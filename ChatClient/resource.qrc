@@ -1,0 +1,36 @@
+<RCC>
+    <qresource prefix="/">
+        <file>res/sysbtn_close_down.png</file>
+        <file>res/sysbtn_close_hover.png</file>
+        <file>res/sysbtn_close_normal.png</file>
+        <file>res/1.jpg</file>
+        <file>res/YLCommonControl/away.png</file>
+        <file>res/YLCommonControl/busypng</file>
+        <file>res/YLCommonControl/imonline.png</file>
+        <file>res/YLCommonControl/invisible.png</file>
+        <file>res/YLCommonControl/mute.png</file>
+        <file>res/YLCommonControl/Qme.png</file>
+        <file>res/YLCommonControl/menu_bkg.png</file>
+        <file>res/LoginPanel/button_login_down.png</file>
+        <file>res/LoginPanel/button_login_hover.png</file>
+        <file>res/LoginPanel/button_login_normal.png</file>
+        <file>res/LoginPanel/edit_frame_hove_passwd.png</file>
+        <file>res/LoginPanel/edit_frame_hover_useraccount.png</file>
+        <file>res/LoginPanel/edit_frame_normal_passwd.png</file>
+        <file>res/LoginPanel/edit_frame_normal_useraccount.png</file>
+        <file>res/LoginPanel/edit_frame_hover_useraccount_copy.png</file>
+        <file>res/LoginPanel/btn_delete_normal.png</file>
+        <file>res/LoginPanel/btn_delete_hover.png</file>
+        <file>res/LoginPanel/btn_delete_down.png</file>
+        <file>res/LoginPanel/arrow_hover.png</file>
+        <file>res/LoginPanel/arrow_normal.png</file>
+        <file>res/LoginPanel/arrow_press.png</file>
+        <file>res/MainFrame/sysbtn_min_down.png</file>
+        <file>res/MainFrame/sysbtn_min_hover.png</file>
+        <file>res/MainFrame/sysbtn_min_normal.png</file>
+        <file>res/MainFrame/logo.png</file>
+        <file>res/MainFrame/sysbtn_Skin_down.png</file>
+        <file>res/MainFrame/sysbtn_Skin_highlight.png</file>
+        <file>res/MainFrame/sysbtn_skin_normal.png</file>
+    </qresource>
+</RCC>
