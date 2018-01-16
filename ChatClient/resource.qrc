@@ -32,5 +32,10 @@
         <file>res/MainFrame/sysbtn_Skin_down.png</file>
         <file>res/MainFrame/sysbtn_Skin_highlight.png</file>
         <file>res/MainFrame/sysbtn_skin_normal.png</file>
+        <file>res/MainFrame/btn_skin_normal.png</file>
+        <file>res/MainFrame/main_search_deldown.png</file>
+        <file>res/MainFrame/main_search_delhighlight.png</file>
+        <file>res/MainFrame/main_search_delnormal.png</file>
+        <file>res/MainFrame/search_icon.png</file>
     </qresource>
 </RCC>

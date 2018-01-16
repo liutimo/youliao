@@ -1,5 +1,5 @@
 #include "YLLoginPanel/ylloginpanel.h"
-
+#include "YLMainFrame/ylmainwidget.h"
 #include <QApplication>
 #include <QDebug>
 #include "YLCommonControl/yllineedit.h"

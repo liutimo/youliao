@@ -38,7 +38,8 @@ void YLBasicWidget::mousePressEvent(QMouseEvent *event)
 {
 
     if (drag_flag_)
-        setCursor(Qt::OpenHandCursor);
+
+        setCursor(Qt::ClosedHandCursor);
 
     pressed_flag_ = true;
     begin_pos_    = event->pos();

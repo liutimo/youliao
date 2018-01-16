@@ -80,7 +80,7 @@ void YLLoginPanel::on_login()
 {
     //登录操作在这里完成。
 
-    YLMainWidget *main_widget = new YLMainWidget();
+    YLMainWidget *main_widget = new YLMainWidget;
     main_widget->show();
 
     this->close();
