@@ -8,6 +8,7 @@ class YLSearchLineEdit;
 class QLabel;
 class YLSignatureLineEdit;
 class YLHeadAndStatusFrame;
+class YLNavigationBar;
 
 class YLMainWidget : public YLBasicWidget
 {
@@ -38,7 +39,7 @@ private:
 protected:
     void resizeEvent(QResizeEvent *event);
     void paintEvent(QPaintEvent *event);
-
+    void mousePressEvent(QMouseEvent *event);
 
 private:
 
@@ -55,6 +56,11 @@ private:
     //搜索框
     YLSearchLineEdit *search_lineedit_;
 
+    //导航栏
+    YLNavigationBar *navigation_bar_;
+
+    //子窗口
+    QVector<QWidget *> vec;
 };
 
 #endif // YLMAINWIDGET_H

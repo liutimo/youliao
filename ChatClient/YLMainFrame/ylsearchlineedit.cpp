@@ -25,6 +25,7 @@ void YLSearchLineEdit::init()
     delete_button_->setObjectName("delete_button_");
     delete_button_->setStyleSheet(qss_delete_buton);
     delete_button_->hide();
+    connect(delete_button_, &QPushButton::clicked, this, &YLSearchLineEdit::on_delete);
 
 }
 
@@ -46,9 +47,9 @@ void YLSearchLineEdit::focusInEvent(QFocusEvent *event)
 void YLSearchLineEdit::focusOutEvent(QFocusEvent *event)
 {
     setStyleSheet(qss_this_no_edit);
+    clear();
     setPlaceholderText("搜索");
-
-    delete_button_->show();
+    delete_button_->hide();
 
     QLineEdit::focusOutEvent(event);
 }

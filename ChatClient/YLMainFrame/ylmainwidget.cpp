@@ -6,6 +6,7 @@
 #include <QPainter>
 #include "ylsearchlineedit.h"
 #include "ylsignaturelineedit.h"
+#include "ylnavigationbar.h"
 
 YLMainWidget::YLMainWidget(QWidget *parent) : YLBasicWidget(parent)
 {
@@ -29,14 +30,11 @@ void YLMainWidget::init()
     logo_label_->setObjectName("logo_label_");
     logo_label_->setStyleSheet(qss_logo_label);
     logo_label_->resize(QSize(21, 24));
-    logo_label_->move(8, 8);
 
     head_status_frame_  = new YLHeadAndStatusFrame(this);
     head_status_frame_->resize(80, 80);
-    head_status_frame_->move(25, 50);
 
     nickname_label_ = new QLabel(this);
-    nickname_label_->move(115, 50);
     nickname_label_->setText("hahaha");
     nickname_label_->setObjectName("nickname_label_");
     nickname_label_->setStyleSheet(qss_nickname_label);
@@ -44,12 +42,28 @@ void YLMainWidget::init()
     signature_lineedit_ = new YLSignatureLineEdit(this);
     signature_lineedit_->setText("我是谁！！！");
     signature_lineedit_->resize(width() - 145, 30);
-    signature_lineedit_->move(115, 90);
 
     search_lineedit_ = new YLSearchLineEdit(this);
     search_lineedit_->resize(width() - 1, 40);
-    search_lineedit_->move(0, 140);
 
+    navigation_bar_ = new YLNavigationBar(this);
+    navigation_bar_->resize(width() - 1, 40);
+    connect(navigation_bar_, &YLNavigationBar::click_index, this, [this](int index){
+        for (int i = 0; i < vec.size(); ++i)
+        {
+            if (i == index - 1)
+                vec[i]->show();
+            else
+                vec[i]->hide();
+        }
+    });
+
+
+    QLabel *l = new QLabel("1111", this);
+
+    vec.push_back(l);
+    vec.push_back(new QLabel("2222", this));
+    vec.push_back(new QLabel("3333", this));
 }
 
 
@@ -59,8 +73,20 @@ void YLMainWidget::resizeEvent(QResizeEvent *event)
     YLBasicWidget::resizeEvent(event);
     min_button_->move(close_button_->x() - close_button_->width(), 0);
     skin_button_->move(min_button_->x() - min_button_->width(), 0);
+    logo_label_->move(8, 8);
+    head_status_frame_->move(25, 50);
+    nickname_label_->move(115, 50);
+    signature_lineedit_->move(115, 90);
+    search_lineedit_->move(0, 140);
+    navigation_bar_->move(0, 180);
+
 }
 
+void YLMainWidget::mousePressEvent(QMouseEvent *event)
+{
+    min_button_->setFocus();
+    YLBasicWidget::mousePressEvent(event);
+}
 
 void YLMainWidget::paintEvent(QPaintEvent *event)
 {
