@@ -7,11 +7,12 @@
 #include "ylsearchlineedit.h"
 #include "ylsignaturelineedit.h"
 #include "ylnavigationbar.h"
-
+#include "ylrecentchatview.h"
 YLMainWidget::YLMainWidget(QWidget *parent) : YLBasicWidget(parent)
 {
     resize(400, 800);
     init();
+    initListWidget();
 }
 
 void YLMainWidget::init()
@@ -57,15 +58,34 @@ void YLMainWidget::init()
                 vec[i]->hide();
         }
     });
-
-
-    QLabel *l = new QLabel("1111", this);
-
-    vec.push_back(l);
-    vec.push_back(new QLabel("2222", this));
-    vec.push_back(new QLabel("3333", this));
 }
 
+void YLMainWidget::initListWidget()
+{
+    //[1] 消息列表
+    YLRecentChatView *yl_recent_chat_view = new YLRecentChatView(this);
+
+    yl_recent_chat_view->resize(width() - 1, height() - 250);
+    yl_recent_chat_view->move(0, 220);
+    vec.push_back(yl_recent_chat_view);
+
+    //demo
+    YLFriend y;
+    y.setFriendAccount("779564531");
+    y.setFriendImagePath(":/res/2.jpeg");
+    y.setFriendLastChatTime("11:22");
+    y.setFriendLastMessage("你好，我是刘正！");
+    y.setFriendNickName("刘提莫");
+    y.setFriendRemark("刘正");
+    y.setFriendSigature("我希望我的青春遇见你");
+    QMap<int, YLFriend> data;
+    for (int i = 0; i < 10; ++i)
+    {
+        data.insert(i, y);
+    }
+
+    yl_recent_chat_view->setData(data);
+}
 
 void YLMainWidget::resizeEvent(QResizeEvent *event)
 {

@@ -35,6 +35,7 @@ private:
 
     void init();
 
+    void initListWidget();
 
 protected:
     void resizeEvent(QResizeEvent *event);

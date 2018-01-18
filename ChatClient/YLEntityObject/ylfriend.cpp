@@ -1,8 +1,27 @@
 #include "ylfriend.h"
 #include <QTime>
-YLFriend::YLFriend(QObject *parent) : QObject(parent)
+YLFriend::YLFriend()
 {
 
+}
+
+YLFriend & YLFriend::operator =(const YLFriend &f)
+{
+    friend_account_ = f.friend_account_;
+
+    friend_nickname_ = f.friend_nickname_;
+
+    friend_signature_ = f.friend_signature_;
+
+    friend_remark_ = f.friend_remark_;
+
+    friend_last_message_ = f.friend_last_message_;
+
+    friend_image_path_ = f.friend_image_path_;
+
+    friend_group = f.friend_group;
+
+    friend_last_chat_time_ = f.friend_last_chat_time_;
 }
 
 void YLFriend::setFriendAccount(const QString &account)
@@ -44,42 +63,42 @@ void YLFriend::setFriendLastChatTime(const QString &lasttime)
     friend_last_chat_time_ = lasttime;
 }
 
-QString YLFriend::getFriendAccount()
+QString YLFriend::getFriendAccount() const
 {
     return friend_account_;
 }
 
-QString YLFriend::getFriendNickName()
+QString YLFriend::getFriendNickName() const
 {
     return friend_nickname_;
 }
 
-QString YLFriend::getFriendSigature()
+QString YLFriend::getFriendSigature() const
 {
     return friend_signature_;
 }
 
-QString YLFriend::getFriendRemark()
+QString YLFriend::getFriendRemark() const
 {
     return friend_remark_;
 }
 
-QString YLFriend::getFriendLastMessage()
+QString YLFriend::getFriendLastMessage() const
 {
     return friend_last_message_;
 }
 
-QString YLFriend::getFriendImagePath()
+QString YLFriend::getFriendImagePath() const
 {
     return friend_image_path_;
 }
 
-QString YLFriend::getFriendGroup()
+QString YLFriend::getFriendGroup() const
 {
     return friend_group;
 }
 
-QString YLFriend::getFriendLastChatTime()
+QString YLFriend::getFriendLastChatTime() const
 {
     return friend_last_chat_time_;
 }

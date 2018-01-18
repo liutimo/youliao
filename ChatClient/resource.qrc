@@ -37,5 +37,6 @@
         <file>res/MainFrame/main_search_delhighlight.png</file>
         <file>res/MainFrame/main_search_delnormal.png</file>
         <file>res/MainFrame/search_icon.png</file>
+        <file>res/2.jpeg</file>
     </qresource>
 </RCC>

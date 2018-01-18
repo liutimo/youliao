@@ -4,12 +4,14 @@
 #include <QObject>
 
 
-class QTime;
 
-class YLFriend : public QObject
+
+class YLFriend
 {
 public:
-    YLFriend(QObject *parent = nullptr);
+    YLFriend();
+
+    YLFriend &operator =(const YLFriend &);
 
     void setFriendAccount(const QString &account);
 
@@ -27,21 +29,21 @@ public:
 
     void setFriendLastChatTime(const QString &lasttime);
 
-    QString getFriendAccount();
+    QString getFriendAccount() const;
 
-    QString getFriendNickName();
+    QString getFriendNickName() const;
 
-    QString getFriendSigature();
+    QString getFriendSigature() const;
 
-    QString getFriendRemark();
+    QString getFriendRemark() const;
 
-    QString getFriendLastMessage();
+    QString getFriendLastMessage() const;
 
-    QString getFriendImagePath();
+    QString getFriendImagePath() const;
 
-    QString getFriendGroup();
+    QString getFriendGroup() const;
 
-    QString getFriendLastChatTime();
+    QString getFriendLastChatTime() const;
 
 
 private:
