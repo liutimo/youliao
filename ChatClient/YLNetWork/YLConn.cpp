@@ -19,13 +19,9 @@ static YLConn* findConn(ConnMap* conn_map, int fd)
 
 void conn_callback(void* callback_data, uint8_t msg, uint32_t fd, void* pParam)
 {
-    if (!callback_data)
-        return;
 
-    ConnMap *conn_map = (ConnMap*)callback_data;
-    YLConn *pConn = findConn(conn_map, fd);
-    if (!pConn)
-        return;
+    YLConn *pConn = new YLConn();
+    pConn->setFD(fd);
 
     switch (msg)
     {

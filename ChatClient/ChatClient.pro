@@ -32,6 +32,8 @@ include(YLEntityObject/YLEntityObject.pri)
 SOURCES += \
         main.cpp
 
+LIBS += -lprotobuf
+
 HEADERS +=
 
 RESOURCES += \

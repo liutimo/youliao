@@ -8,8 +8,8 @@
 #include "UtilPdu.h"
 #include <google/protobuf/message_lite.h>
 
-const int IM_PDU_HEADER_LEN    = 16;
-const int IM_PDU_VERSION       = 1;
+const int PDU_HEADER_LEN    = 16;
+const int PDU_VERSION       = 1;
 
 #define ALLOCK_FAIL_ASSERT(p) if (p == nullptr) {\
 throw YLPduException(m_pdu_header.service_id, m_pdu_header.command_id, ERROR_CODE_ALLOC_FAILED, "allocate failed"); \
@@ -17,7 +17,7 @@ throw YLPduException(m_pdu_header.service_id, m_pdu_header.command_id, ERROR_COD
 
 typedef struct
 {
-    uint32_t    length;
+    uint32_t    length;     //包头(大小固定) + 数据 的总长度
     uint16_t    version;
     uint16_t    flag;
     uint16_t    service_id;
@@ -58,7 +58,7 @@ public:
     static YLPdu* readPdu(u_char* buf, uint32_t len);
     void write(u_char* buf, uint32_t len) { m_buffer.write(buf, len); }
     int readPduHeader(u_char* buf, uint32_t len);
-    void setPduMsg(const google::protobuf::MessageLite *msg);
+    void setPBMsg(const google::protobuf::MessageLite *msg);
 
 
 protected:

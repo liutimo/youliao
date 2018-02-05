@@ -131,7 +131,7 @@ int YLBaseSocket::connect(const std::string &server_ip, uint16_t port, callback_
 
 int YLBaseSocket::send(void *buf, int len)
 {
-    if (m_socket != SOCKET_STATE_CONNECTED)
+    if (m_state != SOCKET_STATE_CONNECTED)
         return -1;
 
     int ret = ::send(m_socket, (char*)buf, len, 0);
@@ -194,21 +194,19 @@ void YLBaseSocket::onWrite()
         getsockopt(m_socket, SOL_SOCKET, SO_ERROR, (void*)&error, &len);
         if (error)
         {
-            //错误处理
-
-            log("关闭连接\n", "");
+            m_callback(m_callback_data, NETLIB_MSG_CLOSE, m_socket, nullptr);
         }
         else
         {
             //无错，表示连接已经成功建立
             m_state = SOCKET_STATE_CONNECTED;
-            log("发送数据", "");
+            m_callback(m_callback_data, NETLIB_MSG_CONFIRM, m_socket, nullptr);
         }
     }
     else if(m_state == SOCKET_STATE_CONNECTED)
     {
         //写操作
-        log("发送数据", "");
+        m_callback(m_callback_data, NETLIB_MSG_WRITE, m_socket, nullptr);
     }
 
 }
@@ -311,10 +309,22 @@ void YLBaseSocket::_AcceptNewSocket()
         _SetNonBlock(fd);
         _SetNoDelay(fd);
 
+        char buf[4] = "123";
+
+
+//      for (int  i = 0; i < 1000; ++i)
+//      {
+//     	    for(int j = 0; j < 1000000; ++j);
+//          log("send 123 to socket fd = %d, id = %d\n", fd, i);
+//          ::send(fd, buf, 4, 0);
+//      }
+
+
+
         addBaseSocket(pSocket);
         YLEventDispatch::getInstance()->addEvent(fd, SOCKET_READ | SOCKET_EXCEP);
         if (m_callback)
-            m_callback(m_callback_data, NETLIB_MSG_CONNECT, m_socket, NULL);
+            m_callback(m_callback_data, NETLIB_MSG_CONNECT, fd, NULL);
 
     }
 

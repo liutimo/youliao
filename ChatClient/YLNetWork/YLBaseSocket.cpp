@@ -131,7 +131,7 @@ int YLBaseSocket::connect(const std::string &server_ip, uint16_t port, callback_
 
 int YLBaseSocket::send(void *buf, int len)
 {
-    if (m_socket != SOCKET_STATE_CONNECTED)
+    if (m_state != SOCKET_STATE_CONNECTED)
         return -1;
 
     int ret = ::send(m_socket, (char*)buf, len, 0);
@@ -194,21 +194,20 @@ void YLBaseSocket::onWrite()
         getsockopt(m_socket, SOL_SOCKET, SO_ERROR, (void*)&error, &len);
         if (error)
         {
-            //错误处理
-
-            log("关闭连接\n", "");
+            m_callback(m_callback_data, NETLIB_MSG_CLOSE, m_socket, nullptr);
         }
         else
         {
             //无错，表示连接已经成功建立
             m_state = SOCKET_STATE_CONNECTED;
-            log("发送数据", "");
+            //确认连接
+            m_callback(m_callback_data, NETLIB_MSG_CONFIRM, m_socket, nullptr);
         }
     }
     else if(m_state == SOCKET_STATE_CONNECTED)
     {
-        //写操作
-        log("发送数据", "");
+        //连接建立
+        m_callback(m_callback_data, NETLIB_MSG_WRITE, m_socket, nullptr);
     }
 
 }
@@ -276,6 +275,9 @@ void YLBaseSocket::_SetAddr(const std::string &ip, const uint16_t port, sockaddr
 
 bool YLBaseSocket::_IsBlock(int err_code)
 {
+    //EINPROGRESS 当我们以非阻塞的方式来进行连接的时候，返回的结果如果是 -1
+    //,这并不代表这次连接发生了错误，如果它的返回结果是 EINPROGRESS，那么就代表连接还在进行中。
+    //后面可以通过poll或者select来判断socket是否可写，如果可以写，说明连接完成了。
     return (err_code == EINPROGRESS) || (err_code = EWOULDBLOCK);
 }
 

@@ -29,11 +29,12 @@ public:
     virtual void OnConfirm() {}
     virtual void onRead();
     virtual void onWrite();
-    virtual void onClose() { };
+    virtual void onClose() { }
     virtual void onWriteCompelete() {}
 
     virtual void handlePdu(YLPdu *pdu) {}
 
+    void setFD(int fd) {m_fd = fd;}
 
 protected:
     int             m_fd;

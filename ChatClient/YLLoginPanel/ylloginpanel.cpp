@@ -3,19 +3,24 @@
 #include "YLCommonControl/ylheadandstatusframe.h"
 #include "YLCommonControl/yllineedit.h"
 #include "ylaccountlistview.h"
-#include "YLNetWork/ylconnecttoserver.h"
 #include "YLMainFrame/ylmainwidget.h"
 
 #include <QLineEdit>
 #include <QPushButton>
 #include <QComboBox>
 #include <QMouseEvent>
+#include <QDebug>
 
-
+#include "YLNetWork/netservice.h"
 
 YLLoginPanel::YLLoginPanel(QWidget *parent) : YLBasicWidget(parent)
 {
     init();
+
+    connect(YLNetService::instance(), &YLNetService::error, this, [](YLNetServiceError error){
+        if (error == Connect2ServerFailed)
+            qDebug() << "连接登录服务器失败";
+    });
 }
 
 void YLLoginPanel::init()
@@ -79,6 +84,7 @@ void YLLoginPanel::mousePressEvent(QMouseEvent *event)
 void YLLoginPanel::on_login()
 {
     //登录操作在这里完成。
+
 
     YLMainWidget *main_widget = new YLMainWidget;
     main_widget->show();

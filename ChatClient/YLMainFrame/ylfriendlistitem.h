@@ -3,10 +3,10 @@
 
 #include <QWidget>
 
-class YLFriend;
+#include "YLEntityObject/ylfriend.h"
 class YLHeadFrame;
 class QLabel;
-
+class QMenu;
 class YLFriendListItem : public QWidget
 {
     Q_OBJECT
@@ -29,13 +29,15 @@ private:
 
     void init();
 
+    void initMenu();
+
 protected:
     void resizeEvent(QResizeEvent *event);
+    void mousePressEvent(QMouseEvent *event);
 
 signals:
-
-public slots:
-
+    void moveToTop(const YLFriend &);
+    void deleteFromList(const YLFriend &);
 private:
     YLHeadFrame *head_frame_;
 
@@ -43,10 +45,10 @@ private:
     QLabel      *label_up_;         //如果由备注则显示备注信息，否则显示昵称
     QLabel      *label_down_;       //显示个性签名 或者最后一条聊天记录
     QLabel      *label_time_;       //显示最后一次聊天的时间
-
+    QMenu       *menu_;
 
     YLListItemType item_type_;      //保存当前item的类型
-
+    YLFriend friend_;
 };
 
 #endif // YLFRIENDLISTITEM_H

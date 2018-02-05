@@ -24,6 +24,15 @@ YLFriend & YLFriend::operator =(const YLFriend &f)
     friend_last_chat_time_ = f.friend_last_chat_time_;
 }
 
+bool YLFriend::operator ==(const YLFriend &f1) const
+{
+    if (f1.getFriendAccount() == this->getFriendAccount())
+        return true;
+    else
+        return false;
+    return true;
+}
+
 void YLFriend::setFriendAccount(const QString &account)
 {
     friend_account_ = account;

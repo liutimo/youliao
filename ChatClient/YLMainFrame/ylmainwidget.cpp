@@ -71,16 +71,16 @@ void YLMainWidget::initListWidget()
 
     //demo
     YLFriend y;
-    y.setFriendAccount("779564531");
     y.setFriendImagePath(":/res/2.jpeg");
     y.setFriendLastChatTime("11:22");
     y.setFriendLastMessage("你好，我是刘正！");
     y.setFriendNickName("刘提莫");
-    y.setFriendRemark("刘正");
     y.setFriendSigature("我希望我的青春遇见你");
     QMap<int, YLFriend> data;
-    for (int i = 0; i < 10; ++i)
+    for (int i = 0; i < 100; ++i)
     {
+        y.setFriendAccount(QString::number(10000 + i));
+        y.setFriendRemark("刘提莫" + QString::number(i));
         data.insert(i, y);
     }
 

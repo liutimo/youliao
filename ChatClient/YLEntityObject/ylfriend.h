@@ -13,6 +13,8 @@ public:
 
     YLFriend &operator =(const YLFriend &);
 
+    bool operator ==(const YLFriend &) const;
+
     void setFriendAccount(const QString &account);
 
     void setFriendNickName(const QString &nickname);
