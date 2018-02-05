@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 3.7)
+project(util)
+
+AUX_SOURCE_DIRECTORY(./ SRC_LIST)
+
+ADD_LIBRARY(util STATIC ${SRC_LIST})
+
+TARGET_LINK_LIBRARIES(util)
