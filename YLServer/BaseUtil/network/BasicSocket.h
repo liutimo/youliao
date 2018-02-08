@@ -50,8 +50,8 @@ namespace youliao
             int connect(const std::string &serv_ip, uint16_t port, callback_t callback, callback_data data);
 
 
-            ssize_t send(void *buf, int len);
-            ssize_t recv(void *buf, int len);
+            ssize_t send(void *buf, size_t len);
+            ssize_t recv(void *buf, size_t len);
             int close();
 
 

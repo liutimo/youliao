@@ -19,15 +19,15 @@ namespace youliao
 {
     namespace network
     {
-        const int NETLIB_OPT_SET_CALLBACK        =  1;
-        const int NETLIB_OPT_SET_CALLBACK_DATA   =  2;
+        static const int NETLIB_OPT_SET_CALLBACK        =  1;
+        static const int NETLIB_OPT_SET_CALLBACK_DATA   =  2;
 
-        inline int netlib_init()
+        static inline int netlib_init()
         {
             return NETWORK_OK;
         }
 
-        inline int netlib_listen(const std::string& serv_ip,
+        static inline int netlib_listen(const std::string& serv_ip,
                              uint16_t port,
                              callback_t callback,
                              callback_data callbackData)
@@ -41,7 +41,7 @@ namespace youliao
         }
 
 
-        inline int netlib_connect(const std::string& serv_ip,
+        static inline int netlib_connect(const std::string& serv_ip,
                               uint16_t port,
                               callback_t callback,
                               callback_data callbackData)
@@ -53,35 +53,37 @@ namespace youliao
             return ret;
         }
 
-        inline int netlib_send(int handle, void* buf, int len)
+        static inline int netlib_send(int handle, void* buf, size_t len)
         {
             BaseSocket *baseSocket = findBaseSocket(handle);
             if (!baseSocket)
                 return NETWORK_ERROR;
 
-            int ret = baseSocket->send(buf, len);
+            int ret = (int)baseSocket->send(buf, len);
             return ret;
         }
 
-        inline int netlib_recv(int handle, void* buf, int len)
+        static inline int netlib_recv(int handle, void* buf, size_t len)
         {
             BaseSocket *baseSocket = findBaseSocket(handle);
             if (!baseSocket)
                 return NETWORK_ERROR;
 
-            int ret = baseSocket->recv(buf, len);
+            int ret = (int)baseSocket->recv(buf, len);
+            return ret;
         }
 
-        inline int netlib_close(int handle)
+        static inline int netlib_close(int handle)
         {
             BaseSocket *baseSocket = findBaseSocket(handle);
             if (!baseSocket)
                 return NETWORK_ERROR;
 
-            baseSocket->close();
+            return baseSocket->close();
+
         }
 
-        int netlib_option(int handle, int opt, void* optval)
+        static int netlib_option(int handle, int opt, void* optval)
         {
             BaseSocket *baseSocket = findBaseSocket(handle);
             if (!baseSocket)
@@ -102,12 +104,13 @@ namespace youliao
             return NETWORK_OK;
         }
 
-        inline int netlib_eventloop(uint32_t wait_time = 100)
+        static inline int netlib_eventloop(uint32_t wait_time = 100)
         {
             EventDispatch::instance()->eventLoop(wait_time);
+            return NETWORK_OK;
         }
 
-        inline int nettlib_destory()
+        static inline int nettlib_destory()
         {
             return NETWORK_OK;
         }
