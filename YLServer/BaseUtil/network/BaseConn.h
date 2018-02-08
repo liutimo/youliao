@@ -12,8 +12,10 @@
 #ifndef BASEUTIL_BASECONN_H
 #define BASEUTIL_BASECONN_H
 
+#include <backward/hash_map>
 #include "type_define.h"
 #include "../util/SimpleBuffer.h"
+class BasePdu;
 namespace youliao
 {
     namespace network
@@ -36,14 +38,17 @@ namespace youliao
 
             virtual void handlePdu() {}
 
-        private:
-            net_handle_t m_handle;
 
+        protected:
+            net_handle_t m_handle;
             bool m_busy;    //判断写缓冲区是否有数据
             youliao::util::SimpleBuffer m_read_buf;
             youliao::util::SimpleBuffer m_write_buf;
         };
 
+        typedef __gnu_cxx::hash_map<net_handle_t, BaseConn*> BaseConnMap_t;
+
+        void baseconn_callback(callback_data data, uint8_t msg, net_handle_t handle, void *pParam);
     }
 
 }

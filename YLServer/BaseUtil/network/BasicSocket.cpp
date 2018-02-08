@@ -158,7 +158,10 @@ void BaseSocket::_SetSockAddr(const std::string &ip, uint16_t port, sockaddr_in 
     memset(&sock_addr, 0, sizeof(sockaddr_in));
     sock_addr.sin_family = AF_INET;
     sock_addr.sin_port = htons(port);
-    sock_addr.sin_addr.s_addr = inet_addr(ip.c_str());
+    if (ip.empty())
+        sock_addr.sin_addr.s_addr = INADDR_ANY;
+    else
+        sock_addr.sin_addr.s_addr = inet_addr(ip.c_str());
 }
 
 void BaseSocket::_SetNoDelay()

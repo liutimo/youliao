@@ -11,7 +11,47 @@
 
 #include "BaseConn.h"
 #include "netlib.h"
+#include "../util/util.h"
 using namespace youliao::network;
+
+static BaseConn* findBaseConn(BaseConnMap_t *connMap, net_handle_t handle)
+{
+    auto iter = connMap->find(handle);
+    if (iter == connMap->end())
+        return nullptr;
+
+    return iter->second;
+}
+
+void youliao::network::baseconn_callback(callback_data data, uint8_t msg, net_handle_t handle, void *pParam)
+{
+    NO_USERD(pParam);
+    if (data == nullptr)
+        return;
+
+    BaseConnMap_t *baseConnMap = static_cast<BaseConnMap_t*>(data);
+    BaseConn *baseConn = findBaseConn(baseConnMap, handle);
+
+    if (!baseConn)
+        return;
+
+    switch (msg)
+    {
+        case NETWORK_CLOSE:
+            baseConn->onClose();
+            break;
+        case NETWORK_READ:
+            baseConn->onRead();
+            break;
+        case NETWORK_WRITE:
+            baseConn->onWrite();
+        default:
+            break;
+    }
+
+
+}
+
 
 BaseConn::BaseConn()
 {
@@ -75,9 +115,9 @@ void BaseConn::onRead()
             m_read_buf.extend(NETWORK_MAX_SIZE);
 
         int ret = netlib_recv(m_handle, m_read_buf.getCurrWritePos(), NETWORK_MAX_SIZE);
-
         if (ret <= 0)
             break;
+        m_read_buf.incrWriteOffest(ret);
     }
 
     //读pdu,

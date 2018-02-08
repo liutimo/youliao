@@ -26,6 +26,7 @@ namespace youliao
             int read(void* buf, int len);
             int write(void* buf, int len);
             void extend(uint32_t len);
+            void incrWriteOffest(uint16_t len) { m_write_offest += len;}
 
             int getFreeSize() { return m_aolloc_size - m_write_offest; }
             uchar_t* getBuffer() { return m_buf; }

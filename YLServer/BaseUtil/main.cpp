@@ -1,44 +1,39 @@
 #include <iostream>
-#include <list>
+#include "network/netlib.h"
+#include "util/util.h"
+using namespace youliao::network;
 
-#include "util/SimpleBuffer.h"
-#include "network/test.h"
-using namespace youliao::util;
-int main()
+
+//该回调函数在 BaseSocket::_AcceptNewConn 中被调用,
+//其作用是设置 BaseSocket::onRead中的回调函数.
+void listen_callback(void *callback_data, uint8_t msg,  net_handle_t handle, void *pParam)
 {
-    SimpleBuffer *simpleBuffer = new SimpleBuffer;
+    if (msg == NETWORK_CONNECT)
+    {
+        BaseSocket *pSocket = findBaseSocket(handle);
+        if (!pSocket)
+        {
+            log("don't find this handle %d in global connect map", handle);
+            delete pSocket;
+            return;
+        }
+    }
+    else
+    {
+        log("recv a error msg(msg = %d)", msg);
+    }
 
-    char str[4] = "123";
-    char str2[4];
+}
 
-    simpleBuffer->write(str, 4);
+int main() {
 
-    simpleBuffer->read(str2, 4);
+    netlib_init();
 
-    std::cout << str2 << std::endl;
+    netlib_listen("127.0.0.1", 8001, listen_callback, nullptr);
 
-    int i = 9, j = 10;
-    simpleBuffer->write(&i, 4);
-    simpleBuffer->write(&j, 4);
+    netlib_eventloop();
 
-    simpleBuffer->read(&j, 4);
-    simpleBuffer->read(&i, 4);
-    std::cout << i << " " << j << std::endl;
-
-    typedef struct {
-        int i = 10;
-        int j = 20;
-        char str[3] = "12";
-    }T;
-
-    T t;
-    T tt;
-    tt.j = 200;
-    simpleBuffer->write(&t, sizeof(T));
-    simpleBuffer->read(&tt, sizeof(T));
-
-    std::cout << tt.j;
-
+    nettlib_destory();
 
     return 0;
 }
