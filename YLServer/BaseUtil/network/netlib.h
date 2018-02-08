@@ -27,7 +27,7 @@ namespace youliao
             return NETWORK_OK;
         }
 
-        inline netlib_listen(const std::string& serv_ip,
+        inline int netlib_listen(const std::string& serv_ip,
                              uint16_t port,
                              callback_t callback,
                              callback_data callbackData)
@@ -41,7 +41,7 @@ namespace youliao
         }
 
 
-        inline netlib_connect(const std::string& serv_ip,
+        inline int netlib_connect(const std::string& serv_ip,
                               uint16_t port,
                               callback_t callback,
                               callback_data callbackData)
@@ -50,7 +50,7 @@ namespace youliao
             int ret = baseSocket->connect(serv_ip, port, callback, callbackData);
             if (ret == NETWORK_ERROR)
                 delete baseSocket;
-            return baseSocket;
+            return ret;
         }
 
         inline int netlib_send(int handle, void* buf, int len)
