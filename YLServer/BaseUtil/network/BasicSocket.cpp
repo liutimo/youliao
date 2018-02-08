@@ -136,7 +136,7 @@ int BaseSocket::close()
     return ::close(m_handle);
 }
 
-ssize_t BaseSocket::send(void *buf, int len)
+ssize_t BaseSocket::send(void *buf, size_t len)
 {
     if (m_state != BASESOCKET_STATE_CONNECTED)
     {
@@ -147,7 +147,7 @@ ssize_t BaseSocket::send(void *buf, int len)
     return ret;
 }
 
-ssize_t BaseSocket::recv(void *buf, int len)
+ssize_t BaseSocket::recv(void *buf, size_t len)
 {
     ssize_t ret = ::recv(m_handle, buf, len, 0);
     return ret;
@@ -277,7 +277,8 @@ void BaseSocket::_AcceptNewConn()
         t_basesocket->setSocketState(BASESOCKET_STATE_CONNECTED);
         t_basesocket->_SetNoDelay();
         t_basesocket->_SetNonBlock();
-
+        t_basesocket->setCallBack(m_callback);
+        t_basesocket->setCallBackData(m_callback_data);
 
         addBaseSocket(t_basesocket);
         EventDispatch::instance()->addEvent(t_handle);
