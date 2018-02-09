@@ -12,7 +12,7 @@
 
 #include <string.h>
 #include <stdlib.h>
-
+#include <iostream>
 using namespace youliao::util;
 
 SimpleBuffer::SimpleBuffer()
@@ -61,4 +61,69 @@ int SimpleBuffer::write(void *buf, int len)
 
     m_write_offest += len;
     return len;
+}
+
+void SimpleBuffer::writeUInt32(uint32_t data)
+{
+    if (sizeof(uint32_t) > getFreeSize())
+        extend(sizeof(uint32_t));
+
+    uchar_t *buf = getCurrWritePos();
+    buf[0] = (data >> 24) & 0xFF;
+    buf[1] = (data >> 16) & 0xFF;
+    buf[2] = (data >> 8)  & 0xFF;
+    buf[3] = (data)       & 0xFF;
+
+    incrWriteOffest(sizeof(uint32_t));
+}
+uint32_t  SimpleBuffer::readUInt32()
+{
+    if(getFreeSize() < sizeof(uint32_t))
+        return (uint32_t)-1;
+
+    uchar_t *buf = getBuffer();
+
+
+    uint32_t ret = (uint32_t)((buf[0] << 24) | (buf[1] << 16) | (buf[2] << 8) | buf[3]);
+    std::cout << ret << std::endl;
+    read(nullptr, sizeof(uint32_t));
+
+    return ret;
+}
+
+void SimpleBuffer::writeUInt16(uint16_t data)
+{
+    if (sizeof(uint16_t) > getFreeSize())
+        extend(sizeof(uint16_t));
+
+    uchar_t *buf = getCurrWritePos();
+    buf[0] = (data >> 8) & 0xFF;
+    buf[1] = (data)      & 0xFF;
+
+    incrWriteOffest(sizeof(uint16_t));
+}
+
+uint16_t SimpleBuffer::readUInt16()
+{
+    if(getFreeSize() < sizeof(uint16_t))
+        return (uint16_t)-1;
+
+    uchar_t *buf = getBuffer();
+    uint16_t  ret = (uint16_t)((buf[0] << 8) | buf[1]);
+    std::cout << ret << std::endl;
+    read(nullptr, sizeof(uint16_t));
+    return  ret;
+}
+
+void SimpleBuffer::writeString(const std::string &str)
+{
+    write((void*)str.c_str(), str.length());
+}
+
+std::string SimpleBuffer::readString(uint32_t length)
+{
+    std::string str(" ", length);
+    std::copy(getBuffer(), getBuffer() + length, str.begin());
+    read(nullptr, length);
+    return str;
 }

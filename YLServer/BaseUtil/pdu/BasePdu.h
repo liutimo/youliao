@@ -33,9 +33,19 @@ namespace youliao
             ~BasePdu();
 
             void writePduHeader(pdu_header_t *pduHeader);
+
+            static BasePdu* readPduFromBuffer(SimpleBuffer &buffer);
+
         private:
+            void readHeader(SimpleBuffer&);
+
             //pdu数据缓冲
             SimpleBuffer m_buff;
+
+            pdu_header_t m_header;
+
+
+            const int PDU_HEADER_LENGTH = sizeof(pdu_header_t);
 
         };
 

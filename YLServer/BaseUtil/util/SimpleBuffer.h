@@ -13,6 +13,7 @@
 #define BASEUTIL_SIMPLEBUFFER_H
 
 #include <stdint.h>
+#include <string>
 namespace youliao
 {
     namespace util
@@ -26,13 +27,28 @@ namespace youliao
             int read(void* buf, int len);
             int write(void* buf, int len);
             void extend(uint32_t len);
-            void incrWriteOffest(uint16_t len) { m_write_offest += len;}
 
-            int getFreeSize() { return m_aolloc_size - m_write_offest; }
-            uchar_t* getBuffer() { return m_buf; }
-            uchar_t* getCurrWritePos() { return m_buf + m_write_offest; }
-            bool empty() { return m_write_offest == 0; }
-            uint32_t size() { return m_write_offest; }
+            uint32_t getWriteOffest() const { return m_write_offest; }
+            //当使用使用getBuffer直接写入时,需要调用这个方法来增加写偏移
+            void incrWriteOffest(uint16_t len) { m_write_offest += len;}
+            //获取空闲内存大小
+            int getFreeSize() const { return m_aolloc_size - m_write_offest; }
+
+            //获取当前写入的位置.每次写入缓冲时都应该调用该method,而不是getBuffer
+            uchar_t* getCurrWritePos() const { return m_buf + m_write_offest; }
+            uchar_t* getBuffer() const { return m_buf; }
+            uint32_t size() const { return m_write_offest; }
+            bool empty() const { return m_write_offest == 0; }
+
+            void writeUInt32(uint32_t);
+            uint32_t  readUInt32();
+
+            void writeUInt16(uint16_t );
+            uint16_t readUInt16();
+
+            void writeString(const std::string &);
+            std::string readString(uint32_t);
+
         private:
             uchar_t *m_buf;
 

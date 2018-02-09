@@ -55,10 +55,17 @@ void LoginConn::handlePdu()
 {
     pdu_header_t header;
 
-    header.length = (m_read_buf.getBuffer()[0] << 24) | (m_read_buf.getBuffer()[1] << 16) | (m_read_buf.getBuffer()[2] << 8) | (m_read_buf.getBuffer()[3]);
-    header.sid = (m_read_buf.getBuffer()[4] << 8) | (m_read_buf.getBuffer()[5]);
-    header.cid = (m_read_buf.getBuffer()[6] << 8) | (m_read_buf.getBuffer()[7]);
-    m_read_buf.read(nullptr, sizeof(pdu_header_t));
-    log("m_handle = %d, pdu.length=%d, pdu.sid = %d, pdu.cid = %d", m_handle, header.length, header.sid, header.cid);
+//    header.length = (m_read_buf.getBuffer()[0] << 24) | (m_read_buf.getBuffer()[1] << 16) | (m_read_buf.getBuffer()[2] << 8) | (m_read_buf.getBuffer()[3]);
+//    header.sid = (m_read_buf.getBuffer()[4] << 8) | (m_read_buf.getBuffer()[5]);
+//    header.cid = (m_read_buf.getBuffer()[6] << 8) | (m_read_buf.getBuffer()[7]);
+//    m_read_buf.read(nullptr, sizeof(pdu_header_t));
+
+    header.length = m_read_buf.readUInt32();
+    header.sid = m_read_buf.readUInt16();
+    header.cid = m_read_buf.readUInt16();
+
+    std::string msg = m_read_buf.readString(header.length - sizeof(pdu_header_t));
+
+    log("m_handle = %d, pdu.length=%d, pdu.sid = %d, pdu.cid = %d  msg = %s", m_handle, header.length, header.sid, header.cid, msg.c_str());
 
 }
