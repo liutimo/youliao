@@ -2,7 +2,6 @@
 #include <network/netlib.h>
 #include "util/util.h"
 #include "LoginConn.h"
-#include <google/protobuf/message_lite.h>
 
 using namespace youliao::network;
 

@@ -64,7 +64,8 @@ void LoginConn::handlePdu(BasePdu *basePdu)
             _HandleClientLogin(basePdu);
             break;
         case youliao::pdu::base::SID_SERVER:
-
+            _HandleServerInfo(basePdu);
+            break;
         default:
             break;
     }
@@ -93,7 +94,7 @@ void LoginConn::_HandleClientLogin(BasePdu *basePdu)
 
 void LoginConn::_HandleServerInfo(BasePdu *basePdu)
 {
-    server::MsgServerInfo server_info;
+    youliao::pdu::server::MsgServerInfo server_info;
     server_info.ParseFromString(basePdu->getMessage());
 
     msg_server_info_t *msg_server_info = new msg_server_info_t;

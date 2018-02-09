@@ -1,0 +1,11 @@
+syntax = "proto3";
+package youliao.pdu.server;
+import "youliao.base.proto";
+
+message MsgServerInfo
+{
+    string ip             = 1;
+    uint32 port           = 2;
+    uint32 max_conn_count = 3;
+    uint32 cur_conn_count = 4;
+}
