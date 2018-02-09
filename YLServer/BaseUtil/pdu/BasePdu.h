@@ -13,7 +13,7 @@
 #define BASEUTIL_BASEPDU_H
 
 #include "../util/SimpleBuffer.h"
-
+#include <google/protobuf/message_lite.h>
 using namespace youliao::util;
 namespace youliao
 {
@@ -32,20 +32,39 @@ namespace youliao
 
             ~BasePdu();
 
+            //发送数据时使用
+            //发送数据时  消息头和消息主体都会被写进m_buff
             void writePduHeader(pdu_header_t *pduHeader);
+            void writeMessage(google::protobuf::MessageLite *messageLite);
+
+            //解析数据时使用
+            //解析数据时 消息头写入m_header,消息主体写入m_buff
+            void readPduHeader(SimpleBuffer&);
+            void readMessage(SimpleBuffer&);
+
+            void setCID(uint16_t cid) {m_header.cid = cid;}
+            void setSID(uint16_t sid) {m_header.sid = sid;}
+
+            uint16_t getSID() const {return m_header.sid;}
+            uint16_t getCID() const {return m_header.cid;}
+
+            std::string getMessage() const { return m_message; }
+            uchar_t* getBuffer() const { return m_buff.getBuffer(); }
+            uint32_t getBufferLength() const { return m_buff.getWriteOffest();}
 
             static BasePdu* readPduFromBuffer(SimpleBuffer &buffer);
+            static bool isAvailabel(SimpleBuffer &buffer);
 
         private:
-            void readHeader(SimpleBuffer&);
 
-            //pdu数据缓冲
+
+            //只在发送数据时使用
             SimpleBuffer m_buff;
-
             pdu_header_t m_header;
+            //只在解析数据时使用
+            std::string  m_message;
 
-
-            const int PDU_HEADER_LENGTH = sizeof(pdu_header_t);
+            static const int PDU_HEADER_LENGTH = sizeof(pdu_header_t);
 
         };
 

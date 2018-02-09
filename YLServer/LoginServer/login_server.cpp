@@ -2,7 +2,7 @@
 #include <network/netlib.h>
 #include "util/util.h"
 #include "LoginConn.h"
-
+#include <google/protobuf/message_lite.h>
 
 using namespace youliao::network;
 
@@ -30,7 +30,8 @@ void listen_server_callback(callback_data data, uint8_t msg, net_handle_t handle
 
 
 
-int main() {
+int main()
+{
 
 
     log("login server has been starting!");
@@ -47,6 +48,7 @@ int main() {
     netlib_eventloop();
 
     nettlib_destory();
+
 
 
     return 0;

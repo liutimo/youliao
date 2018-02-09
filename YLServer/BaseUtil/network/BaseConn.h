@@ -15,7 +15,8 @@
 #include <backward/hash_map>
 #include "type_define.h"
 #include "../util/SimpleBuffer.h"
-class BasePdu;
+#include "../pdu/BasePdu.h"
+
 namespace youliao
 {
     namespace network
@@ -28,6 +29,7 @@ namespace youliao
 
             ~BaseConn();
 
+            int sendBasePdu(pdu::BasePdu*);
             int send(void* buf, int len);
         public:
             virtual void onConnect(net_handle_t handle) { m_handle = handle; }
@@ -36,7 +38,7 @@ namespace youliao
             virtual void onClose();
             virtual void onWriteComplete() {}
 
-            virtual void handlePdu() {}
+            virtual void handlePdu(pdu::BasePdu *) {}
 
 
         protected:

@@ -1,0 +1,14 @@
+syntax = "proto3";
+package youliao.pdu.login;
+import "youliao.base.proto";
+message MsgServerRequest
+{
+
+}
+
+message MsgServerRespone
+{
+    youliao.pdu.base.ResultType result_code = 1;
+    string msg_server_ip = 2;
+    uint32 port = 3;
+}

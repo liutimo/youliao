@@ -49,6 +49,8 @@ namespace youliao
             void writeString(const std::string &);
             std::string readString(uint32_t);
 
+            //只是读一个值,不会清空缓冲中的数据
+            uint32_t getUint32();
         private:
             uchar_t *m_buf;
 

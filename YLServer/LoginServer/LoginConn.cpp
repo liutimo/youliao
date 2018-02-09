@@ -12,13 +12,18 @@
 #include "LoginConn.h"
 #include "network/BasicSocket.h"
 #include "network/netlib.h"
-#include "pdu/BasePdu.h"
+#include "pdu/protobuf/youliao.base.pb.h"
+#include "pdu/protobuf/youliao.login.pb.h"
+#include "pdu/protobuf/youliao.server.pb.h"
 
 using namespace youliao::pdu;
+
 
 //这两个map, 会在onConnect函数中通过type参数来决定将哪个map传递给回调函数
 static ConnMap_t g_client_conn_map;
 static ConnMap_t g_server_conn_map;
+static __gnu_cxx::hash_map<int, msg_server_info_t*> server_info_map;
+
 
 
 LoginConn::LoginConn() : BaseConn()
@@ -51,21 +56,51 @@ void LoginConn::onConnect(net_handle_t handle, ConnType type)
 }
 
 
-void LoginConn::handlePdu()
+void LoginConn::handlePdu(BasePdu *basePdu)
 {
-    pdu_header_t header;
+    switch (basePdu->getSID())
+    {
+        case youliao::pdu::base::SID_LOGIN:
+            _HandleClientLogin(basePdu);
+            break;
+        case youliao::pdu::base::SID_SERVER:
 
-//    header.length = (m_read_buf.getBuffer()[0] << 24) | (m_read_buf.getBuffer()[1] << 16) | (m_read_buf.getBuffer()[2] << 8) | (m_read_buf.getBuffer()[3]);
-//    header.sid = (m_read_buf.getBuffer()[4] << 8) | (m_read_buf.getBuffer()[5]);
-//    header.cid = (m_read_buf.getBuffer()[6] << 8) | (m_read_buf.getBuffer()[7]);
-//    m_read_buf.read(nullptr, sizeof(pdu_header_t));
+        default:
+            break;
+    }
 
-    header.length = m_read_buf.readUInt32();
-    header.sid = m_read_buf.readUInt16();
-    header.cid = m_read_buf.readUInt16();
+}
 
-    std::string msg = m_read_buf.readString(header.length - sizeof(pdu_header_t));
+void LoginConn::_HandleClientLogin(BasePdu *basePdu)
+{
+    login::MsgServerRequest request;
+    request.ParseFromString(basePdu->getMessage());
 
-    log("m_handle = %d, pdu.length=%d, pdu.sid = %d, pdu.cid = %d  msg = %s", m_handle, header.length, header.sid, header.cid, msg.c_str());
+    //响应
+    youliao::pdu::login::MsgServerRespone respone;
+    respone.set_result_code(base::NO_MSG_SERVER);
+    respone.set_msg_server_ip("127.0.0.1");
+    respone.set_port(8001);
 
+    BasePdu *responePdu = new BasePdu;
+    responePdu->setSID(base::SID_LOGIN);
+    responePdu->setCID(base::CID_LOGIN_RESPONE_MSGSERVER);
+    responePdu->writeMessage(&respone);
+
+    sendBasePdu(responePdu);
+    delete responePdu;
+}
+
+void LoginConn::_HandleServerInfo(BasePdu *basePdu)
+{
+    server::MsgServerInfo server_info;
+    server_info.ParseFromString(basePdu->getMessage());
+
+    msg_server_info_t *msg_server_info = new msg_server_info_t;
+    msg_server_info->ip = server_info.ip();
+    msg_server_info->port = server_info.port();
+    msg_server_info->max_conn_count = server_info.max_conn_count();
+    msg_server_info->cur_conn_count = server_info.cur_conn_count();
+
+    server_info_map.insert(std::make_pair(m_handle, msg_server_info));
 }

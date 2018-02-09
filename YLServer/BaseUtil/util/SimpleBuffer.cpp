@@ -83,7 +83,6 @@ uint32_t  SimpleBuffer::readUInt32()
 
     uchar_t *buf = getBuffer();
 
-
     uint32_t ret = (uint32_t)((buf[0] << 24) | (buf[1] << 16) | (buf[2] << 8) | buf[3]);
     std::cout << ret << std::endl;
     read(nullptr, sizeof(uint32_t));
@@ -110,7 +109,6 @@ uint16_t SimpleBuffer::readUInt16()
 
     uchar_t *buf = getBuffer();
     uint16_t  ret = (uint16_t)((buf[0] << 8) | buf[1]);
-    std::cout << ret << std::endl;
     read(nullptr, sizeof(uint16_t));
     return  ret;
 }
@@ -126,4 +124,15 @@ std::string SimpleBuffer::readString(uint32_t length)
     std::copy(getBuffer(), getBuffer() + length, str.begin());
     read(nullptr, length);
     return str;
+}
+
+uint32_t SimpleBuffer::getUint32()
+{
+    if(getFreeSize() < sizeof(uint32_t))
+        return (uint32_t)-1;
+
+    uchar_t *buf = getBuffer();
+
+    uint32_t ret = (uint32_t)((buf[0] << 24) | (buf[1] << 16) | (buf[2] << 8) | buf[3]);
+    return ret;
 }

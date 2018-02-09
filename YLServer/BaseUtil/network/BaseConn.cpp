@@ -13,6 +13,7 @@
 #include "netlib.h"
 #include "../util/util.h"
 using namespace youliao::network;
+using namespace youliao::pdu;
 
 static BaseConn* findBaseConn(BaseConnMap_t *connMap, net_handle_t handle)
 {
@@ -62,6 +63,11 @@ BaseConn::BaseConn()
 BaseConn::~BaseConn()
 {
 
+}
+
+int BaseConn::sendBasePdu(BasePdu *basePdu)
+{
+    return send(basePdu->getBuffer(), basePdu->getBufferLength());
 }
 
 int BaseConn::send(void *buf, int len)
@@ -120,8 +126,17 @@ void BaseConn::onRead()
         m_read_buf.incrWriteOffest(ret);
     }
 
-    //读pdu,
-    handlePdu();
+
+    youliao::pdu::BasePdu *basePdu = nullptr;
+
+    while ( (basePdu = youliao::pdu::BasePdu::readPduFromBuffer(m_read_buf)) != nullptr)
+    {
+        //读pdu,
+        handlePdu(basePdu);
+        delete basePdu;
+        basePdu = nullptr;
+    }
+
 
 }
 
