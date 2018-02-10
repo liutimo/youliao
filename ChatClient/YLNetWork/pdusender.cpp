@@ -20,7 +20,7 @@ void PduSender::run()
         m_condition.unlock();
 
         //send pdu
-        int ret = m_msg_serv_conn->sendBasePdu(pdu);
+       m_msg_serv_conn->sendBasePdu(pdu);
         delete pdu;
     }
 }

@@ -16,10 +16,6 @@ int main(int argc, char *argv[])
     netlib_service->setLoginServerPort(8001);
     netlib_service->start();
 
-    //启动PDU处理线程
-    PduHandler *pduHandler = new PduHandler;
-    pduHandler->start();
-
     YLLoginPanel w;
     w.resize(300, 400);
     w.show();

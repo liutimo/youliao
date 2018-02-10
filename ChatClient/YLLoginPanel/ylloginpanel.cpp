@@ -10,11 +10,13 @@
 #include <QComboBox>
 #include <QMouseEvent>
 #include <QDebug>
+#include <QMessageBox>
 
 #include "protobuf/youliao.base.pb.h"
 #include "protobuf/youliao.login.pb.h"
 #include "YLNetWork/BasePdu.h"
 #include "YLNetWork/pdusender.h"
+#include "YLNetWork/pduhandler.h"
 
 using namespace youliao::pdu;
 
@@ -95,6 +97,22 @@ void YLLoginPanel::on_login()
     basePdu->writeMessage(&request);
 
     PduSender::instance()->addMessage(basePdu);
+
+
+    connect(PduHandler::instance(), &PduHandler::loginStatus, this, [this](bool success, base::UserInfo *userInfo)
+    {
+        if (success)
+        {
+            YLMainWidget *main = new YLMainWidget;
+            main->setUserInfo(userInfo);
+            main->show();
+            this->close();
+        }
+        else
+        {
+            QMessageBox::about(this, "error", "用户名密码错误");
+        }
+    });
 }
 
 void YLLoginPanel::on_account_button_clicked()

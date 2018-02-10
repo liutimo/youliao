@@ -2,7 +2,7 @@
 #define YLMAINWIDGET_H
 
 #include "YLBasicWidget/ylbasicwidget.h"
-
+#include "protobuf/youliao.base.pb.h"
 class QPushButton;
 class YLSearchLineEdit;
 class QLabel;
@@ -10,11 +10,14 @@ class YLSignatureLineEdit;
 class YLHeadAndStatusFrame;
 class YLNavigationBar;
 
+using namespace youliao::pdu::base;
 class YLMainWidget : public YLBasicWidget
 {
     Q_OBJECT
 public:
     explicit YLMainWidget(QWidget *parent = nullptr);
+
+    void setUserInfo(UserInfo *);
 
 private:
     const QString qss_min_button     = "QPushButton#min_button_        {border-image:url(:/res/MainFrame/sysbtn_min_normal.png);}\

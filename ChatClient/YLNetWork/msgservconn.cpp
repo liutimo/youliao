@@ -3,6 +3,7 @@
 #include "util.h"
 #include "protobuf/youliao.base.pb.h"
 #include "pdusender.h"
+#include "pduhandler.h"
 static BaseConnMap_t g_msg_serv_conn_map;
 
 MsgServConn::MsgServConn()
@@ -51,6 +52,12 @@ void MsgServConn::connect(const std::string &server_ip, uint16_t port)
     log("启动pdu发送线程");
     PduSender *pduSender = PduSender::instance();
     pduSender->setMsgServConn(this);
+
+    log("启动pdu处理线程");
+    if (!PduHandler::instance())
+    {
+        exit(0);
+    }
 }
 
 void MsgServConn::handlePdu(BasePdu *pdu)

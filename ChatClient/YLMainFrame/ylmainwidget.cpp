@@ -8,6 +8,7 @@
 #include "ylsignaturelineedit.h"
 #include "ylnavigationbar.h"
 #include "ylrecentchatview.h"
+
 YLMainWidget::YLMainWidget(QWidget *parent) : YLBasicWidget(parent)
 {
     resize(400, 800);
@@ -116,3 +117,12 @@ void YLMainWidget::paintEvent(QPaintEvent *event)
     p.setBrush(QColor::fromHsv(123, 122, 155, 122));
     p.drawRect(rect());
 }
+
+/************************/
+void YLMainWidget::setUserInfo(UserInfo *userInfo)
+{
+    nickname_label_->setText(userInfo->user_nick().c_str());
+    signature_lineedit_->setText(userInfo->user_sign_info().c_str());
+}
+
+
