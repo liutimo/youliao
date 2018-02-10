@@ -1,0 +1,55 @@
+syntax = "proto3";
+package youliao.pdu.base;
+
+enum ServiceID
+{
+    //语法要求  枚举类型第一个必须为0
+    SID_ZERO = 0x0000;
+    SID_LOGIN = 0x0001; //  客户端登录
+    SID_FRIEND_LIST = 0x0002; //好友列表
+    SID_SERVER = 0x0003;        //服务器之间的消息
+}
+
+enum LoginCID
+{
+    CID_LOGIN_ZERO = 0x0000;
+    CID_LOGIN_REQUSET_MSGSERVER = 0x0101;       // 请求消息服务器
+    CID_LOGIN_RESPONE_MSGSERVER = 0x0102;       // 登录服务器相应客户机关于消息服务器的请求
+    CID_LOGIN_REQUEST_USERLOGIN = 0x0103;       // 用户登录请求
+    CID_LOGIN_RESPONE_USERLOGIN = 0x0104;       // 用户登录结果响应
+}
+
+
+enum ServerCID
+{
+    CID_SERVER_ZERO = 0x0000;
+    CID_SERVER_MSGSERVER_INFO = 0x0201;        //消息服务器主动发送该消息给登录服务器
+}
+
+//响应结果类型
+enum ResultType
+{
+    NONE    =   0;
+    NO_MSG_SERVER = 1;
+    MSG_SERVER_FULL = 2;
+}
+
+//用户在线状态
+enum UserStatusType
+{
+    USER_STATUS_ZERO = 0;
+    USER_STATUS_ONLINE = 1;
+    USER_STATUS_OFFLINE = 2;
+    USER_STATUS_HIDE = 3;
+}
+
+message UserInfo
+{
+    uint32 user_id = 1;
+    uint32 user_sex = 2;
+    string user_nick = 3;
+    string user_header_url =4;
+    string user_email = 5;
+    string user_phone = 6;
+    string user_sign_info = 7;
+}
