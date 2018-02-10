@@ -4,7 +4,7 @@
 
 #include "log.h"
 #include <stdarg.h>
-
+#include <iostream>
 using namespace log4cxx;
 using namespace youliao::log;
 
@@ -55,6 +55,7 @@ void LogObjectImpl::Fatal(const std::string& msg)
 
 Log::Log(const std::string &module_name)
 {
+    std::cout << "初始化" << module_name << std::endl;
     m_log_object = new LogObjectImpl(module_name);
 }
 

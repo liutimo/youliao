@@ -1,63 +1,124 @@
-//
-// Created by liuzheng on 18-2-4.
-//
-
-#ifndef UTIL_NETLIB_H
-#define UTIL_NETLIB_H
-
-#include "os.h"
-
-#define NETLIB_OPT_MIN_VALUE            0
-#define NETLIB_OPT_SET_CALLBACK         1
-#define NETLIB_OPT_SET_CALLBACK_DATA    2
-#define NETLIB_OPT_GET_REMOTE_IP        3
-#define NETLIB_OPT_GET_REMOTE_PORT      4
-#define NETLIB_OPT_MAX_VALUE            5
+/*================================================================
+*   
+*   文件名称: netlib.h
+*   创 建 者: 刘正
+*   邮   箱: 779564531@qq.com
+*   创建日期: 2018年02月07日　 下午4:00
+*   描   述:
+*
+================================================================*/
 
 
-#define NETLIB_MAX_SOCKET_BUF_SIZE		(128 * 1024) //允许发送的最大size
+#ifndef BASEUTIL_NETLIB_H
+#define BASEUTIL_NETLIB_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include "BasicSocket.h"
+#include "EventDispatch.h"
+#include "type_define.h"
+namespace youliao
+{
+    namespace network
+    {
+        static const int NETLIB_OPT_SET_CALLBACK        =  1;
+        static const int NETLIB_OPT_SET_CALLBACK_DATA   =  2;
 
-int netlib_init();
+        static inline int netlib_init()
+        {
+            return NETWORK_OK;
+        }
 
-int netlib_destroy();
+        static inline int netlib_listen(const std::string& serv_ip,
+                             uint16_t port,
+                             callback_t callback,
+                             callback_data callbackData)
+        {
+            BaseSocket *baseSocket = new BaseSocket;
+            int ret = baseSocket->listen(serv_ip, port, callback, callbackData);
+            if (ret == NETWORK_ERROR)
+                delete baseSocket;
 
-int netlib_listen(
-        const char* server_ip,
-        uint16_t port,
-        callback_t callback,
-        void* callback_data);
-
-int netlib_connect(
-        const char* server_ip,
-        uint16_t port,
-        callback_t callback,
-        void* callback_data);
-
-int netlib_send(int fd, void* buf, int len);
-
-int netlib_recv(int fd, void* buf, int len);
-
-int netlib_close(int fd);
-
-int netlib_option(int fd, int opt, void* opt_val);
-
-void netlib_eventloop(uint32_t wait_time = 100); //ms
-
-void netlib_stop_eventloop();
-
-bool netlib_is_running();
+            return ret;
+        }
 
 
+        static inline int netlib_connect(const std::string& serv_ip,
+                              uint16_t port,
+                              callback_t callback,
+                              callback_data callbackData)
+        {
+            BaseSocket *baseSocket = new BaseSocket;
+            int ret = baseSocket->connect(serv_ip, port, callback, callbackData);
+            if (ret == NETWORK_ERROR)
+                delete baseSocket;
+            return ret;
+        }
 
-#ifdef __cplusplus
-}
-#endif
+        static inline int netlib_send(int handle, void* buf, size_t len)
+        {
+            BaseSocket *baseSocket = findBaseSocket(handle);
+            if (!baseSocket)
+                return NETWORK_ERROR;
+
+            int ret = (int)baseSocket->send(buf, len);
+            return ret;
+        }
+
+        static inline int netlib_recv(int handle, void* buf, size_t len)
+        {
+            BaseSocket *baseSocket = findBaseSocket(handle);
+            if (!baseSocket)
+                return NETWORK_ERROR;
+
+            int ret = (int)baseSocket->recv(buf, len);
+            return ret;
+        }
+
+        static inline int netlib_close(int handle)
+        {
+            BaseSocket *baseSocket = findBaseSocket(handle);
+            if (!baseSocket)
+                return NETWORK_ERROR;
+
+            return baseSocket->close();
+
+        }
+
+        static int netlib_option(int handle, int opt, void* optval)
+        {
+            BaseSocket *baseSocket = findBaseSocket(handle);
+            if (!baseSocket)
+                return NETWORK_ERROR;
+
+            switch (opt)
+            {
+                case NETLIB_OPT_SET_CALLBACK:
+                    baseSocket->setCallBack((callback_t)optval);
+                    break;
+                case NETLIB_OPT_SET_CALLBACK_DATA:
+                    baseSocket->setCallBackData((callback_data)optval);
+                    break;
+                default:
+                    break;
+            }
+
+            return NETWORK_OK;
+        }
+
+        static inline int netlib_eventloop(uint32_t wait_time = 100)
+        {
+            EventDispatch::instance()->eventLoop(wait_time);
+            return NETWORK_OK;
+        }
+
+        static inline int netlib_destory()
+        {
+            return NETWORK_OK;
+        }
+
+    }
 
 
+};
 
 
-#endif //UTIL_NETLIB_H
+#endif //BASEUTIL_NETLIB_H

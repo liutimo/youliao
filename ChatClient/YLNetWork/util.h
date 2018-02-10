@@ -19,15 +19,17 @@
 #endif
 
 #include <string.h>
-#include "../log/log.h"
-
+#include <list>
+#include "log.h"
 
 //输出日志
-static youliao::log::Log g_log("youliao");
+extern youliao::log::Log g_log;
 #define __FILENAME__ (strrchr(__FILE__, '/') ? (strrchr(__FILE__, '/') + 1) : __FILE__ )
 #define log(format, args...) g_log.Info("<%s> | <%d> | <%s>" format, __FILENAME__, __LINE__, __FUNCTION__, ##args)
 
 //
 #define NO_USERD(arg) ((void)arg)
+
+
 
 #endif //BASEUTIL_UTIL_H

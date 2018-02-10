@@ -11,16 +11,16 @@
 #include <QMouseEvent>
 #include <QDebug>
 
-#include "YLNetWork/netservice.h"
+#include "protobuf/youliao.base.pb.h"
+#include "protobuf/youliao.login.pb.h"
+#include "YLNetWork/BasePdu.h"
+#include "YLNetWork/pdusender.h"
+
+using namespace youliao::pdu;
 
 YLLoginPanel::YLLoginPanel(QWidget *parent) : YLBasicWidget(parent)
 {
     init();
-
-    connect(YLNetService::instance(), &YLNetService::error, this, [](YLNetServiceError error){
-        if (error == Connect2ServerFailed)
-            qDebug() << "连接登录服务器失败";
-    });
 }
 
 void YLLoginPanel::init()
@@ -84,12 +84,17 @@ void YLLoginPanel::mousePressEvent(QMouseEvent *event)
 void YLLoginPanel::on_login()
 {
     //登录操作在这里完成。
+    login::UserLoginRequest request;
+    request.set_user_name(lineedit_useraccount_->text().toStdString());
+    request.set_user_password(lineedit_passwd_->text().toStdString());
+    request.set_user_status(base::USER_STATUS_ONLINE);
 
+    BasePdu *basePdu = new BasePdu;
+    basePdu->setSID(base::SID_LOGIN);
+    basePdu->setCID(base::CID_LOGIN_REQUEST_USERLOGIN);
+    basePdu->writeMessage(&request);
 
-    YLMainWidget *main_widget = new YLMainWidget;
-    main_widget->show();
-
-    this->close();
+    PduSender::instance()->addMessage(basePdu);
 }
 
 void YLLoginPanel::on_account_button_clicked()

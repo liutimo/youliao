@@ -14,7 +14,6 @@ namespace youliao{
     namespace log
     {
         class LoggerPtr;
-
         class LogObject
         {
         public:
@@ -61,10 +60,6 @@ namespace youliao{
             void Warn(const char*, ...);
             void Error(const char*, ...);
             void Fatal(const char*, ...);
-
-
-
-
 
         private:
             LogObject *m_log_object;

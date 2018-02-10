@@ -12,14 +12,15 @@
 #ifndef BASEUTIL_BASEPDU_H
 #define BASEUTIL_BASEPDU_H
 
-#include "../util/SimpleBuffer.h"
+#include "SimpleBuffer.h"
+#include "Lock.h"
 #include <google/protobuf/message_lite.h>
 using namespace youliao::util;
+using namespace youliao::thread;
 namespace youliao
 {
     namespace pdu
     {
-
         typedef struct {
             uint32_t    length;       //整个消息包的长度  sizeof(pdu_header_t) + message.length()
             uint16_t    sid;          //消息归属.    例如:  客户机消息, 消息服务器消息, 数据库服务器消息...

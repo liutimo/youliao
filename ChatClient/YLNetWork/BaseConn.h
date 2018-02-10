@@ -14,8 +14,8 @@
 
 #include <ext/hash_map>
 #include "type_define.h"
-#include "../util/SimpleBuffer.h"
-#include "../pdu/BasePdu.h"
+#include "SimpleBuffer.h"
+#include "BasePdu.h"
 
 namespace youliao
 {
@@ -38,7 +38,7 @@ namespace youliao
             virtual void onClose();
             virtual void onWriteComplete() {}
 
-            virtual void handlePdu(pdu::BasePdu *) {}
+            virtual void handlePdu(youliao::pdu::BasePdu *) {}
 
 
         protected:

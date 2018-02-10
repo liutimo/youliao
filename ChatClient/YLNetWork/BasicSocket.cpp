@@ -16,7 +16,7 @@
 #include <arpa/inet.h>
 #include <sys/ioctl.h>
 #include <netinet/tcp.h>
-#include "../util/util.h"
+#include "util.h"
 #include "EventDispatch.h"
 using namespace youliao::network;
 

@@ -28,11 +28,13 @@ include(YLCommonControl/YLCommonControl.pri)
 include(YLNetWork/YLNetWork.pri)
 include(YLMainFrame/YLMainFrame.pri)
 include(YLEntityObject/YLEntityObject.pri)
+include(protobuf/protobuf.pri)
 
 SOURCES += \
         main.cpp
 
-LIBS += -lprotobuf
+LIBS += -lprotobuf \
+        -llog4cxx
 
 HEADERS +=
 

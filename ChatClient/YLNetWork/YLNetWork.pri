@@ -1,30 +1,37 @@
+DISTFILES += \
+    $$PWD/log4cxx.properties
+
 HEADERS += \
-    $$PWD/common.h \
-    $$PWD/ConfigFileReader.h \
+    $$PWD/BaseConn.h \
+    $$PWD/BasePdu.h \
+    $$PWD/BasicSocket.h \
+    $$PWD/EventDispatch.h \
+    $$PWD/log.h \
     $$PWD/netlib.h \
-    $$PWD/os.h \
-    $$PWD/UtilPdu.h \
-    $$PWD/YLBaseSocket.h \
-    $$PWD/YLConn.h \
-    $$PWD/YLEventDispatch.h \
-    $$PWD/YLPduBase.h \
-    $$PWD/protobuf/YLBase.pb.h \
-    $$PWD/protobuf/YLLogin.pb.h \
-    $$PWD/netservice.h
+    $$PWD/SimpleBuffer.h \
+    $$PWD/type_define.h \
+    $$PWD/test.h \
+    $$PWD/util.h \
+    $$PWD/loginconn.h \
+    $$PWD/netlibservice.h \
+    $$PWD/msgservconn.h \
+    $$PWD/Lock.h \
+    $$PWD/pduhandler.h \
+    $$PWD/pdusender.h \
+    $$PWD/Thread.h
 
 SOURCES += \
-    $$PWD/ConfigFileReader.cpp \
-    $$PWD/netlib.cpp \
-    $$PWD/UtilPdu.cpp \
-    $$PWD/YLBaseSocket.cpp \
-    $$PWD/YLConn.cpp \
-    $$PWD/YLEventDispatch.cpp \
-    $$PWD/YLPduBase.cpp \
-    $$PWD/protobuf/YLBase.pb.cc \
-    $$PWD/protobuf/YLLogin.pb.cc \
-    $$PWD/netservice.cpp
-
-DISTFILES += \
-    $$PWD/protobuf/YLBase.proto \
-    $$PWD/protobuf/YLLogin.proto
-
+    $$PWD/SimpleBuffer.cpp \
+    $$PWD/EventDispatch.cpp \
+    $$PWD/BasicSocket.cpp \
+    $$PWD/BasePdu.cpp \
+    $$PWD/BaseConn.cpp \
+    $$PWD/log.cpp \
+    $$PWD/loginconn.cpp \
+    $$PWD/netlibservice.cpp \
+    $$PWD/msgservconn.cpp \
+    $$PWD/Lock.cpp \
+    $$PWD/pduhandler.cpp \
+    $$PWD/util.cpp \
+    $$PWD/pdusender.cpp \
+    $$PWD/Thread.cpp

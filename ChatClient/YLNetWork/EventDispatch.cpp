@@ -11,13 +11,14 @@
 #include "EventDispatch.h"
 #include <unistd.h>
 #include <sys/epoll.h>
-#include "../util/util.h"
+#include "util.h"
 #include "BasicSocket.h"
 
 using namespace youliao::network;
 
 EventDispatch* EventDispatch::m_event_dispatch = nullptr;
 
+youliao::log::Log g_log = youliao::log::Log("youliao");
 EventDispatch::EventDispatch()
 {
     //从linux 2.6.8开始,epoll_create的参数无意义,但是必须大于0

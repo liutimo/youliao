@@ -11,7 +11,7 @@
 
 #include "BaseConn.h"
 #include "netlib.h"
-#include "../util/util.h"
+#include "util.h"
 using namespace youliao::network;
 using namespace youliao::pdu;
 
@@ -87,10 +87,11 @@ int BaseConn::send(void *buf, int len)
         if (size > NETWORK_MAX_SIZE)
             size = NETWORK_MAX_SIZE;
 
-        int ret = netlib_send(m_handle, buf + offest, offest);
+        int ret = netlib_send(m_handle, buf + offest, size);
 
         if (ret <= 0)
         {
+            log("%s", strerror(errno));
             break;
         }
 
@@ -136,8 +137,6 @@ void BaseConn::onRead()
         delete basePdu;
         basePdu = nullptr;
     }
-
-
 }
 
 
