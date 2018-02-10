@@ -48,6 +48,8 @@ namespace youliao
         private:
             EventDispatch();
 
+            void _CheckTimer();
+
             int m_epfd;
 
             static EventDispatch* m_event_dispatch;

@@ -79,9 +79,9 @@ void LoginConn::_HandleClientLogin(BasePdu *basePdu)
 
     //响应
     youliao::pdu::login::MsgServerRespone respone;
-    respone.set_result_code(base::NO_MSG_SERVER);
+    respone.set_result_code(base::NONE);
     respone.set_msg_server_ip("127.0.0.1");
-    respone.set_port(8001);
+    respone.set_port(8002);
 
     BasePdu *responePdu = new BasePdu;
     responePdu->setSID(base::SID_LOGIN);

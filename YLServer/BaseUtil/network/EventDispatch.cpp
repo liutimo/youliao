@@ -54,6 +54,11 @@ void EventDispatch::removeEvent(net_handle_t handle, uint8_t events)
     }
 }
 
+void EventDispatch::_CheckTimer()
+{
+
+}
+
 void EventDispatch::eventLoop(uint32_t wait_time)
 {
     epoll_event events[1024];

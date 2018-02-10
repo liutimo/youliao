@@ -87,7 +87,7 @@ int BaseConn::send(void *buf, int len)
         if (size > NETWORK_MAX_SIZE)
             size = NETWORK_MAX_SIZE;
 
-        int ret = netlib_send(m_handle, buf + offest, offest);
+        int ret = netlib_send(m_handle, buf + offest, size);
 
         if (ret <= 0)
         {

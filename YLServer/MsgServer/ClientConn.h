@@ -12,16 +12,27 @@
 #ifndef MSGSERVER_CLIENTCONN_H
 #define MSGSERVER_CLIENTCONN_H
 
+#include "network/BaseConn.h"
+#include "pdu/BasePdu.h"
+#include "util/util.h"
+using namespace youliao::network;
+using namespace youliao::pdu;
 
-class ClientConn {
+class ClientConn : public BaseConn{
 public:
     ClientConn();
 
     ~ClientConn();
 
+    void onConnect(net_handle_t handle) override;
+
+    void onClose() override ;
+
+    void handlePdu(BasePdu *) override ;
 private:
 
 };
 
+typedef  __gnu_cxx::hash_map<int, ClientConn*> ClientConnMap_t;
 
 #endif //MSGSERVER_CLIENTCONN_H

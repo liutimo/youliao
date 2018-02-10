@@ -3,5 +3,17 @@ project(MsgServer)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES msg_server.cpp)
+INCLUDE_DIRECTORIES(../BaseUtil)
+LINK_DIRECTORIES(../BaseUtil)
+
+AUX_SOURCE_DIRECTORY(./ SRC_LIST)
+
+
+set(SOURCE_FILES ${SRC_LIST})
+
+find_package(Protobuf REQUIRED)
+
 add_executable(MsgServer ${SOURCE_FILES})
+
+
+TARGET_LINK_LIBRARIES(MsgServer BaseUtil log4cxx protobuf)
