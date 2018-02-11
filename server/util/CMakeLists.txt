@@ -1,8 +1,0 @@
-cmake_minimum_required(VERSION 3.7)
-project(util)
-
-AUX_SOURCE_DIRECTORY(./ SRC_LIST1)
-AUX_SOURCE_DIRECTORY(./protobuf SRC_LIST2)
-ADD_LIBRARY(util STATIC ${SRC_LIST1} ${SRC_LIST2})
-
-TARGET_LINK_LIBRARIES(util)
