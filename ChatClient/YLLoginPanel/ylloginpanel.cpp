@@ -17,12 +17,26 @@
 #include "YLNetWork/BasePdu.h"
 #include "YLNetWork/pdusender.h"
 #include "YLNetWork/pduhandler.h"
+#include "YLNetWork/netlibservice.h"
 
 using namespace youliao::pdu;
 
-YLLoginPanel::YLLoginPanel(QWidget *parent) : YLBasicWidget(parent)
+YLLoginPanel::YLLoginPanel(QWidget *parent) : YLBasicWidget(parent), m_connected(false)
 {
     init();
+
+    //启动网络线程
+    NetlibService *netlib_service = new NetlibService;
+//    netlib_service->setLoginServerIP("182.254.219.254");
+    netlib_service->setLoginServerIP("127.0.0.1");
+    netlib_service->setLoginServerPort(8001);
+    netlib_service->start();
+
+    connect(netlib_service, &NetlibService::loginServerConnectStatus, this, [this](bool connected){
+        m_connected = connected;
+        if (!connected)
+            QMessageBox::about(this, "网络错误", "无法连接登录服务器");
+    }, Qt::QueuedConnection);
 }
 
 void YLLoginPanel::init()
@@ -86,33 +100,39 @@ void YLLoginPanel::mousePressEvent(QMouseEvent *event)
 void YLLoginPanel::on_login()
 {
     //登录操作在这里完成。
-    login::UserLoginRequest request;
-    request.set_user_name(lineedit_useraccount_->text().toStdString());
-    request.set_user_password(lineedit_passwd_->text().toStdString());
-    request.set_user_status(base::USER_STATUS_ONLINE);
-
-    BasePdu *basePdu = new BasePdu;
-    basePdu->setSID(base::SID_LOGIN);
-    basePdu->setCID(base::CID_LOGIN_REQUEST_USERLOGIN);
-    basePdu->writeMessage(&request);
-
-    PduSender::instance()->addMessage(basePdu);
-
-
-    connect(PduHandler::instance(), &PduHandler::loginStatus, this, [this](bool success, base::UserInfo *userInfo)
+    if (m_connected)
     {
-        if (success)
+        login::UserLoginRequest request;
+        request.set_user_name(lineedit_useraccount_->text().toStdString());
+        request.set_user_password(lineedit_passwd_->text().toStdString());
+        request.set_user_status(base::USER_STATUS_ONLINE);
+
+        BasePdu *basePdu = new BasePdu;
+        basePdu->setSID(base::SID_LOGIN);
+        basePdu->setCID(base::CID_LOGIN_REQUEST_USERLOGIN);
+        basePdu->writeMessage(&request);
+
+        PduSender::instance()->addMessage(basePdu);
+
+        connect(PduHandler::instance(), &PduHandler::loginStatus, this, [this](bool success, base::UserInfo *userInfo)
         {
-            YLMainWidget *main = new YLMainWidget;
-            main->setUserInfo(userInfo);
-            main->show();
-            this->close();
-        }
-        else
-        {
-            QMessageBox::about(this, "error", "用户名密码错误");
-        }
-    });
+            if (success)
+            {
+                YLMainWidget *main = new YLMainWidget;
+                main->setUserInfo(userInfo);
+                main->show();
+                this->close();
+            }
+            else
+            {
+                QMessageBox::about(this, "error", "用户名密码错误");
+            }
+        });
+    }
+    else
+    {
+        QMessageBox::about(this, "网络错误", "无法连接登录服务器");
+    }
 }
 
 void YLLoginPanel::on_account_button_clicked()

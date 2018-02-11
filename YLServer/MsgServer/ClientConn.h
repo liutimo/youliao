@@ -30,6 +30,8 @@ public:
 
     void handlePdu(BasePdu *) override ;
 private:
+    void _HandlClientLoginRequest(BasePdu *);
+    void _HandleHeartBeat(BasePdu*);
 
 };
 

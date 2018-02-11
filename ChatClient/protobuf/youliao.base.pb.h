@@ -37,7 +37,7 @@ namespace protobuf_youliao_2ebase_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[1];
+  static const ::google::protobuf::internal::ParseTable schema[2];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -45,13 +45,19 @@ struct TableStruct {
 void AddDescriptors();
 void InitDefaultsUserInfoImpl();
 void InitDefaultsUserInfo();
+void InitDefaultsHeartBeatImpl();
+void InitDefaultsHeartBeat();
 inline void InitDefaults() {
   InitDefaultsUserInfo();
+  InitDefaultsHeartBeat();
 }
 }  // namespace protobuf_youliao_2ebase_2eproto
 namespace youliao {
 namespace pdu {
 namespace base {
+class HeartBeat;
+class HeartBeatDefaultTypeInternal;
+extern HeartBeatDefaultTypeInternal _HeartBeat_default_instance_;
 class UserInfo;
 class UserInfoDefaultTypeInternal;
 extern UserInfoDefaultTypeInternal _UserInfo_default_instance_;
@@ -67,12 +73,13 @@ enum ServiceID {
   SID_LOGIN = 1,
   SID_FRIEND_LIST = 2,
   SID_SERVER = 3,
+  SID_OTHER = 4,
   ServiceID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   ServiceID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool ServiceID_IsValid(int value);
 const ServiceID ServiceID_MIN = SID_ZERO;
-const ServiceID ServiceID_MAX = SID_SERVER;
+const ServiceID ServiceID_MAX = SID_OTHER;
 const int ServiceID_ARRAYSIZE = ServiceID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* ServiceID_descriptor();
@@ -129,6 +136,27 @@ inline bool ServerCID_Parse(
     const ::std::string& name, ServerCID* value) {
   return ::google::protobuf::internal::ParseNamedEnum<ServerCID>(
     ServerCID_descriptor(), name, value);
+}
+enum OtherCID {
+  CID_OTHER_ZERO = 0,
+  CID_OTHER_HEARTBEAT = 769,
+  OtherCID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  OtherCID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+bool OtherCID_IsValid(int value);
+const OtherCID OtherCID_MIN = CID_OTHER_ZERO;
+const OtherCID OtherCID_MAX = CID_OTHER_HEARTBEAT;
+const int OtherCID_ARRAYSIZE = OtherCID_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* OtherCID_descriptor();
+inline const ::std::string& OtherCID_Name(OtherCID value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    OtherCID_descriptor(), value);
+}
+inline bool OtherCID_Parse(
+    const ::std::string& name, OtherCID* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<OtherCID>(
+    OtherCID_descriptor(), name, value);
 }
 enum ResultType {
   NONE = 0,
@@ -355,6 +383,98 @@ class UserInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(
   mutable int _cached_size_;
   friend struct ::protobuf_youliao_2ebase_2eproto::TableStruct;
   friend void ::protobuf_youliao_2ebase_2eproto::InitDefaultsUserInfoImpl();
+};
+// -------------------------------------------------------------------
+
+class HeartBeat : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.base.HeartBeat) */ {
+ public:
+  HeartBeat();
+  virtual ~HeartBeat();
+
+  HeartBeat(const HeartBeat& from);
+
+  inline HeartBeat& operator=(const HeartBeat& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  HeartBeat(HeartBeat&& from) noexcept
+    : HeartBeat() {
+    *this = ::std::move(from);
+  }
+
+  inline HeartBeat& operator=(HeartBeat&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const HeartBeat& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const HeartBeat* internal_default_instance() {
+    return reinterpret_cast<const HeartBeat*>(
+               &_HeartBeat_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    1;
+
+  void Swap(HeartBeat* other);
+  friend void swap(HeartBeat& a, HeartBeat& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline HeartBeat* New() const PROTOBUF_FINAL { return New(NULL); }
+
+  HeartBeat* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL;
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const HeartBeat& from);
+  void MergeFrom(const HeartBeat& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(HeartBeat* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.base.HeartBeat)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2ebase_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2ebase_2eproto::InitDefaultsHeartBeatImpl();
 };
 // ===================================================================
 
@@ -660,9 +780,15 @@ inline void UserInfo::set_allocated_user_sign_info(::std::string* user_sign_info
   // @@protoc_insertion_point(field_set_allocated:youliao.pdu.base.UserInfo.user_sign_info)
 }
 
+// -------------------------------------------------------------------
+
+// HeartBeat
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 
 // @@protoc_insertion_point(namespace_scope)
 
@@ -687,6 +813,11 @@ template <> struct is_proto_enum< ::youliao::pdu::base::ServerCID> : ::google::p
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::youliao::pdu::base::ServerCID>() {
   return ::youliao::pdu::base::ServerCID_descriptor();
+}
+template <> struct is_proto_enum< ::youliao::pdu::base::OtherCID> : ::google::protobuf::internal::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::youliao::pdu::base::OtherCID>() {
+  return ::youliao::pdu::base::OtherCID_descriptor();
 }
 template <> struct is_proto_enum< ::youliao::pdu::base::ResultType> : ::google::protobuf::internal::true_type {};
 template <>

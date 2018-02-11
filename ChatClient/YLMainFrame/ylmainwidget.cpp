@@ -8,12 +8,43 @@
 #include "ylsignaturelineedit.h"
 #include "ylnavigationbar.h"
 #include "ylrecentchatview.h"
+#include "protobuf/youliao.base.pb.h"
+#include "YLNetWork/BasePdu.h"
+#include "YLNetWork/pdusender.h"
+#include "YLNetWork/pduhandler.h"
+#include "YLNetWork/netlib.h"
+#include <QTimer>
+
+using namespace youliao::pdu;
 
 YLMainWidget::YLMainWidget(QWidget *parent) : YLBasicWidget(parent)
 {
     resize(400, 800);
     init();
     initListWidget();
+
+    //30s发送一次心跳包
+    m_timer = new QTimer(this);
+    m_timer->start(300);
+    connect(m_timer, &QTimer::timeout, this, [](){
+
+        if (m_heartbeat_send_times - PduHandler::m_heartbeat_received_times > 3)
+        {
+            m_timer->stop();
+            //表明连接断开
+            return;
+        }
+
+
+        base::HeartBeat heartBeat;
+        BasePdu *basePdu = new BasePdu;
+        basePdu->setSID(base::SID_OTHER);
+        basePdu->setCID(base::CID_OTHER_HEARTBEAT);
+        basePdu->writeMessage(&heartBeat);
+        qDebug() << "发送心跳包";
+        ++m_heartbeat_send_times;
+        PduSender::instance()->addMessage(basePdu);
+    });
 }
 
 void YLMainWidget::init()

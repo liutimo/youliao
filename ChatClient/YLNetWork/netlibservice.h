@@ -14,12 +14,13 @@ public:
 
     void run();
 signals:
-
+    void loginServerConnectStatus(bool success);
 public slots:
 
 private:
     QString m_login_server_ip;
     quint16 m_login_server_port;
+    int     m_times = 0;
 };
 
 #endif // NETLIBSERVICE_H

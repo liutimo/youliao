@@ -21,7 +21,7 @@ void PduSender::run()
 
         //send pdu
        m_msg_serv_conn->sendBasePdu(pdu);
-        delete pdu;
+       delete pdu;
     }
 }
 

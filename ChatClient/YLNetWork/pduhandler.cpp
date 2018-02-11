@@ -50,19 +50,30 @@ void PduHandler::_HandleBasePdu(BasePdu *pdu)
 {
     switch (pdu->getCID()) {
     case base::CID_LOGIN_RESPONE_USERLOGIN:
-    {
-        login::UserLoginRespone respone;
-        respone.ParseFromString(pdu->getMessage());
-        if (respone.result_code() == base::NONE)
-        {
-            base::UserInfo *userInfo = new base::UserInfo(respone.user_info());
-            emit loginStatus(true, userInfo);
-        }
-        else
-            emit loginStatus(false);
+        _HandleUserLoginRespone(pdu);
         break;
-    }
+    case base::CID_OTHER_HEARTBEAT:
+        _HandleHeartBeat();
+        break;
     default:
         break;
     }
+}
+
+void PduHandler::_HandleUserLoginRespone(BasePdu *pdu)
+{
+    login::UserLoginRespone respone;
+    respone.ParseFromString(pdu->getMessage());
+    if (respone.result_code() == base::NONE)
+    {
+        base::UserInfo *userInfo = new base::UserInfo(respone.user_info());
+        emit loginStatus(true, userInfo);
+    }
+    else
+        emit loginStatus(false);
+}
+
+void PduHandler::_HandleHeartBeat()
+{
+    ++m_heartbeat_received_times;
 }

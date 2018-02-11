@@ -11,11 +11,17 @@ class PduHandler : public QThread
 public:
     void run() override;
     static PduHandler* instance();
+    static uint32_t m_heartbeat_received_times = 0;
 signals:
     void loginStatus(bool successed, base::UserInfo *userInfo = nullptr);
+
+private:
+    void _HandleBasePdu(BasePdu *pdu);
+    void _HandleUserLoginRespone(BasePdu *pdu);
+    void _HandleHeartBeat();
+
 private:
     explicit PduHandler(QObject *parent = nullptr);
-    void _HandleBasePdu(BasePdu *pdu);
 
     static PduHandler *m_pdu_handler;
 };

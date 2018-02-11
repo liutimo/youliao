@@ -4,10 +4,11 @@ package youliao.pdu.base;
 enum ServiceID
 {
     //语法要求  枚举类型第一个必须为0
-    SID_ZERO = 0x0000;
-    SID_LOGIN = 0x0001; //  客户端登录
-    SID_FRIEND_LIST = 0x0002; //好友列表
-    SID_SERVER = 0x0003;        //服务器之间的消息
+    SID_ZERO            = 0x0000;
+    SID_LOGIN           = 0x0001;           //客户端登录
+    SID_FRIEND_LIST     = 0x0002;           //好友列表
+    SID_SERVER          = 0x0003;           //服务器之间的消息
+    SID_OTHER           = 0x0004;           //其他
 }
 
 enum LoginCID
@@ -26,6 +27,16 @@ enum ServerCID
     CID_SERVER_MSGSERVER_INFO = 0x0201;        //消息服务器主动发送该消息给登录服务器
 }
 
+enum OtherCID
+{
+    CID_OTHER_ZERO      = 0x0000;
+    CID_OTHER_HEARTBEAT = 0x0301;            //心跳包
+}
+
+//
+
+
+
 //响应结果类型
 enum ResultType
 {
@@ -43,6 +54,7 @@ enum UserStatusType
     USER_STATUS_HIDE = 3;
 }
 
+//用户信息, 登录成功后发送
 message UserInfo
 {
     uint32 user_id = 1;
@@ -52,4 +64,10 @@ message UserInfo
     string user_email = 5;
     string user_phone = 6;
     string user_sign_info = 7;
+}
+
+//心跳包
+message HeartBeat
+{
+    //
 }

@@ -43,6 +43,8 @@ private:
     QPushButton          *pushbutton_login_;
     YLHeadAndStatusFrame *head_frame_;
     YLAccountListView    *account_listview_;
+
+    bool   m_connected;
 };
 
 #endif // YLLOGINPANEL_H

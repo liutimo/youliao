@@ -20,7 +20,7 @@ LoginConn::~LoginConn()
 
 }
 
-void LoginConn::connect(const std::string &server_ip, uint16_t port)
+bool LoginConn::connect(const std::string &server_ip, uint16_t port)
 {
     m_handle = netlib_connect(server_ip, port, baseconn_callback, (void*)&login_conn_map);
 
@@ -36,10 +36,14 @@ void LoginConn::connect(const std::string &server_ip, uint16_t port)
 
         sendBasePdu(basePdu);
         delete basePdu;
+
+        return true;
     }
     else
+    {
         onClose();
-
+        return false;
+    }
 }
 
 void LoginConn::handlePdu(BasePdu *pdu)

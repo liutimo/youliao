@@ -10,7 +10,7 @@ public:
     LoginConn();
     virtual ~LoginConn();
 
-    void connect(const std::string &server_ip, uint16_t port);
+    bool connect(const std::string &server_ip, uint16_t port);
 
     void handlePdu(BasePdu *) override;
 private:

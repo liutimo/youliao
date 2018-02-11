@@ -9,6 +9,7 @@ class QLabel;
 class YLSignatureLineEdit;
 class YLHeadAndStatusFrame;
 class YLNavigationBar;
+class QTimer;
 
 using namespace youliao::pdu::base;
 class YLMainWidget : public YLBasicWidget
@@ -65,6 +66,11 @@ private:
 
     //子窗口
     QVector<QWidget *> vec;
+
+    //发送心跳包的定时器
+    QTimer *m_timer;
+    //记录心跳包发送次数
+    uint32_t m_heartbeat_send_times = 0;
 };
 
 #endif // YLMAINWIDGET_H

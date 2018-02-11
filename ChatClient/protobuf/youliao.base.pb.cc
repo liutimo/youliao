@@ -27,6 +27,11 @@ class UserInfoDefaultTypeInternal {
   ::google::protobuf::internal::ExplicitlyConstructed<UserInfo>
       _instance;
 } _UserInfo_default_instance_;
+class HeartBeatDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<HeartBeat>
+      _instance;
+} _HeartBeat_default_instance_;
 }  // namespace base
 }  // namespace pdu
 }  // namespace youliao
@@ -52,8 +57,29 @@ void InitDefaultsUserInfo() {
   ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsUserInfoImpl);
 }
 
-::google::protobuf::Metadata file_level_metadata[1];
-const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[5];
+void InitDefaultsHeartBeatImpl() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+#ifdef GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  ::google::protobuf::internal::InitProtobufDefaultsForceUnique();
+#else
+  ::google::protobuf::internal::InitProtobufDefaults();
+#endif  // GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  {
+    void* ptr = &::youliao::pdu::base::_HeartBeat_default_instance_;
+    new (ptr) ::youliao::pdu::base::HeartBeat();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::youliao::pdu::base::HeartBeat::InitAsDefaultInstance();
+}
+
+void InitDefaultsHeartBeat() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsHeartBeatImpl);
+}
+
+::google::protobuf::Metadata file_level_metadata[2];
+const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[6];
 
 const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   ~0u,  // no _has_bits_
@@ -68,13 +94,20 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::base::UserInfo, user_email_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::base::UserInfo, user_phone_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::base::UserInfo, user_sign_info_),
+  ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::base::HeartBeat, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::youliao::pdu::base::UserInfo)},
+  { 12, -1, sizeof(::youliao::pdu::base::HeartBeat)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::base::_UserInfo_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::base::_HeartBeat_default_instance_),
 };
 
 void protobuf_AssignDescriptors() {
@@ -93,7 +126,7 @@ void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) GOOGLE_PROTOBUF_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 1);
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 2);
 }
 
 void AddDescriptorsImpl() {
@@ -103,23 +136,25 @@ void AddDescriptorsImpl() {
       "\001\n\010UserInfo\022\017\n\007user_id\030\001 \001(\r\022\020\n\010user_sex"
       "\030\002 \001(\r\022\021\n\tuser_nick\030\003 \001(\t\022\027\n\017user_header"
       "_url\030\004 \001(\t\022\022\n\nuser_email\030\005 \001(\t\022\022\n\nuser_p"
-      "hone\030\006 \001(\t\022\026\n\016user_sign_info\030\007 \001(\t*M\n\tSe"
-      "rviceID\022\014\n\010SID_ZERO\020\000\022\r\n\tSID_LOGIN\020\001\022\023\n\017"
-      "SID_FRIEND_LIST\020\002\022\016\n\nSID_SERVER\020\003*\246\001\n\010Lo"
-      "ginCID\022\022\n\016CID_LOGIN_ZERO\020\000\022 \n\033CID_LOGIN_"
-      "REQUSET_MSGSERVER\020\201\002\022 \n\033CID_LOGIN_RESPON"
-      "E_MSGSERVER\020\202\002\022 \n\033CID_LOGIN_REQUEST_USER"
-      "LOGIN\020\203\002\022 \n\033CID_LOGIN_RESPONE_USERLOGIN\020"
-      "\204\002*@\n\tServerCID\022\023\n\017CID_SERVER_ZERO\020\000\022\036\n\031"
-      "CID_SERVER_MSGSERVER_INFO\020\201\004*>\n\nResultTy"
-      "pe\022\010\n\004NONE\020\000\022\021\n\rNO_MSG_SERVER\020\001\022\023\n\017MSG_S"
-      "ERVER_FULL\020\002*m\n\016UserStatusType\022\024\n\020USER_S"
-      "TATUS_ZERO\020\000\022\026\n\022USER_STATUS_ONLINE\020\001\022\027\n\023"
-      "USER_STATUS_OFFLINE\020\002\022\024\n\020USER_STATUS_HID"
-      "E\020\003b\006proto3"
+      "hone\030\006 \001(\t\022\026\n\016user_sign_info\030\007 \001(\t\"\013\n\tHe"
+      "artBeat*\\\n\tServiceID\022\014\n\010SID_ZERO\020\000\022\r\n\tSI"
+      "D_LOGIN\020\001\022\023\n\017SID_FRIEND_LIST\020\002\022\016\n\nSID_SE"
+      "RVER\020\003\022\r\n\tSID_OTHER\020\004*\246\001\n\010LoginCID\022\022\n\016CI"
+      "D_LOGIN_ZERO\020\000\022 \n\033CID_LOGIN_REQUSET_MSGS"
+      "ERVER\020\201\002\022 \n\033CID_LOGIN_RESPONE_MSGSERVER\020"
+      "\202\002\022 \n\033CID_LOGIN_REQUEST_USERLOGIN\020\203\002\022 \n\033"
+      "CID_LOGIN_RESPONE_USERLOGIN\020\204\002*@\n\tServer"
+      "CID\022\023\n\017CID_SERVER_ZERO\020\000\022\036\n\031CID_SERVER_M"
+      "SGSERVER_INFO\020\201\004*8\n\010OtherCID\022\022\n\016CID_OTHE"
+      "R_ZERO\020\000\022\030\n\023CID_OTHER_HEARTBEAT\020\201\006*>\n\nRe"
+      "sultType\022\010\n\004NONE\020\000\022\021\n\rNO_MSG_SERVER\020\001\022\023\n"
+      "\017MSG_SERVER_FULL\020\002*m\n\016UserStatusType\022\024\n\020"
+      "USER_STATUS_ZERO\020\000\022\026\n\022USER_STATUS_ONLINE"
+      "\020\001\022\027\n\023USER_STATUS_OFFLINE\020\002\022\024\n\020USER_STAT"
+      "US_HIDE\020\003b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 691);
+      descriptor, 777);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "youliao.base.proto", &protobuf_RegisterTypes);
 }
@@ -148,6 +183,7 @@ bool ServiceID_IsValid(int value) {
     case 1:
     case 2:
     case 3:
+    case 4:
       return true;
     default:
       return false;
@@ -185,9 +221,23 @@ bool ServerCID_IsValid(int value) {
   }
 }
 
-const ::google::protobuf::EnumDescriptor* ResultType_descriptor() {
+const ::google::protobuf::EnumDescriptor* OtherCID_descriptor() {
   protobuf_youliao_2ebase_2eproto::protobuf_AssignDescriptorsOnce();
   return protobuf_youliao_2ebase_2eproto::file_level_enum_descriptors[3];
+}
+bool OtherCID_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 769:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::google::protobuf::EnumDescriptor* ResultType_descriptor() {
+  protobuf_youliao_2ebase_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_youliao_2ebase_2eproto::file_level_enum_descriptors[4];
 }
 bool ResultType_IsValid(int value) {
   switch (value) {
@@ -202,7 +252,7 @@ bool ResultType_IsValid(int value) {
 
 const ::google::protobuf::EnumDescriptor* UserStatusType_descriptor() {
   protobuf_youliao_2ebase_2eproto::protobuf_AssignDescriptorsOnce();
-  return protobuf_youliao_2ebase_2eproto::file_level_enum_descriptors[4];
+  return protobuf_youliao_2ebase_2eproto::file_level_enum_descriptors[5];
 }
 bool UserStatusType_IsValid(int value) {
   switch (value) {
@@ -777,6 +827,200 @@ void UserInfo::InternalSwap(UserInfo* other) {
 }
 
 ::google::protobuf::Metadata UserInfo::GetMetadata() const {
+  protobuf_youliao_2ebase_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_youliao_2ebase_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
+// ===================================================================
+
+void HeartBeat::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+HeartBeat::HeartBeat()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    ::protobuf_youliao_2ebase_2eproto::InitDefaultsHeartBeat();
+  }
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:youliao.pdu.base.HeartBeat)
+}
+HeartBeat::HeartBeat(const HeartBeat& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  // @@protoc_insertion_point(copy_constructor:youliao.pdu.base.HeartBeat)
+}
+
+void HeartBeat::SharedCtor() {
+  _cached_size_ = 0;
+}
+
+HeartBeat::~HeartBeat() {
+  // @@protoc_insertion_point(destructor:youliao.pdu.base.HeartBeat)
+  SharedDtor();
+}
+
+void HeartBeat::SharedDtor() {
+}
+
+void HeartBeat::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* HeartBeat::descriptor() {
+  ::protobuf_youliao_2ebase_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_youliao_2ebase_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const HeartBeat& HeartBeat::default_instance() {
+  ::protobuf_youliao_2ebase_2eproto::InitDefaultsHeartBeat();
+  return *internal_default_instance();
+}
+
+HeartBeat* HeartBeat::New(::google::protobuf::Arena* arena) const {
+  HeartBeat* n = new HeartBeat;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void HeartBeat::Clear() {
+// @@protoc_insertion_point(message_clear_start:youliao.pdu.base.HeartBeat)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _internal_metadata_.Clear();
+}
+
+bool HeartBeat::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:youliao.pdu.base.HeartBeat)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+  handle_unusual:
+    if (tag == 0) {
+      goto success;
+    }
+    DO_(::google::protobuf::internal::WireFormat::SkipField(
+          input, tag, _internal_metadata_.mutable_unknown_fields()));
+  }
+success:
+  // @@protoc_insertion_point(parse_success:youliao.pdu.base.HeartBeat)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:youliao.pdu.base.HeartBeat)
+  return false;
+#undef DO_
+}
+
+void HeartBeat::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:youliao.pdu.base.HeartBeat)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
+  // @@protoc_insertion_point(serialize_end:youliao.pdu.base.HeartBeat)
+}
+
+::google::protobuf::uint8* HeartBeat::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:youliao.pdu.base.HeartBeat)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:youliao.pdu.base.HeartBeat)
+  return target;
+}
+
+size_t HeartBeat::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:youliao.pdu.base.HeartBeat)
+  size_t total_size = 0;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void HeartBeat::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:youliao.pdu.base.HeartBeat)
+  GOOGLE_DCHECK_NE(&from, this);
+  const HeartBeat* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const HeartBeat>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:youliao.pdu.base.HeartBeat)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:youliao.pdu.base.HeartBeat)
+    MergeFrom(*source);
+  }
+}
+
+void HeartBeat::MergeFrom(const HeartBeat& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:youliao.pdu.base.HeartBeat)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+}
+
+void HeartBeat::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:youliao.pdu.base.HeartBeat)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void HeartBeat::CopyFrom(const HeartBeat& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:youliao.pdu.base.HeartBeat)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool HeartBeat::IsInitialized() const {
+  return true;
+}
+
+void HeartBeat::Swap(HeartBeat* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void HeartBeat::InternalSwap(HeartBeat* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata HeartBeat::GetMetadata() const {
   protobuf_youliao_2ebase_2eproto::protobuf_AssignDescriptorsOnce();
   return ::protobuf_youliao_2ebase_2eproto::file_level_metadata[kIndexInFileMessages];
 }
