@@ -11,7 +11,7 @@ class PduHandler : public QThread
 public:
     void run() override;
     static PduHandler* instance();
-    static uint32_t m_heartbeat_received_times = 0;
+    static uint32_t m_heartbeat_received_times;
 signals:
     void loginStatus(bool successed, base::UserInfo *userInfo = nullptr);
 

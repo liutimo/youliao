@@ -11,7 +11,7 @@ class YLBasicWidget : public QWidget
 {
     Q_OBJECT
 private:
-    const QString qss_clost_button = "QPushButton#close_button_        {border-image:url(:/res/sysbtn_close_normal.png);}\
+    const QString qss_close_button = "QPushButton#close_button_        {border-image:url(:/res/sysbtn_close_normal.png);}\
                                       QPushButton#close_button_:hover  {border-image:url(:/res/sysbtn_close_hover.png);}\
                                       QPushButton#close_button_:pressed{border-image:url(:/res/sysbtn_close_down.png);}\
                                       ";

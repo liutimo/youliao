@@ -1,11 +1,16 @@
 #ifndef YLMESSAGEVIEW_H
 #define YLMESSAGEVIEW_H
 
+#include <QWebEngineView>
 
-class YLMessageView
+class YLMessageView : public QWebEngineView
 {
+
 public:
-    YLMessageView();
+    explicit YLMessageView(QWidget *parent = Q_NULLPTR);
+
+public slots:
+    void copy();
 };
 
 #endif // YLMESSAGEVIEW_H

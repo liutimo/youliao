@@ -16,7 +16,7 @@ void YLBasicWidget::init()
     close_button_->setFixedSize(32, 32);
     close_button_->move(width() - 32, 0);
     close_button_->setObjectName("close_button_");
-    close_button_->setStyleSheet(qss_clost_button);
+    close_button_->setStyleSheet(qss_close_button);
     close_button_->setTabletTracking(true);
 
     connect(close_button_, &QPushButton::clicked, this, &YLBasicWidget::on_close);
@@ -36,7 +36,7 @@ void YLBasicWidget::resizeEvent(QResizeEvent *event)
 
 void YLBasicWidget::mousePressEvent(QMouseEvent *event)
 {
-
+    QWidget::mousePressEvent(event);
     if (drag_flag_)
 
         setCursor(Qt::ClosedHandCursor);
@@ -44,28 +44,28 @@ void YLBasicWidget::mousePressEvent(QMouseEvent *event)
     pressed_flag_ = true;
     begin_pos_    = event->pos();
 
-    QWidget::mousePressEvent(event);
 }
 
 void YLBasicWidget::mouseReleaseEvent(QMouseEvent *event)
 {
+    QWidget::mouseReleaseEvent(event);
+
     if (drag_flag_)
         setCursor(Qt::ArrowCursor);
 
     pressed_flag_ = false;
 
-    QWidget::mouseReleaseEvent(event);
 }
 
 void YLBasicWidget::mouseMoveEvent(QMouseEvent *event)
 {
+    QWidget::mouseMoveEvent(event);
+
     if (drag_flag_ && pressed_flag_)
     {
         QPoint curPos(QCursor::pos() - begin_pos_);
         move(curPos);
     }
-
-    QWidget::mouseMoveEvent(event);
 }
 void YLBasicWidget::on_close()
 {

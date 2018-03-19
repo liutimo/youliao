@@ -6,6 +6,7 @@
 
 QT       += core gui network
 
+QT += webenginewidgets
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = ChatClient
@@ -26,6 +27,7 @@ include(YLLoginPanel/YLLoginPanel.pri)
 include(YLBasicWidget/YLBasicWidget.pri)
 include(YLCommonControl/YLCommonControl.pri)
 include(YLNetWork/YLNetWork.pri)
+include (YLChatWidget/YLChatWidget.pri)
 include(YLMainFrame/YLMainFrame.pri)
 include(YLEntityObject/YLEntityObject.pri)
 include(protobuf/protobuf.pri)

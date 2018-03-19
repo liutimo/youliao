@@ -12,6 +12,8 @@ Condition           g_condition;
 
 PduHandler* PduHandler::m_pdu_handler = nullptr;
 
+uint32_t PduHandler::m_heartbeat_received_times = 0;
+
 PduHandler::PduHandler(QObject *parent) : QThread(parent)
 {
 

@@ -25,8 +25,8 @@ YLMainWidget::YLMainWidget(QWidget *parent) : YLBasicWidget(parent)
 
     //30s发送一次心跳包
     m_timer = new QTimer(this);
-    m_timer->start(300);
-    connect(m_timer, &QTimer::timeout, this, [](){
+//    m_timer->start(300);
+    connect(m_timer, &QTimer::timeout, this, [this](){
 
         if (m_heartbeat_send_times - PduHandler::m_heartbeat_received_times > 3)
         {
