@@ -1,0 +1,10 @@
+CREATE TABLE youliao.yl_user (
+	user_id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '用户id',
+	user_account varchar(12) NOT NULL,
+	user_password varchar(256) NOT NULL,
+	CONSTRAINT yl_user_PK PRIMARY KEY (user_id)
+)
+ENGINE=InnoDB
+DEFAULT CHARSET=utf8
+COLLATE=utf8_general_ci ;
+
