@@ -20,6 +20,8 @@ public:
 
     void setUserInfo(UserInfo *);
 
+    static QPoint center;
+
 private:
     const QString qss_min_button     = "QPushButton#min_button_        {border-image:url(:/res/MainFrame/sysbtn_min_normal.png);}\
                                         QPushButton#min_button_:hover  {border-image:url(:/res/MainFrame/sysbtn_min_hover.png);}\
@@ -45,9 +47,8 @@ protected:
     void resizeEvent(QResizeEvent *event);
     void paintEvent(QPaintEvent *event);
     void mousePressEvent(QMouseEvent *event);
-
+    void mouseReleaseEvent(QMouseEvent *event);
 private:
-
     //窗口顶部按钮
     QPushButton *min_button_;
     QPushButton *skin_button_;
@@ -67,10 +68,12 @@ private:
     //子窗口
     QVector<QWidget *> vec;
 
+
     //发送心跳包的定时器
     QTimer *m_timer;
     //记录心跳包发送次数
     uint32_t m_heartbeat_send_times = 0;
+
 };
 
 #endif // YLMAINWIDGET_H

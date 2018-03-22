@@ -8,17 +8,19 @@
 #include "ylsignaturelineedit.h"
 #include "ylnavigationbar.h"
 #include "ylrecentchatview.h"
-
+#include "YLCommonControl/ylmessagebox.h"
 #include <QTimer>
 
 using namespace youliao::pdu;
+
+QPoint YLMainWidget::center = QPoint();
 
 YLMainWidget::YLMainWidget(QWidget *parent) : YLBasicWidget(parent)
 {
     resize(400, 800);
     init();
     initListWidget();
-
+    center = geometry().center();
 //    //30s发送一次心跳包
 //    m_timer = new QTimer(this);
 ////    m_timer->start(300);
@@ -49,6 +51,11 @@ void YLMainWidget::init()
     min_button_->resize(close_button_->size());
     min_button_->setObjectName("min_button_");
     min_button_->setStyleSheet(qss_min_button);
+    connect(min_button_, &QPushButton::clicked, this, [this](){
+        YLMessageBox *message = new YLMessageBox(this);
+        message->exec();
+    });
+
 
     skin_button_ = new QPushButton(this);
     skin_button_->resize(close_button_->size());
@@ -136,6 +143,12 @@ void YLMainWidget::mousePressEvent(QMouseEvent *event)
     YLBasicWidget::mousePressEvent(event);
 }
 
+void YLMainWidget::mouseReleaseEvent(QMouseEvent *event)
+{
+    center = geometry().center();
+    YLBasicWidget::mouseReleaseEvent(event);
+}
+
 void YLMainWidget::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event);
@@ -151,5 +164,4 @@ void YLMainWidget::setUserInfo(UserInfo *userInfo)
     nickname_label_->setText(userInfo->user_nick().c_str());
     signature_lineedit_->setText(userInfo->user_sign_info().c_str());
 }
-
 

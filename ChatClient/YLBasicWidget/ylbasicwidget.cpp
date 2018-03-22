@@ -3,6 +3,7 @@
 #include <QPushButton>
 #include <QMouseEvent>
 
+
 YLBasicWidget::YLBasicWidget(QWidget *parent) : QWidget(parent), drag_flag_(true), pressed_flag_(false)
 {
     init();
@@ -30,7 +31,6 @@ void YLBasicWidget::setWidgetDraged(bool flag)
 void YLBasicWidget::resizeEvent(QResizeEvent *event)
 {
     close_button_->move(width() - 32, 0);
-
     QWidget::resizeEvent(event);
 }
 
@@ -55,6 +55,7 @@ void YLBasicWidget::mouseReleaseEvent(QMouseEvent *event)
 
     pressed_flag_ = false;
 
+
 }
 
 void YLBasicWidget::mouseMoveEvent(QMouseEvent *event)
@@ -71,3 +72,4 @@ void YLBasicWidget::on_close()
 {
     close();
 }
+

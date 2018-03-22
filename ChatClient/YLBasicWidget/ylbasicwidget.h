@@ -25,8 +25,9 @@ public:
      */
     void setWidgetDraged(bool flag = true);
 
+
 private slots:
-    void on_close();
+    virtual void on_close();
 
 protected:
     void resizeEvent      (QResizeEvent *event);
@@ -41,6 +42,7 @@ protected:
     bool pressed_flag_;
 
     QPoint begin_pos_;
+
 };
 
 #endif // YLBASICWIDGET_H

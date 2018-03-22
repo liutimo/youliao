@@ -6,7 +6,9 @@
 #include <QPixmap>
 #include <QMouseEvent>
 #include "YLChatWidget/ylchatwidget.h"
-
+#include "YLCommonControl/ylmodifyremark.h"
+#include "ylmainwidget.h"
+#include <QDebug>
 YLFriendListItem::YLFriendListItem(YLListItemType type, QWidget *parent) : QWidget(parent)
 {
     item_type_ = type;
@@ -68,6 +70,14 @@ void YLFriendListItem::initMenu()
 
     connect(action_on_top, &QAction::triggered, this, [this](){
         emit moveToTop(friend_);
+    });
+
+    connect(action_modify_remark, &QAction::triggered, this, [this](){
+        YLModifyRemarkWidget *w = new YLModifyRemarkWidget(this);
+        w->setDefalutText(friend_.getFriendRemark());
+        auto p = YLMainWidget::center;
+        w->move(mapToGlobal(p) - mapToGlobal(w->rect().center()));
+        w->exec();
     });
 }
 

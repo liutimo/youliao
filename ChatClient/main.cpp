@@ -7,6 +7,7 @@
 #include "YLChatWidget/ylquickbar.h"
 #include "YLChatWidget/ylemoticonwidget.h"
 #include "YLChatWidget/ylmessageview.h"
+#include "YLCommonControl/ylmodifyremark.h"
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -15,6 +16,7 @@ int main(int argc, char *argv[])
 //    YLChatWidget w;
 //    YLLoginPanel w;
     YLMainWidget w;
+//    YLModifyRemarkWidget w;
 //    w.resize(500, 400);
     w.show();
 

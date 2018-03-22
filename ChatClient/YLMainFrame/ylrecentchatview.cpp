@@ -93,5 +93,24 @@ void YLRecentChatView::on_move_to_top(const YLFriend &f)
 
 void YLRecentChatView::on_del_from_list(const YLFriend &f)
 {
-   }
+    for (auto iter = m_top_data.begin(); iter != m_top_data.end(); ++iter)
+    {
+        if (*iter == f)
+        {
+            m_top_data.erase(iter);
+            break;
+        }
+    }
+
+    for (auto iter = m_data.begin(); iter != m_data.end(); ++iter)
+    {
+        if (*iter == f)
+        {
+            m_data.erase(iter);
+            break;
+        }
+    }
+
+    updateList();
+}
 
