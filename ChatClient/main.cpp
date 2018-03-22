@@ -1,7 +1,6 @@
 #include <QApplication>
 #include <QDebug>
 #include <QThread>
-#include "YLNetWork/util.h"
 #include "YLLoginPanel/ylloginpanel.h"
 #include "YLMainFrame/ylmainwidget.h"
 #include "YLChatWidget/ylchatwidget.h"
@@ -13,8 +12,10 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
 //    YLQuickBar w;
-    YLChatWidget w;
-    w.resize(600, 400);
+//    YLChatWidget w;
+//    YLLoginPanel w;
+    YLMainWidget w;
+//    w.resize(500, 400);
     w.show();
 
     return a.exec();

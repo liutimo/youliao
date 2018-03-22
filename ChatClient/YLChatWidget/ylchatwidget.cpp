@@ -12,7 +12,7 @@ YLChatWidget::YLChatWidget(QWidget *parent) : YLBasicWidget(parent)
     initView();
 
     this->setObjectName("aaa");
-    setStyleSheet("QWidget#aaa{background-color:rgb(122, 20, 210, 200);}");
+    setStyleSheet("QWidget#aaa{background-color:rgb(181, 212, 240, 200);}");
 }
 
 
@@ -20,15 +20,21 @@ void YLChatWidget::initTitleBar()
 {
     m_max_button = new QPushButton(this);
     m_max_button->setFixedSize(32, 32);
-    m_max_button->setObjectName("m_max_button");
+    m_max_button->setObjectName("max_button");
     m_max_button->setStyleSheet(m_qss_max_button);
     connect(m_max_button, &QPushButton::clicked, this, &YLChatWidget::max);
 
     m_min_button = new QPushButton(this);
     m_min_button->setFixedSize(32, 32);
-    m_min_button->setObjectName("m_min_button");
+    m_min_button->setObjectName("min_button");
     m_min_button->setStyleSheet(m_qss_min_button);
     connect(m_min_button, &QPushButton::clicked, this, &YLChatWidget::min);
+
+    m_nickname_button = new QPushButton(this);
+    m_nickname_button->setObjectName("nickname_button");
+    //connect ... slot
+
+
 }
 
 void YLChatWidget::initView()
@@ -44,7 +50,7 @@ void YLChatWidget::updatePosition()
 {
     m_max_button->move(width() - 2 * 32, 0);
     m_min_button->move(width() - 3 * 32, 0);
-
+    m_nickname_button->move((width() - m_nickname_button->width()) / 2, 2);
 
     m_message_view->move(0, 32);
     m_quick_bar->move(m_message_view->geometry().bottomLeft());
@@ -66,6 +72,13 @@ void YLChatWidget::resizeEvent(QResizeEvent *e)
     updatePosition();
     YLBasicWidget::resizeEvent(e);
 }
+
+///public
+void YLChatWidget::setNickName(const QString &title)
+{
+    m_nickname_button->setText(title);
+}
+
 
 /// slot
 void YLChatWidget::max()

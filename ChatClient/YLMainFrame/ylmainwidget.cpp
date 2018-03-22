@@ -8,11 +8,7 @@
 #include "ylsignaturelineedit.h"
 #include "ylnavigationbar.h"
 #include "ylrecentchatview.h"
-#include "protobuf/youliao.base.pb.h"
-#include "YLNetWork/BasePdu.h"
-#include "YLNetWork/pdusender.h"
-#include "YLNetWork/pduhandler.h"
-#include "YLNetWork/netlib.h"
+
 #include <QTimer>
 
 using namespace youliao::pdu;
@@ -23,28 +19,28 @@ YLMainWidget::YLMainWidget(QWidget *parent) : YLBasicWidget(parent)
     init();
     initListWidget();
 
-    //30s发送一次心跳包
-    m_timer = new QTimer(this);
-//    m_timer->start(300);
-    connect(m_timer, &QTimer::timeout, this, [this](){
+//    //30s发送一次心跳包
+//    m_timer = new QTimer(this);
+////    m_timer->start(300);
+//    connect(m_timer, &QTimer::timeout, this, [this](){
 
-        if (m_heartbeat_send_times - PduHandler::m_heartbeat_received_times > 3)
-        {
-            m_timer->stop();
-            //表明连接断开
-            return;
-        }
+//        if (m_heartbeat_send_times - PduHandler::m_heartbeat_received_times > 3)
+//        {
+//            m_timer->stop();
+//            //表明连接断开
+//            return;
+//        }
 
 
-        base::HeartBeat heartBeat;
-        BasePdu *basePdu = new BasePdu;
-        basePdu->setSID(base::SID_OTHER);
-        basePdu->setCID(base::CID_OTHER_HEARTBEAT);
-        basePdu->writeMessage(&heartBeat);
-        qDebug() << "发送心跳包";
-        ++m_heartbeat_send_times;
-        PduSender::instance()->addMessage(basePdu);
-    });
+//        base::HeartBeat heartBeat;
+//        BasePdu *basePdu = new BasePdu;
+//        basePdu->setSID(base::SID_OTHER);
+//        basePdu->setCID(base::CID_OTHER_HEARTBEAT);
+//        basePdu->writeMessage(&heartBeat);
+//        qDebug() << "发送心跳包";
+//        ++m_heartbeat_send_times;
+//        PduSender::instance()->addMessage(basePdu);
+//    });
 }
 
 void YLMainWidget::init()
@@ -103,20 +99,20 @@ void YLMainWidget::initListWidget()
 
     //demo
     YLFriend y;
-    y.setFriendImagePath(":/res/2.jpeg");
+    y.setFriendImagePath(":/res/1.PNG");
     y.setFriendLastChatTime("11:22");
     y.setFriendLastMessage("你好，我是刘正！");
     y.setFriendNickName("刘提莫");
     y.setFriendSigature("我希望我的青春遇见你");
-    QMap<int, YLFriend> data;
+
     for (int i = 0; i < 100; ++i)
     {
         y.setFriendAccount(QString::number(10000 + i));
         y.setFriendRemark("刘提莫" + QString::number(i));
-        data.insert(i, y);
+        yl_recent_chat_view->addItem(y);
     }
 
-    yl_recent_chat_view->setData(data);
+
 }
 
 void YLMainWidget::resizeEvent(QResizeEvent *event)
@@ -145,7 +141,7 @@ void YLMainWidget::paintEvent(QPaintEvent *event)
     Q_UNUSED(event);
     QPainter p(this);
     p.setPen(Qt::NoPen);
-    p.setBrush(QColor::fromHsv(123, 122, 155, 122));
+    p.setBrush(QColor::fromRgb(40, 138, 221, 122));
     p.drawRect(rect());
 }
 

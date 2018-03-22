@@ -1,36 +1,65 @@
 #include "ylrecentchatview.h"
 #include "ylfriendlistitem.h"
 #include <QMouseEvent>
+#include <QScrollBar>
+#include <QDebug>
 YLRecentChatView::YLRecentChatView(QWidget *parent) : QListWidget(parent)
 {
     setObjectName("YLRecentChatView");
-    setStyleSheet(qss_this);
+    setStyleSheet(qss_this + qss_scroll_bar);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setFocusPolicy(Qt::NoFocus);
+    setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+
 }
 
-void YLRecentChatView::setData(const QMap<int, YLFriend> &data)
+void YLRecentChatView::addItem(const YLFriend &fri)
 {
-    data_ = data;
-    updateList();
+    add(fri);
+    m_data.push_front(fri);
 }
 
 void YLRecentChatView::updateList()
 {
     clear();
+    int i = 0;
 
-    for (int i = 0; i < data_.size(); ++i)
+    for (auto elem : m_top_data)
     {
-        QListWidgetItem *item = new QListWidgetItem;
-        addItem(item);
-        item->setSizeHint(QSize(width() - 30, 56));
-        YLFriendListItem *item_widget = new YLFriendListItem(YLFriendListItem::RECENTTLYCHATITEM);
-        connect(item_widget, &YLFriendListItem::moveToTop,      this, &YLRecentChatView::on_move_to_top);
-        connect(item_widget, &YLFriendListItem::deleteFromList, this, &YLRecentChatView::on_del_from_list);
-        item_widget->setData(data_[i]);
-        setItemWidget(item, item_widget);
+        add(elem, i);
+        static_cast<YLFriendListItem*>(itemWidget(item(i++)))->setMarkTop(true);
     }
 
+    for (auto elem : m_data)
+    {
+        bool found = false;
+        for (auto e : m_top_data)
+        {
+            if (e == elem)
+            {
+                found = true;
+                break;
+            }
+        }
+        if (!found)
+        {
+            add(elem, i++);
+        }
+
+        qDebug() << m_data.size();
+    }
+}
+
+void YLRecentChatView::add(const YLFriend &fri, int pos)
+{
+    QListWidgetItem *item = new QListWidgetItem;
+    insertItem(pos, item);
+    item->setSizeHint(QSize(width() - 30, 56));
+    YLFriendListItem *item_widget = new YLFriendListItem(YLFriendListItem::RECENTTLYCHATITEM);
+    connect(item_widget, &YLFriendListItem::moveToTop,      this, &YLRecentChatView::on_move_to_top);
+    connect(item_widget, &YLFriendListItem::deleteFromList, this, &YLRecentChatView::on_del_from_list);
+    item_widget->setData(fri);
+    setItemWidget(item, item_widget);
 }
 
 void YLRecentChatView::mousePressEvent(QMouseEvent *event)
@@ -43,27 +72,26 @@ void YLRecentChatView::mousePressEvent(QMouseEvent *event)
 
 void YLRecentChatView::on_move_to_top(const YLFriend &f)
 {
-    int key = data_.key(f);
+    bool exist = false;
 
-    for (int i = key; i > 0; --i)
+    for (auto iter = m_top_data.begin(); iter != m_top_data.end(); ++iter)
     {
-        data_[i] = data_[i - 1];
+        if (*iter == f)
+        {
+            m_top_data.erase(iter);
+            exist = true;
+            break;
+        }
     }
 
-    data_[0] = f;
+    if (!exist)
+        m_top_data.push_front(f);
 
     updateList();
+
 }
 
 void YLRecentChatView::on_del_from_list(const YLFriend &f)
 {
-    int key = data_.key(f);
-    data_.remove(key);
-    for (int i = key; i <= data_.size(); ++i)
-    {
-        data_[i] = data_[i + 1];
-    }
-
-    updateList();
-}
+   }
 

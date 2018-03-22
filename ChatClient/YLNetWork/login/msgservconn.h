@@ -1,8 +1,8 @@
 #ifndef MSGSERVCONN_H
 #define MSGSERVCONN_H
 
-#include "BaseConn.h"
-#include "BasePdu.h"
+#include "../base/BaseConn.h"
+#include "../base/BasePdu.h"
 #include <list>
 #include <string>
 
@@ -23,8 +23,8 @@ public:
     void onRead() override;
 };
 
-extern std::list<BasePdu*> g_pdu_list;
-extern Condition           g_condition;
+//extern std::list<BasePdu*> g_pdu_list;
+//extern Condition           g_condition;
 
 
 #endif // MSGSERVCONN_H

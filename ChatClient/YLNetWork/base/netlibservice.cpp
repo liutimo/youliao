@@ -1,7 +1,7 @@
 #include "netlibservice.h"
 #include "netlib.h"
 #include "util.h"
-#include "loginconn.h"
+#include "../login/loginconn.h"
 using namespace youliao::network;
 
 NetlibService::NetlibService(QObject *parent) : QThread(parent)

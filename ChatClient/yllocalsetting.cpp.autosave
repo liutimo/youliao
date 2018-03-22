@@ -1,0 +1,8 @@
+#include "yllocalsetting.h"
+
+YLLocalSetting* YLLocalSetting::
+
+YLLocalSetting::YLLocalSetting(QObject *parent) : QObject(parent)
+{
+
+}

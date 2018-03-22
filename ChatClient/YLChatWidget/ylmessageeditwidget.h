@@ -3,23 +3,41 @@
 
 #include <QWidget>
 
-class QPushButton;
-class QTextEdit;
-class YLMessageEditWidget : public QWidget
+#include <QTextEdit>
+
+class QMenu;
+class QAction;
+
+class YLMessageEditWidget : public QTextEdit
 {
     Q_OBJECT
+
 public:
-    explicit YLMessageEditWidget(QWidget *parent = nullptr);
+    explicit YLMessageEditWidget(QWidget *parent = Q_NULLPTR);
 
-signals:
+    //获取关键html代码
+    QString getContent() const;
 
-public slots:
-protected:
-    void resizeEvent(QResizeEvent *event);
+    //添加系统表情
+    void addEmoticon(int index);
+
 private:
-    QTextEdit       *m_text_editor;
-    QPushButton     *m_send_button;
-    QPushButton     *m_close_bitton;
+    void initMenu();
+
+private slots:
+    void slotCopy();
+    void slotCut();
+    void slotPaste();
+
+protected:
+    void keyPressEvent(QKeyEvent* event) override;
+    void contextMenuEvent(QContextMenuEvent* event) override;
+private:
+    QMenu	*m_menu;
+    QAction *m_action_cpoy;
+    QAction *m_action__paste;
+    QAction *m_action_cut;
+
 };
 
 #endif // YLMESSAGEEDITWIDGET_H

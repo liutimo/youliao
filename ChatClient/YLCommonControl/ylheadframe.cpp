@@ -24,6 +24,7 @@ void YLHeadFrame::paintEvent(QPaintEvent *e)
 {
 
     QPainter p(this);
+    p.setPen(Qt::NoPen);
     p.setRenderHint(QPainter::Antialiasing);
     p.drawEllipse(1, 1, width() - 2, height() - 2);
 

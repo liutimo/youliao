@@ -49,7 +49,7 @@ public:
     void setHeadPicture(const QString &path);
     void setNickName(const QString &nickname);
     void setAccount(const QString &account);
-
+    void setIndex(unsigned int i) { m_index = i; }
 private:
     void init();
 
@@ -61,7 +61,7 @@ protected:
     void mouseDoubleClickEvent(QMouseEvent *event);
 
 signals:
-    void deleteItem(const QString &);
+    void deleteItem(unsigned int index);
     void selected(const QString &account);
 
 private:
@@ -69,7 +69,7 @@ private:
     QLabel      *label_account_;
     YLHeadFrame *head_frame_;
     QPushButton *button_delete_;
-
+    unsigned int m_index;
 };
 
 #endif // YLACCOUNTLISTVIEW_H

@@ -1,9 +1,9 @@
 #include "msgservconn.h"
-#include "netlib.h"
-#include "util.h"
+#include "../base/netlib.h"
+#include "../base/util.h"
 #include "protobuf/youliao.base.pb.h"
-#include "pdusender.h"
-#include "pduhandler.h"
+#include "../pdusender.h"
+//#include "pduhandler.h"
 static BaseConnMap_t g_msg_serv_conn_map;
 
 MsgServConn::MsgServConn()
@@ -53,11 +53,11 @@ void MsgServConn::connect(const std::string &server_ip, uint16_t port)
     PduSender *pduSender = PduSender::instance();
     pduSender->setMsgServConn(this);
 
-    log("启动pdu处理线程");
-    if (!PduHandler::instance())
-    {
-        exit(0);
-    }
+//    log("启动pdu处理线程");
+//    if (!PduHandler::instance())
+//    {
+//        exit(0);
+//    }
 }
 
 void MsgServConn::handlePdu(BasePdu *pdu)
@@ -68,8 +68,8 @@ void MsgServConn::handlePdu(BasePdu *pdu)
 //         delete pdu;
 //         rteurn;
 //    }
-    g_condition.lock();
-    g_pdu_list.push_back(pdu);
-    g_condition.signal();
-    g_condition.unlock();
+//    g_condition.lock();
+//    g_pdu_list.push_back(pdu);
+//    g_condition.signal();
+//    g_condition.unlock();
 }

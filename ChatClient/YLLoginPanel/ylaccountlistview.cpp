@@ -19,6 +19,7 @@ YLAccountListView::YLAccountListView(QWidget *parent) : QListWidget(parent)
 
 void YLAccountListView::setData(const QVector<QStringList> &data)
 {
+    unsigned int i = 1;
     for (auto str_list : data)
     {
         QListWidgetItem *item = new QListWidgetItem;
@@ -28,12 +29,18 @@ void YLAccountListView::setData(const QVector<QStringList> &data)
         item_widget->setHeadPicture(str_list[0]);
         item_widget->setNickName(str_list[1]);
         item_widget->setAccount(str_list[2]);
+        item_widget->setIndex(i++);
         setItemWidget(item, item_widget);
 
         connect(item_widget, &YLAccountListViewItem::selected, this, [this](const QString &account){
             emit selected(account);
             this->hide();
         });
+
+        connect(item_widget, &YLAccountListViewItem::deleteItem, this, [this](unsigned int idx) {
+
+        });
+
     }
 
     unsigned int size = data.size() * 40;
@@ -75,7 +82,7 @@ void YLAccountListViewItem::init()
     button_delete_->hide();
     connect(button_delete_, &QPushButton::clicked, this, [this]()
     {
-        emit deleteItem(label_account_->text());
+        emit deleteItem(m_index);
     });
 
     this->setObjectName("YLAccountListViewItem");

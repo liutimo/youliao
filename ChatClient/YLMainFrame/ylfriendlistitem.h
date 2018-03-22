@@ -17,6 +17,8 @@ public:
     explicit YLFriendListItem(YLListItemType type = FRIENDITEM,  QWidget *parent = nullptr);
 
     void setData(const YLFriend &f);
+    YLFriend getData() { return friend_;}
+    void setMarkTop(bool flag = false);
 private:
     //用于显示备注信息或者昵称
     const QString placeholder_text_1   =  "<span style=\"color:black;font:14px solid 黑体\">%1</span><span style=\"color:gray;font:14px solid 黑体\">(%2)</span>";
@@ -34,6 +36,7 @@ private:
 protected:
     void resizeEvent(QResizeEvent *event);
     void mousePressEvent(QMouseEvent *event);
+    void paintEvent(QPaintEvent *event);
 
 signals:
     void moveToTop(const YLFriend &);
@@ -46,9 +49,11 @@ private:
     QLabel      *label_down_;       //显示个性签名 或者最后一条聊天记录
     QLabel      *label_time_;       //显示最后一次聊天的时间
     QMenu       *menu_;
-
+    QAction     *action_on_top;
     YLListItemType item_type_;      //保存当前item的类型
     YLFriend friend_;
+
+    bool m_is_mark_top;
 };
 
 #endif // YLFRIENDLISTITEM_H

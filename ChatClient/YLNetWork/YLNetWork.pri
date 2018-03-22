@@ -1,37 +1,39 @@
-DISTFILES += \
-    $$PWD/log4cxx.properties
+DISTFILES += \ss
+    $$PWD/base/log4cxx.properties
 
 HEADERS += \
-    $$PWD/BaseConn.h \
-    $$PWD/BasePdu.h \
-    $$PWD/BasicSocket.h \
-    $$PWD/EventDispatch.h \
-    $$PWD/log.h \
-    $$PWD/netlib.h \
-    $$PWD/SimpleBuffer.h \
-    $$PWD/type_define.h \
-    $$PWD/test.h \
-    $$PWD/util.h \
-    $$PWD/loginconn.h \
-    $$PWD/netlibservice.h \
-    $$PWD/msgservconn.h \
-    $$PWD/Lock.h \
-    $$PWD/pduhandler.h \
+    $$PWD/base/BaseConn.h \
+    $$PWD/base/BasePdu.h \
+    $$PWD/base/BasicSocket.h \
+    $$PWD/base/EventDispatch.h \
+    $$PWD/base/Lock.h \
+    $$PWD/base/log.h \
+    $$PWD/base/netlib.h \
+    $$PWD/base/netlibservice.h \
+    $$PWD/base/SimpleBuffer.h \
+    $$PWD/base/Thread.h \
+    $$PWD/base/type_define.h \
+    $$PWD/base/util.h \
+    $$PWD/login/loginconn.h \
+    $$PWD/login/msgservconn.h \
+    $$PWD/ylnetservice.h \
     $$PWD/pdusender.h \
-    $$PWD/Thread.h
+    $$PWD/ylbusiness.h
 
 SOURCES += \
-    $$PWD/SimpleBuffer.cpp \
-    $$PWD/EventDispatch.cpp \
-    $$PWD/BasicSocket.cpp \
-    $$PWD/BasePdu.cpp \
-    $$PWD/BaseConn.cpp \
-    $$PWD/log.cpp \
-    $$PWD/loginconn.cpp \
-    $$PWD/netlibservice.cpp \
-    $$PWD/msgservconn.cpp \
-    $$PWD/Lock.cpp \
-    $$PWD/pduhandler.cpp \
-    $$PWD/util.cpp \
+    $$PWD/base/BaseConn.cpp \
+    $$PWD/base/BasePdu.cpp \
+    $$PWD/base/BasicSocket.cpp \
+    $$PWD/base/EventDispatch.cpp \
+    $$PWD/base/Lock.cpp \
+    $$PWD/base/log.cpp \
+    $$PWD/base/netlibservice.cpp \
+    $$PWD/base/SimpleBuffer.cpp \
+    $$PWD/base/Thread.cpp \
+    $$PWD/base/util.cpp \
+    $$PWD/login/loginconn.cpp \
+    $$PWD/login/msgservconn.cpp \
+    $$PWD/ylnetservice.cpp \
     $$PWD/pdusender.cpp \
-    $$PWD/Thread.cpp
+    $$PWD/ylbusiness.cpp
+

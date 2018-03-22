@@ -1,13 +1,16 @@
 #include "ylfriendlistitem.h"
-
 #include "YLCommonControl/ylheadframe.h"
 #include <QLabel>
 #include <QMenu>
+#include <QPainter>
+#include <QPixmap>
 #include <QMouseEvent>
+#include "YLChatWidget/ylchatwidget.h"
+
 YLFriendListItem::YLFriendListItem(YLListItemType type, QWidget *parent) : QWidget(parent)
 {
-
     item_type_ = type;
+    m_is_mark_top = false;
     init();
     initMenu();
 }
@@ -30,7 +33,7 @@ void YLFriendListItem::initMenu()
     QAction *action_send_msg      = new QAction("发送即时消息");
     QAction *action_show_info     = new QAction("查看资料");
     QAction *action_msg_record    = new QAction("消息记录");
-    QAction *action_on_top        = new QAction("会话置顶");
+             action_on_top        = new QAction("会话置顶");
     QAction *action_remove        = new QAction("从回话列表移除");
     QAction *action_modify_remark = new QAction("修改备注姓名");
     QAction *action_move_to       = new QAction("移动好友至");
@@ -51,13 +54,36 @@ void YLFriendListItem::initMenu()
     menu_->addAction(action_move_to);
     menu_->addAction(aciton_delete);
 
-    connect(action_on_top, &QAction::triggered, this, [this](){
-        emit moveToTop(friend_);
+
+    connect(action_send_msg, &QAction::triggered, this, [this](){
+        YLChatWidget *chatWidget = new YLChatWidget();
+        chatWidget->resize(800, 600);
+        chatWidget->setNickName(friend_.getFriendNickName());
+        chatWidget->show();
     });
 
     connect(action_remove, &QAction::triggered, this, [this](){
         emit deleteFromList(friend_);
     });
+
+    connect(action_on_top, &QAction::triggered, this, [this](){
+        emit moveToTop(friend_);
+    });
+}
+
+void YLFriendListItem::setMarkTop(bool flag)
+{
+    m_is_mark_top = flag;
+
+    if (m_is_mark_top)
+    {
+        action_on_top->setText("取消会话置顶");
+    }
+    else
+    {
+        action_on_top->setText("会话置顶");
+    }
+    update();
 }
 
 
@@ -102,8 +128,18 @@ void YLFriendListItem::mousePressEvent(QMouseEvent *event)
     QWidget::mousePressEvent(event);
     if (event->button() == Qt::RightButton)
         menu_->exec(QCursor::pos());
+}
 
+void YLFriendListItem::paintEvent(QPaintEvent *event)
+{
+    if (m_is_mark_top)
+    {
+        QPainter painter(this);
+        painter.setPen(Qt::NoPen);
+        painter.drawPixmap(3, 3, 10, 10, QPixmap(":/res/MainFrame/aio_top_mark.png"));
+    }
 
+    QWidget::paintEvent(event);
 }
 
 

@@ -33,12 +33,16 @@ include(YLEntityObject/YLEntityObject.pri)
 include(protobuf/protobuf.pri)
 
 SOURCES += \
-        main.cpp
+        main.cpp \
+    yllocalsettings.cpp
 
 LIBS += -lprotobuf \
         -llog4cxx
 
-HEADERS +=
+HEADERS += \
+    yllocalsettings.h
 
 RESOURCES += \
     resource.qrc
+
+FORMS +=

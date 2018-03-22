@@ -1,8 +1,8 @@
 #ifndef MSGSERVCONN_H
 #define MSGSERVCONN_H
 
-#include "BaseConn.h"
-#include "BasePdu.h"
+#include "base/BaseConn.h"
+#include "base/BasePdu.h"
 #include <list>
 #include <string>
 

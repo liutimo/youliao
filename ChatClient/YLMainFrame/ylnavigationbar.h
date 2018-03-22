@@ -13,11 +13,11 @@ public:
 
 private:
 
-    const QString qss_selected = "QToolButton{border:0px;border-bottom:2px solid red;color:gray;color:red;font: 14px solid 黑体;}"
-                                 "QToolButton:hover{border:0px;border-bottom:2px solid red; color:red;font: 14px solid 黑体;}";
+    const QString qss_selected = "QToolButton{background:rgba(255, 255, 255, 200);border:0px;border-bottom:2px solid red;color:gray;color:red;font: 14px solid 黑体;}"
+                                 "QToolButton:hover{background:rgba(255, 255, 255, 200);border:0px;border-bottom:2px solid red; color:red;font: 14px solid 黑体;}";
 
-    const QString qss_no_selected = "QToolButton{border:0px;color:gray;font: 14px solid 黑体;}"
-                                    "QToolButton:hover{border:0px;color:black;font: 14px solid 黑体;}";
+    const QString qss_no_selected = "QToolButton{background:rgba(255, 255, 255, 200);border:0px;color:gray;font: 14px solid 黑体;}"
+                                    "QToolButton:hover{background:rgba(255, 255, 255, 200);border:0px;color:black;font: 14px solid 黑体;}";
 
     void init();
 

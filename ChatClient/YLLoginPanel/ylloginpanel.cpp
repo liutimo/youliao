@@ -4,39 +4,25 @@
 #include "YLCommonControl/yllineedit.h"
 #include "ylaccountlistview.h"
 #include "YLMainFrame/ylmainwidget.h"
-
+#include "YLNetWork/ylnetservice.h"
+#include "YLNetWork/ylbusiness.h"
+#include "../yllocalsettings.h"
 #include <QLineEdit>
 #include <QPushButton>
 #include <QComboBox>
 #include <QMouseEvent>
 #include <QDebug>
 #include <QMessageBox>
-
-#include "protobuf/youliao.base.pb.h"
-#include "protobuf/youliao.login.pb.h"
-#include "YLNetWork/BasePdu.h"
-#include "YLNetWork/pdusender.h"
-#include "YLNetWork/pduhandler.h"
-#include "YLNetWork/netlibservice.h"
-
+#include <QPainter>
+#include <QPixmap>
+#include <QCheckBox>
 using namespace youliao::pdu;
 
 YLLoginPanel::YLLoginPanel(QWidget *parent) : YLBasicWidget(parent), m_connected(false)
 {
     init();
-
-    //启动网络线程
-    NetlibService *netlib_service = new NetlibService;
-//    netlib_service->setLoginServerIP("182.254.219.254");
-    netlib_service->setLoginServerIP("127.0.0.1");
-    netlib_service->setLoginServerPort(8001);
-    netlib_service->start();
-
-    connect(netlib_service, &NetlibService::loginServerConnectStatus, this, [this](bool connected){
-        m_connected = connected;
-        if (!connected)
-            QMessageBox::about(this, "网络错误", "无法连接登录服务器");
-    }, Qt::QueuedConnection);
+    initCheckBoxs();
+    connectToLoginServer();
 }
 
 void YLLoginPanel::init()
@@ -46,12 +32,10 @@ void YLLoginPanel::init()
         //handle status changed message here;
     });
 
-    lineedit_useraccount_ = new YLLineEdit(this);
+    lineedit_useraccount_ = new QLineEdit(this);
     lineedit_useraccount_->setPlaceholderText("输入账号");
     lineedit_useraccount_->setObjectName("lineedit_useraccount_");
     lineedit_useraccount_->setStyleSheet(qss_useraccount_);
-    lineedit_useraccount_->setButtonIcon(":/res/LoginPanel/arrow_normal.png", ":/res/LoginPanel/arrow_hover.png", ":/res/LoginPanel/arrow_press.png");
-    connect(lineedit_useraccount_, &YLLineEdit::button_clicked, this, &YLLoginPanel::on_account_button_clicked);
 
     lineedit_passwd_      = new QLineEdit(this);
     lineedit_passwd_->setPlaceholderText("输入密码");
@@ -80,12 +64,31 @@ void YLLoginPanel::init()
 
 }
 
+void YLLoginPanel::initCheckBoxs()
+{   
+    m_remember_pwd = new QCheckBox("记住密码", this);
+    m_remember_pwd->setStyleSheet(qss_checkbox);
+
+    m_auto_login = new QCheckBox("自动登录", this);
+    m_auto_login->setStyleSheet(qss_checkbox);
+
+    YLLocalSettings *settings = YLLocalSettings::instance();
+    m_auto_login->setChecked(settings->getBool("auto_login"));
+    m_remember_pwd->setChecked(settings->getBool("remeber_pwd"));
+    lineedit_useraccount_->setText(settings->getValue("recent_account").toString());
+    if (m_remember_pwd->isChecked())
+        lineedit_passwd_->setText(settings->getValue("password").toString());
+}
+
 void YLLoginPanel::resizeEvent(QResizeEvent *event)
 {
     head_frame_->move((width() - head_frame_->width()) / 2, 35);
     lineedit_useraccount_->move((width() - lineedit_useraccount_->width()) / 2, 175);
     lineedit_passwd_->move((width() - lineedit_passwd_->width()) / 2, 210);
-    pushbutton_login_->move((width() - pushbutton_login_->width()) / 2, 255);
+    pushbutton_login_->move((width() - pushbutton_login_->width()) / 2, 275);
+    m_remember_pwd->move(pushbutton_login_->geometry().topLeft().x(), 250);
+    m_auto_login->move(pushbutton_login_->geometry().topRight().x() - 70, 250);
+
     YLBasicWidget::resizeEvent(event);
 }
 
@@ -97,65 +100,44 @@ void YLLoginPanel::mousePressEvent(QMouseEvent *event)
     YLBasicWidget::mousePressEvent(event);
 }
 
+void YLLoginPanel::paintEvent(QPaintEvent *event)
+{
+//    QPainter painter(this);
+//    painter.setPen(Qt::NoPen);
+//    painter.drawPixmap(0, 0, width(), height(), QPixmap(":/res/LoginPanel/background.jpeg"));
+
+
+}
+
+
 void YLLoginPanel::on_login()
 {
+    YLLocalSettings *settings = YLLocalSettings::instance();
+    settings->setValue("auto_login", m_auto_login->isChecked());
+    settings->setValue("remeber_pwd", m_remember_pwd->isChecked());
+    settings->setValue("recent_account", lineedit_useraccount_->text());
+    if(m_remember_pwd->isChecked())
+        settings->setValue("password", lineedit_passwd_->text());
+
     //登录操作在这里完成。
     if (m_connected)
     {
-        login::UserLoginRequest request;
-        request.set_user_name(lineedit_useraccount_->text().toStdString());
-        request.set_user_password(lineedit_passwd_->text().toStdString());
-        request.set_user_status(base::USER_STATUS_ONLINE);
-
-        BasePdu *basePdu = new BasePdu;
-        basePdu->setSID(base::SID_LOGIN);
-        basePdu->setCID(base::CID_LOGIN_REQUEST_USERLOGIN);
-        basePdu->writeMessage(&request);
-
-        PduSender::instance()->addMessage(basePdu);
-
-        connect(PduHandler::instance(), &PduHandler::loginStatus, this, [this](bool success, base::UserInfo *userInfo)
-        {
-            if (success)
-            {
-                YLMainWidget *main = new YLMainWidget;
-                main->setUserInfo(userInfo);
-                main->show();
-                this->close();
-            }
-            else
-            {
-                QMessageBox::about(this, "error", "用户名密码错误");
-            }
-        });
-    }
-    else
-    {
-        QMessageBox::about(this, "网络错误", "无法连接登录服务器");
+        YLBusiness::login(lineedit_useraccount_->text(), lineedit_passwd_->text());
+//        YLMainWidget *main = new YLMainWidget;
+//        main->show();
+//        this->close();
     }
 }
 
-void YLLoginPanel::on_account_button_clicked()
+//network
+
+void YLLoginPanel::connectToLoginServer()
 {
-    if (account_listview_->isVisible())
-    {
-        account_listview_->hide();
-        return;
-    }
-
-    QVector<QStringList> vec;
-    QStringList l1;
-    l1 << ":/res/1.jpg" << "liuzheng" << "779564531";
-
-    for (int i = 0; i < 5; ++i)
-    {
-        vec.push_back(l1);
-        vec.push_back(l1);
-    }
-
-    account_listview_->setData(vec);
-
-    account_listview_->move(QPoint((width() - lineedit_useraccount_->width()) / 2, 210));
-    account_listview_->show();
-
+    YLNetService *ylNetService = YLNetService::instance();
+    connect(ylNetService, &YLNetService::connectLoginServerStatus, this, [this](bool status){
+       m_connected = status;
+       if (!m_connected)
+           QMessageBox::about(this, "网络错误", "无法连接登录服务器");
+    }, Qt::QueuedConnection);
 }
+

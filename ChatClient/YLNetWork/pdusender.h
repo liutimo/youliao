@@ -4,9 +4,9 @@
 #include <QThread>
 #include <list>
 #include <google/protobuf/message_lite.h>
-#include "Lock.h"
-#include "Thread.h"
-#include "BasePdu.h"
+#include "base/Lock.h"
+#include "base/Thread.h"
+#include "base/BasePdu.h"
 #include "msgservconn.h"
 using namespace youliao::thread;
 using namespace youliao::pdu;

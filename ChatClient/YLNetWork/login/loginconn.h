@@ -1,7 +1,7 @@
 #ifndef LOGINCONN_H
 #define LOGINCONN_H
-#include "BaseConn.h"
-#include "BasePdu.h"
+#include "../base/BaseConn.h"
+#include "../base/BasePdu.h"
 using namespace youliao::network;
 using namespace youliao::pdu;
 class LoginConn : public BaseConn

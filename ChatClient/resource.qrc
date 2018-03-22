@@ -266,5 +266,20 @@
         <file>res/YLChatWidget/dist/jquery.contextify.min.js</file>
         <file>res/YLChatWidget/js/jquery-2.1.1.min.js</file>
         <file>res/YLChatWidget/js/qwebchannel.js</file>
+        <file>res/LoginPanel/background.jpeg</file>
+        <file>res/LoginPanel/checkbox_tick_pushed1.png</file>
+        <file>res/LoginPanel/checkbox_tick_normal1.png</file>
+        <file>res/LoginPanel/checkbox_tick_highlight1.png</file>
+        <file>res/LoginPanel/checkbox_pushed.png</file>
+        <file>res/LoginPanel/checkbox_normal.png</file>
+        <file>res/LoginPanel/checkbox_hightlight.png</file>
+        <file>res/MainFrame/scrollbar_arrowup_normal.png</file>
+        <file>res/MainFrame/scrollbar_arrowup_highlight.png</file>
+        <file>res/MainFrame/scrollbar_arrowup_down.png</file>
+        <file>res/MainFrame/scrollbar_arrowdown_normal.png</file>
+        <file>res/MainFrame/scrollbar_arrowdown_highlight.png</file>
+        <file>res/MainFrame/scrollbar_arrowdown_down.png</file>
+        <file>res/1.PNG</file>
+        <file>res/MainFrame/aio_top_mark.png</file>
     </qresource>
 </RCC>
