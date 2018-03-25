@@ -1,10 +1,35 @@
 #include <iostream>
 #include "DBPool.h"
+#include "business/LoginModel.h"
+#include "network/netlib.h"
+#include "ProxyConn.h"
+using  namespace youliao::network;
+
+void new_conn(callback_data data, uint8_t msg, net_handle_t handle, void *pParam)
+{
+    if (msg == NETWORK_CONNECT)
+    {
+        std::cout << "新连接" << std::endl;
+        ProxyConn *proxyConn = new ProxyConn;
+        proxyConn->onConnect(handle);
+    }
+}
+
+
 int main() {
 
-   if ( DBManager::instance() == nullptr)
-       return -1;
+//   if ( DBManager::instance() == nullptr)
+//       return -1;
+//
+//    LoginModel l;
+//    if (l.doLogin("123", "123"))
+//        std::cout << 1;
 
+    netlib_init();
+    netlib_listen("127.0.0.1", 6001, new_conn, nullptr);
+    netlib_eventloop();
+
+    nettlib_destory();
 
     return 0;
 }

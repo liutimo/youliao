@@ -25,12 +25,15 @@ enum ServerCID
 {
     CID_SERVER_ZERO = 0x0000;
     CID_SERVER_MSGSERVER_INFO = 0x0201;        //消息服务器主动发送该消息给登录服务器
+
 }
 
 enum OtherCID
 {
     CID_OTHER_ZERO      = 0x0000;
     CID_OTHER_HEARTBEAT = 0x0301;            //心跳包
+    CID_SERVER_VALIDATE_REQUEST = 0x0202;    //msg server向db server发送用户校验信息
+    CID_SERVER_VALIDATE_RESPONE = 0x0203;
 }
 
 //

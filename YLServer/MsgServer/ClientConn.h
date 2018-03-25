@@ -21,11 +21,9 @@ using namespace youliao::pdu;
 class ClientConn : public BaseConn{
 public:
     ClientConn();
-
     ~ClientConn();
 
     void onConnect(net_handle_t handle) override;
-
     void onClose() override ;
 
     void handlePdu(BasePdu *) override ;
@@ -36,5 +34,6 @@ private:
 };
 
 typedef  __gnu_cxx::hash_map<int, ClientConn*> ClientConnMap_t;
+ClientConn *findConn(uint32_t handle);
 
 #endif //MSGSERVER_CLIENTCONN_H

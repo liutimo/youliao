@@ -12,6 +12,6 @@
 
 namespace DB_PROXY
 {
-    doLogin()
+//    doLogin()
 }
 

@@ -145,16 +145,18 @@ void AddDescriptorsImpl() {
       "\202\002\022 \n\033CID_LOGIN_REQUEST_USERLOGIN\020\203\002\022 \n\033"
       "CID_LOGIN_RESPONE_USERLOGIN\020\204\002*@\n\tServer"
       "CID\022\023\n\017CID_SERVER_ZERO\020\000\022\036\n\031CID_SERVER_M"
-      "SGSERVER_INFO\020\201\004*8\n\010OtherCID\022\022\n\016CID_OTHE"
-      "R_ZERO\020\000\022\030\n\023CID_OTHER_HEARTBEAT\020\201\006*>\n\nRe"
-      "sultType\022\010\n\004NONE\020\000\022\021\n\rNO_MSG_SERVER\020\001\022\023\n"
-      "\017MSG_SERVER_FULL\020\002*m\n\016UserStatusType\022\024\n\020"
-      "USER_STATUS_ZERO\020\000\022\026\n\022USER_STATUS_ONLINE"
-      "\020\001\022\027\n\023USER_STATUS_OFFLINE\020\002\022\024\n\020USER_STAT"
-      "US_HIDE\020\003b\006proto3"
+      "SGSERVER_INFO\020\201\004*|\n\010OtherCID\022\022\n\016CID_OTHE"
+      "R_ZERO\020\000\022\030\n\023CID_OTHER_HEARTBEAT\020\201\006\022 \n\033CI"
+      "D_SERVER_VALIDATE_REQUEST\020\202\004\022 \n\033CID_SERV"
+      "ER_VALIDATE_RESPONE\020\203\004*>\n\nResultType\022\010\n\004"
+      "NONE\020\000\022\021\n\rNO_MSG_SERVER\020\001\022\023\n\017MSG_SERVER_"
+      "FULL\020\002*m\n\016UserStatusType\022\024\n\020USER_STATUS_"
+      "ZERO\020\000\022\026\n\022USER_STATUS_ONLINE\020\001\022\027\n\023USER_S"
+      "TATUS_OFFLINE\020\002\022\024\n\020USER_STATUS_HIDE\020\003b\006p"
+      "roto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 777);
+      descriptor, 845);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "youliao.base.proto", &protobuf_RegisterTypes);
 }
@@ -228,6 +230,8 @@ const ::google::protobuf::EnumDescriptor* OtherCID_descriptor() {
 bool OtherCID_IsValid(int value) {
   switch (value) {
     case 0:
+    case 514:
+    case 515:
     case 769:
       return true;
     default:
@@ -360,13 +364,6 @@ const UserInfo& UserInfo::default_instance() {
   return *internal_default_instance();
 }
 
-UserInfo* UserInfo::New(::google::protobuf::Arena* arena) const {
-  UserInfo* n = new UserInfo;
-  if (arena != NULL) {
-    arena->Own(n);
-  }
-  return n;
-}
 
 void UserInfo::Clear() {
 // @@protoc_insertion_point(message_clear_start:youliao.pdu.base.UserInfo)
@@ -882,13 +879,6 @@ const HeartBeat& HeartBeat::default_instance() {
   return *internal_default_instance();
 }
 
-HeartBeat* HeartBeat::New(::google::protobuf::Arena* arena) const {
-  HeartBeat* n = new HeartBeat;
-  if (arena != NULL) {
-    arena->Own(n);
-  }
-  return n;
-}
 
 void HeartBeat::Clear() {
 // @@protoc_insertion_point(message_clear_start:youliao.pdu.base.HeartBeat)
@@ -1030,5 +1020,15 @@ void HeartBeat::InternalSwap(HeartBeat* other) {
 }  // namespace base
 }  // namespace pdu
 }  // namespace youliao
+namespace google {
+namespace protobuf {
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::base::UserInfo* Arena::Create< ::youliao::pdu::base::UserInfo >(Arena* arena) {
+  return Arena::CreateInternal< ::youliao::pdu::base::UserInfo >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::base::HeartBeat* Arena::Create< ::youliao::pdu::base::HeartBeat >(Arena* arena) {
+  return Arena::CreateInternal< ::youliao::pdu::base::HeartBeat >(arena);
+}
+}  // namespace protobuf
+}  // namespace google
 
 // @@protoc_insertion_point(global_scope)

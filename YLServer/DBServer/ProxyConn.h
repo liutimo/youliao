@@ -13,18 +13,20 @@
 #define DBSERVER_PROXYCONN_H
 
 #include "network/BaseConn.h"
+#include "pdu/BasePdu.h"
+
+using namespace youliao::pdu;
 using namespace youliao::network;
 class ProxyConn : public BaseConn{
 public:
     ProxyConn();
-
     ~ProxyConn();
 
-    void onRead() override ;
+    void onConnect(net_handle_t handle) override ;
+    void close();
     void onClose() override ;
 
-
-
+    void handlePdu(BasePdu *) override;
 private:
 
 };

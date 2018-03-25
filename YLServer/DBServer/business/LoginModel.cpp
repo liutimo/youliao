@@ -21,7 +21,7 @@ LoginModel::~LoginModel()
 
 }
 
-void LoginModel::doLogin(const std::string &str_name, const std::string &str_pass)
+bool LoginModel::doLogin(const std::string &str_name, const std::string &str_pass)
 {
     bool ret = false;
     DBManager *dbManager = DBManager::instance();
@@ -29,15 +29,14 @@ void LoginModel::doLogin(const std::string &str_name, const std::string &str_pas
 
     if (dbConn)
     {
-        std::string str_sql = "select * from yl_user where name='" + str_name + "'";
+        std::string str_sql = "select * from yl_user where user_account='" + str_name + "'";
         ResultSet *resultSet = dbConn->query(str_sql);
 
         std::string password;
 
-        if (resultSet)
+        if (resultSet && resultSet->next())
         {
-            resultSet->next();
-            password = resultSet->getString("password");
+            password = resultSet->getString("user_password");
 
             if (str_pass == password)
                 ret = true;
@@ -47,7 +46,5 @@ void LoginModel::doLogin(const std::string &str_name, const std::string &str_pas
     }
 
     dbManager->releaseConnection(dbConn);
-
-
     return ret;
 }

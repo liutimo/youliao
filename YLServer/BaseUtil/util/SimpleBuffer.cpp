@@ -78,7 +78,8 @@ void SimpleBuffer::writeUInt32(uint32_t data)
 }
 uint32_t  SimpleBuffer::readUInt32()
 {
-    if(getFreeSize() < sizeof(uint32_t))
+
+    if(getWriteOffest() < sizeof(uint32_t))
         return (uint32_t)-1;
 
     uchar_t *buf = getBuffer();
@@ -104,7 +105,7 @@ void SimpleBuffer::writeUInt16(uint16_t data)
 
 uint16_t SimpleBuffer::readUInt16()
 {
-    if(getFreeSize() < sizeof(uint16_t))
+    if(getWriteOffest() < sizeof(uint16_t))
         return (uint16_t)-1;
 
     uchar_t *buf = getBuffer();

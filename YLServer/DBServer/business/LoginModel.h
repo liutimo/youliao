@@ -13,13 +13,14 @@
 #define DBSERVER_LOGINMODEL_H
 
 #include <string>
+
 class LoginModel {
 public:
     LoginModel();
 
     ~LoginModel();
 
-    void doLogin(const std::string &str_name, const std::string &str_pass);
+    bool doLogin(const std::string &str_name, const std::string &str_pass);
 
 private:
 

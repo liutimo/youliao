@@ -10,11 +10,24 @@
 
 #include "ClientConn.h"
 #include "network/netlib.h"
+#include "DBServConn.h"
+#include "util/SimpleBuffer.h"
 #include "pdu/protobuf/youliao.base.pb.h"
 #include "pdu/protobuf/youliao.login.pb.h"
+#include "pdu/protobuf/youliao.server.pb.h"
 
+using namespace youliao::util;
 
 static ClientConnMap_t g_client_conn_map;
+
+
+ClientConn *findConn(uint32_t handle)
+{
+    auto iter = g_client_conn_map.find(handle);
+    if (iter != g_client_conn_map.end())
+        return iter->second;
+    return nullptr;
+}
 
 ClientConn::ClientConn() : BaseConn()
 {
@@ -70,21 +83,20 @@ void ClientConn::_HandlClientLoginRequest(BasePdu *pdu)
     login::UserLoginRequest request;
     request.ParseFromString(pdu->getMessage());
     log("登录请求! 登录名: %s, 登录密码:%s", request.user_name().c_str(), request.user_password().c_str());
-    login::UserLoginRespone respone;
-    respone.set_result_code(base::NONE);
-    base::UserInfo *userInfo = new base::UserInfo;
-    userInfo->set_user_email("779564531");
-    userInfo->set_user_id(1);
-    userInfo->set_user_nick("刘提莫");
-    userInfo->set_user_phone("15367877419");
-    userInfo->set_user_sex(1);
-    userInfo->set_user_sign_info("好好学习,努力工作");
-    respone.set_allocated_user_info(userInfo);
-    BasePdu basePdu;
-    basePdu.setCID(base::CID_LOGIN_RESPONE_USERLOGIN);
-    basePdu.setSID(base::SID_LOGIN);
-    basePdu.writeMessage(&respone);
-    sendBasePdu(&basePdu);
+
+    server::ValidateRequest validateRequest;
+    validateRequest.set_user_name(request.user_name());
+    validateRequest.set_user_pwd(request.user_password());
+    SimpleBuffer simpleBuffer;
+    simpleBuffer.writeUInt32(m_handle);
+    validateRequest.set_attach_data(simpleBuffer.getBuffer(), simpleBuffer.getWriteOffest());
+    DBServConn *pDbServConn = get_db_server_conn();
+    BasePdu *basePdu = new BasePdu;
+    basePdu->setSID(base::SID_OTHER);
+    basePdu->setCID(base::CID_SERVER_VALIDATE_REQUEST);
+    basePdu->writeMessage(&validateRequest);
+    pDbServConn->sendBasePdu(basePdu);
+
 }
 
 void ClientConn::_HandleHeartBeat(BasePdu *pdu)

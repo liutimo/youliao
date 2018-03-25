@@ -17,7 +17,7 @@
 using namespace youliao::pdu;
 namespace DB_PROXY
 {
-   void doLogin(BasePdu *pdu, uint32_t conn_uuid);
+//   void doLogin(BasePdu *pdu, uint32_t conn_uuid);
 }
 
 

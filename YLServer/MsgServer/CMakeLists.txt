@@ -13,7 +13,7 @@ set(SOURCE_FILES ${SRC_LIST})
 
 find_package(Protobuf REQUIRED)
 
-add_executable(MsgServer ${SOURCE_FILES})
+add_executable(MsgServer ${SOURCE_FILES} DBServConn.h DBServConn.cpp)
 
 
 TARGET_LINK_LIBRARIES(MsgServer BaseUtil log4cxx protobuf)
