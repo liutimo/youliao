@@ -12,12 +12,9 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-//    YLQuickBar w;
-//    YLChatWidget w;
-//    YLLoginPanel w;
-    YLMainWidget w;
-//    YLModifyRemarkWidget w;
-//    w.resize(500, 400);
+    YLLoginPanel w;
+    w.resize(500, 400);
+//    YLMainWidget w;
     w.show();
 
     return a.exec();

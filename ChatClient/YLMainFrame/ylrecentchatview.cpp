@@ -13,11 +13,24 @@ YLRecentChatView::YLRecentChatView(QWidget *parent) : QListWidget(parent)
 
 }
 
+void YLRecentChatView::add(const YLFriend &fri, int pos)
+{
+    QListWidgetItem *item = new QListWidgetItem;
+    insertItem(pos, item);
+    item->setSizeHint(QSize(width() - 30, 56));
+    YLFriendListItem *item_widget = new YLFriendListItem(YLFriendListItem::RECENTTLYCHATITEM);
+    connect(item_widget, &YLFriendListItem::moveToTop,      this, &YLRecentChatView::on_move_to_top);
+    connect(item_widget, &YLFriendListItem::deleteFromList, this, &YLRecentChatView::on_del_from_list);
+    item_widget->setData(fri);
+    setItemWidget(item, item_widget);
+}
+
 void YLRecentChatView::addItem(const YLFriend &fri)
 {
     add(fri);
     m_data.push_front(fri);
 }
+
 
 void YLRecentChatView::updateList()
 {
@@ -50,17 +63,6 @@ void YLRecentChatView::updateList()
     }
 }
 
-void YLRecentChatView::add(const YLFriend &fri, int pos)
-{
-    QListWidgetItem *item = new QListWidgetItem;
-    insertItem(pos, item);
-    item->setSizeHint(QSize(width() - 30, 56));
-    YLFriendListItem *item_widget = new YLFriendListItem(YLFriendListItem::RECENTTLYCHATITEM);
-    connect(item_widget, &YLFriendListItem::moveToTop,      this, &YLRecentChatView::on_move_to_top);
-    connect(item_widget, &YLFriendListItem::deleteFromList, this, &YLRecentChatView::on_del_from_list);
-    item_widget->setData(fri);
-    setItemWidget(item, item_widget);
-}
 
 void YLRecentChatView::mousePressEvent(QMouseEvent *event)
 {

@@ -8,6 +8,7 @@
 #include "ylsignaturelineedit.h"
 #include "ylnavigationbar.h"
 #include "ylrecentchatview.h"
+#include "ylfriendlistview.h"
 #include "YLCommonControl/ylmessagebox.h"
 #include <QTimer>
 
@@ -21,28 +22,6 @@ YLMainWidget::YLMainWidget(QWidget *parent) : YLBasicWidget(parent)
     init();
     initListWidget();
     center = geometry().center();
-//    //30s发送一次心跳包
-//    m_timer = new QTimer(this);
-////    m_timer->start(300);
-//    connect(m_timer, &QTimer::timeout, this, [this](){
-
-//        if (m_heartbeat_send_times - PduHandler::m_heartbeat_received_times > 3)
-//        {
-//            m_timer->stop();
-//            //表明连接断开
-//            return;
-//        }
-
-
-//        base::HeartBeat heartBeat;
-//        BasePdu *basePdu = new BasePdu;
-//        basePdu->setSID(base::SID_OTHER);
-//        basePdu->setCID(base::CID_OTHER_HEARTBEAT);
-//        basePdu->writeMessage(&heartBeat);
-//        qDebug() << "发送心跳包";
-//        ++m_heartbeat_send_times;
-//        PduSender::instance()->addMessage(basePdu);
-//    });
 }
 
 void YLMainWidget::init()
@@ -99,10 +78,15 @@ void YLMainWidget::initListWidget()
 {
     //[1] 消息列表
     YLRecentChatView *yl_recent_chat_view = new YLRecentChatView(this);
-
     yl_recent_chat_view->resize(width() - 1, height() - 250);
     yl_recent_chat_view->move(0, 220);
     vec.push_back(yl_recent_chat_view);
+
+    //[2] frient list
+    YLFriendListView *yl_friendlist_view = new YLFriendListView(this);
+    yl_friendlist_view->resize(width() - 1, height() - 250);
+    yl_friendlist_view->move(0, 220);
+    vec.push_back(yl_friendlist_view);
 
     //demo
     YLFriend y;

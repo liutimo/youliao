@@ -23,8 +23,8 @@ public:
     void onRead() override;
 };
 
-//extern std::list<BasePdu*> g_pdu_list;
-//extern Condition           g_condition;
+extern std::list<BasePdu*> g_pdu_list;
+extern Condition           g_condition;
 
 
 #endif // MSGSERVCONN_H

@@ -1,11 +1,11 @@
 #include "ylloginpanel.h"
-
 #include "YLCommonControl/ylheadandstatusframe.h"
 #include "YLCommonControl/yllineedit.h"
-#include "ylaccountlistview.h"
+#include "YLCommonControl/ylmessagebox.h"
 #include "YLMainFrame/ylmainwidget.h"
 #include "YLNetWork/ylnetservice.h"
 #include "YLNetWork/ylbusiness.h"
+#include "YLNetWork/pduhandler.h"
 #include "../yllocalsettings.h"
 #include <QLineEdit>
 #include <QPushButton>
@@ -49,19 +49,9 @@ void YLLoginPanel::init()
     pushbutton_login_->setStyleSheet(qss_login_button_);
     connect(pushbutton_login_, &QPushButton::clicked, this, &YLLoginPanel::on_login);
 
-
-    account_listview_     = new YLAccountListView(this);
-    connect(account_listview_, &YLAccountListView::selected, this, [this](const QString &account){
-        lineedit_useraccount_->setText(account);
-    });
-
-
     lineedit_passwd_->resize(200, 35);
     pushbutton_login_->resize(200, 35);
     lineedit_useraccount_->resize(200, 35);
-
-
-
 }
 
 void YLLoginPanel::initCheckBoxs()
@@ -94,19 +84,15 @@ void YLLoginPanel::resizeEvent(QResizeEvent *event)
 
 void YLLoginPanel::mousePressEvent(QMouseEvent *event)
 {
-    if (!account_listview_->geometry().contains(event->pos()))
-        account_listview_->hide();
 
     YLBasicWidget::mousePressEvent(event);
 }
 
 void YLLoginPanel::paintEvent(QPaintEvent *event)
 {
-//    QPainter painter(this);
-//    painter.setPen(Qt::NoPen);
-//    painter.drawPixmap(0, 0, width(), height(), QPixmap(":/res/LoginPanel/background.jpeg"));
-
-
+    QPainter painter(this);
+    painter.setPen(Qt::NoPen);
+    painter.drawPixmap(0, 0, width(), height(), QPixmap(":/res/LoginPanel/background.jpeg"));
 }
 
 
@@ -123,21 +109,40 @@ void YLLoginPanel::on_login()
     if (m_connected)
     {
         YLBusiness::login(lineedit_useraccount_->text(), lineedit_passwd_->text());
-//        YLMainWidget *main = new YLMainWidget;
-//        main->show();
-//        this->close();
+
+        connect(PduHandler::instance(), &PduHandler::loginStatus, this, [this](bool successed, base::UserInfo *userInfo){
+            if (successed)
+            {
+                YLMainWidget *mainWidget = new YLMainWidget;
+                mainWidget->setUserInfo(userInfo);
+                mainWidget->show();
+                close();
+                delete userInfo;
+            }
+            else
+            {
+                YLMessageBox *message = new YLMessageBox(this);
+                message->setTitle("网络错误");
+                message->setToolTip("无法连接登录服务器");
+                message->exec();
+            }
+        });
     }
 }
 
 //network
-
 void YLLoginPanel::connectToLoginServer()
 {
     YLNetService *ylNetService = YLNetService::instance();
     connect(ylNetService, &YLNetService::connectLoginServerStatus, this, [this](bool status){
        m_connected = status;
        if (!m_connected)
-           QMessageBox::about(this, "网络错误", "无法连接登录服务器");
+       {
+           YLMessageBox *message = new YLMessageBox(this);
+           message->setTitle("网络错误");
+           message->setToolTip("无法连接登录服务器");
+           message->exec();
+       }
     }, Qt::QueuedConnection);
 }
 

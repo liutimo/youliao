@@ -18,7 +18,8 @@ HEADERS += \
     $$PWD/login/msgservconn.h \
     $$PWD/ylnetservice.h \
     $$PWD/pdusender.h \
-    $$PWD/ylbusiness.h
+    $$PWD/ylbusiness.h \
+    $$PWD/pduhandler.h
 
 SOURCES += \
     $$PWD/base/BaseConn.cpp \
@@ -35,5 +36,6 @@ SOURCES += \
     $$PWD/login/msgservconn.cpp \
     $$PWD/ylnetservice.cpp \
     $$PWD/pdusender.cpp \
-    $$PWD/ylbusiness.cpp
+    $$PWD/ylbusiness.cpp \
+    $$PWD/pduhandler.cpp
 

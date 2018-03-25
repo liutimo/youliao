@@ -10,7 +10,7 @@ YLBusiness::YLBusiness(QObject *parent) : QObject(parent)
 }
 
 
-void YLBusiness::login(const QString &account, const QString &password, base::UserStatusType type)
+void YLBusiness::login(const QString &account, const QString &password, UserStatusType type)
 {
     login::UserLoginRequest request;
     request.set_user_name(account.toStdString());

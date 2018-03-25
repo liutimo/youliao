@@ -2,8 +2,9 @@
 #include "../base/netlib.h"
 #include "../base/util.h"
 #include "protobuf/youliao.base.pb.h"
+#include "protobuf/youliao.login.pb.h"
 #include "../pdusender.h"
-//#include "pduhandler.h"
+#include "../pduhandler.h"
 static BaseConnMap_t g_msg_serv_conn_map;
 
 MsgServConn::MsgServConn()
@@ -63,13 +64,13 @@ void MsgServConn::connect(const std::string &server_ip, uint16_t port)
 void MsgServConn::handlePdu(BasePdu *pdu)
 {
     //忽略心跳包
-//    if (pdu->getCID() == base::CID_HEARTBEAT)
-//    {
-//         delete pdu;
-//         rteurn;
-//    }
-//    g_condition.lock();
-//    g_pdu_list.push_back(pdu);
-//    g_condition.signal();
-//    g_condition.unlock();
+    if (pdu->getCID() == base::CID_OTHER_HEARTBEAT)
+    {
+         delete pdu;
+         return;
+    }
+    g_condition.lock();
+    g_pdu_list.push_back(pdu);
+    g_condition.signal();
+    g_condition.unlock();
 }
