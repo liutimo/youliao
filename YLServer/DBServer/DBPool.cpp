@@ -55,7 +55,7 @@ int ResultSet::getInt(const std::string &key)
 std::string ResultSet::getString(const std::string &key)
 {
     int index = _GetIndex(key);
-    if (index == -1)
+    if (index == -1 | m_row[index] == nullptr)
         return std::string();
     else
         return m_row[index];

@@ -13,14 +13,15 @@
 #define DBSERVER_LOGINMODEL_H
 
 #include <string>
-
+#include "pdu/protobuf/youliao.base.pb.h"
+using namespace youliao::pdu;
 class LoginModel {
 public:
     LoginModel();
 
     ~LoginModel();
 
-    bool doLogin(const std::string &str_name, const std::string &str_pass);
+    bool doLogin(const std::string &str_name, const std::string &str_pass, base::UserInfo &userInfo);
 
 private:
 

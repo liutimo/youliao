@@ -22,6 +22,7 @@ public:
     ProxyConn();
     ~ProxyConn();
 
+    void onRead() override;
     void onConnect(net_handle_t handle) override ;
     void close();
     void onClose() override ;

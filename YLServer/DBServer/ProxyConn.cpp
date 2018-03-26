@@ -8,19 +8,30 @@
 *
 ================================================================*/
 
-
+#include <list>
 #include "ProxyConn.h"
 #include "network/netlib.h"
+#include "thread/ThreadPool.h"
+#include "thread/Lock.h"
 #include "pdu/protobuf/youliao.base.pb.h"
 #include "pdu/protobuf/youliao.login.pb.h"
 #include "pdu/protobuf/youliao.server.pb.h"
-
-#include "business/LoginModel.h"
-
+#include "DBProxyTask.h"
+#include "HandlerMap.h"
+using namespace youliao::thread;
 using namespace youliao::network;
 using namespace youliao::pdu;
 
 static BaseConnMap_t g_proxy_conn_map;
+
+Mutex g_mutex;
+std::list<Task*> g_task_list;
+
+//处理pdu
+ThreadPool g_thread_pool;
+
+
+
 
 ProxyConn::ProxyConn() : BaseConn()
 {
@@ -58,55 +69,41 @@ void ProxyConn::onClose()
     close();
 }
 
-void ProxyConn::handlePdu(BasePdu *pdu)
+//pdu需要在其余线程中处理,重新实现该函数
+void ProxyConn::onRead()
 {
-    switch (pdu->getCID() ) {
-        case base::CID_OTHER_HEARTBEAT:
-            std::cout << "心跳包" << std::endl;
+    //全部读入缓冲区
+    for (;;)
+    {
+        int free_buf_size = m_read_buf.getFreeSize();
+        if (free_buf_size < NETWORK_MAX_SIZE)
+            m_read_buf.extend(NETWORK_MAX_SIZE);
+
+        int ret = netlib_recv(m_handle, m_read_buf.getCurrWritePos(), NETWORK_MAX_SIZE);
+        if (ret <= 0)
             break;
-        case base::CID_SERVER_VALIDATE_REQUEST:
-        {
-            server::ValidateRequest validateRequest;
-            validateRequest.ParseFromString(pdu->getMessage());
-
-            server::ValidateRespone validateRespone;
-            validateRespone.set_attach_data(validateRequest.attach_data());
-
-            LoginModel loginModel;
-
-            if (loginModel.doLogin(validateRequest.user_name(), validateRequest.user_pwd()))
-            {
-                std::cout << "login success!" << std::endl;
-
-                validateRespone.set_user_name(validateRequest.user_name());
-                validateRespone.set_result_code(0);
-                validateRespone.set_result_string("登录成功");
-
-                base::UserInfo *userInfo = new base::UserInfo;
-                userInfo->set_user_nick("刘提莫");
-                userInfo->set_user_sign_info("carry");
-                userInfo->set_user_email("77956431@qq.com");
-                userInfo->set_user_header_url("http://www.11.com/1.png");
-                userInfo->set_user_id(1);
-                userInfo->set_user_sex(1);
-                userInfo->set_user_phone("15367877419");
-
-                validateRespone.set_allocated_user_info(userInfo);
-            }
-            else
-            {
-                std::cout << "login error!" << std::endl;
-                validateRespone.set_result_code(1);
-                validateRespone.set_result_string("登录失败， 用户名或密码错误！");
-            }
-
-            BasePdu *pdu1 = new BasePdu;
-            pdu1->setSID(base::SID_OTHER);
-            pdu1->setCID(base::CID_SERVER_VALIDATE_RESPONE);
-            pdu1->writeMessage(&validateRespone);
-
-            sendBasePdu(pdu1);
-            delete pdu1;
-        }
+        m_read_buf.incrWriteOffest(ret);
     }
+
+
+    youliao::pdu::BasePdu *basePdu = nullptr;
+
+    while ( (basePdu = youliao::pdu::BasePdu::readPduFromBuffer(m_read_buf)) != nullptr)
+    {
+        //读pdu,
+        handlePdu(basePdu);
+    }
+}
+
+void ProxyConn::handlePdu(BasePdu *pdu) {
+    auto cid = pdu->getCID();
+
+    if (cid == base::CID_OTHER_HEARTBEAT) {
+        //delete pdu;
+        return;
+    }
+
+    DBProxyTask *dbProxyTask = new DBProxyTask(pdu, m_handle, HandlerMap::instance()->getHandler(cid));
+
+    g_thread_pool.addTask(dbProxyTask);
 }

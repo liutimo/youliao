@@ -21,7 +21,7 @@ LoginModel::~LoginModel()
 
 }
 
-bool LoginModel::doLogin(const std::string &str_name, const std::string &str_pass)
+bool LoginModel::doLogin(const std::string &str_name, const std::string &str_pass, base::UserInfo &userInfo)
 {
     bool ret = false;
     DBManager *dbManager = DBManager::instance();
@@ -39,7 +39,16 @@ bool LoginModel::doLogin(const std::string &str_name, const std::string &str_pas
             password = resultSet->getString("user_password");
 
             if (str_pass == password)
+            {
                 ret = true;
+                userInfo.set_user_sex(resultSet->getInt("user_sex"));
+                userInfo.set_user_sign_info(resultSet->getString("user_sign_info"));
+                userInfo.set_user_email(resultSet->getString("user_email"));
+                userInfo.set_user_header_url(resultSet->getString("user_header"));
+                userInfo.set_user_phone(resultSet->getString("user_phone"));
+                userInfo.set_user_nick(resultSet->getString("user_nickname"));
+                userInfo.set_user_id(resultSet->getInt("user_id"));
+            }
         }
 
         delete resultSet;
