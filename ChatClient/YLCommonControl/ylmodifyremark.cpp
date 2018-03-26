@@ -2,7 +2,7 @@
 #include <QLabel>
 #include <QLineEdit>
 
-YLModifyRemarkWidget::YLModifyRemarkWidget(QWidget *parent) : YLMessageBox(parent)
+YLModifyRemarkWidget::YLModifyRemarkWidget(QWidget *parent) : YLMessageBox(BUTTON_OK | BUTTON_CANNEL, parent)
 {
     init();
 }

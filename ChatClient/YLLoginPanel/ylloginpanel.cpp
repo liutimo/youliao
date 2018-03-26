@@ -2,6 +2,7 @@
 #include "YLCommonControl/ylheadandstatusframe.h"
 #include "YLCommonControl/yllineedit.h"
 #include "YLCommonControl/ylmessagebox.h"
+#include "YLNetWork/http/httpdownloader.h"
 #include "YLMainFrame/ylmainwidget.h"
 #include "YLNetWork/ylnetservice.h"
 #include "YLNetWork/ylbusiness.h"
@@ -23,6 +24,26 @@ YLLoginPanel::YLLoginPanel(QWidget *parent) : YLBasicWidget(parent), m_connected
     init();
     initCheckBoxs();
     connectToLoginServer();
+
+    connect(PduHandler::instance(), &PduHandler::loginStatus, this, [this](bool successed, base::UserInfo *userInfo){
+        if (successed)
+        {
+            YLMainWidget *mainWidget = new YLMainWidget;
+            mainWidget->setUserInfo(userInfo);
+            mainWidget->show();
+            userInfo = nullptr;
+            close();
+        }
+        else
+        {
+            YLMessageBox *message = new YLMessageBox(BUTTON_OK,this);
+            message->setTitle("网络错误");
+            message->setToolTip("无法连接登录服务器");
+            message->exec();
+        }
+    }, Qt::QueuedConnection);
+
+
 }
 
 void YLLoginPanel::init()
@@ -90,9 +111,9 @@ void YLLoginPanel::mousePressEvent(QMouseEvent *event)
 
 void YLLoginPanel::paintEvent(QPaintEvent *event)
 {
-    QPainter painter(this);
-    painter.setPen(Qt::NoPen);
-    painter.drawPixmap(0, 0, width(), height(), QPixmap(":/res/LoginPanel/background.jpeg"));
+//    QPainter painter(this);
+//    painter.setPen(Qt::NoPen);
+//    painter.drawPixmap(0, 0, width(), height(), QPixmap(":/res/LoginPanel/background.jpeg"));
 }
 
 
@@ -109,24 +130,6 @@ void YLLoginPanel::on_login()
     if (m_connected)
     {
         YLBusiness::login(lineedit_useraccount_->text(), lineedit_passwd_->text());
-
-        connect(PduHandler::instance(), &PduHandler::loginStatus, this, [this](bool successed, base::UserInfo *userInfo){
-            if (successed)
-            {
-                YLMainWidget *mainWidget = new YLMainWidget;
-                mainWidget->setUserInfo(userInfo);
-                mainWidget->show();
-                close();
-                delete userInfo;
-            }
-            else
-            {
-                YLMessageBox *message = new YLMessageBox(this);
-                message->setTitle("网络错误");
-                message->setToolTip("无法连接登录服务器");
-                message->exec();
-            }
-        });
     }
 }
 
@@ -138,11 +141,11 @@ void YLLoginPanel::connectToLoginServer()
        m_connected = status;
        if (!m_connected)
        {
-           YLMessageBox *message = new YLMessageBox(this);
+           YLMessageBox *message = new YLMessageBox(BUTTON_OK, this);
            message->setTitle("网络错误");
            message->setToolTip("无法连接登录服务器");
            message->exec();
        }
-    }, Qt::QueuedConnection);
+    }, Qt::UniqueConnection);
 }
 

@@ -14,7 +14,7 @@ public:
     static uint32_t m_heartbeat_received_times;
 
 signals:
-    void loginStatus(bool successed, base::UserInfo *userInfo = nullptr);
+    void loginStatus(bool successed,  base::UserInfo *userInfo = nullptr);
 
 private:
     void _HandleBasePdu(BasePdu *pdu);

@@ -8,14 +8,17 @@
 #include "YLChatWidget/ylemoticonwidget.h"
 #include "YLChatWidget/ylmessageview.h"
 #include "YLCommonControl/ylmodifyremark.h"
+
+#include "YLNetWork/http/httpdownloader.h"
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
     YLLoginPanel w;
     w.resize(500, 400);
-//    YLMainWidget w;
     w.show();
+
 
     return a.exec();
 

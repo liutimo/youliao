@@ -13,6 +13,12 @@ typedef enum
     ID_CANNEL
 }BottonResult;
 
+typedef enum
+{
+    BUTTON_OK = 0x0001,
+    BUTTON_CANNEL = 0x0010
+}BottonType;
+
 class YLMessageBox : public YLBasicWidget
 {
     Q_OBJECT
@@ -22,9 +28,10 @@ class YLMessageBox : public YLBasicWidget
 public:
 
 
-    explicit YLMessageBox(QWidget *parent = nullptr);
+    explicit YLMessageBox(int type = BUTTON_OK | BUTTON_CANNEL, QWidget *parent = nullptr);
     BottonResult exec();
     void setTitle(const QString &title);
+    void setToolTip(const QString &toolTip);
 
 protected:
     void paintEvent(QPaintEvent *event);
@@ -32,12 +39,19 @@ protected:
 
 private:
     void init();
+    void initButtonOk(const QPoint &p);
+    void initButtonCannel(const QPoint &p);
 
     QLabel       *m_title;
+    QLabel       *m_tooltip;
     QPushButton  *m_ok;
     QPushButton  *m_cannel;
     QEventLoop   *m_event_loop;
     BottonResult  m_botton_reslut;
+    int           m_button_type;
+
+    QPoint point1;
+    QPoint point2;
 };
 
 #endif // YLMESSAGEBOX_H

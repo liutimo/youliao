@@ -10,6 +10,7 @@
 #include "ylrecentchatview.h"
 #include "ylfriendlistview.h"
 #include "YLCommonControl/ylmessagebox.h"
+#include "YLNetWork/http/httpdownloader.h"
 #include <QTimer>
 
 using namespace youliao::pdu;
@@ -31,7 +32,7 @@ void YLMainWidget::init()
     min_button_->setObjectName("min_button_");
     min_button_->setStyleSheet(qss_min_button);
     connect(min_button_, &QPushButton::clicked, this, [this](){
-        YLMessageBox *message = new YLMessageBox(this);
+        YLMessageBox *message = new YLMessageBox(BUTTON_OK | BUTTON_CANNEL, this);
         message->exec();
     });
 
@@ -147,5 +148,15 @@ void YLMainWidget::setUserInfo(UserInfo *userInfo)
 {
     nickname_label_->setText(userInfo->user_nick().c_str());
     signature_lineedit_->setText(userInfo->user_sign_info().c_str());
+
+    HttpDownloader *h = new HttpDownloader;
+    h->start("http://gss0.bdstatic.com/70cFfyinKgQIm2_p8IuM_a/daf/pic/item/6a63f6246b600c33e83325c1164c510fd9f9a175.jpg");
+    connect(h, &HttpDownloader::downloadFinshed, this, [this, h](){
+        head_status_frame_->setHeadFromLocal("./" + h->getFilename());
+    });
+    connect(h, &HttpDownloader::urlInvalid, this, []() {
+        qDebug() << "error";
+    });
+
 }
 

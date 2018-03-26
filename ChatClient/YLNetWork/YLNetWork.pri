@@ -19,7 +19,8 @@ HEADERS += \
     $$PWD/ylnetservice.h \
     $$PWD/pdusender.h \
     $$PWD/ylbusiness.h \
-    $$PWD/pduhandler.h
+    $$PWD/pduhandler.h \
+    $$PWD/http/httpdownloader.h
 
 SOURCES += \
     $$PWD/base/BaseConn.cpp \
@@ -37,5 +38,6 @@ SOURCES += \
     $$PWD/ylnetservice.cpp \
     $$PWD/pdusender.cpp \
     $$PWD/ylbusiness.cpp \
-    $$PWD/pduhandler.cpp
+    $$PWD/pduhandler.cpp \
+    $$PWD/http/httpdownloader.cpp
 
