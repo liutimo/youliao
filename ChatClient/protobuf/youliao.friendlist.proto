@@ -1,0 +1,27 @@
+syntax = "proto3";
+package youliao.pdu.friendlist;
+import "youliao.base.proto";
+
+
+message Group_Friend
+{
+    uint32 group_id   = 1;          //好友列表 组id
+    string   group_name = 2;        //好友列表 组名
+    repeated youliao.pdu.base.UserInfo friend = 3; //该组下的好友
+}
+
+
+//请求好友列表
+message FriendListRequest
+{
+    uint32 user_id = 1;
+    bytes attach_data = 20;
+}
+
+//响应
+message FriendListRespone
+{
+    map<uint32, Group_Friend> friend_list = 1;
+    bytes attach_data = 20;
+}
+
