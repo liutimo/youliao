@@ -32,5 +32,6 @@ private:
 
 };
 
+ProxyConn *findProxyConn(net_handle_t handle);
 
 #endif //DBSERVER_PROXYCONN_H

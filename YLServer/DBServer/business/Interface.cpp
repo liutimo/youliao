@@ -3,8 +3,12 @@
 //
 
 #include "Interface.h"
-#include "pdu/protobuf/youliao.server.pb.h"
+#include "../ProxyConn.h"
 #include "LoginModel.h"
+#include "FriendListModel.h"
+
+#include "pdu/protobuf/youliao.server.pb.h"
+#include "pdu/protobuf/youliao.friendlist.pb.h"
 
 
 namespace DB_INTERFACE
@@ -39,6 +43,31 @@ namespace DB_INTERFACE
         pdu1->writeMessage(&validateRespone);
 
 //        sendBasePdu(pdu1);
+        findProxyConn(conn_uuid)->sendBasePdu(pdu1);
+        delete pdu1;
         //add to thread pool
     }
+
+    void getFriendList(BasePdu* basePdu, uint32_t conn_uuid)
+    {
+        friendlist::FriendListRequest friendListRequest;
+        friendListRequest.ParseFromString(basePdu->getMessage());
+
+        friendlist::FriendListRespone friendListRespone;
+        friendListRespone.set_attach_data(friendListRequest.attach_data());
+
+        FriendListModel friendListModel;
+        friendListModel.getFriendList(friendListRequest.user_id(), friendListRespone);
+
+
+
+        BasePdu *pdu = new BasePdu;
+        pdu->setSID(base::SID_FRIEND_LIST);
+        pdu->setCID(base::CID_FRIENDLIST_GET_RESPONE);
+        pdu->writeMessage(&friendListRespone);
+
+        findProxyConn(conn_uuid)->sendBasePdu(pdu);
+        delete pdu;
+    }
+
 }

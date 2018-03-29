@@ -166,6 +166,28 @@ inline bool OtherCID_Parse(
   return ::google::protobuf::internal::ParseNamedEnum<OtherCID>(
     OtherCID_descriptor(), name, value);
 }
+enum FriendListCID {
+  CID_FRIENDLIST_ZERO = 0,
+  CID_FRIENDLIST_GET_REQUEST = 1025,
+  CID_FRIENDLIST_GET_RESPONE = 1026,
+  FriendListCID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  FriendListCID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+bool FriendListCID_IsValid(int value);
+const FriendListCID FriendListCID_MIN = CID_FRIENDLIST_ZERO;
+const FriendListCID FriendListCID_MAX = CID_FRIENDLIST_GET_RESPONE;
+const int FriendListCID_ARRAYSIZE = FriendListCID_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* FriendListCID_descriptor();
+inline const ::std::string& FriendListCID_Name(FriendListCID value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    FriendListCID_descriptor(), value);
+}
+inline bool FriendListCID_Parse(
+    const ::std::string& name, FriendListCID* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<FriendListCID>(
+    FriendListCID_descriptor(), name, value);
+}
 enum ResultType {
   NONE = 0,
   NO_MSG_SERVER = 1,
@@ -299,9 +321,9 @@ class UserInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(
 
   // accessors -------------------------------------------------------
 
-  // string user_nick = 3;
+  // string user_nick = 4;
   void clear_user_nick();
-  static const int kUserNickFieldNumber = 3;
+  static const int kUserNickFieldNumber = 4;
   const ::std::string& user_nick() const;
   void set_user_nick(const ::std::string& value);
   #if LANG_CXX11
@@ -313,9 +335,9 @@ class UserInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(
   ::std::string* release_user_nick();
   void set_allocated_user_nick(::std::string* user_nick);
 
-  // string user_header_url = 4;
+  // string user_header_url = 5;
   void clear_user_header_url();
-  static const int kUserHeaderUrlFieldNumber = 4;
+  static const int kUserHeaderUrlFieldNumber = 5;
   const ::std::string& user_header_url() const;
   void set_user_header_url(const ::std::string& value);
   #if LANG_CXX11
@@ -327,9 +349,9 @@ class UserInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(
   ::std::string* release_user_header_url();
   void set_allocated_user_header_url(::std::string* user_header_url);
 
-  // string user_email = 5;
+  // string user_email = 6;
   void clear_user_email();
-  static const int kUserEmailFieldNumber = 5;
+  static const int kUserEmailFieldNumber = 6;
   const ::std::string& user_email() const;
   void set_user_email(const ::std::string& value);
   #if LANG_CXX11
@@ -341,9 +363,9 @@ class UserInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(
   ::std::string* release_user_email();
   void set_allocated_user_email(::std::string* user_email);
 
-  // string user_phone = 6;
+  // string user_phone = 7;
   void clear_user_phone();
-  static const int kUserPhoneFieldNumber = 6;
+  static const int kUserPhoneFieldNumber = 7;
   const ::std::string& user_phone() const;
   void set_user_phone(const ::std::string& value);
   #if LANG_CXX11
@@ -355,9 +377,9 @@ class UserInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(
   ::std::string* release_user_phone();
   void set_allocated_user_phone(::std::string* user_phone);
 
-  // string user_sign_info = 7;
+  // string user_sign_info = 8;
   void clear_user_sign_info();
-  static const int kUserSignInfoFieldNumber = 7;
+  static const int kUserSignInfoFieldNumber = 8;
   const ::std::string& user_sign_info() const;
   void set_user_sign_info(const ::std::string& value);
   #if LANG_CXX11
@@ -375,9 +397,15 @@ class UserInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(
   ::google::protobuf::uint32 user_id() const;
   void set_user_id(::google::protobuf::uint32 value);
 
-  // uint32 user_sex = 2;
+  // uint32 user_account = 2;
+  void clear_user_account();
+  static const int kUserAccountFieldNumber = 2;
+  ::google::protobuf::uint32 user_account() const;
+  void set_user_account(::google::protobuf::uint32 value);
+
+  // uint32 user_sex = 3;
   void clear_user_sex();
-  static const int kUserSexFieldNumber = 2;
+  static const int kUserSexFieldNumber = 3;
   ::google::protobuf::uint32 user_sex() const;
   void set_user_sex(::google::protobuf::uint32 value);
 
@@ -391,6 +419,7 @@ class UserInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(
   ::google::protobuf::internal::ArenaStringPtr user_phone_;
   ::google::protobuf::internal::ArenaStringPtr user_sign_info_;
   ::google::protobuf::uint32 user_id_;
+  ::google::protobuf::uint32 user_account_;
   ::google::protobuf::uint32 user_sex_;
   mutable int _cached_size_;
   friend struct ::protobuf_youliao_2ebase_2eproto::TableStruct;
@@ -517,7 +546,21 @@ inline void UserInfo::set_user_id(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:youliao.pdu.base.UserInfo.user_id)
 }
 
-// uint32 user_sex = 2;
+// uint32 user_account = 2;
+inline void UserInfo::clear_user_account() {
+  user_account_ = 0u;
+}
+inline ::google::protobuf::uint32 UserInfo::user_account() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.UserInfo.user_account)
+  return user_account_;
+}
+inline void UserInfo::set_user_account(::google::protobuf::uint32 value) {
+  
+  user_account_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.base.UserInfo.user_account)
+}
+
+// uint32 user_sex = 3;
 inline void UserInfo::clear_user_sex() {
   user_sex_ = 0u;
 }
@@ -531,7 +574,7 @@ inline void UserInfo::set_user_sex(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:youliao.pdu.base.UserInfo.user_sex)
 }
 
-// string user_nick = 3;
+// string user_nick = 4;
 inline void UserInfo::clear_user_nick() {
   user_nick_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -584,7 +627,7 @@ inline void UserInfo::set_allocated_user_nick(::std::string* user_nick) {
   // @@protoc_insertion_point(field_set_allocated:youliao.pdu.base.UserInfo.user_nick)
 }
 
-// string user_header_url = 4;
+// string user_header_url = 5;
 inline void UserInfo::clear_user_header_url() {
   user_header_url_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -637,7 +680,7 @@ inline void UserInfo::set_allocated_user_header_url(::std::string* user_header_u
   // @@protoc_insertion_point(field_set_allocated:youliao.pdu.base.UserInfo.user_header_url)
 }
 
-// string user_email = 5;
+// string user_email = 6;
 inline void UserInfo::clear_user_email() {
   user_email_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -690,7 +733,7 @@ inline void UserInfo::set_allocated_user_email(::std::string* user_email) {
   // @@protoc_insertion_point(field_set_allocated:youliao.pdu.base.UserInfo.user_email)
 }
 
-// string user_phone = 6;
+// string user_phone = 7;
 inline void UserInfo::clear_user_phone() {
   user_phone_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -743,7 +786,7 @@ inline void UserInfo::set_allocated_user_phone(::std::string* user_phone) {
   // @@protoc_insertion_point(field_set_allocated:youliao.pdu.base.UserInfo.user_phone)
 }
 
-// string user_sign_info = 7;
+// string user_sign_info = 8;
 inline void UserInfo::clear_user_sign_info() {
   user_sign_info_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -834,6 +877,11 @@ template <> struct is_proto_enum< ::youliao::pdu::base::OtherCID> : ::google::pr
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::youliao::pdu::base::OtherCID>() {
   return ::youliao::pdu::base::OtherCID_descriptor();
+}
+template <> struct is_proto_enum< ::youliao::pdu::base::FriendListCID> : ::google::protobuf::internal::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::youliao::pdu::base::FriendListCID>() {
+  return ::youliao::pdu::base::FriendListCID_descriptor();
 }
 template <> struct is_proto_enum< ::youliao::pdu::base::ResultType> : ::google::protobuf::internal::true_type {};
 template <>

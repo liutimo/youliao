@@ -10,4 +10,34 @@ CREATE TABLE `yl_user` (
   `user_created` int(11) unsigned NOT NULL COMMENT '信息更新时间',
   `user_updated` int(11) unsigned NOT NULL COMMENT '账号创建时间',
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+
+
+CREATE TABLE youliao.yl_friend (
+	id int(11) NOT NULL AUTO_INCREMENT,
+	user_a_id int(11) unsigned NOT NULL COMMENT '用户A的ID',
+	user_b_id int(11) unsigned NOT NULL COMMENT '用户b的id',
+	created int(11) unsigned NOT NULL COMMENT '创建时间',
+	a_group_id int(11)  NOT NULL COMMENT '用户b在用户a的好友列表中的分组ID',
+	b_group_id int(11) DEFAULT 1 NOT NULL COMMENT '用户a在用户b的好友列表中的分组ID',
+	CONSTRAINT yl_friend_PK PRIMARY KEY (id)
+)
+ENGINE=InnoDB
+DEFAULT CHARSET=utf8
+COLLATE=utf8_general_ci ;
+CREATE INDEX yl_friend_user_a_id_IDX USING BTREE ON youliao.yl_friend (user_a_id) ;
+CREATE INDEX yl_friend_user_b_id_IDX USING BTREE ON youliao.yl_friend (user_b_id) ;
+
+
+
+CREATE TABLE youliao.yl_friend_group (
+	group_id int(11) NOT NULL AUTO_INCREMENT,
+	user_id int(11) unsigned NOT NULL COMMENT '用户id',
+	group_name varchar(64) NOT NULL COMMENT '分组名称',
+	CONSTRAINT yl_friend_group_PK PRIMARY KEY (group_id)
+)
+ENGINE=InnoDB
+DEFAULT CHARSET=utf8
+COLLATE=utf8_general_ci ;
+;

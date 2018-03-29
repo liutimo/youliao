@@ -30,6 +30,7 @@ public:
 private:
     void _HandlClientLoginRequest(BasePdu *);
     void _HandleHeartBeat(BasePdu*);
+    void _HandleFriendListGetRequest(BasePdu *);
 
 };
 

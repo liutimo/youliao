@@ -24,6 +24,7 @@ using namespace youliao::pdu;
 
 static BaseConnMap_t g_proxy_conn_map;
 
+
 Mutex g_mutex;
 std::list<Task*> g_task_list;
 
@@ -31,6 +32,16 @@ std::list<Task*> g_task_list;
 ThreadPool g_thread_pool;
 
 
+ProxyConn *findProxyConn(net_handle_t handle)
+{
+    auto iter = g_proxy_conn_map.find(handle);
+    if (iter != g_proxy_conn_map.end())
+    {
+        return (ProxyConn *)iter->second;
+    }
+
+    return nullptr;
+}
 
 
 ProxyConn::ProxyConn() : BaseConn()

@@ -37,7 +37,12 @@ enum OtherCID
 }
 
 //
-
+enum FriendListCID
+{
+    CID_FRIENDLIST_ZERO = 0x0000;
+    CID_FRIENDLIST_GET_REQUEST = 0X0401;      //获取好友列表请求
+    CID_FRIENDLIST_GET_RESPONE = 0X0402;      //         响应
+}
 
 
 //响应结果类型
@@ -61,12 +66,13 @@ enum UserStatusType
 message UserInfo
 {
     uint32 user_id = 1;
-    uint32 user_sex = 2;
-    string user_nick = 3;
-    string user_header_url =4;
-    string user_email = 5;
-    string user_phone = 6;
-    string user_sign_info = 7;
+    uint32 user_account = 2;
+    uint32 user_sex = 3;
+    string user_nick = 4;
+    string user_header_url =5;
+    string user_email = 6;
+    string user_phone = 7;
+    string user_sign_info = 8;
 }
 
 //心跳包

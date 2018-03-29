@@ -13,6 +13,9 @@ namespace DB_INTERFACE
 {
     //用户登录
     void login(BasePdu* basePdu, uint32_t conn_uuid);
+
+    //获取好友列表
+    void getFriendList(BasePdu* basePdu, uint32_t conn_uuid);
 }
 
 

@@ -15,11 +15,19 @@
 #include "pdu/protobuf/youliao.base.pb.h"
 #include "pdu/protobuf/youliao.login.pb.h"
 #include "pdu/protobuf/youliao.server.pb.h"
+#include "pdu/protobuf/youliao.friendlist.pb.h"
 
 using namespace youliao::util;
 
 static ClientConnMap_t g_client_conn_map;
 
+template <class T>
+void set_attach_data(T &t, net_handle_t data)
+{
+    SimpleBuffer simpleBuffer;
+    simpleBuffer.writeUInt32(data);
+    t.set_attach_data(simpleBuffer.getBuffer(), simpleBuffer.getWriteOffest());
+}
 
 ClientConn *findConn(uint32_t handle)
 {
@@ -72,6 +80,9 @@ void ClientConn::handlePdu(BasePdu *pdu)
         case base::CID_OTHER_HEARTBEAT:
             _HandleHeartBeat(pdu);
             break;
+        case base::CID_FRIENDLIST_GET_REQUEST:
+            _HandleFriendListGetRequest(pdu);
+            break;
         default:
             break;
     }
@@ -87,15 +98,15 @@ void ClientConn::_HandlClientLoginRequest(BasePdu *pdu)
     server::ValidateRequest validateRequest;
     validateRequest.set_user_name(request.user_name());
     validateRequest.set_user_pwd(request.user_password());
-    SimpleBuffer simpleBuffer;
-    simpleBuffer.writeUInt32(m_handle);
-    validateRequest.set_attach_data(simpleBuffer.getBuffer(), simpleBuffer.getWriteOffest());
+    set_attach_data(validateRequest, m_handle);
+
     DBServConn *pDbServConn = get_db_server_conn();
     BasePdu *basePdu = new BasePdu;
     basePdu->setSID(base::SID_OTHER);
     basePdu->setCID(base::CID_SERVER_VALIDATE_REQUEST);
     basePdu->writeMessage(&validateRequest);
     pDbServConn->sendBasePdu(basePdu);
+    delete basePdu;
 
 }
 
@@ -103,4 +114,30 @@ void ClientConn::_HandleHeartBeat(BasePdu *pdu)
 {
     log("received heartbeat!");
     sendBasePdu(pdu);
+}
+
+
+void ClientConn::_HandleFriendListGetRequest(BasePdu *pdu)
+{
+
+    std::cout << "收到来自" << m_handle << "的好友列表请求" << std::endl;
+
+    friendlist::FriendListRequest friendListRequest;
+    friendListRequest.ParseFromString(pdu->getMessage());
+    log("获取用户id=%d的好友列表", friendListRequest.user_id());
+
+    set_attach_data(friendListRequest, m_handle);
+
+    DBServConn *dbServConn = get_db_server_conn();
+
+    if (dbServConn)
+    {
+        BasePdu *basePdu = new BasePdu;
+        basePdu->setSID(base::SID_FRIEND_LIST);
+        basePdu->setCID(base::CID_FRIENDLIST_GET_REQUEST);
+        basePdu->writeMessage(&friendListRequest);
+        dbServConn->sendBasePdu(basePdu);
+        delete basePdu;
+    }
+
 }
