@@ -2,6 +2,27 @@ syntax = "proto3";
 package youliao.pdu.server;
 import "youliao.base.proto";
 
+//[1]db_server
+
+//校验用户名和密码
+message ValidateRequest
+{
+    string user_name = 1;
+    string user_pwd  = 2;
+    bytes  attach_data = 20;
+}
+
+message ValidateRespone
+{
+    string user_name     = 1;
+    uint32 result_code   = 2;
+    string result_string = 3;
+    youliao.pdu.base.UserInfo user_info = 4;
+    bytes attach_data = 20;
+}
+
+
+//
 message MsgServerInfo
 {
     string ip             = 1;

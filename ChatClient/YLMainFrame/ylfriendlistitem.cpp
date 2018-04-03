@@ -8,6 +8,7 @@
 #include "YLChatWidget/ylchatwidget.h"
 #include "YLCommonControl/ylmodifyremark.h"
 #include "ylmainwidget.h"
+#include "YLNetWork/http/httpdownloader.h"
 #include <QDebug>
 YLFriendListItem::YLFriendListItem(YLListItemType type, QWidget *parent) : QWidget(parent)
 {
@@ -15,6 +16,7 @@ YLFriendListItem::YLFriendListItem(YLListItemType type, QWidget *parent) : QWidg
     m_is_mark_top = false;
     init();
     initMenu();
+
 }
 
 void YLFriendListItem::init()
@@ -25,6 +27,11 @@ void YLFriendListItem::init()
     label_up_ = new QLabel(this);
     label_down_ = new QLabel(this);
     label_time_ = new QLabel(this);
+
+    m_http = new HttpDownloader;
+    connect(m_http, &HttpDownloader::downloadFinshed, this, [this](){
+        head_frame_->setHeadFromLocal("./" + m_http->getFilename());
+    });
 }
 
 
@@ -111,7 +118,6 @@ void YLFriendListItem::setData(const YLFriend &friend_)
 
         label_down_->setText(placeholder_text_2.arg(friend_.getFriendSigature()));
 
-        head_frame_->setHeadFromLocal(friend_.getFriendImagePath());
 
     }
     else if (item_type_ == RECENTTLYCHATITEM)   //作为最近聊天记录列表中的item
@@ -121,6 +127,9 @@ void YLFriendListItem::setData(const YLFriend &friend_)
         label_down_->setText(placeholder_text_2.arg(friend_.getFriendLastMessage()));
         head_frame_->setHeadFromLocal(friend_.getFriendImagePath());
     }
+
+
+    m_http->start(friend_.getFriendImagePath());
 }
 
 void YLFriendListItem::resizeEvent(QResizeEvent *event)

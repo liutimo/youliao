@@ -2,7 +2,7 @@
 #define YLNETSERVICE_H
 
 #include <QThread>
-
+class LoginConn;
 class YLNetService : public QThread
 {
     Q_OBJECT
@@ -26,7 +26,7 @@ private:
     explicit YLNetService(QObject *parent = nullptr);
 
     static YLNetService* m_netservice;
-
+    LoginConn *loginConn;
     uint m_reconnect_times;
 };
 

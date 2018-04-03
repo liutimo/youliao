@@ -1,7 +1,12 @@
 #include "pduhandler.h"
 #include <list>
+#include <iostream>
+
+#include <QMap>
+#include <QVector>
 #include "protobuf/youliao.base.pb.h"
 #include "protobuf/youliao.login.pb.h"
+#include "protobuf/youliao.friendlist.pb.h"
 //全局PDU list
 //主线程产生的所有pdu都会放入这个list中
 //子线程循环冲list读数据发送到消息服务器
@@ -9,14 +14,14 @@
 std::list<BasePdu*> g_pdu_list;
 Condition           g_condition;
 
-
 PduHandler* PduHandler::m_pdu_handler = nullptr;
 
 uint32_t PduHandler::m_heartbeat_received_times = 0;
 
 PduHandler::PduHandler(QObject *parent) : QThread(parent)
 {
-
+    qRegisterMetaType<group_map>("group_map");
+    qRegisterMetaType<friend_map>("friend_map");
 }
 
 PduHandler* PduHandler::instance()
@@ -57,7 +62,11 @@ void PduHandler::_HandleBasePdu(BasePdu *pdu)
     case base::CID_OTHER_HEARTBEAT:
         _HandleHeartBeat();
         break;
+    case base::CID_FRIENDLIST_GET_RESPONE:
+        _HandleFriendListGetRespone(pdu);
+        break;
     default:
+        std::cout << "CID" << pdu->getCID() << "  SID:" << pdu->getSID();
         break;
     }
 }
@@ -79,3 +88,36 @@ void PduHandler::_HandleHeartBeat()
 {
     ++m_heartbeat_received_times;
 }
+
+
+void PduHandler::_HandleFriendListGetRespone(BasePdu *pdu)
+{
+    friendlist::FriendListRespone friendlistRespone;
+    friendlistRespone.ParseFromString(pdu->getMessage());
+
+    friend_map friends;
+    group_map  groups;
+
+    auto friendList = friendlistRespone.friend_list();
+    for (auto elem : friendList)
+    {
+        auto c = elem.second;
+        int groupId = elem.first;
+        QString groupName(c.group_name().c_str());
+        groups[groupId] = groupName;
+        for (int i = 0; i < c.friend__size(); ++i)
+        {
+            auto fri = c.friend_(i);
+            YLFriend ylFriend;
+            ylFriend.setFriendAccount(QString::number(fri.user_account()));
+            ylFriend.setFriendImagePath(fri.user_header_url().c_str());
+            ylFriend.setFriendNickName(fri.user_nick().c_str());
+            ylFriend.setFriendSigature(fri.user_sign_info().c_str());
+
+            friends[groupId].push_back(ylFriend);
+        }
+    }
+
+    emit friendlist(friends, groups);
+}
+

@@ -27,10 +27,18 @@ void HttpDownloader::start(const QString &url_)
     }
 
     m_file = new QFile(m_filename);
-    if (!m_file->open(QIODevice::WriteOnly))
-        return;
 
-    startRequest(url);
+    if (m_file->exists())
+    {
+        emit downloadFinshed();
+    }
+    else
+    {
+        if (!m_file->open(QIODevice::WriteOnly))
+            return;
+
+        startRequest(url);
+    }
 }
 
 void HttpDownloader::startRequest(const QUrl &url)
@@ -38,6 +46,8 @@ void HttpDownloader::startRequest(const QUrl &url)
     m_reply = m_manager->get(QNetworkRequest(url));
     connect(m_reply, &QNetworkReply::finished, this, [this](){
         m_file->close();
+        m_reply->abort();
+        delete m_reply;
         emit downloadFinshed();
     });
     connect(m_reply, &QNetworkReply::readyRead, this, [this](){

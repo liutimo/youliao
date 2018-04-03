@@ -11,6 +11,7 @@
 #include "ylfriendlistview.h"
 #include "YLCommonControl/ylmessagebox.h"
 #include "YLNetWork/http/httpdownloader.h"
+#include "YLNetWork/ylbusiness.h"
 #include <QTimer>
 
 using namespace youliao::pdu;
@@ -81,7 +82,9 @@ void YLMainWidget::initListWidget()
     YLRecentChatView *yl_recent_chat_view = new YLRecentChatView(this);
     yl_recent_chat_view->resize(width() - 1, height() - 250);
     yl_recent_chat_view->move(0, 220);
+    yl_recent_chat_view->hide();
     vec.push_back(yl_recent_chat_view);
+
 
     //[2] frient list
     YLFriendListView *yl_friendlist_view = new YLFriendListView(this);
@@ -149,14 +152,13 @@ void YLMainWidget::setUserInfo(UserInfo *userInfo)
     nickname_label_->setText(userInfo->user_nick().c_str());
     signature_lineedit_->setText(userInfo->user_sign_info().c_str());
 
+    YLBusiness::getFriendListRequest(userInfo->user_id());
+
     HttpDownloader *h = new HttpDownloader;
-    h->start("http://gss0.bdstatic.com/70cFfyinKgQIm2_p8IuM_a/daf/pic/item/6a63f6246b600c33e83325c1164c510fd9f9a175.jpg");
+    h->start(userInfo->user_header_url().c_str());
     connect(h, &HttpDownloader::downloadFinshed, this, [this, h](){
         head_status_frame_->setHeadFromLocal("./" + h->getFilename());
-    });
-    connect(h, &HttpDownloader::urlInvalid, this, []() {
-        qDebug() << "error";
-    });
+    }, Qt::QueuedConnection);
 
 }
 

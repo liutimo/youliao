@@ -10,6 +10,7 @@ YLNetService::YLNetService(QObject *parent) : QThread(parent)
 {
    netlib_init();
    m_reconnect_times = 0;
+   loginConn = new LoginConn;
    start();
 }
 
@@ -22,8 +23,8 @@ YLNetService* YLNetService::instance()
 
 void YLNetService::run()
 {
-    LoginConn *loginConn = new LoginConn;
-    if (loginConn->connect("127.0.0.1", 5001))
+//    if (loginConn->connect("127.0.0.1", 5001))
+    if (loginConn->connect("182.254.219.254", 5001))
     {
         m_reconnect_times = 0;
         emit connectLoginServerStatus(true);

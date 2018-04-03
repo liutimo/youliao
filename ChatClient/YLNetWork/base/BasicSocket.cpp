@@ -112,13 +112,14 @@ int BaseSocket::connect(const std::string &serv_ip, uint16_t port, callback_t ca
 
     int ret = ::connect(m_handle, (sockaddr*)&t_sockaddr, sizeof(t_sockaddr));
 
+    _SetNonBlock();
+    _SetNoDelay();
     if (ret == NETWORK_ERROR) {
         log("error str = %s", _GetErrorStr());
         return NETWORK_ERROR;
     }
 
-    _SetNonBlock();
-    _SetNoDelay();
+
     m_state = BASESOCKET_STATE_CONNECTING;
 
     //加入全局map

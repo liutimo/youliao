@@ -12,6 +12,7 @@ class YLBusiness : public QObject
 public:
     explicit YLBusiness(QObject *parent = nullptr);
     static void login(const QString &account, const QString &password, UserStatusType type = USER_STATUS_ONLINE);
+    static void getFriendListRequest(uint32_t user_id);
 };
 
 #endif // YLBUSINESS_H

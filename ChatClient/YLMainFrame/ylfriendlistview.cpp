@@ -4,17 +4,34 @@
 #include <QLineEdit>
 #include <QMouseEvent>
 #include <QContextMenuEvent>
-YLFriendListView::YLFriendListView(QWidget *parent) : QListWidget(parent)
+#include "ylfriendlistitem.h"
+
+//network
+#include "YLNetWork/pduhandler.h"
+
+
+
+YLFriendListView::YLFriendListView(QWidget *parent) : QListWidget(parent),
+    m_current_press_item(nullptr)
 {
     setFocusPolicy(Qt::NoFocus);       // 去除item选中时的虚线边框
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    setStyleSheet(qss_this);
+    setStyleSheet(qss_this + qss_scroll_bar);
     setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
-    m_current_press_item = nullptr;
-
     initMenu();
-    updateList();
+    connect(this, &YLFriendListView::itemDoubleClicked, this, [this](QListWidgetItem *item){
+        if (qFind(m_group_item, item) != m_group_item.cend())
+        {
+            QString groupName = item->text().split(QRegExp("(\\(\\d/\\d\\))")).at(0);
+            int groupId = m_group.key(groupName);
+            m_group_show[groupId] = !m_group_show[groupId];
+            updateFriendList(m_friends, m_group);
+        }
+
+    });
+
+    connect(PduHandler::instance(), &PduHandler::friendlist, this, &YLFriendListView::updateFriendList);
 }
 
 YLFriendListView::~YLFriendListView()
@@ -23,11 +40,6 @@ YLFriendListView::~YLFriendListView()
     delete m_blank_menu;
 }
 
-void YLFriendListView::setData(const QVector<QPair<QString, QVector<YLFriend> > > &data)
-{
-    data_ = data;
-    updateList();
-}
 
 void YLFriendListView::initMenu()
 {
@@ -52,26 +64,56 @@ void YLFriendListView::initMenu()
 
 }
 
-void YLFriendListView::updateList()
+
+void YLFriendListView::updateFriendList(const QMap<int, QVector<YLFriend>> &friends, const QMap<int, QString> &groups)
 {
-    QListWidgetItem *item = new QListWidgetItem("未命名(0/0)");
-    item->setSizeHint(QSize(width(), 30));
-    addItem(item);
-    m_group_item.push_back(item);
-    for (auto pair : data_)
+    clear();
+    m_group_item.clear();
+    m_friends = friends;
+    m_group = groups;
+    for (auto elem : m_friends)
     {
-        //pair.first 是 组名
-        //pai.second 是 该组下好友的数量
+
+        int groupId = m_friends.key(elem);
+        QString groupName = m_group[groupId];
+        auto iter = m_group_show.find(groupId);
+        if (iter == m_group_show.end())
+            m_group_show[groupId] = false;
+
+
+
+        if (m_group_show[groupId] == true)
+        {
+            QListWidgetItem *item = new QListWidgetItem(QIcon(":/res/MainFrame/down.png"), groupName + QString("(%1/%1)").arg(elem.size()));
+            item->setSizeHint(QSize(width() - 30, 35));
+            addItem(item);
+            m_group_item.push_back(item);
+            for (auto fri : elem)
+            {
+                item = new QListWidgetItem;
+                addItem(item);
+                item->setSizeHint(QSize(width() - 30, 56));
+                YLFriendListItem *item_widget = new YLFriendListItem(YLFriendListItem::FRIENDITEM);
+                item_widget->setData(fri);
+                setItemWidget(item, item_widget);
+            }
+        }
+        else
+        {
+            QListWidgetItem *item = new QListWidgetItem(QIcon(":/res/MainFrame/right.png"), groupName + QString("(%1/%1)").arg(elem.size()));
+            item->setSizeHint(QSize(width() - 30, 35));
+            addItem(item);
+            m_group_item.push_back(item);
+        }
     }
 }
-
 
 void YLFriendListView::mousePressEvent(QMouseEvent *event)
 {
     QListWidget::mousePressEvent(event);
     if (event->button() == Qt::RightButton)
     {
-       m_current_press_item = itemAt(event->pos());
+        m_current_press_item = itemAt(event->pos());
     }
 }
 

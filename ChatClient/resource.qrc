@@ -281,5 +281,7 @@
         <file>res/MainFrame/scrollbar_arrowdown_down.png</file>
         <file>res/1.PNG</file>
         <file>res/MainFrame/aio_top_mark.png</file>
+        <file>res/MainFrame/right.png</file>
+        <file>res/MainFrame/down.png</file>
     </qresource>
 </RCC>
