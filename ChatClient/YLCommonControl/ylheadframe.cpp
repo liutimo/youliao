@@ -33,7 +33,9 @@ void YLHeadFrame::paintEvent(QPaintEvent *e)
 
     p.setClipPath(path);
     p.setRenderHint(QPainter::SmoothPixmapTransform);
-    p.drawPixmap(2, 2, width() - 4, height() - 4, QPixmap(path_.isEmpty() ? ":/res/1.jpg" : path_));
+    p.drawPixmap(2, 2, width() - 4, height() - 4,
+                 QPixmap(path_.isEmpty() ? ":/res/1.jpg" : path_).scaled(width() - 6, height() - 6,
+                 Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
 }
 
 

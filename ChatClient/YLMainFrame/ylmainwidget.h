@@ -10,6 +10,7 @@ class YLSignatureLineEdit;
 class YLHeadAndStatusFrame;
 class YLNavigationBar;
 class QTimer;
+class HttpDownloader;
 
 using namespace youliao::pdu::base;
 class YLMainWidget : public YLBasicWidget
@@ -19,6 +20,8 @@ public:
     explicit YLMainWidget(QWidget *parent = nullptr);
 
     void setUserInfo(UserInfo *);
+
+    void startHeartBeat();
 
     static QPoint center;
 
@@ -48,25 +51,25 @@ protected:
     void paintEvent(QPaintEvent *event);
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
+    void closeEvent(QCloseEvent *event);
 private:
     //窗口顶部按钮
     QPushButton *min_button_;
     QPushButton *skin_button_;
     QLabel      *logo_label_;
-
     //窗口中上部(账号信息)
     YLHeadAndStatusFrame *head_status_frame_;
     QLabel               *nickname_label_;
     YLSignatureLineEdit  *signature_lineedit_;
-
     //搜索框
     YLSearchLineEdit *search_lineedit_;
-
     //导航栏
     YLNavigationBar *navigation_bar_;
-
     //子窗口
     QVector<QWidget *> vec;
+    UserInfo *m_user_info;
+    QTimer *m_timer;
+    HttpDownloader *m_http_dowloader;
 };
 
 #endif // YLMAINWIDGET_H

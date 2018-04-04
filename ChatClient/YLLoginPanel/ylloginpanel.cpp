@@ -30,6 +30,7 @@ YLLoginPanel::YLLoginPanel(QWidget *parent) : YLBasicWidget(parent), m_connected
         {
             YLMainWidget *mainWidget = new YLMainWidget;
             mainWidget->setUserInfo(userInfo);
+            mainWidget->startHeartBeat();
             mainWidget->show();
             userInfo = nullptr;
             close();

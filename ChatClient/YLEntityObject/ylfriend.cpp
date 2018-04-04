@@ -7,6 +7,8 @@ YLFriend::YLFriend()
 
 YLFriend & YLFriend::operator =(const YLFriend &f)
 {
+    friend_id_ = f.friend_id_;
+
     friend_account_ = f.friend_account_;
 
     friend_nickname_ = f.friend_nickname_;

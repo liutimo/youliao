@@ -9,7 +9,7 @@
         p{
             color:  black;
             font-family: "Arial", "san-serif";
-            font-size: 14px;
+            font-size: 16px;
             display: inline;
         }
         /*自己的消息*/
@@ -27,6 +27,15 @@
             right: 1px;
             border-radius: 5px;
             }
+        .divMyHead{
+            moz-user-select: -moz-none;
+            -moz-user-select: none;
+            -o-user-select:none;
+            -khtml-user-select:none;
+            -webkit-user-select:none;
+            -ms-user-select:none;
+            user-select:none;
+         }
         /*对方的消息*/
         .otherMsg{
             max-height: 300px;
@@ -40,8 +49,17 @@
             float: left;
             margin:5px 0px 0px 0px;
             left: 1px;
-            border-radius: 5px;
+            border-radius: 50% 50% 50% 50%;
         }
+        .divotherHead{
+            moz-user-select: -moz-none;
+            -moz-user-select: none;
+            -o-user-select:none;
+            -khtml-user-select:none;
+            -webkit-user-select:none;
+            -ms-user-select:none;
+            user-select:none;
+         }
         /*实现对方发送来的消息的方框*/
         .triangle-left{
             float:left;
@@ -49,10 +67,10 @@
             border:1px solid #ffffff;
             border-radius:5px;
             padding:4px;
-            background:#FF0000;
+            background:#FFFFFF;
             position:relative;
             display:inline-block;
-            margin:5px 0px 5px 20px;
+            margin:5px 10px 5px 10px;
             word-wrap: break-word;
         }
 
@@ -63,7 +81,7 @@
         }
         /*实现对方消息的那个小三角，小三角的实现其实是将一个正方形对角线划分为四个小三角，其余的三个设置颜色不可见，只将对自己有用的那一个留下来*/
         .triangle-left.left:before{
-            border-color:rgba(0, 0, 0, 0) #FF0000 rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
+            border-color:rgba(0, 0, 0, 0) #FFFFFF rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
             border-width:5px 5px 5px 0;
             border-style:solid;
             bottom:auto;
@@ -117,24 +135,34 @@
             right:-6px;
             top:8px;
         }
+
         </style>
 <title>ss </title >
 
 
-    <script src="js/qwebchannel.js"></script>
+        <script src="js/qwebchannel.js"></script>
+
         <script language="JavaScript" >
 
-        window.onload = function(){
+        function mouseDown(e)
+        {
+            if(e.button ==2)
+            {
+                var target = e.target || e.srcElement;
+                var text = target.innerHTML;
 
-           document.getElementById("t").onmousedown = function(e){
-               if(e.button ==2){
-                new QWebChannel(qt.webChannelTransport, function(channel) {
-                 window.bridge = channel.objects.T;
-                 bridge.showContentPMenu();
-               });
-               }
-           }
-       }
+                new QWebChannel(qt.webChannelTransport, function(channel)
+                {
+                    window.bridge = channel.objects.T;
+                    bridge.showContentPMenu(text);
+                });
+            }
+        }
+
+        document.ondragstart = function(event)
+        {
+            return false;
+        };
 
         function img()
         {
@@ -147,36 +175,29 @@
 
         function clear(){
             document.body.innerHTML=""
-}
+        }
+
+        function keepOnBottom()
+        {
+            var div = document.getElementById('content');
+            div.scrollTop = div.scrollHeight;
+        }
         </script>
     </head>
     <body id="content" style="background:#efefef">
-        <div style="overflow:hidden;">
-            <p class="divMyHead">
-                <img src="qrc:/res/1.jpg" width="30px" heigth="30px">
-            </p>
-            <p id="t" class="triangle-right right">
-             dasdasdasdas,ha ma pi初始化youliao
-
-            </p>
-        </div>
 
         <div style='overflow:hidden;'>
-            <p class='divotherhead'>
-                <img src="qrc:/res/2.jpeg" width="30px" heigth="30px">
+            <p class='divotherhead' >
+                <img src="qrc:/res/2.jpeg" width="40px" heigth="40px">
             </p>
-            <p id="t" class='triangle-left left'>
-                sadasdasdasdasdasdads
+            <p id="t" class='triangle-left left' onmousedown="mouseDown(event)">
+                I'm really like you!
             </p>
         </div>
-        <div style="overflow:hidden;">
-            <p class="divMyHead">
-                <img src="qrc:/res/1.jpg" width="30px" heigth="30px">
-            </p>
-            <p id="t" class="triangle-right right">
 
-             js: Uncaught SyntaxError: Unexpected identifier
-            </p>
-        </div>
+        <script src="js/jquery-2.1.1.min.js">
+
+          </script>
     </body>
+
 </html>

@@ -2,7 +2,7 @@
 
 PduSender* PduSender::m_pdu_sender = nullptr;
 
-PduSender::PduSender()
+PduSender::PduSender() : m_connected(false)
 {
 
 }
@@ -18,10 +18,10 @@ void PduSender::run()
         BasePdu *pdu = m_message_list.front();
         m_message_list.pop_front();
         m_condition.unlock();
-
         //send pdu
-       m_msg_serv_conn->sendBasePdu(pdu);
-       delete pdu;
+        if (m_connected)
+            m_msg_serv_conn->sendBasePdu(pdu);
+        delete pdu;
     }
 }
 

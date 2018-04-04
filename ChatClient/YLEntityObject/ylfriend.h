@@ -15,6 +15,8 @@ public:
 
     bool operator ==(const YLFriend &) const;
 
+    void setFriendId(uint32_t id) { friend_id_ = id; }
+
     void setFriendAccount(const QString &account);
 
     void setFriendNickName(const QString &nickname);
@@ -47,8 +49,10 @@ public:
 
     QString getFriendLastChatTime() const;
 
+    uint32_t getFriendId() const { return friend_id_; }
 
 private:
+    uint32_t friend_id_;
     //好友账号
     QString friend_account_;
     //好友昵称

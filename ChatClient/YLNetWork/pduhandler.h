@@ -19,11 +19,14 @@ public:
 signals:
     void loginStatus(bool successed,  base::UserInfo *userInfo = nullptr);
     void friendlist(const friend_map &, const group_map&);
+    void signleMessage(uint32_t senderId, const QString &content);
+
 private:
     void _HandleBasePdu(BasePdu *pdu);
     void _HandleUserLoginRespone(BasePdu *pdu);
     void _HandleHeartBeat();
     void _HandleFriendListGetRespone(BasePdu *pdu);
+    void _HandleMessageData(BasePdu *pdu);
 
 private:
     explicit PduHandler(QObject *parent = nullptr);

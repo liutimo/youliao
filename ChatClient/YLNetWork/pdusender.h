@@ -17,7 +17,7 @@ public:
 
     void addMessage(BasePdu*);
     void setMsgServConn(MsgServConn *conn) { m_msg_serv_conn = conn; }
-
+    void connect() { m_connected = true; }
     static PduSender* instance();
 
 private:
@@ -26,6 +26,7 @@ private:
     Condition            m_condition;
     MsgServConn         *m_msg_serv_conn;
     static PduSender    *m_pdu_sender;
+    bool m_connected;
 };
 
 #endif // PDUSENDER_H

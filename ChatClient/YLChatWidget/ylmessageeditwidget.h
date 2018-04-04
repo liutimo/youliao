@@ -17,9 +17,12 @@ public:
 
     //获取关键html代码
     QString getContent() const;
-
     //添加系统表情
+
     void addEmoticon(int index);
+
+signals:
+    void enterPress();
 
 private:
     void initMenu();
@@ -38,6 +41,10 @@ private:
     QAction *m_action__paste;
     QAction *m_action_cut;
 
+    QString str1 = "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">";
+    QString str2 = "<br />";
+    QString str3 = "</p>";
+    QString str4 = "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">";
 };
 
 #endif // YLMESSAGEEDITWIDGET_H

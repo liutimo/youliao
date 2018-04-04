@@ -31,6 +31,7 @@ void YLFriendListItem::init()
     m_http = new HttpDownloader;
     connect(m_http, &HttpDownloader::downloadFinshed, this, [this](){
         head_frame_->setHeadFromLocal("./" + m_http->getFilename());
+        friend_.setFriendImagePath(m_http->getFilename());
     });
 }
 
@@ -67,7 +68,7 @@ void YLFriendListItem::initMenu()
     connect(action_send_msg, &QAction::triggered, this, [this](){
         YLChatWidget *chatWidget = new YLChatWidget();
         chatWidget->resize(800, 600);
-        chatWidget->setNickName(friend_.getFriendNickName());
+        chatWidget->setFriend(friend_);
         chatWidget->show();
     });
 

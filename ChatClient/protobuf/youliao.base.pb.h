@@ -80,12 +80,13 @@ enum ServiceID {
   SID_FRIEND_LIST = 2,
   SID_SERVER = 3,
   SID_OTHER = 4,
+  SID_MESSAGE = 5,
   ServiceID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   ServiceID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool ServiceID_IsValid(int value);
 const ServiceID ServiceID_MIN = SID_ZERO;
-const ServiceID ServiceID_MAX = SID_OTHER;
+const ServiceID ServiceID_MAX = SID_MESSAGE;
 const int ServiceID_ARRAYSIZE = ServiceID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* ServiceID_descriptor();
@@ -104,12 +105,13 @@ enum LoginCID {
   CID_LOGIN_RESPONE_MSGSERVER = 258,
   CID_LOGIN_REQUEST_USERLOGIN = 259,
   CID_LOGIN_RESPONE_USERLOGIN = 260,
+  CID_LOGIN_REQUEST_USERLOGINOUT = 261,
   LoginCID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   LoginCID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool LoginCID_IsValid(int value);
 const LoginCID LoginCID_MIN = CID_LOGIN_ZERO;
-const LoginCID LoginCID_MAX = CID_LOGIN_RESPONE_USERLOGIN;
+const LoginCID LoginCID_MAX = CID_LOGIN_REQUEST_USERLOGINOUT;
 const int LoginCID_ARRAYSIZE = LoginCID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* LoginCID_descriptor();
@@ -188,6 +190,27 @@ inline bool FriendListCID_Parse(
   return ::google::protobuf::internal::ParseNamedEnum<FriendListCID>(
     FriendListCID_descriptor(), name, value);
 }
+enum MessageCID {
+  CID_MESSAGE_ZERO = 0,
+  CID_MESSAGE_DATA = 1281,
+  MessageCID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  MessageCID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+bool MessageCID_IsValid(int value);
+const MessageCID MessageCID_MIN = CID_MESSAGE_ZERO;
+const MessageCID MessageCID_MAX = CID_MESSAGE_DATA;
+const int MessageCID_ARRAYSIZE = MessageCID_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* MessageCID_descriptor();
+inline const ::std::string& MessageCID_Name(MessageCID value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    MessageCID_descriptor(), value);
+}
+inline bool MessageCID_Parse(
+    const ::std::string& name, MessageCID* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<MessageCID>(
+    MessageCID_descriptor(), name, value);
+}
 enum ResultType {
   NONE = 0,
   NO_MSG_SERVER = 1,
@@ -232,6 +255,30 @@ inline bool UserStatusType_Parse(
     const ::std::string& name, UserStatusType* value) {
   return ::google::protobuf::internal::ParseNamedEnum<UserStatusType>(
     UserStatusType_descriptor(), name, value);
+}
+enum MessageType {
+  MESSAGE_ZERO = 0,
+  MESSAGE_TYPE_SINGLE_TEXT = 1,
+  MESSAGE_TYPE_SINGLE_AUDIO = 2,
+  MESSAGE_TYPE_GROUP_TEXT = 3,
+  MESSAGE_TYPE_GROUP_AUDIO = 4,
+  MessageType_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  MessageType_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+bool MessageType_IsValid(int value);
+const MessageType MessageType_MIN = MESSAGE_ZERO;
+const MessageType MessageType_MAX = MESSAGE_TYPE_GROUP_AUDIO;
+const int MessageType_ARRAYSIZE = MessageType_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* MessageType_descriptor();
+inline const ::std::string& MessageType_Name(MessageType value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    MessageType_descriptor(), value);
+}
+inline bool MessageType_Parse(
+    const ::std::string& name, MessageType* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<MessageType>(
+    MessageType_descriptor(), name, value);
 }
 // ===================================================================
 
@@ -883,6 +930,11 @@ template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::youliao::pdu::base::FriendListCID>() {
   return ::youliao::pdu::base::FriendListCID_descriptor();
 }
+template <> struct is_proto_enum< ::youliao::pdu::base::MessageCID> : ::google::protobuf::internal::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::youliao::pdu::base::MessageCID>() {
+  return ::youliao::pdu::base::MessageCID_descriptor();
+}
 template <> struct is_proto_enum< ::youliao::pdu::base::ResultType> : ::google::protobuf::internal::true_type {};
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::youliao::pdu::base::ResultType>() {
@@ -892,6 +944,11 @@ template <> struct is_proto_enum< ::youliao::pdu::base::UserStatusType> : ::goog
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::youliao::pdu::base::UserStatusType>() {
   return ::youliao::pdu::base::UserStatusType_descriptor();
+}
+template <> struct is_proto_enum< ::youliao::pdu::base::MessageType> : ::google::protobuf::internal::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::youliao::pdu::base::MessageType>() {
+  return ::youliao::pdu::base::MessageType_descriptor();
 }
 
 }  // namespace protobuf

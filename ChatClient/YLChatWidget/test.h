@@ -16,7 +16,7 @@ private:
     void initPMenu();
 
 public slots:
-    void showContentPMenu();
+    void showContentPMenu(const QString &text);
 
 private:
     QWebEnginePage *m_page;

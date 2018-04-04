@@ -80,8 +80,6 @@ void YLFriendListView::updateFriendList(const QMap<int, QVector<YLFriend>> &frie
         if (iter == m_group_show.end())
             m_group_show[groupId] = false;
 
-
-
         if (m_group_show[groupId] == true)
         {
             QListWidgetItem *item = new QListWidgetItem(QIcon(":/res/MainFrame/down.png"), groupName + QString("(%1/%1)").arg(elem.size()));

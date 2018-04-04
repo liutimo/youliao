@@ -3,6 +3,7 @@
 #include <QTableWidget>
 #include <QMovie>
 #include <QHeaderView>
+#include <QFocusEvent>
 
 bool YLEmoticonWidget::isShow = false;
 
@@ -10,7 +11,7 @@ YLEmoticonWidget::YLEmoticonWidget(QWidget *parent) : QWidget(parent)
 {
     setWindowFlags(Qt::FramelessWindowHint);
     init();
-    isShow = true;
+    isShow = false;
 }
 
 
@@ -53,6 +54,8 @@ void YLEmoticonWidget::init()
     });
 
 }
+
+
 
 
 ////////////////////////////////////////////////////////////////

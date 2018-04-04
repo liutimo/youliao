@@ -23,7 +23,7 @@ void Test::initPMenu()
 }
 
 
-void Test::showContentPMenu()
+void Test::showContentPMenu(const QString &text)
 {
     m_p_menu->exec(QCursor::pos());
 }

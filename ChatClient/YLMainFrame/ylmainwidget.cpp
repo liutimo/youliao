@@ -4,6 +4,7 @@
 #include <QLabel>
 #include <QDebug>
 #include <QPainter>
+#include "globaldata.h"
 #include "ylsearchlineedit.h"
 #include "ylsignaturelineedit.h"
 #include "ylnavigationbar.h"
@@ -32,9 +33,9 @@ void YLMainWidget::init()
     min_button_->resize(close_button_->size());
     min_button_->setObjectName("min_button_");
     min_button_->setStyleSheet(qss_min_button);
+
     connect(min_button_, &QPushButton::clicked, this, [this](){
-        YLMessageBox *message = new YLMessageBox(BUTTON_OK | BUTTON_CANNEL, this);
-        message->exec();
+        hide();
     });
 
 
@@ -74,6 +75,18 @@ void YLMainWidget::init()
                 vec[i]->hide();
         }
     });
+
+    m_timer = new QTimer(this);
+    connect(m_timer, &QTimer::timeout, this, [this](){
+        YLBusiness::heartBeat();
+    });
+
+
+    m_http_dowloader = new HttpDownloader;
+    connect(m_http_dowloader, &HttpDownloader::downloadFinshed, this, [this](){
+        head_status_frame_->setHeadFromLocal("./" + m_http_dowloader->getFilename());
+    }, Qt::QueuedConnection);
+
 }
 
 void YLMainWidget::initListWidget()
@@ -92,22 +105,25 @@ void YLMainWidget::initListWidget()
     yl_friendlist_view->move(0, 220);
     vec.push_back(yl_friendlist_view);
 
-    //demo
-    YLFriend y;
-    y.setFriendImagePath(":/res/1.PNG");
-    y.setFriendLastChatTime("11:22");
-    y.setFriendLastMessage("你好，我是刘正！");
-    y.setFriendNickName("刘提莫");
-    y.setFriendSigature("我希望我的青春遇见你");
+//    //demo
+//    YLFriend y;
+//    y.setFriendImagePath(":/res/1.PNG");
+//    y.setFriendLastChatTime("11:22");
+//    y.setFriendLastMessage("你好，我是刘正！");
+//    y.setFriendNickName("刘提莫");
+//    y.setFriendSigature("我希望我的青春遇见你");
 
-    for (int i = 0; i < 100; ++i)
-    {
-        y.setFriendAccount(QString::number(10000 + i));
-        y.setFriendRemark("刘提莫" + QString::number(i));
-        yl_recent_chat_view->addItem(y);
-    }
+//    for (int i = 0; i < 100; ++i)
+//    {
+//        y.setFriendAccount(QString::number(10000 + i));
+//        y.setFriendRemark("刘提莫" + QString::number(i));
+//        yl_recent_chat_view->addItem(y);
+//    }
+}
 
-
+void YLMainWidget::startHeartBeat()
+{
+    m_timer->start(2000);
 }
 
 void YLMainWidget::resizeEvent(QResizeEvent *event)
@@ -146,19 +162,23 @@ void YLMainWidget::paintEvent(QPaintEvent *event)
     p.drawRect(rect());
 }
 
+void YLMainWidget::closeEvent(QCloseEvent *event)
+{
+    YLBusiness::loginOut(m_user_info->user_id());
+
+    YLBasicWidget::closeEvent(event);
+}
+
 /************************/
 void YLMainWidget::setUserInfo(UserInfo *userInfo)
 {
-    nickname_label_->setText(userInfo->user_nick().c_str());
-    signature_lineedit_->setText(userInfo->user_sign_info().c_str());
+    m_user_info = userInfo;
+    GlobalData::setCurrLoginUser(*m_user_info);
+    nickname_label_->setText(m_user_info->user_nick().c_str());
+    signature_lineedit_->setText(m_user_info->user_sign_info().c_str());
 
-    YLBusiness::getFriendListRequest(userInfo->user_id());
+    YLBusiness::getFriendListRequest(m_user_info->user_id());
 
-    HttpDownloader *h = new HttpDownloader;
-    h->start(userInfo->user_header_url().c_str());
-    connect(h, &HttpDownloader::downloadFinshed, this, [this, h](){
-        head_status_frame_->setHeadFromLocal("./" + h->getFilename());
-    }, Qt::QueuedConnection);
-
+    m_http_dowloader->start(m_user_info->user_header_url().c_str());
 }
 

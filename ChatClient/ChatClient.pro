@@ -34,13 +34,15 @@ include(protobuf/protobuf.pri)
 
 SOURCES += \
         main.cpp \
-    yllocalsettings.cpp
+    yllocalsettings.cpp \
+    globaldata.cpp
 
 LIBS += -lprotobuf \
         -llog4cxx
 
 HEADERS += \
-    yllocalsettings.h
+    yllocalsettings.h \
+    globaldata.h
 
 RESOURCES += \
     resource.qrc

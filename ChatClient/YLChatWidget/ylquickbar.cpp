@@ -5,6 +5,9 @@ YLQuickBar::YLQuickBar(QWidget *parent) : QWidget(parent)
 {
     setFixedHeight(26);
     init();
+    m_emoticon_widget = new  YLEmoticonWidget();
+    m_emoticon_widget->hide();
+
 }
 
 
@@ -17,9 +20,10 @@ void YLQuickBar::init()
     connect(m_face_btn, &QPushButton::clicked, this, [this](){
         if (YLEmoticonWidget::isShow)
             return;
-        YLEmoticonWidget *w = new  YLEmoticonWidget;
         QPoint point = m_face_btn->mapToGlobal(m_face_btn->rect().topLeft());
-        w->move(point.x(), point.y() - 230);
-        w->show();
+        m_emoticon_widget->move(point.x(), point.y() - 230);
+        m_emoticon_widget->show();
+        installEventFilter(m_emoticon_widget);
     });
 }
+

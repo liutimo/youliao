@@ -15,6 +15,7 @@ class YLEmoticonWidget : public QWidget
 public:
     explicit YLEmoticonWidget(QWidget *parent = nullptr);
     static bool isShow;
+
 private:
     void init();
 

@@ -11,7 +11,9 @@ YLMessageEditWidget::YLMessageEditWidget(QWidget *parent)
 {
     setAcceptRichText(true);
     initMenu();
-    //setHtml("<img src=\"file:///C:\\Users\\lz153\\Pictures\\1.png\">");
+    QFont f = font();
+    f.setPixelSize(24);
+    setFont(f);
 }
 
 void YLMessageEditWidget::initMenu()
@@ -34,20 +36,36 @@ void YLMessageEditWidget::initMenu()
 
 QString YLMessageEditWidget::getContent() const
 {
-    return QString();
+    QString pattern("<p .*>(.*)</p>");
+    QRegExp re(pattern);
+    int pos = toHtml().indexOf(re);
+    QString  content = re.cap(1);
+    content.replace(str1, "");
+    content.replace(str2, "");
+    content.replace(str3, "");
+    content.replace(str4, "");
+    content.replace("\n", "<br />");
+
+
+    return content;
 }
 
 
 void YLMessageEditWidget::addEmoticon(int index)
 {
-
+    insertHtml(QString("<img src='qrc:/res/YLChatWidget/face/%1.gif' />").arg(index));
 }
 
 ////event
 
 void YLMessageEditWidget::keyPressEvent(QKeyEvent* event)
 {
-    QTextEdit::keyPressEvent(event);
+    if(event->key() ==  Qt::Key_Enter || event->key() == Qt::Key_Return)
+    {
+        emit enterPress();
+    }
+    else
+        QTextEdit::keyPressEvent(event);
 }
 
 
@@ -75,9 +93,9 @@ void YLMessageEditWidget::slotPaste()
 
     if (mime_data->hasImage())
     {
-        //paste a image
-        qDebug() << 1;
-        insertHtml("<img src=\"qrc:/res/2.jpeg\">");
+        QPixmap pixmap = qvariant_cast<QPixmap>(mime_data->imageData());
+        pixmap.save("a.jpg");
+        insertHtml("<img src=\"file:///home/liuzheng/Documents/Code/build-ChatClient-Desktop_Qt_5_9_0_GCC_64bit-Debug/a.jpg\">");
     }
     else if (mime_data->hasText())
     {

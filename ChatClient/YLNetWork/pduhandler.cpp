@@ -4,9 +4,11 @@
 
 #include <QMap>
 #include <QVector>
+#include <QDebug>
 #include "protobuf/youliao.base.pb.h"
 #include "protobuf/youliao.login.pb.h"
 #include "protobuf/youliao.friendlist.pb.h"
+#include "protobuf/youliao.message.pb.h"
 //全局PDU list
 //主线程产生的所有pdu都会放入这个list中
 //子线程循环冲list读数据发送到消息服务器
@@ -22,6 +24,7 @@ PduHandler::PduHandler(QObject *parent) : QThread(parent)
 {
     qRegisterMetaType<group_map>("group_map");
     qRegisterMetaType<friend_map>("friend_map");
+    qRegisterMetaType<uint32_t>("uint32_t");
 }
 
 PduHandler* PduHandler::instance()
@@ -64,6 +67,9 @@ void PduHandler::_HandleBasePdu(BasePdu *pdu)
         break;
     case base::CID_FRIENDLIST_GET_RESPONE:
         _HandleFriendListGetRespone(pdu);
+        break;
+    case base::CID_MESSAGE_DATA:
+        _HandleMessageData(pdu);
         break;
     default:
         std::cout << "CID" << pdu->getCID() << "  SID:" << pdu->getSID();
@@ -109,6 +115,7 @@ void PduHandler::_HandleFriendListGetRespone(BasePdu *pdu)
         {
             auto fri = c.friend_(i);
             YLFriend ylFriend;
+            ylFriend.setFriendId(fri.user_id());
             ylFriend.setFriendAccount(QString::number(fri.user_account()));
             ylFriend.setFriendImagePath(fri.user_header_url().c_str());
             ylFriend.setFriendNickName(fri.user_nick().c_str());
@@ -119,5 +126,13 @@ void PduHandler::_HandleFriendListGetRespone(BasePdu *pdu)
     }
 
     emit friendlist(friends, groups);
+}
+
+void PduHandler::_HandleMessageData(BasePdu *pdu)
+{
+    message::MessageData messageData;
+    messageData.ParseFromString(pdu->getMessage());
+
+    emit signleMessage(messageData.from_user_id(), QString(messageData.message_data().c_str()));
 }
 

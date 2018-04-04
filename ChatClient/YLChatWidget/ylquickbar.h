@@ -5,6 +5,7 @@
 
 
 class QPushButton;
+class YLEmoticonWidget;
 
 class YLQuickBar : public QWidget
 {
@@ -15,7 +16,7 @@ class YLQuickBar : public QWidget
                                         ";
 public:
     explicit YLQuickBar(QWidget *parent = nullptr);
-
+    YLEmoticonWidget* getEmoticonWidget() {return m_emoticon_widget;}
 
 private:
     void init();
@@ -25,6 +26,7 @@ public slots:
 
 private:
     QPushButton *m_face_btn;
+    YLEmoticonWidget *m_emoticon_widget;
 };
 
 #endif // YLQUCIKBAR_H
