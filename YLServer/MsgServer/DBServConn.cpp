@@ -11,6 +11,7 @@
 #include "pdu/protobuf/youliao.login.pb.h"
 #include "pdu/protobuf/youliao.server.pb.h"
 #include "pdu/BasePdu.h"
+#include "User.h"
 
 using namespace youliao::pdu;
 
@@ -147,8 +148,20 @@ void DBServConn::_HandleValidateRespone(BasePdu *pdu)
     uint32_t handle = get_attach_data(validateRespone);
 
     ClientConn *clientConn = findConn(handle);
-    if (clientConn) {
+
+
+    if (clientConn)
+    {
         base::UserInfo *userInfo = new base::UserInfo(validateRespone.user_info());
+
+        if (UserManager::instance()->isLogin(userInfo->user_id()))
+        {
+            //重复登录
+            return;
+        }
+
+        UserManager::instance()->addUser(userInfo->user_id(), clientConn);
+
         login::UserLoginRespone userLoginRespone;
         if (validateRespone.result_code() == 1)
             userLoginRespone.set_result_code(base::MSG_SERVER_FULL);
@@ -163,7 +176,6 @@ void DBServConn::_HandleValidateRespone(BasePdu *pdu)
         clientConn->sendBasePdu(basePdu);
         delete basePdu;
     }
-    std::cout << validateRespone.result_string() << std::endl;
 }
 
 

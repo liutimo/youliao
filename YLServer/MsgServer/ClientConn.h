@@ -27,11 +27,19 @@ public:
     void onClose() override ;
 
     void handlePdu(BasePdu *) override ;
+    uint32_t getUserId() { return m_user_id; }
 private:
-    void _HandlClientLoginRequest(BasePdu *);
+    void _HandleClientLoginRequest(BasePdu *);
+    void _HandleClientLoginOutRequest(BasePdu *);
     void _HandleHeartBeat(BasePdu*);
     void _HandleFriendListGetRequest(BasePdu *);
+    void _HandleMessageDataRequest(BasePdu *);
 
+public:
+    uint64_t m_last_heart_beat_tick;    //最后一次收到心跳包的时间
+
+private:
+    uint32_t  m_user_id;
 };
 
 typedef  __gnu_cxx::hash_map<int, ClientConn*> ClientConnMap_t;

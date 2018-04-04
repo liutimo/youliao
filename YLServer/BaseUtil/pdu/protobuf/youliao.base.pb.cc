@@ -79,7 +79,7 @@ void InitDefaultsHeartBeat() {
 }
 
 ::google::protobuf::Metadata file_level_metadata[2];
-const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[7];
+const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[9];
 
 const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   ~0u,  // no _has_bits_
@@ -138,29 +138,36 @@ void AddDescriptorsImpl() {
       "ount\030\002 \001(\r\022\020\n\010user_sex\030\003 \001(\r\022\021\n\tuser_nic"
       "k\030\004 \001(\t\022\027\n\017user_header_url\030\005 \001(\t\022\022\n\nuser"
       "_email\030\006 \001(\t\022\022\n\nuser_phone\030\007 \001(\t\022\026\n\016user"
-      "_sign_info\030\010 \001(\t\"\013\n\tHeartBeat*\\\n\tService"
+      "_sign_info\030\010 \001(\t\"\013\n\tHeartBeat*m\n\tService"
       "ID\022\014\n\010SID_ZERO\020\000\022\r\n\tSID_LOGIN\020\001\022\023\n\017SID_F"
       "RIEND_LIST\020\002\022\016\n\nSID_SERVER\020\003\022\r\n\tSID_OTHE"
-      "R\020\004*\246\001\n\010LoginCID\022\022\n\016CID_LOGIN_ZERO\020\000\022 \n\033"
-      "CID_LOGIN_REQUSET_MSGSERVER\020\201\002\022 \n\033CID_LO"
-      "GIN_RESPONE_MSGSERVER\020\202\002\022 \n\033CID_LOGIN_RE"
-      "QUEST_USERLOGIN\020\203\002\022 \n\033CID_LOGIN_RESPONE_"
-      "USERLOGIN\020\204\002*@\n\tServerCID\022\023\n\017CID_SERVER_"
-      "ZERO\020\000\022\036\n\031CID_SERVER_MSGSERVER_INFO\020\201\004*|"
-      "\n\010OtherCID\022\022\n\016CID_OTHER_ZERO\020\000\022\030\n\023CID_OT"
-      "HER_HEARTBEAT\020\201\006\022 \n\033CID_SERVER_VALIDATE_"
-      "REQUEST\020\202\004\022 \n\033CID_SERVER_VALIDATE_RESPON"
-      "E\020\203\004*j\n\rFriendListCID\022\027\n\023CID_FRIENDLIST_"
-      "ZERO\020\000\022\037\n\032CID_FRIENDLIST_GET_REQUEST\020\201\010\022"
-      "\037\n\032CID_FRIENDLIST_GET_RESPONE\020\202\010*>\n\nResu"
-      "ltType\022\010\n\004NONE\020\000\022\021\n\rNO_MSG_SERVER\020\001\022\023\n\017M"
-      "SG_SERVER_FULL\020\002*m\n\016UserStatusType\022\024\n\020US"
-      "ER_STATUS_ZERO\020\000\022\026\n\022USER_STATUS_ONLINE\020\001"
-      "\022\027\n\023USER_STATUS_OFFLINE\020\002\022\024\n\020USER_STATUS"
-      "_HIDE\020\003b\006proto3"
+      "R\020\004\022\017\n\013SID_MESSAGE\020\005*\313\001\n\010LoginCID\022\022\n\016CID"
+      "_LOGIN_ZERO\020\000\022 \n\033CID_LOGIN_REQUSET_MSGSE"
+      "RVER\020\201\002\022 \n\033CID_LOGIN_RESPONE_MSGSERVER\020\202"
+      "\002\022 \n\033CID_LOGIN_REQUEST_USERLOGIN\020\203\002\022 \n\033C"
+      "ID_LOGIN_RESPONE_USERLOGIN\020\204\002\022#\n\036CID_LOG"
+      "IN_REQUEST_USERLOGINOUT\020\205\002*@\n\tServerCID\022"
+      "\023\n\017CID_SERVER_ZERO\020\000\022\036\n\031CID_SERVER_MSGSE"
+      "RVER_INFO\020\201\004*|\n\010OtherCID\022\022\n\016CID_OTHER_ZE"
+      "RO\020\000\022\030\n\023CID_OTHER_HEARTBEAT\020\201\006\022 \n\033CID_SE"
+      "RVER_VALIDATE_REQUEST\020\202\004\022 \n\033CID_SERVER_V"
+      "ALIDATE_RESPONE\020\203\004*j\n\rFriendListCID\022\027\n\023C"
+      "ID_FRIENDLIST_ZERO\020\000\022\037\n\032CID_FRIENDLIST_G"
+      "ET_REQUEST\020\201\010\022\037\n\032CID_FRIENDLIST_GET_RESP"
+      "ONE\020\202\010*9\n\nMessageCID\022\024\n\020CID_MESSAGE_ZERO"
+      "\020\000\022\025\n\020CID_MESSAGE_DATA\020\201\n*>\n\nResultType\022"
+      "\010\n\004NONE\020\000\022\021\n\rNO_MSG_SERVER\020\001\022\023\n\017MSG_SERV"
+      "ER_FULL\020\002*m\n\016UserStatusType\022\024\n\020USER_STAT"
+      "US_ZERO\020\000\022\026\n\022USER_STATUS_ONLINE\020\001\022\027\n\023USE"
+      "R_STATUS_OFFLINE\020\002\022\024\n\020USER_STATUS_HIDE\020\003"
+      "*\227\001\n\013MessageType\022\020\n\014MESSAGE_ZERO\020\000\022\034\n\030ME"
+      "SSAGE_TYPE_SINGLE_TEXT\020\001\022\035\n\031MESSAGE_TYPE"
+      "_SINGLE_AUDIO\020\002\022\033\n\027MESSAGE_TYPE_GROUP_TE"
+      "XT\020\003\022\034\n\030MESSAGE_TYPE_GROUP_AUDIO\020\004b\006prot"
+      "o3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 975);
+      descriptor, 1242);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "youliao.base.proto", &protobuf_RegisterTypes);
 }
@@ -190,6 +197,7 @@ bool ServiceID_IsValid(int value) {
     case 2:
     case 3:
     case 4:
+    case 5:
       return true;
     default:
       return false;
@@ -207,6 +215,7 @@ bool LoginCID_IsValid(int value) {
     case 258:
     case 259:
     case 260:
+    case 261:
       return true;
     default:
       return false;
@@ -258,9 +267,23 @@ bool FriendListCID_IsValid(int value) {
   }
 }
 
-const ::google::protobuf::EnumDescriptor* ResultType_descriptor() {
+const ::google::protobuf::EnumDescriptor* MessageCID_descriptor() {
   protobuf_youliao_2ebase_2eproto::protobuf_AssignDescriptorsOnce();
   return protobuf_youliao_2ebase_2eproto::file_level_enum_descriptors[5];
+}
+bool MessageCID_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1281:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::google::protobuf::EnumDescriptor* ResultType_descriptor() {
+  protobuf_youliao_2ebase_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_youliao_2ebase_2eproto::file_level_enum_descriptors[6];
 }
 bool ResultType_IsValid(int value) {
   switch (value) {
@@ -275,7 +298,7 @@ bool ResultType_IsValid(int value) {
 
 const ::google::protobuf::EnumDescriptor* UserStatusType_descriptor() {
   protobuf_youliao_2ebase_2eproto::protobuf_AssignDescriptorsOnce();
-  return protobuf_youliao_2ebase_2eproto::file_level_enum_descriptors[6];
+  return protobuf_youliao_2ebase_2eproto::file_level_enum_descriptors[7];
 }
 bool UserStatusType_IsValid(int value) {
   switch (value) {
@@ -283,6 +306,23 @@ bool UserStatusType_IsValid(int value) {
     case 1:
     case 2:
     case 3:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::google::protobuf::EnumDescriptor* MessageType_descriptor() {
+  protobuf_youliao_2ebase_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_youliao_2ebase_2eproto::file_level_enum_descriptors[8];
+}
+bool MessageType_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+    case 4:
       return true;
     default:
       return false;

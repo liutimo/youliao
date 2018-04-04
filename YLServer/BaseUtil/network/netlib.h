@@ -83,6 +83,12 @@ namespace youliao
 
         }
 
+        static inline int netlib_add_loop(callback_t callback, callback_data data)
+        {
+            EventDispatch::instance()->addLoop(callback, data);
+            return 0;
+        }
+
         static int netlib_option(int handle, int opt, void* optval)
         {
             BaseSocket *baseSocket = findBaseSocket(handle);
@@ -114,6 +120,7 @@ namespace youliao
         {
             return NETWORK_OK;
         }
+
 
     }
 

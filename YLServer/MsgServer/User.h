@@ -10,7 +10,6 @@
 #include <map>
 
 class ClientConn;
-class BasePdu;
 
 class User {
 public:

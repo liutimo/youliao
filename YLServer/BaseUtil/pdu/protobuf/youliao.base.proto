@@ -9,6 +9,7 @@ enum ServiceID
     SID_FRIEND_LIST     = 0x0002;           //好友列表
     SID_SERVER          = 0x0003;           //服务器之间的消息
     SID_OTHER           = 0x0004;           //其他
+    SID_MESSAGE         = 0x0005;           //消息
 }
 
 enum LoginCID
@@ -18,6 +19,7 @@ enum LoginCID
     CID_LOGIN_RESPONE_MSGSERVER = 0x0102;       // 登录服务器相应客户机关于消息服务器的请求
     CID_LOGIN_REQUEST_USERLOGIN = 0x0103;       // 用户登录请求
     CID_LOGIN_RESPONE_USERLOGIN = 0x0104;       // 用户登录结果响应
+    CID_LOGIN_REQUEST_USERLOGINOUT = 0x0105;    //用户退出登录
 }
 
 
@@ -36,12 +38,19 @@ enum OtherCID
     CID_SERVER_VALIDATE_RESPONE = 0x0203;
 }
 
-//
+//好友列表
 enum FriendListCID
 {
     CID_FRIENDLIST_ZERO = 0x0000;
     CID_FRIENDLIST_GET_REQUEST = 0X0401;      //获取好友列表请求
     CID_FRIENDLIST_GET_RESPONE = 0X0402;      //         响应
+}
+
+//消息
+enum MessageCID
+{
+    CID_MESSAGE_ZERO = 0x0000;
+    CID_MESSAGE_DATA = 0x0501;                //发送消息
 }
 
 
@@ -79,4 +88,13 @@ message UserInfo
 message HeartBeat
 {
     //
+}
+
+enum MessageType
+{
+    MESSAGE_ZERO = 0x00;
+    MESSAGE_TYPE_SINGLE_TEXT  = 0x01; //单人 文本
+    MESSAGE_TYPE_SINGLE_AUDIO = 0x02; //单人 语音
+    MESSAGE_TYPE_GROUP_TEXT   = 0x03; //群组 文本
+    MESSAGE_TYPE_GROUP_AUDIO  = 0x04; //群组 语音
 }

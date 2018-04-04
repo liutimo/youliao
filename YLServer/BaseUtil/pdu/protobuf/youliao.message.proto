@@ -1,0 +1,14 @@
+syntax = "proto3";
+package youliao.pdu.message;
+import "youliao.base.proto";
+
+message MessageData
+{
+    uint32 from_user_id = 1;
+    uint32 to_user_id   = 2;
+    uint32 msg_id       = 3;
+    uint32 create_time  = 4;
+    youliao.pdu.base.MessageType message_type = 5;
+    bytes  message_data = 6;
+    bytes  attach_data = 7;
+}

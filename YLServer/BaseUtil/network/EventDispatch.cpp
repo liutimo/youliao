@@ -54,9 +54,21 @@ void EventDispatch::removeEvent(net_handle_t handle, uint8_t events)
     }
 }
 
-void EventDispatch::_CheckTimer()
+void EventDispatch::addLoop(callback_t callback, callback_data data)
 {
+    EventItem *eventItem = new EventItem;
+    eventItem->callback = callback;
+    eventItem->data = data;
 
+    m_loop_list.push_back(eventItem);
+}
+
+void EventDispatch::_CheckLoop()
+{
+    for (auto item : m_loop_list)
+    {
+        item->callback(item->data, NETWORK_LOOP, 0, nullptr);
+    }
 }
 
 void EventDispatch::eventLoop(uint32_t wait_time)
@@ -92,6 +104,7 @@ void EventDispatch::eventLoop(uint32_t wait_time)
                 pSock->onClose();
             }
         }
+        _CheckLoop();
 
     }
 }

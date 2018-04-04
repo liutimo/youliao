@@ -12,6 +12,7 @@
 #ifndef BASEUTIL_EVENTDISPATCH_H
 #define BASEUTIL_EVENTDISPATCH_H
 
+#include <list>
 #include "type_define.h"
 namespace youliao
 {
@@ -24,33 +25,28 @@ namespace youliao
 
             static EventDispatch* instance();
 
-
-            /**
-             * 为handle添加事件
-             * @param handle    socket描述符
-             * @param events    实际无用,传入任意即可
-             */
             void addEvent(net_handle_t handle, uint8_t events = 0xFF);
-
-            /**
-             * 移除handle上的指定事件
-             * @param handle  socket描述符
-             * @param events    实际无用
-             */
             void removeEvent(net_handle_t handle, uint8_t events = 0xFF);
 
+            void addLoop(callback_t, callback_data data);
 
-            /**
-             * 开始事件循环
-             * @param wait_time 阻塞时间, 默认为100ms
-             */
             void eventLoop(uint32_t wait_time = 100);
         private:
+            void _CheckLoop();
+
+            typedef struct {
+                callback_t      callback;
+                callback_data   data;
+                uint64_t        interval;
+                uint64_t        next_tick;
+            }EventItem;
+
+        private:
+
             EventDispatch();
 
-            void _CheckTimer();
-
             int m_epfd;
+            std::list<EventItem*> m_loop_list;
 
             static EventDispatch* m_event_dispatch;
 
