@@ -22,20 +22,20 @@ enum LoginCID
     CID_LOGIN_REQUEST_USERLOGINOUT = 0x0105;    //用户退出登录
 }
 
-
+//服务器之间的消息
 enum ServerCID
 {
     CID_SERVER_ZERO = 0x0000;
-    CID_SERVER_MSGSERVER_INFO = 0x0201;        //消息服务器主动发送该消息给登录服务器
-
+    CID_SERVER_MSGSERVER_INFO = 0x0201;          //消息服务器主动发送该消息给登录服务器
+    CID_SERVER_VALIDATE_REQUEST = 0x0202;        //msg server向db server发送用户校验信息
+    CID_SERVER_VALIDATE_RESPONE = 0x0203;
+    CID_SERVER_USER_LOGOUT      = 0x0204;        //由消息服务器发送给数据库服务器
 }
 
 enum OtherCID
 {
     CID_OTHER_ZERO      = 0x0000;
     CID_OTHER_HEARTBEAT = 0x0301;            //心跳包
-    CID_SERVER_VALIDATE_REQUEST = 0x0202;    //msg server向db server发送用户校验信息
-    CID_SERVER_VALIDATE_RESPONE = 0x0203;
 }
 
 //好友列表

@@ -22,6 +22,16 @@ message ValidateRespone
 }
 
 
+
+//用户下线
+//由MsgServer发送给DBServer
+//刷新CacheDB的数据
+message UserOffline
+{
+    uint32 user_id = 1;
+}
+
+
 //
 message MsgServerInfo
 {

@@ -37,7 +37,7 @@ namespace protobuf_youliao_2eserver_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[3];
+  static const ::google::protobuf::internal::ParseTable schema[4];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -47,11 +47,14 @@ void InitDefaultsValidateRequestImpl();
 void InitDefaultsValidateRequest();
 void InitDefaultsValidateResponeImpl();
 void InitDefaultsValidateRespone();
+void InitDefaultsUserOfflineImpl();
+void InitDefaultsUserOffline();
 void InitDefaultsMsgServerInfoImpl();
 void InitDefaultsMsgServerInfo();
 inline void InitDefaults() {
   InitDefaultsValidateRequest();
   InitDefaultsValidateRespone();
+  InitDefaultsUserOffline();
   InitDefaultsMsgServerInfo();
 }
 }  // namespace protobuf_youliao_2eserver_2eproto
@@ -61,6 +64,9 @@ namespace server {
 class MsgServerInfo;
 class MsgServerInfoDefaultTypeInternal;
 extern MsgServerInfoDefaultTypeInternal _MsgServerInfo_default_instance_;
+class UserOffline;
+class UserOfflineDefaultTypeInternal;
+extern UserOfflineDefaultTypeInternal _UserOffline_default_instance_;
 class ValidateRequest;
 class ValidateRequestDefaultTypeInternal;
 extern ValidateRequestDefaultTypeInternal _ValidateRequest_default_instance_;
@@ -73,6 +79,7 @@ extern ValidateResponeDefaultTypeInternal _ValidateRespone_default_instance_;
 namespace google {
 namespace protobuf {
 template<> ::youliao::pdu::server::MsgServerInfo* Arena::Create< ::youliao::pdu::server::MsgServerInfo>(Arena*);
+template<> ::youliao::pdu::server::UserOffline* Arena::Create< ::youliao::pdu::server::UserOffline>(Arena*);
 template<> ::youliao::pdu::server::ValidateRequest* Arena::Create< ::youliao::pdu::server::ValidateRequest>(Arena*);
 template<> ::youliao::pdu::server::ValidateRespone* Arena::Create< ::youliao::pdu::server::ValidateRespone>(Arena*);
 }  // namespace protobuf
@@ -382,6 +389,109 @@ class ValidateRespone : public ::google::protobuf::Message /* @@protoc_insertion
 };
 // -------------------------------------------------------------------
 
+class UserOffline : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.server.UserOffline) */ {
+ public:
+  UserOffline();
+  virtual ~UserOffline();
+
+  UserOffline(const UserOffline& from);
+
+  inline UserOffline& operator=(const UserOffline& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  UserOffline(UserOffline&& from) noexcept
+    : UserOffline() {
+    *this = ::std::move(from);
+  }
+
+  inline UserOffline& operator=(UserOffline&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const UserOffline& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const UserOffline* internal_default_instance() {
+    return reinterpret_cast<const UserOffline*>(
+               &_UserOffline_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    2;
+
+  void Swap(UserOffline* other);
+  friend void swap(UserOffline& a, UserOffline& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline UserOffline* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<UserOffline>(NULL);
+  }
+
+  UserOffline* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<UserOffline>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const UserOffline& from);
+  void MergeFrom(const UserOffline& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(UserOffline* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // uint32 user_id = 1;
+  void clear_user_id();
+  static const int kUserIdFieldNumber = 1;
+  ::google::protobuf::uint32 user_id() const;
+  void set_user_id(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.server.UserOffline)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 user_id_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2eserver_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2eserver_2eproto::InitDefaultsUserOfflineImpl();
+};
+// -------------------------------------------------------------------
+
 class MsgServerInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.server.MsgServerInfo) */ {
  public:
   MsgServerInfo();
@@ -417,7 +527,7 @@ class MsgServerInfo : public ::google::protobuf::Message /* @@protoc_insertion_p
                &_MsgServerInfo_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    2;
+    3;
 
   void Swap(MsgServerInfo* other);
   friend void swap(MsgServerInfo& a, MsgServerInfo& b) {
@@ -906,6 +1016,24 @@ inline void ValidateRespone::set_allocated_attach_data(::std::string* attach_dat
 
 // -------------------------------------------------------------------
 
+// UserOffline
+
+// uint32 user_id = 1;
+inline void UserOffline::clear_user_id() {
+  user_id_ = 0u;
+}
+inline ::google::protobuf::uint32 UserOffline::user_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.server.UserOffline.user_id)
+  return user_id_;
+}
+inline void UserOffline::set_user_id(::google::protobuf::uint32 value) {
+  
+  user_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.server.UserOffline.user_id)
+}
+
+// -------------------------------------------------------------------
+
 // MsgServerInfo
 
 // string ip = 1;
@@ -1006,6 +1134,8 @@ inline void MsgServerInfo::set_cur_conn_count(::google::protobuf::uint32 value) 
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

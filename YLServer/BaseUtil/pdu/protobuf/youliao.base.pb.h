@@ -134,12 +134,15 @@ inline bool LoginCID_Parse(
 enum ServerCID {
   CID_SERVER_ZERO = 0,
   CID_SERVER_MSGSERVER_INFO = 513,
+  CID_SERVER_VALIDATE_REQUEST = 514,
+  CID_SERVER_VALIDATE_RESPONE = 515,
+  CID_SERVER_USER_LOGOUT = 516,
   ServerCID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   ServerCID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool ServerCID_IsValid(int value);
 const ServerCID ServerCID_MIN = CID_SERVER_ZERO;
-const ServerCID ServerCID_MAX = CID_SERVER_MSGSERVER_INFO;
+const ServerCID ServerCID_MAX = CID_SERVER_USER_LOGOUT;
 const int ServerCID_ARRAYSIZE = ServerCID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* ServerCID_descriptor();
@@ -155,8 +158,6 @@ inline bool ServerCID_Parse(
 enum OtherCID {
   CID_OTHER_ZERO = 0,
   CID_OTHER_HEARTBEAT = 769,
-  CID_SERVER_VALIDATE_REQUEST = 514,
-  CID_SERVER_VALIDATE_RESPONE = 515,
   OtherCID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   OtherCID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };

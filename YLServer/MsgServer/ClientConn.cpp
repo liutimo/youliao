@@ -208,6 +208,22 @@ void ClientConn::_HandleClientLoginOutRequest(BasePdu *pdu)
         UserManager::instance()->removerUser(userId);
         conn->onClose();
     }
+
+
+
+    DBServConn *dbServConn = get_db_server_conn();
+
+    if (dbServConn)
+    {
+        server::UserOffline userOffline;
+        userOffline.set_user_id(userId);
+        BasePdu basePdu;
+        basePdu.setSID(base::SID_SERVER);
+        basePdu.setCID(base::CID_SERVER_USER_LOGOUT);
+        basePdu.writeMessage(&userOffline);
+        dbServConn->sendBasePdu(&basePdu);
+
+    }
 }
 
 void ClientConn::_HandleMessageDataRequest(BasePdu *pdu)

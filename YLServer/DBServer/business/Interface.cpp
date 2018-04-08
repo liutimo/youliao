@@ -59,8 +59,6 @@ namespace DB_INTERFACE
         FriendListModel friendListModel;
         friendListModel.getFriendList(friendListRequest.user_id(), friendListRespone);
 
-
-
         BasePdu *pdu = new BasePdu;
         pdu->setSID(base::SID_FRIEND_LIST);
         pdu->setCID(base::CID_FRIENDLIST_GET_RESPONE);
@@ -70,4 +68,16 @@ namespace DB_INTERFACE
         delete pdu;
     }
 
+    void logout(BasePdu* basePdu, uint32_t conn_uid)
+    {
+        server::UserOffline userOffline;
+        userOffline.ParseFromString(basePdu->getMessage());
+
+        uint32_t userId = userOffline.user_id();
+
+        LoginModel loginModel;
+        loginModel.doLogout(userId);
+    }
 }
+
+

@@ -16,6 +16,9 @@ namespace DB_INTERFACE
 
     //获取好友列表
     void getFriendList(BasePdu* basePdu, uint32_t conn_uuid);
+
+    //用户离线
+    void logout(BasePdu* basePdu, uint32_t conn_uid);
 }
 
 

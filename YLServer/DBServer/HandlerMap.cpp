@@ -37,6 +37,9 @@ void HandlerMap::init()
 
     //friend list
     m_handler_map.insert(std::make_pair(CID_FRIENDLIST_GET_REQUEST, DB_INTERFACE::getFriendList));
+
+    //logout
+    m_handler_map.insert(std::make_pair(CID_SERVER_USER_LOGOUT, DB_INTERFACE::logout));
 }
 
 pdu_handler_t HandlerMap::getHandler(uint16_t cid)

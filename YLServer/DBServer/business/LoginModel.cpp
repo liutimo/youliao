@@ -73,3 +73,19 @@ bool LoginModel::doLogin(const std::string &str_name, const std::string &str_pas
     dbManager->releaseConnection(dbConn);
     return ret;
 }
+
+bool LoginModel::doLogout(uint32_t userId)
+{
+    auto conn = CacheManager::instance()->getCacheConn("OnlineUser");
+
+    if (conn != nullptr)
+    {
+        auto ret = conn->sRem("OnlineUser", std::to_string(userId));
+        if (ret == 1)
+
+            log("user %d logout!", userId);
+        else
+            log("user %d logout failed !", userId);
+
+    }
+}
