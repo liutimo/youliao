@@ -3,13 +3,14 @@
 #include <QToolButton>
 #include <QMenu>
 #include <QDebug>
-YLHeadFrame::YLHeadFrame(QWidget *parent) : QLabel(parent)
+YLHeadFrame::YLHeadFrame(QWidget *parent) : QLabel(parent), m_online(false)
 {
     resize(120, 120);
 }
 
-void YLHeadFrame::setHeadFromLocal(const QString &path)
+void YLHeadFrame::setHeadFromLocal(const QString &path, bool online)
 {
+    m_online = online;
     path_ = path;
     update();
 }
@@ -30,11 +31,17 @@ void YLHeadFrame::paintEvent(QPaintEvent *e)
 
     QPainterPath path;
     path.addEllipse(2, 2, width() - 4, height() - 4);
-
     p.setClipPath(path);
     p.setRenderHint(QPainter::SmoothPixmapTransform);
+
+    QImage image(path_.isEmpty() ? ":/res/1.jpg" : path_);
+    if (!m_online)
+        image = image.convertToFormat(QImage::Format_Grayscale8);
+
+    QPixmap pix(QPixmap::fromImage(image));
+
     p.drawPixmap(2, 2, width() - 4, height() - 4,
-                 QPixmap(path_.isEmpty() ? ":/res/1.jpg" : path_).scaled(width() - 6, height() - 6,
+                 pix.scaled(width() - 6, height() - 6,
                  Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
 }
 

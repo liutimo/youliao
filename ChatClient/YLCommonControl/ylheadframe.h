@@ -17,7 +17,7 @@ public:
 
     explicit YLHeadFrame(QWidget *parent = nullptr);
 
-    void setHeadFromLocal(const QString &path);
+    void setHeadFromLocal(const QString &path, bool online = true);
     void setHeadFromUrl(const QUrl &url);
 
 protected:
@@ -27,6 +27,7 @@ private:
 
     QUrl url_;
     QString path_;
+    bool m_online;
 };
 
 #endif // YLHEADFRAME_H
