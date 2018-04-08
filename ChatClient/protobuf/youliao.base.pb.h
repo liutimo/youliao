@@ -37,7 +37,7 @@ namespace protobuf_youliao_2ebase_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[2];
+  static const ::google::protobuf::internal::ParseTable schema[3];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -45,16 +45,22 @@ struct TableStruct {
 void AddDescriptors();
 void InitDefaultsUserInfoImpl();
 void InitDefaultsUserInfo();
+void InitDefaultsFriendInfoImpl();
+void InitDefaultsFriendInfo();
 void InitDefaultsHeartBeatImpl();
 void InitDefaultsHeartBeat();
 inline void InitDefaults() {
   InitDefaultsUserInfo();
+  InitDefaultsFriendInfo();
   InitDefaultsHeartBeat();
 }
 }  // namespace protobuf_youliao_2ebase_2eproto
 namespace youliao {
 namespace pdu {
 namespace base {
+class FriendInfo;
+class FriendInfoDefaultTypeInternal;
+extern FriendInfoDefaultTypeInternal _FriendInfo_default_instance_;
 class HeartBeat;
 class HeartBeatDefaultTypeInternal;
 extern HeartBeatDefaultTypeInternal _HeartBeat_default_instance_;
@@ -66,6 +72,7 @@ extern UserInfoDefaultTypeInternal _UserInfo_default_instance_;
 }  // namespace youliao
 namespace google {
 namespace protobuf {
+template<> ::youliao::pdu::base::FriendInfo* Arena::Create< ::youliao::pdu::base::FriendInfo>(Arena*);
 template<> ::youliao::pdu::base::HeartBeat* Arena::Create< ::youliao::pdu::base::HeartBeat>(Arena*);
 template<> ::youliao::pdu::base::UserInfo* Arena::Create< ::youliao::pdu::base::UserInfo>(Arena*);
 }  // namespace protobuf
@@ -474,6 +481,205 @@ class UserInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(
 };
 // -------------------------------------------------------------------
 
+class FriendInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.base.FriendInfo) */ {
+ public:
+  FriendInfo();
+  virtual ~FriendInfo();
+
+  FriendInfo(const FriendInfo& from);
+
+  inline FriendInfo& operator=(const FriendInfo& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  FriendInfo(FriendInfo&& from) noexcept
+    : FriendInfo() {
+    *this = ::std::move(from);
+  }
+
+  inline FriendInfo& operator=(FriendInfo&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const FriendInfo& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const FriendInfo* internal_default_instance() {
+    return reinterpret_cast<const FriendInfo*>(
+               &_FriendInfo_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    1;
+
+  void Swap(FriendInfo* other);
+  friend void swap(FriendInfo& a, FriendInfo& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline FriendInfo* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<FriendInfo>(NULL);
+  }
+
+  FriendInfo* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<FriendInfo>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const FriendInfo& from);
+  void MergeFrom(const FriendInfo& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(FriendInfo* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string friend_nick = 4;
+  void clear_friend_nick();
+  static const int kFriendNickFieldNumber = 4;
+  const ::std::string& friend_nick() const;
+  void set_friend_nick(const ::std::string& value);
+  #if LANG_CXX11
+  void set_friend_nick(::std::string&& value);
+  #endif
+  void set_friend_nick(const char* value);
+  void set_friend_nick(const char* value, size_t size);
+  ::std::string* mutable_friend_nick();
+  ::std::string* release_friend_nick();
+  void set_allocated_friend_nick(::std::string* friend_nick);
+
+  // string friend_header_url = 5;
+  void clear_friend_header_url();
+  static const int kFriendHeaderUrlFieldNumber = 5;
+  const ::std::string& friend_header_url() const;
+  void set_friend_header_url(const ::std::string& value);
+  #if LANG_CXX11
+  void set_friend_header_url(::std::string&& value);
+  #endif
+  void set_friend_header_url(const char* value);
+  void set_friend_header_url(const char* value, size_t size);
+  ::std::string* mutable_friend_header_url();
+  ::std::string* release_friend_header_url();
+  void set_allocated_friend_header_url(::std::string* friend_header_url);
+
+  // string friend_email = 6;
+  void clear_friend_email();
+  static const int kFriendEmailFieldNumber = 6;
+  const ::std::string& friend_email() const;
+  void set_friend_email(const ::std::string& value);
+  #if LANG_CXX11
+  void set_friend_email(::std::string&& value);
+  #endif
+  void set_friend_email(const char* value);
+  void set_friend_email(const char* value, size_t size);
+  ::std::string* mutable_friend_email();
+  ::std::string* release_friend_email();
+  void set_allocated_friend_email(::std::string* friend_email);
+
+  // string friend_phone = 7;
+  void clear_friend_phone();
+  static const int kFriendPhoneFieldNumber = 7;
+  const ::std::string& friend_phone() const;
+  void set_friend_phone(const ::std::string& value);
+  #if LANG_CXX11
+  void set_friend_phone(::std::string&& value);
+  #endif
+  void set_friend_phone(const char* value);
+  void set_friend_phone(const char* value, size_t size);
+  ::std::string* mutable_friend_phone();
+  ::std::string* release_friend_phone();
+  void set_allocated_friend_phone(::std::string* friend_phone);
+
+  // string friend_sign_info = 8;
+  void clear_friend_sign_info();
+  static const int kFriendSignInfoFieldNumber = 8;
+  const ::std::string& friend_sign_info() const;
+  void set_friend_sign_info(const ::std::string& value);
+  #if LANG_CXX11
+  void set_friend_sign_info(::std::string&& value);
+  #endif
+  void set_friend_sign_info(const char* value);
+  void set_friend_sign_info(const char* value, size_t size);
+  ::std::string* mutable_friend_sign_info();
+  ::std::string* release_friend_sign_info();
+  void set_allocated_friend_sign_info(::std::string* friend_sign_info);
+
+  // uint32 friend_id = 1;
+  void clear_friend_id();
+  static const int kFriendIdFieldNumber = 1;
+  ::google::protobuf::uint32 friend_id() const;
+  void set_friend_id(::google::protobuf::uint32 value);
+
+  // uint32 friend_account = 2;
+  void clear_friend_account();
+  static const int kFriendAccountFieldNumber = 2;
+  ::google::protobuf::uint32 friend_account() const;
+  void set_friend_account(::google::protobuf::uint32 value);
+
+  // uint32 friend_sex = 3;
+  void clear_friend_sex();
+  static const int kFriendSexFieldNumber = 3;
+  ::google::protobuf::uint32 friend_sex() const;
+  void set_friend_sex(::google::protobuf::uint32 value);
+
+  // bool friend_is_online = 9;
+  void clear_friend_is_online();
+  static const int kFriendIsOnlineFieldNumber = 9;
+  bool friend_is_online() const;
+  void set_friend_is_online(bool value);
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.base.FriendInfo)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr friend_nick_;
+  ::google::protobuf::internal::ArenaStringPtr friend_header_url_;
+  ::google::protobuf::internal::ArenaStringPtr friend_email_;
+  ::google::protobuf::internal::ArenaStringPtr friend_phone_;
+  ::google::protobuf::internal::ArenaStringPtr friend_sign_info_;
+  ::google::protobuf::uint32 friend_id_;
+  ::google::protobuf::uint32 friend_account_;
+  ::google::protobuf::uint32 friend_sex_;
+  bool friend_is_online_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2ebase_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2ebase_2eproto::InitDefaultsFriendInfoImpl();
+};
+// -------------------------------------------------------------------
+
 class HeartBeat : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.base.HeartBeat) */ {
  public:
   HeartBeat();
@@ -509,7 +715,7 @@ class HeartBeat : public ::google::protobuf::Message /* @@protoc_insertion_point
                &_HeartBeat_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    1;
+    2;
 
   void Swap(HeartBeat* other);
   friend void swap(HeartBeat& a, HeartBeat& b) {
@@ -888,11 +1094,338 @@ inline void UserInfo::set_allocated_user_sign_info(::std::string* user_sign_info
 
 // -------------------------------------------------------------------
 
+// FriendInfo
+
+// uint32 friend_id = 1;
+inline void FriendInfo::clear_friend_id() {
+  friend_id_ = 0u;
+}
+inline ::google::protobuf::uint32 FriendInfo::friend_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.FriendInfo.friend_id)
+  return friend_id_;
+}
+inline void FriendInfo::set_friend_id(::google::protobuf::uint32 value) {
+  
+  friend_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.base.FriendInfo.friend_id)
+}
+
+// uint32 friend_account = 2;
+inline void FriendInfo::clear_friend_account() {
+  friend_account_ = 0u;
+}
+inline ::google::protobuf::uint32 FriendInfo::friend_account() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.FriendInfo.friend_account)
+  return friend_account_;
+}
+inline void FriendInfo::set_friend_account(::google::protobuf::uint32 value) {
+  
+  friend_account_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.base.FriendInfo.friend_account)
+}
+
+// uint32 friend_sex = 3;
+inline void FriendInfo::clear_friend_sex() {
+  friend_sex_ = 0u;
+}
+inline ::google::protobuf::uint32 FriendInfo::friend_sex() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.FriendInfo.friend_sex)
+  return friend_sex_;
+}
+inline void FriendInfo::set_friend_sex(::google::protobuf::uint32 value) {
+  
+  friend_sex_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.base.FriendInfo.friend_sex)
+}
+
+// string friend_nick = 4;
+inline void FriendInfo::clear_friend_nick() {
+  friend_nick_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& FriendInfo::friend_nick() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.FriendInfo.friend_nick)
+  return friend_nick_.GetNoArena();
+}
+inline void FriendInfo::set_friend_nick(const ::std::string& value) {
+  
+  friend_nick_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:youliao.pdu.base.FriendInfo.friend_nick)
+}
+#if LANG_CXX11
+inline void FriendInfo::set_friend_nick(::std::string&& value) {
+  
+  friend_nick_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:youliao.pdu.base.FriendInfo.friend_nick)
+}
+#endif
+inline void FriendInfo::set_friend_nick(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  friend_nick_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:youliao.pdu.base.FriendInfo.friend_nick)
+}
+inline void FriendInfo::set_friend_nick(const char* value, size_t size) {
+  
+  friend_nick_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:youliao.pdu.base.FriendInfo.friend_nick)
+}
+inline ::std::string* FriendInfo::mutable_friend_nick() {
+  
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.base.FriendInfo.friend_nick)
+  return friend_nick_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* FriendInfo::release_friend_nick() {
+  // @@protoc_insertion_point(field_release:youliao.pdu.base.FriendInfo.friend_nick)
+  
+  return friend_nick_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void FriendInfo::set_allocated_friend_nick(::std::string* friend_nick) {
+  if (friend_nick != NULL) {
+    
+  } else {
+    
+  }
+  friend_nick_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), friend_nick);
+  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.base.FriendInfo.friend_nick)
+}
+
+// string friend_header_url = 5;
+inline void FriendInfo::clear_friend_header_url() {
+  friend_header_url_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& FriendInfo::friend_header_url() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.FriendInfo.friend_header_url)
+  return friend_header_url_.GetNoArena();
+}
+inline void FriendInfo::set_friend_header_url(const ::std::string& value) {
+  
+  friend_header_url_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:youliao.pdu.base.FriendInfo.friend_header_url)
+}
+#if LANG_CXX11
+inline void FriendInfo::set_friend_header_url(::std::string&& value) {
+  
+  friend_header_url_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:youliao.pdu.base.FriendInfo.friend_header_url)
+}
+#endif
+inline void FriendInfo::set_friend_header_url(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  friend_header_url_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:youliao.pdu.base.FriendInfo.friend_header_url)
+}
+inline void FriendInfo::set_friend_header_url(const char* value, size_t size) {
+  
+  friend_header_url_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:youliao.pdu.base.FriendInfo.friend_header_url)
+}
+inline ::std::string* FriendInfo::mutable_friend_header_url() {
+  
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.base.FriendInfo.friend_header_url)
+  return friend_header_url_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* FriendInfo::release_friend_header_url() {
+  // @@protoc_insertion_point(field_release:youliao.pdu.base.FriendInfo.friend_header_url)
+  
+  return friend_header_url_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void FriendInfo::set_allocated_friend_header_url(::std::string* friend_header_url) {
+  if (friend_header_url != NULL) {
+    
+  } else {
+    
+  }
+  friend_header_url_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), friend_header_url);
+  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.base.FriendInfo.friend_header_url)
+}
+
+// string friend_email = 6;
+inline void FriendInfo::clear_friend_email() {
+  friend_email_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& FriendInfo::friend_email() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.FriendInfo.friend_email)
+  return friend_email_.GetNoArena();
+}
+inline void FriendInfo::set_friend_email(const ::std::string& value) {
+  
+  friend_email_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:youliao.pdu.base.FriendInfo.friend_email)
+}
+#if LANG_CXX11
+inline void FriendInfo::set_friend_email(::std::string&& value) {
+  
+  friend_email_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:youliao.pdu.base.FriendInfo.friend_email)
+}
+#endif
+inline void FriendInfo::set_friend_email(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  friend_email_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:youliao.pdu.base.FriendInfo.friend_email)
+}
+inline void FriendInfo::set_friend_email(const char* value, size_t size) {
+  
+  friend_email_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:youliao.pdu.base.FriendInfo.friend_email)
+}
+inline ::std::string* FriendInfo::mutable_friend_email() {
+  
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.base.FriendInfo.friend_email)
+  return friend_email_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* FriendInfo::release_friend_email() {
+  // @@protoc_insertion_point(field_release:youliao.pdu.base.FriendInfo.friend_email)
+  
+  return friend_email_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void FriendInfo::set_allocated_friend_email(::std::string* friend_email) {
+  if (friend_email != NULL) {
+    
+  } else {
+    
+  }
+  friend_email_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), friend_email);
+  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.base.FriendInfo.friend_email)
+}
+
+// string friend_phone = 7;
+inline void FriendInfo::clear_friend_phone() {
+  friend_phone_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& FriendInfo::friend_phone() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.FriendInfo.friend_phone)
+  return friend_phone_.GetNoArena();
+}
+inline void FriendInfo::set_friend_phone(const ::std::string& value) {
+  
+  friend_phone_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:youliao.pdu.base.FriendInfo.friend_phone)
+}
+#if LANG_CXX11
+inline void FriendInfo::set_friend_phone(::std::string&& value) {
+  
+  friend_phone_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:youliao.pdu.base.FriendInfo.friend_phone)
+}
+#endif
+inline void FriendInfo::set_friend_phone(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  friend_phone_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:youliao.pdu.base.FriendInfo.friend_phone)
+}
+inline void FriendInfo::set_friend_phone(const char* value, size_t size) {
+  
+  friend_phone_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:youliao.pdu.base.FriendInfo.friend_phone)
+}
+inline ::std::string* FriendInfo::mutable_friend_phone() {
+  
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.base.FriendInfo.friend_phone)
+  return friend_phone_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* FriendInfo::release_friend_phone() {
+  // @@protoc_insertion_point(field_release:youliao.pdu.base.FriendInfo.friend_phone)
+  
+  return friend_phone_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void FriendInfo::set_allocated_friend_phone(::std::string* friend_phone) {
+  if (friend_phone != NULL) {
+    
+  } else {
+    
+  }
+  friend_phone_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), friend_phone);
+  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.base.FriendInfo.friend_phone)
+}
+
+// string friend_sign_info = 8;
+inline void FriendInfo::clear_friend_sign_info() {
+  friend_sign_info_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& FriendInfo::friend_sign_info() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.FriendInfo.friend_sign_info)
+  return friend_sign_info_.GetNoArena();
+}
+inline void FriendInfo::set_friend_sign_info(const ::std::string& value) {
+  
+  friend_sign_info_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:youliao.pdu.base.FriendInfo.friend_sign_info)
+}
+#if LANG_CXX11
+inline void FriendInfo::set_friend_sign_info(::std::string&& value) {
+  
+  friend_sign_info_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:youliao.pdu.base.FriendInfo.friend_sign_info)
+}
+#endif
+inline void FriendInfo::set_friend_sign_info(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  friend_sign_info_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:youliao.pdu.base.FriendInfo.friend_sign_info)
+}
+inline void FriendInfo::set_friend_sign_info(const char* value, size_t size) {
+  
+  friend_sign_info_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:youliao.pdu.base.FriendInfo.friend_sign_info)
+}
+inline ::std::string* FriendInfo::mutable_friend_sign_info() {
+  
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.base.FriendInfo.friend_sign_info)
+  return friend_sign_info_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* FriendInfo::release_friend_sign_info() {
+  // @@protoc_insertion_point(field_release:youliao.pdu.base.FriendInfo.friend_sign_info)
+  
+  return friend_sign_info_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void FriendInfo::set_allocated_friend_sign_info(::std::string* friend_sign_info) {
+  if (friend_sign_info != NULL) {
+    
+  } else {
+    
+  }
+  friend_sign_info_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), friend_sign_info);
+  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.base.FriendInfo.friend_sign_info)
+}
+
+// bool friend_is_online = 9;
+inline void FriendInfo::clear_friend_is_online() {
+  friend_is_online_ = false;
+}
+inline bool FriendInfo::friend_is_online() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.FriendInfo.friend_is_online)
+  return friend_is_online_;
+}
+inline void FriendInfo::set_friend_is_online(bool value) {
+  
+  friend_is_online_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.base.FriendInfo.friend_is_online)
+}
+
+// -------------------------------------------------------------------
+
 // HeartBeat
 
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 

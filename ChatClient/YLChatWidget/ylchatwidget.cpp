@@ -40,7 +40,7 @@ void YLChatWidget::initTitleBar()
     //connect ... slot
 
     connect(PduHandler::instance(), &PduHandler::signleMessage, this, [this](uint32_t user_id, const QString &message){
-        if (user_id == m_friend.getFriendId())
+        if (user_id == m_friend.friendId())
         {
             m_message_view->addRight(m_friend_header_path, message);
         }
@@ -105,8 +105,8 @@ void YLChatWidget::resizeEvent(QResizeEvent *e)
 void YLChatWidget::setFriend(const YLFriend&fri)
 {
     m_friend = fri;
-    m_nickname_button->setText(m_friend.getFriendNickName());
-    m_friend_header_path = "file://" + QDir::currentPath() + "/" + m_friend.getFriendImagePath();
+    m_nickname_button->setText(m_friend.friendNickName());
+    m_friend_header_path = "file://" + QDir::currentPath() + "/" + m_friend.friendImagePath();
 }
 
 /// slot
@@ -130,5 +130,5 @@ void YLChatWidget::sendMessage()
     qDebug() << content;
     content.replace("\"", "'");
     m_message_view->addLeft(GlobalData::getCurrLoginUserIconPath(), content);
-    YLBusiness::sendMessage(GlobalData::getCurrLoginUserId(), m_friend.getFriendId(), content);
+    YLBusiness::sendMessage(GlobalData::getCurrLoginUserId(), m_friend.friendId(), content);
 }

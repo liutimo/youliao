@@ -179,16 +179,16 @@ class Group_Friend : public ::google::protobuf::Message /* @@protoc_insertion_po
 
   // accessors -------------------------------------------------------
 
-  // repeated .youliao.pdu.base.UserInfo friend = 3;
+  // repeated .youliao.pdu.base.FriendInfo friend = 3;
   int friend__size() const;
   void clear_friend_();
   static const int kFriendFieldNumber = 3;
-  ::youliao::pdu::base::UserInfo* mutable_friend_(int index);
-  ::google::protobuf::RepeatedPtrField< ::youliao::pdu::base::UserInfo >*
+  ::youliao::pdu::base::FriendInfo* mutable_friend_(int index);
+  ::google::protobuf::RepeatedPtrField< ::youliao::pdu::base::FriendInfo >*
       mutable_friend_();
-  const ::youliao::pdu::base::UserInfo& friend_(int index) const;
-  ::youliao::pdu::base::UserInfo* add_friend_();
-  const ::google::protobuf::RepeatedPtrField< ::youliao::pdu::base::UserInfo >&
+  const ::youliao::pdu::base::FriendInfo& friend_(int index) const;
+  ::youliao::pdu::base::FriendInfo* add_friend_();
+  const ::google::protobuf::RepeatedPtrField< ::youliao::pdu::base::FriendInfo >&
       friend_() const;
 
   // string group_name = 2;
@@ -215,7 +215,7 @@ class Group_Friend : public ::google::protobuf::Message /* @@protoc_insertion_po
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::RepeatedPtrField< ::youliao::pdu::base::UserInfo > friend__;
+  ::google::protobuf::RepeatedPtrField< ::youliao::pdu::base::FriendInfo > friend__;
   ::google::protobuf::internal::ArenaStringPtr group_name_;
   ::google::protobuf::uint32 group_id_;
   mutable int _cached_size_;
@@ -566,28 +566,28 @@ inline void Group_Friend::set_allocated_group_name(::std::string* group_name) {
   // @@protoc_insertion_point(field_set_allocated:youliao.pdu.friendlist.Group_Friend.group_name)
 }
 
-// repeated .youliao.pdu.base.UserInfo friend = 3;
+// repeated .youliao.pdu.base.FriendInfo friend = 3;
 inline int Group_Friend::friend__size() const {
   return friend__.size();
 }
-inline ::youliao::pdu::base::UserInfo* Group_Friend::mutable_friend_(int index) {
+inline ::youliao::pdu::base::FriendInfo* Group_Friend::mutable_friend_(int index) {
   // @@protoc_insertion_point(field_mutable:youliao.pdu.friendlist.Group_Friend.friend)
   return friend__.Mutable(index);
 }
-inline ::google::protobuf::RepeatedPtrField< ::youliao::pdu::base::UserInfo >*
+inline ::google::protobuf::RepeatedPtrField< ::youliao::pdu::base::FriendInfo >*
 Group_Friend::mutable_friend_() {
   // @@protoc_insertion_point(field_mutable_list:youliao.pdu.friendlist.Group_Friend.friend)
   return &friend__;
 }
-inline const ::youliao::pdu::base::UserInfo& Group_Friend::friend_(int index) const {
+inline const ::youliao::pdu::base::FriendInfo& Group_Friend::friend_(int index) const {
   // @@protoc_insertion_point(field_get:youliao.pdu.friendlist.Group_Friend.friend)
   return friend__.Get(index);
 }
-inline ::youliao::pdu::base::UserInfo* Group_Friend::add_friend_() {
+inline ::youliao::pdu::base::FriendInfo* Group_Friend::add_friend_() {
   // @@protoc_insertion_point(field_add:youliao.pdu.friendlist.Group_Friend.friend)
   return friend__.Add();
 }
-inline const ::google::protobuf::RepeatedPtrField< ::youliao::pdu::base::UserInfo >&
+inline const ::google::protobuf::RepeatedPtrField< ::youliao::pdu::base::FriendInfo >&
 Group_Friend::friend_() const {
   // @@protoc_insertion_point(field_list:youliao.pdu.friendlist.Group_Friend.friend)
   return friend__;

@@ -7,7 +7,7 @@ message Group_Friend
 {
     uint32 group_id   = 1;          //好友列表 组id
     string   group_name = 2;        //好友列表 组名
-    repeated youliao.pdu.base.UserInfo friend = 3; //该组下的好友
+    repeated youliao.pdu.base.FriendInfo friend = 3; //该组下的好友
 }
 
 

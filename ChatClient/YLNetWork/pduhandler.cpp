@@ -115,12 +115,12 @@ void PduHandler::_HandleFriendListGetRespone(BasePdu *pdu)
         {
             auto fri = c.friend_(i);
             YLFriend ylFriend;
-            ylFriend.setFriendId(fri.user_id());
-            ylFriend.setFriendAccount(QString::number(fri.user_account()));
-            ylFriend.setFriendImagePath(fri.user_header_url().c_str());
-            ylFriend.setFriendNickName(fri.user_nick().c_str());
-            ylFriend.setFriendSigature(fri.user_sign_info().c_str());
-
+            ylFriend.setFriendId(fri.friend_id());
+            ylFriend.setFriendAccount(QString::number(fri.friend_account()));
+            ylFriend.setFriendImagePath(fri.friend_header_url().c_str());
+            ylFriend.setFriendNickName(fri.friend_nick().c_str());
+            ylFriend.setFriendSigature(fri.friend_sign_info().c_str());
+            ylFriend.setFriendOnline(fri.friend_is_online());
             friends[groupId].push_back(ylFriend);
         }
     }

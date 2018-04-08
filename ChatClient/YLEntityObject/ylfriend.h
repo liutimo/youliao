@@ -33,23 +33,27 @@ public:
 
     void setFriendLastChatTime(const QString &lasttime);
 
-    QString getFriendAccount() const;
+    void setFriendOnline(bool online) { friend_is_online_ = online; }
 
-    QString getFriendNickName() const;
+    QString friendAccount() const;
 
-    QString getFriendSigature() const;
+    QString friendNickName() const;
 
-    QString getFriendRemark() const;
+    QString friendSigature() const;
 
-    QString getFriendLastMessage() const;
+    QString friendRemark() const;
 
-    QString getFriendImagePath() const;
+    QString friendLastMessage() const;
 
-    QString getFriendGroup() const;
+    QString friendImagePath() const;
 
-    QString getFriendLastChatTime() const;
+    QString friendGroup() const;
 
-    uint32_t getFriendId() const { return friend_id_; }
+    QString friendLastChatTime() const;
+
+    uint32_t friendId() const { return friend_id_; }
+
+    bool friendIsOnline() const { return friend_is_online_; }
 
 private:
     uint32_t friend_id_;
@@ -69,6 +73,8 @@ private:
     QString friend_group;
     //最后一条消息接收的时间
     QString friend_last_chat_time_;
+
+    bool friend_is_online_;
 };
 
 #endif // YLFRIEND_H

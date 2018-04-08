@@ -24,11 +24,13 @@ YLFriend & YLFriend::operator =(const YLFriend &f)
     friend_group = f.friend_group;
 
     friend_last_chat_time_ = f.friend_last_chat_time_;
+
+    friend_is_online_ = f.friend_is_online_;
 }
 
 bool YLFriend::operator ==(const YLFriend &f1) const
 {
-    if (f1.getFriendAccount() == this->getFriendAccount())
+    if (f1.friendAccount() == this->friendAccount())
         return true;
     else
         return false;
@@ -74,42 +76,42 @@ void YLFriend::setFriendLastChatTime(const QString &lasttime)
     friend_last_chat_time_ = lasttime;
 }
 
-QString YLFriend::getFriendAccount() const
+QString YLFriend::friendAccount() const
 {
     return friend_account_;
 }
 
-QString YLFriend::getFriendNickName() const
+QString YLFriend::friendNickName() const
 {
     return friend_nickname_;
 }
 
-QString YLFriend::getFriendSigature() const
+QString YLFriend::friendSigature() const
 {
     return friend_signature_;
 }
 
-QString YLFriend::getFriendRemark() const
+QString YLFriend::friendRemark() const
 {
     return friend_remark_;
 }
 
-QString YLFriend::getFriendLastMessage() const
+QString YLFriend::friendLastMessage() const
 {
     return friend_last_message_;
 }
 
-QString YLFriend::getFriendImagePath() const
+QString YLFriend::friendImagePath() const
 {
     return friend_image_path_;
 }
 
-QString YLFriend::getFriendGroup() const
+QString YLFriend::friendGroup() const
 {
     return friend_group;
 }
 
-QString YLFriend::getFriendLastChatTime() const
+QString YLFriend::friendLastChatTime() const
 {
     return friend_last_chat_time_;
 }

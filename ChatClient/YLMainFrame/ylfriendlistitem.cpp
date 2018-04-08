@@ -30,7 +30,7 @@ void YLFriendListItem::init()
 
     m_http = new HttpDownloader;
     connect(m_http, &HttpDownloader::downloadFinshed, this, [this](){
-        head_frame_->setHeadFromLocal("./" + m_http->getFilename());
+        head_frame_->setHeadFromLocal("./" + m_http->getFilename(), friend_.friendIsOnline());
         friend_.setFriendImagePath(m_http->getFilename());
     });
 }
@@ -82,7 +82,7 @@ void YLFriendListItem::initMenu()
 
     connect(action_modify_remark, &QAction::triggered, this, [this](){
         YLModifyRemarkWidget *w = new YLModifyRemarkWidget(this);
-        w->setDefalutText(friend_.getFriendRemark());
+        w->setDefalutText(friend_.friendRemark());
         auto p = YLMainWidget::center;
         w->move(mapToGlobal(p) - mapToGlobal(w->rect().center()));
         w->exec();
@@ -112,25 +112,25 @@ void YLFriendListItem::setData(const YLFriend &friend_)
     {
         //有备注:  备注(昵称)
         //没备注:  昵称(账号)
-        if (friend_.getFriendRemark().isEmpty())
-            label_up_->setText(placeholder_text_1.arg(friend_.getFriendNickName(), friend_.getFriendAccount()));
+        if (friend_.friendRemark().isEmpty())
+            label_up_->setText(placeholder_text_1.arg(friend_.friendNickName(), friend_.friendAccount()));
         else
-            label_up_->setText(placeholder_text_1.arg(friend_.getFriendRemark(), friend_.getFriendNickName()));
+            label_up_->setText(placeholder_text_1.arg(friend_.friendRemark(), friend_.friendNickName()));
 
-        label_down_->setText(placeholder_text_2.arg(friend_.getFriendSigature()));
+        label_down_->setText(placeholder_text_2.arg(friend_.friendSigature()));
 
 
     }
     else if (item_type_ == RECENTTLYCHATITEM)   //作为最近聊天记录列表中的item
     {
-        label_up_->setText(placeholder_text_1_1.arg(friend_.getFriendRemark().isEmpty() ? friend_.getFriendNickName() : friend_.getFriendRemark()));
-        label_time_->setText(placeholder_text_3.arg(friend_.getFriendLastChatTime()));
-        label_down_->setText(placeholder_text_2.arg(friend_.getFriendLastMessage()));
-        head_frame_->setHeadFromLocal(friend_.getFriendImagePath());
+        label_up_->setText(placeholder_text_1_1.arg(friend_.friendRemark().isEmpty() ? friend_.friendNickName() : friend_.friendRemark()));
+        label_time_->setText(placeholder_text_3.arg(friend_.friendLastChatTime()));
+        label_down_->setText(placeholder_text_2.arg(friend_.friendLastMessage()));
+        head_frame_->setHeadFromLocal(friend_.friendImagePath());
     }
 
 
-    m_http->start(friend_.getFriendImagePath());
+    m_http->start(friend_.friendImagePath());
 }
 
 void YLFriendListItem::resizeEvent(QResizeEvent *event)

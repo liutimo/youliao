@@ -84,6 +84,20 @@ message UserInfo
     string user_sign_info = 8;
 }
 
+//好友信息
+message FriendInfo
+{
+    uint32 friend_id = 1;
+    uint32 friend_account = 2;
+    uint32 friend_sex = 3;
+    string friend_nick = 4;
+    string friend_header_url =5;
+    string friend_email = 6;
+    string friend_phone = 7;
+    string friend_sign_info = 8;
+    bool   friend_is_online = 9;
+}
+
 //心跳包
 message HeartBeat
 {
