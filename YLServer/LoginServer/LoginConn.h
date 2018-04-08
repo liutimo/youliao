@@ -54,6 +54,8 @@ private:
 
     ConnType m_conn_type;
 
+    int i = 0;
+
 };
 
 #endif //LOGINSERVER_LOGINCONN_H

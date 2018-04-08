@@ -11,6 +11,9 @@
 
 #include "LoginModel.h"
 #include "../DBPool.h"
+#include "../CachePool.h"
+#include "util/util.h"
+
 LoginModel::LoginModel()
 {
 
@@ -49,6 +52,19 @@ bool LoginModel::doLogin(const std::string &str_name, const std::string &str_pas
                 userInfo.set_user_nick(resultSet->getString("user_nickname"));
                 userInfo.set_user_id(resultSet->getInt("user_id"));
             }
+        }
+
+        //将其登录状态保存到redis
+        auto conn = CacheManager::instance()->getCacheConn("OnlineUser");
+        conn->sAdd("OnlineUser", resultSet->getString("user_id"));
+
+        string value = resultSet->getString("user_id");
+        log("%s", value.c_str());
+        if (conn->sIsMem("OnlineUser", value))
+        {
+            log("%s is mem of onlineuser", value.c_str());
+        } else{
+            log("%s is't mem of onlineuser", value.c_str());
         }
 
         delete resultSet;

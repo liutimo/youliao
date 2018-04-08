@@ -54,7 +54,7 @@ void InitDefaultsGroup_FriendImpl() {
 #else
   ::google::protobuf::internal::InitProtobufDefaults();
 #endif  // GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
-  protobuf_youliao_2ebase_2eproto::InitDefaultsUserInfo();
+  protobuf_youliao_2ebase_2eproto::InitDefaultsFriendInfo();
   {
     void* ptr = &::youliao::pdu::friendlist::_Group_Friend_default_instance_;
     new (ptr) ::youliao::pdu::friendlist::Group_Friend();
@@ -204,20 +204,20 @@ void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
       "\n\030youliao.friendlist.proto\022\026youliao.pdu."
-      "friendlist\032\022youliao.base.proto\"`\n\014Group_"
+      "friendlist\032\022youliao.base.proto\"b\n\014Group_"
       "Friend\022\020\n\010group_id\030\001 \001(\r\022\022\n\ngroup_name\030\002"
-      " \001(\t\022*\n\006friend\030\003 \003(\0132\032.youliao.pdu.base."
-      "UserInfo\"9\n\021FriendListRequest\022\017\n\007user_id"
-      "\030\001 \001(\r\022\023\n\013attach_data\030\024 \001(\014\"\321\001\n\021FriendLi"
-      "stRespone\022N\n\013friend_list\030\001 \003(\01329.youliao"
-      ".pdu.friendlist.FriendListRespone.Friend"
-      "ListEntry\022\023\n\013attach_data\030\024 \001(\014\032W\n\017Friend"
-      "ListEntry\022\013\n\003key\030\001 \001(\r\0223\n\005value\030\002 \001(\0132$."
-      "youliao.pdu.friendlist.Group_Friend:\0028\001b"
-      "\006proto3"
+      " \001(\t\022,\n\006friend\030\003 \003(\0132\034.youliao.pdu.base."
+      "FriendInfo\"9\n\021FriendListRequest\022\017\n\007user_"
+      "id\030\001 \001(\r\022\023\n\013attach_data\030\024 \001(\014\"\321\001\n\021Friend"
+      "ListRespone\022N\n\013friend_list\030\001 \003(\01329.youli"
+      "ao.pdu.friendlist.FriendListRespone.Frie"
+      "ndListEntry\022\023\n\013attach_data\030\024 \001(\014\032W\n\017Frie"
+      "ndListEntry\022\013\n\003key\030\001 \001(\r\0223\n\005value\030\002 \001(\0132"
+      "$.youliao.pdu.friendlist.Group_Friend:\0028"
+      "\001b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 447);
+      descriptor, 449);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "youliao.friendlist.proto", &protobuf_RegisterTypes);
   ::protobuf_youliao_2ebase_2eproto::AddDescriptors();
@@ -356,7 +356,7 @@ bool Group_Friend::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated .youliao.pdu.base.UserInfo friend = 3;
+      // repeated .youliao.pdu.base.FriendInfo friend = 3;
       case 3: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(26u /* 26 & 0xFF */)) {
@@ -409,7 +409,7 @@ void Group_Friend::SerializeWithCachedSizes(
       2, this->group_name(), output);
   }
 
-  // repeated .youliao.pdu.base.UserInfo friend = 3;
+  // repeated .youliao.pdu.base.FriendInfo friend = 3;
   for (unsigned int i = 0,
       n = static_cast<unsigned int>(this->friend__size()); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
@@ -448,7 +448,7 @@ void Group_Friend::SerializeWithCachedSizes(
         2, this->group_name(), target);
   }
 
-  // repeated .youliao.pdu.base.UserInfo friend = 3;
+  // repeated .youliao.pdu.base.FriendInfo friend = 3;
   for (unsigned int i = 0,
       n = static_cast<unsigned int>(this->friend__size()); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
@@ -473,7 +473,7 @@ size_t Group_Friend::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
   }
-  // repeated .youliao.pdu.base.UserInfo friend = 3;
+  // repeated .youliao.pdu.base.FriendInfo friend = 3;
   {
     unsigned int count = static_cast<unsigned int>(this->friend__size());
     total_size += 1UL * count;

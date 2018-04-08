@@ -81,6 +81,13 @@ void LoginConn::_HandleClientLogin(BasePdu *basePdu)
     youliao::pdu::login::MsgServerRespone respone;
     respone.set_result_code(base::NONE);
     respone.set_msg_server_ip("127.0.0.1");
+
+//    if (i % 2 == 0)
+//        respone.set_port(8002);
+//    else
+//        respone.set_port(8003);
+//    ++i;
+
     respone.set_port(8002);
 
     BasePdu *responePdu = new BasePdu;
