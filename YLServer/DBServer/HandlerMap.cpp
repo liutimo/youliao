@@ -42,7 +42,7 @@ void HandlerMap::init()
     m_handler_map.insert(std::make_pair(CID_SERVER_USER_LOGOUT, DB_INTERFACE::logout));
 
     //获取在线好友
-    m_handler_map.insert(std::make_pair(CID_SERVER_GET_ONLINE_FRIENDS, DB_INTERFACE::getOnlineFriends));
+    m_handler_map.insert(std::make_pair(CID_SERVER_GET_ONLINE_FRIENDS_REQUEST, DB_INTERFACE::getOnlineFriends));
 }
 
 pdu_handler_t HandlerMap::getHandler(uint16_t cid)

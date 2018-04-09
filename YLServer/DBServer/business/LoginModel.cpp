@@ -33,6 +33,7 @@ bool LoginModel::doLogin(const std::string &str_name, const std::string &str_pas
     if (dbConn)
     {
         std::string str_sql = "select * from yl_user where user_account='" + str_name + "'";
+        log("%s", str_sql.c_str());
         ResultSet *resultSet = dbConn->query(str_sql);
 
         std::string password;

@@ -85,7 +85,7 @@ void FriendListModel::getFriendList(uint32_t user_id, uint32_t msg_serv_idx, fri
     manager->releaseConnection(conn);
 }
 
-void FriendListModel::getOnlineFriends(uint32_t user_id, server::OnlineFriendRespone &onlineFriendRespone)
+void FriendListModel::getOnlineFriends(uint32_t user_id, server::RouteGetOnlineFriendRespone &routeGetOnlineFriendRespone)
 {
     auto conn = CacheManager::instance()->getCacheConn("OnlineUser");
 
@@ -96,15 +96,14 @@ void FriendListModel::getOnlineFriends(uint32_t user_id, server::OnlineFriendRes
         conn->hgetAll(mapName, onlineFriends);
         log("%s has %d online friends", mapName.c_str(), onlineFriends.size());
 
-
-        auto& onlineFriendMap = *onlineFriendRespone.mutable_online_firends();
+        auto& onlineFriendMap = *routeGetOnlineFriendRespone.mutable_online_firends();
 
         for (auto elem : onlineFriends)
         {
             string friendId = elem.first;
             string msg_idx = elem.second;
             log("key = %s value = %s", friendId.c_str(), msg_idx.c_str());
-            onlineFriendMap[atoi(friendId.)]
+            onlineFriendMap[atoi(friendId.c_str())] = (uint32_t )atoi(msg_idx.c_str());
         }
     }
 

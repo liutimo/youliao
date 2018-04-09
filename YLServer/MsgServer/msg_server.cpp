@@ -3,7 +3,7 @@
 #include "ClientConn.h"
 #include "network/netlib.h"
 #include "DBServConn.h"
-#include "util/SimpleBuffer.h"
+#include "RouteConn.h"
 #include "pdu/protobuf/youliao.server.pb.h"
 
 using namespace youliao::network;
@@ -29,6 +29,12 @@ int main() {
     s->server_port = 6001;
 
     init_db_serv_conn(s, 1, 2);
+
+    serv_info_t *s1 = new serv_info_t;
+    s1->server_ip = "127.0.0.1";
+    s1->server_port = 7001;
+
+    init_route_serv_conn(s1, 1, 2);
 
 
     netlib_eventloop();

@@ -90,18 +90,24 @@ namespace DB_INTERFACE
     }
 
 
-    void getOnlineFriends(BasePdu *basePdu, uint32_t conn_uid)
+    void getOnlineFriends(BasePdu *basePdu, uint32_t conn_uuid)
     {
-        server::OnlineFirendRequest onlineFirendRequest;
-        onlineFirendRequest.ParseFromString(basePdu->getMessage());
+        server::RouteGetOnlineFirendRequest RouteGetOnlineFirendRequest;
+        RouteGetOnlineFirendRequest.ParseFromString(basePdu->getMessage());
 
-        uint32_t userId = onlineFirendRequest.user_id();
+        uint32_t userId = RouteGetOnlineFirendRequest.user_id();
 
-        server::OnlineFriendRespone onlineFriendRespone;
+        server::RouteGetOnlineFriendRespone routeGetOnlineFriendRespone;
 
         FriendListModel friendListModel;
-        friendListModel.getOnlineFriends(userId, onlineFriendRespone);
+        friendListModel.getOnlineFriends(userId, routeGetOnlineFriendRespone);
 
+        BasePdu basePdu1;
+        basePdu1.setSID(base::SID_SERVER);
+        basePdu1.setCID(base::CID_SERVER_GET_ONLINE_FRIENDS_RESPONE);
+        basePdu1.writeMessage(&routeGetOnlineFriendRespone);
+
+        findProxyConn(conn_uuid)->sendBasePdu(&basePdu1);
     }
 }
 

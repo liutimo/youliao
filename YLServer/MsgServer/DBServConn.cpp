@@ -5,12 +5,12 @@
 #include <network/ServerInfo.h>
 #include <pdu/protobuf/youliao.friendlist.pb.h>
 #include "DBServConn.h"
+#include "RouteConn.h"
 #include "ClientConn.h"
 #include "network/netlib.h"
-#include "pdu/protobuf/youliao.base.pb.h"
+
 #include "pdu/protobuf/youliao.login.pb.h"
 #include "pdu/protobuf/youliao.server.pb.h"
-#include "pdu/BasePdu.h"
 #include "User.h"
 
 using namespace youliao::pdu;
@@ -21,11 +21,7 @@ serv_info_t*  g_db_server_list = nullptr;
 uint32_t      g_db_server_count = 0;
 uint32_t      g_db_server_login_count = 0;
 
-//serv_info_t *s = new serv_info_t;
-//s->server_ip = "127.0.0.1";
-//s->server_port = 6001;
-//
-//init_db_serv_conn(s, 1, 2);
+
 
 void init_db_serv_conn(serv_info_t* server_list, uint32_t server_count, uint32_t curr_conn_cnt) {
     g_db_server_list = server_list;
@@ -35,14 +31,6 @@ void init_db_serv_conn(serv_info_t* server_list, uint32_t server_count, uint32_t
     g_db_server_login_count = (total_db_instance / 2) * curr_conn_cnt;
 
     serv_init<DBServConn>(g_db_server_list, g_db_server_count);
-
-
-    base::HeartBeat heartBeat;
-    BasePdu *pdu = new BasePdu;
-    pdu->setSID(base::SID_OTHER);
-    pdu->setCID(base::CID_OTHER_HEARTBEAT);
-    pdu->writeMessage(&heartBeat);
-    g_db_server_list->server_conn->sendBasePdu(pdu);
 }
 
 template <class T>
@@ -78,7 +66,7 @@ DBServConn* get_db_server_conn()
         }
     }
 
-    return (DBServConn*)(g_db_server_list->server_conn);
+    return pDbConn;
 }
 
 
@@ -194,25 +182,29 @@ void DBServConn::_HandleFriendListRespone(BasePdu *pdu)
     ClientConn *clientConn = findConn(handle);
 
     log("send friend list to %d", handle);
-    if (clientConn)
-    {
-        BasePdu basePdu;
-        basePdu.setSID(base::SID_FRIEND_LIST);
-        basePdu.setCID(base::CID_FRIENDLIST_GET_RESPONE);
-        basePdu.writeMessage(&friendListRespone);
+    if (!clientConn)
+        return;
 
-        clientConn->sendBasePdu(&basePdu);
+    //发送好友列表给客户端
+    BasePdu basePdu;
+    basePdu.setSID(base::SID_FRIEND_LIST);
+    basePdu.setCID(base::CID_FRIENDLIST_GET_RESPONE);
+    basePdu.writeMessage(&friendListRespone);
+    clientConn->sendBasePdu(&basePdu);
 
-        //请求在线好友,通知"我"上线
-        server::OnlineFirendRequest onlineFirendRequest;
-        onlineFirendRequest.set_user_id(clientConn->getUserId());
-        basePdu.setSID(base::SID_SERVER);
-        basePdu.setCID(base::CID_SERVER_GET_ONLINE_FRIENDS);
-        basePdu.writeMessage(&onlineFirendRequest);
-        sendBasePdu(&basePdu);
+    RouteConn *routeConn = get_route_server_conn();
+    if (!routeConn)
+        return;
 
+    //发送好友上线通知
+    //之所以在这里发送，是因为DBServer是在获取好友列表时更新 在线好友列表
+    server::RouteStatusChange routeStatusChange;
+    routeStatusChange.set_user_id(clientConn->getUserId());
+    routeStatusChange.set_user_status_type(base::USER_STATUS_ONLINE);
+    BasePdu basePdu1;
+    basePdu1.setSID(base::SID_SERVER);
+    basePdu1.setCID(base::CID_SERVER_ROUTE_STATUS_CHANGED);
+    basePdu1.writeMessage(&routeStatusChange);
 
-    }
-
-
+    routeConn->sendBasePdu(&basePdu1);
 }

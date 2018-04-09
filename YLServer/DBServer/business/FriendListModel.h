@@ -18,7 +18,7 @@ public:
 
     void getFriendList(uint32_t user_id, uint32_t msg_serv_idx, friendlist::FriendListRespone &friendListRespone);
 
-    void getOnlineFriends(uint32_t user_id, server::OnlineFriendRespone &onlineFriendRespone);
+    void getOnlineFriends(uint32_t user_id, server::RouteGetOnlineFriendRespone &routeGetOnlineFriendRespone);
 
 };
 

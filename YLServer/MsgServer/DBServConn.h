@@ -30,7 +30,6 @@ private:
     void _HandleFriendListRespone(BasePdu *);
 
 
-
     uint32_t   m_server_index;
     bool       m_open;
 };

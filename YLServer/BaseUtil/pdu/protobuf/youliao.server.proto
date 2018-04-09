@@ -41,36 +41,32 @@ message MsgServerInfo
     uint32 cur_conn_count = 4;
 }
 
-
-//1. 用户上线,msg_server向dbserver请求在线用户,
-//2. dbserver将在线好友信息发送到msg_server
-//3. msgserver 将收到的好友信息发送到routeserver.
-//4. routerserver 根据好友所在msgserver进行广播.
-
-
-//[1]
-message OnlineFirendRequest
+//[1] 由msgServer发送给RouteServer,
+message RouteStatusChange
 {
     uint32 user_id = 1;
+    youliao.pdu.base.UserStatusType user_status_type = 2;
 }
 
-//[2]
-message OnlineFriendRespone
+
+//[2]由RouteServer发送给DBServer
+message RouteGetOnlineFirendRequest
 {
+    uint32 user_id = 1;
+    bytes attach_data = 20;
+}
+
+//[2]由DBServer转发给RouteServer
+message RouteGetOnlineFriendRespone
+{ 
+    uint32 user_id = 1;
     //在线好友ID : 消息服务器ID
-    map<uint32, uint32> online_firends = 1;
+    map<uint32, uint32> online_firends = 2;
+    bytes attach_data = 20;
 }
 
-//[3]
-message MsgRouteRequest
-{
-    uint32 user_id = 1; //用户id, 由该用户发出的请求
-    map<uint32, uint32> online_firends = 2;    //在线好友ID : 消息服务器ID
-    bytes route_data = 20;
-}
-
-//[4]
-message MsgRouteResponse
+//[3] routeServer广播消息
+message RouteBroadcase
 {
     uint32 user_id = 1;
     repeated uint32 friends = 2;
