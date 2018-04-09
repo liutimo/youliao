@@ -22,6 +22,17 @@ using namespace youliao::util;
 
 static ClientConnMap_t g_client_conn_map;
 
+static uint32_t g_msg_serv_idx = 0;
+
+void setMsgServIdx(uint32_t msg_serv_idx)
+{
+    g_msg_serv_idx = msg_serv_idx;
+}
+
+uint32_t  getMsgServIdx()
+{
+    return g_msg_serv_idx;
+}
 
 
 uint64_t get_tick_count()
@@ -70,6 +81,8 @@ ClientConn *findConn(uint32_t handle)
         return iter->second;
     return nullptr;
 }
+
+//////////////////////////////////////
 
 ClientConn::ClientConn() : BaseConn()
 {
@@ -139,6 +152,7 @@ void ClientConn::_HandleClientLoginRequest(BasePdu *pdu)
     server::ValidateRequest validateRequest;
     validateRequest.set_user_name(request.user_name());
     validateRequest.set_user_pwd(request.user_password());
+    validateRequest.set_msg_serv_id(getMsgServIdx());
     set_attach_data(validateRequest, m_handle);
 
     DBServConn *pDbServConn = get_db_server_conn();
@@ -177,6 +191,7 @@ void ClientConn::_HandleFriendListGetRequest(BasePdu *pdu)
         return;
     }
 
+    friendListRequest.set_msg_serv_idx(getMsgServIdx());
     set_attach_data(friendListRequest, m_handle);
 
     DBServConn *dbServConn = get_db_server_conn();
@@ -209,8 +224,6 @@ void ClientConn::_HandleClientLoginOutRequest(BasePdu *pdu)
         conn->onClose();
     }
 
-
-
     DBServConn *dbServConn = get_db_server_conn();
 
     if (dbServConn)
@@ -239,6 +252,7 @@ void ClientConn::_HandleMessageDataRequest(BasePdu *pdu)
     {
         //接受这不在当前服务器,或者未登录.
         //
+
     }
     else
     {

@@ -30,6 +30,8 @@ enum ServerCID
     CID_SERVER_VALIDATE_REQUEST = 0x0202;        //msg server向db server发送用户校验信息
     CID_SERVER_VALIDATE_RESPONE = 0x0203;
     CID_SERVER_USER_LOGOUT      = 0x0204;        //由消息服务器发送给数据库服务器
+    CID_SERVER_ROUTE_MSG        = 0x0205;
+    CID_SERVER_GET_ONLINE_FRIENDS = 0x0206;       //由msgserver发送给dbserver,获取在线好友
 }
 
 enum OtherCID
@@ -111,4 +113,13 @@ enum MessageType
     MESSAGE_TYPE_SINGLE_AUDIO = 0x02; //单人 语音
     MESSAGE_TYPE_GROUP_TEXT   = 0x03; //群组 文本
     MESSAGE_TYPE_GROUP_AUDIO  = 0x04; //群组 语音
+}
+
+
+//服务器间通知
+enum RouteMessageType
+{
+    ROUTE_MESSAGE_ZERO = 0x00;
+    ROUTE_MESSAGE_STATUS = 0x01;     //好友状态更改
+
 }

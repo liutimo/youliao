@@ -160,13 +160,16 @@ void DBServConn::_HandleValidateRespone(BasePdu *pdu)
             return;
         }
 
-        UserManager::instance()->addUser(userInfo->user_id(), clientConn);
-
         login::UserLoginRespone userLoginRespone;
         if (validateRespone.result_code() == 1)
             userLoginRespone.set_result_code(base::MSG_SERVER_FULL);
         else
+        {
             userLoginRespone.set_result_code(base::NONE);
+            //  登录成功
+            UserManager::instance()->addUser(userInfo->user_id(), clientConn);
+        }
+
         userLoginRespone.set_allocated_user_info(userInfo);
 
         BasePdu *basePdu = new BasePdu;
@@ -186,19 +189,30 @@ void DBServConn::_HandleFriendListRespone(BasePdu *pdu)
 
     uint32_t handle = get_attach_data(friendListRespone);
 
-
     std::cout << "向" << handle << "发送的好友列表响应" << std::endl;
 
     ClientConn *clientConn = findConn(handle);
+
+    log("send friend list to %d", handle);
     if (clientConn)
     {
+        BasePdu basePdu;
+        basePdu.setSID(base::SID_FRIEND_LIST);
+        basePdu.setCID(base::CID_FRIENDLIST_GET_RESPONE);
+        basePdu.writeMessage(&friendListRespone);
 
-        BasePdu *basePdu = new BasePdu;
-        basePdu->setSID(base::SID_FRIEND_LIST);
-        basePdu->setCID(base::CID_FRIENDLIST_GET_RESPONE);
-        basePdu->writeMessage(&friendListRespone);
+        clientConn->sendBasePdu(&basePdu);
 
-        clientConn->sendBasePdu(basePdu);
-        delete basePdu;
+        //请求在线好友,通知"我"上线
+        server::OnlineFirendRequest onlineFirendRequest;
+        onlineFirendRequest.set_user_id(clientConn->getUserId());
+        basePdu.setSID(base::SID_SERVER);
+        basePdu.setCID(base::CID_SERVER_GET_ONLINE_FRIENDS);
+        basePdu.writeMessage(&onlineFirendRequest);
+        sendBasePdu(&basePdu);
+
+
     }
+
+
 }

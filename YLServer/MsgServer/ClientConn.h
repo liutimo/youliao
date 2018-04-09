@@ -28,6 +28,7 @@ public:
 
     void handlePdu(BasePdu *) override ;
     uint32_t getUserId() { return m_user_id; }
+
 private:
     void _HandleClientLoginRequest(BasePdu *);
     void _HandleClientLoginOutRequest(BasePdu *);
@@ -45,4 +46,6 @@ private:
 typedef  __gnu_cxx::hash_map<int, ClientConn*> ClientConnMap_t;
 ClientConn *findConn(uint32_t handle);
 
+void setMsgServIdx(uint32_t msg_serv_idx);
+uint32_t  getMsgServIdx();
 #endif //MSGSERVER_CLIENTCONN_H

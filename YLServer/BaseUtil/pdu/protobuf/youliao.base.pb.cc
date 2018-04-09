@@ -105,7 +105,7 @@ void InitDefaultsHeartBeat() {
 }
 
 ::google::protobuf::Metadata file_level_metadata[3];
-const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[9];
+const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[10];
 
 const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   ~0u,  // no _has_bits_
@@ -194,28 +194,31 @@ void AddDescriptorsImpl() {
       "IN_RESPONE_MSGSERVER\020\202\002\022 \n\033CID_LOGIN_REQ"
       "UEST_USERLOGIN\020\203\002\022 \n\033CID_LOGIN_RESPONE_U"
       "SERLOGIN\020\204\002\022#\n\036CID_LOGIN_REQUEST_USERLOG"
-      "INOUT\020\205\002*\241\001\n\tServerCID\022\023\n\017CID_SERVER_ZER"
+      "INOUT\020\205\002*\340\001\n\tServerCID\022\023\n\017CID_SERVER_ZER"
       "O\020\000\022\036\n\031CID_SERVER_MSGSERVER_INFO\020\201\004\022 \n\033C"
       "ID_SERVER_VALIDATE_REQUEST\020\202\004\022 \n\033CID_SER"
       "VER_VALIDATE_RESPONE\020\203\004\022\033\n\026CID_SERVER_US"
-      "ER_LOGOUT\020\204\004*8\n\010OtherCID\022\022\n\016CID_OTHER_ZE"
-      "RO\020\000\022\030\n\023CID_OTHER_HEARTBEAT\020\201\006*j\n\rFriend"
-      "ListCID\022\027\n\023CID_FRIENDLIST_ZERO\020\000\022\037\n\032CID_"
-      "FRIENDLIST_GET_REQUEST\020\201\010\022\037\n\032CID_FRIENDL"
-      "IST_GET_RESPONE\020\202\010*9\n\nMessageCID\022\024\n\020CID_"
-      "MESSAGE_ZERO\020\000\022\025\n\020CID_MESSAGE_DATA\020\201\n*>\n"
-      "\nResultType\022\010\n\004NONE\020\000\022\021\n\rNO_MSG_SERVER\020\001"
-      "\022\023\n\017MSG_SERVER_FULL\020\002*m\n\016UserStatusType\022"
-      "\024\n\020USER_STATUS_ZERO\020\000\022\026\n\022USER_STATUS_ONL"
-      "INE\020\001\022\027\n\023USER_STATUS_OFFLINE\020\002\022\024\n\020USER_S"
-      "TATUS_HIDE\020\003*\227\001\n\013MessageType\022\020\n\014MESSAGE_"
-      "ZERO\020\000\022\034\n\030MESSAGE_TYPE_SINGLE_TEXT\020\001\022\035\n\031"
-      "MESSAGE_TYPE_SINGLE_AUDIO\020\002\022\033\n\027MESSAGE_T"
-      "YPE_GROUP_TEXT\020\003\022\034\n\030MESSAGE_TYPE_GROUP_A"
-      "UDIO\020\004b\006proto3"
+      "ER_LOGOUT\020\204\004\022\031\n\024CID_SERVER_ROUTE_MSG\020\205\004\022"
+      "\"\n\035CID_SERVER_GET_ONLINE_FRIENDS\020\206\004*8\n\010O"
+      "therCID\022\022\n\016CID_OTHER_ZERO\020\000\022\030\n\023CID_OTHER"
+      "_HEARTBEAT\020\201\006*j\n\rFriendListCID\022\027\n\023CID_FR"
+      "IENDLIST_ZERO\020\000\022\037\n\032CID_FRIENDLIST_GET_RE"
+      "QUEST\020\201\010\022\037\n\032CID_FRIENDLIST_GET_RESPONE\020\202"
+      "\010*9\n\nMessageCID\022\024\n\020CID_MESSAGE_ZERO\020\000\022\025\n"
+      "\020CID_MESSAGE_DATA\020\201\n*>\n\nResultType\022\010\n\004NO"
+      "NE\020\000\022\021\n\rNO_MSG_SERVER\020\001\022\023\n\017MSG_SERVER_FU"
+      "LL\020\002*m\n\016UserStatusType\022\024\n\020USER_STATUS_ZE"
+      "RO\020\000\022\026\n\022USER_STATUS_ONLINE\020\001\022\027\n\023USER_STA"
+      "TUS_OFFLINE\020\002\022\024\n\020USER_STATUS_HIDE\020\003*\227\001\n\013"
+      "MessageType\022\020\n\014MESSAGE_ZERO\020\000\022\034\n\030MESSAGE"
+      "_TYPE_SINGLE_TEXT\020\001\022\035\n\031MESSAGE_TYPE_SING"
+      "LE_AUDIO\020\002\022\033\n\027MESSAGE_TYPE_GROUP_TEXT\020\003\022"
+      "\034\n\030MESSAGE_TYPE_GROUP_AUDIO\020\004*D\n\020RouteMe"
+      "ssageType\022\026\n\022ROUTE_MESSAGE_ZERO\020\000\022\030\n\024ROU"
+      "TE_MESSAGE_STATUS\020\001b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 1494);
+      descriptor, 1627);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "youliao.base.proto", &protobuf_RegisterTypes);
 }
@@ -281,6 +284,8 @@ bool ServerCID_IsValid(int value) {
     case 514:
     case 515:
     case 516:
+    case 517:
+    case 518:
       return true;
     default:
       return false;
@@ -372,6 +377,20 @@ bool MessageType_IsValid(int value) {
     case 2:
     case 3:
     case 4:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::google::protobuf::EnumDescriptor* RouteMessageType_descriptor() {
+  protobuf_youliao_2ebase_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_youliao_2ebase_2eproto::file_level_enum_descriptors[9];
+}
+bool RouteMessageType_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
       return true;
     default:
       return false;

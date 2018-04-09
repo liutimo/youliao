@@ -6,9 +6,10 @@
 #include "../ProxyConn.h"
 #include "LoginModel.h"
 #include "FriendListModel.h"
+#include "util/util.h"
+#include "../CachePool.h"
 
 #include "pdu/protobuf/youliao.server.pb.h"
-#include "pdu/protobuf/youliao.friendlist.pb.h"
 
 
 namespace DB_INTERFACE
@@ -26,15 +27,24 @@ namespace DB_INTERFACE
         base::UserInfo *userInfo = new base::UserInfo;
         if (loginModel.doLogin(validateRequest.user_name(), validateRequest.user_pwd(), *userInfo))
         {
+            //将其登录状态保存到redis, 格式为user_id : msg_serv_id
+            auto conn = CacheManager::instance()->getCacheConn("OnlineUser");
+            conn->hset("user_map", to_string(userInfo->user_id()), to_string(validateRequest.msg_serv_id()));
+
+            CacheManager::instance()->releaseCacheConn(conn);
+
             validateRespone.set_user_name(validateRequest.user_name());
             validateRespone.set_result_code(0);
             validateRespone.set_result_string("登录成功");
             validateRespone.set_allocated_user_info(userInfo);
+            log("user %s login success!", validateRequest.user_name().c_str());
         }
         else
         {
             validateRespone.set_result_code(1);
             validateRespone.set_result_string("登录失败， 用户名或密码错误！");
+
+            log("user %s login success!", validateRequest.user_name().c_str());
         }
 
         BasePdu *pdu1 = new BasePdu;
@@ -57,7 +67,7 @@ namespace DB_INTERFACE
         friendListRespone.set_attach_data(friendListRequest.attach_data());
 
         FriendListModel friendListModel;
-        friendListModel.getFriendList(friendListRequest.user_id(), friendListRespone);
+        friendListModel.getFriendList(friendListRequest.user_id(), friendListRequest.msg_serv_idx(), friendListRespone);
 
         BasePdu *pdu = new BasePdu;
         pdu->setSID(base::SID_FRIEND_LIST);
@@ -77,6 +87,21 @@ namespace DB_INTERFACE
 
         LoginModel loginModel;
         loginModel.doLogout(userId);
+    }
+
+
+    void getOnlineFriends(BasePdu *basePdu, uint32_t conn_uid)
+    {
+        server::OnlineFirendRequest onlineFirendRequest;
+        onlineFirendRequest.ParseFromString(basePdu->getMessage());
+
+        uint32_t userId = onlineFirendRequest.user_id();
+
+        server::OnlineFriendRespone onlineFriendRespone;
+
+        FriendListModel friendListModel;
+        friendListModel.getOnlineFriends(userId, onlineFriendRespone);
+
     }
 }
 

@@ -137,12 +137,14 @@ enum ServerCID {
   CID_SERVER_VALIDATE_REQUEST = 514,
   CID_SERVER_VALIDATE_RESPONE = 515,
   CID_SERVER_USER_LOGOUT = 516,
+  CID_SERVER_ROUTE_MSG = 517,
+  CID_SERVER_GET_ONLINE_FRIENDS = 518,
   ServerCID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   ServerCID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool ServerCID_IsValid(int value);
 const ServerCID ServerCID_MIN = CID_SERVER_ZERO;
-const ServerCID ServerCID_MAX = CID_SERVER_USER_LOGOUT;
+const ServerCID ServerCID_MAX = CID_SERVER_GET_ONLINE_FRIENDS;
 const int ServerCID_ARRAYSIZE = ServerCID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* ServerCID_descriptor();
@@ -287,6 +289,27 @@ inline bool MessageType_Parse(
     const ::std::string& name, MessageType* value) {
   return ::google::protobuf::internal::ParseNamedEnum<MessageType>(
     MessageType_descriptor(), name, value);
+}
+enum RouteMessageType {
+  ROUTE_MESSAGE_ZERO = 0,
+  ROUTE_MESSAGE_STATUS = 1,
+  RouteMessageType_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  RouteMessageType_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+bool RouteMessageType_IsValid(int value);
+const RouteMessageType RouteMessageType_MIN = ROUTE_MESSAGE_ZERO;
+const RouteMessageType RouteMessageType_MAX = ROUTE_MESSAGE_STATUS;
+const int RouteMessageType_ARRAYSIZE = RouteMessageType_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* RouteMessageType_descriptor();
+inline const ::std::string& RouteMessageType_Name(RouteMessageType value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    RouteMessageType_descriptor(), value);
+}
+inline bool RouteMessageType_Parse(
+    const ::std::string& name, RouteMessageType* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<RouteMessageType>(
+    RouteMessageType_descriptor(), name, value);
 }
 // ===================================================================
 
@@ -1483,6 +1506,11 @@ template <> struct is_proto_enum< ::youliao::pdu::base::MessageType> : ::google:
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::youliao::pdu::base::MessageType>() {
   return ::youliao::pdu::base::MessageType_descriptor();
+}
+template <> struct is_proto_enum< ::youliao::pdu::base::RouteMessageType> : ::google::protobuf::internal::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::youliao::pdu::base::RouteMessageType>() {
+  return ::youliao::pdu::base::RouteMessageType_descriptor();
 }
 
 }  // namespace protobuf

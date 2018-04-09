@@ -20,6 +20,7 @@ void clientconn_callback(callback_data data, uint8_t msg, net_handle_t handle, v
 
 int main() {
 
+    setMsgServIdx(10);
     netlib_init();
     netlib_listen("127.0.0.1", 8002, clientconn_callback, nullptr);
 

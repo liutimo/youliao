@@ -330,12 +330,19 @@ class FriendListRequest : public ::google::protobuf::Message /* @@protoc_inserti
   ::google::protobuf::uint32 user_id() const;
   void set_user_id(::google::protobuf::uint32 value);
 
+  // uint32 msg_serv_idx = 2;
+  void clear_msg_serv_idx();
+  static const int kMsgServIdxFieldNumber = 2;
+  ::google::protobuf::uint32 msg_serv_idx() const;
+  void set_msg_serv_idx(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:youliao.pdu.friendlist.FriendListRequest)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::ArenaStringPtr attach_data_;
   ::google::protobuf::uint32 user_id_;
+  ::google::protobuf::uint32 msg_serv_idx_;
   mutable int _cached_size_;
   friend struct ::protobuf_youliao_2efriendlist_2eproto::TableStruct;
   friend void ::protobuf_youliao_2efriendlist_2eproto::InitDefaultsFriendListRequestImpl();
@@ -609,6 +616,20 @@ inline void FriendListRequest::set_user_id(::google::protobuf::uint32 value) {
   
   user_id_ = value;
   // @@protoc_insertion_point(field_set:youliao.pdu.friendlist.FriendListRequest.user_id)
+}
+
+// uint32 msg_serv_idx = 2;
+inline void FriendListRequest::clear_msg_serv_idx() {
+  msg_serv_idx_ = 0u;
+}
+inline ::google::protobuf::uint32 FriendListRequest::msg_serv_idx() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.friendlist.FriendListRequest.msg_serv_idx)
+  return msg_serv_idx_;
+}
+inline void FriendListRequest::set_msg_serv_idx(::google::protobuf::uint32 value) {
+  
+  msg_serv_idx_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.friendlist.FriendListRequest.msg_serv_idx)
 }
 
 // bytes attach_data = 20;

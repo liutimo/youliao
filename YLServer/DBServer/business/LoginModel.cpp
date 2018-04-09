@@ -54,19 +54,6 @@ bool LoginModel::doLogin(const std::string &str_name, const std::string &str_pas
             }
         }
 
-        //将其登录状态保存到redis
-        auto conn = CacheManager::instance()->getCacheConn("OnlineUser");
-        conn->sAdd("OnlineUser", resultSet->getString("user_id"));
-
-        string value = resultSet->getString("user_id");
-        log("%s", value.c_str());
-        if (conn->sIsMem("OnlineUser", value))
-        {
-            log("%s is mem of onlineuser", value.c_str());
-        } else{
-            log("%s is't mem of onlineuser", value.c_str());
-        }
-
         delete resultSet;
     }
 
@@ -80,12 +67,12 @@ bool LoginModel::doLogout(uint32_t userId)
 
     if (conn != nullptr)
     {
-        auto ret = conn->sRem("OnlineUser", std::to_string(userId));
+        auto ret = conn->hdel("user_map", to_string(userId));
         if (ret == 1)
 
             log("user %d logout!", userId);
         else
             log("user %d logout failed !", userId);
-
     }
+    CacheManager::instance()->releaseCacheConn(conn);
 }

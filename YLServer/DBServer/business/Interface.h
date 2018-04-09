@@ -19,6 +19,9 @@ namespace DB_INTERFACE
 
     //用户离线
     void logout(BasePdu* basePdu, uint32_t conn_uid);
+
+    //获取在线好友
+    void getOnlineFriends(BasePdu *basePdu, uint32_t conn_uid);
 }
 
 

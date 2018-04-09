@@ -15,6 +15,7 @@ message Group_Friend
 message FriendListRequest
 {
     uint32 user_id = 1;
+    uint32 msg_serv_idx = 2;
     bytes attach_data = 20;
 }
 

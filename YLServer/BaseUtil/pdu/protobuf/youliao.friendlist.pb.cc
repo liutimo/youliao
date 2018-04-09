@@ -149,6 +149,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::friendlist::FriendListRequest, user_id_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::friendlist::FriendListRequest, msg_serv_idx_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::friendlist::FriendListRequest, attach_data_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::friendlist::FriendListRespone_FriendListEntry_DoNotUse, _has_bits_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::friendlist::FriendListRespone_FriendListEntry_DoNotUse, _internal_metadata_),
@@ -170,8 +171,8 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::youliao::pdu::friendlist::Group_Friend)},
   { 8, -1, sizeof(::youliao::pdu::friendlist::FriendListRequest)},
-  { 15, 22, sizeof(::youliao::pdu::friendlist::FriendListRespone_FriendListEntry_DoNotUse)},
-  { 24, -1, sizeof(::youliao::pdu::friendlist::FriendListRespone)},
+  { 16, 23, sizeof(::youliao::pdu::friendlist::FriendListRespone_FriendListEntry_DoNotUse)},
+  { 25, -1, sizeof(::youliao::pdu::friendlist::FriendListRespone)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -207,17 +208,17 @@ void AddDescriptorsImpl() {
       "friendlist\032\022youliao.base.proto\"b\n\014Group_"
       "Friend\022\020\n\010group_id\030\001 \001(\r\022\022\n\ngroup_name\030\002"
       " \001(\t\022,\n\006friend\030\003 \003(\0132\034.youliao.pdu.base."
-      "FriendInfo\"9\n\021FriendListRequest\022\017\n\007user_"
-      "id\030\001 \001(\r\022\023\n\013attach_data\030\024 \001(\014\"\321\001\n\021Friend"
-      "ListRespone\022N\n\013friend_list\030\001 \003(\01329.youli"
-      "ao.pdu.friendlist.FriendListRespone.Frie"
-      "ndListEntry\022\023\n\013attach_data\030\024 \001(\014\032W\n\017Frie"
-      "ndListEntry\022\013\n\003key\030\001 \001(\r\0223\n\005value\030\002 \001(\0132"
-      "$.youliao.pdu.friendlist.Group_Friend:\0028"
-      "\001b\006proto3"
+      "FriendInfo\"O\n\021FriendListRequest\022\017\n\007user_"
+      "id\030\001 \001(\r\022\024\n\014msg_serv_idx\030\002 \001(\r\022\023\n\013attach"
+      "_data\030\024 \001(\014\"\321\001\n\021FriendListRespone\022N\n\013fri"
+      "end_list\030\001 \003(\01329.youliao.pdu.friendlist."
+      "FriendListRespone.FriendListEntry\022\023\n\013att"
+      "ach_data\030\024 \001(\014\032W\n\017FriendListEntry\022\013\n\003key"
+      "\030\001 \001(\r\0223\n\005value\030\002 \001(\0132$.youliao.pdu.frie"
+      "ndlist.Group_Friend:\0028\001b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 449);
+      descriptor, 471);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "youliao.friendlist.proto", &protobuf_RegisterTypes);
   ::protobuf_youliao_2ebase_2eproto::AddDescriptors();
@@ -580,6 +581,7 @@ void FriendListRequest::InitAsDefaultInstance() {
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int FriendListRequest::kUserIdFieldNumber;
+const int FriendListRequest::kMsgServIdxFieldNumber;
 const int FriendListRequest::kAttachDataFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -600,13 +602,17 @@ FriendListRequest::FriendListRequest(const FriendListRequest& from)
   if (from.attach_data().size() > 0) {
     attach_data_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.attach_data_);
   }
-  user_id_ = from.user_id_;
+  ::memcpy(&user_id_, &from.user_id_,
+    static_cast<size_t>(reinterpret_cast<char*>(&msg_serv_idx_) -
+    reinterpret_cast<char*>(&user_id_)) + sizeof(msg_serv_idx_));
   // @@protoc_insertion_point(copy_constructor:youliao.pdu.friendlist.FriendListRequest)
 }
 
 void FriendListRequest::SharedCtor() {
   attach_data_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  user_id_ = 0u;
+  ::memset(&user_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&msg_serv_idx_) -
+      reinterpret_cast<char*>(&user_id_)) + sizeof(msg_serv_idx_));
   _cached_size_ = 0;
 }
 
@@ -642,7 +648,9 @@ void FriendListRequest::Clear() {
   (void) cached_has_bits;
 
   attach_data_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  user_id_ = 0u;
+  ::memset(&user_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&msg_serv_idx_) -
+      reinterpret_cast<char*>(&user_id_)) + sizeof(msg_serv_idx_));
   _internal_metadata_.Clear();
 }
 
@@ -664,6 +672,20 @@ bool FriendListRequest::MergePartialFromCodedStream(
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &user_id_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint32 msg_serv_idx = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &msg_serv_idx_)));
         } else {
           goto handle_unusual;
         }
@@ -713,6 +735,11 @@ void FriendListRequest::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->user_id(), output);
   }
 
+  // uint32 msg_serv_idx = 2;
+  if (this->msg_serv_idx() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->msg_serv_idx(), output);
+  }
+
   // bytes attach_data = 20;
   if (this->attach_data().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
@@ -736,6 +763,11 @@ void FriendListRequest::SerializeWithCachedSizes(
   // uint32 user_id = 1;
   if (this->user_id() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->user_id(), target);
+  }
+
+  // uint32 msg_serv_idx = 2;
+  if (this->msg_serv_idx() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->msg_serv_idx(), target);
   }
 
   // bytes attach_data = 20;
@@ -776,6 +808,13 @@ size_t FriendListRequest::ByteSizeLong() const {
         this->user_id());
   }
 
+  // uint32 msg_serv_idx = 2;
+  if (this->msg_serv_idx() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->msg_serv_idx());
+  }
+
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = cached_size;
@@ -812,6 +851,9 @@ void FriendListRequest::MergeFrom(const FriendListRequest& from) {
   if (from.user_id() != 0) {
     set_user_id(from.user_id());
   }
+  if (from.msg_serv_idx() != 0) {
+    set_msg_serv_idx(from.msg_serv_idx());
+  }
 }
 
 void FriendListRequest::CopyFrom(const ::google::protobuf::Message& from) {
@@ -840,6 +882,7 @@ void FriendListRequest::InternalSwap(FriendListRequest* other) {
   using std::swap;
   attach_data_.Swap(&other->attach_data_);
   swap(user_id_, other->user_id_);
+  swap(msg_serv_idx_, other->msg_serv_idx_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   swap(_cached_size_, other->_cached_size_);
 }
