@@ -29,7 +29,7 @@ public:
 
 private:
     void initMenu();
-
+    void updateList();
 protected:
     void mousePressEvent(QMouseEvent *event);
     void contextMenuEvent(QContextMenuEvent *event);

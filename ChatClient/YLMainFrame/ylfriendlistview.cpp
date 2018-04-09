@@ -67,10 +67,15 @@ void YLFriendListView::initMenu()
 
 void YLFriendListView::updateFriendList(const QMap<int, QVector<YLFriend>> &friends, const QMap<int, QString> &groups)
 {
-    clear();
     m_group_item.clear();
     m_friends = friends;
     m_group = groups;
+    updateList();
+}
+
+void YLFriendListView::updateList()
+{
+    clear();
     for (auto elem : m_friends)
     {
 
