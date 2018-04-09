@@ -37,6 +37,15 @@ bool YLFriend::operator ==(const YLFriend &f1) const
     return true;
 }
 
+
+bool YLFriend::operator <(const YLFriend &f1) const
+{
+    if (f1.friendIsOnline() && !friendIsOnline())
+        return false;
+    else
+        return true;
+}
+
 void YLFriend::setFriendAccount(const QString &account)
 {
     friend_account_ = account;

@@ -15,6 +15,8 @@ public:
 
     bool operator ==(const YLFriend &) const;
 
+    bool operator <(const YLFriend &) const;
+
     void setFriendId(uint32_t id) { friend_id_ = id; }
 
     void setFriendAccount(const QString &account);

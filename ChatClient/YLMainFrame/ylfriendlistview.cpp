@@ -76,18 +76,36 @@ void YLFriendListView::updateFriendList(const QMap<int, QVector<YLFriend>> &frie
 void YLFriendListView::updateList()
 {
     clear();
+    //sort by online status
+    QMap<int, QPair<int, int>> online_users;
+    for (auto& elem : m_friends)
+    {
+        int groupId = m_friends.key(elem);
+        online_users[groupId].first = elem.size();
+
+        qSort(elem.begin(), elem.end());
+
+        for (YLFriend fri : elem)
+        {
+            if (fri.friendIsOnline())
+                ++online_users[groupId].second;
+        }
+    }
+
+
     for (auto elem : m_friends)
     {
-
         int groupId = m_friends.key(elem);
         QString groupName = m_group[groupId];
         auto iter = m_group_show.find(groupId);
         if (iter == m_group_show.end())
             m_group_show[groupId] = false;
 
+        auto pair = online_users[groupId];
+
         if (m_group_show[groupId] == true)
         {
-            QListWidgetItem *item = new QListWidgetItem(QIcon(":/res/MainFrame/down.png"), groupName + QString("(%1/%1)").arg(elem.size()));
+            QListWidgetItem *item = new QListWidgetItem(QIcon(":/res/MainFrame/down.png"), groupName + QString("(%1/%2)").arg(pair.second).arg(pair.first));
             item->setSizeHint(QSize(width() - 30, 35));
             addItem(item);
             m_group_item.push_back(item);
@@ -103,7 +121,7 @@ void YLFriendListView::updateList()
         }
         else
         {
-            QListWidgetItem *item = new QListWidgetItem(QIcon(":/res/MainFrame/right.png"), groupName + QString("(%1/%1)").arg(elem.size()));
+            QListWidgetItem *item = new QListWidgetItem(QIcon(":/res/MainFrame/right.png"), groupName + QString("(%1/%2)").arg(pair.second).arg(pair.first));
             item->setSizeHint(QSize(width() - 30, 35));
             addItem(item);
             m_group_item.push_back(item);
