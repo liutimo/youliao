@@ -203,7 +203,7 @@ void DBServConn::_HandleFriendListRespone(BasePdu *pdu)
     routeStatusChange.set_user_status_type(base::USER_STATUS_ONLINE);
     BasePdu basePdu1;
     basePdu1.setSID(base::SID_SERVER);
-    basePdu1.setCID(base::CID_SERVER_ROUTE_STATUS_CHANGED);
+    basePdu1.setCID(base::CID_SERVER_ROUTE_BROADCAST);
     basePdu1.writeMessage(&routeStatusChange);
 
     routeConn->sendBasePdu(&basePdu1);

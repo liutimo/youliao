@@ -4,6 +4,7 @@
 
 #include "RouteConn.h"
 #include <pdu/protobuf/youliao.friendlist.pb.h>
+#include <network/ServerInfo.h>
 #include "network/netlib.h"
 #include "pdu/protobuf/youliao.base.pb.h"
 #include "pdu/protobuf/youliao.login.pb.h"
@@ -111,6 +112,12 @@ void RouteConn::handlePdu(BasePdu *pdu)
 {
     switch (pdu->getCID())
     {
+        case base::CID_SERVER_GET_SERVER_INDEX_REQUEST:
+            _HandleGetServerIndexRequest(pdu);
+            break;
+        case base::CID_SERVER_ROUTE_BROADCAST:
+            _HandleRouteBroadcast(pdu);
+            break;
         default:
             break;
     }
@@ -118,3 +125,28 @@ void RouteConn::handlePdu(BasePdu *pdu)
 }
 
 
+void RouteConn::_HandleGetServerIndexRequest(BasePdu *basePdu)
+{
+    server::GetServerIndexRespone getServerIndexRespone;
+    getServerIndexRespone.set_index(10);
+    BasePdu basePdu1;
+    basePdu1.setSID(base::SID_SERVER);
+    basePdu1.setCID(base::CID_SERVER_GET_ONLINE_FRIENDS_RESPONE);
+    basePdu1.writeMessage(&getServerIndexRespone);
+
+    sendBasePdu(&basePdu1);
+}
+
+
+void RouteConn::_HandleRouteBroadcast(BasePdu *basePdu)
+{
+    server::RouteBroadcast routeBroadcast;
+    routeBroadcast.ParseFromString(basePdu->getMessage());
+
+    int i = routeBroadcast.friends_size();
+
+    for (int j = 0; j < i; ++j)
+    {
+        log("notify user : %d", routeBroadcast.friends(j));
+    }
+}

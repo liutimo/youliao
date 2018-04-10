@@ -40,7 +40,7 @@ namespace protobuf_youliao_2eserver_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[9];
+  static const ::google::protobuf::internal::ParseTable schema[11];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -62,8 +62,12 @@ void InitDefaultsRouteGetOnlineFriendRespone_OnlineFirendsEntry_DoNotUseImpl();
 void InitDefaultsRouteGetOnlineFriendRespone_OnlineFirendsEntry_DoNotUse();
 void InitDefaultsRouteGetOnlineFriendResponeImpl();
 void InitDefaultsRouteGetOnlineFriendRespone();
-void InitDefaultsRouteBroadcaseImpl();
-void InitDefaultsRouteBroadcase();
+void InitDefaultsRouteBroadcastImpl();
+void InitDefaultsRouteBroadcast();
+void InitDefaultsGetServerIndexRequestImpl();
+void InitDefaultsGetServerIndexRequest();
+void InitDefaultsGetServerIndexResponeImpl();
+void InitDefaultsGetServerIndexRespone();
 inline void InitDefaults() {
   InitDefaultsValidateRequest();
   InitDefaultsValidateRespone();
@@ -73,18 +77,26 @@ inline void InitDefaults() {
   InitDefaultsRouteGetOnlineFirendRequest();
   InitDefaultsRouteGetOnlineFriendRespone_OnlineFirendsEntry_DoNotUse();
   InitDefaultsRouteGetOnlineFriendRespone();
-  InitDefaultsRouteBroadcase();
+  InitDefaultsRouteBroadcast();
+  InitDefaultsGetServerIndexRequest();
+  InitDefaultsGetServerIndexRespone();
 }
 }  // namespace protobuf_youliao_2eserver_2eproto
 namespace youliao {
 namespace pdu {
 namespace server {
+class GetServerIndexRequest;
+class GetServerIndexRequestDefaultTypeInternal;
+extern GetServerIndexRequestDefaultTypeInternal _GetServerIndexRequest_default_instance_;
+class GetServerIndexRespone;
+class GetServerIndexResponeDefaultTypeInternal;
+extern GetServerIndexResponeDefaultTypeInternal _GetServerIndexRespone_default_instance_;
 class MsgServerInfo;
 class MsgServerInfoDefaultTypeInternal;
 extern MsgServerInfoDefaultTypeInternal _MsgServerInfo_default_instance_;
-class RouteBroadcase;
-class RouteBroadcaseDefaultTypeInternal;
-extern RouteBroadcaseDefaultTypeInternal _RouteBroadcase_default_instance_;
+class RouteBroadcast;
+class RouteBroadcastDefaultTypeInternal;
+extern RouteBroadcastDefaultTypeInternal _RouteBroadcast_default_instance_;
 class RouteGetOnlineFirendRequest;
 class RouteGetOnlineFirendRequestDefaultTypeInternal;
 extern RouteGetOnlineFirendRequestDefaultTypeInternal _RouteGetOnlineFirendRequest_default_instance_;
@@ -111,8 +123,10 @@ extern ValidateResponeDefaultTypeInternal _ValidateRespone_default_instance_;
 }  // namespace youliao
 namespace google {
 namespace protobuf {
+template<> ::youliao::pdu::server::GetServerIndexRequest* Arena::Create< ::youliao::pdu::server::GetServerIndexRequest>(Arena*);
+template<> ::youliao::pdu::server::GetServerIndexRespone* Arena::Create< ::youliao::pdu::server::GetServerIndexRespone>(Arena*);
 template<> ::youliao::pdu::server::MsgServerInfo* Arena::Create< ::youliao::pdu::server::MsgServerInfo>(Arena*);
-template<> ::youliao::pdu::server::RouteBroadcase* Arena::Create< ::youliao::pdu::server::RouteBroadcase>(Arena*);
+template<> ::youliao::pdu::server::RouteBroadcast* Arena::Create< ::youliao::pdu::server::RouteBroadcast>(Arena*);
 template<> ::youliao::pdu::server::RouteGetOnlineFirendRequest* Arena::Create< ::youliao::pdu::server::RouteGetOnlineFirendRequest>(Arena*);
 template<> ::youliao::pdu::server::RouteGetOnlineFriendRespone* Arena::Create< ::youliao::pdu::server::RouteGetOnlineFriendRespone>(Arena*);
 template<> ::youliao::pdu::server::RouteGetOnlineFriendRespone_OnlineFirendsEntry_DoNotUse* Arena::Create< ::youliao::pdu::server::RouteGetOnlineFriendRespone_OnlineFirendsEntry_DoNotUse>(Arena*);
@@ -1052,24 +1066,24 @@ class RouteGetOnlineFriendRespone : public ::google::protobuf::Message /* @@prot
 };
 // -------------------------------------------------------------------
 
-class RouteBroadcase : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.server.RouteBroadcase) */ {
+class RouteBroadcast : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.server.RouteBroadcast) */ {
  public:
-  RouteBroadcase();
-  virtual ~RouteBroadcase();
+  RouteBroadcast();
+  virtual ~RouteBroadcast();
 
-  RouteBroadcase(const RouteBroadcase& from);
+  RouteBroadcast(const RouteBroadcast& from);
 
-  inline RouteBroadcase& operator=(const RouteBroadcase& from) {
+  inline RouteBroadcast& operator=(const RouteBroadcast& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  RouteBroadcase(RouteBroadcase&& from) noexcept
-    : RouteBroadcase() {
+  RouteBroadcast(RouteBroadcast&& from) noexcept
+    : RouteBroadcast() {
     *this = ::std::move(from);
   }
 
-  inline RouteBroadcase& operator=(RouteBroadcase&& from) noexcept {
+  inline RouteBroadcast& operator=(RouteBroadcast&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -1079,34 +1093,34 @@ class RouteBroadcase : public ::google::protobuf::Message /* @@protoc_insertion_
   }
   #endif
   static const ::google::protobuf::Descriptor* descriptor();
-  static const RouteBroadcase& default_instance();
+  static const RouteBroadcast& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const RouteBroadcase* internal_default_instance() {
-    return reinterpret_cast<const RouteBroadcase*>(
-               &_RouteBroadcase_default_instance_);
+  static inline const RouteBroadcast* internal_default_instance() {
+    return reinterpret_cast<const RouteBroadcast*>(
+               &_RouteBroadcast_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
     8;
 
-  void Swap(RouteBroadcase* other);
-  friend void swap(RouteBroadcase& a, RouteBroadcase& b) {
+  void Swap(RouteBroadcast* other);
+  friend void swap(RouteBroadcast& a, RouteBroadcast& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline RouteBroadcase* New() const PROTOBUF_FINAL {
-    return ::google::protobuf::Arena::Create<RouteBroadcase>(NULL);
+  inline RouteBroadcast* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<RouteBroadcast>(NULL);
   }
 
-  RouteBroadcase* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
-    return ::google::protobuf::Arena::Create<RouteBroadcase>(arena);
+  RouteBroadcast* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<RouteBroadcast>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
   void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
-  void CopyFrom(const RouteBroadcase& from);
-  void MergeFrom(const RouteBroadcase& from);
+  void CopyFrom(const RouteBroadcast& from);
+  void MergeFrom(const RouteBroadcast& from);
   void Clear() PROTOBUF_FINAL;
   bool IsInitialized() const PROTOBUF_FINAL;
 
@@ -1122,7 +1136,7 @@ class RouteBroadcase : public ::google::protobuf::Message /* @@protoc_insertion_
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const PROTOBUF_FINAL;
-  void InternalSwap(RouteBroadcase* other);
+  void InternalSwap(RouteBroadcast* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -1170,7 +1184,7 @@ class RouteBroadcase : public ::google::protobuf::Message /* @@protoc_insertion_
   ::google::protobuf::uint32 user_id() const;
   void set_user_id(::google::protobuf::uint32 value);
 
-  // @@protoc_insertion_point(class_scope:youliao.pdu.server.RouteBroadcase)
+  // @@protoc_insertion_point(class_scope:youliao.pdu.server.RouteBroadcast)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -1180,7 +1194,206 @@ class RouteBroadcase : public ::google::protobuf::Message /* @@protoc_insertion_
   ::google::protobuf::uint32 user_id_;
   mutable int _cached_size_;
   friend struct ::protobuf_youliao_2eserver_2eproto::TableStruct;
-  friend void ::protobuf_youliao_2eserver_2eproto::InitDefaultsRouteBroadcaseImpl();
+  friend void ::protobuf_youliao_2eserver_2eproto::InitDefaultsRouteBroadcastImpl();
+};
+// -------------------------------------------------------------------
+
+class GetServerIndexRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.server.GetServerIndexRequest) */ {
+ public:
+  GetServerIndexRequest();
+  virtual ~GetServerIndexRequest();
+
+  GetServerIndexRequest(const GetServerIndexRequest& from);
+
+  inline GetServerIndexRequest& operator=(const GetServerIndexRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  GetServerIndexRequest(GetServerIndexRequest&& from) noexcept
+    : GetServerIndexRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline GetServerIndexRequest& operator=(GetServerIndexRequest&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const GetServerIndexRequest& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const GetServerIndexRequest* internal_default_instance() {
+    return reinterpret_cast<const GetServerIndexRequest*>(
+               &_GetServerIndexRequest_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    9;
+
+  void Swap(GetServerIndexRequest* other);
+  friend void swap(GetServerIndexRequest& a, GetServerIndexRequest& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline GetServerIndexRequest* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<GetServerIndexRequest>(NULL);
+  }
+
+  GetServerIndexRequest* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<GetServerIndexRequest>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const GetServerIndexRequest& from);
+  void MergeFrom(const GetServerIndexRequest& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(GetServerIndexRequest* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.server.GetServerIndexRequest)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2eserver_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2eserver_2eproto::InitDefaultsGetServerIndexRequestImpl();
+};
+// -------------------------------------------------------------------
+
+class GetServerIndexRespone : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.server.GetServerIndexRespone) */ {
+ public:
+  GetServerIndexRespone();
+  virtual ~GetServerIndexRespone();
+
+  GetServerIndexRespone(const GetServerIndexRespone& from);
+
+  inline GetServerIndexRespone& operator=(const GetServerIndexRespone& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  GetServerIndexRespone(GetServerIndexRespone&& from) noexcept
+    : GetServerIndexRespone() {
+    *this = ::std::move(from);
+  }
+
+  inline GetServerIndexRespone& operator=(GetServerIndexRespone&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const GetServerIndexRespone& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const GetServerIndexRespone* internal_default_instance() {
+    return reinterpret_cast<const GetServerIndexRespone*>(
+               &_GetServerIndexRespone_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    10;
+
+  void Swap(GetServerIndexRespone* other);
+  friend void swap(GetServerIndexRespone& a, GetServerIndexRespone& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline GetServerIndexRespone* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<GetServerIndexRespone>(NULL);
+  }
+
+  GetServerIndexRespone* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<GetServerIndexRespone>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const GetServerIndexRespone& from);
+  void MergeFrom(const GetServerIndexRespone& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(GetServerIndexRespone* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // uint32 index = 1;
+  void clear_index();
+  static const int kIndexFieldNumber = 1;
+  ::google::protobuf::uint32 index() const;
+  void set_index(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.server.GetServerIndexRespone)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 index_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2eserver_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2eserver_2eproto::InitDefaultsGetServerIndexResponeImpl();
 };
 // ===================================================================
 
@@ -1901,108 +2114,134 @@ inline void RouteGetOnlineFriendRespone::set_allocated_attach_data(::std::string
 
 // -------------------------------------------------------------------
 
-// RouteBroadcase
+// RouteBroadcast
 
 // uint32 user_id = 1;
-inline void RouteBroadcase::clear_user_id() {
+inline void RouteBroadcast::clear_user_id() {
   user_id_ = 0u;
 }
-inline ::google::protobuf::uint32 RouteBroadcase::user_id() const {
-  // @@protoc_insertion_point(field_get:youliao.pdu.server.RouteBroadcase.user_id)
+inline ::google::protobuf::uint32 RouteBroadcast::user_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.server.RouteBroadcast.user_id)
   return user_id_;
 }
-inline void RouteBroadcase::set_user_id(::google::protobuf::uint32 value) {
+inline void RouteBroadcast::set_user_id(::google::protobuf::uint32 value) {
   
   user_id_ = value;
-  // @@protoc_insertion_point(field_set:youliao.pdu.server.RouteBroadcase.user_id)
+  // @@protoc_insertion_point(field_set:youliao.pdu.server.RouteBroadcast.user_id)
 }
 
 // repeated uint32 friends = 2;
-inline int RouteBroadcase::friends_size() const {
+inline int RouteBroadcast::friends_size() const {
   return friends_.size();
 }
-inline void RouteBroadcase::clear_friends() {
+inline void RouteBroadcast::clear_friends() {
   friends_.Clear();
 }
-inline ::google::protobuf::uint32 RouteBroadcase::friends(int index) const {
-  // @@protoc_insertion_point(field_get:youliao.pdu.server.RouteBroadcase.friends)
+inline ::google::protobuf::uint32 RouteBroadcast::friends(int index) const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.server.RouteBroadcast.friends)
   return friends_.Get(index);
 }
-inline void RouteBroadcase::set_friends(int index, ::google::protobuf::uint32 value) {
+inline void RouteBroadcast::set_friends(int index, ::google::protobuf::uint32 value) {
   friends_.Set(index, value);
-  // @@protoc_insertion_point(field_set:youliao.pdu.server.RouteBroadcase.friends)
+  // @@protoc_insertion_point(field_set:youliao.pdu.server.RouteBroadcast.friends)
 }
-inline void RouteBroadcase::add_friends(::google::protobuf::uint32 value) {
+inline void RouteBroadcast::add_friends(::google::protobuf::uint32 value) {
   friends_.Add(value);
-  // @@protoc_insertion_point(field_add:youliao.pdu.server.RouteBroadcase.friends)
+  // @@protoc_insertion_point(field_add:youliao.pdu.server.RouteBroadcast.friends)
 }
 inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
-RouteBroadcase::friends() const {
-  // @@protoc_insertion_point(field_list:youliao.pdu.server.RouteBroadcase.friends)
+RouteBroadcast::friends() const {
+  // @@protoc_insertion_point(field_list:youliao.pdu.server.RouteBroadcast.friends)
   return friends_;
 }
 inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
-RouteBroadcase::mutable_friends() {
-  // @@protoc_insertion_point(field_mutable_list:youliao.pdu.server.RouteBroadcase.friends)
+RouteBroadcast::mutable_friends() {
+  // @@protoc_insertion_point(field_mutable_list:youliao.pdu.server.RouteBroadcast.friends)
   return &friends_;
 }
 
 // bytes route_data = 20;
-inline void RouteBroadcase::clear_route_data() {
+inline void RouteBroadcast::clear_route_data() {
   route_data_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& RouteBroadcase::route_data() const {
-  // @@protoc_insertion_point(field_get:youliao.pdu.server.RouteBroadcase.route_data)
+inline const ::std::string& RouteBroadcast::route_data() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.server.RouteBroadcast.route_data)
   return route_data_.GetNoArena();
 }
-inline void RouteBroadcase::set_route_data(const ::std::string& value) {
+inline void RouteBroadcast::set_route_data(const ::std::string& value) {
   
   route_data_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:youliao.pdu.server.RouteBroadcase.route_data)
+  // @@protoc_insertion_point(field_set:youliao.pdu.server.RouteBroadcast.route_data)
 }
 #if LANG_CXX11
-inline void RouteBroadcase::set_route_data(::std::string&& value) {
+inline void RouteBroadcast::set_route_data(::std::string&& value) {
   
   route_data_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:youliao.pdu.server.RouteBroadcase.route_data)
+  // @@protoc_insertion_point(field_set_rvalue:youliao.pdu.server.RouteBroadcast.route_data)
 }
 #endif
-inline void RouteBroadcase::set_route_data(const char* value) {
+inline void RouteBroadcast::set_route_data(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   route_data_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:youliao.pdu.server.RouteBroadcase.route_data)
+  // @@protoc_insertion_point(field_set_char:youliao.pdu.server.RouteBroadcast.route_data)
 }
-inline void RouteBroadcase::set_route_data(const void* value, size_t size) {
+inline void RouteBroadcast::set_route_data(const void* value, size_t size) {
   
   route_data_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:youliao.pdu.server.RouteBroadcase.route_data)
+  // @@protoc_insertion_point(field_set_pointer:youliao.pdu.server.RouteBroadcast.route_data)
 }
-inline ::std::string* RouteBroadcase::mutable_route_data() {
+inline ::std::string* RouteBroadcast::mutable_route_data() {
   
-  // @@protoc_insertion_point(field_mutable:youliao.pdu.server.RouteBroadcase.route_data)
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.server.RouteBroadcast.route_data)
   return route_data_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* RouteBroadcase::release_route_data() {
-  // @@protoc_insertion_point(field_release:youliao.pdu.server.RouteBroadcase.route_data)
+inline ::std::string* RouteBroadcast::release_route_data() {
+  // @@protoc_insertion_point(field_release:youliao.pdu.server.RouteBroadcast.route_data)
   
   return route_data_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void RouteBroadcase::set_allocated_route_data(::std::string* route_data) {
+inline void RouteBroadcast::set_allocated_route_data(::std::string* route_data) {
   if (route_data != NULL) {
     
   } else {
     
   }
   route_data_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), route_data);
-  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.server.RouteBroadcase.route_data)
+  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.server.RouteBroadcast.route_data)
+}
+
+// -------------------------------------------------------------------
+
+// GetServerIndexRequest
+
+// -------------------------------------------------------------------
+
+// GetServerIndexRespone
+
+// uint32 index = 1;
+inline void GetServerIndexRespone::clear_index() {
+  index_ = 0u;
+}
+inline ::google::protobuf::uint32 GetServerIndexRespone::index() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.server.GetServerIndexRespone.index)
+  return index_;
+}
+inline void GetServerIndexRespone::set_index(::google::protobuf::uint32 value) {
+  
+  index_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.server.GetServerIndexRespone.index)
 }
 
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

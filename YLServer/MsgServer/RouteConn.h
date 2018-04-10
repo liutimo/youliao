@@ -26,7 +26,8 @@ public:
     bool isOpen() const { return m_open; }
 
 private:
-
+    void _HandleGetServerIndexRequest(BasePdu *);
+    void _HandleRouteBroadcast(BasePdu *);
 
     uint32_t   m_server_index;
     bool       m_open;

@@ -96,14 +96,14 @@ void FriendListModel::getOnlineFriends(uint32_t user_id, server::RouteGetOnlineF
         conn->hgetAll(mapName, onlineFriends);
         log("%s has %d online friends", mapName.c_str(), onlineFriends.size());
 
-        auto& onlineFriendMap = *routeGetOnlineFriendRespone.mutable_online_firends();
+        auto onlineFriendMap = routeGetOnlineFriendRespone.mutable_online_firends();
 
         for (auto elem : onlineFriends)
         {
             string friendId = elem.first;
             string msg_idx = elem.second;
             log("key = %s value = %s", friendId.c_str(), msg_idx.c_str());
-            onlineFriendMap[atoi(friendId.c_str())] = (uint32_t )atoi(msg_idx.c_str());
+            (*onlineFriendMap)[atoi(friendId.c_str())] = (uint32_t )atoi(msg_idx.c_str());
         }
     }
 

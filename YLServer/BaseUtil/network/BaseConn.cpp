@@ -91,6 +91,7 @@ int BaseConn::send(void *buf, int len)
 
         if (ret <= 0)
         {
+            log("netliib_send failed: %s", strerror(errno));
             break;
         }
 

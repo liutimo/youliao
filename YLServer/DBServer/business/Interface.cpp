@@ -92,12 +92,14 @@ namespace DB_INTERFACE
 
     void getOnlineFriends(BasePdu *basePdu, uint32_t conn_uuid)
     {
-        server::RouteGetOnlineFirendRequest RouteGetOnlineFirendRequest;
-        RouteGetOnlineFirendRequest.ParseFromString(basePdu->getMessage());
+        server::RouteGetOnlineFirendRequest routeGetOnlineFirendRequest;
+        routeGetOnlineFirendRequest.ParseFromString(basePdu->getMessage());
 
-        uint32_t userId = RouteGetOnlineFirendRequest.user_id();
+        uint32_t userId = routeGetOnlineFirendRequest.user_id();
 
         server::RouteGetOnlineFriendRespone routeGetOnlineFriendRespone;
+        routeGetOnlineFriendRespone.set_user_id(userId);
+        routeGetOnlineFriendRespone.set_attach_data(routeGetOnlineFirendRequest.attach_data());
 
         FriendListModel friendListModel;
         friendListModel.getOnlineFriends(userId, routeGetOnlineFriendRespone);
