@@ -40,7 +40,7 @@ namespace protobuf_youliao_2efriendlist_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[4];
+  static const ::google::protobuf::internal::ParseTable schema[5];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -54,11 +54,14 @@ void InitDefaultsFriendListRespone_FriendListEntry_DoNotUseImpl();
 void InitDefaultsFriendListRespone_FriendListEntry_DoNotUse();
 void InitDefaultsFriendListResponeImpl();
 void InitDefaultsFriendListRespone();
+void InitDefaultsFriendStatusChangeMessageImpl();
+void InitDefaultsFriendStatusChangeMessage();
 inline void InitDefaults() {
   InitDefaultsGroup_Friend();
   InitDefaultsFriendListRequest();
   InitDefaultsFriendListRespone_FriendListEntry_DoNotUse();
   InitDefaultsFriendListRespone();
+  InitDefaultsFriendStatusChangeMessage();
 }
 }  // namespace protobuf_youliao_2efriendlist_2eproto
 namespace youliao {
@@ -73,6 +76,9 @@ extern FriendListResponeDefaultTypeInternal _FriendListRespone_default_instance_
 class FriendListRespone_FriendListEntry_DoNotUse;
 class FriendListRespone_FriendListEntry_DoNotUseDefaultTypeInternal;
 extern FriendListRespone_FriendListEntry_DoNotUseDefaultTypeInternal _FriendListRespone_FriendListEntry_DoNotUse_default_instance_;
+class FriendStatusChangeMessage;
+class FriendStatusChangeMessageDefaultTypeInternal;
+extern FriendStatusChangeMessageDefaultTypeInternal _FriendStatusChangeMessage_default_instance_;
 class Group_Friend;
 class Group_FriendDefaultTypeInternal;
 extern Group_FriendDefaultTypeInternal _Group_Friend_default_instance_;
@@ -84,6 +90,7 @@ namespace protobuf {
 template<> ::youliao::pdu::friendlist::FriendListRequest* Arena::Create< ::youliao::pdu::friendlist::FriendListRequest>(Arena*);
 template<> ::youliao::pdu::friendlist::FriendListRespone* Arena::Create< ::youliao::pdu::friendlist::FriendListRespone>(Arena*);
 template<> ::youliao::pdu::friendlist::FriendListRespone_FriendListEntry_DoNotUse* Arena::Create< ::youliao::pdu::friendlist::FriendListRespone_FriendListEntry_DoNotUse>(Arena*);
+template<> ::youliao::pdu::friendlist::FriendStatusChangeMessage* Arena::Create< ::youliao::pdu::friendlist::FriendStatusChangeMessage>(Arena*);
 template<> ::youliao::pdu::friendlist::Group_Friend* Arena::Create< ::youliao::pdu::friendlist::Group_Friend>(Arena*);
 }  // namespace protobuf
 }  // namespace google
@@ -330,12 +337,19 @@ class FriendListRequest : public ::google::protobuf::Message /* @@protoc_inserti
   ::google::protobuf::uint32 user_id() const;
   void set_user_id(::google::protobuf::uint32 value);
 
+  // uint32 msg_serv_idx = 2;
+  void clear_msg_serv_idx();
+  static const int kMsgServIdxFieldNumber = 2;
+  ::google::protobuf::uint32 msg_serv_idx() const;
+  void set_msg_serv_idx(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:youliao.pdu.friendlist.FriendListRequest)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::ArenaStringPtr attach_data_;
   ::google::protobuf::uint32 user_id_;
+  ::google::protobuf::uint32 msg_serv_idx_;
   mutable int _cached_size_;
   friend struct ::protobuf_youliao_2efriendlist_2eproto::TableStruct;
   friend void ::protobuf_youliao_2efriendlist_2eproto::InitDefaultsFriendListRequestImpl();
@@ -488,6 +502,116 @@ class FriendListRespone : public ::google::protobuf::Message /* @@protoc_inserti
   friend struct ::protobuf_youliao_2efriendlist_2eproto::TableStruct;
   friend void ::protobuf_youliao_2efriendlist_2eproto::InitDefaultsFriendListResponeImpl();
 };
+// -------------------------------------------------------------------
+
+class FriendStatusChangeMessage : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.friendlist.FriendStatusChangeMessage) */ {
+ public:
+  FriendStatusChangeMessage();
+  virtual ~FriendStatusChangeMessage();
+
+  FriendStatusChangeMessage(const FriendStatusChangeMessage& from);
+
+  inline FriendStatusChangeMessage& operator=(const FriendStatusChangeMessage& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  FriendStatusChangeMessage(FriendStatusChangeMessage&& from) noexcept
+    : FriendStatusChangeMessage() {
+    *this = ::std::move(from);
+  }
+
+  inline FriendStatusChangeMessage& operator=(FriendStatusChangeMessage&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const FriendStatusChangeMessage& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const FriendStatusChangeMessage* internal_default_instance() {
+    return reinterpret_cast<const FriendStatusChangeMessage*>(
+               &_FriendStatusChangeMessage_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    4;
+
+  void Swap(FriendStatusChangeMessage* other);
+  friend void swap(FriendStatusChangeMessage& a, FriendStatusChangeMessage& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline FriendStatusChangeMessage* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<FriendStatusChangeMessage>(NULL);
+  }
+
+  FriendStatusChangeMessage* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<FriendStatusChangeMessage>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const FriendStatusChangeMessage& from);
+  void MergeFrom(const FriendStatusChangeMessage& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(FriendStatusChangeMessage* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // uint32 user_id = 1;
+  void clear_user_id();
+  static const int kUserIdFieldNumber = 1;
+  ::google::protobuf::uint32 user_id() const;
+  void set_user_id(::google::protobuf::uint32 value);
+
+  // .youliao.pdu.base.UserStatusType user_status_type = 2;
+  void clear_user_status_type();
+  static const int kUserStatusTypeFieldNumber = 2;
+  ::youliao::pdu::base::UserStatusType user_status_type() const;
+  void set_user_status_type(::youliao::pdu::base::UserStatusType value);
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.friendlist.FriendStatusChangeMessage)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 user_id_;
+  int user_status_type_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2efriendlist_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2efriendlist_2eproto::InitDefaultsFriendStatusChangeMessageImpl();
+};
 // ===================================================================
 
 
@@ -609,6 +733,20 @@ inline void FriendListRequest::set_user_id(::google::protobuf::uint32 value) {
   
   user_id_ = value;
   // @@protoc_insertion_point(field_set:youliao.pdu.friendlist.FriendListRequest.user_id)
+}
+
+// uint32 msg_serv_idx = 2;
+inline void FriendListRequest::clear_msg_serv_idx() {
+  msg_serv_idx_ = 0u;
+}
+inline ::google::protobuf::uint32 FriendListRequest::msg_serv_idx() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.friendlist.FriendListRequest.msg_serv_idx)
+  return msg_serv_idx_;
+}
+inline void FriendListRequest::set_msg_serv_idx(::google::protobuf::uint32 value) {
+  
+  msg_serv_idx_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.friendlist.FriendListRequest.msg_serv_idx)
 }
 
 // bytes attach_data = 20;
@@ -741,9 +879,43 @@ inline void FriendListRespone::set_allocated_attach_data(::std::string* attach_d
   // @@protoc_insertion_point(field_set_allocated:youliao.pdu.friendlist.FriendListRespone.attach_data)
 }
 
+// -------------------------------------------------------------------
+
+// FriendStatusChangeMessage
+
+// uint32 user_id = 1;
+inline void FriendStatusChangeMessage::clear_user_id() {
+  user_id_ = 0u;
+}
+inline ::google::protobuf::uint32 FriendStatusChangeMessage::user_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.friendlist.FriendStatusChangeMessage.user_id)
+  return user_id_;
+}
+inline void FriendStatusChangeMessage::set_user_id(::google::protobuf::uint32 value) {
+  
+  user_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.friendlist.FriendStatusChangeMessage.user_id)
+}
+
+// .youliao.pdu.base.UserStatusType user_status_type = 2;
+inline void FriendStatusChangeMessage::clear_user_status_type() {
+  user_status_type_ = 0;
+}
+inline ::youliao::pdu::base::UserStatusType FriendStatusChangeMessage::user_status_type() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.friendlist.FriendStatusChangeMessage.user_status_type)
+  return static_cast< ::youliao::pdu::base::UserStatusType >(user_status_type_);
+}
+inline void FriendStatusChangeMessage::set_user_status_type(::youliao::pdu::base::UserStatusType value) {
+  
+  user_status_type_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.friendlist.FriendStatusChangeMessage.user_status_type)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

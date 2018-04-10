@@ -22,20 +22,26 @@ enum LoginCID
     CID_LOGIN_REQUEST_USERLOGINOUT = 0x0105;    //用户退出登录
 }
 
-
+//服务器之间的消息
 enum ServerCID
 {
     CID_SERVER_ZERO = 0x0000;
-    CID_SERVER_MSGSERVER_INFO = 0x0201;        //消息服务器主动发送该消息给登录服务器
-
+    CID_SERVER_MSGSERVER_INFO = 0x0201;          //消息服务器主动发送该消息给登录服务器
+    CID_SERVER_VALIDATE_REQUEST = 0x0202;        //msg server向db server发送用户校验信息
+    CID_SERVER_VALIDATE_RESPONE = 0x0203;
+    CID_SERVER_USER_LOGOUT      = 0x0204;        //由消息服务器发送给数据库服务器
+    CID_SERVER_ROUTE_MSG        = 0x0205;
+    CID_SERVER_ROUTE_BROADCAST  = 0x0206;
+    CID_SERVER_GET_ONLINE_FRIENDS_REQUEST = 0x0207;
+    CID_SERVER_GET_ONLINE_FRIENDS_RESPONE = 0x0208;
+    CID_SERVER_GET_SERVER_INDEX_REQUEST   = 0x0209;
+    CID_SERVER_GET_SERVER_INDEX_RESPONE   = 0x020A;
 }
 
 enum OtherCID
 {
     CID_OTHER_ZERO      = 0x0000;
     CID_OTHER_HEARTBEAT = 0x0301;            //心跳包
-    CID_SERVER_VALIDATE_REQUEST = 0x0202;    //msg server向db server发送用户校验信息
-    CID_SERVER_VALIDATE_RESPONE = 0x0203;
 }
 
 //好友列表
@@ -44,6 +50,7 @@ enum FriendListCID
     CID_FRIENDLIST_ZERO = 0x0000;
     CID_FRIENDLIST_GET_REQUEST = 0X0401;      //获取好友列表请求
     CID_FRIENDLIST_GET_RESPONE = 0X0402;      //         响应
+    CID_FRIENDLIST_FRIEND_STATUS_CHANGE = 0x0403;
 }
 
 //消息
@@ -111,4 +118,12 @@ enum MessageType
     MESSAGE_TYPE_SINGLE_AUDIO = 0x02; //单人 语音
     MESSAGE_TYPE_GROUP_TEXT   = 0x03; //群组 文本
     MESSAGE_TYPE_GROUP_AUDIO  = 0x04; //群组 语音
+}
+
+
+//服务器间通知
+enum RouteMessageType
+{
+    ROUTE_MESSAGE_ZERO = 0x00;
+    ROUTE_MESSAGE_FRIEND_STATUS_CHANGE = 0x01;     //好友状态更改
 }

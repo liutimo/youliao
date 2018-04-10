@@ -27,6 +27,7 @@ private:
     void _HandleHeartBeat();
     void _HandleFriendListGetRespone(BasePdu *pdu);
     void _HandleMessageData(BasePdu *pdu);
+    void _HandleFriendStatusChangeMessage(BasePdu *pdu);
 
 private:
     explicit PduHandler(QObject *parent = nullptr);

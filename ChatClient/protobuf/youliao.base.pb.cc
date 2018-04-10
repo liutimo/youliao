@@ -105,7 +105,7 @@ void InitDefaultsHeartBeat() {
 }
 
 ::google::protobuf::Metadata file_level_metadata[3];
-const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[9];
+const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[10];
 
 const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   ~0u,  // no _has_bits_
@@ -194,27 +194,37 @@ void AddDescriptorsImpl() {
       "IN_RESPONE_MSGSERVER\020\202\002\022 \n\033CID_LOGIN_REQ"
       "UEST_USERLOGIN\020\203\002\022 \n\033CID_LOGIN_RESPONE_U"
       "SERLOGIN\020\204\002\022#\n\036CID_LOGIN_REQUEST_USERLOG"
-      "INOUT\020\205\002*@\n\tServerCID\022\023\n\017CID_SERVER_ZERO"
-      "\020\000\022\036\n\031CID_SERVER_MSGSERVER_INFO\020\201\004*|\n\010Ot"
-      "herCID\022\022\n\016CID_OTHER_ZERO\020\000\022\030\n\023CID_OTHER_"
-      "HEARTBEAT\020\201\006\022 \n\033CID_SERVER_VALIDATE_REQU"
-      "EST\020\202\004\022 \n\033CID_SERVER_VALIDATE_RESPONE\020\203\004"
-      "*j\n\rFriendListCID\022\027\n\023CID_FRIENDLIST_ZERO"
-      "\020\000\022\037\n\032CID_FRIENDLIST_GET_REQUEST\020\201\010\022\037\n\032C"
-      "ID_FRIENDLIST_GET_RESPONE\020\202\010*9\n\nMessageC"
-      "ID\022\024\n\020CID_MESSAGE_ZERO\020\000\022\025\n\020CID_MESSAGE_"
-      "DATA\020\201\n*>\n\nResultType\022\010\n\004NONE\020\000\022\021\n\rNO_MS"
-      "G_SERVER\020\001\022\023\n\017MSG_SERVER_FULL\020\002*m\n\016UserS"
-      "tatusType\022\024\n\020USER_STATUS_ZERO\020\000\022\026\n\022USER_"
-      "STATUS_ONLINE\020\001\022\027\n\023USER_STATUS_OFFLINE\020\002"
-      "\022\024\n\020USER_STATUS_HIDE\020\003*\227\001\n\013MessageType\022\020"
-      "\n\014MESSAGE_ZERO\020\000\022\034\n\030MESSAGE_TYPE_SINGLE_"
-      "TEXT\020\001\022\035\n\031MESSAGE_TYPE_SINGLE_AUDIO\020\002\022\033\n"
-      "\027MESSAGE_TYPE_GROUP_TEXT\020\003\022\034\n\030MESSAGE_TY"
-      "PE_GROUP_AUDIO\020\004b\006proto3"
+      "INOUT\020\205\002*\211\003\n\tServerCID\022\023\n\017CID_SERVER_ZER"
+      "O\020\000\022\036\n\031CID_SERVER_MSGSERVER_INFO\020\201\004\022 \n\033C"
+      "ID_SERVER_VALIDATE_REQUEST\020\202\004\022 \n\033CID_SER"
+      "VER_VALIDATE_RESPONE\020\203\004\022\033\n\026CID_SERVER_US"
+      "ER_LOGOUT\020\204\004\022\031\n\024CID_SERVER_ROUTE_MSG\020\205\004\022"
+      "\037\n\032CID_SERVER_ROUTE_BROADCAST\020\206\004\022*\n%CID_"
+      "SERVER_GET_ONLINE_FRIENDS_REQUEST\020\207\004\022*\n%"
+      "CID_SERVER_GET_ONLINE_FRIENDS_RESPONE\020\210\004"
+      "\022(\n#CID_SERVER_GET_SERVER_INDEX_REQUEST\020"
+      "\211\004\022(\n#CID_SERVER_GET_SERVER_INDEX_RESPON"
+      "E\020\212\004*8\n\010OtherCID\022\022\n\016CID_OTHER_ZERO\020\000\022\030\n\023"
+      "CID_OTHER_HEARTBEAT\020\201\006*\224\001\n\rFriendListCID"
+      "\022\027\n\023CID_FRIENDLIST_ZERO\020\000\022\037\n\032CID_FRIENDL"
+      "IST_GET_REQUEST\020\201\010\022\037\n\032CID_FRIENDLIST_GET"
+      "_RESPONE\020\202\010\022(\n#CID_FRIENDLIST_FRIEND_STA"
+      "TUS_CHANGE\020\203\010*9\n\nMessageCID\022\024\n\020CID_MESSA"
+      "GE_ZERO\020\000\022\025\n\020CID_MESSAGE_DATA\020\201\n*>\n\nResu"
+      "ltType\022\010\n\004NONE\020\000\022\021\n\rNO_MSG_SERVER\020\001\022\023\n\017M"
+      "SG_SERVER_FULL\020\002*m\n\016UserStatusType\022\024\n\020US"
+      "ER_STATUS_ZERO\020\000\022\026\n\022USER_STATUS_ONLINE\020\001"
+      "\022\027\n\023USER_STATUS_OFFLINE\020\002\022\024\n\020USER_STATUS"
+      "_HIDE\020\003*\227\001\n\013MessageType\022\020\n\014MESSAGE_ZERO\020"
+      "\000\022\034\n\030MESSAGE_TYPE_SINGLE_TEXT\020\001\022\035\n\031MESSA"
+      "GE_TYPE_SINGLE_AUDIO\020\002\022\033\n\027MESSAGE_TYPE_G"
+      "ROUP_TEXT\020\003\022\034\n\030MESSAGE_TYPE_GROUP_AUDIO\020"
+      "\004*R\n\020RouteMessageType\022\026\n\022ROUTE_MESSAGE_Z"
+      "ERO\020\000\022&\n\"ROUTE_MESSAGE_FRIEND_STATUS_CHA"
+      "NGE\020\001b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 1464);
+      descriptor, 1853);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "youliao.base.proto", &protobuf_RegisterTypes);
 }
@@ -277,6 +287,15 @@ bool ServerCID_IsValid(int value) {
   switch (value) {
     case 0:
     case 513:
+    case 514:
+    case 515:
+    case 516:
+    case 517:
+    case 518:
+    case 519:
+    case 520:
+    case 521:
+    case 522:
       return true;
     default:
       return false;
@@ -290,8 +309,6 @@ const ::google::protobuf::EnumDescriptor* OtherCID_descriptor() {
 bool OtherCID_IsValid(int value) {
   switch (value) {
     case 0:
-    case 514:
-    case 515:
     case 769:
       return true;
     default:
@@ -308,6 +325,7 @@ bool FriendListCID_IsValid(int value) {
     case 0:
     case 1025:
     case 1026:
+    case 1027:
       return true;
     default:
       return false;
@@ -370,6 +388,20 @@ bool MessageType_IsValid(int value) {
     case 2:
     case 3:
     case 4:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::google::protobuf::EnumDescriptor* RouteMessageType_descriptor() {
+  protobuf_youliao_2ebase_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_youliao_2ebase_2eproto::file_level_enum_descriptors[9];
+}
+bool RouteMessageType_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
       return true;
     default:
       return false;

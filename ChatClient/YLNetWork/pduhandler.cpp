@@ -71,6 +71,9 @@ void PduHandler::_HandleBasePdu(BasePdu *pdu)
     case base::CID_MESSAGE_DATA:
         _HandleMessageData(pdu);
         break;
+    case base::CID_FRIENDLIST_FRIEND_STATUS_CHANGE:
+        _HandleFriendStatusChangeMessage(pdu);
+        break;
     default:
         std::cout << "CID" << pdu->getCID() << "  SID:" << pdu->getSID();
         break;
@@ -136,3 +139,13 @@ void PduHandler::_HandleMessageData(BasePdu *pdu)
     emit signleMessage(messageData.from_user_id(), QString(messageData.message_data().c_str()));
 }
 
+
+void PduHandler::_HandleFriendStatusChangeMessage(BasePdu *pdu)
+{
+    friendlist::FriendStatusChangeMessage friendStatusChangeMessage;
+    friendStatusChangeMessage.ParseFromString(pdu->getMessage());
+
+    uint32_t changedUserId = friendStatusChangeMessage.user_id();
+    uint32_t status = friendStatusChangeMessage.user_status_type();
+
+}

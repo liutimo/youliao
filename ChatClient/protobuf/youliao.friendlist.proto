@@ -15,6 +15,7 @@ message Group_Friend
 message FriendListRequest
 {
     uint32 user_id = 1;
+    uint32 msg_serv_idx = 2;
     bytes attach_data = 20;
 }
 
@@ -25,3 +26,9 @@ message FriendListRespone
     bytes attach_data = 20;
 }
 
+//好友状态更改
+message FriendStatusChangeMessage
+{
+    uint32 user_id = 1;
+    youliao.pdu.base.UserStatusType user_status_type = 2;
+}
