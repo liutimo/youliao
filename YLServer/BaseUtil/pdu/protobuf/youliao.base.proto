@@ -50,6 +50,7 @@ enum FriendListCID
     CID_FRIENDLIST_ZERO = 0x0000;
     CID_FRIENDLIST_GET_REQUEST = 0X0401;      //获取好友列表请求
     CID_FRIENDLIST_GET_RESPONE = 0X0402;      //         响应
+    CID_FRIENDLIST_FRIEND_STATUS_CHANGE = 0x0403;
 }
 
 //消息
@@ -124,6 +125,5 @@ enum MessageType
 enum RouteMessageType
 {
     ROUTE_MESSAGE_ZERO = 0x00;
-    ROUTE_MESSAGE_STATUS = 0x01;     //好友状态更改
-
+    ROUTE_MESSAGE_FRIEND_STATUS_CHANGE = 0x01;     //好友状态更改
 }

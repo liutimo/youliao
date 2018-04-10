@@ -99,6 +99,7 @@ namespace DB_INTERFACE
 
         server::RouteGetOnlineFriendRespone routeGetOnlineFriendRespone;
         routeGetOnlineFriendRespone.set_user_id(userId);
+        routeGetOnlineFriendRespone.set_route_status_type(routeGetOnlineFirendRequest.route_status_type());
         routeGetOnlineFriendRespone.set_attach_data(routeGetOnlineFirendRequest.attach_data());
 
         FriendListModel friendListModel;

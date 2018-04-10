@@ -186,12 +186,13 @@ enum FriendListCID {
   CID_FRIENDLIST_ZERO = 0,
   CID_FRIENDLIST_GET_REQUEST = 1025,
   CID_FRIENDLIST_GET_RESPONE = 1026,
+  CID_FRIENDLIST_FRIEND_STATUS_CHANGE = 1027,
   FriendListCID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   FriendListCID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool FriendListCID_IsValid(int value);
 const FriendListCID FriendListCID_MIN = CID_FRIENDLIST_ZERO;
-const FriendListCID FriendListCID_MAX = CID_FRIENDLIST_GET_RESPONE;
+const FriendListCID FriendListCID_MAX = CID_FRIENDLIST_FRIEND_STATUS_CHANGE;
 const int FriendListCID_ARRAYSIZE = FriendListCID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* FriendListCID_descriptor();
@@ -296,13 +297,13 @@ inline bool MessageType_Parse(
 }
 enum RouteMessageType {
   ROUTE_MESSAGE_ZERO = 0,
-  ROUTE_MESSAGE_STATUS = 1,
+  ROUTE_MESSAGE_FRIEND_STATUS_CHANGE = 1,
   RouteMessageType_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   RouteMessageType_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool RouteMessageType_IsValid(int value);
 const RouteMessageType RouteMessageType_MIN = ROUTE_MESSAGE_ZERO;
-const RouteMessageType RouteMessageType_MAX = ROUTE_MESSAGE_STATUS;
+const RouteMessageType RouteMessageType_MAX = ROUTE_MESSAGE_FRIEND_STATUS_CHANGE;
 const int RouteMessageType_ARRAYSIZE = RouteMessageType_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* RouteMessageType_descriptor();

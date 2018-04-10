@@ -34,6 +34,15 @@ void init_db_serv_conn(serv_info_t* server_list, uint32_t server_count, uint32_t
 }
 
 template <class T>
+void set_attach_data(T &t, net_handle_t data)
+{
+    SimpleBuffer simpleBuffer;
+    simpleBuffer.writeUInt32(data);
+    t.set_attach_data(simpleBuffer.getBuffer(), simpleBuffer.getWriteOffest());
+}
+
+
+template <class T>
 uint32_t get_attach_data(T &t)
 {
     SimpleBuffer simpleBuffer;
@@ -198,13 +207,15 @@ void DBServConn::_HandleFriendListRespone(BasePdu *pdu)
 
     //发送好友上线通知
     //之所以在这里发送，是因为DBServer是在获取好友列表时更新 在线好友列表
-    server::RouteStatusChange routeStatusChange;
-    routeStatusChange.set_user_id(clientConn->getUserId());
-    routeStatusChange.set_user_status_type(base::USER_STATUS_ONLINE);
+    server::RouteMessage routeMessage;
+    routeMessage.set_user_id(clientConn->getUserId());
+    routeMessage.set_route_status_type(base::ROUTE_MESSAGE_FRIEND_STATUS_CHANGE);
+    set_attach_data(routeMessage, base::USER_STATUS_ONLINE);
+
     BasePdu basePdu1;
     basePdu1.setSID(base::SID_SERVER);
     basePdu1.setCID(base::CID_SERVER_ROUTE_BROADCAST);
-    basePdu1.writeMessage(&routeStatusChange);
+    basePdu1.writeMessage(&routeMessage);
 
     routeConn->sendBasePdu(&basePdu1);
 }

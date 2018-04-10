@@ -26,3 +26,9 @@ message FriendListRespone
     bytes attach_data = 20;
 }
 
+//好友状态更改
+message FriendStatusChangeMessage
+{
+    uint32 user_id = 1;
+    youliao.pdu.base.UserStatusType user_status_type = 2;
+}

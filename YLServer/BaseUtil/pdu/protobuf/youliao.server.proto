@@ -42,10 +42,11 @@ message MsgServerInfo
 }
 
 //[1] 由msgServer发送给RouteServer,
-message RouteStatusChange
+message RouteMessage
 {
     uint32 user_id = 1;
-    youliao.pdu.base.UserStatusType user_status_type = 2;
+    youliao.pdu.base.RouteMessageType route_status_type = 2;
+    bytes attach_data = 20;
 }
 
 
@@ -53,6 +54,7 @@ message RouteStatusChange
 message RouteGetOnlineFirendRequest
 {
     uint32 user_id = 1;
+    youliao.pdu.base.RouteMessageType route_status_type = 2;
     bytes attach_data = 20;
 }
 
@@ -62,6 +64,7 @@ message RouteGetOnlineFriendRespone
     uint32 user_id = 1;
     //在线好友ID : 消息服务器ID
     map<uint32, uint32> online_firends = 2;
+    youliao.pdu.base.RouteMessageType route_status_type = 3;
     bytes attach_data = 20;
 }
 
@@ -70,7 +73,8 @@ message RouteBroadcast
 {
     uint32 user_id = 1;
     repeated uint32 friends = 2;
-    bytes route_data = 20;
+    youliao.pdu.base.RouteMessageType route_status_type = 3;
+    bytes attach_data = 20;
 }
 
 message GetServerIndexRequest

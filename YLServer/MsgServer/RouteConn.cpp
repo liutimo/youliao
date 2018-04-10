@@ -4,12 +4,12 @@
 
 #include "RouteConn.h"
 #include <pdu/protobuf/youliao.friendlist.pb.h>
-#include <network/ServerInfo.h>
 #include "network/netlib.h"
-#include "pdu/protobuf/youliao.base.pb.h"
 #include "pdu/protobuf/youliao.login.pb.h"
 #include "pdu/protobuf/youliao.server.pb.h"
 
+#include "ClientConn.h"
+#include "User.h"
 using namespace youliao::pdu;
 
 static BaseConnMap_t g_route_server_conn_map;
@@ -145,8 +145,36 @@ void RouteConn::_HandleRouteBroadcast(BasePdu *basePdu)
 
     int i = routeBroadcast.friends_size();
 
+    BasePdu pdu;
+    pdu.setSID(base::SID_FRIEND_LIST);
+    switch (routeBroadcast.route_status_type())
+    {
+        case base::ROUTE_MESSAGE_FRIEND_STATUS_CHANGE:
+            //状态更改
+        {
+            pdu.setCID(base::CID_FRIENDLIST_FRIEND_STATUS_CHANGE);
+
+            friendlist::FriendStatusChangeMessage friendStatusChangeMessage;
+            friendStatusChangeMessage.set_user_status_type((base::UserStatusType)get_attach_data(routeBroadcast));
+            pdu.writeMessage(&friendStatusChangeMessage);
+        }
+            break;
+        default:
+            break;
+
+    }
+
+
     for (int j = 0; j < i; ++j)
     {
-        log("notify user : %d", routeBroadcast.friends(j));
+        uint32_t userId = routeBroadcast.friends(j);
+        log("notify user : %d", userId);
+
+        auto user = UserManager::instance()->getUser(userId);
+
+        if (!user)
+            continue;
+
+        user->getConn()->sendBasePdu(&pdu);
     }
 }
