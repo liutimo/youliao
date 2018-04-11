@@ -19,7 +19,9 @@ public:
 signals:
     void loginStatus(bool successed,  base::UserInfo *userInfo = nullptr);
     void friendlist(const friend_map &, const group_map&);
+    void friendStatusChange(uint32_t friend_id, uint32_t status);
     void signleMessage(uint32_t senderId, const QString &content);
+
 
 private:
     void _HandleBasePdu(BasePdu *pdu);

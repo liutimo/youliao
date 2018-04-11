@@ -148,4 +148,5 @@ void PduHandler::_HandleFriendStatusChangeMessage(BasePdu *pdu)
     uint32_t changedUserId = friendStatusChangeMessage.user_id();
     uint32_t status = friendStatusChangeMessage.user_status_type();
 
+    emit friendStatusChange(changedUserId, status);
 }

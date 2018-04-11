@@ -32,6 +32,7 @@ YLFriendListView::YLFriendListView(QWidget *parent) : QListWidget(parent),
     });
 
     connect(PduHandler::instance(), &PduHandler::friendlist, this, &YLFriendListView::updateFriendList);
+    connect(PduHandler::instance(), &PduHandler::friendStatusChange, this, &YLFriendListView::friendStatusChanged);
 }
 
 YLFriendListView::~YLFriendListView()
@@ -70,6 +71,22 @@ void YLFriendListView::updateFriendList(const QMap<int, QVector<YLFriend>> &frie
     m_group_item.clear();
     m_friends = friends;
     m_group = groups;
+    updateList();
+}
+
+void YLFriendListView::friendStatusChanged(uint32_t friendId, uint32_t status)
+{
+    for (auto &groupFriend : m_friends)
+    {
+        for (int i = 0; i < groupFriend.size(); ++i)
+        {
+            auto &fri = groupFriend[i];
+            if (fri.friendId() == friendId)
+            {
+                fri.setFriendOnline(status == 1);
+            }
+        }
+    }
     updateList();
 }
 
