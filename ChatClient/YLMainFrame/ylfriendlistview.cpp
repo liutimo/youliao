@@ -33,6 +33,7 @@ YLFriendListView::YLFriendListView(QWidget *parent) : QListWidget(parent),
 
     connect(PduHandler::instance(), &PduHandler::friendlist, this, &YLFriendListView::updateFriendList);
     connect(PduHandler::instance(), &PduHandler::friendStatusChange, this, &YLFriendListView::friendStatusChanged);
+    connect(PduHandler::instance(), &PduHandler::friendSignatureChange, this, &YLFriendListView::friendSignatureChanged);
 }
 
 YLFriendListView::~YLFriendListView()
@@ -84,6 +85,23 @@ void YLFriendListView::friendStatusChanged(uint32_t friendId, uint32_t status)
             if (fri.friendId() == friendId)
             {
                 fri.setFriendOnline(status == 1);
+            }
+        }
+    }
+    updateList();
+}
+
+
+void YLFriendListView::friendSignatureChanged(uint32_t friendId, const QString &signature)
+{
+    for (auto &groupFriend : m_friends)
+    {
+        for (int i = 0; i < groupFriend.size(); ++i)
+        {
+            auto &fri = groupFriend[i];
+            if (fri.friendId() == friendId)
+            {
+                fri.setFriendSigature(signature);
             }
         }
     }

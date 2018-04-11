@@ -138,6 +138,9 @@ void ClientConn::handlePdu(BasePdu *pdu)
         case base::CID_MESSAGE_DATA:
             _HandleMessageDataRequest(pdu);
             break;
+        case base::CID_FRIENDLIST_SIGNATURE_CHANGED_REQUEST:
+            _HandleSignatureChangeRequest(pdu);
+            break;
         default:
             break;
     }
@@ -277,4 +280,24 @@ void ClientConn::_HandleMessageDataRequest(BasePdu *pdu)
 
         user->getConn()->sendBasePdu(&basePdu);
     }
+}
+
+void ClientConn::_HandleSignatureChangeRequest(BasePdu *pdu)
+{
+    friendlist::SignatureChangeResquest signatureChangeResquest;
+    signatureChangeResquest.ParseFromString(pdu->getMessage());
+
+    log("user %d signature modify request: %s", signatureChangeResquest.user_id(), signatureChangeResquest.user_signature().c_str());
+
+    DBServConn *dbServConn = get_db_server_conn();
+
+    if (!dbServConn)
+        return;
+
+    BasePdu basePdu;
+    basePdu.setSID(base::SID_SERVER);
+    basePdu.setCID(base::CID_FRIENDLIST_SIGNATURE_CHANGED_REQUEST);
+    basePdu.writeMessage(&signatureChangeResquest);
+
+    dbServConn->sendBasePdu(&basePdu);
 }

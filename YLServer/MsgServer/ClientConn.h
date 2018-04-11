@@ -35,6 +35,7 @@ private:
     void _HandleHeartBeat(BasePdu*);
     void _HandleFriendListGetRequest(BasePdu *);
     void _HandleMessageDataRequest(BasePdu *);
+    void _HandleSignatureChangeRequest(BasePdu *);
 
 public:
     uint64_t m_last_heart_beat_tick;    //最后一次收到心跳包的时间

@@ -130,6 +130,9 @@ void DBServConn::handlePdu(BasePdu *pdu)
         case base::CID_FRIENDLIST_GET_RESPONE:
             _HandleFriendListRespone(pdu);
             break;
+        case base::CID_FRIENDLIST_SIGNATURE_CHANGED_RESPONE:
+            _HandleSignatureChangedResponse(pdu);
+            break;
         default:
             break;
     }
@@ -218,4 +221,47 @@ void DBServConn::_HandleFriendListRespone(BasePdu *pdu)
     basePdu1.writeMessage(&routeMessage);
 
     routeConn->sendBasePdu(&basePdu1);
+}
+
+void DBServConn::_HandleSignatureChangedResponse(BasePdu *pdu)
+{
+    friendlist::SignatureChangeRespone signatureChangeRespone;
+    signatureChangeRespone.ParseFromString(pdu->getMessage());
+
+    uint32_t userId = signatureChangeRespone.user_id();
+    base::ResultType resultType = signatureChangeRespone.result_type();
+    bool modifySuccess = false;
+
+    if (resultType == base::NONE)
+        modifySuccess = true;
+    else if (resultType == base::SIGNATURE_MODIFY_FAILED)
+        modifySuccess = false;
+
+
+    BasePdu basePdu;
+    basePdu.setSID(base::SID_FRIEND_LIST);
+    basePdu.setCID(base::CID_FRIENDLIST_SIGNATURE_CHANGED_RESPONE);
+    basePdu.writeMessage(&signatureChangeRespone);
+
+    //发送到client
+    UserManager::instance()->getUser(userId)->getConn()->sendBasePdu(&basePdu);
+
+    if (modifySuccess)
+    {
+        //修改成功。发送到路由服务器广播修改后的个性签名到好友
+        server::RouteMessage routeMessage;
+        routeMessage.set_user_id(userId);
+        routeMessage.set_route_status_type(base::ROUTE_MESSAGE_FRIEND_SIGNATURE_CHANGE);
+        routeMessage.set_attach_data(signatureChangeRespone.user_signature());
+
+        auto routeConn = get_route_server_conn();
+        if (routeConn)
+        {
+            basePdu.setSID(base::SID_SERVER);
+            basePdu.setCID(base::CID_SERVER_ROUTE_BROADCAST);
+            basePdu.writeMessage(&routeMessage);
+
+            routeConn->sendBasePdu(&basePdu);
+        }
+    }
 }

@@ -84,3 +84,17 @@ void YLBusiness::sendMessage(uint32_t senderId, uint32_t receiverId, const QStri
 
     PduSender::instance()->addMessage(basePdu);
 }
+
+void YLBusiness::modifySignature(uint32_t user_id, const QString &signature)
+{
+    friendlist::SignatureChangeResquest signatureChangeResquest;
+    signatureChangeResquest.set_user_id(user_id);
+    signatureChangeResquest.set_user_signature(signature.toStdString());
+
+    BasePdu *basePdu = new BasePdu;
+    basePdu->setSID(SID_FRIEND_LIST);
+    basePdu->setCID(CID_FRIENDLIST_SIGNATURE_CHANGED_REQUEST);
+    basePdu->writeMessage(&signatureChangeResquest);
+
+    PduSender::instance()->addMessage(basePdu);
+}

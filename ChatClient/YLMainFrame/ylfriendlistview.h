@@ -38,7 +38,7 @@ private slots:
     void onAddGroupSlots();
     void updateFriendList(const QMap<int, QVector<YLFriend>> &, const QMap<int, QString>&);
     void friendStatusChanged(uint32_t, uint32_t);
-
+    void friendSignatureChanged(uint32_t, const QString &);
 private:
     QMenu       *m_blank_menu;
     QMenu       *m_group_menu;

@@ -16,7 +16,7 @@ void YLSignatureLineEdit::focusInEvent(QFocusEvent *event)
 void YLSignatureLineEdit::focusOutEvent(QFocusEvent *event)
 {
     setStyleSheet(qss_this_no_edit);
-
+    emit editFinished();
     QLineEdit::focusOutEvent(event);
 }
 

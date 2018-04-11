@@ -40,7 +40,7 @@ namespace protobuf_youliao_2efriendlist_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[7];
+  static const ::google::protobuf::internal::ParseTable schema[8];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -60,6 +60,8 @@ void InitDefaultsSignatureChangeResquestImpl();
 void InitDefaultsSignatureChangeResquest();
 void InitDefaultsSignatureChangeResponeImpl();
 void InitDefaultsSignatureChangeRespone();
+void InitDefaultsFriendSignatureChangedNotifyImpl();
+void InitDefaultsFriendSignatureChangedNotify();
 inline void InitDefaults() {
   InitDefaultsGroup_Friend();
   InitDefaultsFriendListRequest();
@@ -68,6 +70,7 @@ inline void InitDefaults() {
   InitDefaultsFriendStatusChangeMessage();
   InitDefaultsSignatureChangeResquest();
   InitDefaultsSignatureChangeRespone();
+  InitDefaultsFriendSignatureChangedNotify();
 }
 }  // namespace protobuf_youliao_2efriendlist_2eproto
 namespace youliao {
@@ -82,6 +85,9 @@ extern FriendListResponeDefaultTypeInternal _FriendListRespone_default_instance_
 class FriendListRespone_FriendListEntry_DoNotUse;
 class FriendListRespone_FriendListEntry_DoNotUseDefaultTypeInternal;
 extern FriendListRespone_FriendListEntry_DoNotUseDefaultTypeInternal _FriendListRespone_FriendListEntry_DoNotUse_default_instance_;
+class FriendSignatureChangedNotify;
+class FriendSignatureChangedNotifyDefaultTypeInternal;
+extern FriendSignatureChangedNotifyDefaultTypeInternal _FriendSignatureChangedNotify_default_instance_;
 class FriendStatusChangeMessage;
 class FriendStatusChangeMessageDefaultTypeInternal;
 extern FriendStatusChangeMessageDefaultTypeInternal _FriendStatusChangeMessage_default_instance_;
@@ -102,6 +108,7 @@ namespace protobuf {
 template<> ::youliao::pdu::friendlist::FriendListRequest* Arena::Create< ::youliao::pdu::friendlist::FriendListRequest>(Arena*);
 template<> ::youliao::pdu::friendlist::FriendListRespone* Arena::Create< ::youliao::pdu::friendlist::FriendListRespone>(Arena*);
 template<> ::youliao::pdu::friendlist::FriendListRespone_FriendListEntry_DoNotUse* Arena::Create< ::youliao::pdu::friendlist::FriendListRespone_FriendListEntry_DoNotUse>(Arena*);
+template<> ::youliao::pdu::friendlist::FriendSignatureChangedNotify* Arena::Create< ::youliao::pdu::friendlist::FriendSignatureChangedNotify>(Arena*);
 template<> ::youliao::pdu::friendlist::FriendStatusChangeMessage* Arena::Create< ::youliao::pdu::friendlist::FriendStatusChangeMessage>(Arena*);
 template<> ::youliao::pdu::friendlist::Group_Friend* Arena::Create< ::youliao::pdu::friendlist::Group_Friend>(Arena*);
 template<> ::youliao::pdu::friendlist::SignatureChangeRespone* Arena::Create< ::youliao::pdu::friendlist::SignatureChangeRespone>(Arena*);
@@ -869,6 +876,124 @@ class SignatureChangeRespone : public ::google::protobuf::Message /* @@protoc_in
   friend struct ::protobuf_youliao_2efriendlist_2eproto::TableStruct;
   friend void ::protobuf_youliao_2efriendlist_2eproto::InitDefaultsSignatureChangeResponeImpl();
 };
+// -------------------------------------------------------------------
+
+class FriendSignatureChangedNotify : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.friendlist.FriendSignatureChangedNotify) */ {
+ public:
+  FriendSignatureChangedNotify();
+  virtual ~FriendSignatureChangedNotify();
+
+  FriendSignatureChangedNotify(const FriendSignatureChangedNotify& from);
+
+  inline FriendSignatureChangedNotify& operator=(const FriendSignatureChangedNotify& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  FriendSignatureChangedNotify(FriendSignatureChangedNotify&& from) noexcept
+    : FriendSignatureChangedNotify() {
+    *this = ::std::move(from);
+  }
+
+  inline FriendSignatureChangedNotify& operator=(FriendSignatureChangedNotify&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const FriendSignatureChangedNotify& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const FriendSignatureChangedNotify* internal_default_instance() {
+    return reinterpret_cast<const FriendSignatureChangedNotify*>(
+               &_FriendSignatureChangedNotify_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    7;
+
+  void Swap(FriendSignatureChangedNotify* other);
+  friend void swap(FriendSignatureChangedNotify& a, FriendSignatureChangedNotify& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline FriendSignatureChangedNotify* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<FriendSignatureChangedNotify>(NULL);
+  }
+
+  FriendSignatureChangedNotify* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<FriendSignatureChangedNotify>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const FriendSignatureChangedNotify& from);
+  void MergeFrom(const FriendSignatureChangedNotify& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(FriendSignatureChangedNotify* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string friend_signatrue = 2;
+  void clear_friend_signatrue();
+  static const int kFriendSignatrueFieldNumber = 2;
+  const ::std::string& friend_signatrue() const;
+  void set_friend_signatrue(const ::std::string& value);
+  #if LANG_CXX11
+  void set_friend_signatrue(::std::string&& value);
+  #endif
+  void set_friend_signatrue(const char* value);
+  void set_friend_signatrue(const char* value, size_t size);
+  ::std::string* mutable_friend_signatrue();
+  ::std::string* release_friend_signatrue();
+  void set_allocated_friend_signatrue(::std::string* friend_signatrue);
+
+  // uint32 friend_id = 1;
+  void clear_friend_id();
+  static const int kFriendIdFieldNumber = 1;
+  ::google::protobuf::uint32 friend_id() const;
+  void set_friend_id(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.friendlist.FriendSignatureChangedNotify)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr friend_signatrue_;
+  ::google::protobuf::uint32 friend_id_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2efriendlist_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2efriendlist_2eproto::InitDefaultsFriendSignatureChangedNotifyImpl();
+};
 // ===================================================================
 
 
@@ -1324,9 +1449,82 @@ inline void SignatureChangeRespone::set_result_type(::youliao::pdu::base::Result
   // @@protoc_insertion_point(field_set:youliao.pdu.friendlist.SignatureChangeRespone.result_type)
 }
 
+// -------------------------------------------------------------------
+
+// FriendSignatureChangedNotify
+
+// uint32 friend_id = 1;
+inline void FriendSignatureChangedNotify::clear_friend_id() {
+  friend_id_ = 0u;
+}
+inline ::google::protobuf::uint32 FriendSignatureChangedNotify::friend_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.friendlist.FriendSignatureChangedNotify.friend_id)
+  return friend_id_;
+}
+inline void FriendSignatureChangedNotify::set_friend_id(::google::protobuf::uint32 value) {
+  
+  friend_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.friendlist.FriendSignatureChangedNotify.friend_id)
+}
+
+// string friend_signatrue = 2;
+inline void FriendSignatureChangedNotify::clear_friend_signatrue() {
+  friend_signatrue_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& FriendSignatureChangedNotify::friend_signatrue() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.friendlist.FriendSignatureChangedNotify.friend_signatrue)
+  return friend_signatrue_.GetNoArena();
+}
+inline void FriendSignatureChangedNotify::set_friend_signatrue(const ::std::string& value) {
+  
+  friend_signatrue_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:youliao.pdu.friendlist.FriendSignatureChangedNotify.friend_signatrue)
+}
+#if LANG_CXX11
+inline void FriendSignatureChangedNotify::set_friend_signatrue(::std::string&& value) {
+  
+  friend_signatrue_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:youliao.pdu.friendlist.FriendSignatureChangedNotify.friend_signatrue)
+}
+#endif
+inline void FriendSignatureChangedNotify::set_friend_signatrue(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  friend_signatrue_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:youliao.pdu.friendlist.FriendSignatureChangedNotify.friend_signatrue)
+}
+inline void FriendSignatureChangedNotify::set_friend_signatrue(const char* value, size_t size) {
+  
+  friend_signatrue_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:youliao.pdu.friendlist.FriendSignatureChangedNotify.friend_signatrue)
+}
+inline ::std::string* FriendSignatureChangedNotify::mutable_friend_signatrue() {
+  
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.friendlist.FriendSignatureChangedNotify.friend_signatrue)
+  return friend_signatrue_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* FriendSignatureChangedNotify::release_friend_signatrue() {
+  // @@protoc_insertion_point(field_release:youliao.pdu.friendlist.FriendSignatureChangedNotify.friend_signatrue)
+  
+  return friend_signatrue_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void FriendSignatureChangedNotify::set_allocated_friend_signatrue(::std::string* friend_signatrue) {
+  if (friend_signatrue != NULL) {
+    
+  } else {
+    
+  }
+  friend_signatrue_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), friend_signatrue);
+  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.friendlist.FriendSignatureChangedNotify.friend_signatrue)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

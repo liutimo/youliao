@@ -187,12 +187,15 @@ enum FriendListCID {
   CID_FRIENDLIST_GET_REQUEST = 1025,
   CID_FRIENDLIST_GET_RESPONE = 1026,
   CID_FRIENDLIST_FRIEND_STATUS_CHANGE = 1027,
+  CID_FRIENDLIST_SIGNATURE_CHANGED_REQUEST = 1028,
+  CID_FRIENDLIST_SIGNATURE_CHANGED_RESPONE = 1029,
+  CID_FRIENDLIST_FRIEND_SIGNATURE_CHANGED = 1030,
   FriendListCID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   FriendListCID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool FriendListCID_IsValid(int value);
 const FriendListCID FriendListCID_MIN = CID_FRIENDLIST_ZERO;
-const FriendListCID FriendListCID_MAX = CID_FRIENDLIST_FRIEND_STATUS_CHANGE;
+const FriendListCID FriendListCID_MAX = CID_FRIENDLIST_FRIEND_SIGNATURE_CHANGED;
 const int FriendListCID_ARRAYSIZE = FriendListCID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* FriendListCID_descriptor();
@@ -230,12 +233,13 @@ enum ResultType {
   NONE = 0,
   NO_MSG_SERVER = 1,
   MSG_SERVER_FULL = 2,
+  SIGNATURE_MODIFY_FAILED = 3,
   ResultType_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   ResultType_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool ResultType_IsValid(int value);
 const ResultType ResultType_MIN = NONE;
-const ResultType ResultType_MAX = MSG_SERVER_FULL;
+const ResultType ResultType_MAX = SIGNATURE_MODIFY_FAILED;
 const int ResultType_ARRAYSIZE = ResultType_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* ResultType_descriptor();
@@ -298,12 +302,13 @@ inline bool MessageType_Parse(
 enum RouteMessageType {
   ROUTE_MESSAGE_ZERO = 0,
   ROUTE_MESSAGE_FRIEND_STATUS_CHANGE = 1,
+  ROUTE_MESSAGE_FRIEND_SIGNATURE_CHANGE = 2,
   RouteMessageType_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   RouteMessageType_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool RouteMessageType_IsValid(int value);
 const RouteMessageType RouteMessageType_MIN = ROUTE_MESSAGE_ZERO;
-const RouteMessageType RouteMessageType_MAX = ROUTE_MESSAGE_FRIEND_STATUS_CHANGE;
+const RouteMessageType RouteMessageType_MAX = ROUTE_MESSAGE_FRIEND_SIGNATURE_CHANGE;
 const int RouteMessageType_ARRAYSIZE = RouteMessageType_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* RouteMessageType_descriptor();

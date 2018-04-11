@@ -121,7 +121,7 @@ bool FriendListModel::modifySignature(uint32_t user_id, const std::string &signa
     {
         char update_sql_1[] = "UPDATE yl_user SET user_sign_info = '%s' WHERE user_id = '%d'";
         char update_sql_2[2048];
-        sprintf(update_sql_2, update_sql_1, user_id, signature.c_str());
+        sprintf(update_sql_2, update_sql_1, signature.c_str(), user_id);
         log("modify signature. sql = %s", update_sql_2);
 
         if (conn->update(update_sql_2))

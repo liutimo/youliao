@@ -28,7 +28,7 @@ public:
 private:
     void _HandleValidateRespone(BasePdu *);
     void _HandleFriendListRespone(BasePdu *);
-
+    void _HandleSignatureChangedResponse(BasePdu *);
 
     uint32_t   m_server_index;
     bool       m_open;

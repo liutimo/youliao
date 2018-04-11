@@ -189,12 +189,13 @@ enum FriendListCID {
   CID_FRIENDLIST_FRIEND_STATUS_CHANGE = 1027,
   CID_FRIENDLIST_SIGNATURE_CHANGED_REQUEST = 1028,
   CID_FRIENDLIST_SIGNATURE_CHANGED_RESPONE = 1029,
+  CID_FRIENDLIST_FRIEND_SIGNATURE_CHANGED = 1030,
   FriendListCID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   FriendListCID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool FriendListCID_IsValid(int value);
 const FriendListCID FriendListCID_MIN = CID_FRIENDLIST_ZERO;
-const FriendListCID FriendListCID_MAX = CID_FRIENDLIST_SIGNATURE_CHANGED_RESPONE;
+const FriendListCID FriendListCID_MAX = CID_FRIENDLIST_FRIEND_SIGNATURE_CHANGED;
 const int FriendListCID_ARRAYSIZE = FriendListCID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* FriendListCID_descriptor();

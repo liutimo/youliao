@@ -32,3 +32,23 @@ message FriendStatusChangeMessage
     uint32 user_id = 1;
     youliao.pdu.base.UserStatusType user_status_type = 2;
 }
+
+//好友个性签名修改
+message SignatureChangeResquest
+{
+    uint32 user_id = 1;
+    string user_signature = 2;
+}
+
+message SignatureChangeRespone
+{
+    uint32 user_id = 1;
+    string user_signature = 2;
+    youliao.pdu.base.ResultType result_type = 3;
+}
+
+message FriendSignatureChangedNotify
+{
+    uint32 friend_id = 1;
+    string friend_signatrue = 2;
+}

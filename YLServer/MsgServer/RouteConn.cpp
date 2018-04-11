@@ -160,6 +160,16 @@ void RouteConn::_HandleRouteBroadcast(BasePdu *basePdu)
             pdu.writeMessage(&friendStatusChangeMessage);
         }
             break;
+        case base::ROUTE_MESSAGE_FRIEND_SIGNATURE_CHANGE:
+        {
+            pdu.setCID(base::CID_FRIENDLIST_FRIEND_SIGNATURE_CHANGED);
+
+            friendlist::FriendSignatureChangedNotify friendSignatureChangedNotify;
+            friendSignatureChangedNotify.set_friend_id(routeBroadcast.user_id());
+            friendSignatureChangedNotify.set_friend_signatrue(routeBroadcast.attach_data());
+            pdu.writeMessage(&friendSignatureChangedNotify);
+        }
+            break;
         default:
             break;
 

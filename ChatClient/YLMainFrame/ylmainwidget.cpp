@@ -58,8 +58,11 @@ void YLMainWidget::init()
     nickname_label_->setStyleSheet(qss_nickname_label);
 
     signature_lineedit_ = new YLSignatureLineEdit(this);
-    signature_lineedit_->setText("我是谁！！！");
     signature_lineedit_->resize(width() - 145, 30);
+    connect(signature_lineedit_, &YLSignatureLineEdit::editFinished, this, [this](){
+        YLBusiness::modifySignature(GlobalData::getCurrLoginUserId(), signature_lineedit_->text());
+    });
+
 
     search_lineedit_ = new YLSearchLineEdit(this);
     search_lineedit_->resize(width() - 1, 40);
