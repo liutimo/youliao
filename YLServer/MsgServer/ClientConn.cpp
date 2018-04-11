@@ -11,6 +11,7 @@
 #include "ClientConn.h"
 #include "network/netlib.h"
 #include "DBServConn.h"
+#include "RouteConn.h"
 #include "pdu/protobuf/youliao.base.pb.h"
 #include "pdu/protobuf/youliao.login.pb.h"
 #include "pdu/protobuf/youliao.server.pb.h"
@@ -235,8 +236,20 @@ void ClientConn::_HandleClientLoginOutRequest(BasePdu *pdu)
         basePdu.setCID(base::CID_SERVER_USER_LOGOUT);
         basePdu.writeMessage(&userOffline);
         dbServConn->sendBasePdu(&basePdu);
-
     }
+
+    //发送好友下线通知
+    server::RouteMessage routeMessage;
+    routeMessage.set_user_id(m_user_id);
+    routeMessage.set_route_status_type(base::ROUTE_MESSAGE_FRIEND_STATUS_CHANGE);
+    set_attach_data(routeMessage, base::USER_STATUS_OFFLINE);
+
+    BasePdu basePdu1;
+    basePdu1.setSID(base::SID_SERVER);
+    basePdu1.setCID(base::CID_SERVER_ROUTE_BROADCAST);
+    basePdu1.writeMessage(&routeMessage);
+
+    get_route_server_conn()->sendBasePdu(&basePdu1);
 }
 
 void ClientConn::_HandleMessageDataRequest(BasePdu *pdu)

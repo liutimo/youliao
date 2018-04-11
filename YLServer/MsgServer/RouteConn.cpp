@@ -155,6 +155,7 @@ void RouteConn::_HandleRouteBroadcast(BasePdu *basePdu)
             pdu.setCID(base::CID_FRIENDLIST_FRIEND_STATUS_CHANGE);
 
             friendlist::FriendStatusChangeMessage friendStatusChangeMessage;
+            friendStatusChangeMessage.set_user_id(routeBroadcast.user_id());
             friendStatusChangeMessage.set_user_status_type((base::UserStatusType)get_attach_data(routeBroadcast));
             pdu.writeMessage(&friendStatusChangeMessage);
         }
