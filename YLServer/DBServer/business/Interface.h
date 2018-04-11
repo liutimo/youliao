@@ -22,6 +22,9 @@ namespace DB_INTERFACE
 
     //获取在线好友
     void getOnlineFriends(BasePdu *basePdu, uint32_t conn_uid);
+
+    //修改个性签名
+    void modifySignature(BasePdu *basePdu, uint32_t conn_uid);
 }
 
 

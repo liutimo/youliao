@@ -20,6 +20,7 @@ public:
 
     void getOnlineFriends(uint32_t user_id, server::RouteGetOnlineFriendRespone &routeGetOnlineFriendRespone);
 
+    bool modifySignature(uint32_t user_id, const std::string &signature);
 };
 
 

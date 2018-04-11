@@ -205,26 +205,30 @@ void AddDescriptorsImpl() {
       "\022(\n#CID_SERVER_GET_SERVER_INDEX_REQUEST\020"
       "\211\004\022(\n#CID_SERVER_GET_SERVER_INDEX_RESPON"
       "E\020\212\004*8\n\010OtherCID\022\022\n\016CID_OTHER_ZERO\020\000\022\030\n\023"
-      "CID_OTHER_HEARTBEAT\020\201\006*\224\001\n\rFriendListCID"
+      "CID_OTHER_HEARTBEAT\020\201\006*\362\001\n\rFriendListCID"
       "\022\027\n\023CID_FRIENDLIST_ZERO\020\000\022\037\n\032CID_FRIENDL"
       "IST_GET_REQUEST\020\201\010\022\037\n\032CID_FRIENDLIST_GET"
       "_RESPONE\020\202\010\022(\n#CID_FRIENDLIST_FRIEND_STA"
-      "TUS_CHANGE\020\203\010*9\n\nMessageCID\022\024\n\020CID_MESSA"
-      "GE_ZERO\020\000\022\025\n\020CID_MESSAGE_DATA\020\201\n*>\n\nResu"
-      "ltType\022\010\n\004NONE\020\000\022\021\n\rNO_MSG_SERVER\020\001\022\023\n\017M"
-      "SG_SERVER_FULL\020\002*m\n\016UserStatusType\022\024\n\020US"
-      "ER_STATUS_ZERO\020\000\022\026\n\022USER_STATUS_ONLINE\020\001"
-      "\022\027\n\023USER_STATUS_OFFLINE\020\002\022\024\n\020USER_STATUS"
-      "_HIDE\020\003*\227\001\n\013MessageType\022\020\n\014MESSAGE_ZERO\020"
-      "\000\022\034\n\030MESSAGE_TYPE_SINGLE_TEXT\020\001\022\035\n\031MESSA"
-      "GE_TYPE_SINGLE_AUDIO\020\002\022\033\n\027MESSAGE_TYPE_G"
-      "ROUP_TEXT\020\003\022\034\n\030MESSAGE_TYPE_GROUP_AUDIO\020"
-      "\004*R\n\020RouteMessageType\022\026\n\022ROUTE_MESSAGE_Z"
-      "ERO\020\000\022&\n\"ROUTE_MESSAGE_FRIEND_STATUS_CHA"
-      "NGE\020\001b\006proto3"
+      "TUS_CHANGE\020\203\010\022-\n(CID_FRIENDLIST_SIGNATUR"
+      "E_CHANGED_REQUEST\020\204\010\022-\n(CID_FRIENDLIST_S"
+      "IGNATURE_CHANGED_RESPONE\020\205\010*9\n\nMessageCI"
+      "D\022\024\n\020CID_MESSAGE_ZERO\020\000\022\025\n\020CID_MESSAGE_D"
+      "ATA\020\201\n*[\n\nResultType\022\010\n\004NONE\020\000\022\021\n\rNO_MSG"
+      "_SERVER\020\001\022\023\n\017MSG_SERVER_FULL\020\002\022\033\n\027SIGNAT"
+      "URE_MODIFY_FAILED\020\003*m\n\016UserStatusType\022\024\n"
+      "\020USER_STATUS_ZERO\020\000\022\026\n\022USER_STATUS_ONLIN"
+      "E\020\001\022\027\n\023USER_STATUS_OFFLINE\020\002\022\024\n\020USER_STA"
+      "TUS_HIDE\020\003*\227\001\n\013MessageType\022\020\n\014MESSAGE_ZE"
+      "RO\020\000\022\034\n\030MESSAGE_TYPE_SINGLE_TEXT\020\001\022\035\n\031ME"
+      "SSAGE_TYPE_SINGLE_AUDIO\020\002\022\033\n\027MESSAGE_TYP"
+      "E_GROUP_TEXT\020\003\022\034\n\030MESSAGE_TYPE_GROUP_AUD"
+      "IO\020\004*}\n\020RouteMessageType\022\026\n\022ROUTE_MESSAG"
+      "E_ZERO\020\000\022&\n\"ROUTE_MESSAGE_FRIEND_STATUS_"
+      "CHANGE\020\001\022)\n%ROUTE_MESSAGE_FRIEND_SIGNATU"
+      "RE_CHANGE\020\002b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 1853);
+      descriptor, 2019);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "youliao.base.proto", &protobuf_RegisterTypes);
 }
@@ -326,6 +330,8 @@ bool FriendListCID_IsValid(int value) {
     case 1025:
     case 1026:
     case 1027:
+    case 1028:
+    case 1029:
       return true;
     default:
       return false;
@@ -355,6 +361,7 @@ bool ResultType_IsValid(int value) {
     case 0:
     case 1:
     case 2:
+    case 3:
       return true;
     default:
       return false;
@@ -402,6 +409,7 @@ bool RouteMessageType_IsValid(int value) {
   switch (value) {
     case 0:
     case 1:
+    case 2:
       return true;
     default:
       return false;

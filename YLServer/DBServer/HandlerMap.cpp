@@ -43,6 +43,9 @@ void HandlerMap::init()
 
     //获取在线好友
     m_handler_map.insert(std::make_pair(CID_SERVER_GET_ONLINE_FRIENDS_REQUEST, DB_INTERFACE::getOnlineFriends));
+
+    //修改个性签名
+    m_handler_map.insert(std::make_pair(CID_FRIENDLIST_SIGNATURE_CHANGED_REQUEST, DB_INTERFACE::modifySignature));
 }
 
 pdu_handler_t HandlerMap::getHandler(uint16_t cid)

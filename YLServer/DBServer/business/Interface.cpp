@@ -112,6 +112,39 @@ namespace DB_INTERFACE
 
         findProxyConn(conn_uuid)->sendBasePdu(&basePdu1);
     }
+
+
+    void modifySignature(BasePdu *basePdu, uint32_t conn_uid)
+    {
+        friendlist::SignatureChangeResquest signatureChangeResquest;
+        signatureChangeResquest.ParseFromString(basePdu->getMessage());
+
+        uint32_t userId = signatureChangeResquest.user_id();
+        string userSignature = signatureChangeResquest.user_signature();
+
+        FriendListModel friendListModel;
+        bool ret = friendListModel.modifySignature(userId, userSignature);
+
+        friendlist::SignatureChangeRespone signatureChangeRespone;
+        signatureChangeRespone.set_user_id(userId);
+
+        if (ret)
+        {
+            signatureChangeRespone.set_result_type(base::NONE);
+            signatureChangeRespone.set_user_signature(userSignature);
+        }
+        else
+        {
+            signatureChangeRespone.set_result_type(base::SIGNATURE_MODIFY_FAILED);
+        }
+        BasePdu basePdu1;
+        basePdu1.setSID(base::SID_SERVER);
+        basePdu1.setCID(base::CID_FRIENDLIST_SIGNATURE_CHANGED_RESPONE);
+        basePdu1.writeMessage(&signatureChangeRespone);
+
+        log("send user %d modify signature result to msg_server", userId);
+        findProxyConn(conn_uid)->sendBasePdu(&basePdu1);
+    }
 }
 
 

@@ -51,6 +51,8 @@ enum FriendListCID
     CID_FRIENDLIST_GET_REQUEST = 0X0401;      //获取好友列表请求
     CID_FRIENDLIST_GET_RESPONE = 0X0402;      //         响应
     CID_FRIENDLIST_FRIEND_STATUS_CHANGE = 0x0403;
+    CID_FRIENDLIST_SIGNATURE_CHANGED_REQUEST = 0x0404;  //个性签名更改请求
+    CID_FRIENDLIST_SIGNATURE_CHANGED_RESPONE = 0x0405;  //个性签名修改响应
 }
 
 //消息
@@ -64,9 +66,10 @@ enum MessageCID
 //响应结果类型
 enum ResultType
 {
-    NONE    =   0;
+    NONE    =   0;                      //操作成功
     NO_MSG_SERVER = 1;
     MSG_SERVER_FULL = 2;
+    SIGNATURE_MODIFY_FAILED = 3;        //个性签名修改失败
 }
 
 //用户在线状态
@@ -126,4 +129,5 @@ enum RouteMessageType
 {
     ROUTE_MESSAGE_ZERO = 0x00;
     ROUTE_MESSAGE_FRIEND_STATUS_CHANGE = 0x01;     //好友状态更改
+    ROUTE_MESSAGE_FRIEND_SIGNATURE_CHANGE = 0x02;  //好友个性签名修改
 }
