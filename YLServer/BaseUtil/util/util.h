@@ -26,7 +26,7 @@
 static youliao::log::Log g_log("youliao");
 #define __FILENAME__ (strrchr(__FILE__, '/') ? (strrchr(__FILE__, '/') + 1) : __FILE__ )
 #define log(format, args...) g_log.Info("<%s> | <%d> | <%s>" format, __FILENAME__, __LINE__, __FUNCTION__, ##args)
-
+#define printSql2Log(sql) log("执行SQL语句: %s", sql)
 //
 #define NO_USERD(arg) ((void)arg)
 
