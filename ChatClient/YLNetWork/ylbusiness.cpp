@@ -44,6 +44,20 @@ void  YLBusiness::loginOut(const uint32_t user_id)
     PduSender::instance()->addMessage(basePdu);
 }
 
+void YLBusiness::getFriendGroupsRequest(uint32_t user_id)
+{
+    friendlist::GroupsRequest groupRequest;
+    groupRequest.set_user_id(user_id);
+
+    BasePdu *basePdu = new BasePdu;
+    basePdu->setSID(base::SID_FRIEND_LIST);
+    basePdu->setCID(base::CID_FRIENDLIST_GET_GROUPS_REQUEST);
+    basePdu->writeMessage(&groupRequest);
+
+    PduSender::instance()->addMessage(basePdu);
+}
+
+
 void YLBusiness::getFriendListRequest(uint32_t user_id)
 {
     friendlist::FriendListRequest request;

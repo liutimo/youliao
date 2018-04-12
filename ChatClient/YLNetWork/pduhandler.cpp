@@ -65,6 +65,9 @@ void PduHandler::_HandleBasePdu(BasePdu *pdu)
     case base::CID_OTHER_HEARTBEAT:
         _HandleHeartBeat();
         break;
+    case base::CID_FRIENDLIST_GET_GROUPS_REPSONE:
+        _HandleFriendGroupGetRespone(pdu);
+        break;
     case base::CID_FRIENDLIST_GET_RESPONE:
         _HandleFriendListGetRespone(pdu);
         break;
@@ -101,6 +104,21 @@ void PduHandler::_HandleHeartBeat()
     ++m_heartbeat_received_times;
 }
 
+void PduHandler::_HandleFriendGroupGetRespone(BasePdu *pdu)
+{
+    friendlist::GroupsRespone groupsRespone;
+    groupsRespone.ParseFromString(pdu->getMessage());
+
+    group_map groupsMap;
+
+    auto groups = groupsRespone.user_groups();
+    for (auto elem : groups)
+    {
+        groupsMap[elem.first] = QString(elem.second.c_str());
+    }
+
+    emit friendgroups(groupsMap);
+}
 
 void PduHandler::_HandleFriendListGetRespone(BasePdu *pdu)
 {
@@ -108,15 +126,11 @@ void PduHandler::_HandleFriendListGetRespone(BasePdu *pdu)
     friendlistRespone.ParseFromString(pdu->getMessage());
 
     friend_map friends;
-    group_map  groups;
-
     auto friendList = friendlistRespone.friend_list();
     for (auto elem : friendList)
     {
         auto c = elem.second;
         int groupId = elem.first;
-        QString groupName(c.group_name().c_str());
-        groups[groupId] = groupName;
         for (int i = 0; i < c.friend__size(); ++i)
         {
             auto fri = c.friend_(i);
@@ -131,7 +145,7 @@ void PduHandler::_HandleFriendListGetRespone(BasePdu *pdu)
         }
     }
 
-    emit friendlist(friends, groups);
+    emit friendlist(friends);
 }
 
 void PduHandler::_HandleMessageData(BasePdu *pdu)

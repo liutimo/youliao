@@ -19,6 +19,11 @@ YLFriendListView::YLFriendListView(QWidget *parent) : QListWidget(parent),
     setStyleSheet(qss_this + qss_scroll_bar);
     setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
+
+    m_lineedit = new QLineEdit(this);
+    m_lineedit->hide();
+    connect(m_lineedit, &QLineEdit::editingFinished, this, &YLFriendListView::editFinshed);
+
     initMenu();
     connect(this, &YLFriendListView::itemDoubleClicked, this, [this](QListWidgetItem *item){
         if (qFind(m_group_item, item) != m_group_item.cend())
@@ -26,11 +31,14 @@ YLFriendListView::YLFriendListView(QWidget *parent) : QListWidget(parent),
             QString groupName = item->text().split(QRegExp("(\\(\\d/\\d\\))")).at(0);
             int groupId = m_group.key(groupName);
             m_group_show[groupId] = !m_group_show[groupId];
-            updateFriendList(m_friends, m_group);
+            updateList();
         }
 
     });
 
+    connect(PduHandler::instance(), &PduHandler::friendgroups, this, [this](const QMap<int, QString> &groups){
+       m_group = groups;
+    });
     connect(PduHandler::instance(), &PduHandler::friendlist, this, &YLFriendListView::updateFriendList);
     connect(PduHandler::instance(), &PduHandler::friendStatusChange, this, &YLFriendListView::friendStatusChanged);
     connect(PduHandler::instance(), &PduHandler::friendSignatureChange, this, &YLFriendListView::friendSignatureChanged);
@@ -48,7 +56,6 @@ void YLFriendListView::initMenu()
     QAction *action_refresh             = new QAction("刷新好友列表");
     QAction *action_show_all_or_online  = new QAction("显示在线好友");
     QAction *action_add_group           = new QAction("添加分组");
-    connect(action_add_group, &QAction::triggered, this, &YLFriendListView::onAddGroupSlots);
     m_blank_menu = new QMenu();
     m_blank_menu->addAction(action_refresh);
     m_blank_menu->addAction(action_show_all_or_online);
@@ -56,6 +63,7 @@ void YLFriendListView::initMenu()
 
     connect(action_refresh, &QAction::triggered, this, &YLFriendListView::refreshFriendList);
     connect(action_show_all_or_online, &QAction::triggered, this, &YLFriendListView::showFriendsModel);
+    connect(action_add_group, &QAction::triggered, this, &YLFriendListView::addGroup);
 
     QAction *action_rename = new QAction("重命名");
     QAction *action_delete = new QAction("删除该组");
@@ -73,6 +81,7 @@ void YLFriendListView::initMenu()
 
 void YLFriendListView::updateList()
 {
+    m_group_item.clear();
     clear();
     //sort by online status
     QMap<int, QPair<int, int>> online_users;
@@ -90,24 +99,20 @@ void YLFriendListView::updateList()
         }
     }
 
-
-    for (auto elem : m_friends)
+    for (auto elem : m_group)
     {
-        int groupId = m_friends.key(elem);
-        QString groupName = m_group[groupId];
-        auto iter = m_group_show.find(groupId);
-        if (iter == m_group_show.end())
-            m_group_show[groupId] = false;
-
+        int groupId = m_group.key(elem);
         auto pair = online_users[groupId];
 
         if (m_group_show[groupId] == true)
         {
-            QListWidgetItem *item = new QListWidgetItem(QIcon(":/res/MainFrame/down.png"), groupName + QString("(%1/%2)").arg(pair.second).arg(pair.first));
+            QListWidgetItem *item = new QListWidgetItem(QIcon(":/res/MainFrame/down.png"), elem + QString("(%1/%2)").arg(pair.second).arg(pair.first));
             item->setSizeHint(QSize(width() - 30, 35));
             addItem(item);
             m_group_item.push_back(item);
-            for (YLFriend fri : elem)
+
+
+            for (YLFriend fri : m_friends[groupId])
             {
                 if (m_online && !fri.friendIsOnline())
                     continue;
@@ -122,12 +127,14 @@ void YLFriendListView::updateList()
         }
         else
         {
-            QListWidgetItem *item = new QListWidgetItem(QIcon(":/res/MainFrame/right.png"), groupName + QString("(%1/%2)").arg(pair.second).arg(pair.first));
+            QListWidgetItem *item = new QListWidgetItem(QIcon(":/res/MainFrame/right.png"), elem + QString("(%1/%2)").arg(pair.second).arg(pair.first));
             item->setSizeHint(QSize(width() - 30, 35));
             addItem(item);
             m_group_item.push_back(item);
         }
+
     }
+
 }
 
 void YLFriendListView::mousePressEvent(QMouseEvent *event)
@@ -148,20 +155,12 @@ void YLFriendListView::contextMenuEvent(QContextMenuEvent *event)
     event->accept();
 }
 
+
+
 //slots
-void YLFriendListView::onAddGroupSlots()
+void YLFriendListView::updateFriendList(const QMap<int, QVector<YLFriend>> &friends)
 {
-    QLineEdit *lineEdit = new QLineEdit(this);
-    lineEdit->setText("未命名(0/0)");
-    lineEdit->show();
-}
-
-
-void YLFriendListView::updateFriendList(const QMap<int, QVector<YLFriend>> &friends, const QMap<int, QString> &groups)
-{
-    m_group_item.clear();
     m_friends = friends;
-    m_group = groups;
     updateList();
 }
 
@@ -200,6 +199,7 @@ void YLFriendListView::friendSignatureChanged(uint32_t friendId, const QString &
 
 void YLFriendListView::refreshFriendList()
 {
+    YLBusiness::getFriendGroupsRequest(GlobalData::getCurrLoginUserId());
     YLBusiness::getFriendListRequest(GlobalData::getCurrLoginUserId());
 }
 
@@ -219,4 +219,36 @@ void YLFriendListView::showFriendsModel()
         m_online = false;
         updateList();
     }
+}
+
+void YLFriendListView::addGroup()
+{
+    QListWidgetItem *newItem = new QListWidgetItem(QIcon(":/res/MainFrame/right.png"), "未命名(0/0)");
+    newItem->setSizeHint(QSize(width() - 30, 35));
+    addItem(newItem);
+    m_group_item.push_back(newItem);
+    m_current_edit_item = newItem;
+
+    QRect r = visualItemRect(newItem);
+    m_lineedit->setText("未命名");
+    m_lineedit->setGeometry(r.left() + 20,r.top() + 1, r.width() - 30, r.height() - 2);//出现的位置
+    m_lineedit->show();
+    m_lineedit->setFocus();
+    m_lineedit->selectAll();
+}
+
+void YLFriendListView::renameGroup()
+{
+
+
+
+}
+
+void YLFriendListView::editFinshed()
+{
+    m_lineedit->hide();
+//    m_current_edit_item->setText(m_lineedit->text() + "(0/0)");
+//    m_group[m_group.size() + 1] = m_lineedit->text() + "(0/0)";
+    int i = 0;
+    updateList();
 }

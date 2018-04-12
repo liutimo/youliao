@@ -18,16 +18,17 @@ public:
 
 signals:
     void loginStatus(bool successed,  base::UserInfo *userInfo = nullptr);
-    void friendlist(const friend_map &, const group_map&);
+    void friendlist(const friend_map &);
     void friendStatusChange(uint32_t friend_id, uint32_t status);
     void friendSignatureChange(uint32_t friend_id, const QString &signature);
     void signleMessage(uint32_t senderId, const QString &content);
-
+    void friendgroups(const group_map&);
 
 private:
     void _HandleBasePdu(BasePdu *pdu);
     void _HandleUserLoginRespone(BasePdu *pdu);
     void _HandleHeartBeat();
+    void _HandleFriendGroupGetRespone(BasePdu *pdu);
     void _HandleFriendListGetRespone(BasePdu *pdu);
     void _HandleMessageData(BasePdu *pdu);
     void _HandleFriendStatusChangeMessage(BasePdu *pdu);

@@ -180,6 +180,7 @@ void YLMainWidget::setUserInfo(UserInfo *userInfo)
     nickname_label_->setText(m_user_info->user_nick().c_str());
     signature_lineedit_->setText(m_user_info->user_sign_info().c_str());
 
+    YLBusiness::getFriendGroupsRequest(m_user_info->user_id());
     YLBusiness::getFriendListRequest(m_user_info->user_id());
 
     m_http_dowloader->start(m_user_info->user_header_url().c_str());

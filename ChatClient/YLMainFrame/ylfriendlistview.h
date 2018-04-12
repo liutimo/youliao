@@ -35,12 +35,15 @@ protected:
     void contextMenuEvent(QContextMenuEvent *event);
 
 private slots:
-    void onAddGroupSlots();
-    void updateFriendList(const QMap<int, QVector<YLFriend>> &, const QMap<int, QString>&);
+    void updateFriendList(const QMap<int, QVector<YLFriend>>&);
     void friendStatusChanged(uint32_t, uint32_t);
     void friendSignatureChanged(uint32_t, const QString &);
     void refreshFriendList();
     void showFriendsModel();
+    void addGroup();
+    void renameGroup();
+    void editFinshed();
+
 private:
     QMenu       *m_blank_menu;
     QMenu       *m_group_menu;
@@ -48,7 +51,7 @@ private:
     QLineEdit   *m_lineedit;
 
     const QListWidgetItem *m_current_press_item;
-
+    QListWidgetItem *m_current_edit_item;
     QVector<QListWidgetItem*> m_group_item;
     QMap<int, QVector<YLFriend>> m_friends;
     QMap<int, QString> m_group;

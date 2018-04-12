@@ -16,8 +16,10 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     YLLoginPanel w;
-//    YLChatWidget w;
     w.resize(500, 400);
+
+//    YLMainWidget w;
+//    w.resize(400, 800);
     w.show();
 
 
