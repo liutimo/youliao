@@ -31,6 +31,9 @@ namespace DB_INTERFACE
 
     //新的好友分组
     void addFriendGroup(BasePdu *basePdu, uint32_t conn_uid);
+
+    //重命名分组
+    void renameFriendGroup(BasePdu *basePdu, uint32_t conn_uid);
 }
 
 

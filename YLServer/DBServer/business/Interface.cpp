@@ -198,6 +198,19 @@ namespace DB_INTERFACE
         //否则丢弃该请求，
 
     }
+
+    void renameFriendGroup(BasePdu *basePdu, uint32_t conn_uid)
+    {
+        friendlist::RenameFriendGroupRequest renameFriendGroupRequest;
+        renameFriendGroupRequest.ParseFromString(basePdu->getMessage());
+
+        uint32_t userId = renameFriendGroupRequest.user_id();
+        uint32_t groupId = renameFriendGroupRequest.group_id();
+        string groupNewName = renameFriendGroupRequest.group_new_name();
+
+        FriendListModel friendListModel;
+        friendListModel.renameFriendGroup(userId, groupNewName, groupId);
+    }
 }
 
 

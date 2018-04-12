@@ -57,7 +57,9 @@ private:
     QMap<int, QString> m_group;
     QMap<int, bool> m_group_show;
     bool m_online;
-    bool m_add;
+    bool m_flag;
+    int m_type;    // 1. add new  2. rename  0. nothing
+    int m_group_id;
 };
 
 #endif // YLFRIENDLISTVIEW_H

@@ -190,3 +190,26 @@ bool FriendListModel::addNewFriendGroup(uint32_t user_id, const std::string &new
     DBManager::instance()->releaseConnection(conn);
     return ret;
 }
+
+
+bool FriendListModel::renameFriendGroup(uint32_t user_id, const std::string &group_new_name, uint32_t &groupId)
+{
+    bool ret = false;
+
+    auto conn = DBManager::instance()->getConnection();
+
+    if (conn)
+    {
+        char update_sql_1[] = "UPDATE yl_friend_group set group_name = '%s' where user_id = %d and group_id = %d;";
+        char update_sql_2[2048];
+        sprintf(update_sql_2, update_sql_1, group_new_name.c_str(), user_id, groupId);
+        log("执行SQL语句:%s", update_sql_2);
+        if(conn->update(update_sql_2))
+            ret = true;
+        else
+            ret = false;
+    }
+
+    DBManager::instance()->releaseConnection(conn);
+    return ret;
+}

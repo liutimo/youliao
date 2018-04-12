@@ -147,6 +147,9 @@ void ClientConn::handlePdu(BasePdu *pdu)
         case base::CID_FRIENDLIST_ADD_FRIEND_GROUP_REQUEST:
             _HandleAddFriendGroupRequest(pdu);
             break;
+        case base::CID_FRIENDLIST_RENAME_FRIEND_GROUP_REQUEST:
+            _HandleRenameFriendGroupRequest(pdu);
+            break;
         default:
             break;
     }
@@ -335,6 +338,23 @@ void ClientConn::_HandleAddFriendGroupRequest(BasePdu *pdu)
     basePdu.setSID(base::SID_SERVER);
     basePdu.setCID(base::CID_FRIENDLIST_ADD_FRIEND_GROUP_REQUEST);
     basePdu.writeMessage(&addNewFriendGroupRequest);
+
+    DBServConn *dbServConn = get_db_server_conn();
+
+    if (dbServConn)
+        dbServConn->sendBasePdu(&basePdu);
+}
+
+
+void ClientConn::_HandleRenameFriendGroupRequest(BasePdu *pdu)
+{
+    friendlist::RenameFriendGroupRequest renameFriendGroupRequest;
+    renameFriendGroupRequest.ParseFromString(pdu->getMessage());
+
+    BasePdu basePdu;
+    basePdu.setSID(base::SID_SERVER);
+    basePdu.setCID(base::CID_FRIENDLIST_RENAME_FRIEND_GROUP_REQUEST);
+    basePdu.writeMessage(&renameFriendGroupRequest);
 
     DBServConn *dbServConn = get_db_server_conn();
 

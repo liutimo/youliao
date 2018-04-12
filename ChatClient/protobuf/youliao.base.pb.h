@@ -195,12 +195,13 @@ enum FriendListCID {
   CID_FRIENDLIST_ADD_FRIEND_GROUP_RESPONE = 1033,
   CID_FRIENDLIST_GET_GROUPS_REQUEST = 1034,
   CID_FRIENDLIST_GET_GROUPS_REPSONE = 1035,
+  CID_FRIENDLIST_RENAME_FRIEND_GROUP_REQUEST = 1036,
   FriendListCID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   FriendListCID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool FriendListCID_IsValid(int value);
 const FriendListCID FriendListCID_MIN = CID_FRIENDLIST_ZERO;
-const FriendListCID FriendListCID_MAX = CID_FRIENDLIST_GET_GROUPS_REPSONE;
+const FriendListCID FriendListCID_MAX = CID_FRIENDLIST_RENAME_FRIEND_GROUP_REQUEST;
 const int FriendListCID_ARRAYSIZE = FriendListCID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* FriendListCID_descriptor();

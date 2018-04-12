@@ -25,6 +25,8 @@ public:
     bool modifySignature(uint32_t user_id, const std::string &signature);
 
     bool addNewFriendGroup(uint32_t user_id, const std::string &new_group_name, uint32_t &groupId);
+
+    bool renameFriendGroup(uint32_t user_id, const std::string &group_nnew_ame, uint32_t &groupId);
 };
 
 

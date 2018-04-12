@@ -126,3 +126,19 @@ void YLBusiness::addNewFriendGroup(uint32_t user_id, const QString &groupName)
 
     PduSender::instance()->addMessage(basePdu);
 }
+
+
+void YLBusiness::renameFriendGroup(uint32_t userId, uint32_t groupId, const QString &groupNewName)
+{
+   friendlist::RenameFriendGroupRequest request;
+   request.set_user_id(userId);
+   request.set_group_id(groupId);
+   request.set_group_new_name(groupNewName.toStdString());
+
+   BasePdu *basePdu = new BasePdu;
+   basePdu->setSID(SID_FRIEND_LIST);
+   basePdu->setCID(CID_FRIENDLIST_RENAME_FRIEND_GROUP_REQUEST);
+   basePdu->writeMessage(&request);
+
+   PduSender::instance()->addMessage(basePdu);
+}

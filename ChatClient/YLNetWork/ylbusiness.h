@@ -19,6 +19,7 @@ public:
     static void sendMessage(uint32_t senderId, uint32_t receiverId, const QString &message);
     static void modifySignature(uint32_t user_id, const QString &signature);
     static void addNewFriendGroup(uint32_t user_id, const QString &groupName);
+    static void renameFriendGroup(uint32_t userId, uint32_t groupId, const QString &groupNewName);
 };
 
 #endif // YLBUSINESS_H

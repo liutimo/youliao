@@ -14,7 +14,7 @@
 
 
 YLFriendListView::YLFriendListView(QWidget *parent) : QListWidget(parent),
-    m_current_press_item(nullptr), m_online(false), m_add(false)
+    m_current_press_item(nullptr), m_online(false), m_flag(false), m_type(0)
 {
     setFocusPolicy(Qt::NoFocus);       // 去除item选中时的虚线边框
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -81,6 +81,8 @@ void YLFriendListView::initMenu()
     m_group_menu->addAction(action_rename);
     m_group_menu->addAction(action_delete);
 
+
+    connect(action_rename, &QAction::triggered, this, &YLFriendListView::renameGroup);
 }
 
 
@@ -242,21 +244,30 @@ void YLFriendListView::addGroup()
     m_lineedit->setFocus();
     m_lineedit->selectAll();
 
-    m_add = true;
+    m_type = 1;
+    m_flag = true;
 }
 
 void YLFriendListView::renameGroup()
 {
+    QRect r = visualItemRect(m_current_press_item);
+    QString oldName = m_current_press_item->text().split(QRegExp("(\\(\\d/\\d\\))")).at(0);
+    m_lineedit->setText(oldName);
+    m_lineedit->setGeometry(r.left() + 20,r.top() + 1, r.width() - 30, r.height() - 2);//出现的位置
+    m_lineedit->show();
+    m_lineedit->setFocus();
+    m_lineedit->selectAll();
 
-
-
+    m_group_id = m_group.key(oldName);
+    m_type = 2;
+    m_flag = true;
 }
 
 void YLFriendListView::editFinshed()
 {
-    if(!m_add)
+    if(!m_flag)
         return;
-    m_add = false;
+    m_flag = false;
 
     m_lineedit->hide();
     QString newName = m_lineedit->text();
@@ -275,7 +286,16 @@ void YLFriendListView::editFinshed()
             return;
         }
     }
-    m_current_edit_item->setText(newName + "(0/0)");
-    YLBusiness::addNewFriendGroup(GlobalData::getCurrLoginUserId(), newName);
 
+    if (m_type == 1)
+    {
+        m_current_edit_item->setText(newName + "(0/0)");
+        YLBusiness::addNewFriendGroup(GlobalData::getCurrLoginUserId(), newName);
+    }
+    else if (m_type == 2)
+    {
+        m_group[m_group_id] = newName;
+        updateList();
+        YLBusiness::renameFriendGroup(GlobalData::getCurrLoginUserId(), m_group_id, newName);
+    }
 }

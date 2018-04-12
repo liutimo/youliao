@@ -52,6 +52,9 @@ void HandlerMap::init()
 
     //新增好友列表分组
     m_handler_map.insert(std::make_pair(CID_FRIENDLIST_ADD_FRIEND_GROUP_REQUEST, DB_INTERFACE::addFriendGroup));
+
+    //重命名好友分组
+    m_handler_map.insert(std::make_pair(CID_FRIENDLIST_RENAME_FRIEND_GROUP_REQUEST, DB_INTERFACE::renameFriendGroup));
 }
 
 pdu_handler_t HandlerMap::getHandler(uint16_t cid)
