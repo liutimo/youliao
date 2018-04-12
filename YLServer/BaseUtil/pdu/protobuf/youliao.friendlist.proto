@@ -6,7 +6,7 @@ import "youliao.base.proto";
 message Group_Friend
 {
     uint32 group_id   = 1;          //好友列表 组id
-    string   group_name = 2;        //好友列表 组名
+//    string   group_name = 2;        //好友列表 组名
     repeated youliao.pdu.base.FriendInfo friend = 3; //该组下的好友
 }
 
@@ -24,6 +24,19 @@ message FriendListRespone
 {
     map<uint32, Group_Friend> friend_list = 1;
     bytes attach_data = 20;
+}
+
+
+message GroupsRequest
+{
+    uint32 user_id = 1;
+}
+
+
+message GroupsRespone
+{
+    uint32 user_id = 1;
+    map<uint32, string> user_groups = 2;
 }
 
 //好友状态更改
@@ -51,4 +64,23 @@ message FriendSignatureChangedNotify
 {
     uint32 friend_id = 1;
     string friend_signatrue = 2;
+}
+
+message ModifyFriendGroupNameRequest
+{
+    uint32 user_id = 1;
+    uint32 group_id = 2;
+    string new_group_name = 3;
+}
+
+message AddNewFriendGroupRequest
+{
+    uint32 user_id = 1;
+    string new_group_name = 2;
+}
+
+message AddNewFriendGroupRespone
+{
+    uint32 group_id = 1;
+    string group_name = 2;
 }

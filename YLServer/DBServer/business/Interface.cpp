@@ -58,6 +58,28 @@ namespace DB_INTERFACE
         //add to thread pool
     }
 
+    void getFriendGroups(BasePdu *basePdu, uint32_t conn_uid)
+    {
+        friendlist::GroupsRequest groupsRequest;
+        groupsRequest.ParseFromString(basePdu->getMessage());
+
+        uint32_t userId = groupsRequest.user_id();
+
+        friendlist::GroupsRespone groupsRespone;
+        groupsRespone.set_user_id(userId);
+
+        FriendListModel friendListModel;
+        friendListModel.getGroups(userId, groupsRespone);
+
+        BasePdu basePdu1;
+        basePdu1.setSID(base::SID_SERVER);
+        basePdu1.setCID(base::CID_FRIENDLIST_GET_GROUPS_REPSONE);
+        basePdu1.writeMessage(&groupsRespone);
+
+        log("send user %d groups to msg_server", userId);
+        findProxyConn(conn_uid)->sendBasePdu(&basePdu1);
+    }
+
     void getFriendList(BasePdu* basePdu, uint32_t conn_uuid)
     {
         friendlist::FriendListRequest friendListRequest;
@@ -144,6 +166,17 @@ namespace DB_INTERFACE
 
         log("send user %d modify signature result to msg_server", userId);
         findProxyConn(conn_uid)->sendBasePdu(&basePdu1);
+    }
+
+    void addFriendGroup(BasePdu *basePdu, uint32_t conn_uid)
+    {
+        friendlist::AddNewFriendGroupRequest addNewFriendGroupRequest;
+        addNewFriendGroupRequest.ParseFromString(basePdu->getMessage());
+
+        uint32_t userId = addNewFriendGroupRequest.user_id();
+        string newGroupName = addNewFriendGroupRequest.new_group_name();
+
+
     }
 }
 

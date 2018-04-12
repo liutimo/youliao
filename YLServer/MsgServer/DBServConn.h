@@ -27,6 +27,7 @@ public:
 
 private:
     void _HandleValidateRespone(BasePdu *);
+    void _HandleFriendGroupsRespone(BasePdu *);
     void _HandleFriendListRespone(BasePdu *);
     void _HandleSignatureChangedResponse(BasePdu *);
 

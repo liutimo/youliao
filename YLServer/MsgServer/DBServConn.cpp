@@ -127,6 +127,9 @@ void DBServConn::handlePdu(BasePdu *pdu)
         case base::CID_SERVER_VALIDATE_RESPONE:
             _HandleValidateRespone(pdu);
             break;
+        case base::CID_FRIENDLIST_GET_GROUPS_REPSONE:
+            _HandleFriendGroupsRespone(pdu);
+            break;
         case base::CID_FRIENDLIST_GET_RESPONE:
             _HandleFriendListRespone(pdu);
             break;
@@ -181,6 +184,25 @@ void DBServConn::_HandleValidateRespone(BasePdu *pdu)
     }
 }
 
+void DBServConn::_HandleFriendGroupsRespone(BasePdu *pdu)
+{
+    friendlist::GroupsRespone groupsRespone;
+    groupsRespone.ParseFromString(pdu->getMessage());
+    uint32_t userId = groupsRespone.user_id();
+
+    log("send user %d's friend's groups to MsgServer", userId);
+
+    auto clientConn = UserManager::instance()->getUser(userId)->getConn();
+
+    if (clientConn)
+    {
+        BasePdu basePdu;
+        basePdu.setSID(base::SID_FRIEND_LIST);
+        basePdu.setCID(base::CID_FRIENDLIST_GET_GROUPS_REPSONE);
+        basePdu.writeMessage(&groupsRespone);
+        clientConn->sendBasePdu(&basePdu);
+    }
+}
 
 void DBServConn::_HandleFriendListRespone(BasePdu *pdu)
 {

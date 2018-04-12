@@ -16,11 +16,15 @@ public:
     FriendListModel();
     virtual ~FriendListModel();
 
+    void getGroups(uint32_t user_id, friendlist::GroupsRespone &groupsRespone);
+
     void getFriendList(uint32_t user_id, uint32_t msg_serv_idx, friendlist::FriendListRespone &friendListRespone);
 
     void getOnlineFriends(uint32_t user_id, server::RouteGetOnlineFriendRespone &routeGetOnlineFriendRespone);
 
     bool modifySignature(uint32_t user_id, const std::string &signature);
+
+    bool addNewFriendGroup(uint32_t user_id, const std::string &new_group_name);
 };
 
 

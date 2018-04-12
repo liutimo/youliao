@@ -17,6 +17,31 @@ FriendListModel::~FriendListModel()
 
 }
 
+
+void FriendListModel::getGroups(uint32_t user_id, friendlist::GroupsRespone &groupsRespone)
+{
+    DBManager *manager = DBManager::instance();
+    DBConn *dbConn = manager->getConnection();
+    if (dbConn)
+    {
+        char query_sql_1[] = "SELECT group_id, group_name from yl_friend_group where user_id = '%d' or group_id = '1';";
+        char query_sql_2[2048];
+        sprintf(query_sql_2, query_sql_1, user_id);
+
+        ResultSet *resultSet = dbConn->query(query_sql_2);
+        auto m = groupsRespone.mutable_user_groups();
+
+        while (resultSet->next())
+        {
+            uint32_t groupId = (uint32_t)resultSet->getInt("group_id");
+            string groupName = resultSet->getString("group_name");
+            (*m)[groupId] = groupName;
+        }
+    }
+
+    manager->releaseConnection(dbConn);
+}
+
 void FriendListModel::getFriendList(uint32_t user_id, uint32_t msg_serv_idx, friendlist::FriendListRespone &friendListRespone)
 {
     DBManager *manager = DBManager::instance();
@@ -26,16 +51,13 @@ void FriendListModel::getFriendList(uint32_t user_id, uint32_t msg_serv_idx, fri
     {
         //卧槽,这个表建得有问题,怎么可以这么长的sql语句
         //查找指定用户的所有好友
-        char query_sql_1[] =    "SELECT user_a_id, b_group_id as group_id, group_name, user_account, user_nickname, user_header, user_sign_info "
-                                "from yl_friend, yl_friend_group ,yl_user "
-                                "where yl_friend_group.group_id = b_group_id and user_b_id = '%d' and status = 0 and yl_user.user_id = user_a_id "
-                                "UNION "
-                                "SELECT user_b_id, a_group_id as group_id, group_name, user_account, user_nickname, user_header, user_sign_info "
-                                "from yl_friend, yl_friend_group ,yl_user "
-                                "where yl_friend_group.group_id = a_group_id and user_a_id = '%d' and status = 0 and yl_user.user_id = user_b_id;";
+        char query_sql_1[] =    "SELECT friend_id, group_id,  user_account, user_nickname, user_header, user_sign_info "
+                                "FROM yl_friend, yl_user "
+                                "WHERE yl_friend.user_id = '%d' and yl_user.user_id = yl_friend.friend_id and status = '1'  "
+                                "order by yl_friend.friend_id DESC";
 
         char query_sql_2[2048];
-        sprintf(query_sql_2, query_sql_1, user_id, user_id);
+        sprintf(query_sql_2, query_sql_1, user_id);
 
         std::cout << query_sql_2 << std::endl;
 
@@ -51,9 +73,8 @@ void FriendListModel::getFriendList(uint32_t user_id, uint32_t msg_serv_idx, fri
             uint32_t group_id = (uint32_t)resultSet->getInt("group_id");
 
             (*m)[group_id].set_group_id(group_id);
-            (*m)[group_id].set_group_name(resultSet->getString("group_name"));
 
-            uint32_t  friendId = (uint32_t )resultSet->getInt("user_a_id");
+            uint32_t  friendId = (uint32_t )resultSet->getInt("friend_id");
 
             auto friend_ = (*m)[group_id].add_friend_();
             friend_->set_friend_id(friendId);
@@ -67,7 +88,7 @@ void FriendListModel::getFriendList(uint32_t user_id, uint32_t msg_serv_idx, fri
             if (!cacheConn->hget("user_map", friendIdStr).empty())
             {
                 //创建该用户的在线好友map
-                string field = resultSet->getString("user_a_id");
+                string field = resultSet->getString("friend_id");
                 string value = cacheConn->hget("user_map", friendIdStr);
                 cacheConn->hset(mapName, field, value);
                 log("msg server index %s", value.c_str());
@@ -76,7 +97,7 @@ void FriendListModel::getFriendList(uint32_t user_id, uint32_t msg_serv_idx, fri
             } else {
                 friend_->set_friend_is_online(false);
 
-                log("%s is't online ", resultSet->getString("user_a_id").c_str());
+                log("%s is't online ", resultSet->getString("friend_id").c_str());
             }
         }
         CacheManager::instance()->releaseCacheConn(cacheConn);
@@ -132,4 +153,26 @@ bool FriendListModel::modifySignature(uint32_t user_id, const std::string &signa
     DBManager::instance()->releaseConnection(conn);
 
     return res;
+}
+
+bool FriendListModel::addNewFriendGroup(uint32_t user_id, const std::string &new_group_name)
+{
+    bool ret = false;
+
+    auto conn = DBManager::instance()->getConnection();
+
+    if (conn)
+    {
+        char insert_sql_1[] = "";
+        char insert_sql_2[2048];
+
+        log("insert new friend group %s to user %d", new_group_name.c_str(), user_id);
+        if(conn->update(insert_sql_2))
+            ret = true;
+        else
+            ret = false;
+    }
+
+    DBManager::instance()->releaseConnection(conn);
+    return ret;
 }

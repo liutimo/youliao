@@ -35,6 +35,9 @@ void HandlerMap::init()
     //login validate
     m_handler_map.insert(std::make_pair(CID_SERVER_VALIDATE_REQUEST, DB_INTERFACE::login));
 
+    //friend group
+    m_handler_map.insert(std::make_pair(CID_FRIENDLIST_GET_GROUPS_REQUEST, DB_INTERFACE::getFriendGroups));
+
     //friend list
     m_handler_map.insert(std::make_pair(CID_FRIENDLIST_GET_REQUEST, DB_INTERFACE::getFriendList));
 

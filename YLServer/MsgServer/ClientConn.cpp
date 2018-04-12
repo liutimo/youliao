@@ -132,6 +132,9 @@ void ClientConn::handlePdu(BasePdu *pdu)
         case base::CID_OTHER_HEARTBEAT:
             _HandleHeartBeat(pdu);
             break;
+        case base::CID_FRIENDLIST_GET_GROUPS_REQUEST:
+            _HandleGroupsRequest(pdu);
+            break;
         case base::CID_FRIENDLIST_GET_REQUEST:
             _HandleFriendListGetRequest(pdu);
             break;
@@ -176,6 +179,24 @@ void ClientConn::_HandleHeartBeat(BasePdu *pdu)
     sendBasePdu(pdu);
 }
 
+
+void ClientConn::_HandleGroupsRequest(BasePdu *pdu)
+{
+    friendlist::GroupsRequest groupsRequest;
+    groupsRequest.ParseFromString(pdu->getMessage());
+
+    log("获取用户 %d 的好友分组信息", groupsRequest.user_id());
+
+    BasePdu basePdu;
+    basePdu.setSID(base::SID_SERVER);
+    basePdu.setCID(base::CID_FRIENDLIST_GET_GROUPS_REQUEST);
+    basePdu.writeMessage(&groupsRequest);
+
+    auto dbServConn = get_db_server_conn();
+
+    if (dbServConn)
+        dbServConn->sendBasePdu(&basePdu);
+}
 
 void ClientConn::_HandleFriendListGetRequest(BasePdu *pdu)
 {
@@ -300,4 +321,20 @@ void ClientConn::_HandleSignatureChangeRequest(BasePdu *pdu)
     basePdu.writeMessage(&signatureChangeResquest);
 
     dbServConn->sendBasePdu(&basePdu);
+}
+
+void ClientConn::_HandleAddFriendGroupRequest(BasePdu *pdu)
+{
+    friendlist::AddNewFriendGroupRequest addNewFriendGroupRequest;
+    addNewFriendGroupRequest.ParseFromString(pdu->getMessage());
+
+    BasePdu basePdu;
+    basePdu.setSID(base::SID_SERVER);
+    basePdu.setCID(base::CID_FRIENDLIST_ADD_FRIEND_GROUP_REQUEST);
+    basePdu.writeMessage(&addNewFriendGroupRequest);
+
+    DBServConn *dbServConn = get_db_server_conn();
+
+    if (dbServConn)
+        dbServConn->sendBasePdu(&basePdu);
 }
