@@ -39,6 +39,8 @@ private slots:
     void updateFriendList(const QMap<int, QVector<YLFriend>> &, const QMap<int, QString>&);
     void friendStatusChanged(uint32_t, uint32_t);
     void friendSignatureChanged(uint32_t, const QString &);
+    void refreshFriendList();
+    void showFriendsModel();
 private:
     QMenu       *m_blank_menu;
     QMenu       *m_group_menu;
@@ -51,6 +53,7 @@ private:
     QMap<int, QVector<YLFriend>> m_friends;
     QMap<int, QString> m_group;
     QMap<int, bool> m_group_show;
+    bool m_online;
 };
 
 #endif // YLFRIENDLISTVIEW_H

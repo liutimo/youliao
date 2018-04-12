@@ -5,14 +5,14 @@
 #include <QMouseEvent>
 #include <QContextMenuEvent>
 #include "ylfriendlistitem.h"
-
+#include "globaldata.h"
 //network
 #include "YLNetWork/pduhandler.h"
-
+#include "YLNetWork/ylbusiness.h"
 
 
 YLFriendListView::YLFriendListView(QWidget *parent) : QListWidget(parent),
-    m_current_press_item(nullptr)
+    m_current_press_item(nullptr), m_online(false)
 {
     setFocusPolicy(Qt::NoFocus);       // 去除item选中时的虚线边框
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -46,13 +46,16 @@ YLFriendListView::~YLFriendListView()
 void YLFriendListView::initMenu()
 {
     QAction *action_refresh             = new QAction("刷新好友列表");
-    QAction *action_show_all_or_online  = new QAction("显示全部联系人");
+    QAction *action_show_all_or_online  = new QAction("显示在线好友");
     QAction *action_add_group           = new QAction("添加分组");
     connect(action_add_group, &QAction::triggered, this, &YLFriendListView::onAddGroupSlots);
     m_blank_menu = new QMenu();
     m_blank_menu->addAction(action_refresh);
     m_blank_menu->addAction(action_show_all_or_online);
     m_blank_menu->addAction(action_add_group);
+
+    connect(action_refresh, &QAction::triggered, this, &YLFriendListView::refreshFriendList);
+    connect(action_show_all_or_online, &QAction::triggered, this, &YLFriendListView::showFriendsModel);
 
     QAction *action_rename = new QAction("重命名");
     QAction *action_delete = new QAction("删除该组");
@@ -64,6 +67,93 @@ void YLFriendListView::initMenu()
     m_group_menu->addAction(action_rename);
     m_group_menu->addAction(action_delete);
 
+}
+
+
+
+void YLFriendListView::updateList()
+{
+    clear();
+    //sort by online status
+    QMap<int, QPair<int, int>> online_users;
+    for (auto& elem : m_friends)
+    {
+        int groupId = m_friends.key(elem);
+        online_users[groupId].first = elem.size();
+
+        qSort(elem.begin(), elem.end());
+
+        for (YLFriend fri : elem)
+        {
+            if (fri.friendIsOnline())
+                ++online_users[groupId].second;
+        }
+    }
+
+
+    for (auto elem : m_friends)
+    {
+        int groupId = m_friends.key(elem);
+        QString groupName = m_group[groupId];
+        auto iter = m_group_show.find(groupId);
+        if (iter == m_group_show.end())
+            m_group_show[groupId] = false;
+
+        auto pair = online_users[groupId];
+
+        if (m_group_show[groupId] == true)
+        {
+            QListWidgetItem *item = new QListWidgetItem(QIcon(":/res/MainFrame/down.png"), groupName + QString("(%1/%2)").arg(pair.second).arg(pair.first));
+            item->setSizeHint(QSize(width() - 30, 35));
+            addItem(item);
+            m_group_item.push_back(item);
+            for (YLFriend fri : elem)
+            {
+                if (m_online && !fri.friendIsOnline())
+                    continue;
+
+                item = new QListWidgetItem;
+                addItem(item);
+                item->setSizeHint(QSize(width() - 30, 56));
+                YLFriendListItem *item_widget = new YLFriendListItem(YLFriendListItem::FRIENDITEM);
+                item_widget->setData(fri);
+                setItemWidget(item, item_widget);
+            }
+        }
+        else
+        {
+            QListWidgetItem *item = new QListWidgetItem(QIcon(":/res/MainFrame/right.png"), groupName + QString("(%1/%2)").arg(pair.second).arg(pair.first));
+            item->setSizeHint(QSize(width() - 30, 35));
+            addItem(item);
+            m_group_item.push_back(item);
+        }
+    }
+}
+
+void YLFriendListView::mousePressEvent(QMouseEvent *event)
+{
+    QListWidget::mousePressEvent(event);
+    if (event->button() == Qt::RightButton)
+    {
+        m_current_press_item = itemAt(event->pos());
+    }
+}
+
+void YLFriendListView::contextMenuEvent(QContextMenuEvent *event)
+{
+    if (m_current_press_item == nullptr)
+        m_blank_menu->exec(QCursor::pos());
+    else if (qFind(m_group_item, m_current_press_item) != m_group_item.cend())
+        m_group_menu->exec(QCursor::pos());
+    event->accept();
+}
+
+//slots
+void YLFriendListView::onAddGroupSlots()
+{
+    QLineEdit *lineEdit = new QLineEdit(this);
+    lineEdit->setText("未命名(0/0)");
+    lineEdit->show();
 }
 
 
@@ -108,84 +198,25 @@ void YLFriendListView::friendSignatureChanged(uint32_t friendId, const QString &
     updateList();
 }
 
-void YLFriendListView::updateList()
+void YLFriendListView::refreshFriendList()
 {
-    clear();
-    //sort by online status
-    QMap<int, QPair<int, int>> online_users;
-    for (auto& elem : m_friends)
-    {
-        int groupId = m_friends.key(elem);
-        online_users[groupId].first = elem.size();
-
-        qSort(elem.begin(), elem.end());
-
-        for (YLFriend fri : elem)
-        {
-            if (fri.friendIsOnline())
-                ++online_users[groupId].second;
-        }
-    }
-
-
-    for (auto elem : m_friends)
-    {
-        int groupId = m_friends.key(elem);
-        QString groupName = m_group[groupId];
-        auto iter = m_group_show.find(groupId);
-        if (iter == m_group_show.end())
-            m_group_show[groupId] = false;
-
-        auto pair = online_users[groupId];
-
-        if (m_group_show[groupId] == true)
-        {
-            QListWidgetItem *item = new QListWidgetItem(QIcon(":/res/MainFrame/down.png"), groupName + QString("(%1/%2)").arg(pair.second).arg(pair.first));
-            item->setSizeHint(QSize(width() - 30, 35));
-            addItem(item);
-            m_group_item.push_back(item);
-            for (auto fri : elem)
-            {
-                item = new QListWidgetItem;
-                addItem(item);
-                item->setSizeHint(QSize(width() - 30, 56));
-                YLFriendListItem *item_widget = new YLFriendListItem(YLFriendListItem::FRIENDITEM);
-                item_widget->setData(fri);
-                setItemWidget(item, item_widget);
-            }
-        }
-        else
-        {
-            QListWidgetItem *item = new QListWidgetItem(QIcon(":/res/MainFrame/right.png"), groupName + QString("(%1/%2)").arg(pair.second).arg(pair.first));
-            item->setSizeHint(QSize(width() - 30, 35));
-            addItem(item);
-            m_group_item.push_back(item);
-        }
-    }
+    YLBusiness::getFriendListRequest(GlobalData::getCurrLoginUserId());
 }
 
-void YLFriendListView::mousePressEvent(QMouseEvent *event)
+void YLFriendListView::showFriendsModel()
 {
-    QListWidget::mousePressEvent(event);
-    if (event->button() == Qt::RightButton)
+    QAction *pSender = static_cast<QAction*>(sender());
+
+    if (pSender->text() == "显示在线好友")
     {
-        m_current_press_item = itemAt(event->pos());
+        pSender->setText("显示全部联系人");
+        m_online = true;
+        updateList();
     }
-}
-
-void YLFriendListView::contextMenuEvent(QContextMenuEvent *event)
-{
-    if (m_current_press_item == nullptr)
-        m_blank_menu->exec(QCursor::pos());
-    else if (qFind(m_group_item, m_current_press_item) != m_group_item.cend())
-        m_group_menu->exec(QCursor::pos());
-    event->accept();
-}
-
-//slots
-void YLFriendListView::onAddGroupSlots()
-{
-    QLineEdit *lineEdit = new QLineEdit(this);
-    lineEdit->setText("未命名(0/0)");
-    lineEdit->show();
+    else
+    {
+        pSender->setText("显示在线好友");
+        m_online = false;
+        updateList();
+    }
 }
