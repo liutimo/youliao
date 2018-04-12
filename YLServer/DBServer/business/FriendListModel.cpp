@@ -37,6 +37,8 @@ void FriendListModel::getGroups(uint32_t user_id, friendlist::GroupsRespone &gro
             string groupName = resultSet->getString("group_name");
             (*m)[groupId] = groupName;
         }
+
+        delete resultSet;
     }
 
     manager->releaseConnection(dbConn);
@@ -100,6 +102,8 @@ void FriendListModel::getFriendList(uint32_t user_id, uint32_t msg_serv_idx, fri
                 log("%s is't online ", resultSet->getString("friend_id").c_str());
             }
         }
+        delete resultSet;
+
         CacheManager::instance()->releaseCacheConn(cacheConn);
     }
 
@@ -155,7 +159,7 @@ bool FriendListModel::modifySignature(uint32_t user_id, const std::string &signa
     return res;
 }
 
-bool FriendListModel::addNewFriendGroup(uint32_t user_id, const std::string &new_group_name)
+bool FriendListModel::addNewFriendGroup(uint32_t user_id, const std::string &new_group_name, uint32_t &groupId)
 {
     bool ret = false;
 
@@ -163,13 +167,23 @@ bool FriendListModel::addNewFriendGroup(uint32_t user_id, const std::string &new
 
     if (conn)
     {
-        char insert_sql_1[] = "";
+        char insert_sql_1[] = "INSERT INTO yl_friend_group(user_id, group_name) VALUES(%d, '%s');";
         char insert_sql_2[2048];
+        sprintf(insert_sql_2, insert_sql_1, user_id, new_group_name.c_str());
 
         log("insert new friend group %s to user %d", new_group_name.c_str(), user_id);
         if(conn->update(insert_sql_2))
+        {
             ret = true;
-        else
+            char query_sql_1[] = "SELECT group_id from yl_friend_group where group_name = '%s' and user_id = %d;";
+            char query_sql_2[2048];
+            sprintf(query_sql_2, query_sql_1, new_group_name.c_str(), user_id);
+            auto resultSet = conn->query(query_sql_2);
+            if (resultSet->next())
+                groupId = (uint32_t)resultSet->getInt("group_id");
+
+            delete resultSet;
+        }else
             ret = false;
     }
 

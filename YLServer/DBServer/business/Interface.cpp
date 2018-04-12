@@ -173,9 +173,29 @@ namespace DB_INTERFACE
         friendlist::AddNewFriendGroupRequest addNewFriendGroupRequest;
         addNewFriendGroupRequest.ParseFromString(basePdu->getMessage());
 
+        uint32_t groupId;
         uint32_t userId = addNewFriendGroupRequest.user_id();
         string newGroupName = addNewFriendGroupRequest.new_group_name();
 
+        FriendListModel friendListModel;
+        if (friendListModel.addNewFriendGroup(userId, newGroupName, groupId))
+        {
+            //添加成功
+            friendlist::AddNewFriendGroupRespone addNewFriendGroupRespone;
+
+            addNewFriendGroupRespone.set_user_id(userId);
+            addNewFriendGroupRespone.set_group_id(groupId);
+            addNewFriendGroupRespone.set_group_name(newGroupName);
+
+            BasePdu basePdu1;
+            basePdu1.setSID(base::SID_SERVER);
+            basePdu1.setCID(base::CID_FRIENDLIST_ADD_FRIEND_GROUP_RESPONE);
+            basePdu1.writeMessage(&addNewFriendGroupRespone);
+
+            log("send user %d add new friend group result to msg_server", userId);
+            findProxyConn(conn_uid)->sendBasePdu(&basePdu1);
+        }
+        //否则丢弃该请求，
 
     }
 }

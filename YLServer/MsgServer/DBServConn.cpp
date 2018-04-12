@@ -134,7 +134,10 @@ void DBServConn::handlePdu(BasePdu *pdu)
             _HandleFriendListRespone(pdu);
             break;
         case base::CID_FRIENDLIST_SIGNATURE_CHANGED_RESPONE:
-            _HandleSignatureChangedResponse(pdu);
+            _HandleSignatureChangedRespone(pdu);
+            break;
+        case base::CID_FRIENDLIST_ADD_FRIEND_GROUP_RESPONE:
+            _HandleAddNewFriendGroupRespone(pdu);
             break;
         default:
             break;
@@ -245,7 +248,7 @@ void DBServConn::_HandleFriendListRespone(BasePdu *pdu)
     routeConn->sendBasePdu(&basePdu1);
 }
 
-void DBServConn::_HandleSignatureChangedResponse(BasePdu *pdu)
+void DBServConn::_HandleSignatureChangedRespone(BasePdu *pdu)
 {
     friendlist::SignatureChangeRespone signatureChangeRespone;
     signatureChangeRespone.ParseFromString(pdu->getMessage());
@@ -286,4 +289,30 @@ void DBServConn::_HandleSignatureChangedResponse(BasePdu *pdu)
             routeConn->sendBasePdu(&basePdu);
         }
     }
+}
+
+
+void DBServConn::_HandleAddNewFriendGroupRespone(BasePdu *pdu)
+{
+    friendlist::AddNewFriendGroupRespone addNewFriendGroupRespone;
+    addNewFriendGroupRespone.ParseFromString(pdu->getMessage());
+
+    uint32_t userId = addNewFriendGroupRespone.user_id();
+    std::string groupName = addNewFriendGroupRespone.group_name();
+
+    BasePdu basePdu1;
+    basePdu1.setSID(base::SID_FRIEND_LIST);
+    basePdu1.setCID(base::CID_FRIENDLIST_ADD_FRIEND_GROUP_RESPONE);
+    basePdu1.writeMessage(&addNewFriendGroupRespone);
+
+    auto  user = UserManager::instance()->getUser(userId);
+
+    if (user)
+    {
+        auto conn = user->getConn();
+        if (conn)
+            conn->sendBasePdu(&basePdu1);
+    }
+
+
 }

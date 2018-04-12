@@ -49,6 +49,9 @@ void HandlerMap::init()
 
     //修改个性签名
     m_handler_map.insert(std::make_pair(CID_FRIENDLIST_SIGNATURE_CHANGED_REQUEST, DB_INTERFACE::modifySignature));
+
+    //新增好友列表分组
+    m_handler_map.insert(std::make_pair(CID_FRIENDLIST_ADD_FRIEND_GROUP_REQUEST, DB_INTERFACE::addFriendGroup));
 }
 
 pdu_handler_t HandlerMap::getHandler(uint16_t cid)

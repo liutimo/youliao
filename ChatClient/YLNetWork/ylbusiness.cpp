@@ -112,3 +112,17 @@ void YLBusiness::modifySignature(uint32_t user_id, const QString &signature)
 
     PduSender::instance()->addMessage(basePdu);
 }
+
+void YLBusiness::addNewFriendGroup(uint32_t user_id, const QString &groupName)
+{
+    friendlist::AddNewFriendGroupRequest request;
+    request.set_user_id(user_id);
+    request.set_new_group_name(groupName.toStdString());
+
+    BasePdu *basePdu = new BasePdu;
+    basePdu->setSID(SID_FRIEND_LIST);
+    basePdu->setCID(CID_FRIENDLIST_ADD_FRIEND_GROUP_REQUEST);
+    basePdu->writeMessage(&request);
+
+    PduSender::instance()->addMessage(basePdu);
+}

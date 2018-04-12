@@ -18,6 +18,7 @@ public:
     static void loginOut(const uint32_t user_id);
     static void sendMessage(uint32_t senderId, uint32_t receiverId, const QString &message);
     static void modifySignature(uint32_t user_id, const QString &signature);
+    static void addNewFriendGroup(uint32_t user_id, const QString &groupName);
 };
 
 #endif // YLBUSINESS_H

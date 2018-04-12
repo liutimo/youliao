@@ -23,6 +23,7 @@ signals:
     void friendSignatureChange(uint32_t friend_id, const QString &signature);
     void signleMessage(uint32_t senderId, const QString &content);
     void friendgroups(const group_map&);
+    void friendGroup(uint32_t group_id, const QString &group_name);
 
 private:
     void _HandleBasePdu(BasePdu *pdu);
@@ -33,6 +34,7 @@ private:
     void _HandleMessageData(BasePdu *pdu);
     void _HandleFriendStatusChangeMessage(BasePdu *pdu);
     void _HandleFriendSignatureChanged(BasePdu *pdu);
+    void _HandleAddFriendGroupRespone(BasePdu *pdu);
 private:
     explicit PduHandler(QObject *parent = nullptr);
 

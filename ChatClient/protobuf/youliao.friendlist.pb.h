@@ -1595,9 +1595,9 @@ class AddNewFriendGroupRespone : public ::google::protobuf::Message /* @@protoc_
 
   // accessors -------------------------------------------------------
 
-  // string group_name = 2;
+  // string group_name = 3;
   void clear_group_name();
-  static const int kGroupNameFieldNumber = 2;
+  static const int kGroupNameFieldNumber = 3;
   const ::std::string& group_name() const;
   void set_group_name(const ::std::string& value);
   #if LANG_CXX11
@@ -1609,9 +1609,15 @@ class AddNewFriendGroupRespone : public ::google::protobuf::Message /* @@protoc_
   ::std::string* release_group_name();
   void set_allocated_group_name(::std::string* group_name);
 
-  // uint32 group_id = 1;
+  // uint32 user_id = 1;
+  void clear_user_id();
+  static const int kUserIdFieldNumber = 1;
+  ::google::protobuf::uint32 user_id() const;
+  void set_user_id(::google::protobuf::uint32 value);
+
+  // uint32 group_id = 2;
   void clear_group_id();
-  static const int kGroupIdFieldNumber = 1;
+  static const int kGroupIdFieldNumber = 2;
   ::google::protobuf::uint32 group_id() const;
   void set_group_id(::google::protobuf::uint32 value);
 
@@ -1620,6 +1626,7 @@ class AddNewFriendGroupRespone : public ::google::protobuf::Message /* @@protoc_
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::ArenaStringPtr group_name_;
+  ::google::protobuf::uint32 user_id_;
   ::google::protobuf::uint32 group_id_;
   mutable int _cached_size_;
   friend struct ::protobuf_youliao_2efriendlist_2eproto::TableStruct;
@@ -2314,7 +2321,21 @@ inline void AddNewFriendGroupRequest::set_allocated_new_group_name(::std::string
 
 // AddNewFriendGroupRespone
 
-// uint32 group_id = 1;
+// uint32 user_id = 1;
+inline void AddNewFriendGroupRespone::clear_user_id() {
+  user_id_ = 0u;
+}
+inline ::google::protobuf::uint32 AddNewFriendGroupRespone::user_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.friendlist.AddNewFriendGroupRespone.user_id)
+  return user_id_;
+}
+inline void AddNewFriendGroupRespone::set_user_id(::google::protobuf::uint32 value) {
+  
+  user_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.friendlist.AddNewFriendGroupRespone.user_id)
+}
+
+// uint32 group_id = 2;
 inline void AddNewFriendGroupRespone::clear_group_id() {
   group_id_ = 0u;
 }
@@ -2328,7 +2349,7 @@ inline void AddNewFriendGroupRespone::set_group_id(::google::protobuf::uint32 va
   // @@protoc_insertion_point(field_set:youliao.pdu.friendlist.AddNewFriendGroupRespone.group_id)
 }
 
-// string group_name = 2;
+// string group_name = 3;
 inline void AddNewFriendGroupRespone::clear_group_name() {
   group_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }

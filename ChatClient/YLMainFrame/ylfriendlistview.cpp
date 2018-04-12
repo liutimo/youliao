@@ -5,14 +5,16 @@
 #include <QMouseEvent>
 #include <QContextMenuEvent>
 #include "ylfriendlistitem.h"
+#include "ylmainwidget.h"
 #include "globaldata.h"
+#include "YLCommonControl/ylmessagebox.h"
 //network
 #include "YLNetWork/pduhandler.h"
 #include "YLNetWork/ylbusiness.h"
 
 
 YLFriendListView::YLFriendListView(QWidget *parent) : QListWidget(parent),
-    m_current_press_item(nullptr), m_online(false)
+    m_current_press_item(nullptr), m_online(false), m_add(false)
 {
     setFocusPolicy(Qt::NoFocus);       // 去除item选中时的虚线边框
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -42,6 +44,10 @@ YLFriendListView::YLFriendListView(QWidget *parent) : QListWidget(parent),
     connect(PduHandler::instance(), &PduHandler::friendlist, this, &YLFriendListView::updateFriendList);
     connect(PduHandler::instance(), &PduHandler::friendStatusChange, this, &YLFriendListView::friendStatusChanged);
     connect(PduHandler::instance(), &PduHandler::friendSignatureChange, this, &YLFriendListView::friendSignatureChanged);
+    connect(PduHandler::instance(), &PduHandler::friendGroup, this, [this](uint32_t groupId, const QString &groupName)
+    {
+        m_group[groupId] = groupName;
+    });
 }
 
 YLFriendListView::~YLFriendListView()
@@ -235,6 +241,8 @@ void YLFriendListView::addGroup()
     m_lineedit->show();
     m_lineedit->setFocus();
     m_lineedit->selectAll();
+
+    m_add = true;
 }
 
 void YLFriendListView::renameGroup()
@@ -246,9 +254,28 @@ void YLFriendListView::renameGroup()
 
 void YLFriendListView::editFinshed()
 {
+    if(!m_add)
+        return;
+    m_add = false;
+
     m_lineedit->hide();
-//    m_current_edit_item->setText(m_lineedit->text() + "(0/0)");
-//    m_group[m_group.size() + 1] = m_lineedit->text() + "(0/0)";
-    int i = 0;
-    updateList();
+    QString newName = m_lineedit->text();
+
+    for (auto elem : m_group)
+    {
+        if(elem == newName)
+        {
+            YLMessageBox *messageBox = new YLMessageBox(BUTTON_OK, parentWidget());
+            messageBox->setTitle("Error");
+            messageBox->setToolTip("this group is exist!");
+            auto p = YLMainWidget::center;
+            messageBox->move(mapToGlobal(p) - mapToGlobal(messageBox->rect().center()));
+            messageBox->exec();
+            updateList();
+            return;
+        }
+    }
+    m_current_edit_item->setText(newName + "(0/0)");
+    YLBusiness::addNewFriendGroup(GlobalData::getCurrLoginUserId(), newName);
+
 }

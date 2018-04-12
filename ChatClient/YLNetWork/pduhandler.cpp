@@ -80,6 +80,9 @@ void PduHandler::_HandleBasePdu(BasePdu *pdu)
     case base::CID_FRIENDLIST_FRIEND_SIGNATURE_CHANGED:
         _HandleFriendSignatureChanged(pdu);
         break;
+    case base::CID_FRIENDLIST_ADD_FRIEND_GROUP_RESPONE:
+        _HandleAddFriendGroupRespone(pdu);
+        break;
     default:
         std::cout << "CID" << pdu->getCID() << "  SID:" << pdu->getSID();
         break;
@@ -177,4 +180,16 @@ void PduHandler::_HandleFriendSignatureChanged(BasePdu *pdu)
     std::string  signature = friendSignatureChangedNotify.friend_signatrue();
 
     emit friendSignatureChange(friendId, QString(signature.c_str()));
+}
+
+
+void PduHandler::_HandleAddFriendGroupRespone(BasePdu *pdu)
+{
+    friendlist::AddNewFriendGroupRespone respone;
+    respone.ParseFromString(pdu->getMessage());
+
+    uint32_t groupId = respone.group_id();
+    QString groupName = QString(respone.group_name().c_str());
+
+    emit friendGroup(groupId, groupName);
 }

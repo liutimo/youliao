@@ -29,7 +29,8 @@ private:
     void _HandleValidateRespone(BasePdu *);
     void _HandleFriendGroupsRespone(BasePdu *);
     void _HandleFriendListRespone(BasePdu *);
-    void _HandleSignatureChangedResponse(BasePdu *);
+    void _HandleSignatureChangedRespone(BasePdu *);
+    void _HandleAddNewFriendGroupRespone(BasePdu *);
 
     uint32_t   m_server_index;
     bool       m_open;

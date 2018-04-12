@@ -81,6 +81,7 @@ message AddNewFriendGroupRequest
 
 message AddNewFriendGroupRespone
 {
-    uint32 group_id = 1;
-    string group_name = 2;
+    uint32 user_id = 1;
+    uint32 group_id = 2;
+    string group_name = 3;
 }

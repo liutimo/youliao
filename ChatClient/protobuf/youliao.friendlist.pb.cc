@@ -497,6 +497,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::friendlist::AddNewFriendGroupRespone, user_id_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::friendlist::AddNewFriendGroupRespone, group_id_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::friendlist::AddNewFriendGroupRespone, group_name_),
 };
@@ -585,12 +586,12 @@ void AddDescriptorsImpl() {
       "\022\017\n\007user_id\030\001 \001(\r\022\020\n\010group_id\030\002 \001(\r\022\026\n\016n"
       "ew_group_name\030\003 \001(\t\"C\n\030AddNewFriendGroup"
       "Request\022\017\n\007user_id\030\001 \001(\r\022\026\n\016new_group_na"
-      "me\030\002 \001(\t\"@\n\030AddNewFriendGroupRespone\022\020\n\010"
-      "group_id\030\001 \001(\r\022\022\n\ngroup_name\030\002 \001(\tb\006prot"
-      "o3"
+      "me\030\002 \001(\t\"Q\n\030AddNewFriendGroupRespone\022\017\n\007"
+      "user_id\030\001 \001(\r\022\020\n\010group_id\030\002 \001(\r\022\022\n\ngroup"
+      "_name\030\003 \001(\tb\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 1242);
+      descriptor, 1259);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "youliao.friendlist.proto", &protobuf_RegisterTypes);
   ::protobuf_youliao_2ebase_2eproto::AddDescriptors();
@@ -4011,6 +4012,7 @@ void AddNewFriendGroupRequest::InternalSwap(AddNewFriendGroupRequest* other) {
 void AddNewFriendGroupRespone::InitAsDefaultInstance() {
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int AddNewFriendGroupRespone::kUserIdFieldNumber;
 const int AddNewFriendGroupRespone::kGroupIdFieldNumber;
 const int AddNewFriendGroupRespone::kGroupNameFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
@@ -4032,13 +4034,17 @@ AddNewFriendGroupRespone::AddNewFriendGroupRespone(const AddNewFriendGroupRespon
   if (from.group_name().size() > 0) {
     group_name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.group_name_);
   }
-  group_id_ = from.group_id_;
+  ::memcpy(&user_id_, &from.user_id_,
+    static_cast<size_t>(reinterpret_cast<char*>(&group_id_) -
+    reinterpret_cast<char*>(&user_id_)) + sizeof(group_id_));
   // @@protoc_insertion_point(copy_constructor:youliao.pdu.friendlist.AddNewFriendGroupRespone)
 }
 
 void AddNewFriendGroupRespone::SharedCtor() {
   group_name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  group_id_ = 0u;
+  ::memset(&user_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&group_id_) -
+      reinterpret_cast<char*>(&user_id_)) + sizeof(group_id_));
   _cached_size_ = 0;
 }
 
@@ -4074,7 +4080,9 @@ void AddNewFriendGroupRespone::Clear() {
   (void) cached_has_bits;
 
   group_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  group_id_ = 0u;
+  ::memset(&user_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&group_id_) -
+      reinterpret_cast<char*>(&user_id_)) + sizeof(group_id_));
   _internal_metadata_.Clear();
 }
 
@@ -4088,10 +4096,24 @@ bool AddNewFriendGroupRespone::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // uint32 group_id = 1;
+      // uint32 user_id = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &user_id_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint32 group_id = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -4102,10 +4124,10 @@ bool AddNewFriendGroupRespone::MergePartialFromCodedStream(
         break;
       }
 
-      // string group_name = 2;
-      case 2: {
+      // string group_name = 3;
+      case 3: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(26u /* 26 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_group_name()));
           DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
@@ -4144,19 +4166,24 @@ void AddNewFriendGroupRespone::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // uint32 group_id = 1;
-  if (this->group_id() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->group_id(), output);
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->user_id(), output);
   }
 
-  // string group_name = 2;
+  // uint32 group_id = 2;
+  if (this->group_id() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->group_id(), output);
+  }
+
+  // string group_name = 3;
   if (this->group_name().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->group_name().data(), static_cast<int>(this->group_name().length()),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
       "youliao.pdu.friendlist.AddNewFriendGroupRespone.group_name");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      2, this->group_name(), output);
+      3, this->group_name(), output);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -4173,12 +4200,17 @@ void AddNewFriendGroupRespone::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // uint32 group_id = 1;
-  if (this->group_id() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->group_id(), target);
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->user_id(), target);
   }
 
-  // string group_name = 2;
+  // uint32 group_id = 2;
+  if (this->group_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->group_id(), target);
+  }
+
+  // string group_name = 3;
   if (this->group_name().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->group_name().data(), static_cast<int>(this->group_name().length()),
@@ -4186,7 +4218,7 @@ void AddNewFriendGroupRespone::SerializeWithCachedSizes(
       "youliao.pdu.friendlist.AddNewFriendGroupRespone.group_name");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->group_name(), target);
+        3, this->group_name(), target);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -4206,14 +4238,21 @@ size_t AddNewFriendGroupRespone::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
   }
-  // string group_name = 2;
+  // string group_name = 3;
   if (this->group_name().size() > 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::StringSize(
         this->group_name());
   }
 
-  // uint32 group_id = 1;
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->user_id());
+  }
+
+  // uint32 group_id = 2;
   if (this->group_id() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
@@ -4253,6 +4292,9 @@ void AddNewFriendGroupRespone::MergeFrom(const AddNewFriendGroupRespone& from) {
 
     group_name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.group_name_);
   }
+  if (from.user_id() != 0) {
+    set_user_id(from.user_id());
+  }
   if (from.group_id() != 0) {
     set_group_id(from.group_id());
   }
@@ -4283,6 +4325,7 @@ void AddNewFriendGroupRespone::Swap(AddNewFriendGroupRespone* other) {
 void AddNewFriendGroupRespone::InternalSwap(AddNewFriendGroupRespone* other) {
   using std::swap;
   group_name_.Swap(&other->group_name_);
+  swap(user_id_, other->user_id_);
   swap(group_id_, other->group_id_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   swap(_cached_size_, other->_cached_size_);

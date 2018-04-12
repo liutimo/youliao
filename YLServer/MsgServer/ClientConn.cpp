@@ -144,6 +144,9 @@ void ClientConn::handlePdu(BasePdu *pdu)
         case base::CID_FRIENDLIST_SIGNATURE_CHANGED_REQUEST:
             _HandleSignatureChangeRequest(pdu);
             break;
+        case base::CID_FRIENDLIST_ADD_FRIEND_GROUP_REQUEST:
+            _HandleAddFriendGroupRequest(pdu);
+            break;
         default:
             break;
     }
