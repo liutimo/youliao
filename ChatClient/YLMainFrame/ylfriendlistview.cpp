@@ -83,6 +83,7 @@ void YLFriendListView::initMenu()
 
 
     connect(action_rename, &QAction::triggered, this, &YLFriendListView::renameGroup);
+    connect(action_delete, &QAction::triggered, this, &YLFriendListView::deleteGroup);
 }
 
 
@@ -261,6 +262,18 @@ void YLFriendListView::renameGroup()
     m_group_id = m_group.key(oldName);
     m_type = 2;
     m_flag = true;
+}
+
+
+void YLFriendListView::deleteGroup()
+{
+    QString groupName = m_current_press_item->text().split(QRegExp("(\\(\\d/\\d\\))")).at(0);
+    m_group_id = m_group.key(groupName);
+    m_group.remove(m_group_id);
+    m_friends[1].append(m_friends[m_group_id]);
+    m_friends.remove(m_group_id);
+    updateList();
+    YLBusiness::deleteFriendGroup(GlobalData::getCurrLoginUserId(), m_group_id);
 }
 
 void YLFriendListView::editFinshed()

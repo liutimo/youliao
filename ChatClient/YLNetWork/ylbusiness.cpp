@@ -31,10 +31,10 @@ void YLBusiness::login(const QString &account, const QString &password, UserStat
 }
 
 
-void  YLBusiness::loginOut(const uint32_t user_id)
+void  YLBusiness::loginOut(const uint32_t userId)
 {
     login::UserLoginOutRequest request;
-    request.set_user_id(user_id);
+    request.set_user_id(userId);
 
     BasePdu *basePdu = new BasePdu;
     basePdu->setSID(SID_LOGIN);
@@ -44,10 +44,10 @@ void  YLBusiness::loginOut(const uint32_t user_id)
     PduSender::instance()->addMessage(basePdu);
 }
 
-void YLBusiness::getFriendGroupsRequest(uint32_t user_id)
+void YLBusiness::getFriendGroupsRequest(uint32_t userId)
 {
     friendlist::GroupsRequest groupRequest;
-    groupRequest.set_user_id(user_id);
+    groupRequest.set_user_id(userId);
 
     BasePdu *basePdu = new BasePdu;
     basePdu->setSID(base::SID_FRIEND_LIST);
@@ -58,10 +58,10 @@ void YLBusiness::getFriendGroupsRequest(uint32_t user_id)
 }
 
 
-void YLBusiness::getFriendListRequest(uint32_t user_id)
+void YLBusiness::getFriendListRequest(uint32_t userId)
 {
     friendlist::FriendListRequest request;
-    request.set_user_id(user_id);
+    request.set_user_id(userId);
 
     BasePdu *basePdu = new BasePdu;
     basePdu->setSID(base::SID_FRIEND_LIST);
@@ -99,10 +99,10 @@ void YLBusiness::sendMessage(uint32_t senderId, uint32_t receiverId, const QStri
     PduSender::instance()->addMessage(basePdu);
 }
 
-void YLBusiness::modifySignature(uint32_t user_id, const QString &signature)
+void YLBusiness::modifySignature(uint32_t userId, const QString &signature)
 {
     friendlist::SignatureChangeResquest signatureChangeResquest;
-    signatureChangeResquest.set_user_id(user_id);
+    signatureChangeResquest.set_user_id(userId);
     signatureChangeResquest.set_user_signature(signature.toStdString());
 
     BasePdu *basePdu = new BasePdu;
@@ -113,10 +113,10 @@ void YLBusiness::modifySignature(uint32_t user_id, const QString &signature)
     PduSender::instance()->addMessage(basePdu);
 }
 
-void YLBusiness::addNewFriendGroup(uint32_t user_id, const QString &groupName)
+void YLBusiness::addNewFriendGroup(uint32_t userId, const QString &groupName)
 {
     friendlist::AddNewFriendGroupRequest request;
-    request.set_user_id(user_id);
+    request.set_user_id(userId);
     request.set_new_group_name(groupName.toStdString());
 
     BasePdu *basePdu = new BasePdu;
@@ -141,4 +141,18 @@ void YLBusiness::renameFriendGroup(uint32_t userId, uint32_t groupId, const QStr
    basePdu->writeMessage(&request);
 
    PduSender::instance()->addMessage(basePdu);
+}
+
+void YLBusiness::deleteFriendGroup(uint32_t userId, uint32_t groupId)
+{
+    friendlist::DeleteFriendGroupRequest request;
+    request.set_user_id(userId);
+    request.set_group_id(groupId);
+
+    BasePdu *basePdu = new BasePdu;
+    basePdu->setSID(SID_FRIEND_LIST);
+    basePdu->setCID(CID_FRIENDLIST_DELETE_FRIEND_GROUP_REQUEST);
+    basePdu->writeMessage(&request);
+
+    PduSender::instance()->addMessage(basePdu);
 }

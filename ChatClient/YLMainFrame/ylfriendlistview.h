@@ -43,6 +43,7 @@ private slots:
     void addGroup();
     void renameGroup();
     void editFinshed();
+    void deleteGroup();
 
 private:
     QMenu       *m_blank_menu;

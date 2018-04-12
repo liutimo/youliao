@@ -37,6 +37,8 @@ SOURCES += \
     yllocalsettings.cpp \
     globaldata.cpp
 
+INCLUDEPATH += /usr/local/include
+
 LIBS += -lprotobuf \
         -llog4cxx
 
