@@ -8,7 +8,8 @@ AUX_SOURCE_DIRECTORY(./business SRC_LIST2)
 
 set(SOURCE_FILES ${SRC_LIST} ${SRC_LIST2})
 
-
+INCLUDE_DIRECTORIES(/usr/local/include)
+LINK_DIRECTORIES(/usr/local/lib)
 
 INCLUDE_DIRECTORIES(../BaseUtil)
 LINK_DIRECTORIES(../BaseUtil ./)

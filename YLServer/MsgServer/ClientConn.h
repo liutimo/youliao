@@ -39,6 +39,7 @@ private:
     void _HandleSignatureChangeRequest(BasePdu *);
     void _HandleAddFriendGroupRequest(BasePdu *);
     void _HandleRenameFriendGroupRequest(BasePdu *);
+    void _HandleDeleteFriendGroupRequest(BasePdu *);
 
 public:
     uint64_t m_last_heart_beat_tick;    //最后一次收到心跳包的时间

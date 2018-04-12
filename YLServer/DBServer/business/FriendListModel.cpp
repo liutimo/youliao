@@ -7,6 +7,7 @@
 #include "util/util.h"
 #include "../CachePool.h"
 #include <cstring>
+
 FriendListModel::FriendListModel()
 {
 
@@ -206,6 +207,35 @@ bool FriendListModel::renameFriendGroup(uint32_t user_id, const std::string &gro
         log("执行SQL语句:%s", update_sql_2);
         if(conn->update(update_sql_2))
             ret = true;
+        else
+            ret = false;
+    }
+
+    DBManager::instance()->releaseConnection(conn);
+    return ret;
+}
+
+bool FriendListModel::deleteFriendGroup(uint32_t user_id, uint32_t group_id)
+{
+    bool ret = false;
+
+    auto conn = DBManager::instance()->getConnection();
+
+    if (conn)
+    {
+        char delete_sql[] = "DELETE FROM yl_friend_group where user_id = %d and group_id = %d;";
+        char sql[2048];
+        sprintf(sql, delete_sql, user_id, group_id);
+        printSql2Log(sql);
+        if(conn->update(sql))
+        {
+            ret = true;
+            //删除成功，将原来该分组的所有好友移动到默认分组
+            char update_sql[] = "UPDATE yl_friend set group_id = 1 where user_id = %d and group_id = %d";
+            sprintf(sql, update_sql, user_id, group_id);
+            printSql2Log(sql);
+            conn->update(sql);
+        }
         else
             ret = false;
     }

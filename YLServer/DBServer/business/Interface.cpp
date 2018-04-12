@@ -211,6 +211,19 @@ namespace DB_INTERFACE
         FriendListModel friendListModel;
         friendListModel.renameFriendGroup(userId, groupNewName, groupId);
     }
+
+    //删除分组
+    void deleteFriendGroup(BasePdu *basePdu, uint32_t conn_uid)
+    {
+        friendlist::DeleteFriendGroupRequest deleteFriendGroupRequest;
+        deleteFriendGroupRequest.ParseFromString(basePdu->getMessage());
+
+        uint32_t userId = deleteFriendGroupRequest.user_id();
+        uint32_t groupId = deleteFriendGroupRequest.group_id();
+
+        FriendListModel friendListModel;
+        friendListModel.deleteFriendGroup(userId, groupId);
+    }
 }
 
 

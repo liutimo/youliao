@@ -3,6 +3,9 @@ project(LoginServer)
 set(CMAKE_CXX_STANDARD 11)
 
 INCLUDE_DIRECTORIES(../BaseUtil)
+INCLUDE_DIRECTORIES(/usr/local/include)
+LINK_DIRECTORIES(/usr/local/lib)
+
 LINK_DIRECTORIES(../BaseUtil)
 LINK_LIBRARIES(log4cxx)
 

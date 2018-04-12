@@ -4,6 +4,8 @@ project(MsgServer)
 set(CMAKE_CXX_STANDARD 11)
 
 INCLUDE_DIRECTORIES(../BaseUtil)
+INCLUDE_DIRECTORIES(/usr/local/include)
+LINK_DIRECTORIES(/usr/local/lib)
 LINK_DIRECTORIES(../BaseUtil)
 
 AUX_SOURCE_DIRECTORY(./ SRC_LIST)

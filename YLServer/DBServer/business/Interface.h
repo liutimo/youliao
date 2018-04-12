@@ -34,6 +34,9 @@ namespace DB_INTERFACE
 
     //重命名分组
     void renameFriendGroup(BasePdu *basePdu, uint32_t conn_uid);
+
+    //删除分组
+    void deleteFriendGroup(BasePdu *basePdu, uint32_t conn_uid);
 }
 
 
