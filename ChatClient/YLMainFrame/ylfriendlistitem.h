@@ -17,6 +17,9 @@ public:
 
     explicit YLFriendListItem(YLListItemType type = FRIENDITEM,  QWidget *parent = nullptr);
 
+    //set second menu
+    void setSecondMenu(const QMap<int, QString> &groups, const QString &currGroupName);
+
     void setData(const YLFriend &f);
     YLFriend getData() { return friend_;}
     void setMarkTop(bool flag = false);
@@ -39,9 +42,13 @@ protected:
     void mousePressEvent(QMouseEvent *event);
     void paintEvent(QPaintEvent *event);
 
+
+
+
 signals:
     void moveToTop(const YLFriend &);
     void deleteFromList(const YLFriend &);
+    void moveFriendToGroup(uint32_t friendId, uint32_t oldGroupId, uint32_t newGroupId);
 private:
     YLHeadFrame *head_frame_;
 
@@ -50,6 +57,7 @@ private:
     QLabel      *label_down_;       //显示个性签名 或者最后一条聊天记录
     QLabel      *label_time_;       //显示最后一次聊天的时间
     QMenu       *menu_;
+    QMenu       *second_menu_;
     QAction     *action_on_top;
     YLListItemType item_type_;      //保存当前item的类型
     YLFriend friend_;

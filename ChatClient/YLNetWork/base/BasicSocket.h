@@ -68,6 +68,7 @@ namespace youliao
             void _SetNonBlock();
             void _SetSockAddr(const std::string &ip, uint16_t port, sockaddr_in&);
             void _AcceptNewConn();
+            bool _IsBlock(int errCode);
             int _GetErrorCode();
             char* _GetErrorStr();
         private:

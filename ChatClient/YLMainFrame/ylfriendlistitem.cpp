@@ -10,6 +10,8 @@
 #include "ylmainwidget.h"
 #include "YLNetWork/http/httpdownloader.h"
 #include <QDebug>
+#include "YLNetWork/ylbusiness.h"
+#include "globaldata.h"
 YLFriendListItem::YLFriendListItem(YLListItemType type, QWidget *parent) : QWidget(parent)
 {
     item_type_ = type;
@@ -46,7 +48,7 @@ void YLFriendListItem::initMenu()
              action_on_top        = new QAction("会话置顶");
     QAction *action_remove        = new QAction("从回话列表移除");
     QAction *action_modify_remark = new QAction("修改备注姓名");
-    QAction *action_move_to       = new QAction("移动好友至");
+//    QAction *action_move_to       = new QAction("");
     QAction *aciton_delete        = new QAction("删除好友");
 
     menu_->addAction(action_send_msg);
@@ -61,9 +63,8 @@ void YLFriendListItem::initMenu()
     menu_->addAction(action_on_top);
     menu_->addAction(action_remove);
     menu_->addAction(action_modify_remark);
-    menu_->addAction(action_move_to);
+    second_menu_ = menu_->addMenu("移动好友至");
     menu_->addAction(aciton_delete);
-
 
     connect(action_send_msg, &QAction::triggered, this, [this](){
         YLChatWidget *chatWidget = new YLChatWidget();
@@ -87,6 +88,23 @@ void YLFriendListItem::initMenu()
         w->move(mapToGlobal(p) - mapToGlobal(w->rect().center()));
         w->exec();
     });
+}
+
+void YLFriendListItem::setSecondMenu(const QMap<int, QString> &groups, const QString &currGroupName)
+{
+    for (QString actionName : groups)
+    {
+        int newGroupId = groups.key(actionName);
+        int oldGroupId = groups.key(currGroupName);
+        if (currGroupName == actionName)
+            continue;
+
+        QAction *action = new QAction(actionName);
+        second_menu_->addAction(action);
+        connect(action, &QAction::triggered, this, [this, oldGroupId, newGroupId](){
+            emit moveFriendToGroup(friend_.friendId(), oldGroupId, newGroupId);
+        });
+    }
 }
 
 void YLFriendListItem::setMarkTop(bool flag)

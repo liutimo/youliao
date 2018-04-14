@@ -99,3 +99,10 @@ message DeleteFriendGroupRequest
     uint32 user_id = 1;
     uint32 group_id = 2;
 }
+
+message MoveFriendToGroupRequest
+{
+    uint32 user_id   = 1; //用户id
+    uint32 friend_id = 2; //好友id
+    uint32 group_id  = 3; //目的分组id
+}

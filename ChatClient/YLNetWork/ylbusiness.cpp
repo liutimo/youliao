@@ -156,3 +156,18 @@ void YLBusiness::deleteFriendGroup(uint32_t userId, uint32_t groupId)
 
     PduSender::instance()->addMessage(basePdu);
 }
+
+
+void YLBusiness::moveFriendToGroup(uint32_t userId, uint32_t friendId, uint32_t groupId)
+{
+    friendlist::MoveFriendToGroupRequest request;
+    request.set_user_id(userId);
+    request.set_friend_id(friendId);
+    request.set_group_id(groupId);
+
+    BasePdu *basePdu = new BasePdu;
+    basePdu->setSID(SID_FRIEND_LIST);
+    basePdu->setCID(CID_FRIENDLIST_MOVE_FRIEND_TO_GROUP_REQUEST);
+    basePdu->writeMessage(&request);
+    PduSender::instance()->addMessage(basePdu);
+}

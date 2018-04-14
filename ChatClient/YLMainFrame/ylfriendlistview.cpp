@@ -130,6 +130,8 @@ void YLFriendListView::updateList()
                 addItem(item);
                 item->setSizeHint(QSize(width() - 30, 56));
                 YLFriendListItem *item_widget = new YLFriendListItem(YLFriendListItem::FRIENDITEM);
+                connect(item_widget, &YLFriendListItem::moveFriendToGroup, this, &YLFriendListView::moveFriendToGroup);
+                item_widget->setSecondMenu(m_group, elem);
                 item_widget->setData(fri);
                 setItemWidget(item, item_widget);
             }
@@ -311,4 +313,23 @@ void YLFriendListView::editFinshed()
         updateList();
         YLBusiness::renameFriendGroup(GlobalData::getCurrLoginUserId(), m_group_id, newName);
     }
+}
+
+void YLFriendListView::moveFriendToGroup(uint32_t friendId, uint32_t oldGroupId, uint32_t newGroupId)
+{
+    YLBusiness::moveFriendToGroup(GlobalData::getCurrLoginUserId(), friendId, newGroupId);
+
+    QVector<YLFriend> &vec = m_friends[oldGroupId];
+
+    for (auto iter = vec.begin(); iter != vec.end(); ++iter)
+    {
+        if (iter->friendId() == friendId)
+        {
+            m_friends[newGroupId].push_back(*iter);
+            vec.erase(iter);
+            break;
+        }
+    }
+
+    updateList();
 }

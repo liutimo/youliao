@@ -44,6 +44,7 @@ private slots:
     void renameGroup();
     void editFinshed();
     void deleteGroup();
+    void moveFriendToGroup(uint32_t friendId, uint32_t oldGroupId, uint32_t newGroupId);
 
 private:
     QMenu       *m_blank_menu;

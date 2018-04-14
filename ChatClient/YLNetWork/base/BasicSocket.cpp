@@ -67,8 +67,9 @@ int BaseSocket::listen(const std::string &serv_ip, uint16_t port, callback_t cal
     m_callback = callback;
     m_callback_data = data;
 
-    _SetNonBlock();
+
     _SetReuseAddr();
+    _SetNonBlock();
 
     sockaddr_in t_sockaddr;
     _SetSockAddr(serv_ip, port, t_sockaddr);
@@ -107,14 +108,13 @@ int BaseSocket::connect(const std::string &serv_ip, uint16_t port, callback_t ca
     m_callback = callback;
     m_callback_data = data;
 
-    sockaddr_in t_sockaddr;
-    _SetSockAddr(serv_ip, port, t_sockaddr);
-
-    int ret = ::connect(m_handle, (sockaddr*)&t_sockaddr, sizeof(t_sockaddr));
-
     _SetNonBlock();
     _SetNoDelay();
-    if (ret == NETWORK_ERROR) {
+    sockaddr_in t_sockaddr;
+    _SetSockAddr(serv_ip, port, t_sockaddr);
+    int ret = ::connect(m_handle, (sockaddr*)&t_sockaddr, sizeof(t_sockaddr));
+    if ((ret == NETWORK_ERROR) &&!_IsBlock(_GetErrorCode()))
+    {
         log("error str = %s", _GetErrorStr());
         return NETWORK_ERROR;
     }
@@ -145,6 +145,12 @@ ssize_t BaseSocket::send(void *buf, size_t len)
     }
 
     ssize_t ret = ::send(m_handle, buf, len, 0);
+
+    if (ret == NETWORK_ERROR)
+    {
+        if (_IsBlock(_GetErrorCode()))
+            ret = 0;
+    }
     return ret;
 }
 
@@ -202,6 +208,11 @@ int BaseSocket::_GetErrorCode()
 char* BaseSocket::_GetErrorStr()
 {
     return strerror(_GetErrorCode());
+}
+
+bool BaseSocket::_IsBlock(int errCode)
+{
+    return ((errCode == EINPROGRESS) || (errCode == EWOULDBLOCK));
 }
 
 void BaseSocket::onRead()

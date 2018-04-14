@@ -91,7 +91,6 @@ int BaseConn::send(void *buf, int len)
 
         if (ret <= 0)
         {
-            log("%s", strerror(errno));
             break;
         }
 
@@ -123,7 +122,9 @@ void BaseConn::onRead()
 
         int ret = netlib_recv(m_handle, m_read_buf.getCurrWritePos(), NETWORK_MAX_SIZE);
         if (ret <= 0)
+        {
             break;
+        }
         m_read_buf.incrWriteOffest(ret);
     }
 
