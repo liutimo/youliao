@@ -14,21 +14,17 @@ CREATE TABLE `yl_user` (
 
 
 
-CREATE TABLE youliao.yl_friend (
-	id int(11) unsigned NOT NULL AUTO_INCREMENT,
-	user_id int(11) unsigned NOT NULL COMMENT '用户id',
-	friend_id int(11) unsigned NOT NULL COMMENT '好友id',
-	group_id int(11) unsigned NOT NULL COMMENT '好友所在组的组id',
-	created int(11) unsigned NOT NULL COMMENT '创建时间',
-	status tinyint(1) unsigned DEFAULT 0 NOT NULL COMMENT '1添加成功 0待确认',
-	CONSTRAINT yl_friend_PK PRIMARY KEY (id)
-)
-ENGINE=InnoDB
-DEFAULT CHARSET=utf8
-COLLATE=utf8_general_ci ;
-CREATE INDEX yl_friend_user_id_IDX USING BTREE ON youliao.yl_friend (user_id) ;
-
-
+CREATE TABLE `yl_friend` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned NOT NULL COMMENT '用户id',
+  `friend_id` int(11) unsigned NOT NULL COMMENT '好友id',
+  `group_id` int(11) unsigned NOT NULL COMMENT '好友所在组的组id',
+  `created` int(11) unsigned NOT NULL COMMENT '创建时间',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '1添加成功 0待确认',
+  `friend_remark` varchar(100) CHARACTER SET utf8mb4 DEFAULT NULL COMMENT '好友备注',
+  PRIMARY KEY (`id`),
+  KEY `yl_friend_user_id_IDX` (`user_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8s
 
 CREATE TABLE `yl_friend_group` (
   `group_id` int(11) NOT NULL AUTO_INCREMENT,

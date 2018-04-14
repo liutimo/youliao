@@ -31,6 +31,10 @@ public:
     bool deleteFriendGroup(uint32_t user_id, uint32_t group_id);
 
     bool moveFriendToGroup(uint32_t user_id, uint32_t friend_id, uint32_t group_id);
+
+    bool deleteFriend(uint32_t user_id, uint32_t friend_id);
+
+    bool modifyFriendRemark(uint32_t user_id, uint32_t friend_id, const std::string &friendRemark);
 };
 
 

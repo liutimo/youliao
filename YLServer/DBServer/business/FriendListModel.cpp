@@ -54,10 +54,10 @@ void FriendListModel::getFriendList(uint32_t user_id, uint32_t msg_serv_idx, fri
     {
         //卧槽,这个表建得有问题,怎么可以这么长的sql语句
         //查找指定用户的所有好友
-        char query_sql_1[] =    "SELECT friend_id, group_id,  user_account, user_nickname, user_header, user_sign_info "
+        char query_sql_1[] =    "SELECT friend_id, group_id, friend_remark, user_account, user_nickname, user_header, user_sign_info "
                                 "FROM yl_friend, yl_user "
                                 "WHERE yl_friend.user_id = '%d' and yl_user.user_id = yl_friend.friend_id and status = '1'  "
-                                "order by yl_friend.friend_id DESC";
+                                "order by yl_friend.friend_id";
 
         char query_sql_2[2048];
         sprintf(query_sql_2, query_sql_1, user_id);
@@ -85,7 +85,7 @@ void FriendListModel::getFriendList(uint32_t user_id, uint32_t msg_serv_idx, fri
             friend_->set_friend_header_url(resultSet->getString("user_header"));
             friend_->set_friend_sign_info(resultSet->getString("user_sign_info"));
             friend_->set_friend_account((uint32_t)resultSet->getInt("user_account"));
-
+            friend_->set_friend_remark(resultSet->getString("friend_remark"));
             //该好友在线
             string friendIdStr = to_string(friendId);
             if (!cacheConn->hget("user_map", friendIdStr).empty())
@@ -258,9 +258,52 @@ bool FriendListModel::moveFriendToGroup(uint32_t user_id, uint32_t friend_id, ui
         char update_sql[] = "UPDATE yl_friend set group_id = %d where user_id = %d and friend_id = %d";
         char sql[2048];
         sprintf(sql, update_sql, group_id, user_id, friend_id);
-            printSql2Log(sql);
+        printSql2Log(sql);
 
         if (conn->update(sql))
+            ret = true;
+        else
+            ret = false;
+    }
+
+    DBManager::instance()->releaseConnection(conn);
+    return ret;
+}
+
+bool FriendListModel::deleteFriend(uint32_t user_id, uint32_t friend_id)
+{
+    bool ret = false;
+
+    auto conn = DBManager::instance()->getConnection();
+    if (conn)
+    {
+        //删除好友,只需将status字段由1改成2
+        string update_sql = "UPDATE yl_friend set status = 2 where user_id = "+ to_string(user_id) +" and friend_id = " + to_string(friend_id);
+        printSql2Log(update_sql.c_str());
+
+        if (conn->update(update_sql))
+            ret = true;
+        else
+            ret = false;
+    }
+
+    DBManager::instance()->releaseConnection(conn);
+    return ret;
+}
+
+bool FriendListModel::modifyFriendRemark(uint32_t user_id, uint32_t friend_id, const std::string &friendRemark)
+{
+
+    bool ret = false;
+
+    auto conn = DBManager::instance()->getConnection();
+    if (conn)
+    {
+        //修改好友备注
+        string update_sql = "UPDATE yl_friend set friend_remark = '" + friendRemark +"' where user_id = "+ to_string(user_id) +" and friend_id = " + to_string(friend_id);
+        printSql2Log(update_sql.c_str());
+
+        if (conn->update(update_sql))
             ret = true;
         else
             ret = false;

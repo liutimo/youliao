@@ -4,6 +4,7 @@
 
 #include "RouteConn.h"
 #include <pdu/protobuf/youliao.friendlist.pb.h>
+#include <network/ServerInfo.h>
 #include "network/netlib.h"
 #include "pdu/protobuf/youliao.login.pb.h"
 #include "pdu/protobuf/youliao.server.pb.h"
@@ -27,7 +28,10 @@ void init_route_serv_conn(serv_info_t* server_list, uint32_t server_count, uint3
     uint32_t total_route_instance = server_count / curr_conn_cnt;
     g_route_server_login_count = (total_route_instance / 2) * curr_conn_cnt;
 
-    serv_init<RouteConn>(g_route_server_list, g_route_server_count);
+//    serv_init<RouteConn>(g_route_server_list, g_route_server_count);
+    RouteConn *routeConn = new RouteConn;
+    routeConn->connect(server_list->server_ip, server_list->server_port, g_route_server_count);
+    g_route_server_list[0].server_conn = routeConn;
 }
 
 template <class T>
@@ -63,12 +67,12 @@ RouteConn* get_route_server_conn()
         }
     }
 
-    return (RouteConn*)(g_route_server_list->server_conn);
+    return (RouteConn*)(g_route_server_list[0].server_conn);
 }
 
 
 
-RouteConn::RouteConn()
+RouteConn::RouteConn() : BaseConn()
 {
     m_open = false;
 }
@@ -86,9 +90,11 @@ void RouteConn::connect(const std::string &server_ip, uint16_t server_port, uint
     if (m_handle != NETWORK_ERROR)
     {
         g_route_server_conn_map.insert(std::make_pair(m_handle, this));
+
+        m_open = true;
     }
 
-    m_open = true;
+
 }
 
 void RouteConn::close()
@@ -104,8 +110,6 @@ void RouteConn::close()
 void RouteConn::onClose()
 {
     close();
-
-    delete this;
 }
 
 void RouteConn::handlePdu(BasePdu *pdu)

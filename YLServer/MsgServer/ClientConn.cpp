@@ -156,6 +156,12 @@ void ClientConn::handlePdu(BasePdu *pdu)
         case base::CID_FRIENDLIST_MOVE_FRIEND_TO_GROUP_REQUEST:
             _HandleMoveFriendToGroupRequest(pdu);
             break;
+        case base::CID_FRIENDLIST_DELETE_FRIEND_REQUEST:
+            _HandleDeleteFriendRequest(pdu);
+            break;
+        case base::CID_FRIENDLIST_MODIFY_FRIEND_REMARK_RQUEST:
+            _HandleModifyFriendRemarkRequest(pdu);
+            break;
         default:
             break;
     }
@@ -407,6 +413,43 @@ void ClientConn::_HandleMoveFriendToGroupRequest(BasePdu *pdu)
     basePdu.setSID(base::SID_SERVER);
     basePdu.setCID(base::CID_FRIENDLIST_MOVE_FRIEND_TO_GROUP_REQUEST);
     basePdu.writeMessage(&moveFriendToGroupRequest);
+
+    DBServConn *dbServConn = get_db_server_conn();
+
+    if (dbServConn)
+        dbServConn->sendBasePdu(&basePdu);
+}
+
+
+void ClientConn::_HandleDeleteFriendRequest(BasePdu *pdu)
+{
+    friendlist::DeleteFriendRequest deleteFriendRequest;
+    deleteFriendRequest.ParseFromString(pdu->getMessage());
+
+    log("用户%d请求删除好友%d", deleteFriendRequest.user_id(), deleteFriendRequest.friend_id());
+
+    BasePdu basePdu;
+    basePdu.setSID(base::SID_SERVER);
+    basePdu.setCID(base::CID_FRIENDLIST_DELETE_FRIEND_REQUEST);
+    basePdu.writeMessage(&deleteFriendRequest);
+
+    DBServConn *dbServConn = get_db_server_conn();
+
+    if (dbServConn)
+        dbServConn->sendBasePdu(&basePdu);
+}
+
+void ClientConn::_HandleModifyFriendRemarkRequest(BasePdu *pdu)
+{
+    friendlist::ModifyFriendRemarkRequest request;
+    request.ParseFromString(pdu->getMessage());
+
+    log("用户%d请求修改好友%d的备注名为%s", request.user_id(), request.friend_id(), request.friend_remark().c_str());
+
+    BasePdu basePdu;
+    basePdu.setSID(base::SID_SERVER);
+    basePdu.setCID(base::CID_FRIENDLIST_MODIFY_FRIEND_REMARK_RQUEST);
+    basePdu.writeMessage(&request);
 
     DBServConn *dbServConn = get_db_server_conn();
 

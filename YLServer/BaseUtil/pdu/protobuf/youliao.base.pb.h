@@ -198,12 +198,14 @@ enum FriendListCID {
   CID_FRIENDLIST_RENAME_FRIEND_GROUP_REQUEST = 1036,
   CID_FRIENDLIST_DELETE_FRIEND_GROUP_REQUEST = 1037,
   CID_FRIENDLIST_MOVE_FRIEND_TO_GROUP_REQUEST = 1038,
+  CID_FRIENDLIST_DELETE_FRIEND_REQUEST = 1039,
+  CID_FRIENDLIST_MODIFY_FRIEND_REMARK_RQUEST = 1040,
   FriendListCID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   FriendListCID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool FriendListCID_IsValid(int value);
 const FriendListCID FriendListCID_MIN = CID_FRIENDLIST_ZERO;
-const FriendListCID FriendListCID_MAX = CID_FRIENDLIST_MOVE_FRIEND_TO_GROUP_REQUEST;
+const FriendListCID FriendListCID_MAX = CID_FRIENDLIST_MODIFY_FRIEND_REMARK_RQUEST;
 const int FriendListCID_ARRAYSIZE = FriendListCID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* FriendListCID_descriptor();
@@ -679,6 +681,20 @@ class FriendInfo : public ::google::protobuf::Message /* @@protoc_insertion_poin
   ::std::string* release_friend_sign_info();
   void set_allocated_friend_sign_info(::std::string* friend_sign_info);
 
+  // string friend_remark = 9;
+  void clear_friend_remark();
+  static const int kFriendRemarkFieldNumber = 9;
+  const ::std::string& friend_remark() const;
+  void set_friend_remark(const ::std::string& value);
+  #if LANG_CXX11
+  void set_friend_remark(::std::string&& value);
+  #endif
+  void set_friend_remark(const char* value);
+  void set_friend_remark(const char* value, size_t size);
+  ::std::string* mutable_friend_remark();
+  ::std::string* release_friend_remark();
+  void set_allocated_friend_remark(::std::string* friend_remark);
+
   // uint32 friend_id = 1;
   void clear_friend_id();
   static const int kFriendIdFieldNumber = 1;
@@ -697,9 +713,9 @@ class FriendInfo : public ::google::protobuf::Message /* @@protoc_insertion_poin
   ::google::protobuf::uint32 friend_sex() const;
   void set_friend_sex(::google::protobuf::uint32 value);
 
-  // bool friend_is_online = 9;
+  // bool friend_is_online = 10;
   void clear_friend_is_online();
-  static const int kFriendIsOnlineFieldNumber = 9;
+  static const int kFriendIsOnlineFieldNumber = 10;
   bool friend_is_online() const;
   void set_friend_is_online(bool value);
 
@@ -712,6 +728,7 @@ class FriendInfo : public ::google::protobuf::Message /* @@protoc_insertion_poin
   ::google::protobuf::internal::ArenaStringPtr friend_email_;
   ::google::protobuf::internal::ArenaStringPtr friend_phone_;
   ::google::protobuf::internal::ArenaStringPtr friend_sign_info_;
+  ::google::protobuf::internal::ArenaStringPtr friend_remark_;
   ::google::protobuf::uint32 friend_id_;
   ::google::protobuf::uint32 friend_account_;
   ::google::protobuf::uint32 friend_sex_;
@@ -1445,7 +1462,60 @@ inline void FriendInfo::set_allocated_friend_sign_info(::std::string* friend_sig
   // @@protoc_insertion_point(field_set_allocated:youliao.pdu.base.FriendInfo.friend_sign_info)
 }
 
-// bool friend_is_online = 9;
+// string friend_remark = 9;
+inline void FriendInfo::clear_friend_remark() {
+  friend_remark_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& FriendInfo::friend_remark() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.FriendInfo.friend_remark)
+  return friend_remark_.GetNoArena();
+}
+inline void FriendInfo::set_friend_remark(const ::std::string& value) {
+  
+  friend_remark_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:youliao.pdu.base.FriendInfo.friend_remark)
+}
+#if LANG_CXX11
+inline void FriendInfo::set_friend_remark(::std::string&& value) {
+  
+  friend_remark_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:youliao.pdu.base.FriendInfo.friend_remark)
+}
+#endif
+inline void FriendInfo::set_friend_remark(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  friend_remark_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:youliao.pdu.base.FriendInfo.friend_remark)
+}
+inline void FriendInfo::set_friend_remark(const char* value, size_t size) {
+  
+  friend_remark_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:youliao.pdu.base.FriendInfo.friend_remark)
+}
+inline ::std::string* FriendInfo::mutable_friend_remark() {
+  
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.base.FriendInfo.friend_remark)
+  return friend_remark_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* FriendInfo::release_friend_remark() {
+  // @@protoc_insertion_point(field_release:youliao.pdu.base.FriendInfo.friend_remark)
+  
+  return friend_remark_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void FriendInfo::set_allocated_friend_remark(::std::string* friend_remark) {
+  if (friend_remark != NULL) {
+    
+  } else {
+    
+  }
+  friend_remark_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), friend_remark);
+  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.base.FriendInfo.friend_remark)
+}
+
+// bool friend_is_online = 10;
 inline void FriendInfo::clear_friend_is_online() {
   friend_is_online_ = false;
 }

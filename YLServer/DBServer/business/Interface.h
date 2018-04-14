@@ -40,6 +40,12 @@ namespace DB_INTERFACE
 
     //移动好友到指定分组
     void moveFriendToGroup(BasePdu *basePdu, uint32_t conn_uid);
+
+    //删除好友
+    void deleteFriend(BasePdu *basePdu, uint32_t conn_uid);
+
+    //修改好友备注
+    void modifyFriendRemark(BasePdu *basePdu, uint32_t conn_uid);
 }
 
 

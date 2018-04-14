@@ -235,6 +235,32 @@ namespace DB_INTERFACE
         friendListModel.moveFriendToGroup(request.user_id(), request.friend_id(), request.group_id());
     }
 
+    //删除好友
+    void deleteFriend(BasePdu *basePdu, uint32_t conn_uid)
+    {
+        friendlist::DeleteFriendRequest request;
+        request.ParseFromString(basePdu->getMessage());
+
+        uint32_t userId = request.user_id();
+        uint32_t friendId = request.friend_id();
+
+        FriendListModel friendListModel;
+        friendListModel.deleteFriend(userId, friendId);
+    }
+
+    //修改好友备注
+    void modifyFriendRemark(BasePdu *basePdu, uint32_t conn_uid)
+    {
+        friendlist::ModifyFriendRemarkRequest request;
+        request.ParseFromString(basePdu->getMessage());
+
+        uint32_t userId = request.user_id();
+        uint32_t friendId = request.friend_id();
+        string friendRemark = request.friend_remark();
+
+        FriendListModel friendListModel;
+        friendListModel.modifyFriendRemark(userId, friendId, friendRemark);
+    }
 }
 
 

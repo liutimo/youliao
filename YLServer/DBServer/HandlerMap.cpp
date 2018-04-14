@@ -61,6 +61,12 @@ void HandlerMap::init()
 
     //移动好友到指定分组
     m_handler_map.insert(std::make_pair(CID_FRIENDLIST_MOVE_FRIEND_TO_GROUP_REQUEST, DB_INTERFACE::moveFriendToGroup));
+
+    //删除好友
+    m_handler_map.insert(std::make_pair(CID_FRIENDLIST_DELETE_FRIEND_REQUEST, DB_INTERFACE::deleteFriend));
+
+    //修改好友备注
+    m_handler_map.insert(std::make_pair(CID_FRIENDLIST_MODIFY_FRIEND_REMARK_RQUEST, DB_INTERFACE::modifyFriendRemark));
 }
 
 pdu_handler_t HandlerMap::getHandler(uint16_t cid)

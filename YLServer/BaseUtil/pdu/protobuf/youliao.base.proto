@@ -62,7 +62,8 @@ enum FriendListCID
     CID_FRIENDLIST_RENAME_FRIEND_GROUP_REQUEST = 0x040C;    //好友分组重命名
     CID_FRIENDLIST_DELETE_FRIEND_GROUP_REQUEST = 0x040D;    //删除好友列表中某个分组
     CID_FRIENDLIST_MOVE_FRIEND_TO_GROUP_REQUEST = 0x040E;   //移动好友到摸一个分组
-
+    CID_FRIENDLIST_DELETE_FRIEND_REQUEST        = 0x040F;   //删除好友
+    CID_FRIENDLIST_MODIFY_FRIEND_REMARK_RQUEST  = 0x0410;   //修改好友备注
 }
 
 //消息
@@ -115,7 +116,8 @@ message FriendInfo
     string friend_email = 6;
     string friend_phone = 7;
     string friend_sign_info = 8;
-    bool   friend_is_online = 9;
+    string friend_remark = 9;
+    bool   friend_is_online = 10;
 }
 
 //心跳包
