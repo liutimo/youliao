@@ -155,6 +155,7 @@ void DBServConn::_HandleValidateRespone(BasePdu *pdu)
 
     ClientConn *clientConn = findConn(handle);
 
+    log("收到服务器登录校验用户%d响应", clientConn->getUserId());
 
     if (clientConn)
     {
@@ -178,6 +179,8 @@ void DBServConn::_HandleValidateRespone(BasePdu *pdu)
 
         userLoginRespone.set_allocated_user_info(userInfo);
 
+        log("发送登录结果到用户%d", clientConn->getUserId());
+
         BasePdu *basePdu = new BasePdu;
         basePdu->setCID(base::CID_LOGIN_RESPONE_USERLOGIN);
         basePdu->setSID(base::SID_OTHER);
@@ -193,7 +196,7 @@ void DBServConn::_HandleFriendGroupsRespone(BasePdu *pdu)
     groupsRespone.ParseFromString(pdu->getMessage());
     uint32_t userId = groupsRespone.user_id();
 
-    log("send user %d's friend's groups to MsgServer", userId);
+    log("发送好友分组到用户%d", userId);
 
     auto clientConn = UserManager::instance()->getUser(userId)->getConn();
 
@@ -214,13 +217,12 @@ void DBServConn::_HandleFriendListRespone(BasePdu *pdu)
 
     uint32_t handle = get_attach_data(friendListRespone);
 
-    std::cout << "向" << handle << "发送的好友列表响应" << std::endl;
-
     ClientConn *clientConn = findConn(handle);
 
-    log("send friend list to %d", handle);
     if (!clientConn)
         return;
+
+    log("发送好友列表到用户%d", clientConn->getUserId());
 
     //发送好友列表给客户端
     BasePdu basePdu;
@@ -262,6 +264,7 @@ void DBServConn::_HandleSignatureChangedRespone(BasePdu *pdu)
     else if (resultType == base::SIGNATURE_MODIFY_FAILED)
         modifySuccess = false;
 
+    log("发送个性签名修改响应到用户%d", userId);
 
     BasePdu basePdu;
     basePdu.setSID(base::SID_FRIEND_LIST);
@@ -273,6 +276,7 @@ void DBServConn::_HandleSignatureChangedRespone(BasePdu *pdu)
 
     if (modifySuccess)
     {
+        log("广播用户%d的个性签名修改状态到所有在线好友", userId);
         //修改成功。发送到路由服务器广播修改后的个性签名到好友
         server::RouteMessage routeMessage;
         routeMessage.set_user_id(userId);
@@ -304,6 +308,8 @@ void DBServConn::_HandleAddNewFriendGroupRespone(BasePdu *pdu)
     basePdu1.setSID(base::SID_FRIEND_LIST);
     basePdu1.setCID(base::CID_FRIENDLIST_ADD_FRIEND_GROUP_RESPONE);
     basePdu1.writeMessage(&addNewFriendGroupRespone);
+
+    log("收到用户%d添加好友分组成功响应", userId);
 
     auto  user = UserManager::instance()->getUser(userId);
 

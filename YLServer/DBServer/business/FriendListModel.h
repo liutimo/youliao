@@ -29,6 +29,8 @@ public:
     bool renameFriendGroup(uint32_t user_id, const std::string &group_nnew_ame, uint32_t &groupId);
 
     bool deleteFriendGroup(uint32_t user_id, uint32_t group_id);
+
+    bool moveFriendToGroup(uint32_t user_id, uint32_t friend_id, uint32_t group_id);
 };
 
 

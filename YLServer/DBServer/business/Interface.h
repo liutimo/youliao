@@ -37,6 +37,9 @@ namespace DB_INTERFACE
 
     //删除分组
     void deleteFriendGroup(BasePdu *basePdu, uint32_t conn_uid);
+
+    //移动好友到指定分组
+    void moveFriendToGroup(BasePdu *basePdu, uint32_t conn_uid);
 }
 
 

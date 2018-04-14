@@ -44,7 +44,7 @@ namespace DB_INTERFACE
             validateRespone.set_result_code(1);
             validateRespone.set_result_string("登录失败， 用户名或密码错误！");
 
-            log("user %s login success!", validateRequest.user_name().c_str());
+            log("user %s login failed!", validateRequest.user_name().c_str());
         }
 
         BasePdu *pdu1 = new BasePdu;
@@ -224,6 +224,17 @@ namespace DB_INTERFACE
         FriendListModel friendListModel;
         friendListModel.deleteFriendGroup(userId, groupId);
     }
+
+    //移动好友到指定分组
+    void moveFriendToGroup(BasePdu *basePdu, uint32_t conn_uid)
+    {
+        friendlist::MoveFriendToGroupRequest request;
+        request.ParseFromString(basePdu->getMessage());
+
+        FriendListModel friendListModel;
+        friendListModel.moveFriendToGroup(request.user_id(), request.friend_id(), request.group_id());
+    }
+
 }
 
 

@@ -61,8 +61,8 @@ void FriendListModel::getFriendList(uint32_t user_id, uint32_t msg_serv_idx, fri
 
         char query_sql_2[2048];
         sprintf(query_sql_2, query_sql_1, user_id);
+        printSql2Log(query_sql_2);
 
-        std::cout << query_sql_2 << std::endl;
 
         ResultSet *resultSet = conn->query(query_sql_2);
 
@@ -120,17 +120,18 @@ void FriendListModel::getOnlineFriends(uint32_t user_id, server::RouteGetOnlineF
         string mapName = "OnlineFriend_" + to_string(user_id);
         map<string, string> onlineFriends;
         conn->hgetAll(mapName, onlineFriends);
-        log("%s has %d online friends", mapName.c_str(), onlineFriends.size());
-
+        log("Redis: MapName = %s, 有%d个在线好友", mapName.c_str(), onlineFriends.size());
+        log("----------------------------");
         auto onlineFriendMap = routeGetOnlineFriendRespone.mutable_online_firends();
 
         for (auto elem : onlineFriends)
         {
             string friendId = elem.first;
             string msg_idx = elem.second;
-            log("key = %s value = %s", friendId.c_str(), msg_idx.c_str());
+            log("| key = %s value = %s |", friendId.c_str(), msg_idx.c_str());
             (*onlineFriendMap)[atoi(friendId.c_str())] = (uint32_t )atoi(msg_idx.c_str());
         }
+        log("----------------------------");
     }
 
     CacheManager::instance()->releaseCacheConn(conn);
@@ -148,7 +149,7 @@ bool FriendListModel::modifySignature(uint32_t user_id, const std::string &signa
         char update_sql_1[] = "UPDATE yl_user SET user_sign_info = '%s' WHERE user_id = '%d'";
         char update_sql_2[2048];
         sprintf(update_sql_2, update_sql_1, signature.c_str(), user_id);
-        log("modify signature. sql = %s", update_sql_2);
+        printSql2Log(update_sql_2);
 
         if (conn->update(update_sql_2))
             res = true;
@@ -171,13 +172,14 @@ bool FriendListModel::addNewFriendGroup(uint32_t user_id, const std::string &new
         char insert_sql_1[] = "INSERT INTO yl_friend_group(user_id, group_name) VALUES(%d, '%s');";
         char insert_sql_2[2048];
         sprintf(insert_sql_2, insert_sql_1, user_id, new_group_name.c_str());
+        printSql2Log(insert_sql_2);
 
-        log("insert new friend group %s to user %d", new_group_name.c_str(), user_id);
         if(conn->update(insert_sql_2))
         {
             ret = true;
             char query_sql_1[] = "SELECT group_id from yl_friend_group where group_name = '%s' and user_id = %d;";
             char query_sql_2[2048];
+            printSql2Log(query_sql_2);
             sprintf(query_sql_2, query_sql_1, new_group_name.c_str(), user_id);
             auto resultSet = conn->query(query_sql_2);
             if (resultSet->next())
@@ -204,7 +206,7 @@ bool FriendListModel::renameFriendGroup(uint32_t user_id, const std::string &gro
         char update_sql_1[] = "UPDATE yl_friend_group set group_name = '%s' where user_id = %d and group_id = %d;";
         char update_sql_2[2048];
         sprintf(update_sql_2, update_sql_1, group_new_name.c_str(), user_id, groupId);
-        log("执行SQL语句:%s", update_sql_2);
+        printSql2Log(update_sql_2);
         if(conn->update(update_sql_2))
             ret = true;
         else
@@ -236,6 +238,30 @@ bool FriendListModel::deleteFriendGroup(uint32_t user_id, uint32_t group_id)
             printSql2Log(sql);
             conn->update(sql);
         }
+        else
+            ret = false;
+    }
+
+    DBManager::instance()->releaseConnection(conn);
+    return ret;
+}
+
+bool FriendListModel::moveFriendToGroup(uint32_t user_id, uint32_t friend_id, uint32_t group_id)
+{
+    bool ret = false;
+
+    auto conn = DBManager::instance()->getConnection();
+
+    if (conn)
+    {
+        //移动好友到指定分组
+        char update_sql[] = "UPDATE yl_friend set group_id = %d where user_id = %d and friend_id = %d";
+        char sql[2048];
+        sprintf(sql, update_sql, group_id, user_id, friend_id);
+            printSql2Log(sql);
+
+        if (conn->update(sql))
+            ret = true;
         else
             ret = false;
     }

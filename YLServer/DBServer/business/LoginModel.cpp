@@ -33,7 +33,7 @@ bool LoginModel::doLogin(const std::string &str_name, const std::string &str_pas
     if (dbConn)
     {
         std::string str_sql = "select * from yl_user where user_account='" + str_name + "'";
-        log("%s", str_sql.c_str());
+        printSql2Log(str_sql.c_str());
         ResultSet *resultSet = dbConn->query(str_sql);
 
         std::string password;
@@ -71,9 +71,9 @@ bool LoginModel::doLogout(uint32_t userId)
         auto ret = conn->hdel("user_map", to_string(userId));
         if (ret == 1)
 
-            log("user %d logout!", userId);
+            log("用户%d注销登录!", userId);
         else
-            log("user %d logout failed !", userId);
+            log("用户%d注销登录失败!", userId);
     }
     CacheManager::instance()->releaseCacheConn(conn);
 }

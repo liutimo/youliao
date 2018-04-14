@@ -145,6 +145,9 @@ void RouteConn::_HandleRouteBroadcast(BasePdu *basePdu)
 
     int i = routeBroadcast.friends_size();
 
+
+    log("开始广播用户%d的消息, 接收者个数=%d", routeBroadcast.user_id(), routeBroadcast.friends_size());
+
     BasePdu pdu;
     pdu.setSID(base::SID_FRIEND_LIST);
     switch (routeBroadcast.route_status_type())
@@ -179,7 +182,7 @@ void RouteConn::_HandleRouteBroadcast(BasePdu *basePdu)
     for (int j = 0; j < i; ++j)
     {
         uint32_t userId = routeBroadcast.friends(j);
-        log("notify user : %d", userId);
+        log("%d. 通知用户%d", j, userId);
 
         auto user = UserManager::instance()->getUser(userId);
 

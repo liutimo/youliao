@@ -11,6 +11,7 @@ void listen_client_callback(callback_data data, uint8_t msg, net_handle_t handle
     NO_USERD(pParam);
     if (msg == NETWORK_CONNECT)
     {
+        std::cout << "new connection" << std::endl;
         LoginConn *loginConn = new LoginConn;
         loginConn->onConnect(handle, ConnType::CONN_TYPE_CLIENT);
     }

@@ -153,6 +153,9 @@ void ClientConn::handlePdu(BasePdu *pdu)
         case base::CID_FRIENDLIST_DELETE_FRIEND_GROUP_REQUEST:
             _HandleDeleteFriendGroupRequest(pdu);
             break;
+        case base::CID_FRIENDLIST_MOVE_FRIEND_TO_GROUP_REQUEST:
+            _HandleMoveFriendToGroupRequest(pdu);
+            break;
         default:
             break;
     }
@@ -183,7 +186,7 @@ void ClientConn::_HandleClientLoginRequest(BasePdu *pdu)
 
 void ClientConn::_HandleHeartBeat(BasePdu *pdu)
 {
-    log("received heartbeat!");
+//    log("received heartbeat!");
     m_last_heart_beat_tick = get_tick_count();
     sendBasePdu(pdu);
 }
@@ -209,9 +212,6 @@ void ClientConn::_HandleGroupsRequest(BasePdu *pdu)
 
 void ClientConn::_HandleFriendListGetRequest(BasePdu *pdu)
 {
-
-    std::cout << "收到来自" << m_handle << "的好友列表请求" << std::endl;
-
     friendlist::FriendListRequest friendListRequest;
     friendListRequest.ParseFromString(pdu->getMessage());
 
@@ -251,6 +251,8 @@ void ClientConn::_HandleClientLoginOutRequest(BasePdu *pdu)
 
     auto user = UserManager::instance()->getUser(userId);
 
+    log("用户%d注销请求", userId);
+
     if (user != nullptr)
     {
         auto conn = user->getConn();
@@ -282,7 +284,10 @@ void ClientConn::_HandleClientLoginOutRequest(BasePdu *pdu)
     basePdu1.setCID(base::CID_SERVER_ROUTE_BROADCAST);
     basePdu1.writeMessage(&routeMessage);
 
-    get_route_server_conn()->sendBasePdu(&basePdu1);
+    auto routeConn = get_route_server_conn();
+
+    if (routeConn)
+        routeConn->sendBasePdu(&basePdu1);
 }
 
 void ClientConn::_HandleMessageDataRequest(BasePdu *pdu)
@@ -291,6 +296,8 @@ void ClientConn::_HandleMessageDataRequest(BasePdu *pdu)
     messageData.ParseFromString(pdu->getMessage());
 
     uint32_t toUserID = messageData.to_user_id();
+
+    log("用户%d发送消息到用户%d", messageData.from_user_id(), toUserID);
 
     User *user = UserManager::instance()->getUser(toUserID);
 
@@ -308,7 +315,9 @@ void ClientConn::_HandleMessageDataRequest(BasePdu *pdu)
         basePdu.setCID(base::CID_MESSAGE_DATA);
         basePdu.writeMessage(&messageData);
 
-        user->getConn()->sendBasePdu(&basePdu);
+        auto conn = user->getConn();
+        if (conn)
+            conn->sendBasePdu(&basePdu);
     }
 }
 
@@ -317,7 +326,7 @@ void ClientConn::_HandleSignatureChangeRequest(BasePdu *pdu)
     friendlist::SignatureChangeResquest signatureChangeResquest;
     signatureChangeResquest.ParseFromString(pdu->getMessage());
 
-    log("user %d signature modify request: %s", signatureChangeResquest.user_id(), signatureChangeResquest.user_signature().c_str());
+    log("用户%d修改个性签名为: %s", signatureChangeResquest.user_id(), signatureChangeResquest.user_signature().c_str());
 
     DBServConn *dbServConn = get_db_server_conn();
 
@@ -354,6 +363,8 @@ void ClientConn::_HandleRenameFriendGroupRequest(BasePdu *pdu)
     friendlist::RenameFriendGroupRequest renameFriendGroupRequest;
     renameFriendGroupRequest.ParseFromString(pdu->getMessage());
 
+    log("用户%d请求重命名好友分组", renameFriendGroupRequest.user_id());
+
     BasePdu basePdu;
     basePdu.setSID(base::SID_SERVER);
     basePdu.setCID(base::CID_FRIENDLIST_RENAME_FRIEND_GROUP_REQUEST);
@@ -371,10 +382,31 @@ void ClientConn::_HandleDeleteFriendGroupRequest(BasePdu *pdu)
     friendlist::DeleteFriendGroupRequest deleteFriendGroupRequest;
     deleteFriendGroupRequest.ParseFromString(pdu->getMessage());
 
+    log("用户%d请求删除好友分组", deleteFriendGroupRequest.user_id());
+
     BasePdu basePdu;
     basePdu.setSID(base::SID_SERVER);
     basePdu.setCID(base::CID_FRIENDLIST_DELETE_FRIEND_GROUP_REQUEST);
     basePdu.writeMessage(&deleteFriendGroupRequest);
+
+    DBServConn *dbServConn = get_db_server_conn();
+
+    if (dbServConn)
+        dbServConn->sendBasePdu(&basePdu);
+}
+
+
+void ClientConn::_HandleMoveFriendToGroupRequest(BasePdu *pdu)
+{
+    friendlist::MoveFriendToGroupRequest moveFriendToGroupRequest;
+    moveFriendToGroupRequest.ParseFromString(pdu->getMessage());
+
+    log("用户%d请求将好友%d移动到分组%d", moveFriendToGroupRequest.user_id(), moveFriendToGroupRequest.friend_id(), moveFriendToGroupRequest.group_id());
+
+    BasePdu basePdu;
+    basePdu.setSID(base::SID_SERVER);
+    basePdu.setCID(base::CID_FRIENDLIST_MOVE_FRIEND_TO_GROUP_REQUEST);
+    basePdu.writeMessage(&moveFriendToGroupRequest);
 
     DBServConn *dbServConn = get_db_server_conn();
 

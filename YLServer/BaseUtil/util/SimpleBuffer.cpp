@@ -85,7 +85,6 @@ uint32_t  SimpleBuffer::readUInt32()
     uchar_t *buf = getBuffer();
 
     uint32_t ret = (uint32_t)((buf[0] << 24) | (buf[1] << 16) | (buf[2] << 8) | buf[3]);
-    std::cout << ret << std::endl;
     read(nullptr, sizeof(uint32_t));
 
     return ret;

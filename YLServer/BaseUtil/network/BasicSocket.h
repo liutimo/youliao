@@ -70,6 +70,7 @@ namespace youliao
             void _AcceptNewConn();
             int _GetErrorCode();
             char* _GetErrorStr();
+            bool _IsBlock(int errCode);
         private:
             net_handle_t    m_handle;
 
