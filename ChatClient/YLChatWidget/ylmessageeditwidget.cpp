@@ -16,20 +16,29 @@ YLMessageEditWidget::YLMessageEditWidget(QWidget *parent)
     setFont(f);
 }
 
+YLMessageEditWidget::~YLMessageEditWidget()
+{
+    delete m_action_cpoy;
+    delete m_action_cut;
+    delete m_action_paste;
+
+    qDebug() << "~YLMessageEditWidget()";
+}
+
 void YLMessageEditWidget::initMenu()
 {
     m_menu = new QMenu(this);
     m_action_cpoy = new QAction("复制");
     m_action_cut = new QAction("剪切");
-    m_action__paste = new QAction("粘贴");
+    m_action_paste = new QAction("粘贴");
 
     m_menu->addAction(m_action_cpoy);
     m_menu->addAction(m_action_cut);
-    m_menu->addAction(m_action__paste);
+    m_menu->addAction(m_action_paste);
 
     connect(m_action_cpoy, &QAction::triggered, this, &YLMessageEditWidget::slotCopy);
     connect(m_action_cut, &QAction::triggered, this, &YLMessageEditWidget::slotCut);
-    connect(m_action__paste, &QAction::triggered, this, &YLMessageEditWidget::slotPaste);
+    connect(m_action_paste, &QAction::triggered, this, &YLMessageEditWidget::slotPaste);
 }
 
 

@@ -6,12 +6,13 @@
 
 YLBasicWidget::YLBasicWidget(QWidget *parent) : QWidget(parent), drag_flag_(true), pressed_flag_(false)
 {
+    setAttribute(Qt::WA_DeleteOnClose);
+    setWindowFlags(Qt::FramelessWindowHint);
     init();
 }
 
 void YLBasicWidget::init()
 {
-    setWindowFlags(Qt::FramelessWindowHint);
 
     close_button_ = new QPushButton(this);
     close_button_->setFixedSize(32, 32);

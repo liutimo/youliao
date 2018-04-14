@@ -26,3 +26,8 @@ void YLModifyRemarkWidget::setDefalutText(const QString &text)
     m_lineedit->setText(text);
     m_lineedit->selectAll();
 }
+
+QString YLModifyRemarkWidget::getText()
+{
+    return m_lineedit->text();
+}

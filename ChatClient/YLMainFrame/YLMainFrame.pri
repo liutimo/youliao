@@ -5,7 +5,8 @@ HEADERS += \
     $$PWD/ylnavigationbar.h \
     $$PWD/ylrecentchatview.h \
     $$PWD/ylfriendlistitem.h \
-    $$PWD/ylfriendlistview.h
+    $$PWD/ylfriendlistview.h \
+    $$PWD/ylinfomationwidget.h
 
 SOURCES += \
     $$PWD/ylmainwidget.cpp \
@@ -14,5 +15,6 @@ SOURCES += \
     $$PWD/ylnavigationbar.cpp \
     $$PWD/ylrecentchatview.cpp \
     $$PWD/ylfriendlistitem.cpp \
-    $$PWD/ylfriendlistview.cpp
+    $$PWD/ylfriendlistview.cpp \
+    $$PWD/ylinfomationwidget.cpp
 

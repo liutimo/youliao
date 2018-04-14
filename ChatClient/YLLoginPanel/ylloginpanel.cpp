@@ -33,7 +33,7 @@ YLLoginPanel::YLLoginPanel(QWidget *parent) : YLBasicWidget(parent), m_connected
             mainWidget->startHeartBeat();
             mainWidget->show();
             userInfo = nullptr;
-            close();
+            hide();
         }
         else
         {

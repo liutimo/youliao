@@ -12,6 +12,8 @@
 #include <QDebug>
 #include "YLNetWork/ylbusiness.h"
 #include "globaldata.h"
+#include "ylinfomationwidget.h"
+#include "YLCommonControl/ylmessagebox.h"
 YLFriendListItem::YLFriendListItem(YLListItemType type, QWidget *parent) : QWidget(parent)
 {
     item_type_ = type;
@@ -82,11 +84,40 @@ void YLFriendListItem::initMenu()
     });
 
     connect(action_modify_remark, &QAction::triggered, this, [this](){
-        YLModifyRemarkWidget *w = new YLModifyRemarkWidget(this);
-        w->setDefalutText(friend_.friendRemark());
+        YLModifyRemarkWidget w(this);
+        w.setDefalutText(friend_.friendRemark());
         auto p = YLMainWidget::center;
-        w->move(mapToGlobal(p) - mapToGlobal(w->rect().center()));
-        w->exec();
+        w.move(mapToGlobal(p) - mapToGlobal(w.rect().center()));
+        BottonResult res = w.exec();
+
+        if (res == ID_OK )
+        {
+            QString newRemark = w.getText();
+            if (newRemark != friend_.friendRemark())
+            {
+                emit modifyRemark(friend_.friendId(), newRemark);
+            }
+        }
+    });
+
+    connect(action_show_info, &QAction::triggered, this, [this]()
+    {
+        YLInfomationWidget *w = new YLInfomationWidget;
+        w->setFriendInfo(friend_);
+        w->show();
+    });
+
+    connect(aciton_delete, &QAction::triggered, this, [this]()
+    {
+        YLMessageBox *messageBox = new YLMessageBox(BUTTON_CANNEL | BUTTON_OK, this);
+        messageBox->setTitle("Warn");
+        QString toolTip = friend_.friendRemark().isEmpty() ? friend_.friendNickName() : friend_.friendRemark();
+        messageBox->setToolTip("Are you sure delete " + toolTip);
+        BottonResult res = messageBox->exec();
+        if (res == ID_OK)
+        {
+            emit deleteFriend(friend_.friendId());
+        }
     });
 }
 

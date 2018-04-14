@@ -14,7 +14,7 @@ class YLMessageEditWidget : public QTextEdit
 
 public:
     explicit YLMessageEditWidget(QWidget *parent = Q_NULLPTR);
-
+    virtual ~YLMessageEditWidget();
     //获取关键html代码
     QString getContent() const;
     //添加系统表情
@@ -38,7 +38,7 @@ protected:
 private:
     QMenu	*m_menu;
     QAction *m_action_cpoy;
-    QAction *m_action__paste;
+    QAction *m_action_paste;
     QAction *m_action_cut;
 
     QString str1 = "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">";

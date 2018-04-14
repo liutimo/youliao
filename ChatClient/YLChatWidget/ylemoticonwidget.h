@@ -14,6 +14,8 @@ class YLEmoticonWidget : public QWidget
                                     "QTableWidget#EmoticonTableWidget::item:selected {background: rgba(200, 200, 200, 255);}";
 public:
     explicit YLEmoticonWidget(QWidget *parent = nullptr);
+    virtual ~YLEmoticonWidget();
+
     static bool isShow;
 
 private:
@@ -35,6 +37,8 @@ class YLEmoticonLabel : public QLabel
     Q_OBJECT
 public:
     explicit YLEmoticonLabel(QWidget *parent = Q_NULLPTR);
+    virtual ~YLEmoticonLabel();
+
     void setEmoticon(int index);
 
 protected:

@@ -49,6 +49,9 @@ signals:
     void moveToTop(const YLFriend &);
     void deleteFromList(const YLFriend &);
     void moveFriendToGroup(uint32_t friendId, uint32_t oldGroupId, uint32_t newGroupId);
+    void deleteFriend(uint32_t friendId);
+    void modifyRemark(uint32_t friendId, const QString &newRemark);
+
 private:
     YLHeadFrame *head_frame_;
 

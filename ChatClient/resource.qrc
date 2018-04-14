@@ -283,5 +283,13 @@
         <file>res/MainFrame/aio_top_mark.png</file>
         <file>res/MainFrame/right.png</file>
         <file>res/MainFrame/down.png</file>
+        <file>res/1.jpeg</file>
+        <file>res/Info/sex_age.png</file>
+        <file>res/Info/school.png</file>
+        <file>res/Info/remark.png</file>
+        <file>res/Info/email.png</file>
+        <file>res/Info/account.png</file>
+        <file>res/Info/nick.png</file>
+        <file>res/Info/group.png</file>
     </qresource>
 </RCC>

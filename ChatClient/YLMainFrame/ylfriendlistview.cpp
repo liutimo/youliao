@@ -131,7 +131,11 @@ void YLFriendListView::updateList()
                 item->setSizeHint(QSize(width() - 30, 56));
                 YLFriendListItem *item_widget = new YLFriendListItem(YLFriendListItem::FRIENDITEM);
                 connect(item_widget, &YLFriendListItem::moveFriendToGroup, this, &YLFriendListView::moveFriendToGroup);
+                connect(item_widget, &YLFriendListItem::modifyRemark, this, &YLFriendListView::modifyRemark);
+                connect(item_widget, &YLFriendListItem::deleteFriend, this, &YLFriendListView::deleteFriend);
+
                 item_widget->setSecondMenu(m_group, elem);
+                fri.setFriendGroup(elem);
                 item_widget->setData(fri);
                 setItemWidget(item, item_widget);
             }
@@ -332,4 +336,40 @@ void YLFriendListView::moveFriendToGroup(uint32_t friendId, uint32_t oldGroupId,
     }
 
     updateList();
+}
+
+void YLFriendListView::deleteFriend(uint32_t friendId)
+{
+    YLBusiness::deleteFriend(GlobalData::getCurrLoginUserId(), friendId);
+
+    for (auto &vec : m_friends)
+    {
+        for (auto iter = vec.begin(); iter != vec.end(); ++iter)
+        {
+            if (iter->friendId() == friendId)
+            {
+                vec.erase(iter);
+                updateList();
+                return;
+            }
+        }
+    }
+}
+
+void YLFriendListView::modifyRemark(uint32_t friendId, const QString &newRemark)
+{
+    YLBusiness::modifyFriendRemark(GlobalData::getCurrLoginUserId(), friendId, newRemark);
+
+    for (auto &vec : m_friends)
+    {
+        for (auto iter = vec.begin(); iter != vec.end(); ++iter)
+        {
+            if (iter->friendId() == friendId)
+            {
+                iter->setFriendRemark(newRemark);
+                updateList();
+                return;
+            }
+        }
+    }
 }

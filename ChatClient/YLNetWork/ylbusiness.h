@@ -23,6 +23,8 @@ public:
     static void renameFriendGroup(uint32_t userId, uint32_t groupId, const QString &groupNewName);
     static void deleteFriendGroup(uint32_t userId, uint32_t groupId);
     static void moveFriendToGroup(uint32_t userId, uint32_t friendId, uint32_t groupId);
+    static void deleteFriend(uint32_t userId, uint32_t friendId);
+    static void modifyFriendRemark(uint32_t userId, uint32_t friendId, const QString &friendRemark);
 
     //message
     static void sendMessage(uint32_t senderId, uint32_t receiverId, const QString &message);

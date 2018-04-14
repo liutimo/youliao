@@ -4,7 +4,7 @@
 #include <QMovie>
 #include <QHeaderView>
 #include <QFocusEvent>
-
+#include <QDebug>
 bool YLEmoticonWidget::isShow = false;
 
 YLEmoticonWidget::YLEmoticonWidget(QWidget *parent) : QWidget(parent)
@@ -14,6 +14,10 @@ YLEmoticonWidget::YLEmoticonWidget(QWidget *parent) : QWidget(parent)
     isShow = false;
 }
 
+YLEmoticonWidget::~YLEmoticonWidget()
+{
+    qDebug() << "YLEmoticonWidget()";
+}
 
 void YLEmoticonWidget::init()
 {
@@ -63,6 +67,12 @@ YLEmoticonLabel::YLEmoticonLabel(QWidget *parent) : QLabel(parent)
 {
     setMouseTracking(true);
     m_emoticon_movie = Q_NULLPTR;
+}
+
+YLEmoticonLabel::~YLEmoticonLabel()
+{
+    if (m_emoticon_movie)
+        delete m_emoticon_movie;
 }
 
 void YLEmoticonLabel::setEmoticon(int index)

@@ -144,6 +144,7 @@ void PduHandler::_HandleFriendListGetRespone(BasePdu *pdu)
             ylFriend.setFriendNickName(fri.friend_nick().c_str());
             ylFriend.setFriendSigature(fri.friend_sign_info().c_str());
             ylFriend.setFriendOnline(fri.friend_is_online());
+            ylFriend.setFriendRemark(fri.friend_remark().c_str());
             friends[groupId].push_back(ylFriend);
         }
     }

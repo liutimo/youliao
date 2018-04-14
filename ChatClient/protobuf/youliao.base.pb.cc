@@ -134,6 +134,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::base::FriendInfo, friend_email_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::base::FriendInfo, friend_phone_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::base::FriendInfo, friend_sign_info_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::base::FriendInfo, friend_remark_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::base::FriendInfo, friend_is_online_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::base::HeartBeat, _internal_metadata_),
@@ -144,7 +145,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::youliao::pdu::base::UserInfo)},
   { 13, -1, sizeof(::youliao::pdu::base::FriendInfo)},
-  { 27, -1, sizeof(::youliao::pdu::base::HeartBeat)},
+  { 28, -1, sizeof(::youliao::pdu::base::HeartBeat)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -180,65 +181,68 @@ void AddDescriptorsImpl() {
       "ount\030\002 \001(\r\022\020\n\010user_sex\030\003 \001(\r\022\021\n\tuser_nic"
       "k\030\004 \001(\t\022\027\n\017user_header_url\030\005 \001(\t\022\022\n\nuser"
       "_email\030\006 \001(\t\022\022\n\nuser_phone\030\007 \001(\t\022\026\n\016user"
-      "_sign_info\030\010 \001(\t\"\333\001\n\nFriendInfo\022\021\n\tfrien"
+      "_sign_info\030\010 \001(\t\"\362\001\n\nFriendInfo\022\021\n\tfrien"
       "d_id\030\001 \001(\r\022\026\n\016friend_account\030\002 \001(\r\022\022\n\nfr"
       "iend_sex\030\003 \001(\r\022\023\n\013friend_nick\030\004 \001(\t\022\031\n\021f"
       "riend_header_url\030\005 \001(\t\022\024\n\014friend_email\030\006"
       " \001(\t\022\024\n\014friend_phone\030\007 \001(\t\022\030\n\020friend_sig"
-      "n_info\030\010 \001(\t\022\030\n\020friend_is_online\030\t \001(\010\"\013"
-      "\n\tHeartBeat*m\n\tServiceID\022\014\n\010SID_ZERO\020\000\022\r"
-      "\n\tSID_LOGIN\020\001\022\023\n\017SID_FRIEND_LIST\020\002\022\016\n\nSI"
-      "D_SERVER\020\003\022\r\n\tSID_OTHER\020\004\022\017\n\013SID_MESSAGE"
-      "\020\005*\313\001\n\010LoginCID\022\022\n\016CID_LOGIN_ZERO\020\000\022 \n\033C"
-      "ID_LOGIN_REQUSET_MSGSERVER\020\201\002\022 \n\033CID_LOG"
-      "IN_RESPONE_MSGSERVER\020\202\002\022 \n\033CID_LOGIN_REQ"
-      "UEST_USERLOGIN\020\203\002\022 \n\033CID_LOGIN_RESPONE_U"
-      "SERLOGIN\020\204\002\022#\n\036CID_LOGIN_REQUEST_USERLOG"
-      "INOUT\020\205\002*\211\003\n\tServerCID\022\023\n\017CID_SERVER_ZER"
-      "O\020\000\022\036\n\031CID_SERVER_MSGSERVER_INFO\020\201\004\022 \n\033C"
-      "ID_SERVER_VALIDATE_REQUEST\020\202\004\022 \n\033CID_SER"
-      "VER_VALIDATE_RESPONE\020\203\004\022\033\n\026CID_SERVER_US"
-      "ER_LOGOUT\020\204\004\022\031\n\024CID_SERVER_ROUTE_MSG\020\205\004\022"
-      "\037\n\032CID_SERVER_ROUTE_BROADCAST\020\206\004\022*\n%CID_"
-      "SERVER_GET_ONLINE_FRIENDS_REQUEST\020\207\004\022*\n%"
-      "CID_SERVER_GET_ONLINE_FRIENDS_RESPONE\020\210\004"
-      "\022(\n#CID_SERVER_GET_SERVER_INDEX_REQUEST\020"
-      "\211\004\022(\n#CID_SERVER_GET_SERVER_INDEX_RESPON"
-      "E\020\212\004*8\n\010OtherCID\022\022\n\016CID_OTHER_ZERO\020\000\022\030\n\023"
-      "CID_OTHER_HEARTBEAT\020\201\006*\216\005\n\rFriendListCID"
-      "\022\027\n\023CID_FRIENDLIST_ZERO\020\000\022\037\n\032CID_FRIENDL"
-      "IST_GET_REQUEST\020\201\010\022\037\n\032CID_FRIENDLIST_GET"
-      "_RESPONE\020\202\010\022(\n#CID_FRIENDLIST_FRIEND_STA"
-      "TUS_CHANGE\020\203\010\022-\n(CID_FRIENDLIST_SIGNATUR"
-      "E_CHANGED_REQUEST\020\204\010\022-\n(CID_FRIENDLIST_S"
-      "IGNATURE_CHANGED_RESPONE\020\205\010\022,\n\'CID_FRIEN"
-      "DLIST_FRIEND_SIGNATURE_CHANGED\020\206\010\022,\n\'CID"
-      "_FRIENDLIST_MODEFY_FRIEND_GROUP_NAME\020\207\010\022"
-      ",\n\'CID_FRIENDLIST_ADD_FRIEND_GROUP_REQUE"
-      "ST\020\210\010\022,\n\'CID_FRIENDLIST_ADD_FRIEND_GROUP"
-      "_RESPONE\020\211\010\022&\n!CID_FRIENDLIST_GET_GROUPS"
-      "_REQUEST\020\212\010\022&\n!CID_FRIENDLIST_GET_GROUPS"
-      "_REPSONE\020\213\010\022/\n*CID_FRIENDLIST_RENAME_FRI"
-      "END_GROUP_REQUEST\020\214\010\022/\n*CID_FRIENDLIST_D"
-      "ELETE_FRIEND_GROUP_REQUEST\020\215\010\0220\n+CID_FRI"
-      "ENDLIST_MOVE_FRIEND_TO_GROUP_REQUEST\020\216\010*"
-      "9\n\nMessageCID\022\024\n\020CID_MESSAGE_ZERO\020\000\022\025\n\020C"
-      "ID_MESSAGE_DATA\020\201\n*[\n\nResultType\022\010\n\004NONE"
-      "\020\000\022\021\n\rNO_MSG_SERVER\020\001\022\023\n\017MSG_SERVER_FULL"
-      "\020\002\022\033\n\027SIGNATURE_MODIFY_FAILED\020\003*m\n\016UserS"
-      "tatusType\022\024\n\020USER_STATUS_ZERO\020\000\022\026\n\022USER_"
-      "STATUS_ONLINE\020\001\022\027\n\023USER_STATUS_OFFLINE\020\002"
-      "\022\024\n\020USER_STATUS_HIDE\020\003*\227\001\n\013MessageType\022\020"
-      "\n\014MESSAGE_ZERO\020\000\022\034\n\030MESSAGE_TYPE_SINGLE_"
-      "TEXT\020\001\022\035\n\031MESSAGE_TYPE_SINGLE_AUDIO\020\002\022\033\n"
-      "\027MESSAGE_TYPE_GROUP_TEXT\020\003\022\034\n\030MESSAGE_TY"
-      "PE_GROUP_AUDIO\020\004*}\n\020RouteMessageType\022\026\n\022"
-      "ROUTE_MESSAGE_ZERO\020\000\022&\n\"ROUTE_MESSAGE_FR"
-      "IEND_STATUS_CHANGE\020\001\022)\n%ROUTE_MESSAGE_FR"
-      "IEND_SIGNATURE_CHANGE\020\002b\006proto3"
+      "n_info\030\010 \001(\t\022\025\n\rfriend_remark\030\t \001(\t\022\030\n\020f"
+      "riend_is_online\030\n \001(\010\"\013\n\tHeartBeat*m\n\tSe"
+      "rviceID\022\014\n\010SID_ZERO\020\000\022\r\n\tSID_LOGIN\020\001\022\023\n\017"
+      "SID_FRIEND_LIST\020\002\022\016\n\nSID_SERVER\020\003\022\r\n\tSID"
+      "_OTHER\020\004\022\017\n\013SID_MESSAGE\020\005*\313\001\n\010LoginCID\022\022"
+      "\n\016CID_LOGIN_ZERO\020\000\022 \n\033CID_LOGIN_REQUSET_"
+      "MSGSERVER\020\201\002\022 \n\033CID_LOGIN_RESPONE_MSGSER"
+      "VER\020\202\002\022 \n\033CID_LOGIN_REQUEST_USERLOGIN\020\203\002"
+      "\022 \n\033CID_LOGIN_RESPONE_USERLOGIN\020\204\002\022#\n\036CI"
+      "D_LOGIN_REQUEST_USERLOGINOUT\020\205\002*\211\003\n\tServ"
+      "erCID\022\023\n\017CID_SERVER_ZERO\020\000\022\036\n\031CID_SERVER"
+      "_MSGSERVER_INFO\020\201\004\022 \n\033CID_SERVER_VALIDAT"
+      "E_REQUEST\020\202\004\022 \n\033CID_SERVER_VALIDATE_RESP"
+      "ONE\020\203\004\022\033\n\026CID_SERVER_USER_LOGOUT\020\204\004\022\031\n\024C"
+      "ID_SERVER_ROUTE_MSG\020\205\004\022\037\n\032CID_SERVER_ROU"
+      "TE_BROADCAST\020\206\004\022*\n%CID_SERVER_GET_ONLINE"
+      "_FRIENDS_REQUEST\020\207\004\022*\n%CID_SERVER_GET_ON"
+      "LINE_FRIENDS_RESPONE\020\210\004\022(\n#CID_SERVER_GE"
+      "T_SERVER_INDEX_REQUEST\020\211\004\022(\n#CID_SERVER_"
+      "GET_SERVER_INDEX_RESPONE\020\212\004*8\n\010OtherCID\022"
+      "\022\n\016CID_OTHER_ZERO\020\000\022\030\n\023CID_OTHER_HEARTBE"
+      "AT\020\201\006*\352\005\n\rFriendListCID\022\027\n\023CID_FRIENDLIS"
+      "T_ZERO\020\000\022\037\n\032CID_FRIENDLIST_GET_REQUEST\020\201"
+      "\010\022\037\n\032CID_FRIENDLIST_GET_RESPONE\020\202\010\022(\n#CI"
+      "D_FRIENDLIST_FRIEND_STATUS_CHANGE\020\203\010\022-\n("
+      "CID_FRIENDLIST_SIGNATURE_CHANGED_REQUEST"
+      "\020\204\010\022-\n(CID_FRIENDLIST_SIGNATURE_CHANGED_"
+      "RESPONE\020\205\010\022,\n\'CID_FRIENDLIST_FRIEND_SIGN"
+      "ATURE_CHANGED\020\206\010\022,\n\'CID_FRIENDLIST_MODEF"
+      "Y_FRIEND_GROUP_NAME\020\207\010\022,\n\'CID_FRIENDLIST"
+      "_ADD_FRIEND_GROUP_REQUEST\020\210\010\022,\n\'CID_FRIE"
+      "NDLIST_ADD_FRIEND_GROUP_RESPONE\020\211\010\022&\n!CI"
+      "D_FRIENDLIST_GET_GROUPS_REQUEST\020\212\010\022&\n!CI"
+      "D_FRIENDLIST_GET_GROUPS_REPSONE\020\213\010\022/\n*CI"
+      "D_FRIENDLIST_RENAME_FRIEND_GROUP_REQUEST"
+      "\020\214\010\022/\n*CID_FRIENDLIST_DELETE_FRIEND_GROU"
+      "P_REQUEST\020\215\010\0220\n+CID_FRIENDLIST_MOVE_FRIE"
+      "ND_TO_GROUP_REQUEST\020\216\010\022)\n$CID_FRIENDLIST"
+      "_DELETE_FRIEND_REQUEST\020\217\010\022/\n*CID_FRIENDL"
+      "IST_MODIFY_FRIEND_REMARK_RQUEST\020\220\010*9\n\nMe"
+      "ssageCID\022\024\n\020CID_MESSAGE_ZERO\020\000\022\025\n\020CID_ME"
+      "SSAGE_DATA\020\201\n*[\n\nResultType\022\010\n\004NONE\020\000\022\021\n"
+      "\rNO_MSG_SERVER\020\001\022\023\n\017MSG_SERVER_FULL\020\002\022\033\n"
+      "\027SIGNATURE_MODIFY_FAILED\020\003*m\n\016UserStatus"
+      "Type\022\024\n\020USER_STATUS_ZERO\020\000\022\026\n\022USER_STATU"
+      "S_ONLINE\020\001\022\027\n\023USER_STATUS_OFFLINE\020\002\022\024\n\020U"
+      "SER_STATUS_HIDE\020\003*\227\001\n\013MessageType\022\020\n\014MES"
+      "SAGE_ZERO\020\000\022\034\n\030MESSAGE_TYPE_SINGLE_TEXT\020"
+      "\001\022\035\n\031MESSAGE_TYPE_SINGLE_AUDIO\020\002\022\033\n\027MESS"
+      "AGE_TYPE_GROUP_TEXT\020\003\022\034\n\030MESSAGE_TYPE_GR"
+      "OUP_AUDIO\020\004*}\n\020RouteMessageType\022\026\n\022ROUTE"
+      "_MESSAGE_ZERO\020\000\022&\n\"ROUTE_MESSAGE_FRIEND_"
+      "STATUS_CHANGE\020\001\022)\n%ROUTE_MESSAGE_FRIEND_"
+      "SIGNATURE_CHANGE\020\002b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 2431);
+      descriptor, 2546);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "youliao.base.proto", &protobuf_RegisterTypes);
 }
@@ -351,6 +355,8 @@ bool FriendListCID_IsValid(int value) {
     case 1036:
     case 1037:
     case 1038:
+    case 1039:
+    case 1040:
       return true;
     default:
       return false;
@@ -1043,6 +1049,7 @@ const int FriendInfo::kFriendHeaderUrlFieldNumber;
 const int FriendInfo::kFriendEmailFieldNumber;
 const int FriendInfo::kFriendPhoneFieldNumber;
 const int FriendInfo::kFriendSignInfoFieldNumber;
+const int FriendInfo::kFriendRemarkFieldNumber;
 const int FriendInfo::kFriendIsOnlineFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -1079,6 +1086,10 @@ FriendInfo::FriendInfo(const FriendInfo& from)
   if (from.friend_sign_info().size() > 0) {
     friend_sign_info_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.friend_sign_info_);
   }
+  friend_remark_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.friend_remark().size() > 0) {
+    friend_remark_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.friend_remark_);
+  }
   ::memcpy(&friend_id_, &from.friend_id_,
     static_cast<size_t>(reinterpret_cast<char*>(&friend_is_online_) -
     reinterpret_cast<char*>(&friend_id_)) + sizeof(friend_is_online_));
@@ -1091,6 +1102,7 @@ void FriendInfo::SharedCtor() {
   friend_email_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   friend_phone_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   friend_sign_info_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  friend_remark_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&friend_id_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&friend_is_online_) -
       reinterpret_cast<char*>(&friend_id_)) + sizeof(friend_is_online_));
@@ -1108,6 +1120,7 @@ void FriendInfo::SharedDtor() {
   friend_email_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   friend_phone_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   friend_sign_info_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  friend_remark_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 void FriendInfo::SetCachedSize(int size) const {
@@ -1137,6 +1150,7 @@ void FriendInfo::Clear() {
   friend_email_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   friend_phone_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   friend_sign_info_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  friend_remark_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&friend_id_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&friend_is_online_) -
       reinterpret_cast<char*>(&friend_id_)) + sizeof(friend_is_online_));
@@ -1275,10 +1289,26 @@ bool FriendInfo::MergePartialFromCodedStream(
         break;
       }
 
-      // bool friend_is_online = 9;
+      // string friend_remark = 9;
       case 9: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(72u /* 72 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(74u /* 74 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_friend_remark()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->friend_remark().data(), static_cast<int>(this->friend_remark().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "youliao.pdu.base.FriendInfo.friend_remark"));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // bool friend_is_online = 10;
+      case 10: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(80u /* 80 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
@@ -1380,9 +1410,19 @@ void FriendInfo::SerializeWithCachedSizes(
       8, this->friend_sign_info(), output);
   }
 
-  // bool friend_is_online = 9;
+  // string friend_remark = 9;
+  if (this->friend_remark().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->friend_remark().data(), static_cast<int>(this->friend_remark().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "youliao.pdu.base.FriendInfo.friend_remark");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      9, this->friend_remark(), output);
+  }
+
+  // bool friend_is_online = 10;
   if (this->friend_is_online() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteBool(9, this->friend_is_online(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteBool(10, this->friend_is_online(), output);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -1469,9 +1509,20 @@ void FriendInfo::SerializeWithCachedSizes(
         8, this->friend_sign_info(), target);
   }
 
-  // bool friend_is_online = 9;
+  // string friend_remark = 9;
+  if (this->friend_remark().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->friend_remark().data(), static_cast<int>(this->friend_remark().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "youliao.pdu.base.FriendInfo.friend_remark");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        9, this->friend_remark(), target);
+  }
+
+  // bool friend_is_online = 10;
   if (this->friend_is_online() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(9, this->friend_is_online(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(10, this->friend_is_online(), target);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -1526,6 +1577,13 @@ size_t FriendInfo::ByteSizeLong() const {
         this->friend_sign_info());
   }
 
+  // string friend_remark = 9;
+  if (this->friend_remark().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->friend_remark());
+  }
+
   // uint32 friend_id = 1;
   if (this->friend_id() != 0) {
     total_size += 1 +
@@ -1547,7 +1605,7 @@ size_t FriendInfo::ByteSizeLong() const {
         this->friend_sex());
   }
 
-  // bool friend_is_online = 9;
+  // bool friend_is_online = 10;
   if (this->friend_is_online() != 0) {
     total_size += 1 + 1;
   }
@@ -1601,6 +1659,10 @@ void FriendInfo::MergeFrom(const FriendInfo& from) {
 
     friend_sign_info_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.friend_sign_info_);
   }
+  if (from.friend_remark().size() > 0) {
+
+    friend_remark_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.friend_remark_);
+  }
   if (from.friend_id() != 0) {
     set_friend_id(from.friend_id());
   }
@@ -1644,6 +1706,7 @@ void FriendInfo::InternalSwap(FriendInfo* other) {
   friend_email_.Swap(&other->friend_email_);
   friend_phone_.Swap(&other->friend_phone_);
   friend_sign_info_.Swap(&other->friend_sign_info_);
+  friend_remark_.Swap(&other->friend_remark_);
   swap(friend_id_, other->friend_id_);
   swap(friend_account_, other->friend_account_);
   swap(friend_sex_, other->friend_sex_);

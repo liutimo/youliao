@@ -164,12 +164,12 @@ void YLMainWidget::paintEvent(QPaintEvent *event)
     p.setBrush(QColor::fromRgb(40, 138, 221, 122));
     p.drawRect(rect());
 }
-
+#include <QApplication>
 void YLMainWidget::closeEvent(QCloseEvent *event)
 {
     YLBusiness::loginOut(m_user_info->user_id());
 
-    YLBasicWidget::closeEvent(event);
+    QApplication::quit();
 }
 
 /************************/

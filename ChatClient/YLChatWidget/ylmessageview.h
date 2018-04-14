@@ -9,10 +9,15 @@ class YLMessageView : public QWebEngineView
 public:
     explicit YLMessageView(QWidget *parent = Q_NULLPTR);
 
+    virtual ~YLMessageView();
+
     void addLeft(const QString &, const QString &);
     void addRight(const QString &, const QString&);
 public slots:
     void copy();
+
+private:
+    QWebChannel *channel;
 };
 
 #endif // YLMESSAGEVIEW_H

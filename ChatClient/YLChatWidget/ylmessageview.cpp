@@ -1,8 +1,10 @@
 #include "ylmessageview.h"
 #include <QWebChannel>
+#include <QDebug>
 #include "test.h"
 YLMessageView::YLMessageView(QWidget *parent) : QWebEngineView(parent)
 {
+    setAttribute(Qt::WA_DeleteOnClose);
     setWindowFlags(Qt::FramelessWindowHint);
     setMouseTracking(true);
     load(QUrl("qrc:/res/YLChatWidget/bubble.html"));
@@ -10,9 +12,16 @@ YLMessageView::YLMessageView(QWidget *parent) : QWebEngineView(parent)
 
     Test *t = new Test();
     t->setPage(page());
-    QWebChannel *channel = new QWebChannel(page());
+    channel = new QWebChannel(page());
     channel->registerObject("T", t);
     page()->setWebChannel(channel);
+}
+
+YLMessageView::~YLMessageView()
+{
+    if (channel)
+        delete channel;
+    qDebug() << "~YLMessageView()";
 }
 
 void YLMessageView::addLeft(const QString &head, const QString &content)

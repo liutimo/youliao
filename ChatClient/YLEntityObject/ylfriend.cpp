@@ -124,3 +124,12 @@ QString YLFriend::friendLastChatTime() const
 {
     return friend_last_chat_time_;
 }
+
+QString YLFriend::friendImageName() const
+{
+    QUrl url(friend_image_path_);
+    if (url.isValid())
+        return url.fileName();
+    else
+        return QString();
+}

@@ -106,3 +106,16 @@ message MoveFriendToGroupRequest
     uint32 friend_id = 2; //好友id
     uint32 group_id  = 3; //目的分组id
 }
+
+message DeleteFriendRequest
+{
+    uint32 user_id = 1;
+    uint32 friend_id = 2;
+}
+
+message ModifyFriendRemarkRequest
+{
+    uint32 user_id = 1;
+    uint32 friend_id = 2;
+    string friend_remark = 3;
+}

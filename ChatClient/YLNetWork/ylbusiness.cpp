@@ -171,3 +171,31 @@ void YLBusiness::moveFriendToGroup(uint32_t userId, uint32_t friendId, uint32_t 
     basePdu->writeMessage(&request);
     PduSender::instance()->addMessage(basePdu);
 }
+
+void YLBusiness::deleteFriend(uint32_t userId, uint32_t friendId)
+{
+    friendlist::DeleteFriendRequest request;
+    request.set_user_id(userId);
+    request.set_friend_id(friendId);
+
+    BasePdu *basePdu = new BasePdu;
+    basePdu->setSID(SID_FRIEND_LIST);
+    basePdu->setCID(CID_FRIENDLIST_DELETE_FRIEND_REQUEST);
+    basePdu->writeMessage(&request);
+    PduSender::instance()->addMessage(basePdu);
+}
+
+
+void YLBusiness::modifyFriendRemark(uint32_t userId, uint32_t friendId, const QString &friendRemark)
+{
+    friendlist::ModifyFriendRemarkRequest request;
+    request.set_user_id(userId);
+    request.set_friend_id(friendId);
+    request.set_friend_remark(friendRemark.toStdString());
+
+    BasePdu *basePdu = new BasePdu;
+    basePdu->setSID(SID_FRIEND_LIST);
+    basePdu->setCID(CID_FRIENDLIST_MODIFY_FRIEND_REMARK_RQUEST);
+    basePdu->writeMessage(&request);
+    PduSender::instance()->addMessage(basePdu);
+}

@@ -9,6 +9,7 @@ class YLModifyRemarkWidget : public YLMessageBox
 public:
     explicit YLModifyRemarkWidget(QWidget *parent = nullptr);
     void setDefalutText(const QString &);
+    QString getText();
 signals:
 
 public slots:

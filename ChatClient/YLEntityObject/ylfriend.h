@@ -2,10 +2,7 @@
 #define YLFRIEND_H
 
 #include <QObject>
-
-
-
-
+#include <QUrl>
 class YLFriend
 {
 public:
@@ -52,6 +49,8 @@ public:
     QString friendGroup() const;
 
     QString friendLastChatTime() const;
+
+    QString friendImageName() const;
 
     uint32_t friendId() const { return friend_id_; }
 
