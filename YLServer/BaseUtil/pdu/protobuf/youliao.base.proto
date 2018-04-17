@@ -36,6 +36,10 @@ enum ServerCID
     CID_SERVER_GET_ONLINE_FRIENDS_RESPONE = 0x0208;
     CID_SERVER_GET_SERVER_INDEX_REQUEST   = 0x0209;
     CID_SERVER_GET_SERVER_INDEX_RESPONE   = 0x020A;
+    CID_SERVER_ROUTE_MESSAGE              = 0x020B;     //MsgServer请求RouteServer转发消息
+    CID_SERVER_GET_FRIEND_ONLINE_STATUS   = 0x020C;     //RouteServer请求DBServer好友在线状态
+    CID_SERVER_ROUTE_TO_MESSAGE           = 0x020D;     //RouteServer发送MsgServer
+
 }
 
 enum OtherCID

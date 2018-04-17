@@ -42,7 +42,7 @@ message MsgServerInfo
 }
 
 //[1] 由msgServer发送给RouteServer,
-message RouteMessage
+message RouteStatusChange
 {
     uint32 user_id = 1;
     youliao.pdu.base.RouteMessageType route_status_type = 2;
@@ -69,13 +69,50 @@ message RouteGetOnlineFriendRespone
 }
 
 //[4] routeServer广播消息
-message RouteBroadcast
+message RouteBroadcastStatusChange
 {
     uint32 user_id = 1;
     repeated uint32 friends = 2;
     youliao.pdu.base.RouteMessageType route_status_type = 3;
     bytes attach_data = 20;
 }
+
+
+//[1] MsgServer请求RouteServer转发消息
+message RouteMessageForward
+{
+    uint32 user_id = 1;
+    uint32 friend_id = 2;
+    uint32 msg_id       = 3;
+    uint32 create_time  = 4;
+    youliao.pdu.base.MessageType message_type = 5;
+    bytes  message_data = 6;
+}
+
+//[2] RouteServer向DBServer请求好友在线状态
+//    如果RouteServer收到该回复，则表示好友在线
+message RouteGetFriendOnlineStatus
+{
+    uint32 user_id = 1;
+    uint32 friend_id = 2;
+    uint32 msg_id       = 3;
+    uint32 create_time  = 4;
+    youliao.pdu.base.MessageType message_type = 5;
+    bytes  message_data = 6;
+    uint32 msg_idx = 7;
+}
+
+//RouteServer发送到MsgServer
+message RouteMessage
+{
+    uint32 user_id = 1;
+    uint32 friend_id = 2;
+    uint32 msg_id       = 3;
+    uint32 create_time  = 4;
+    youliao.pdu.base.MessageType message_type = 5;
+    bytes  message_data = 6;
+}
+
 
 message GetServerIndexRequest
 {

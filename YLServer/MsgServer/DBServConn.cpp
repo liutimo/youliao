@@ -237,7 +237,7 @@ void DBServConn::_HandleFriendListRespone(BasePdu *pdu)
 
     //发送好友上线通知
     //之所以在这里发送，是因为DBServer是在获取好友列表时更新 在线好友列表
-    server::RouteMessage routeMessage;
+    server::RouteStatusChange routeMessage;
     routeMessage.set_user_id(clientConn->getUserId());
     routeMessage.set_route_status_type(base::ROUTE_MESSAGE_FRIEND_STATUS_CHANGE);
     set_attach_data(routeMessage, base::USER_STATUS_ONLINE);
@@ -278,7 +278,7 @@ void DBServConn::_HandleSignatureChangedRespone(BasePdu *pdu)
     {
         log("广播用户%d的个性签名修改状态到所有在线好友", userId);
         //修改成功。发送到路由服务器广播修改后的个性签名到好友
-        server::RouteMessage routeMessage;
+        server::RouteStatusChange routeMessage;
         routeMessage.set_user_id(userId);
         routeMessage.set_route_status_type(base::ROUTE_MESSAGE_FRIEND_SIGNATURE_CHANGE);
         routeMessage.set_attach_data(signatureChangeRespone.user_signature());

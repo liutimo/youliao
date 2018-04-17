@@ -124,6 +124,26 @@ namespace http
                     int len  = 0;
                     auto pPos = memfind(data, size, CONTENT_DISPOSITION, strlen(CONTENT_DISPOSITION));
 
+
+                    if (!pPos)
+                        return;
+                    char boundary[] = "youliao_youliao";
+                    len = pPos - data;
+                    pPos = memfind(pPos, size - len, HTTP_END_MARK, strlen(HTTP_END_MARK));
+
+                    auto sizeBegin = pPos + strlen(HTTP_END_MARK);
+                    len += strlen(HTTP_END_MARK);
+                    auto sizeEnd = memfind(sizeBegin, size - len, boundary, strlen(boundary));
+
+                    int sizeLen = sizeEnd - sizeBegin - 4;
+
+                    char *sizeStr = new char[sizeLen + 1];
+                    sizeStr[sizeLen] = '\0';
+                    memcpy(sizeStr, sizeBegin, sizeLen);
+
+                    std::cout << "size = " << atoi(sizeStr) << std::endl;
+
+
                     if (pPos != nullptr)
                     {
                         len = pPos - data;
@@ -151,22 +171,27 @@ namespace http
                                 if(!pPosHttpEnd)
                                     return;
                                 auto pPosFileStart = pPosHttpEnd + strlen(HTTP_END_MARK);
-
-                                len = pPosFileStart - data;
-
-                                char boundary[] = "youliao_youliao";
-                                len = pPosFileStart - data;
-                                auto pPosFileEnd = memfind(pPosFileStart, size - len, boundary, strlen(boundary), false);
-
-                                if (pPosFileEnd == nullptr) {
-                                    std::cout << "文件上传失败" << std::endl;
-                                    rep.stock_reply(reply::bad_request);
-                                    return;
-                                }
-
-                                std::cout << strlen(HTTP_END_MARK) << std::endl;
-
-                                int fileSize = pPosFileEnd - pPosFileStart - strlen(HTTP_END_MARK);
+//
+//                                len = pPosFileStart - data;
+//
+//
+//                                len = pPosFileStart - data;
+//                                auto pPosFileEnd = memfind(pPosFileStart, size - len, boundary, strlen(boundary), false);
+//
+////                                if (pPosFileEnd == nullptr) {
+////                                    std::cout << "文件上传失败" << std::endl;
+////                                    rep.stock_reply(reply::bad_request);
+////                                    return;
+////                                }
+//
+//                                std::cout << data << std::endl;
+//
+//
+//                                int fileSize =  0;
+//                                if ( pPosFileEnd)
+//                                    fileSize = pPosFileEnd - pPosFileStart - strlen(HTTP_END_MARK);
+//                                else
+//                                    fileSize = data + size - pPosFileStart - strlen(HTTP_END_MARK) - strlen(boundary);
 
                                 int flags = O_RDWR | O_CREAT | O_EXCL;
 
@@ -174,12 +199,15 @@ namespace http
 
                                 int fd = open64(filePath.c_str(), flags, 00640);
 
-                                pwrite(fd, pPosFileStart, fileSize, 0);
+                                pwrite(fd, pPosFileStart, atoi(sizeStr), 0);
                                 fsync(fd);
                                 close(fd);
                                 rep.stock_reply(reply::ok);
 
                                 std::cout << "文件上传成功" << std::endl;
+
+                                delete []data;
+                                delete []sizeStr;
                                 return;
                             }
                         }

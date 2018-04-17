@@ -22,7 +22,7 @@ int main() {
 
     setMsgServIdx(10);
     netlib_init();
-    netlib_listen("127.0.0.1", 8002, clientconn_callback, nullptr);
+    netlib_listen("127.0.0.1", 8001, clientconn_callback, nullptr);
 
     serv_info_t *s = new serv_info_t;
     s->server_ip = "127.0.0.1";

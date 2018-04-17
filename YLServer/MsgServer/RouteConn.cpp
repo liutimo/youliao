@@ -4,7 +4,7 @@
 
 #include "RouteConn.h"
 #include <pdu/protobuf/youliao.friendlist.pb.h>
-#include <network/ServerInfo.h>
+#include "pdu/protobuf/youliao.message.pb.h"
 #include "network/netlib.h"
 #include "pdu/protobuf/youliao.login.pb.h"
 #include "pdu/protobuf/youliao.server.pb.h"
@@ -122,6 +122,9 @@ void RouteConn::handlePdu(BasePdu *pdu)
         case base::CID_SERVER_ROUTE_BROADCAST:
             _HandleRouteBroadcast(pdu);
             break;
+        case base::CID_SERVER_ROUTE_TO_MESSAGE:
+            _HandleRouteToMessage(pdu);
+            break;
         default:
             break;
     }
@@ -144,7 +147,7 @@ void RouteConn::_HandleGetServerIndexRequest(BasePdu *basePdu)
 
 void RouteConn::_HandleRouteBroadcast(BasePdu *basePdu)
 {
-    server::RouteBroadcast routeBroadcast;
+    server::RouteBroadcastStatusChange routeBroadcast;
     routeBroadcast.ParseFromString(basePdu->getMessage());
 
     int i = routeBroadcast.friends_size();
@@ -195,4 +198,30 @@ void RouteConn::_HandleRouteBroadcast(BasePdu *basePdu)
 
         user->getConn()->sendBasePdu(&pdu);
     }
+}
+
+void RouteConn::_HandleRouteToMessage(BasePdu *basePdu)
+{
+    server::RouteMessage routeMessage;
+    routeMessage.ParseFromString(basePdu->getMessage());
+
+    auto user = UserManager::instance()->getUser(routeMessage.friend_id());
+
+    if (!user)
+        return;;
+
+    message::MessageData messageData;
+    messageData.set_from_user_id(routeMessage.user_id());
+    messageData.set_to_user_id(routeMessage.friend_id());
+    messageData.set_message_data(routeMessage.message_data());
+    messageData.set_message_type(routeMessage.message_type());
+    messageData.set_create_time(routeMessage.create_time());
+    messageData.set_msg_id(routeMessage.msg_id());
+
+    BasePdu basePdu1;
+    basePdu1.setSID(base::SID_MESSAGE);
+    basePdu1.setCID(base::CID_MESSAGE_DATA);
+    basePdu1.writeMessage(&messageData);
+
+    user->getConn()->sendBasePdu(&basePdu1);
 }

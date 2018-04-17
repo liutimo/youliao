@@ -42,11 +42,11 @@ class MsgServerInfoDefaultTypeInternal {
   ::google::protobuf::internal::ExplicitlyConstructed<MsgServerInfo>
       _instance;
 } _MsgServerInfo_default_instance_;
-class RouteMessageDefaultTypeInternal {
+class RouteStatusChangeDefaultTypeInternal {
  public:
-  ::google::protobuf::internal::ExplicitlyConstructed<RouteMessage>
+  ::google::protobuf::internal::ExplicitlyConstructed<RouteStatusChange>
       _instance;
-} _RouteMessage_default_instance_;
+} _RouteStatusChange_default_instance_;
 class RouteGetOnlineFirendRequestDefaultTypeInternal {
  public:
   ::google::protobuf::internal::ExplicitlyConstructed<RouteGetOnlineFirendRequest>
@@ -62,11 +62,26 @@ class RouteGetOnlineFriendResponeDefaultTypeInternal {
   ::google::protobuf::internal::ExplicitlyConstructed<RouteGetOnlineFriendRespone>
       _instance;
 } _RouteGetOnlineFriendRespone_default_instance_;
-class RouteBroadcastDefaultTypeInternal {
+class RouteBroadcastStatusChangeDefaultTypeInternal {
  public:
-  ::google::protobuf::internal::ExplicitlyConstructed<RouteBroadcast>
+  ::google::protobuf::internal::ExplicitlyConstructed<RouteBroadcastStatusChange>
       _instance;
-} _RouteBroadcast_default_instance_;
+} _RouteBroadcastStatusChange_default_instance_;
+class RouteMessageForwardDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<RouteMessageForward>
+      _instance;
+} _RouteMessageForward_default_instance_;
+class RouteGetFriendOnlineStatusDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<RouteGetFriendOnlineStatus>
+      _instance;
+} _RouteGetFriendOnlineStatus_default_instance_;
+class RouteMessageDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<RouteMessage>
+      _instance;
+} _RouteMessage_default_instance_;
 class GetServerIndexRequestDefaultTypeInternal {
  public:
   ::google::protobuf::internal::ExplicitlyConstructed<GetServerIndexRequest>
@@ -166,7 +181,7 @@ void InitDefaultsMsgServerInfo() {
   ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsMsgServerInfoImpl);
 }
 
-void InitDefaultsRouteMessageImpl() {
+void InitDefaultsRouteStatusChangeImpl() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
 #ifdef GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
@@ -175,16 +190,16 @@ void InitDefaultsRouteMessageImpl() {
   ::google::protobuf::internal::InitProtobufDefaults();
 #endif  // GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
   {
-    void* ptr = &::youliao::pdu::server::_RouteMessage_default_instance_;
-    new (ptr) ::youliao::pdu::server::RouteMessage();
+    void* ptr = &::youliao::pdu::server::_RouteStatusChange_default_instance_;
+    new (ptr) ::youliao::pdu::server::RouteStatusChange();
     ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
   }
-  ::youliao::pdu::server::RouteMessage::InitAsDefaultInstance();
+  ::youliao::pdu::server::RouteStatusChange::InitAsDefaultInstance();
 }
 
-void InitDefaultsRouteMessage() {
+void InitDefaultsRouteStatusChange() {
   static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
-  ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsRouteMessageImpl);
+  ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsRouteStatusChangeImpl);
 }
 
 void InitDefaultsRouteGetOnlineFirendRequestImpl() {
@@ -250,7 +265,7 @@ void InitDefaultsRouteGetOnlineFriendRespone() {
   ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsRouteGetOnlineFriendResponeImpl);
 }
 
-void InitDefaultsRouteBroadcastImpl() {
+void InitDefaultsRouteBroadcastStatusChangeImpl() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
 #ifdef GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
@@ -259,16 +274,79 @@ void InitDefaultsRouteBroadcastImpl() {
   ::google::protobuf::internal::InitProtobufDefaults();
 #endif  // GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
   {
-    void* ptr = &::youliao::pdu::server::_RouteBroadcast_default_instance_;
-    new (ptr) ::youliao::pdu::server::RouteBroadcast();
+    void* ptr = &::youliao::pdu::server::_RouteBroadcastStatusChange_default_instance_;
+    new (ptr) ::youliao::pdu::server::RouteBroadcastStatusChange();
     ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
   }
-  ::youliao::pdu::server::RouteBroadcast::InitAsDefaultInstance();
+  ::youliao::pdu::server::RouteBroadcastStatusChange::InitAsDefaultInstance();
 }
 
-void InitDefaultsRouteBroadcast() {
+void InitDefaultsRouteBroadcastStatusChange() {
   static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
-  ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsRouteBroadcastImpl);
+  ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsRouteBroadcastStatusChangeImpl);
+}
+
+void InitDefaultsRouteMessageForwardImpl() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+#ifdef GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  ::google::protobuf::internal::InitProtobufDefaultsForceUnique();
+#else
+  ::google::protobuf::internal::InitProtobufDefaults();
+#endif  // GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  {
+    void* ptr = &::youliao::pdu::server::_RouteMessageForward_default_instance_;
+    new (ptr) ::youliao::pdu::server::RouteMessageForward();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::youliao::pdu::server::RouteMessageForward::InitAsDefaultInstance();
+}
+
+void InitDefaultsRouteMessageForward() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsRouteMessageForwardImpl);
+}
+
+void InitDefaultsRouteGetFriendOnlineStatusImpl() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+#ifdef GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  ::google::protobuf::internal::InitProtobufDefaultsForceUnique();
+#else
+  ::google::protobuf::internal::InitProtobufDefaults();
+#endif  // GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  {
+    void* ptr = &::youliao::pdu::server::_RouteGetFriendOnlineStatus_default_instance_;
+    new (ptr) ::youliao::pdu::server::RouteGetFriendOnlineStatus();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::youliao::pdu::server::RouteGetFriendOnlineStatus::InitAsDefaultInstance();
+}
+
+void InitDefaultsRouteGetFriendOnlineStatus() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsRouteGetFriendOnlineStatusImpl);
+}
+
+void InitDefaultsRouteMessageImpl() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+#ifdef GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  ::google::protobuf::internal::InitProtobufDefaultsForceUnique();
+#else
+  ::google::protobuf::internal::InitProtobufDefaults();
+#endif  // GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  {
+    void* ptr = &::youliao::pdu::server::_RouteMessage_default_instance_;
+    new (ptr) ::youliao::pdu::server::RouteMessage();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::youliao::pdu::server::RouteMessage::InitAsDefaultInstance();
+}
+
+void InitDefaultsRouteMessage() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsRouteMessageImpl);
 }
 
 void InitDefaultsGetServerIndexRequestImpl() {
@@ -313,7 +391,7 @@ void InitDefaultsGetServerIndexRespone() {
   ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsGetServerIndexResponeImpl);
 }
 
-::google::protobuf::Metadata file_level_metadata[11];
+::google::protobuf::Metadata file_level_metadata[14];
 
 const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   ~0u,  // no _has_bits_
@@ -351,13 +429,13 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::MsgServerInfo, max_conn_count_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::MsgServerInfo, cur_conn_count_),
   ~0u,  // no _has_bits_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteMessage, _internal_metadata_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteStatusChange, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteMessage, user_id_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteMessage, route_status_type_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteMessage, attach_data_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteStatusChange, user_id_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteStatusChange, route_status_type_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteStatusChange, attach_data_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteGetOnlineFirendRequest, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -385,14 +463,48 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteGetOnlineFriendRespone, route_status_type_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteGetOnlineFriendRespone, attach_data_),
   ~0u,  // no _has_bits_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteBroadcast, _internal_metadata_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteBroadcastStatusChange, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteBroadcast, user_id_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteBroadcast, friends_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteBroadcast, route_status_type_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteBroadcast, attach_data_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteBroadcastStatusChange, user_id_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteBroadcastStatusChange, friends_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteBroadcastStatusChange, route_status_type_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteBroadcastStatusChange, attach_data_),
+  ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteMessageForward, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteMessageForward, user_id_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteMessageForward, friend_id_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteMessageForward, msg_id_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteMessageForward, create_time_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteMessageForward, message_type_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteMessageForward, message_data_),
+  ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteGetFriendOnlineStatus, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteGetFriendOnlineStatus, user_id_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteGetFriendOnlineStatus, friend_id_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteGetFriendOnlineStatus, msg_id_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteGetFriendOnlineStatus, create_time_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteGetFriendOnlineStatus, message_type_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteGetFriendOnlineStatus, message_data_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteGetFriendOnlineStatus, msg_idx_),
+  ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteMessage, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteMessage, user_id_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteMessage, friend_id_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteMessage, msg_id_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteMessage, create_time_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteMessage, message_type_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::RouteMessage, message_data_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::GetServerIndexRequest, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -410,13 +522,16 @@ static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROT
   { 9, -1, sizeof(::youliao::pdu::server::ValidateRespone)},
   { 19, -1, sizeof(::youliao::pdu::server::UserOffline)},
   { 25, -1, sizeof(::youliao::pdu::server::MsgServerInfo)},
-  { 34, -1, sizeof(::youliao::pdu::server::RouteMessage)},
+  { 34, -1, sizeof(::youliao::pdu::server::RouteStatusChange)},
   { 42, -1, sizeof(::youliao::pdu::server::RouteGetOnlineFirendRequest)},
   { 50, 57, sizeof(::youliao::pdu::server::RouteGetOnlineFriendRespone_OnlineFirendsEntry_DoNotUse)},
   { 59, -1, sizeof(::youliao::pdu::server::RouteGetOnlineFriendRespone)},
-  { 68, -1, sizeof(::youliao::pdu::server::RouteBroadcast)},
-  { 77, -1, sizeof(::youliao::pdu::server::GetServerIndexRequest)},
-  { 82, -1, sizeof(::youliao::pdu::server::GetServerIndexRespone)},
+  { 68, -1, sizeof(::youliao::pdu::server::RouteBroadcastStatusChange)},
+  { 77, -1, sizeof(::youliao::pdu::server::RouteMessageForward)},
+  { 88, -1, sizeof(::youliao::pdu::server::RouteGetFriendOnlineStatus)},
+  { 100, -1, sizeof(::youliao::pdu::server::RouteMessage)},
+  { 111, -1, sizeof(::youliao::pdu::server::GetServerIndexRequest)},
+  { 116, -1, sizeof(::youliao::pdu::server::GetServerIndexRespone)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -424,11 +539,14 @@ static ::google::protobuf::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::server::_ValidateRespone_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::server::_UserOffline_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::server::_MsgServerInfo_default_instance_),
-  reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::server::_RouteMessage_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::server::_RouteStatusChange_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::server::_RouteGetOnlineFirendRequest_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::server::_RouteGetOnlineFriendRespone_OnlineFirendsEntry_DoNotUse_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::server::_RouteGetOnlineFriendRespone_default_instance_),
-  reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::server::_RouteBroadcast_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::server::_RouteBroadcastStatusChange_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::server::_RouteMessageForward_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::server::_RouteGetFriendOnlineStatus_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::server::_RouteMessage_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::server::_GetServerIndexRequest_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::server::_GetServerIndexRespone_default_instance_),
 };
@@ -449,7 +567,7 @@ void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) GOOGLE_PROTOBUF_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 11);
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 14);
 }
 
 void AddDescriptorsImpl() {
@@ -465,29 +583,43 @@ void AddDescriptorsImpl() {
       "e.UserInfo\022\023\n\013attach_data\030\024 \001(\014\"\036\n\013UserO"
       "ffline\022\017\n\007user_id\030\001 \001(\r\"Y\n\rMsgServerInfo"
       "\022\n\n\002ip\030\001 \001(\t\022\014\n\004port\030\002 \001(\r\022\026\n\016max_conn_c"
-      "ount\030\003 \001(\r\022\026\n\016cur_conn_count\030\004 \001(\r\"s\n\014Ro"
-      "uteMessage\022\017\n\007user_id\030\001 \001(\r\022=\n\021route_sta"
-      "tus_type\030\002 \001(\0162\".youliao.pdu.base.RouteM"
-      "essageType\022\023\n\013attach_data\030\024 \001(\014\"\202\001\n\033Rout"
-      "eGetOnlineFirendRequest\022\017\n\007user_id\030\001 \001(\r"
-      "\022=\n\021route_status_type\030\002 \001(\0162\".youliao.pd"
-      "u.base.RouteMessageType\022\023\n\013attach_data\030\024"
-      " \001(\014\"\224\002\n\033RouteGetOnlineFriendRespone\022\017\n\007"
-      "user_id\030\001 \001(\r\022Z\n\016online_firends\030\002 \003(\0132B."
-      "youliao.pdu.server.RouteGetOnlineFriendR"
-      "espone.OnlineFirendsEntry\022=\n\021route_statu"
-      "s_type\030\003 \001(\0162\".youliao.pdu.base.RouteMes"
-      "sageType\022\023\n\013attach_data\030\024 \001(\014\0324\n\022OnlineF"
-      "irendsEntry\022\013\n\003key\030\001 \001(\r\022\r\n\005value\030\002 \001(\r:"
-      "\0028\001\"\206\001\n\016RouteBroadcast\022\017\n\007user_id\030\001 \001(\r\022"
-      "\017\n\007friends\030\002 \003(\r\022=\n\021route_status_type\030\003 "
-      "\001(\0162\".youliao.pdu.base.RouteMessageType\022"
-      "\023\n\013attach_data\030\024 \001(\014\"\027\n\025GetServerIndexRe"
-      "quest\"&\n\025GetServerIndexRespone\022\r\n\005index\030"
-      "\001 \001(\rb\006proto3"
+      "ount\030\003 \001(\r\022\026\n\016cur_conn_count\030\004 \001(\r\"x\n\021Ro"
+      "uteStatusChange\022\017\n\007user_id\030\001 \001(\r\022=\n\021rout"
+      "e_status_type\030\002 \001(\0162\".youliao.pdu.base.R"
+      "outeMessageType\022\023\n\013attach_data\030\024 \001(\014\"\202\001\n"
+      "\033RouteGetOnlineFirendRequest\022\017\n\007user_id\030"
+      "\001 \001(\r\022=\n\021route_status_type\030\002 \001(\0162\".youli"
+      "ao.pdu.base.RouteMessageType\022\023\n\013attach_d"
+      "ata\030\024 \001(\014\"\224\002\n\033RouteGetOnlineFriendRespon"
+      "e\022\017\n\007user_id\030\001 \001(\r\022Z\n\016online_firends\030\002 \003"
+      "(\0132B.youliao.pdu.server.RouteGetOnlineFr"
+      "iendRespone.OnlineFirendsEntry\022=\n\021route_"
+      "status_type\030\003 \001(\0162\".youliao.pdu.base.Rou"
+      "teMessageType\022\023\n\013attach_data\030\024 \001(\014\0324\n\022On"
+      "lineFirendsEntry\022\013\n\003key\030\001 \001(\r\022\r\n\005value\030\002"
+      " \001(\r:\0028\001\"\222\001\n\032RouteBroadcastStatusChange\022"
+      "\017\n\007user_id\030\001 \001(\r\022\017\n\007friends\030\002 \003(\r\022=\n\021rou"
+      "te_status_type\030\003 \001(\0162\".youliao.pdu.base."
+      "RouteMessageType\022\023\n\013attach_data\030\024 \001(\014\"\251\001"
+      "\n\023RouteMessageForward\022\017\n\007user_id\030\001 \001(\r\022\021"
+      "\n\tfriend_id\030\002 \001(\r\022\016\n\006msg_id\030\003 \001(\r\022\023\n\013cre"
+      "ate_time\030\004 \001(\r\0223\n\014message_type\030\005 \001(\0162\035.y"
+      "ouliao.pdu.base.MessageType\022\024\n\014message_d"
+      "ata\030\006 \001(\014\"\301\001\n\032RouteGetFriendOnlineStatus"
+      "\022\017\n\007user_id\030\001 \001(\r\022\021\n\tfriend_id\030\002 \001(\r\022\016\n\006"
+      "msg_id\030\003 \001(\r\022\023\n\013create_time\030\004 \001(\r\0223\n\014mes"
+      "sage_type\030\005 \001(\0162\035.youliao.pdu.base.Messa"
+      "geType\022\024\n\014message_data\030\006 \001(\014\022\017\n\007msg_idx\030"
+      "\007 \001(\r\"\242\001\n\014RouteMessage\022\017\n\007user_id\030\001 \001(\r\022"
+      "\021\n\tfriend_id\030\002 \001(\r\022\016\n\006msg_id\030\003 \001(\r\022\023\n\013cr"
+      "eate_time\030\004 \001(\r\0223\n\014message_type\030\005 \001(\0162\035."
+      "youliao.pdu.base.MessageType\022\024\n\014message_"
+      "data\030\006 \001(\014\"\027\n\025GetServerIndexRequest\"&\n\025G"
+      "etServerIndexRespone\022\r\n\005index\030\001 \001(\rb\006pro"
+      "to3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 1173);
+      descriptor, 1723);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "youliao.server.proto", &protobuf_RegisterTypes);
   ::protobuf_youliao_2ebase_2eproto::AddDescriptors();
@@ -1944,23 +2076,23 @@ void MsgServerInfo::InternalSwap(MsgServerInfo* other) {
 
 // ===================================================================
 
-void RouteMessage::InitAsDefaultInstance() {
+void RouteStatusChange::InitAsDefaultInstance() {
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int RouteMessage::kUserIdFieldNumber;
-const int RouteMessage::kRouteStatusTypeFieldNumber;
-const int RouteMessage::kAttachDataFieldNumber;
+const int RouteStatusChange::kUserIdFieldNumber;
+const int RouteStatusChange::kRouteStatusTypeFieldNumber;
+const int RouteStatusChange::kAttachDataFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
-RouteMessage::RouteMessage()
+RouteStatusChange::RouteStatusChange()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
-    ::protobuf_youliao_2eserver_2eproto::InitDefaultsRouteMessage();
+    ::protobuf_youliao_2eserver_2eproto::InitDefaultsRouteStatusChange();
   }
   SharedCtor();
-  // @@protoc_insertion_point(constructor:youliao.pdu.server.RouteMessage)
+  // @@protoc_insertion_point(constructor:youliao.pdu.server.RouteStatusChange)
 }
-RouteMessage::RouteMessage(const RouteMessage& from)
+RouteStatusChange::RouteStatusChange(const RouteStatusChange& from)
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
       _cached_size_(0) {
@@ -1972,10 +2104,10 @@ RouteMessage::RouteMessage(const RouteMessage& from)
   ::memcpy(&user_id_, &from.user_id_,
     static_cast<size_t>(reinterpret_cast<char*>(&route_status_type_) -
     reinterpret_cast<char*>(&user_id_)) + sizeof(route_status_type_));
-  // @@protoc_insertion_point(copy_constructor:youliao.pdu.server.RouteMessage)
+  // @@protoc_insertion_point(copy_constructor:youliao.pdu.server.RouteStatusChange)
 }
 
-void RouteMessage::SharedCtor() {
+void RouteStatusChange::SharedCtor() {
   attach_data_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&user_id_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&route_status_type_) -
@@ -1983,33 +2115,33 @@ void RouteMessage::SharedCtor() {
   _cached_size_ = 0;
 }
 
-RouteMessage::~RouteMessage() {
-  // @@protoc_insertion_point(destructor:youliao.pdu.server.RouteMessage)
+RouteStatusChange::~RouteStatusChange() {
+  // @@protoc_insertion_point(destructor:youliao.pdu.server.RouteStatusChange)
   SharedDtor();
 }
 
-void RouteMessage::SharedDtor() {
+void RouteStatusChange::SharedDtor() {
   attach_data_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
-void RouteMessage::SetCachedSize(int size) const {
+void RouteStatusChange::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* RouteMessage::descriptor() {
+const ::google::protobuf::Descriptor* RouteStatusChange::descriptor() {
   ::protobuf_youliao_2eserver_2eproto::protobuf_AssignDescriptorsOnce();
   return ::protobuf_youliao_2eserver_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
 }
 
-const RouteMessage& RouteMessage::default_instance() {
-  ::protobuf_youliao_2eserver_2eproto::InitDefaultsRouteMessage();
+const RouteStatusChange& RouteStatusChange::default_instance() {
+  ::protobuf_youliao_2eserver_2eproto::InitDefaultsRouteStatusChange();
   return *internal_default_instance();
 }
 
 
-void RouteMessage::Clear() {
-// @@protoc_insertion_point(message_clear_start:youliao.pdu.server.RouteMessage)
+void RouteStatusChange::Clear() {
+// @@protoc_insertion_point(message_clear_start:youliao.pdu.server.RouteStatusChange)
   ::google::protobuf::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -2021,11 +2153,11 @@ void RouteMessage::Clear() {
   _internal_metadata_.Clear();
 }
 
-bool RouteMessage::MergePartialFromCodedStream(
+bool RouteStatusChange::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:youliao.pdu.server.RouteMessage)
+  // @@protoc_insertion_point(parse_start:youliao.pdu.server.RouteStatusChange)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(16383u);
     tag = p.first;
@@ -2084,17 +2216,17 @@ bool RouteMessage::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:youliao.pdu.server.RouteMessage)
+  // @@protoc_insertion_point(parse_success:youliao.pdu.server.RouteStatusChange)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:youliao.pdu.server.RouteMessage)
+  // @@protoc_insertion_point(parse_failure:youliao.pdu.server.RouteStatusChange)
   return false;
 #undef DO_
 }
 
-void RouteMessage::SerializeWithCachedSizes(
+void RouteStatusChange::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:youliao.pdu.server.RouteMessage)
+  // @@protoc_insertion_point(serialize_start:youliao.pdu.server.RouteStatusChange)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -2119,13 +2251,13 @@ void RouteMessage::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
   }
-  // @@protoc_insertion_point(serialize_end:youliao.pdu.server.RouteMessage)
+  // @@protoc_insertion_point(serialize_end:youliao.pdu.server.RouteStatusChange)
 }
 
-::google::protobuf::uint8* RouteMessage::InternalSerializeWithCachedSizesToArray(
+::google::protobuf::uint8* RouteStatusChange::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-  // @@protoc_insertion_point(serialize_to_array_start:youliao.pdu.server.RouteMessage)
+  // @@protoc_insertion_point(serialize_to_array_start:youliao.pdu.server.RouteStatusChange)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -2151,12 +2283,12 @@ void RouteMessage::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:youliao.pdu.server.RouteMessage)
+  // @@protoc_insertion_point(serialize_to_array_end:youliao.pdu.server.RouteStatusChange)
   return target;
 }
 
-size_t RouteMessage::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:youliao.pdu.server.RouteMessage)
+size_t RouteStatusChange::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:youliao.pdu.server.RouteStatusChange)
   size_t total_size = 0;
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -2191,23 +2323,23 @@ size_t RouteMessage::ByteSizeLong() const {
   return total_size;
 }
 
-void RouteMessage::MergeFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:youliao.pdu.server.RouteMessage)
+void RouteStatusChange::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:youliao.pdu.server.RouteStatusChange)
   GOOGLE_DCHECK_NE(&from, this);
-  const RouteMessage* source =
-      ::google::protobuf::internal::DynamicCastToGenerated<const RouteMessage>(
+  const RouteStatusChange* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const RouteStatusChange>(
           &from);
   if (source == NULL) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:youliao.pdu.server.RouteMessage)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:youliao.pdu.server.RouteStatusChange)
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:youliao.pdu.server.RouteMessage)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:youliao.pdu.server.RouteStatusChange)
     MergeFrom(*source);
   }
 }
 
-void RouteMessage::MergeFrom(const RouteMessage& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:youliao.pdu.server.RouteMessage)
+void RouteStatusChange::MergeFrom(const RouteStatusChange& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:youliao.pdu.server.RouteStatusChange)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   ::google::protobuf::uint32 cached_has_bits = 0;
@@ -2225,29 +2357,29 @@ void RouteMessage::MergeFrom(const RouteMessage& from) {
   }
 }
 
-void RouteMessage::CopyFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:youliao.pdu.server.RouteMessage)
+void RouteStatusChange::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:youliao.pdu.server.RouteStatusChange)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void RouteMessage::CopyFrom(const RouteMessage& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:youliao.pdu.server.RouteMessage)
+void RouteStatusChange::CopyFrom(const RouteStatusChange& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:youliao.pdu.server.RouteStatusChange)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool RouteMessage::IsInitialized() const {
+bool RouteStatusChange::IsInitialized() const {
   return true;
 }
 
-void RouteMessage::Swap(RouteMessage* other) {
+void RouteStatusChange::Swap(RouteStatusChange* other) {
   if (other == this) return;
   InternalSwap(other);
 }
-void RouteMessage::InternalSwap(RouteMessage* other) {
+void RouteStatusChange::InternalSwap(RouteStatusChange* other) {
   using std::swap;
   attach_data_.Swap(&other->attach_data_);
   swap(user_id_, other->user_id_);
@@ -2256,7 +2388,7 @@ void RouteMessage::InternalSwap(RouteMessage* other) {
   swap(_cached_size_, other->_cached_size_);
 }
 
-::google::protobuf::Metadata RouteMessage::GetMetadata() const {
+::google::protobuf::Metadata RouteStatusChange::GetMetadata() const {
   protobuf_youliao_2eserver_2eproto::protobuf_AssignDescriptorsOnce();
   return ::protobuf_youliao_2eserver_2eproto::file_level_metadata[kIndexInFileMessages];
 }
@@ -3041,24 +3173,24 @@ void RouteGetOnlineFriendRespone::InternalSwap(RouteGetOnlineFriendRespone* othe
 
 // ===================================================================
 
-void RouteBroadcast::InitAsDefaultInstance() {
+void RouteBroadcastStatusChange::InitAsDefaultInstance() {
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int RouteBroadcast::kUserIdFieldNumber;
-const int RouteBroadcast::kFriendsFieldNumber;
-const int RouteBroadcast::kRouteStatusTypeFieldNumber;
-const int RouteBroadcast::kAttachDataFieldNumber;
+const int RouteBroadcastStatusChange::kUserIdFieldNumber;
+const int RouteBroadcastStatusChange::kFriendsFieldNumber;
+const int RouteBroadcastStatusChange::kRouteStatusTypeFieldNumber;
+const int RouteBroadcastStatusChange::kAttachDataFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
-RouteBroadcast::RouteBroadcast()
+RouteBroadcastStatusChange::RouteBroadcastStatusChange()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
-    ::protobuf_youliao_2eserver_2eproto::InitDefaultsRouteBroadcast();
+    ::protobuf_youliao_2eserver_2eproto::InitDefaultsRouteBroadcastStatusChange();
   }
   SharedCtor();
-  // @@protoc_insertion_point(constructor:youliao.pdu.server.RouteBroadcast)
+  // @@protoc_insertion_point(constructor:youliao.pdu.server.RouteBroadcastStatusChange)
 }
-RouteBroadcast::RouteBroadcast(const RouteBroadcast& from)
+RouteBroadcastStatusChange::RouteBroadcastStatusChange(const RouteBroadcastStatusChange& from)
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
       friends_(from.friends_),
@@ -3071,10 +3203,10 @@ RouteBroadcast::RouteBroadcast(const RouteBroadcast& from)
   ::memcpy(&user_id_, &from.user_id_,
     static_cast<size_t>(reinterpret_cast<char*>(&route_status_type_) -
     reinterpret_cast<char*>(&user_id_)) + sizeof(route_status_type_));
-  // @@protoc_insertion_point(copy_constructor:youliao.pdu.server.RouteBroadcast)
+  // @@protoc_insertion_point(copy_constructor:youliao.pdu.server.RouteBroadcastStatusChange)
 }
 
-void RouteBroadcast::SharedCtor() {
+void RouteBroadcastStatusChange::SharedCtor() {
   attach_data_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&user_id_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&route_status_type_) -
@@ -3082,33 +3214,33 @@ void RouteBroadcast::SharedCtor() {
   _cached_size_ = 0;
 }
 
-RouteBroadcast::~RouteBroadcast() {
-  // @@protoc_insertion_point(destructor:youliao.pdu.server.RouteBroadcast)
+RouteBroadcastStatusChange::~RouteBroadcastStatusChange() {
+  // @@protoc_insertion_point(destructor:youliao.pdu.server.RouteBroadcastStatusChange)
   SharedDtor();
 }
 
-void RouteBroadcast::SharedDtor() {
+void RouteBroadcastStatusChange::SharedDtor() {
   attach_data_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
-void RouteBroadcast::SetCachedSize(int size) const {
+void RouteBroadcastStatusChange::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* RouteBroadcast::descriptor() {
+const ::google::protobuf::Descriptor* RouteBroadcastStatusChange::descriptor() {
   ::protobuf_youliao_2eserver_2eproto::protobuf_AssignDescriptorsOnce();
   return ::protobuf_youliao_2eserver_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
 }
 
-const RouteBroadcast& RouteBroadcast::default_instance() {
-  ::protobuf_youliao_2eserver_2eproto::InitDefaultsRouteBroadcast();
+const RouteBroadcastStatusChange& RouteBroadcastStatusChange::default_instance() {
+  ::protobuf_youliao_2eserver_2eproto::InitDefaultsRouteBroadcastStatusChange();
   return *internal_default_instance();
 }
 
 
-void RouteBroadcast::Clear() {
-// @@protoc_insertion_point(message_clear_start:youliao.pdu.server.RouteBroadcast)
+void RouteBroadcastStatusChange::Clear() {
+// @@protoc_insertion_point(message_clear_start:youliao.pdu.server.RouteBroadcastStatusChange)
   ::google::protobuf::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -3121,11 +3253,11 @@ void RouteBroadcast::Clear() {
   _internal_metadata_.Clear();
 }
 
-bool RouteBroadcast::MergePartialFromCodedStream(
+bool RouteBroadcastStatusChange::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:youliao.pdu.server.RouteBroadcast)
+  // @@protoc_insertion_point(parse_start:youliao.pdu.server.RouteBroadcastStatusChange)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(16383u);
     tag = p.first;
@@ -3203,17 +3335,17 @@ bool RouteBroadcast::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:youliao.pdu.server.RouteBroadcast)
+  // @@protoc_insertion_point(parse_success:youliao.pdu.server.RouteBroadcastStatusChange)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:youliao.pdu.server.RouteBroadcast)
+  // @@protoc_insertion_point(parse_failure:youliao.pdu.server.RouteBroadcastStatusChange)
   return false;
 #undef DO_
 }
 
-void RouteBroadcast::SerializeWithCachedSizes(
+void RouteBroadcastStatusChange::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:youliao.pdu.server.RouteBroadcast)
+  // @@protoc_insertion_point(serialize_start:youliao.pdu.server.RouteBroadcastStatusChange)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -3249,13 +3381,13 @@ void RouteBroadcast::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
   }
-  // @@protoc_insertion_point(serialize_end:youliao.pdu.server.RouteBroadcast)
+  // @@protoc_insertion_point(serialize_end:youliao.pdu.server.RouteBroadcastStatusChange)
 }
 
-::google::protobuf::uint8* RouteBroadcast::InternalSerializeWithCachedSizesToArray(
+::google::protobuf::uint8* RouteBroadcastStatusChange::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-  // @@protoc_insertion_point(serialize_to_array_start:youliao.pdu.server.RouteBroadcast)
+  // @@protoc_insertion_point(serialize_to_array_start:youliao.pdu.server.RouteBroadcastStatusChange)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -3294,12 +3426,12 @@ void RouteBroadcast::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:youliao.pdu.server.RouteBroadcast)
+  // @@protoc_insertion_point(serialize_to_array_end:youliao.pdu.server.RouteBroadcastStatusChange)
   return target;
 }
 
-size_t RouteBroadcast::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:youliao.pdu.server.RouteBroadcast)
+size_t RouteBroadcastStatusChange::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:youliao.pdu.server.RouteBroadcastStatusChange)
   size_t total_size = 0;
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -3350,23 +3482,23 @@ size_t RouteBroadcast::ByteSizeLong() const {
   return total_size;
 }
 
-void RouteBroadcast::MergeFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:youliao.pdu.server.RouteBroadcast)
+void RouteBroadcastStatusChange::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:youliao.pdu.server.RouteBroadcastStatusChange)
   GOOGLE_DCHECK_NE(&from, this);
-  const RouteBroadcast* source =
-      ::google::protobuf::internal::DynamicCastToGenerated<const RouteBroadcast>(
+  const RouteBroadcastStatusChange* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const RouteBroadcastStatusChange>(
           &from);
   if (source == NULL) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:youliao.pdu.server.RouteBroadcast)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:youliao.pdu.server.RouteBroadcastStatusChange)
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:youliao.pdu.server.RouteBroadcast)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:youliao.pdu.server.RouteBroadcastStatusChange)
     MergeFrom(*source);
   }
 }
 
-void RouteBroadcast::MergeFrom(const RouteBroadcast& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:youliao.pdu.server.RouteBroadcast)
+void RouteBroadcastStatusChange::MergeFrom(const RouteBroadcastStatusChange& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:youliao.pdu.server.RouteBroadcastStatusChange)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   ::google::protobuf::uint32 cached_has_bits = 0;
@@ -3385,29 +3517,29 @@ void RouteBroadcast::MergeFrom(const RouteBroadcast& from) {
   }
 }
 
-void RouteBroadcast::CopyFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:youliao.pdu.server.RouteBroadcast)
+void RouteBroadcastStatusChange::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:youliao.pdu.server.RouteBroadcastStatusChange)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void RouteBroadcast::CopyFrom(const RouteBroadcast& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:youliao.pdu.server.RouteBroadcast)
+void RouteBroadcastStatusChange::CopyFrom(const RouteBroadcastStatusChange& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:youliao.pdu.server.RouteBroadcastStatusChange)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool RouteBroadcast::IsInitialized() const {
+bool RouteBroadcastStatusChange::IsInitialized() const {
   return true;
 }
 
-void RouteBroadcast::Swap(RouteBroadcast* other) {
+void RouteBroadcastStatusChange::Swap(RouteBroadcastStatusChange* other) {
   if (other == this) return;
   InternalSwap(other);
 }
-void RouteBroadcast::InternalSwap(RouteBroadcast* other) {
+void RouteBroadcastStatusChange::InternalSwap(RouteBroadcastStatusChange* other) {
   using std::swap;
   friends_.InternalSwap(&other->friends_);
   attach_data_.Swap(&other->attach_data_);
@@ -3417,7 +3549,1327 @@ void RouteBroadcast::InternalSwap(RouteBroadcast* other) {
   swap(_cached_size_, other->_cached_size_);
 }
 
-::google::protobuf::Metadata RouteBroadcast::GetMetadata() const {
+::google::protobuf::Metadata RouteBroadcastStatusChange::GetMetadata() const {
+  protobuf_youliao_2eserver_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_youliao_2eserver_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
+// ===================================================================
+
+void RouteMessageForward::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int RouteMessageForward::kUserIdFieldNumber;
+const int RouteMessageForward::kFriendIdFieldNumber;
+const int RouteMessageForward::kMsgIdFieldNumber;
+const int RouteMessageForward::kCreateTimeFieldNumber;
+const int RouteMessageForward::kMessageTypeFieldNumber;
+const int RouteMessageForward::kMessageDataFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+RouteMessageForward::RouteMessageForward()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    ::protobuf_youliao_2eserver_2eproto::InitDefaultsRouteMessageForward();
+  }
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:youliao.pdu.server.RouteMessageForward)
+}
+RouteMessageForward::RouteMessageForward(const RouteMessageForward& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  message_data_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.message_data().size() > 0) {
+    message_data_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.message_data_);
+  }
+  ::memcpy(&user_id_, &from.user_id_,
+    static_cast<size_t>(reinterpret_cast<char*>(&message_type_) -
+    reinterpret_cast<char*>(&user_id_)) + sizeof(message_type_));
+  // @@protoc_insertion_point(copy_constructor:youliao.pdu.server.RouteMessageForward)
+}
+
+void RouteMessageForward::SharedCtor() {
+  message_data_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ::memset(&user_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&message_type_) -
+      reinterpret_cast<char*>(&user_id_)) + sizeof(message_type_));
+  _cached_size_ = 0;
+}
+
+RouteMessageForward::~RouteMessageForward() {
+  // @@protoc_insertion_point(destructor:youliao.pdu.server.RouteMessageForward)
+  SharedDtor();
+}
+
+void RouteMessageForward::SharedDtor() {
+  message_data_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+
+void RouteMessageForward::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* RouteMessageForward::descriptor() {
+  ::protobuf_youliao_2eserver_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_youliao_2eserver_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const RouteMessageForward& RouteMessageForward::default_instance() {
+  ::protobuf_youliao_2eserver_2eproto::InitDefaultsRouteMessageForward();
+  return *internal_default_instance();
+}
+
+
+void RouteMessageForward::Clear() {
+// @@protoc_insertion_point(message_clear_start:youliao.pdu.server.RouteMessageForward)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  message_data_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ::memset(&user_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&message_type_) -
+      reinterpret_cast<char*>(&user_id_)) + sizeof(message_type_));
+  _internal_metadata_.Clear();
+}
+
+bool RouteMessageForward::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:youliao.pdu.server.RouteMessageForward)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // uint32 user_id = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &user_id_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint32 friend_id = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &friend_id_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint32 msg_id = 3;
+      case 3: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &msg_id_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint32 create_time = 4;
+      case 4: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(32u /* 32 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &create_time_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // .youliao.pdu.base.MessageType message_type = 5;
+      case 5: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(40u /* 40 & 0xFF */)) {
+          int value;
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_message_type(static_cast< ::youliao::pdu::base::MessageType >(value));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // bytes message_data = 6;
+      case 6: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(50u /* 50 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
+                input, this->mutable_message_data()));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:youliao.pdu.server.RouteMessageForward)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:youliao.pdu.server.RouteMessageForward)
+  return false;
+#undef DO_
+}
+
+void RouteMessageForward::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:youliao.pdu.server.RouteMessageForward)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->user_id(), output);
+  }
+
+  // uint32 friend_id = 2;
+  if (this->friend_id() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->friend_id(), output);
+  }
+
+  // uint32 msg_id = 3;
+  if (this->msg_id() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->msg_id(), output);
+  }
+
+  // uint32 create_time = 4;
+  if (this->create_time() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->create_time(), output);
+  }
+
+  // .youliao.pdu.base.MessageType message_type = 5;
+  if (this->message_type() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      5, this->message_type(), output);
+  }
+
+  // bytes message_data = 6;
+  if (this->message_data().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
+      6, this->message_data(), output);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
+  // @@protoc_insertion_point(serialize_end:youliao.pdu.server.RouteMessageForward)
+}
+
+::google::protobuf::uint8* RouteMessageForward::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:youliao.pdu.server.RouteMessageForward)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->user_id(), target);
+  }
+
+  // uint32 friend_id = 2;
+  if (this->friend_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->friend_id(), target);
+  }
+
+  // uint32 msg_id = 3;
+  if (this->msg_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->msg_id(), target);
+  }
+
+  // uint32 create_time = 4;
+  if (this->create_time() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->create_time(), target);
+  }
+
+  // .youliao.pdu.base.MessageType message_type = 5;
+  if (this->message_type() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      5, this->message_type(), target);
+  }
+
+  // bytes message_data = 6;
+  if (this->message_data().size() > 0) {
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
+        6, this->message_data(), target);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:youliao.pdu.server.RouteMessageForward)
+  return target;
+}
+
+size_t RouteMessageForward::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:youliao.pdu.server.RouteMessageForward)
+  size_t total_size = 0;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
+  // bytes message_data = 6;
+  if (this->message_data().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::BytesSize(
+        this->message_data());
+  }
+
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->user_id());
+  }
+
+  // uint32 friend_id = 2;
+  if (this->friend_id() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->friend_id());
+  }
+
+  // uint32 msg_id = 3;
+  if (this->msg_id() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->msg_id());
+  }
+
+  // uint32 create_time = 4;
+  if (this->create_time() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->create_time());
+  }
+
+  // .youliao.pdu.base.MessageType message_type = 5;
+  if (this->message_type() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->message_type());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void RouteMessageForward::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:youliao.pdu.server.RouteMessageForward)
+  GOOGLE_DCHECK_NE(&from, this);
+  const RouteMessageForward* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const RouteMessageForward>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:youliao.pdu.server.RouteMessageForward)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:youliao.pdu.server.RouteMessageForward)
+    MergeFrom(*source);
+  }
+}
+
+void RouteMessageForward::MergeFrom(const RouteMessageForward& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:youliao.pdu.server.RouteMessageForward)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.message_data().size() > 0) {
+
+    message_data_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.message_data_);
+  }
+  if (from.user_id() != 0) {
+    set_user_id(from.user_id());
+  }
+  if (from.friend_id() != 0) {
+    set_friend_id(from.friend_id());
+  }
+  if (from.msg_id() != 0) {
+    set_msg_id(from.msg_id());
+  }
+  if (from.create_time() != 0) {
+    set_create_time(from.create_time());
+  }
+  if (from.message_type() != 0) {
+    set_message_type(from.message_type());
+  }
+}
+
+void RouteMessageForward::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:youliao.pdu.server.RouteMessageForward)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void RouteMessageForward::CopyFrom(const RouteMessageForward& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:youliao.pdu.server.RouteMessageForward)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool RouteMessageForward::IsInitialized() const {
+  return true;
+}
+
+void RouteMessageForward::Swap(RouteMessageForward* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void RouteMessageForward::InternalSwap(RouteMessageForward* other) {
+  using std::swap;
+  message_data_.Swap(&other->message_data_);
+  swap(user_id_, other->user_id_);
+  swap(friend_id_, other->friend_id_);
+  swap(msg_id_, other->msg_id_);
+  swap(create_time_, other->create_time_);
+  swap(message_type_, other->message_type_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata RouteMessageForward::GetMetadata() const {
+  protobuf_youliao_2eserver_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_youliao_2eserver_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
+// ===================================================================
+
+void RouteGetFriendOnlineStatus::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int RouteGetFriendOnlineStatus::kUserIdFieldNumber;
+const int RouteGetFriendOnlineStatus::kFriendIdFieldNumber;
+const int RouteGetFriendOnlineStatus::kMsgIdFieldNumber;
+const int RouteGetFriendOnlineStatus::kCreateTimeFieldNumber;
+const int RouteGetFriendOnlineStatus::kMessageTypeFieldNumber;
+const int RouteGetFriendOnlineStatus::kMessageDataFieldNumber;
+const int RouteGetFriendOnlineStatus::kMsgIdxFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+RouteGetFriendOnlineStatus::RouteGetFriendOnlineStatus()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    ::protobuf_youliao_2eserver_2eproto::InitDefaultsRouteGetFriendOnlineStatus();
+  }
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:youliao.pdu.server.RouteGetFriendOnlineStatus)
+}
+RouteGetFriendOnlineStatus::RouteGetFriendOnlineStatus(const RouteGetFriendOnlineStatus& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  message_data_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.message_data().size() > 0) {
+    message_data_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.message_data_);
+  }
+  ::memcpy(&user_id_, &from.user_id_,
+    static_cast<size_t>(reinterpret_cast<char*>(&msg_idx_) -
+    reinterpret_cast<char*>(&user_id_)) + sizeof(msg_idx_));
+  // @@protoc_insertion_point(copy_constructor:youliao.pdu.server.RouteGetFriendOnlineStatus)
+}
+
+void RouteGetFriendOnlineStatus::SharedCtor() {
+  message_data_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ::memset(&user_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&msg_idx_) -
+      reinterpret_cast<char*>(&user_id_)) + sizeof(msg_idx_));
+  _cached_size_ = 0;
+}
+
+RouteGetFriendOnlineStatus::~RouteGetFriendOnlineStatus() {
+  // @@protoc_insertion_point(destructor:youliao.pdu.server.RouteGetFriendOnlineStatus)
+  SharedDtor();
+}
+
+void RouteGetFriendOnlineStatus::SharedDtor() {
+  message_data_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+
+void RouteGetFriendOnlineStatus::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* RouteGetFriendOnlineStatus::descriptor() {
+  ::protobuf_youliao_2eserver_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_youliao_2eserver_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const RouteGetFriendOnlineStatus& RouteGetFriendOnlineStatus::default_instance() {
+  ::protobuf_youliao_2eserver_2eproto::InitDefaultsRouteGetFriendOnlineStatus();
+  return *internal_default_instance();
+}
+
+
+void RouteGetFriendOnlineStatus::Clear() {
+// @@protoc_insertion_point(message_clear_start:youliao.pdu.server.RouteGetFriendOnlineStatus)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  message_data_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ::memset(&user_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&msg_idx_) -
+      reinterpret_cast<char*>(&user_id_)) + sizeof(msg_idx_));
+  _internal_metadata_.Clear();
+}
+
+bool RouteGetFriendOnlineStatus::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:youliao.pdu.server.RouteGetFriendOnlineStatus)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // uint32 user_id = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &user_id_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint32 friend_id = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &friend_id_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint32 msg_id = 3;
+      case 3: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &msg_id_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint32 create_time = 4;
+      case 4: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(32u /* 32 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &create_time_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // .youliao.pdu.base.MessageType message_type = 5;
+      case 5: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(40u /* 40 & 0xFF */)) {
+          int value;
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_message_type(static_cast< ::youliao::pdu::base::MessageType >(value));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // bytes message_data = 6;
+      case 6: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(50u /* 50 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
+                input, this->mutable_message_data()));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint32 msg_idx = 7;
+      case 7: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(56u /* 56 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &msg_idx_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:youliao.pdu.server.RouteGetFriendOnlineStatus)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:youliao.pdu.server.RouteGetFriendOnlineStatus)
+  return false;
+#undef DO_
+}
+
+void RouteGetFriendOnlineStatus::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:youliao.pdu.server.RouteGetFriendOnlineStatus)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->user_id(), output);
+  }
+
+  // uint32 friend_id = 2;
+  if (this->friend_id() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->friend_id(), output);
+  }
+
+  // uint32 msg_id = 3;
+  if (this->msg_id() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->msg_id(), output);
+  }
+
+  // uint32 create_time = 4;
+  if (this->create_time() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->create_time(), output);
+  }
+
+  // .youliao.pdu.base.MessageType message_type = 5;
+  if (this->message_type() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      5, this->message_type(), output);
+  }
+
+  // bytes message_data = 6;
+  if (this->message_data().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
+      6, this->message_data(), output);
+  }
+
+  // uint32 msg_idx = 7;
+  if (this->msg_idx() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(7, this->msg_idx(), output);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
+  // @@protoc_insertion_point(serialize_end:youliao.pdu.server.RouteGetFriendOnlineStatus)
+}
+
+::google::protobuf::uint8* RouteGetFriendOnlineStatus::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:youliao.pdu.server.RouteGetFriendOnlineStatus)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->user_id(), target);
+  }
+
+  // uint32 friend_id = 2;
+  if (this->friend_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->friend_id(), target);
+  }
+
+  // uint32 msg_id = 3;
+  if (this->msg_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->msg_id(), target);
+  }
+
+  // uint32 create_time = 4;
+  if (this->create_time() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->create_time(), target);
+  }
+
+  // .youliao.pdu.base.MessageType message_type = 5;
+  if (this->message_type() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      5, this->message_type(), target);
+  }
+
+  // bytes message_data = 6;
+  if (this->message_data().size() > 0) {
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
+        6, this->message_data(), target);
+  }
+
+  // uint32 msg_idx = 7;
+  if (this->msg_idx() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(7, this->msg_idx(), target);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:youliao.pdu.server.RouteGetFriendOnlineStatus)
+  return target;
+}
+
+size_t RouteGetFriendOnlineStatus::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:youliao.pdu.server.RouteGetFriendOnlineStatus)
+  size_t total_size = 0;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
+  // bytes message_data = 6;
+  if (this->message_data().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::BytesSize(
+        this->message_data());
+  }
+
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->user_id());
+  }
+
+  // uint32 friend_id = 2;
+  if (this->friend_id() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->friend_id());
+  }
+
+  // uint32 msg_id = 3;
+  if (this->msg_id() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->msg_id());
+  }
+
+  // uint32 create_time = 4;
+  if (this->create_time() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->create_time());
+  }
+
+  // .youliao.pdu.base.MessageType message_type = 5;
+  if (this->message_type() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->message_type());
+  }
+
+  // uint32 msg_idx = 7;
+  if (this->msg_idx() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->msg_idx());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void RouteGetFriendOnlineStatus::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:youliao.pdu.server.RouteGetFriendOnlineStatus)
+  GOOGLE_DCHECK_NE(&from, this);
+  const RouteGetFriendOnlineStatus* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const RouteGetFriendOnlineStatus>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:youliao.pdu.server.RouteGetFriendOnlineStatus)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:youliao.pdu.server.RouteGetFriendOnlineStatus)
+    MergeFrom(*source);
+  }
+}
+
+void RouteGetFriendOnlineStatus::MergeFrom(const RouteGetFriendOnlineStatus& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:youliao.pdu.server.RouteGetFriendOnlineStatus)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.message_data().size() > 0) {
+
+    message_data_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.message_data_);
+  }
+  if (from.user_id() != 0) {
+    set_user_id(from.user_id());
+  }
+  if (from.friend_id() != 0) {
+    set_friend_id(from.friend_id());
+  }
+  if (from.msg_id() != 0) {
+    set_msg_id(from.msg_id());
+  }
+  if (from.create_time() != 0) {
+    set_create_time(from.create_time());
+  }
+  if (from.message_type() != 0) {
+    set_message_type(from.message_type());
+  }
+  if (from.msg_idx() != 0) {
+    set_msg_idx(from.msg_idx());
+  }
+}
+
+void RouteGetFriendOnlineStatus::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:youliao.pdu.server.RouteGetFriendOnlineStatus)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void RouteGetFriendOnlineStatus::CopyFrom(const RouteGetFriendOnlineStatus& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:youliao.pdu.server.RouteGetFriendOnlineStatus)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool RouteGetFriendOnlineStatus::IsInitialized() const {
+  return true;
+}
+
+void RouteGetFriendOnlineStatus::Swap(RouteGetFriendOnlineStatus* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void RouteGetFriendOnlineStatus::InternalSwap(RouteGetFriendOnlineStatus* other) {
+  using std::swap;
+  message_data_.Swap(&other->message_data_);
+  swap(user_id_, other->user_id_);
+  swap(friend_id_, other->friend_id_);
+  swap(msg_id_, other->msg_id_);
+  swap(create_time_, other->create_time_);
+  swap(message_type_, other->message_type_);
+  swap(msg_idx_, other->msg_idx_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata RouteGetFriendOnlineStatus::GetMetadata() const {
+  protobuf_youliao_2eserver_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_youliao_2eserver_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
+// ===================================================================
+
+void RouteMessage::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int RouteMessage::kUserIdFieldNumber;
+const int RouteMessage::kFriendIdFieldNumber;
+const int RouteMessage::kMsgIdFieldNumber;
+const int RouteMessage::kCreateTimeFieldNumber;
+const int RouteMessage::kMessageTypeFieldNumber;
+const int RouteMessage::kMessageDataFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+RouteMessage::RouteMessage()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    ::protobuf_youliao_2eserver_2eproto::InitDefaultsRouteMessage();
+  }
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:youliao.pdu.server.RouteMessage)
+}
+RouteMessage::RouteMessage(const RouteMessage& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  message_data_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.message_data().size() > 0) {
+    message_data_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.message_data_);
+  }
+  ::memcpy(&user_id_, &from.user_id_,
+    static_cast<size_t>(reinterpret_cast<char*>(&message_type_) -
+    reinterpret_cast<char*>(&user_id_)) + sizeof(message_type_));
+  // @@protoc_insertion_point(copy_constructor:youliao.pdu.server.RouteMessage)
+}
+
+void RouteMessage::SharedCtor() {
+  message_data_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ::memset(&user_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&message_type_) -
+      reinterpret_cast<char*>(&user_id_)) + sizeof(message_type_));
+  _cached_size_ = 0;
+}
+
+RouteMessage::~RouteMessage() {
+  // @@protoc_insertion_point(destructor:youliao.pdu.server.RouteMessage)
+  SharedDtor();
+}
+
+void RouteMessage::SharedDtor() {
+  message_data_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+
+void RouteMessage::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* RouteMessage::descriptor() {
+  ::protobuf_youliao_2eserver_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_youliao_2eserver_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const RouteMessage& RouteMessage::default_instance() {
+  ::protobuf_youliao_2eserver_2eproto::InitDefaultsRouteMessage();
+  return *internal_default_instance();
+}
+
+
+void RouteMessage::Clear() {
+// @@protoc_insertion_point(message_clear_start:youliao.pdu.server.RouteMessage)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  message_data_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ::memset(&user_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&message_type_) -
+      reinterpret_cast<char*>(&user_id_)) + sizeof(message_type_));
+  _internal_metadata_.Clear();
+}
+
+bool RouteMessage::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:youliao.pdu.server.RouteMessage)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // uint32 user_id = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &user_id_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint32 friend_id = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &friend_id_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint32 msg_id = 3;
+      case 3: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &msg_id_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint32 create_time = 4;
+      case 4: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(32u /* 32 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &create_time_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // .youliao.pdu.base.MessageType message_type = 5;
+      case 5: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(40u /* 40 & 0xFF */)) {
+          int value;
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_message_type(static_cast< ::youliao::pdu::base::MessageType >(value));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // bytes message_data = 6;
+      case 6: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(50u /* 50 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
+                input, this->mutable_message_data()));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:youliao.pdu.server.RouteMessage)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:youliao.pdu.server.RouteMessage)
+  return false;
+#undef DO_
+}
+
+void RouteMessage::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:youliao.pdu.server.RouteMessage)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->user_id(), output);
+  }
+
+  // uint32 friend_id = 2;
+  if (this->friend_id() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->friend_id(), output);
+  }
+
+  // uint32 msg_id = 3;
+  if (this->msg_id() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->msg_id(), output);
+  }
+
+  // uint32 create_time = 4;
+  if (this->create_time() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->create_time(), output);
+  }
+
+  // .youliao.pdu.base.MessageType message_type = 5;
+  if (this->message_type() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      5, this->message_type(), output);
+  }
+
+  // bytes message_data = 6;
+  if (this->message_data().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
+      6, this->message_data(), output);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
+  // @@protoc_insertion_point(serialize_end:youliao.pdu.server.RouteMessage)
+}
+
+::google::protobuf::uint8* RouteMessage::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:youliao.pdu.server.RouteMessage)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->user_id(), target);
+  }
+
+  // uint32 friend_id = 2;
+  if (this->friend_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->friend_id(), target);
+  }
+
+  // uint32 msg_id = 3;
+  if (this->msg_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->msg_id(), target);
+  }
+
+  // uint32 create_time = 4;
+  if (this->create_time() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->create_time(), target);
+  }
+
+  // .youliao.pdu.base.MessageType message_type = 5;
+  if (this->message_type() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      5, this->message_type(), target);
+  }
+
+  // bytes message_data = 6;
+  if (this->message_data().size() > 0) {
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
+        6, this->message_data(), target);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:youliao.pdu.server.RouteMessage)
+  return target;
+}
+
+size_t RouteMessage::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:youliao.pdu.server.RouteMessage)
+  size_t total_size = 0;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
+  // bytes message_data = 6;
+  if (this->message_data().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::BytesSize(
+        this->message_data());
+  }
+
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->user_id());
+  }
+
+  // uint32 friend_id = 2;
+  if (this->friend_id() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->friend_id());
+  }
+
+  // uint32 msg_id = 3;
+  if (this->msg_id() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->msg_id());
+  }
+
+  // uint32 create_time = 4;
+  if (this->create_time() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->create_time());
+  }
+
+  // .youliao.pdu.base.MessageType message_type = 5;
+  if (this->message_type() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->message_type());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void RouteMessage::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:youliao.pdu.server.RouteMessage)
+  GOOGLE_DCHECK_NE(&from, this);
+  const RouteMessage* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const RouteMessage>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:youliao.pdu.server.RouteMessage)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:youliao.pdu.server.RouteMessage)
+    MergeFrom(*source);
+  }
+}
+
+void RouteMessage::MergeFrom(const RouteMessage& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:youliao.pdu.server.RouteMessage)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.message_data().size() > 0) {
+
+    message_data_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.message_data_);
+  }
+  if (from.user_id() != 0) {
+    set_user_id(from.user_id());
+  }
+  if (from.friend_id() != 0) {
+    set_friend_id(from.friend_id());
+  }
+  if (from.msg_id() != 0) {
+    set_msg_id(from.msg_id());
+  }
+  if (from.create_time() != 0) {
+    set_create_time(from.create_time());
+  }
+  if (from.message_type() != 0) {
+    set_message_type(from.message_type());
+  }
+}
+
+void RouteMessage::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:youliao.pdu.server.RouteMessage)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void RouteMessage::CopyFrom(const RouteMessage& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:youliao.pdu.server.RouteMessage)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool RouteMessage::IsInitialized() const {
+  return true;
+}
+
+void RouteMessage::Swap(RouteMessage* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void RouteMessage::InternalSwap(RouteMessage* other) {
+  using std::swap;
+  message_data_.Swap(&other->message_data_);
+  swap(user_id_, other->user_id_);
+  swap(friend_id_, other->friend_id_);
+  swap(msg_id_, other->msg_id_);
+  swap(create_time_, other->create_time_);
+  swap(message_type_, other->message_type_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata RouteMessage::GetMetadata() const {
   protobuf_youliao_2eserver_2eproto::protobuf_AssignDescriptorsOnce();
   return ::protobuf_youliao_2eserver_2eproto::file_level_metadata[kIndexInFileMessages];
 }
@@ -3859,8 +5311,8 @@ template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::server::UserOfflin
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::server::MsgServerInfo* Arena::Create< ::youliao::pdu::server::MsgServerInfo >(Arena* arena) {
   return Arena::CreateInternal< ::youliao::pdu::server::MsgServerInfo >(arena);
 }
-template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::server::RouteMessage* Arena::Create< ::youliao::pdu::server::RouteMessage >(Arena* arena) {
-  return Arena::CreateInternal< ::youliao::pdu::server::RouteMessage >(arena);
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::server::RouteStatusChange* Arena::Create< ::youliao::pdu::server::RouteStatusChange >(Arena* arena) {
+  return Arena::CreateInternal< ::youliao::pdu::server::RouteStatusChange >(arena);
 }
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::server::RouteGetOnlineFirendRequest* Arena::Create< ::youliao::pdu::server::RouteGetOnlineFirendRequest >(Arena* arena) {
   return Arena::CreateInternal< ::youliao::pdu::server::RouteGetOnlineFirendRequest >(arena);
@@ -3871,8 +5323,17 @@ template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::server::RouteGetOn
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::server::RouteGetOnlineFriendRespone* Arena::Create< ::youliao::pdu::server::RouteGetOnlineFriendRespone >(Arena* arena) {
   return Arena::CreateInternal< ::youliao::pdu::server::RouteGetOnlineFriendRespone >(arena);
 }
-template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::server::RouteBroadcast* Arena::Create< ::youliao::pdu::server::RouteBroadcast >(Arena* arena) {
-  return Arena::CreateInternal< ::youliao::pdu::server::RouteBroadcast >(arena);
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::server::RouteBroadcastStatusChange* Arena::Create< ::youliao::pdu::server::RouteBroadcastStatusChange >(Arena* arena) {
+  return Arena::CreateInternal< ::youliao::pdu::server::RouteBroadcastStatusChange >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::server::RouteMessageForward* Arena::Create< ::youliao::pdu::server::RouteMessageForward >(Arena* arena) {
+  return Arena::CreateInternal< ::youliao::pdu::server::RouteMessageForward >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::server::RouteGetFriendOnlineStatus* Arena::Create< ::youliao::pdu::server::RouteGetFriendOnlineStatus >(Arena* arena) {
+  return Arena::CreateInternal< ::youliao::pdu::server::RouteGetFriendOnlineStatus >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::server::RouteMessage* Arena::Create< ::youliao::pdu::server::RouteMessage >(Arena* arena) {
+  return Arena::CreateInternal< ::youliao::pdu::server::RouteMessage >(arena);
 }
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::server::GetServerIndexRequest* Arena::Create< ::youliao::pdu::server::GetServerIndexRequest >(Arena* arena) {
   return Arena::CreateInternal< ::youliao::pdu::server::GetServerIndexRequest >(arena);

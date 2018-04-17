@@ -280,7 +280,7 @@ void ClientConn::_HandleClientLoginOutRequest(BasePdu *pdu)
     }
 
     //发送好友下线通知
-    server::RouteMessage routeMessage;
+    server::RouteStatusChange routeMessage;
     routeMessage.set_user_id(m_user_id);
     routeMessage.set_route_status_type(base::ROUTE_MESSAGE_FRIEND_STATUS_CHANGE);
     set_attach_data(routeMessage, base::USER_STATUS_OFFLINE);
@@ -307,15 +307,42 @@ void ClientConn::_HandleMessageDataRequest(BasePdu *pdu)
 
     User *user = UserManager::instance()->getUser(toUserID);
 
+    //[1] 将消息发送到数据库服务器。 消息状态记为未读
+
+
+
+
+    //[2] 转发消息
     if (user == nullptr)
     {
-        //接受这不在当前服务器,或者未登录.
-        //
+        //接收者不在当前服务器,或者未登录.
+        //将消息转发到路由服务器。
+        server::RouteMessageForward routeMessageForward;
+        routeMessageForward.set_user_id(getUserId());
+        routeMessageForward.set_friend_id(toUserID);
+        routeMessageForward.set_create_time(messageData.create_time());
+        routeMessageForward.set_msg_id(messageData.msg_id());
+        routeMessageForward.set_message_type(messageData.message_type());
+        routeMessageForward.set_message_data(messageData.message_data());
+
+        RouteConn *routeConn = get_route_server_conn();
+
+        if (routeConn)
+        {
+            BasePdu basePdu;
+            basePdu.setSID(base::SID_SERVER);
+            basePdu.setCID(base::CID_SERVER_ROUTE_MESSAGE);
+            basePdu.writeMessage(&routeMessageForward);
+
+            routeConn->sendBasePdu(&basePdu);
+        }
+
 
     }
     else
     {
         //接受者在当前服务器登录
+        //将消息转发到客户端，收到客户端已读请求后将消息状态改为已读
         BasePdu basePdu;
         basePdu.setSID(base::SID_MESSAGE);
         basePdu.setCID(base::CID_MESSAGE_DATA);

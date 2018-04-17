@@ -46,6 +46,9 @@ namespace DB_INTERFACE
 
     //修改好友备注
     void modifyFriendRemark(BasePdu *basePdu, uint32_t conn_uid);
+
+    //获取好友状态
+    void getOnlineFriendStatus(BasePdu *basePdu, uint32_t conn_uid);
 }
 
 

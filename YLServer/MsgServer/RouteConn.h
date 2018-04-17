@@ -28,6 +28,7 @@ public:
 private:
     void _HandleGetServerIndexRequest(BasePdu *);
     void _HandleRouteBroadcast(BasePdu *);
+    void _HandleRouteToMessage(BasePdu *);
 
     uint32_t   m_server_index;
     bool       m_open;

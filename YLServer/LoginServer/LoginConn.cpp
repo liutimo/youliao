@@ -85,10 +85,10 @@ void LoginConn::_HandleClientLogin(BasePdu *basePdu)
 //    if (i % 2 == 0)
 //        respone.set_port(8002);
 //    else
-//        respone.set_port(8003);
+//        respone.set_port(8001);
 //    ++i;
 
-    respone.set_port(8002);
+    respone.set_port(8001);
 
     BasePdu *responePdu = new BasePdu;
     responePdu->setSID(base::SID_LOGIN);

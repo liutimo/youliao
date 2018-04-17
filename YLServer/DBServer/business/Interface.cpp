@@ -6,6 +6,7 @@
 #include "../ProxyConn.h"
 #include "LoginModel.h"
 #include "FriendListModel.h"
+#include "MessageModel.h"
 #include "util/util.h"
 #include "../CachePool.h"
 
@@ -260,6 +261,46 @@ namespace DB_INTERFACE
 
         FriendListModel friendListModel;
         friendListModel.modifyFriendRemark(userId, friendId, friendRemark);
+    }
+
+
+
+    //获取好友状态
+    void getOnlineFriendStatus(BasePdu *basePdu, uint32_t conn_uid)
+    {
+        server::RouteGetFriendOnlineStatus routeGetFriendOnlineStatus;
+        routeGetFriendOnlineStatus.ParseFromString(basePdu->getMessage());
+
+        MessageModel messageModel;
+
+        int msgIdx = 0;
+
+        if(messageModel.getFriendOnlineStatus(routeGetFriendOnlineStatus.friend_id(), msgIdx))
+        {
+            if (msgIdx != 0)
+            {
+                server::RouteGetFriendOnlineStatus reply;
+                reply.set_user_id(routeGetFriendOnlineStatus.user_id());
+                reply.set_friend_id(routeGetFriendOnlineStatus.friend_id());
+                reply.set_msg_id(routeGetFriendOnlineStatus.msg_id());
+                reply.set_create_time(routeGetFriendOnlineStatus.create_time());
+                reply.set_message_data(routeGetFriendOnlineStatus.message_data());
+                reply.set_msg_idx(msgIdx);
+                reply.set_message_type(routeGetFriendOnlineStatus.message_type());
+
+                BasePdu basePdu1;
+                basePdu1.setSID(base::SID_SERVER);
+                basePdu1.setCID(base::CID_SERVER_GET_FRIEND_ONLINE_STATUS);
+                basePdu1.writeMessage(&reply);
+
+                findProxyConn(conn_uid)->sendBasePdu(&basePdu1);
+            }
+
+            //消息服务器ID错误。忽略
+        }
+
+        //不在线。忽略
+
     }
 }
 

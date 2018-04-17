@@ -67,6 +67,9 @@ void HandlerMap::init()
 
     //修改好友备注
     m_handler_map.insert(std::make_pair(CID_FRIENDLIST_MODIFY_FRIEND_REMARK_RQUEST, DB_INTERFACE::modifyFriendRemark));
+
+    //转发消息
+    m_handler_map.insert(std::make_pair(CID_SERVER_GET_FRIEND_ONLINE_STATUS, DB_INTERFACE::getOnlineFriendStatus));
 }
 
 pdu_handler_t HandlerMap::getHandler(uint16_t cid)

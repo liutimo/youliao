@@ -143,12 +143,15 @@ enum ServerCID {
   CID_SERVER_GET_ONLINE_FRIENDS_RESPONE = 520,
   CID_SERVER_GET_SERVER_INDEX_REQUEST = 521,
   CID_SERVER_GET_SERVER_INDEX_RESPONE = 522,
+  CID_SERVER_ROUTE_MESSAGE = 523,
+  CID_SERVER_GET_FRIEND_ONLINE_STATUS = 524,
+  CID_SERVER_ROUTE_TO_MESSAGE = 525,
   ServerCID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   ServerCID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool ServerCID_IsValid(int value);
 const ServerCID ServerCID_MIN = CID_SERVER_ZERO;
-const ServerCID ServerCID_MAX = CID_SERVER_GET_SERVER_INDEX_RESPONE;
+const ServerCID ServerCID_MAX = CID_SERVER_ROUTE_TO_MESSAGE;
 const int ServerCID_ARRAYSIZE = ServerCID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* ServerCID_descriptor();
