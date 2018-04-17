@@ -6,7 +6,7 @@
 #include "YLEntityObject/ylfriend.h"
 class YLHeadFrame;
 class QLabel;
-class HttpDownloader;
+class HttpHelper;
 class QMenu;
 class YLFriendListItem : public QWidget
 {
@@ -64,7 +64,7 @@ private:
     QAction     *action_on_top;
     YLListItemType item_type_;      //保存当前item的类型
     YLFriend friend_;
-    HttpDownloader *m_http;
+    HttpHelper *m_http_helper;
     bool m_is_mark_top;
 };
 

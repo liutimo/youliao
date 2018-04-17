@@ -8,7 +8,7 @@
 #include "YLChatWidget/ylchatwidget.h"
 #include "YLCommonControl/ylmodifyremark.h"
 #include "ylmainwidget.h"
-#include "YLNetWork/http/httpdownloader.h"
+#include "YLNetWork/http/httphelper.h"
 #include <QDebug>
 #include "YLNetWork/ylbusiness.h"
 #include "globaldata.h"
@@ -32,10 +32,10 @@ void YLFriendListItem::init()
     label_down_ = new QLabel(this);
     label_time_ = new QLabel(this);
 
-    m_http = new HttpDownloader;
-    connect(m_http, &HttpDownloader::downloadFinshed, this, [this](){
-        head_frame_->setHeadFromLocal("./" + m_http->getFilename(), friend_.friendIsOnline());
-        friend_.setFriendImagePath(m_http->getFilename());
+    m_http_helper = new HttpHelper;
+    connect(m_http_helper, &HttpHelper::downloadFinshed, this, [this](){
+        head_frame_->setHeadFromLocal("./" + m_http_helper->getFilename(), friend_.friendIsOnline());
+        friend_.setFriendImagePath(m_http_helper->getFilename());
     });
 }
 
@@ -179,7 +179,7 @@ void YLFriendListItem::setData(const YLFriend &friend_)
     }
 
 
-    m_http->start(friend_.friendImagePath());
+    m_http_helper->download(friend_.friendImagePath());
 }
 
 void YLFriendListItem::resizeEvent(QResizeEvent *event)

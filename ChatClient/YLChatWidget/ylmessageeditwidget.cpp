@@ -6,6 +6,9 @@
 #include <QClipboard>
 #include <QMimeData>
 #include <QDebug>
+#include <QTextDocumentFragment>
+#include <QDateTime>
+#include <QCryptographicHash>
 YLMessageEditWidget::YLMessageEditWidget(QWidget *parent)
     : QTextEdit(parent)
 {
@@ -36,9 +39,9 @@ void YLMessageEditWidget::initMenu()
     m_menu->addAction(m_action_cut);
     m_menu->addAction(m_action_paste);
 
-    connect(m_action_cpoy, &QAction::triggered, this, &YLMessageEditWidget::slotCopy);
-    connect(m_action_cut, &QAction::triggered, this, &YLMessageEditWidget::slotCut);
-    connect(m_action_paste, &QAction::triggered, this, &YLMessageEditWidget::slotPaste);
+    connect(m_action_cpoy, &QAction::triggered, this, &YLMessageEditWidget::copy);
+    connect(m_action_cut, &QAction::triggered, this, &YLMessageEditWidget::cut);
+    connect(m_action_paste, &QAction::triggered, this, &YLMessageEditWidget::paste);
 }
 
 
@@ -55,6 +58,7 @@ QString YLMessageEditWidget::getContent() const
     content.replace(str4, "");
     content.replace("\n", "<br />");
 
+    content.replace("\"", "'");
 
     return content;
 }
@@ -84,43 +88,50 @@ void YLMessageEditWidget::contextMenuEvent(QContextMenuEvent *event)
 }
 
 
-///slots
-void YLMessageEditWidget::slotCopy()
+
+bool YLMessageEditWidget::canInsertFromMimeData(const QMimeData *source) const
 {
-    copy();
+    return source->hasImage() || source->hasUrls() || QTextEdit::canInsertFromMimeData(source);
 }
 
-void YLMessageEditWidget::slotCut()
+void YLMessageEditWidget::insertFromMimeData(const QMimeData *source)
 {
-    cut();
-}
+    //may be consider calculate MD5 to determime this image whether exists.
+    if (source->hasImage())
+    {
+        QPixmap pixmap = qvariant_cast<QPixmap>(source->imageData());
 
-void YLMessageEditWidget::slotPaste()
-{
-    const QClipboard *clipboard = QApplication::clipboard();
-    const QMimeData *mime_data = clipboard->mimeData();
+        QString fileName = "/home/liuzheng/Documents/youliao/TEMP.png";
+        pixmap.save(fileName);
 
-    if (mime_data->hasImage())
-    {
-        QPixmap pixmap = qvariant_cast<QPixmap>(mime_data->imageData());
-        pixmap.save("a.jpg");
-        insertHtml("<img src=\"file:///home/liuzheng/Documents/Code/build-ChatClient-Desktop_Qt_5_9_0_GCC_64bit-Debug/a.jpg\">");
+        QFile file(fileName);
+        file.open(QIODevice::ReadOnly);
+
+        QString strHash(QCryptographicHash::hash(file.readAll(), QCryptographicHash::Md5).toHex());
+        qDebug() << strHash;
+        fileName = "/home/liuzheng/Documents/youliao/" + strHash + ".png";
+        QFile f(fileName);
+        if (!f.exists())
+            pixmap.save(fileName);
+
+        int w = pixmap.width();
+        int h = pixmap.height();
+
+        float scaledTimes = qMax(w, h) / 150.0;
+
+        if (qMax(w, h) > 150)
+        {
+            w /= scaledTimes;
+            h /= scaledTimes;
+        }
+        insertHtml(QString("<img width=\"%1\" height=\"%2\" src=\"file://%3\" >").arg(w).arg(h).arg(fileName));
     }
-    else if (mime_data->hasText())
+    else if (source->hasText())
     {
-        //paste text
-        qDebug() << 2;
-        insertHtml(mime_data->text());
+        insertHtml(source->text());
     }
-    else if (mime_data->hasHtml())
+    else if (source->hasHtml())
     {
-        //paste html
-        qDebug() << 3;
         paste();
     }
-
-    qDebug() << toHtml();
-    qDebug() << "-----------------------------";
-    qDebug() << toPlainText();
-
 }

@@ -7,13 +7,15 @@ class QNetworkAccessManager;
 class QNetworkReply;
 class QFile;
 
-class HttpDownloader : public QObject
+class HttpHelper : public QObject
 {
     Q_OBJECT
 //    const QString file_dir = "./"
 public:
-    explicit HttpDownloader(QObject *parent = nullptr);
-    void start(const QString &url);
+    explicit HttpHelper(QObject *parent = nullptr);
+    void download(const QString &url);
+    QString upload(const QString &fileName);
+
     QString getFilename() const  { return m_filename;}
 
 signals:

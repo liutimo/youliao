@@ -11,7 +11,7 @@
 #include "ylrecentchatview.h"
 #include "ylfriendlistview.h"
 #include "YLCommonControl/ylmessagebox.h"
-#include "YLNetWork/http/httpdownloader.h"
+#include "YLNetWork/http/httphelper.h"
 #include "YLNetWork/ylbusiness.h"
 #include <QTimer>
 
@@ -85,9 +85,9 @@ void YLMainWidget::init()
     });
 
 
-    m_http_dowloader = new HttpDownloader;
-    connect(m_http_dowloader, &HttpDownloader::downloadFinshed, this, [this](){
-        head_status_frame_->setHeadFromLocal("./" + m_http_dowloader->getFilename());
+    m_http_helper = new HttpHelper;
+    connect(m_http_helper, &HttpHelper::downloadFinshed, this, [this](){
+        head_status_frame_->setHeadFromLocal("./" + m_http_helper->getFilename());
     }, Qt::QueuedConnection);
 
 }
@@ -183,6 +183,6 @@ void YLMainWidget::setUserInfo(UserInfo *userInfo)
     YLBusiness::getFriendGroupsRequest(m_user_info->user_id());
     YLBusiness::getFriendListRequest(m_user_info->user_id());
 
-    m_http_dowloader->start(m_user_info->user_header_url().c_str());
+    m_http_helper->download(m_user_info->user_header_url().c_str());
 }
 

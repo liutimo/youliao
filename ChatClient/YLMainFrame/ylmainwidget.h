@@ -10,7 +10,7 @@ class YLSignatureLineEdit;
 class YLHeadAndStatusFrame;
 class YLNavigationBar;
 class QTimer;
-class HttpDownloader;
+class HttpHelper;
 
 using namespace youliao::pdu::base;
 class YLMainWidget : public YLBasicWidget
@@ -69,7 +69,7 @@ private:
     QVector<QWidget *> vec;
     UserInfo *m_user_info;
     QTimer *m_timer;
-    HttpDownloader *m_http_dowloader;
+    HttpHelper *m_http_helper;
 };
 
 #endif // YLMAINWIDGET_H

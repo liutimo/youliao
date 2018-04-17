@@ -2,7 +2,7 @@
 #include "YLCommonControl/ylheadandstatusframe.h"
 #include "YLCommonControl/yllineedit.h"
 #include "YLCommonControl/ylmessagebox.h"
-#include "YLNetWork/http/httpdownloader.h"
+#include "YLNetWork/http/httphelper.h"
 #include "YLMainFrame/ylmainwidget.h"
 #include "YLNetWork/ylnetservice.h"
 #include "YLNetWork/ylbusiness.h"

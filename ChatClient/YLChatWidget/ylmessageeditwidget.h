@@ -27,14 +27,13 @@ signals:
 private:
     void initMenu();
 
-private slots:
-    void slotCopy();
-    void slotCut();
-    void slotPaste();
-
 protected:
     void keyPressEvent(QKeyEvent* event) override;
     void contextMenuEvent(QContextMenuEvent* event) override;
+
+    bool canInsertFromMimeData(const QMimeData *source) const override;
+    void insertFromMimeData(const QMimeData *source) override;
+
 private:
     QMenu	*m_menu;
     QAction *m_action_cpoy;

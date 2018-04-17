@@ -6,9 +6,11 @@
 #include "ylemoticonwidget.h"
 #include "YLNetWork/ylbusiness.h"
 #include "YLNetWork/pduhandler.h"
+#include "YLNetWork/http/httphelper.h"
 #include "globaldata.h"
 #include <QDebug>
 #include <QDir>
+
 YLChatWidget::YLChatWidget(QWidget *parent) : YLBasicWidget(parent)
 {
     initTitleBar();
@@ -38,6 +40,7 @@ void YLChatWidget::initTitleBar()
     m_nickname_button->setObjectName("nickname_button");
     m_nickname_button->setStyleSheet("border:0px; font: 16px; text-align:center; background:rgba(255,255,255, 0);");
     //connect ... slot
+
 
     connect(PduHandler::instance(), &PduHandler::signleMessage, this, [this](uint32_t user_id, const QString &message){
         if (user_id == m_friend.friendId())
@@ -127,8 +130,34 @@ void YLChatWidget::sendMessage()
 {
     QString content = m_message_edit_widget->getContent();
     m_message_edit_widget->clear();
-    qDebug() << content;
-    content.replace("\"", "'");
+
+    QString pattern = "src='(.*)'";
+    QRegExp re(pattern);
+    re.setMinimal(true);
+    int pos = 0;
+    QStringList fileList;
+    while ((pos = re.indexIn(content, pos)) >= 0 )
+    {
+        fileList << re.cap(1);
+        pos += re.matchedLength();
+    };
+
+    HttpHelper *helper = new HttpHelper;
+    QStringList uploadFileList;
+    for (QString fileName : fileList)
+    {
+        QString localFile = fileName.replace("file://", "");
+        uploadFileList << helper->upload(localFile);
+    }
+
+
     m_message_view->addLeft(GlobalData::getCurrLoginUserIconPath(), content);
+
+    for (int i = 0; i < fileList.size(); ++i)
+    {
+        content.replace(fileList[i], "http://www.liutimo.cn/" + uploadFileList[i]);
+    }
+
+
     YLBusiness::sendMessage(GlobalData::getCurrLoginUserId(), m_friend.friendId(), content);
 }
