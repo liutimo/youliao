@@ -6,6 +6,8 @@
 
 #include "pdu/protobuf/youliao.friendlist.pb.h"
 #include "CachePool.h"
+
+#include "business/Interface.h"
 using namespace youliao::pdu;
 
 using  namespace youliao::network;
@@ -27,6 +29,7 @@ int main() {
     netlib_eventloop();
 
     nettlib_destory();
+
 
     return 0;
 }

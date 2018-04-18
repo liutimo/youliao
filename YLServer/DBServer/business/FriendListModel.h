@@ -13,7 +13,7 @@ using namespace youliao::pdu;
 
 class FriendListModel {
 public:
-    FriendListModel();
+    static FriendListModel* instance();
     virtual ~FriendListModel();
 
     void getGroups(uint32_t user_id, friendlist::GroupsRespone &groupsRespone);
@@ -35,6 +35,12 @@ public:
     bool deleteFriend(uint32_t user_id, uint32_t friend_id);
 
     bool modifyFriendRemark(uint32_t user_id, uint32_t friend_id, const std::string &friendRemark);
+
+    uint32_t getRelationId(uint32_t userId, uint32_t friendId);
+
+private:
+    FriendListModel();
+    static FriendListModel *m_instance;
 };
 
 

@@ -9,8 +9,9 @@
 #include "MessageModel.h"
 #include "util/util.h"
 #include "../CachePool.h"
-
+#include "SessionModel.h"
 #include "pdu/protobuf/youliao.server.pb.h"
+#include "pdu/protobuf/youliao.message.pb.h"
 
 
 namespace DB_INTERFACE
@@ -69,8 +70,8 @@ namespace DB_INTERFACE
         friendlist::GroupsRespone groupsRespone;
         groupsRespone.set_user_id(userId);
 
-        FriendListModel friendListModel;
-        friendListModel.getGroups(userId, groupsRespone);
+        FriendListModel *friendListModel = FriendListModel::instance();
+        friendListModel->getGroups(userId, groupsRespone);
 
         BasePdu basePdu1;
         basePdu1.setSID(base::SID_SERVER);
@@ -89,8 +90,8 @@ namespace DB_INTERFACE
         friendlist::FriendListRespone friendListRespone;
         friendListRespone.set_attach_data(friendListRequest.attach_data());
 
-        FriendListModel friendListModel;
-        friendListModel.getFriendList(friendListRequest.user_id(), friendListRequest.msg_serv_idx(), friendListRespone);
+        FriendListModel *friendListModel = FriendListModel::instance() ;
+        friendListModel->getFriendList(friendListRequest.user_id(), friendListRequest.msg_serv_idx(), friendListRespone);
 
         BasePdu *pdu = new BasePdu;
         pdu->setSID(base::SID_FRIEND_LIST);
@@ -125,8 +126,8 @@ namespace DB_INTERFACE
         routeGetOnlineFriendRespone.set_route_status_type(routeGetOnlineFirendRequest.route_status_type());
         routeGetOnlineFriendRespone.set_attach_data(routeGetOnlineFirendRequest.attach_data());
 
-        FriendListModel friendListModel;
-        friendListModel.getOnlineFriends(userId, routeGetOnlineFriendRespone);
+        FriendListModel *friendListModel = FriendListModel::instance() ;
+        friendListModel->getOnlineFriends(userId, routeGetOnlineFriendRespone);
 
         BasePdu basePdu1;
         basePdu1.setSID(base::SID_SERVER);
@@ -145,8 +146,8 @@ namespace DB_INTERFACE
         uint32_t userId = signatureChangeResquest.user_id();
         string userSignature = signatureChangeResquest.user_signature();
 
-        FriendListModel friendListModel;
-        bool ret = friendListModel.modifySignature(userId, userSignature);
+        FriendListModel *friendListModel = FriendListModel::instance() ;
+        bool ret = friendListModel->modifySignature(userId, userSignature);
 
         friendlist::SignatureChangeRespone signatureChangeRespone;
         signatureChangeRespone.set_user_id(userId);
@@ -178,8 +179,8 @@ namespace DB_INTERFACE
         uint32_t userId = addNewFriendGroupRequest.user_id();
         string newGroupName = addNewFriendGroupRequest.new_group_name();
 
-        FriendListModel friendListModel;
-        if (friendListModel.addNewFriendGroup(userId, newGroupName, groupId))
+        FriendListModel *friendListModel = FriendListModel::instance() ;
+        if (friendListModel->addNewFriendGroup(userId, newGroupName, groupId))
         {
             //添加成功
             friendlist::AddNewFriendGroupRespone addNewFriendGroupRespone;
@@ -209,8 +210,8 @@ namespace DB_INTERFACE
         uint32_t groupId = renameFriendGroupRequest.group_id();
         string groupNewName = renameFriendGroupRequest.group_new_name();
 
-        FriendListModel friendListModel;
-        friendListModel.renameFriendGroup(userId, groupNewName, groupId);
+        FriendListModel *friendListModel = FriendListModel::instance() ;
+        friendListModel->renameFriendGroup(userId, groupNewName, groupId);
     }
 
     //删除分组
@@ -222,8 +223,8 @@ namespace DB_INTERFACE
         uint32_t userId = deleteFriendGroupRequest.user_id();
         uint32_t groupId = deleteFriendGroupRequest.group_id();
 
-        FriendListModel friendListModel;
-        friendListModel.deleteFriendGroup(userId, groupId);
+        FriendListModel *friendListModel = FriendListModel::instance() ;
+        friendListModel->deleteFriendGroup(userId, groupId);
     }
 
     //移动好友到指定分组
@@ -232,8 +233,8 @@ namespace DB_INTERFACE
         friendlist::MoveFriendToGroupRequest request;
         request.ParseFromString(basePdu->getMessage());
 
-        FriendListModel friendListModel;
-        friendListModel.moveFriendToGroup(request.user_id(), request.friend_id(), request.group_id());
+        FriendListModel *friendListModel = FriendListModel::instance() ;
+        friendListModel->moveFriendToGroup(request.user_id(), request.friend_id(), request.group_id());
     }
 
     //删除好友
@@ -245,8 +246,8 @@ namespace DB_INTERFACE
         uint32_t userId = request.user_id();
         uint32_t friendId = request.friend_id();
 
-        FriendListModel friendListModel;
-        friendListModel.deleteFriend(userId, friendId);
+        FriendListModel *friendListModel = FriendListModel::instance() ;
+        friendListModel->deleteFriend(userId, friendId);
     }
 
     //修改好友备注
@@ -259,8 +260,8 @@ namespace DB_INTERFACE
         uint32_t friendId = request.friend_id();
         string friendRemark = request.friend_remark();
 
-        FriendListModel friendListModel;
-        friendListModel.modifyFriendRemark(userId, friendId, friendRemark);
+        FriendListModel *friendListModel = FriendListModel::instance() ;
+        friendListModel->modifyFriendRemark(userId, friendId, friendRemark);
     }
 
 
@@ -271,11 +272,11 @@ namespace DB_INTERFACE
         server::RouteGetFriendOnlineStatus routeGetFriendOnlineStatus;
         routeGetFriendOnlineStatus.ParseFromString(basePdu->getMessage());
 
-        MessageModel messageModel;
+        MessageModel *messageModel = MessageModel::instance();
 
         int msgIdx = 0;
 
-        if(messageModel.getFriendOnlineStatus(routeGetFriendOnlineStatus.friend_id(), msgIdx))
+        if(messageModel->getFriendOnlineStatus(routeGetFriendOnlineStatus.friend_id(), msgIdx))
         {
             if (msgIdx != 0)
             {
@@ -302,6 +303,85 @@ namespace DB_INTERFACE
         //不在线。忽略
 
     }
+
+
+    //保存消息记录
+    void saveMessage(BasePdu *basePdu, uint32_t conn_uuid)
+    {
+        message::MessageData msg;
+        if(msg.ParseFromString(basePdu->getMessage()))
+        {
+            uint32_t senderId = msg.from_user_id();
+            uint32_t receiverId = msg.to_user_id();
+            uint32_t createdTime = msg.create_time();
+            base::MessageType msgType = msg.message_type();
+            uint32_t msgLen = msg.message_data().length();
+            uint32_t msgId = msg.msg_id();
+
+
+
+            if (base::MessageType_IsValid(msgType))
+            {
+                if (msgLen > 0)
+                {
+                    if (msgType == base::MESSAGE_TYPE_SINGLE_TEXT)
+                    {
+                        MessageModel *messageModel = MessageModel::instance();
+                        //[1] 更新sender和receiver的session
+                        //[2] 保存消息
+                        // 一条消息要保存两份。 发送者和接受者各一份
+                        uint32_t senderRelatedId = FriendListModel::instance()->getRelationId(senderId, receiverId);
+                        uint32_t receiverRelatedId = FriendListModel::instance()->getRelationId(receiverId, senderId);
+
+                        if (senderRelatedId == 0 || receiverRelatedId == 0)
+                        {
+                            //两者不是互为好友的关系。消息不予保存。
+                            return;
+                        }
+
+                        uint32_t senderSessionId = SessionModel::instance()->getSessionId(senderId, receiverId, base::SESSION_TYPE_SINGLE);
+                        //Session不存在。  (从未添加过改Session)
+                        if (senderSessionId == 0)
+                        {
+                            senderSessionId = SessionModel::instance()->addSession(senderId, receiverId, base::SESSION_TYPE_SINGLE);
+                        }
+                        uint32_t receiverSessionId = SessionModel::instance()->getSessionId(receiverId, senderId, base::SESSION_TYPE_SINGLE);
+                        if (receiverSessionId == 0)
+                        {
+                            receiverSessionId = SessionModel::instance()->addSession(receiverId, senderId, base::SESSION_TYPE_SINGLE);
+                        }
+
+                        //保存消息到数据库
+                        messageModel->saveMessage(senderRelatedId, senderId, receiverId, msgType, createdTime, msgId, msg.message_data());
+                        messageModel->saveMessage(receiverRelatedId, senderId, receiverId, msgType, createdTime, msgId, msg.message_data());
+                        //更新session
+                        SessionModel::instance()->updateSession(senderSessionId);
+                        SessionModel::instance()->updateSession(receiverSessionId);
+                    }
+                }
+                else
+                {
+                    log("消息长度错误! senderId=%u, receiverId=%u, type=%u", senderId, receiverId, msgType);
+                }
+            }
+            else
+            {
+                log("无效的MessageType! senderId=%u, receiverId=%u, type=%u", senderId, receiverId, msgType);
+            }
+
+        }
+        else
+        {
+            log("解析PDU失败！");
+        }
+    }
+
+    void getSessions(BasePdu *basePdu, uint32_t conn_uuid)
+    {
+        std::list<base::SessionInfo> list;
+        SessionModel::instance()->getSessions(1, list);
+    }
+
 }
 
 

@@ -49,6 +49,14 @@ namespace DB_INTERFACE
 
     //获取好友状态
     void getOnlineFriendStatus(BasePdu *basePdu, uint32_t conn_uid);
+
+    //保存消息记录
+    void saveMessage(BasePdu *basePdu, uint32_t conn_uuid);
+
+
+
+    /*******************会话列表************************/
+    void getSessions(BasePdu *basePdu, uint32_t conn_uid);
 }
 
 

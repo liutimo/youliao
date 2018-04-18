@@ -8,6 +8,15 @@
 #include "../CachePool.h"
 #include <cstring>
 
+FriendListModel* FriendListModel::m_instance = nullptr;
+
+FriendListModel* FriendListModel::instance()
+{
+    if (!m_instance)
+        m_instance = new FriendListModel;
+    return m_instance;
+}
+
 FriendListModel::FriendListModel()
 {
 
@@ -311,4 +320,30 @@ bool FriendListModel::modifyFriendRemark(uint32_t user_id, uint32_t friend_id, c
 
     DBManager::instance()->releaseConnection(conn);
     return ret;
+}
+
+uint32_t FriendListModel::getRelationId(uint32_t userId, uint32_t friendId)
+{
+    uint32_t relationId = 0;
+
+    DBConn *dbConn = DBManager::instance()->getConnection();
+
+    if (!dbConn)
+    {
+        return relationId;
+    }
+
+    string strSql = "SELECT id FROM yl_friend WHERE user_id=" + to_string(userId) + " and friend_id=" + to_string(friendId);
+    printSql2Log(strSql.c_str());
+    ResultSet *resultSet = dbConn->query(strSql);
+    if (resultSet)
+    {
+        while (resultSet->next())
+        {
+            relationId = (uint32_t)resultSet->getInt("id");
+        }
+        delete resultSet;
+    }
+
+    return relationId;
 }

@@ -70,6 +70,8 @@ void HandlerMap::init()
 
     //转发消息
     m_handler_map.insert(std::make_pair(CID_SERVER_GET_FRIEND_ONLINE_STATUS, DB_INTERFACE::getOnlineFriendStatus));
+
+    m_handler_map.insert(std::make_pair(CID_MESSAGE_SAVE, DB_INTERFACE::saveMessage));
 }
 
 pdu_handler_t HandlerMap::getHandler(uint16_t cid)

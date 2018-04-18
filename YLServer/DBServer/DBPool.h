@@ -17,6 +17,28 @@
 #include <string>
 #include <list>
 #include "thread/Lock.h"
+
+class PrepareStatement {
+public:
+    PrepareStatement();
+    virtual ~PrepareStatement();
+
+    bool init(MYSQL* mysql, std::string& sql);
+
+    void setParam(uint32_t index, int& value);
+    void setParam(uint32_t index, uint32_t& value);
+    void setParam(uint32_t index, std::string& value);
+    void setParam(uint32_t index, const std::string& value);
+
+    bool executeUpdate();
+    uint32_t getInsertId();
+private:
+    MYSQL_STMT*	m_stmt;
+    MYSQL_BIND*	m_param_bind;
+    uint32_t	m_param_cnt;
+};
+
+
 //结果集
 class ResultSet
 {

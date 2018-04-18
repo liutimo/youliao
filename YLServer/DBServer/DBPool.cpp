@@ -10,6 +10,135 @@
 
 #include "DBPool.h"
 #include "util/util.h"
+
+
+
+PrepareStatement::PrepareStatement()
+{
+    m_stmt = NULL;
+    m_param_bind = NULL;
+    m_param_cnt = 0;
+}
+
+PrepareStatement::~PrepareStatement()
+{
+    if (m_stmt) {
+        mysql_stmt_close(m_stmt);
+        m_stmt = NULL;
+    }
+
+    if (m_param_bind) {
+        delete [] m_param_bind;
+        m_param_bind = NULL;
+    }
+}
+
+bool PrepareStatement::init(MYSQL* mysql, std::string& sql)
+{
+    mysql_ping(mysql);
+
+    m_stmt = mysql_stmt_init(mysql);
+    if (!m_stmt) {
+        log("mysql_stmt_init failed");
+        return false;
+    }
+
+    if (mysql_stmt_prepare(m_stmt, sql.c_str(), sql.size())) {
+        log("mysql_stmt_prepare failed: %s", mysql_stmt_error(m_stmt));
+        return false;
+    }
+
+    m_param_cnt = mysql_stmt_param_count(m_stmt);
+    if (m_param_cnt > 0) {
+        m_param_bind = new MYSQL_BIND [m_param_cnt];
+        if (!m_param_bind) {
+            log("new failed");
+            return false;
+        }
+
+        memset(m_param_bind, 0, sizeof(MYSQL_BIND) * m_param_cnt);
+    }
+
+    return true;
+}
+
+void PrepareStatement::setParam(uint32_t index, int& value)
+{
+    if (index >= m_param_cnt) {
+        log("index too large: %d", index);
+        return;
+    }
+
+    m_param_bind[index].buffer_type = MYSQL_TYPE_LONG;
+    m_param_bind[index].buffer = &value;
+}
+
+void PrepareStatement::setParam(uint32_t index, uint32_t& value)
+{
+    if (index >= m_param_cnt) {
+        log("index too large: %d", index);
+        return;
+    }
+
+    m_param_bind[index].buffer_type = MYSQL_TYPE_LONG;
+    m_param_bind[index].buffer = &value;
+}
+
+void PrepareStatement::setParam(uint32_t index, std::string& value)
+{
+    if (index >= m_param_cnt) {
+        log("index too large: %d", index);
+        return;
+    }
+
+    m_param_bind[index].buffer_type = MYSQL_TYPE_STRING;
+    m_param_bind[index].buffer = (char*)value.c_str();
+    m_param_bind[index].buffer_length = value.size();
+}
+
+void PrepareStatement::setParam(uint32_t index, const std::string& value)
+{
+    if (index >= m_param_cnt) {
+        log("index too large: %d", index);
+        return;
+    }
+
+    m_param_bind[index].buffer_type = MYSQL_TYPE_STRING;
+    m_param_bind[index].buffer = (char*)value.c_str();
+    m_param_bind[index].buffer_length = value.size();
+}
+
+bool PrepareStatement::executeUpdate()
+{
+    if (!m_stmt) {
+        log("no m_stmt");
+        return false;
+    }
+
+    if (mysql_stmt_bind_param(m_stmt, m_param_bind)) {
+        log("mysql_stmt_bind_param failed: %s", mysql_stmt_error(m_stmt));
+        return false;
+    }
+
+    if (mysql_stmt_execute(m_stmt)) {
+        log("mysql_stmt_execute failed: %s", mysql_stmt_error(m_stmt));
+        return false;
+    }
+
+    if (mysql_stmt_affected_rows(m_stmt) == 0) {
+        log("ExecuteUpdate have no effect");
+        return false;
+    }
+
+    return true;
+}
+
+uint32_t PrepareStatement::getInsertId()
+{
+    return mysql_stmt_insert_id(m_stmt);
+}
+
+
 ResultSet::ResultSet(MYSQL_RES *res) : m_res(res)
 {
     //获取结果集的所有字段
@@ -135,6 +264,11 @@ bool DBConn::update(const std::string &sql)
     {
         return false;
     }
+}
+
+uint32_t DBConn::getInsertId()
+{
+    return (uint32_t)mysql_insert_id(m_mysql);
 }
 
 ////////////////////////////

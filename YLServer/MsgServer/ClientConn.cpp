@@ -308,9 +308,12 @@ void ClientConn::_HandleMessageDataRequest(BasePdu *pdu)
     User *user = UserManager::instance()->getUser(toUserID);
 
     //[1] 将消息发送到数据库服务器。 消息状态记为未读
+    DBServConn *dbServConn = get_db_server_conn();
 
+    if (!dbServConn)
+        return;
 
-
+    sendMessage(dbServConn, messageData, base::SID_SERVER, base::CID_MESSAGE_SAVE);
 
     //[2] 转发消息
     if (user == nullptr)
@@ -327,16 +330,18 @@ void ClientConn::_HandleMessageDataRequest(BasePdu *pdu)
 
         RouteConn *routeConn = get_route_server_conn();
 
-        if (routeConn)
-        {
-            BasePdu basePdu;
-            basePdu.setSID(base::SID_SERVER);
-            basePdu.setCID(base::CID_SERVER_ROUTE_MESSAGE);
-            basePdu.writeMessage(&routeMessageForward);
+        if (!routeConn)
+            return;
+//        {
+//            BasePdu basePdu;
+//            basePdu.setSID(base::SID_SERVER);
+//            basePdu.setCID(base::CID_SERVER_ROUTE_MESSAGE);
+//            basePdu.writeMessage(&routeMessageForward);
+//
+//            routeConn->sendBasePdu(&basePdu);
+//        }
 
-            routeConn->sendBasePdu(&basePdu);
-        }
-
+        sendMessage(routeConn, routeMessageForward, base::SID_SERVER, base::CID_SERVER_ROUTE_MESSAGE);
 
     }
     else

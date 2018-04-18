@@ -20,6 +20,7 @@
 
 #include <string.h>
 #include "../log/log.h"
+#include "../pdu/BasePdu.h"
 
 
 //输出日志
@@ -29,5 +30,18 @@ static youliao::log::Log g_log("youliao");
 #define printSql2Log(sql) log("执行SQL语句: %s", sql)
 //
 #define NO_USERD(arg) ((void)arg)
+
+
+template <typename Conn, typename MessageLite>
+void sendMessage(Conn &conn, MessageLite &messageLite, uint16_t SID, uint16_t CID)
+{
+    youliao::pdu::BasePdu basePdu;
+    basePdu.setSID(SID);
+    basePdu.setCID(CID);
+    basePdu.writeMessage(&messageLite);
+
+    conn->sendBasePdu(&basePdu);
+}
+
 
 #endif //BASEUTIL_UTIL_H

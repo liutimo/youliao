@@ -37,7 +37,7 @@ namespace protobuf_youliao_2ebase_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[3];
+  static const ::google::protobuf::internal::ParseTable schema[4];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -47,11 +47,14 @@ void InitDefaultsUserInfoImpl();
 void InitDefaultsUserInfo();
 void InitDefaultsFriendInfoImpl();
 void InitDefaultsFriendInfo();
+void InitDefaultsSessionInfoImpl();
+void InitDefaultsSessionInfo();
 void InitDefaultsHeartBeatImpl();
 void InitDefaultsHeartBeat();
 inline void InitDefaults() {
   InitDefaultsUserInfo();
   InitDefaultsFriendInfo();
+  InitDefaultsSessionInfo();
   InitDefaultsHeartBeat();
 }
 }  // namespace protobuf_youliao_2ebase_2eproto
@@ -64,6 +67,9 @@ extern FriendInfoDefaultTypeInternal _FriendInfo_default_instance_;
 class HeartBeat;
 class HeartBeatDefaultTypeInternal;
 extern HeartBeatDefaultTypeInternal _HeartBeat_default_instance_;
+class SessionInfo;
+class SessionInfoDefaultTypeInternal;
+extern SessionInfoDefaultTypeInternal _SessionInfo_default_instance_;
 class UserInfo;
 class UserInfoDefaultTypeInternal;
 extern UserInfoDefaultTypeInternal _UserInfo_default_instance_;
@@ -74,6 +80,7 @@ namespace google {
 namespace protobuf {
 template<> ::youliao::pdu::base::FriendInfo* Arena::Create< ::youliao::pdu::base::FriendInfo>(Arena*);
 template<> ::youliao::pdu::base::HeartBeat* Arena::Create< ::youliao::pdu::base::HeartBeat>(Arena*);
+template<> ::youliao::pdu::base::SessionInfo* Arena::Create< ::youliao::pdu::base::SessionInfo>(Arena*);
 template<> ::youliao::pdu::base::UserInfo* Arena::Create< ::youliao::pdu::base::UserInfo>(Arena*);
 }  // namespace protobuf
 }  // namespace google
@@ -87,7 +94,8 @@ enum ServiceID {
   SID_FRIEND_LIST = 2,
   SID_SERVER = 3,
   SID_OTHER = 4,
-  SID_MESSAGE = 5,
+  SID_SESSION = 5,
+  SID_MESSAGE = 6,
   ServiceID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   ServiceID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
@@ -221,15 +229,43 @@ inline bool FriendListCID_Parse(
   return ::google::protobuf::internal::ParseNamedEnum<FriendListCID>(
     FriendListCID_descriptor(), name, value);
 }
+enum SessionListCID {
+  CID_SESSIONLIST_ZERO = 0,
+  CID_SESSIONLIST_ADD_SESSION = 1281,
+  CID_SESSIONLIST_DEL_SESSION = 1282,
+  CID_SESSIONLIST_UPD_SESSION = 1283,
+  CID_SESSIONLIST_TOP_SESSION = 1284,
+  CID_SESSIONLIST_GET_SESSIONS_REQUEST = 1285,
+  CID_SESSIONLIST_GET_SESSIONS_RESPONE = 1286,
+  SessionListCID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  SessionListCID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+bool SessionListCID_IsValid(int value);
+const SessionListCID SessionListCID_MIN = CID_SESSIONLIST_ZERO;
+const SessionListCID SessionListCID_MAX = CID_SESSIONLIST_GET_SESSIONS_RESPONE;
+const int SessionListCID_ARRAYSIZE = SessionListCID_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* SessionListCID_descriptor();
+inline const ::std::string& SessionListCID_Name(SessionListCID value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    SessionListCID_descriptor(), value);
+}
+inline bool SessionListCID_Parse(
+    const ::std::string& name, SessionListCID* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<SessionListCID>(
+    SessionListCID_descriptor(), name, value);
+}
 enum MessageCID {
   CID_MESSAGE_ZERO = 0,
-  CID_MESSAGE_DATA = 1281,
+  CID_MESSAGE_DATA = 1537,
+  CID_MESSAGE_SAVE = 1538,
+  CID_MESSAGE_UPDATE = 1539,
   MessageCID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   MessageCID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool MessageCID_IsValid(int value);
 const MessageCID MessageCID_MIN = CID_MESSAGE_ZERO;
-const MessageCID MessageCID_MAX = CID_MESSAGE_DATA;
+const MessageCID MessageCID_MAX = CID_MESSAGE_UPDATE;
 const int MessageCID_ARRAYSIZE = MessageCID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* MessageCID_descriptor();
@@ -287,6 +323,28 @@ inline bool UserStatusType_Parse(
     const ::std::string& name, UserStatusType* value) {
   return ::google::protobuf::internal::ParseNamedEnum<UserStatusType>(
     UserStatusType_descriptor(), name, value);
+}
+enum SessionType {
+  SESSION_ZERO = 0,
+  SESSION_TYPE_SINGLE = 1,
+  SESSION_TYPE_GROUP = 2,
+  SessionType_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  SessionType_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+bool SessionType_IsValid(int value);
+const SessionType SessionType_MIN = SESSION_ZERO;
+const SessionType SessionType_MAX = SESSION_TYPE_GROUP;
+const int SessionType_ARRAYSIZE = SessionType_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* SessionType_descriptor();
+inline const ::std::string& SessionType_Name(SessionType value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    SessionType_descriptor(), value);
+}
+inline bool SessionType_Parse(
+    const ::std::string& name, SessionType* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<SessionType>(
+    SessionType_descriptor(), name, value);
 }
 enum MessageType {
   MESSAGE_ZERO = 0,
@@ -742,6 +800,152 @@ class FriendInfo : public ::google::protobuf::Message /* @@protoc_insertion_poin
 };
 // -------------------------------------------------------------------
 
+class SessionInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.base.SessionInfo) */ {
+ public:
+  SessionInfo();
+  virtual ~SessionInfo();
+
+  SessionInfo(const SessionInfo& from);
+
+  inline SessionInfo& operator=(const SessionInfo& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  SessionInfo(SessionInfo&& from) noexcept
+    : SessionInfo() {
+    *this = ::std::move(from);
+  }
+
+  inline SessionInfo& operator=(SessionInfo&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const SessionInfo& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const SessionInfo* internal_default_instance() {
+    return reinterpret_cast<const SessionInfo*>(
+               &_SessionInfo_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    2;
+
+  void Swap(SessionInfo* other);
+  friend void swap(SessionInfo& a, SessionInfo& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline SessionInfo* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<SessionInfo>(NULL);
+  }
+
+  SessionInfo* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<SessionInfo>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const SessionInfo& from);
+  void MergeFrom(const SessionInfo& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(SessionInfo* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // bytes last_message_data = 6;
+  void clear_last_message_data();
+  static const int kLastMessageDataFieldNumber = 6;
+  const ::std::string& last_message_data() const;
+  void set_last_message_data(const ::std::string& value);
+  #if LANG_CXX11
+  void set_last_message_data(::std::string&& value);
+  #endif
+  void set_last_message_data(const char* value);
+  void set_last_message_data(const void* value, size_t size);
+  ::std::string* mutable_last_message_data();
+  ::std::string* release_last_message_data();
+  void set_allocated_last_message_data(::std::string* last_message_data);
+
+  // uint32 session_id = 1;
+  void clear_session_id();
+  static const int kSessionIdFieldNumber = 1;
+  ::google::protobuf::uint32 session_id() const;
+  void set_session_id(::google::protobuf::uint32 value);
+
+  // uint32 other_id = 2;
+  void clear_other_id();
+  static const int kOtherIdFieldNumber = 2;
+  ::google::protobuf::uint32 other_id() const;
+  void set_other_id(::google::protobuf::uint32 value);
+
+  // uint32 session_type = 3;
+  void clear_session_type();
+  static const int kSessionTypeFieldNumber = 3;
+  ::google::protobuf::uint32 session_type() const;
+  void set_session_type(::google::protobuf::uint32 value);
+
+  // uint32 session_top = 4;
+  void clear_session_top();
+  static const int kSessionTopFieldNumber = 4;
+  ::google::protobuf::uint32 session_top() const;
+  void set_session_top(::google::protobuf::uint32 value);
+
+  // uint32 session_update = 5;
+  void clear_session_update();
+  static const int kSessionUpdateFieldNumber = 5;
+  ::google::protobuf::uint32 session_update() const;
+  void set_session_update(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.base.SessionInfo)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr last_message_data_;
+  ::google::protobuf::uint32 session_id_;
+  ::google::protobuf::uint32 other_id_;
+  ::google::protobuf::uint32 session_type_;
+  ::google::protobuf::uint32 session_top_;
+  ::google::protobuf::uint32 session_update_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2ebase_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2ebase_2eproto::InitDefaultsSessionInfoImpl();
+};
+// -------------------------------------------------------------------
+
 class HeartBeat : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.base.HeartBeat) */ {
  public:
   HeartBeat();
@@ -777,7 +981,7 @@ class HeartBeat : public ::google::protobuf::Message /* @@protoc_insertion_point
                &_HeartBeat_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    2;
+    3;
 
   void Swap(HeartBeat* other);
   friend void swap(HeartBeat& a, HeartBeat& b) {
@@ -1534,11 +1738,140 @@ inline void FriendInfo::set_friend_is_online(bool value) {
 
 // -------------------------------------------------------------------
 
+// SessionInfo
+
+// uint32 session_id = 1;
+inline void SessionInfo::clear_session_id() {
+  session_id_ = 0u;
+}
+inline ::google::protobuf::uint32 SessionInfo::session_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.SessionInfo.session_id)
+  return session_id_;
+}
+inline void SessionInfo::set_session_id(::google::protobuf::uint32 value) {
+  
+  session_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.base.SessionInfo.session_id)
+}
+
+// uint32 other_id = 2;
+inline void SessionInfo::clear_other_id() {
+  other_id_ = 0u;
+}
+inline ::google::protobuf::uint32 SessionInfo::other_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.SessionInfo.other_id)
+  return other_id_;
+}
+inline void SessionInfo::set_other_id(::google::protobuf::uint32 value) {
+  
+  other_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.base.SessionInfo.other_id)
+}
+
+// uint32 session_type = 3;
+inline void SessionInfo::clear_session_type() {
+  session_type_ = 0u;
+}
+inline ::google::protobuf::uint32 SessionInfo::session_type() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.SessionInfo.session_type)
+  return session_type_;
+}
+inline void SessionInfo::set_session_type(::google::protobuf::uint32 value) {
+  
+  session_type_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.base.SessionInfo.session_type)
+}
+
+// uint32 session_top = 4;
+inline void SessionInfo::clear_session_top() {
+  session_top_ = 0u;
+}
+inline ::google::protobuf::uint32 SessionInfo::session_top() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.SessionInfo.session_top)
+  return session_top_;
+}
+inline void SessionInfo::set_session_top(::google::protobuf::uint32 value) {
+  
+  session_top_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.base.SessionInfo.session_top)
+}
+
+// uint32 session_update = 5;
+inline void SessionInfo::clear_session_update() {
+  session_update_ = 0u;
+}
+inline ::google::protobuf::uint32 SessionInfo::session_update() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.SessionInfo.session_update)
+  return session_update_;
+}
+inline void SessionInfo::set_session_update(::google::protobuf::uint32 value) {
+  
+  session_update_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.base.SessionInfo.session_update)
+}
+
+// bytes last_message_data = 6;
+inline void SessionInfo::clear_last_message_data() {
+  last_message_data_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& SessionInfo::last_message_data() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.SessionInfo.last_message_data)
+  return last_message_data_.GetNoArena();
+}
+inline void SessionInfo::set_last_message_data(const ::std::string& value) {
+  
+  last_message_data_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:youliao.pdu.base.SessionInfo.last_message_data)
+}
+#if LANG_CXX11
+inline void SessionInfo::set_last_message_data(::std::string&& value) {
+  
+  last_message_data_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:youliao.pdu.base.SessionInfo.last_message_data)
+}
+#endif
+inline void SessionInfo::set_last_message_data(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  last_message_data_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:youliao.pdu.base.SessionInfo.last_message_data)
+}
+inline void SessionInfo::set_last_message_data(const void* value, size_t size) {
+  
+  last_message_data_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:youliao.pdu.base.SessionInfo.last_message_data)
+}
+inline ::std::string* SessionInfo::mutable_last_message_data() {
+  
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.base.SessionInfo.last_message_data)
+  return last_message_data_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* SessionInfo::release_last_message_data() {
+  // @@protoc_insertion_point(field_release:youliao.pdu.base.SessionInfo.last_message_data)
+  
+  return last_message_data_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void SessionInfo::set_allocated_last_message_data(::std::string* last_message_data) {
+  if (last_message_data != NULL) {
+    
+  } else {
+    
+  }
+  last_message_data_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), last_message_data);
+  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.base.SessionInfo.last_message_data)
+}
+
+// -------------------------------------------------------------------
+
 // HeartBeat
 
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
@@ -1578,6 +1911,11 @@ template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::youliao::pdu::base::FriendListCID>() {
   return ::youliao::pdu::base::FriendListCID_descriptor();
 }
+template <> struct is_proto_enum< ::youliao::pdu::base::SessionListCID> : ::google::protobuf::internal::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::youliao::pdu::base::SessionListCID>() {
+  return ::youliao::pdu::base::SessionListCID_descriptor();
+}
 template <> struct is_proto_enum< ::youliao::pdu::base::MessageCID> : ::google::protobuf::internal::true_type {};
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::youliao::pdu::base::MessageCID>() {
@@ -1592,6 +1930,11 @@ template <> struct is_proto_enum< ::youliao::pdu::base::UserStatusType> : ::goog
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::youliao::pdu::base::UserStatusType>() {
   return ::youliao::pdu::base::UserStatusType_descriptor();
+}
+template <> struct is_proto_enum< ::youliao::pdu::base::SessionType> : ::google::protobuf::internal::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::youliao::pdu::base::SessionType>() {
+  return ::youliao::pdu::base::SessionType_descriptor();
 }
 template <> struct is_proto_enum< ::youliao::pdu::base::MessageType> : ::google::protobuf::internal::true_type {};
 template <>
