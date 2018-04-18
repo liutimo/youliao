@@ -9,7 +9,8 @@ enum ServiceID
     SID_FRIEND_LIST     = 0x0002;           //好友列表
     SID_SERVER          = 0x0003;           //服务器之间的消息
     SID_OTHER           = 0x0004;           //其他
-    SID_MESSAGE         = 0x0005;           //消息
+    SID_SESSION         = 0x0005;           //SESSION
+    SID_MESSAGE         = 0x0006;           //消息
 }
 
 enum LoginCID
@@ -36,6 +37,10 @@ enum ServerCID
     CID_SERVER_GET_ONLINE_FRIENDS_RESPONE = 0x0208;
     CID_SERVER_GET_SERVER_INDEX_REQUEST   = 0x0209;
     CID_SERVER_GET_SERVER_INDEX_RESPONE   = 0x020A;
+    CID_SERVER_ROUTE_MESSAGE              = 0x020B;     //MsgServer请求RouteServer转发消息
+    CID_SERVER_GET_FRIEND_ONLINE_STATUS   = 0x020C;     //RouteServer请求DBServer好友在线状态
+    CID_SERVER_ROUTE_TO_MESSAGE           = 0x020D;     //RouteServer发送MsgServer
+
 }
 
 enum OtherCID
@@ -66,11 +71,30 @@ enum FriendListCID
     CID_FRIENDLIST_MODIFY_FRIEND_REMARK_RQUEST  = 0x0410;   //修改好友备注
 }
 
+//最近会话
+//该CID基本只会用于服务器内部
+//客户端在登陆后会请求一次Session列表。
+//之后所有的数据在本地维护
+//Session相关的数据根据DBServer在保存消息时维护
+enum SessionListCID
+{
+    CID_SESSIONLIST_ZERO = 0x0000;
+    CID_SESSIONLIST_ADD_SESSION = 0x0501;  //新增session
+    CID_SESSIONLIST_DEL_SESSION = 0x0502;  //删除session
+    CID_SESSIONLIST_UPD_SESSION = 0x0503;  //更新session
+    CID_SESSIONLIST_TOP_SESSION = 0x0504;  //置顶session
+    CID_SESSIONLIST_GET_SESSIONS_REQUEST = 0x0505;  //请求Session列表
+    CID_SESSIONLIST_GET_SESSIONS_RESPONE = 0x0506;  //响应Session列表
+}
+
+
 //消息
 enum MessageCID
 {
     CID_MESSAGE_ZERO = 0x0000;
-    CID_MESSAGE_DATA = 0x0501;                //发送消息
+    CID_MESSAGE_DATA = 0x0601;        //发送消息
+    CID_MESSAGE_SAVE = 0x0602;        //保存消息到数据库
+    CID_MESSAGE_UPDATE = 0x0603;      //更新消息，第一次存入数据库的消息时未读状态。当收到Client ACK，更改其状态为已读
 }
 
 
@@ -90,6 +114,14 @@ enum UserStatusType
     USER_STATUS_ONLINE = 1;
     USER_STATUS_OFFLINE = 2;
     USER_STATUS_HIDE = 3;
+}
+
+//session类型
+enum SessionType
+{
+    SESSION_ZERO   = 0;
+    SESSION_TYPE_SINGLE = 1;    //好友会话
+    SESSION_TYPE_GROUP  = 2;    //群组会话
 }
 
 //用户信息, 登录成功后发送

@@ -34,6 +34,9 @@ public:
     explicit YLChatWidget(QWidget *parent = Q_NULLPTR);
     void setFriend(const YLFriend &);
 
+signals:
+    void updateSession(YLFriend &ylFriend);
+
 protected:
     void resizeEvent(QResizeEvent *e);
 

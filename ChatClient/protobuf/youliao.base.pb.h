@@ -87,7 +87,8 @@ enum ServiceID {
   SID_FRIEND_LIST = 2,
   SID_SERVER = 3,
   SID_OTHER = 4,
-  SID_MESSAGE = 5,
+  SID_SESSION = 5,
+  SID_MESSAGE = 6,
   ServiceID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   ServiceID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
@@ -143,12 +144,15 @@ enum ServerCID {
   CID_SERVER_GET_ONLINE_FRIENDS_RESPONE = 520,
   CID_SERVER_GET_SERVER_INDEX_REQUEST = 521,
   CID_SERVER_GET_SERVER_INDEX_RESPONE = 522,
+  CID_SERVER_ROUTE_MESSAGE = 523,
+  CID_SERVER_GET_FRIEND_ONLINE_STATUS = 524,
+  CID_SERVER_ROUTE_TO_MESSAGE = 525,
   ServerCID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   ServerCID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool ServerCID_IsValid(int value);
 const ServerCID ServerCID_MIN = CID_SERVER_ZERO;
-const ServerCID ServerCID_MAX = CID_SERVER_GET_SERVER_INDEX_RESPONE;
+const ServerCID ServerCID_MAX = CID_SERVER_ROUTE_TO_MESSAGE;
 const int ServerCID_ARRAYSIZE = ServerCID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* ServerCID_descriptor();
@@ -218,15 +222,43 @@ inline bool FriendListCID_Parse(
   return ::google::protobuf::internal::ParseNamedEnum<FriendListCID>(
     FriendListCID_descriptor(), name, value);
 }
+enum SessionListCID {
+  CID_SESSIONLIST_ZERO = 0,
+  CID_SESSIONLIST_ADD_SESSION = 1281,
+  CID_SESSIONLIST_DEL_SESSION = 1282,
+  CID_SESSIONLIST_UPD_SESSION = 1283,
+  CID_SESSIONLIST_TOP_SESSION = 1284,
+  CID_SESSIONLIST_GET_SESSIONS_REQUEST = 1285,
+  CID_SESSIONLIST_GET_SESSIONS_RESPONE = 1286,
+  SessionListCID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  SessionListCID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+bool SessionListCID_IsValid(int value);
+const SessionListCID SessionListCID_MIN = CID_SESSIONLIST_ZERO;
+const SessionListCID SessionListCID_MAX = CID_SESSIONLIST_GET_SESSIONS_RESPONE;
+const int SessionListCID_ARRAYSIZE = SessionListCID_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* SessionListCID_descriptor();
+inline const ::std::string& SessionListCID_Name(SessionListCID value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    SessionListCID_descriptor(), value);
+}
+inline bool SessionListCID_Parse(
+    const ::std::string& name, SessionListCID* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<SessionListCID>(
+    SessionListCID_descriptor(), name, value);
+}
 enum MessageCID {
   CID_MESSAGE_ZERO = 0,
-  CID_MESSAGE_DATA = 1281,
+  CID_MESSAGE_DATA = 1537,
+  CID_MESSAGE_SAVE = 1538,
+  CID_MESSAGE_UPDATE = 1539,
   MessageCID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   MessageCID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool MessageCID_IsValid(int value);
 const MessageCID MessageCID_MIN = CID_MESSAGE_ZERO;
-const MessageCID MessageCID_MAX = CID_MESSAGE_DATA;
+const MessageCID MessageCID_MAX = CID_MESSAGE_UPDATE;
 const int MessageCID_ARRAYSIZE = MessageCID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* MessageCID_descriptor();
@@ -284,6 +316,28 @@ inline bool UserStatusType_Parse(
     const ::std::string& name, UserStatusType* value) {
   return ::google::protobuf::internal::ParseNamedEnum<UserStatusType>(
     UserStatusType_descriptor(), name, value);
+}
+enum SessionType {
+  SESSION_ZERO = 0,
+  SESSION_TYPE_SINGLE = 1,
+  SESSION_TYPE_GROUP = 2,
+  SessionType_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  SessionType_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+bool SessionType_IsValid(int value);
+const SessionType SessionType_MIN = SESSION_ZERO;
+const SessionType SessionType_MAX = SESSION_TYPE_GROUP;
+const int SessionType_ARRAYSIZE = SessionType_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* SessionType_descriptor();
+inline const ::std::string& SessionType_Name(SessionType value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    SessionType_descriptor(), value);
+}
+inline bool SessionType_Parse(
+    const ::std::string& name, SessionType* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<SessionType>(
+    SessionType_descriptor(), name, value);
 }
 enum MessageType {
   MESSAGE_ZERO = 0,
@@ -1575,6 +1629,11 @@ template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::youliao::pdu::base::FriendListCID>() {
   return ::youliao::pdu::base::FriendListCID_descriptor();
 }
+template <> struct is_proto_enum< ::youliao::pdu::base::SessionListCID> : ::google::protobuf::internal::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::youliao::pdu::base::SessionListCID>() {
+  return ::youliao::pdu::base::SessionListCID_descriptor();
+}
 template <> struct is_proto_enum< ::youliao::pdu::base::MessageCID> : ::google::protobuf::internal::true_type {};
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::youliao::pdu::base::MessageCID>() {
@@ -1589,6 +1648,11 @@ template <> struct is_proto_enum< ::youliao::pdu::base::UserStatusType> : ::goog
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::youliao::pdu::base::UserStatusType>() {
   return ::youliao::pdu::base::UserStatusType_descriptor();
+}
+template <> struct is_proto_enum< ::youliao::pdu::base::SessionType> : ::google::protobuf::internal::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::youliao::pdu::base::SessionType>() {
+  return ::youliao::pdu::base::SessionType_descriptor();
 }
 template <> struct is_proto_enum< ::youliao::pdu::base::MessageType> : ::google::protobuf::internal::true_type {};
 template <>

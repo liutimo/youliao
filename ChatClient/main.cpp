@@ -4,16 +4,18 @@
 #include "YLLoginPanel/ylloginpanel.h"
 #include "YLChatWidget/ylchatwidget.h"
 #include "YLMainFrame/ylinfomationwidget.h"
-#include "YLNetWork/http/httphelper.h"
+#include "signalforward.h"
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
+
+    SignalForward::instance();
 
     YLLoginPanel w;
 //    YLChatWidget w;
 
     w.resize(500, 400);
-
 
 
 //    YLInfomationWidget w;

@@ -27,8 +27,26 @@ void YLRecentChatView::add(const YLFriend &fri, int pos)
 
 void YLRecentChatView::addItem(const YLFriend &fri)
 {
-    add(fri);
+    for (auto iter = m_data.begin(); iter != m_data.end(); ++iter)
+    {
+        if (fri == *iter)
+        {
+            m_data.erase(iter);
+            break;
+        }
+    }
+
+    for (auto &f : m_top_data)
+    {
+        if (f == fri)
+        {
+            f = fri;
+            break;
+        }
+    }
+
     m_data.push_front(fri);
+    updateList();
 }
 
 

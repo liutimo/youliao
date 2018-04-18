@@ -35,7 +35,8 @@ include(protobuf/protobuf.pri)
 SOURCES += \
         main.cpp \
     yllocalsettings.cpp \
-    globaldata.cpp
+    globaldata.cpp \
+    signalforward.cpp
 
 INCLUDEPATH += /usr/local/include
 
@@ -44,7 +45,8 @@ LIBS += -lprotobuf \
 
 HEADERS += \
     yllocalsettings.h \
-    globaldata.h
+    globaldata.h \
+    signalforward.h
 
 RESOURCES += \
     resource.qrc

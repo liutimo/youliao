@@ -13,6 +13,7 @@
 #include "YLCommonControl/ylmessagebox.h"
 #include "YLNetWork/http/httphelper.h"
 #include "YLNetWork/ylbusiness.h"
+#include "../signalforward.h"
 #include <QTimer>
 
 using namespace youliao::pdu;
@@ -100,7 +101,7 @@ void YLMainWidget::initListWidget()
     yl_recent_chat_view->move(0, 220);
     yl_recent_chat_view->hide();
     vec.push_back(yl_recent_chat_view);
-
+    connect(SignalForward::instance(), &SignalForward::updateSession, yl_recent_chat_view, &YLRecentChatView::addItem);
 
     //[2] frient list
     YLFriendListView *yl_friendlist_view = new YLFriendListView(this);

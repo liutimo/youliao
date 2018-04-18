@@ -105,7 +105,7 @@ void InitDefaultsHeartBeat() {
 }
 
 ::google::protobuf::Metadata file_level_metadata[3];
-const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[10];
+const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[12];
 
 const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   ~0u,  // no _has_bits_
@@ -187,62 +187,75 @@ void AddDescriptorsImpl() {
       "riend_header_url\030\005 \001(\t\022\024\n\014friend_email\030\006"
       " \001(\t\022\024\n\014friend_phone\030\007 \001(\t\022\030\n\020friend_sig"
       "n_info\030\010 \001(\t\022\025\n\rfriend_remark\030\t \001(\t\022\030\n\020f"
-      "riend_is_online\030\n \001(\010\"\013\n\tHeartBeat*m\n\tSe"
+      "riend_is_online\030\n \001(\010\"\013\n\tHeartBeat*~\n\tSe"
       "rviceID\022\014\n\010SID_ZERO\020\000\022\r\n\tSID_LOGIN\020\001\022\023\n\017"
       "SID_FRIEND_LIST\020\002\022\016\n\nSID_SERVER\020\003\022\r\n\tSID"
-      "_OTHER\020\004\022\017\n\013SID_MESSAGE\020\005*\313\001\n\010LoginCID\022\022"
-      "\n\016CID_LOGIN_ZERO\020\000\022 \n\033CID_LOGIN_REQUSET_"
-      "MSGSERVER\020\201\002\022 \n\033CID_LOGIN_RESPONE_MSGSER"
-      "VER\020\202\002\022 \n\033CID_LOGIN_REQUEST_USERLOGIN\020\203\002"
-      "\022 \n\033CID_LOGIN_RESPONE_USERLOGIN\020\204\002\022#\n\036CI"
-      "D_LOGIN_REQUEST_USERLOGINOUT\020\205\002*\211\003\n\tServ"
-      "erCID\022\023\n\017CID_SERVER_ZERO\020\000\022\036\n\031CID_SERVER"
-      "_MSGSERVER_INFO\020\201\004\022 \n\033CID_SERVER_VALIDAT"
-      "E_REQUEST\020\202\004\022 \n\033CID_SERVER_VALIDATE_RESP"
-      "ONE\020\203\004\022\033\n\026CID_SERVER_USER_LOGOUT\020\204\004\022\031\n\024C"
-      "ID_SERVER_ROUTE_MSG\020\205\004\022\037\n\032CID_SERVER_ROU"
-      "TE_BROADCAST\020\206\004\022*\n%CID_SERVER_GET_ONLINE"
-      "_FRIENDS_REQUEST\020\207\004\022*\n%CID_SERVER_GET_ON"
-      "LINE_FRIENDS_RESPONE\020\210\004\022(\n#CID_SERVER_GE"
-      "T_SERVER_INDEX_REQUEST\020\211\004\022(\n#CID_SERVER_"
-      "GET_SERVER_INDEX_RESPONE\020\212\004*8\n\010OtherCID\022"
-      "\022\n\016CID_OTHER_ZERO\020\000\022\030\n\023CID_OTHER_HEARTBE"
-      "AT\020\201\006*\352\005\n\rFriendListCID\022\027\n\023CID_FRIENDLIS"
-      "T_ZERO\020\000\022\037\n\032CID_FRIENDLIST_GET_REQUEST\020\201"
-      "\010\022\037\n\032CID_FRIENDLIST_GET_RESPONE\020\202\010\022(\n#CI"
-      "D_FRIENDLIST_FRIEND_STATUS_CHANGE\020\203\010\022-\n("
-      "CID_FRIENDLIST_SIGNATURE_CHANGED_REQUEST"
-      "\020\204\010\022-\n(CID_FRIENDLIST_SIGNATURE_CHANGED_"
-      "RESPONE\020\205\010\022,\n\'CID_FRIENDLIST_FRIEND_SIGN"
-      "ATURE_CHANGED\020\206\010\022,\n\'CID_FRIENDLIST_MODEF"
-      "Y_FRIEND_GROUP_NAME\020\207\010\022,\n\'CID_FRIENDLIST"
-      "_ADD_FRIEND_GROUP_REQUEST\020\210\010\022,\n\'CID_FRIE"
-      "NDLIST_ADD_FRIEND_GROUP_RESPONE\020\211\010\022&\n!CI"
-      "D_FRIENDLIST_GET_GROUPS_REQUEST\020\212\010\022&\n!CI"
-      "D_FRIENDLIST_GET_GROUPS_REPSONE\020\213\010\022/\n*CI"
-      "D_FRIENDLIST_RENAME_FRIEND_GROUP_REQUEST"
-      "\020\214\010\022/\n*CID_FRIENDLIST_DELETE_FRIEND_GROU"
-      "P_REQUEST\020\215\010\0220\n+CID_FRIENDLIST_MOVE_FRIE"
-      "ND_TO_GROUP_REQUEST\020\216\010\022)\n$CID_FRIENDLIST"
-      "_DELETE_FRIEND_REQUEST\020\217\010\022/\n*CID_FRIENDL"
-      "IST_MODIFY_FRIEND_REMARK_RQUEST\020\220\010*9\n\nMe"
-      "ssageCID\022\024\n\020CID_MESSAGE_ZERO\020\000\022\025\n\020CID_ME"
-      "SSAGE_DATA\020\201\n*[\n\nResultType\022\010\n\004NONE\020\000\022\021\n"
-      "\rNO_MSG_SERVER\020\001\022\023\n\017MSG_SERVER_FULL\020\002\022\033\n"
-      "\027SIGNATURE_MODIFY_FAILED\020\003*m\n\016UserStatus"
-      "Type\022\024\n\020USER_STATUS_ZERO\020\000\022\026\n\022USER_STATU"
-      "S_ONLINE\020\001\022\027\n\023USER_STATUS_OFFLINE\020\002\022\024\n\020U"
-      "SER_STATUS_HIDE\020\003*\227\001\n\013MessageType\022\020\n\014MES"
-      "SAGE_ZERO\020\000\022\034\n\030MESSAGE_TYPE_SINGLE_TEXT\020"
-      "\001\022\035\n\031MESSAGE_TYPE_SINGLE_AUDIO\020\002\022\033\n\027MESS"
-      "AGE_TYPE_GROUP_TEXT\020\003\022\034\n\030MESSAGE_TYPE_GR"
-      "OUP_AUDIO\020\004*}\n\020RouteMessageType\022\026\n\022ROUTE"
-      "_MESSAGE_ZERO\020\000\022&\n\"ROUTE_MESSAGE_FRIEND_"
-      "STATUS_CHANGE\020\001\022)\n%ROUTE_MESSAGE_FRIEND_"
-      "SIGNATURE_CHANGE\020\002b\006proto3"
+      "_OTHER\020\004\022\017\n\013SID_SESSION\020\005\022\017\n\013SID_MESSAGE"
+      "\020\006*\313\001\n\010LoginCID\022\022\n\016CID_LOGIN_ZERO\020\000\022 \n\033C"
+      "ID_LOGIN_REQUSET_MSGSERVER\020\201\002\022 \n\033CID_LOG"
+      "IN_RESPONE_MSGSERVER\020\202\002\022 \n\033CID_LOGIN_REQ"
+      "UEST_USERLOGIN\020\203\002\022 \n\033CID_LOGIN_RESPONE_U"
+      "SERLOGIN\020\204\002\022#\n\036CID_LOGIN_REQUEST_USERLOG"
+      "INOUT\020\205\002*\364\003\n\tServerCID\022\023\n\017CID_SERVER_ZER"
+      "O\020\000\022\036\n\031CID_SERVER_MSGSERVER_INFO\020\201\004\022 \n\033C"
+      "ID_SERVER_VALIDATE_REQUEST\020\202\004\022 \n\033CID_SER"
+      "VER_VALIDATE_RESPONE\020\203\004\022\033\n\026CID_SERVER_US"
+      "ER_LOGOUT\020\204\004\022\031\n\024CID_SERVER_ROUTE_MSG\020\205\004\022"
+      "\037\n\032CID_SERVER_ROUTE_BROADCAST\020\206\004\022*\n%CID_"
+      "SERVER_GET_ONLINE_FRIENDS_REQUEST\020\207\004\022*\n%"
+      "CID_SERVER_GET_ONLINE_FRIENDS_RESPONE\020\210\004"
+      "\022(\n#CID_SERVER_GET_SERVER_INDEX_REQUEST\020"
+      "\211\004\022(\n#CID_SERVER_GET_SERVER_INDEX_RESPON"
+      "E\020\212\004\022\035\n\030CID_SERVER_ROUTE_MESSAGE\020\213\004\022(\n#C"
+      "ID_SERVER_GET_FRIEND_ONLINE_STATUS\020\214\004\022 \n"
+      "\033CID_SERVER_ROUTE_TO_MESSAGE\020\215\004*8\n\010Other"
+      "CID\022\022\n\016CID_OTHER_ZERO\020\000\022\030\n\023CID_OTHER_HEA"
+      "RTBEAT\020\201\006*\352\005\n\rFriendListCID\022\027\n\023CID_FRIEN"
+      "DLIST_ZERO\020\000\022\037\n\032CID_FRIENDLIST_GET_REQUE"
+      "ST\020\201\010\022\037\n\032CID_FRIENDLIST_GET_RESPONE\020\202\010\022("
+      "\n#CID_FRIENDLIST_FRIEND_STATUS_CHANGE\020\203\010"
+      "\022-\n(CID_FRIENDLIST_SIGNATURE_CHANGED_REQ"
+      "UEST\020\204\010\022-\n(CID_FRIENDLIST_SIGNATURE_CHAN"
+      "GED_RESPONE\020\205\010\022,\n\'CID_FRIENDLIST_FRIEND_"
+      "SIGNATURE_CHANGED\020\206\010\022,\n\'CID_FRIENDLIST_M"
+      "ODEFY_FRIEND_GROUP_NAME\020\207\010\022,\n\'CID_FRIEND"
+      "LIST_ADD_FRIEND_GROUP_REQUEST\020\210\010\022,\n\'CID_"
+      "FRIENDLIST_ADD_FRIEND_GROUP_RESPONE\020\211\010\022&"
+      "\n!CID_FRIENDLIST_GET_GROUPS_REQUEST\020\212\010\022&"
+      "\n!CID_FRIENDLIST_GET_GROUPS_REPSONE\020\213\010\022/"
+      "\n*CID_FRIENDLIST_RENAME_FRIEND_GROUP_REQ"
+      "UEST\020\214\010\022/\n*CID_FRIENDLIST_DELETE_FRIEND_"
+      "GROUP_REQUEST\020\215\010\0220\n+CID_FRIENDLIST_MOVE_"
+      "FRIEND_TO_GROUP_REQUEST\020\216\010\022)\n$CID_FRIEND"
+      "LIST_DELETE_FRIEND_REQUEST\020\217\010\022/\n*CID_FRI"
+      "ENDLIST_MODIFY_FRIEND_REMARK_RQUEST\020\220\010*\210"
+      "\002\n\016SessionListCID\022\030\n\024CID_SESSIONLIST_ZER"
+      "O\020\000\022 \n\033CID_SESSIONLIST_ADD_SESSION\020\201\n\022 \n"
+      "\033CID_SESSIONLIST_DEL_SESSION\020\202\n\022 \n\033CID_S"
+      "ESSIONLIST_UPD_SESSION\020\203\n\022 \n\033CID_SESSION"
+      "LIST_TOP_SESSION\020\204\n\022)\n$CID_SESSIONLIST_G"
+      "ET_SESSIONS_REQUEST\020\205\n\022)\n$CID_SESSIONLIS"
+      "T_GET_SESSIONS_RESPONE\020\206\n*i\n\nMessageCID\022"
+      "\024\n\020CID_MESSAGE_ZERO\020\000\022\025\n\020CID_MESSAGE_DAT"
+      "A\020\201\014\022\025\n\020CID_MESSAGE_SAVE\020\202\014\022\027\n\022CID_MESSA"
+      "GE_UPDATE\020\203\014*[\n\nResultType\022\010\n\004NONE\020\000\022\021\n\r"
+      "NO_MSG_SERVER\020\001\022\023\n\017MSG_SERVER_FULL\020\002\022\033\n\027"
+      "SIGNATURE_MODIFY_FAILED\020\003*m\n\016UserStatusT"
+      "ype\022\024\n\020USER_STATUS_ZERO\020\000\022\026\n\022USER_STATUS"
+      "_ONLINE\020\001\022\027\n\023USER_STATUS_OFFLINE\020\002\022\024\n\020US"
+      "ER_STATUS_HIDE\020\003*P\n\013SessionType\022\020\n\014SESSI"
+      "ON_ZERO\020\000\022\027\n\023SESSION_TYPE_SINGLE\020\001\022\026\n\022SE"
+      "SSION_TYPE_GROUP\020\002*\227\001\n\013MessageType\022\020\n\014ME"
+      "SSAGE_ZERO\020\000\022\034\n\030MESSAGE_TYPE_SINGLE_TEXT"
+      "\020\001\022\035\n\031MESSAGE_TYPE_SINGLE_AUDIO\020\002\022\033\n\027MES"
+      "SAGE_TYPE_GROUP_TEXT\020\003\022\034\n\030MESSAGE_TYPE_G"
+      "ROUP_AUDIO\020\004*}\n\020RouteMessageType\022\026\n\022ROUT"
+      "E_MESSAGE_ZERO\020\000\022&\n\"ROUTE_MESSAGE_FRIEND"
+      "_STATUS_CHANGE\020\001\022)\n%ROUTE_MESSAGE_FRIEND"
+      "_SIGNATURE_CHANGE\020\002b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 2546);
+      descriptor, 3067);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "youliao.base.proto", &protobuf_RegisterTypes);
 }
@@ -273,6 +286,7 @@ bool ServiceID_IsValid(int value) {
     case 3:
     case 4:
     case 5:
+    case 6:
       return true;
     default:
       return false;
@@ -314,6 +328,9 @@ bool ServerCID_IsValid(int value) {
     case 520:
     case 521:
     case 522:
+    case 523:
+    case 524:
+    case 525:
       return true;
     default:
       return false;
@@ -363,14 +380,35 @@ bool FriendListCID_IsValid(int value) {
   }
 }
 
-const ::google::protobuf::EnumDescriptor* MessageCID_descriptor() {
+const ::google::protobuf::EnumDescriptor* SessionListCID_descriptor() {
   protobuf_youliao_2ebase_2eproto::protobuf_AssignDescriptorsOnce();
   return protobuf_youliao_2ebase_2eproto::file_level_enum_descriptors[5];
+}
+bool SessionListCID_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1281:
+    case 1282:
+    case 1283:
+    case 1284:
+    case 1285:
+    case 1286:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::google::protobuf::EnumDescriptor* MessageCID_descriptor() {
+  protobuf_youliao_2ebase_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_youliao_2ebase_2eproto::file_level_enum_descriptors[6];
 }
 bool MessageCID_IsValid(int value) {
   switch (value) {
     case 0:
-    case 1281:
+    case 1537:
+    case 1538:
+    case 1539:
       return true;
     default:
       return false;
@@ -379,7 +417,7 @@ bool MessageCID_IsValid(int value) {
 
 const ::google::protobuf::EnumDescriptor* ResultType_descriptor() {
   protobuf_youliao_2ebase_2eproto::protobuf_AssignDescriptorsOnce();
-  return protobuf_youliao_2ebase_2eproto::file_level_enum_descriptors[6];
+  return protobuf_youliao_2ebase_2eproto::file_level_enum_descriptors[7];
 }
 bool ResultType_IsValid(int value) {
   switch (value) {
@@ -395,7 +433,7 @@ bool ResultType_IsValid(int value) {
 
 const ::google::protobuf::EnumDescriptor* UserStatusType_descriptor() {
   protobuf_youliao_2ebase_2eproto::protobuf_AssignDescriptorsOnce();
-  return protobuf_youliao_2ebase_2eproto::file_level_enum_descriptors[7];
+  return protobuf_youliao_2ebase_2eproto::file_level_enum_descriptors[8];
 }
 bool UserStatusType_IsValid(int value) {
   switch (value) {
@@ -409,9 +447,24 @@ bool UserStatusType_IsValid(int value) {
   }
 }
 
+const ::google::protobuf::EnumDescriptor* SessionType_descriptor() {
+  protobuf_youliao_2ebase_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_youliao_2ebase_2eproto::file_level_enum_descriptors[9];
+}
+bool SessionType_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+      return true;
+    default:
+      return false;
+  }
+}
+
 const ::google::protobuf::EnumDescriptor* MessageType_descriptor() {
   protobuf_youliao_2ebase_2eproto::protobuf_AssignDescriptorsOnce();
-  return protobuf_youliao_2ebase_2eproto::file_level_enum_descriptors[8];
+  return protobuf_youliao_2ebase_2eproto::file_level_enum_descriptors[10];
 }
 bool MessageType_IsValid(int value) {
   switch (value) {
@@ -428,7 +481,7 @@ bool MessageType_IsValid(int value) {
 
 const ::google::protobuf::EnumDescriptor* RouteMessageType_descriptor() {
   protobuf_youliao_2ebase_2eproto::protobuf_AssignDescriptorsOnce();
-  return protobuf_youliao_2ebase_2eproto::file_level_enum_descriptors[9];
+  return protobuf_youliao_2ebase_2eproto::file_level_enum_descriptors[11];
 }
 bool RouteMessageType_IsValid(int value) {
   switch (value) {

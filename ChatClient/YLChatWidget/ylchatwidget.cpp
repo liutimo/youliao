@@ -8,6 +8,7 @@
 #include "YLNetWork/pduhandler.h"
 #include "YLNetWork/http/httphelper.h"
 #include "globaldata.h"
+#include "../signalforward.h"
 #include <QDebug>
 #include <QDir>
 
@@ -45,7 +46,15 @@ void YLChatWidget::initTitleBar()
     connect(PduHandler::instance(), &PduHandler::signleMessage, this, [this](uint32_t user_id, const QString &message){
         if (user_id == m_friend.friendId())
         {
+            QRegExp re;
+            re.setPattern("<img.*src='.*'.*>");
+            re.setMinimal(true);
+            QString msg = message;
             m_message_view->addRight(m_friend_header_path, message);
+            msg.replace(re, "[Picture]");
+            m_friend.setFriendLastMessage(msg);
+            m_friend.setFriendLastChatTime(QTime::currentTime().toString("hh:mm"));
+            SignalForward::instance()->forwordUpdateSession(m_friend);
         }
     });
 }
@@ -158,6 +167,13 @@ void YLChatWidget::sendMessage()
         content.replace(fileList[i], "http://www.liutimo.cn/" + uploadFileList[i]);
     }
 
-
     YLBusiness::sendMessage(GlobalData::getCurrLoginUserId(), m_friend.friendId(), content);
+
+    re.setPattern("<img.*src='.*'.*>");
+    re.setMinimal(true);
+
+    content.replace(re, "[Picture]");
+    m_friend.setFriendLastMessage(content);
+    m_friend.setFriendLastChatTime(QTime::currentTime().toString("hh:mm"));
+    SignalForward::instance()->forwordUpdateSession(m_friend);
 }

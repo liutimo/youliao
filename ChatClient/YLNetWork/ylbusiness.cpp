@@ -6,7 +6,7 @@
 #include "protobuf/youliao.login.pb.h"
 #include "protobuf/youliao.friendlist.pb.h"
 #include "protobuf/youliao.message.pb.h"
-#include <time.h>
+#include <QDateTime>
 using namespace youliao::pdu;
 
 YLBusiness::YLBusiness(QObject *parent) : QObject(parent)
@@ -79,7 +79,7 @@ void YLBusiness::heartBeat()
     basePdu->setCID(CID_OTHER_HEARTBEAT);
     basePdu->writeMessage(&heartBeat);
 
-    PduSender::instance()->addMessage(basePdu);
+//    PduSender::instance()->addMessage(basePdu);
 }
 
 void YLBusiness::sendMessage(uint32_t senderId, uint32_t receiverId, const QString &message)
@@ -87,7 +87,7 @@ void YLBusiness::sendMessage(uint32_t senderId, uint32_t receiverId, const QStri
     message::MessageData messageData;
     messageData.set_from_user_id(senderId);
     messageData.set_to_user_id(receiverId);
-    messageData.set_create_time(time(NULL));
+    messageData.set_create_time(QDateTime::currentDateTime().toTime_t());
     messageData.set_message_type(base::MESSAGE_TYPE_SINGLE_TEXT);
     messageData.set_message_data(message.toStdString());
 
