@@ -119,9 +119,16 @@ enum UserStatusType
 //session类型
 enum SessionType
 {
-    SESSION_ZERO   = 0;
+    SESSION_TYPE_ZERO   = 0;
     SESSION_TYPE_SINGLE = 1;    //好友会话
     SESSION_TYPE_GROUP  = 2;    //群组会话
+}
+
+enum SessionFlag
+{
+    SESSION_FLAG_ZERO = 0;
+    SESSION_FLAG_NORMAL = 1;        //正常状态
+    SESSION_FLAG_ONTOP = 2;         //置顶
 }
 
 //用户信息, 登录成功后发送

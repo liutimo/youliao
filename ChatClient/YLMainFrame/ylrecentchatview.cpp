@@ -1,5 +1,6 @@
 #include "ylrecentchatview.h"
 #include "ylfriendlistitem.h"
+#include "YLNetWork/pduhandler.h"
 #include <QMouseEvent>
 #include <QScrollBar>
 #include <QDebug>
@@ -11,6 +12,10 @@ YLRecentChatView::YLRecentChatView(QWidget *parent) : QListWidget(parent)
     setFocusPolicy(Qt::NoFocus);
     setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
+    connect(PduHandler::instance(), &PduHandler::sessions, this, [](const QList<base::SessionInfo> &lists)
+    {
+
+    });
 }
 
 void YLRecentChatView::add(const YLFriend &fri, int pos)

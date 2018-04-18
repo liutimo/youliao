@@ -12,6 +12,7 @@
 #include "SessionModel.h"
 #include "pdu/protobuf/youliao.server.pb.h"
 #include "pdu/protobuf/youliao.message.pb.h"
+#include "pdu/protobuf/youliao.session.pb.h"
 
 
 namespace DB_INTERFACE
@@ -378,8 +379,25 @@ namespace DB_INTERFACE
 
     void getSessions(BasePdu *basePdu, uint32_t conn_uuid)
     {
+        session::GetSessionsRequest request;
+        request.ParseFromString(basePdu->getMessage());
+
+        uint32_t userId = request.userid();
+
         std::list<base::SessionInfo> list;
-        SessionModel::instance()->getSessions(1, list);
+        SessionModel::instance()->getSessions(userId, list);
+
+        session::GetSessionReponse respone;
+        respone.set_userid(userId);
+
+        for (base::SessionInfo &sessionInfo : list)
+        {
+            auto session = respone.add_sessions();
+            *session = sessionInfo;
+        }
+
+        auto conn = findProxyConn(conn_uuid);
+        sendMessage(conn, respone, base::SID_SERVER, base::CID_SESSIONLIST_GET_SESSIONS_RESPONE);
     }
 
 }

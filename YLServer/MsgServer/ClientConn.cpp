@@ -17,6 +17,7 @@
 #include "pdu/protobuf/youliao.server.pb.h"
 #include "pdu/protobuf/youliao.friendlist.pb.h"
 #include "pdu/protobuf/youliao.message.pb.h"
+#include "pdu/protobuf/youliao.session.pb.h"
 #include "User.h"
 #include <sys/time.h>
 using namespace youliao::util;
@@ -162,7 +163,11 @@ void ClientConn::handlePdu(BasePdu *pdu)
         case base::CID_FRIENDLIST_MODIFY_FRIEND_REMARK_RQUEST:
             _HandleModifyFriendRemarkRequest(pdu);
             break;
+        case base::CID_SESSIONLIST_GET_SESSIONS_REQUEST:
+            _HandleGetSessionsRequest(pdu);
+            break;
         default:
+            std::cout << pdu->getCID() << std::endl;
             break;
     }
 }
@@ -487,4 +492,18 @@ void ClientConn::_HandleModifyFriendRemarkRequest(BasePdu *pdu)
 
     if (dbServConn)
         dbServConn->sendBasePdu(&basePdu);
+}
+
+void ClientConn::_HandleGetSessionsRequest(BasePdu *pdu)
+{
+    session::GetSessionsRequest request;
+    request.ParseFromString(pdu->getMessage());
+
+    uint32_t userId = request.userid();
+    log("用户%d请求session列表", userId);
+
+    DBServConn *dbServConn = get_db_server_conn();
+
+    if (dbServConn)
+        sendMessage(dbServConn, request, base::SID_SERVER, base::CID_SESSIONLIST_GET_SESSIONS_REQUEST);
 }

@@ -28,6 +28,9 @@ public:
 
     //message
     static void sendMessage(uint32_t senderId, uint32_t receiverId, const QString &message);
+
+    //session
+    static void getSessions(uint32_t userId);
 };
 
 #endif // YLBUSINESS_H

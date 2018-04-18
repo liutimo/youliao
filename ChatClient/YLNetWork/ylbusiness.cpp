@@ -6,6 +6,7 @@
 #include "protobuf/youliao.login.pb.h"
 #include "protobuf/youliao.friendlist.pb.h"
 #include "protobuf/youliao.message.pb.h"
+#include "protobuf/youliao.session.pb.h"
 #include <QDateTime>
 using namespace youliao::pdu;
 
@@ -196,6 +197,20 @@ void YLBusiness::modifyFriendRemark(uint32_t userId, uint32_t friendId, const QS
     BasePdu *basePdu = new BasePdu;
     basePdu->setSID(SID_FRIEND_LIST);
     basePdu->setCID(CID_FRIENDLIST_MODIFY_FRIEND_REMARK_RQUEST);
+    basePdu->writeMessage(&request);
+    PduSender::instance()->addMessage(basePdu);
+}
+
+
+/******************SESSION*********************/
+void YLBusiness::getSessions(uint32_t userId)
+{
+    session::GetSessionsRequest request;
+    request.set_userid(userId);
+
+    BasePdu *basePdu = new BasePdu;
+    basePdu->setSID(SID_SESSION);
+    basePdu->setCID(CID_SESSIONLIST_GET_SESSIONS_REQUEST);
     basePdu->writeMessage(&request);
     PduSender::instance()->addMessage(basePdu);
 }

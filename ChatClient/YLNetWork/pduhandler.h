@@ -24,7 +24,7 @@ signals:
     void signleMessage(uint32_t senderId, const QString &content);
     void friendgroups(const group_map&);
     void friendGroup(uint32_t group_id, const QString &group_name);
-
+    void sessions(const QList<base::SessionInfo>&);
 private:
     void _HandleBasePdu(BasePdu *pdu);
     void _HandleUserLoginRespone(BasePdu *pdu);
@@ -35,6 +35,7 @@ private:
     void _HandleFriendStatusChangeMessage(BasePdu *pdu);
     void _HandleFriendSignatureChanged(BasePdu *pdu);
     void _HandleAddFriendGroupRespone(BasePdu *pdu);
+    void _HandleGetSessionsRespone(BasePdu *pdu);
 private:
     explicit PduHandler(QObject *parent = nullptr);
 

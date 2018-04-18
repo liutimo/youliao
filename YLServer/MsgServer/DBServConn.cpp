@@ -3,7 +3,6 @@
 //
 
 #include <network/ServerInfo.h>
-#include <pdu/protobuf/youliao.friendlist.pb.h>
 #include "DBServConn.h"
 #include "RouteConn.h"
 #include "ClientConn.h"
@@ -11,6 +10,8 @@
 
 #include "pdu/protobuf/youliao.login.pb.h"
 #include "pdu/protobuf/youliao.server.pb.h"
+#include "pdu/protobuf/youliao.friendlist.pb.h"
+#include "pdu/protobuf/youliao.session.pb.h"
 #include "User.h"
 
 using namespace youliao::pdu;
@@ -138,6 +139,9 @@ void DBServConn::handlePdu(BasePdu *pdu)
             break;
         case base::CID_FRIENDLIST_ADD_FRIEND_GROUP_RESPONE:
             _HandleAddNewFriendGroupRespone(pdu);
+            break;
+        case base::CID_SESSIONLIST_GET_SESSIONS_RESPONE:
+            _HandleGetSessionsRespone(pdu);
             break;
         default:
             break;
@@ -319,6 +323,26 @@ void DBServConn::_HandleAddNewFriendGroupRespone(BasePdu *pdu)
         if (conn)
             conn->sendBasePdu(&basePdu1);
     }
-
-
 }
+
+void DBServConn::_HandleGetSessionsRespone(BasePdu *basePdu)
+{
+    session::GetSessionReponse reponse;
+    reponse.ParseFromString(basePdu->getMessage());
+
+    uint32_t userId = reponse.userid();
+
+    auto user = UserManager::instance()->getUser(userId);
+
+    if (user)
+    {
+        auto conn = user->getConn();
+
+        if(conn)
+        {
+            sendMessage(conn, reponse, base::SID_SERVER, base::CID_SESSIONLIST_GET_SESSIONS_RESPONE);
+        }
+    }
+}
+
+

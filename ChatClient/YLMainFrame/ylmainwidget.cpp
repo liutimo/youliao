@@ -183,7 +183,7 @@ void YLMainWidget::setUserInfo(UserInfo *userInfo)
 
     YLBusiness::getFriendGroupsRequest(m_user_info->user_id());
     YLBusiness::getFriendListRequest(m_user_info->user_id());
-
+    YLBusiness::getSessions(m_user_info->user_id());
     m_http_helper->download(m_user_info->user_header_url().c_str());
 }
 

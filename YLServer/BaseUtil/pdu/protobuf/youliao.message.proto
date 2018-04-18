@@ -12,3 +12,4 @@ message MessageData
     bytes  message_data = 6;
     bytes  attach_data = 7;
 }
+

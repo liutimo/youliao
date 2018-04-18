@@ -119,9 +119,16 @@ enum UserStatusType
 //session类型
 enum SessionType
 {
-    SESSION_ZERO   = 0;
+    SESSION_TYPE_ZERO   = 0;
     SESSION_TYPE_SINGLE = 1;    //好友会话
     SESSION_TYPE_GROUP  = 2;    //群组会话
+}
+
+enum SessionFlag
+{
+    SESSION_FLAG_ZERO = 0;
+    SESSION_FLAG_NORMAL = 1;        //正常状态
+    SESSION_FLAG_ONTOP = 2;         //置顶
 }
 
 //用户信息, 登录成功后发送
@@ -151,6 +158,18 @@ message FriendInfo
     string friend_remark = 9;
     bool   friend_is_online = 10;
 }
+
+//会话信息
+message SessionInfo
+{
+    uint32 session_id = 1;
+    uint32 other_id = 2;
+    uint32 session_type = 3;
+    uint32 session_top = 4;
+    uint32 session_update = 5;
+    bytes last_message_data = 6;
+}
+
 
 //心跳包
 message HeartBeat

@@ -43,6 +43,7 @@ private:
     void _HandleMoveFriendToGroupRequest(BasePdu *);
     void _HandleDeleteFriendRequest(BasePdu*);
     void _HandleModifyFriendRemarkRequest(BasePdu *);
+    void _HandleGetSessionsRequest(BasePdu *);
 
 public:
     uint64_t m_last_heart_beat_tick;    //最后一次收到心跳包的时间

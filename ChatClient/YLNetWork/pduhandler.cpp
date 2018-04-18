@@ -9,6 +9,7 @@
 #include "protobuf/youliao.login.pb.h"
 #include "protobuf/youliao.friendlist.pb.h"
 #include "protobuf/youliao.message.pb.h"
+#include "protobuf/youliao.session.pb.h"
 //全局PDU list
 //主线程产生的所有pdu都会放入这个list中
 //子线程循环冲list读数据发送到消息服务器
@@ -25,6 +26,7 @@ PduHandler::PduHandler(QObject *parent) : QThread(parent)
     qRegisterMetaType<group_map>("group_map");
     qRegisterMetaType<friend_map>("friend_map");
     qRegisterMetaType<uint32_t>("uint32_t");
+    qRegisterMetaType<QList<base::SessionInfo>>("QList<base::SessionInfo>");
 }
 
 PduHandler* PduHandler::instance()
@@ -82,6 +84,9 @@ void PduHandler::_HandleBasePdu(BasePdu *pdu)
         break;
     case base::CID_FRIENDLIST_ADD_FRIEND_GROUP_RESPONE:
         _HandleAddFriendGroupRespone(pdu);
+        break;
+    case base::CID_SESSIONLIST_GET_SESSIONS_RESPONE:
+        _HandleGetSessionsRespone(pdu);
         break;
     default:
         std::cout << "CID" << pdu->getCID() << "  SID:" << pdu->getSID();
@@ -194,3 +199,23 @@ void PduHandler::_HandleAddFriendGroupRespone(BasePdu *pdu)
 
     emit friendGroup(groupId, groupName);
 }
+
+
+void PduHandler::_HandleGetSessionsRespone(BasePdu *pdu)
+{
+    session::GetSessionReponse respone;
+    respone.ParseFromString(pdu->getMessage());
+
+    QList<base::SessionInfo> sessionList;
+
+    for(int i = 0; i < respone.sessions_size(); ++i)
+    {
+        base::SessionInfo si;
+        si = respone.sessions(i);
+        sessionList.push_back(si);
+    }
+
+    emit sessions(sessionList);
+}
+
+
