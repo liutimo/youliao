@@ -211,12 +211,15 @@ enum FriendListCID {
   CID_FRIENDLIST_MOVE_FRIEND_TO_GROUP_REQUEST = 1038,
   CID_FRIENDLIST_DELETE_FRIEND_REQUEST = 1039,
   CID_FRIENDLIST_MODIFY_FRIEND_REMARK_RQUEST = 1040,
+  CID_FRIENDLIST_SEARCH_FRIEND_REQUEST = 1041,
+  CID_FRIENDLIST_SEARCH_FRIEND_RESPONE = 1042,
+  CID_FRIENDLIST_ADD_FRIEND_REQUEST = 1043,
   FriendListCID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   FriendListCID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool FriendListCID_IsValid(int value);
 const FriendListCID FriendListCID_MIN = CID_FRIENDLIST_ZERO;
-const FriendListCID FriendListCID_MAX = CID_FRIENDLIST_MODIFY_FRIEND_REMARK_RQUEST;
+const FriendListCID FriendListCID_MAX = CID_FRIENDLIST_ADD_FRIEND_REQUEST;
 const int FriendListCID_ARRAYSIZE = FriendListCID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* FriendListCID_descriptor();
@@ -413,6 +416,28 @@ inline bool RouteMessageType_Parse(
     const ::std::string& name, RouteMessageType* value) {
   return ::google::protobuf::internal::ParseNamedEnum<RouteMessageType>(
     RouteMessageType_descriptor(), name, value);
+}
+enum SearchType {
+  SEARCH_TYPE_ZERO = 0,
+  SEARCH_TYPE_ACCOUNT = 1,
+  SEARCH_TYPE_NICKNAME = 2,
+  SearchType_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  SearchType_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+bool SearchType_IsValid(int value);
+const SearchType SearchType_MIN = SEARCH_TYPE_ZERO;
+const SearchType SearchType_MAX = SEARCH_TYPE_NICKNAME;
+const int SearchType_ARRAYSIZE = SearchType_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* SearchType_descriptor();
+inline const ::std::string& SearchType_Name(SearchType value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    SearchType_descriptor(), value);
+}
+inline bool SearchType_Parse(
+    const ::std::string& name, SearchType* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<SearchType>(
+    SearchType_descriptor(), name, value);
 }
 // ===================================================================
 
@@ -1972,6 +1997,11 @@ template <> struct is_proto_enum< ::youliao::pdu::base::RouteMessageType> : ::go
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::youliao::pdu::base::RouteMessageType>() {
   return ::youliao::pdu::base::RouteMessageType_descriptor();
+}
+template <> struct is_proto_enum< ::youliao::pdu::base::SearchType> : ::google::protobuf::internal::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::youliao::pdu::base::SearchType>() {
+  return ::youliao::pdu::base::SearchType_descriptor();
 }
 
 }  // namespace protobuf

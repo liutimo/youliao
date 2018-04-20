@@ -172,6 +172,9 @@ void ClientConn::handlePdu(BasePdu *pdu)
         case base::CID_SESSIONLIST_TOP_SESSION:
             _HandleTopSessionRequest(pdu);
             break;
+        case base::CID_FRIENDLIST_SEARCH_FRIEND_REQUEST:
+            _HandleSearchFriendRequest(pdu);
+            break;
         default:
             std::cout << pdu->getCID() << std::endl;
             break;
@@ -547,5 +550,17 @@ void ClientConn::_HandleTopSessionRequest(BasePdu *pdu)
 
 void ClientConn::_HandleSearchFriendRequest(BasePdu *pdu)
 {
-//    friendlist::SearchFriendRequest request;
+    friendlist::SearchFriendRequest request;
+    request.ParseFromString(pdu->getMessage());
+
+    uint32_t userId = request.user_id();
+    std::string searchData = request.search_data();
+    base::SearchType searchType = request.search_type();
+
+    log("用户%d请求搜索：%s，搜索类型为%d", userId, searchData, searchType);
+
+    DBServConn *dbServConn = get_db_server_conn();
+    if (dbServConn)
+        sendMessage(dbServConn, request, base::SID_SERVER, base::CID_FRIENDLIST_SEARCH_FRIEND_REQUEST);
 }
+

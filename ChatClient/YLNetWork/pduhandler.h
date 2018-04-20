@@ -38,6 +38,7 @@ private:
     void _HandleAddFriendGroupRespone(BasePdu *pdu);
     void _HandleGetSessionsRespone(BasePdu *pdu);
     void _HandleAddSessionRespone(BasePdu *pdu);
+    void _HandleSearchFriendRespone(BasePdu *pdu);
 private:
     explicit PduHandler(QObject *parent = nullptr);
 

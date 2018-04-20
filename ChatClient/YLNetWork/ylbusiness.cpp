@@ -201,6 +201,19 @@ void YLBusiness::modifyFriendRemark(uint32_t userId, uint32_t friendId, const QS
     PduSender::instance()->addMessage(basePdu);
 }
 
+void YLBusiness::searchFriend(uint32_t userId, const QString& searchData, youliao::pdu::base::SearchType searchType)
+{
+    friendlist::SearchFriendRequest request;
+    request.set_user_id(userId);
+    request.set_search_data(searchData.toStdString().c_str());
+    request.set_search_type(searchType);
+
+    BasePdu *basePdu = new BasePdu;
+    basePdu->setSID(SID_FRIEND_LIST);
+    basePdu->setCID(CID_FRIENDLIST_SEARCH_FRIEND_REQUEST);
+    basePdu->writeMessage(&request);
+    PduSender::instance()->addMessage(basePdu);
+}
 
 /******************SESSION*********************/
 void YLBusiness::getSessions(uint32_t userId)

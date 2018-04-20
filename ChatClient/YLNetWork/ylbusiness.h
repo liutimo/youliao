@@ -25,6 +25,8 @@ public:
     static void moveFriendToGroup(uint32_t userId, uint32_t friendId, uint32_t groupId);
     static void deleteFriend(uint32_t userId, uint32_t friendId);
     static void modifyFriendRemark(uint32_t userId, uint32_t friendId, const QString &friendRemark);
+    static void searchFriend(uint32_t userId, const QString& searchData, youliao::pdu::base::SearchType searchType);
+
 
     //message
     static void sendMessage(uint32_t senderId, uint32_t receiverId, const QString &message);

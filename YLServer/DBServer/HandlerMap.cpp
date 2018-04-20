@@ -82,6 +82,9 @@ void HandlerMap::init()
 
     //置顶session
     m_handler_map.insert(std::make_pair(CID_SESSIONLIST_TOP_SESSION, DB_INTERFACE::topSession));
+
+    //搜索好友
+    m_handler_map.insert(std::make_pair(CID_FRIENDLIST_SEARCH_FRIEND_REQUEST, DB_INTERFACE::searchFriend));
 }
 
 pdu_handler_t HandlerMap::getHandler(uint16_t cid)

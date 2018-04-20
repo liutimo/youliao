@@ -131,7 +131,7 @@ void InitDefaultsHeartBeat() {
 }
 
 ::google::protobuf::Metadata file_level_metadata[4];
-const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[13];
+const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[14];
 
 const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   ~0u,  // no _has_bits_
@@ -252,7 +252,7 @@ void AddDescriptorsImpl() {
       "SERVER_ROUTE_MESSAGE\020\213\004\022(\n#CID_SERVER_GE"
       "T_FRIEND_ONLINE_STATUS\020\214\004\022 \n\033CID_SERVER_"
       "ROUTE_TO_MESSAGE\020\215\004*8\n\010OtherCID\022\022\n\016CID_O"
-      "THER_ZERO\020\000\022\030\n\023CID_OTHER_HEARTBEAT\020\201\006*\352\005"
+      "THER_ZERO\020\000\022\030\n\023CID_OTHER_HEARTBEAT\020\201\006*\350\006"
       "\n\rFriendListCID\022\027\n\023CID_FRIENDLIST_ZERO\020\000"
       "\022\037\n\032CID_FRIENDLIST_GET_REQUEST\020\201\010\022\037\n\032CID"
       "_FRIENDLIST_GET_RESPONE\020\202\010\022(\n#CID_FRIEND"
@@ -271,36 +271,41 @@ void AddDescriptorsImpl() {
       "T\020\215\010\0220\n+CID_FRIENDLIST_MOVE_FRIEND_TO_GR"
       "OUP_REQUEST\020\216\010\022)\n$CID_FRIENDLIST_DELETE_"
       "FRIEND_REQUEST\020\217\010\022/\n*CID_FRIENDLIST_MODI"
-      "FY_FRIEND_REMARK_RQUEST\020\220\010*\210\002\n\016SessionLi"
-      "stCID\022\030\n\024CID_SESSIONLIST_ZERO\020\000\022 \n\033CID_S"
-      "ESSIONLIST_ADD_SESSION\020\201\n\022 \n\033CID_SESSION"
-      "LIST_DEL_SESSION\020\202\n\022 \n\033CID_SESSIONLIST_U"
-      "PD_SESSION\020\203\n\022 \n\033CID_SESSIONLIST_TOP_SES"
-      "SION\020\204\n\022)\n$CID_SESSIONLIST_GET_SESSIONS_"
-      "REQUEST\020\205\n\022)\n$CID_SESSIONLIST_GET_SESSIO"
-      "NS_RESPONE\020\206\n*i\n\nMessageCID\022\024\n\020CID_MESSA"
-      "GE_ZERO\020\000\022\025\n\020CID_MESSAGE_DATA\020\201\014\022\025\n\020CID_"
-      "MESSAGE_SAVE\020\202\014\022\027\n\022CID_MESSAGE_UPDATE\020\203\014"
-      "*[\n\nResultType\022\010\n\004NONE\020\000\022\021\n\rNO_MSG_SERVE"
-      "R\020\001\022\023\n\017MSG_SERVER_FULL\020\002\022\033\n\027SIGNATURE_MO"
-      "DIFY_FAILED\020\003*m\n\016UserStatusType\022\024\n\020USER_"
-      "STATUS_ZERO\020\000\022\026\n\022USER_STATUS_ONLINE\020\001\022\027\n"
-      "\023USER_STATUS_OFFLINE\020\002\022\024\n\020USER_STATUS_HI"
-      "DE\020\003*U\n\013SessionType\022\025\n\021SESSION_TYPE_ZERO"
-      "\020\000\022\027\n\023SESSION_TYPE_SINGLE\020\001\022\026\n\022SESSION_T"
-      "YPE_GROUP\020\002*U\n\013SessionFlag\022\025\n\021SESSION_FL"
-      "AG_ZERO\020\000\022\027\n\023SESSION_FLAG_NORMAL\020\001\022\026\n\022SE"
-      "SSION_FLAG_ONTOP\020\002*\227\001\n\013MessageType\022\020\n\014ME"
-      "SSAGE_ZERO\020\000\022\034\n\030MESSAGE_TYPE_SINGLE_TEXT"
-      "\020\001\022\035\n\031MESSAGE_TYPE_SINGLE_AUDIO\020\002\022\033\n\027MES"
-      "SAGE_TYPE_GROUP_TEXT\020\003\022\034\n\030MESSAGE_TYPE_G"
-      "ROUP_AUDIO\020\004*}\n\020RouteMessageType\022\026\n\022ROUT"
-      "E_MESSAGE_ZERO\020\000\022&\n\"ROUTE_MESSAGE_FRIEND"
-      "_STATUS_CHANGE\020\001\022)\n%ROUTE_MESSAGE_FRIEND"
-      "_SIGNATURE_CHANGE\020\002b\006proto3"
+      "FY_FRIEND_REMARK_RQUEST\020\220\010\022)\n$CID_FRIEND"
+      "LIST_SEARCH_FRIEND_REQUEST\020\221\010\022)\n$CID_FRI"
+      "ENDLIST_SEARCH_FRIEND_RESPONE\020\222\010\022&\n!CID_"
+      "FRIENDLIST_ADD_FRIEND_REQUEST\020\223\010*\210\002\n\016Ses"
+      "sionListCID\022\030\n\024CID_SESSIONLIST_ZERO\020\000\022 \n"
+      "\033CID_SESSIONLIST_ADD_SESSION\020\201\n\022 \n\033CID_S"
+      "ESSIONLIST_DEL_SESSION\020\202\n\022 \n\033CID_SESSION"
+      "LIST_UPD_SESSION\020\203\n\022 \n\033CID_SESSIONLIST_T"
+      "OP_SESSION\020\204\n\022)\n$CID_SESSIONLIST_GET_SES"
+      "SIONS_REQUEST\020\205\n\022)\n$CID_SESSIONLIST_GET_"
+      "SESSIONS_RESPONE\020\206\n*i\n\nMessageCID\022\024\n\020CID"
+      "_MESSAGE_ZERO\020\000\022\025\n\020CID_MESSAGE_DATA\020\201\014\022\025"
+      "\n\020CID_MESSAGE_SAVE\020\202\014\022\027\n\022CID_MESSAGE_UPD"
+      "ATE\020\203\014*[\n\nResultType\022\010\n\004NONE\020\000\022\021\n\rNO_MSG"
+      "_SERVER\020\001\022\023\n\017MSG_SERVER_FULL\020\002\022\033\n\027SIGNAT"
+      "URE_MODIFY_FAILED\020\003*m\n\016UserStatusType\022\024\n"
+      "\020USER_STATUS_ZERO\020\000\022\026\n\022USER_STATUS_ONLIN"
+      "E\020\001\022\027\n\023USER_STATUS_OFFLINE\020\002\022\024\n\020USER_STA"
+      "TUS_HIDE\020\003*U\n\013SessionType\022\025\n\021SESSION_TYP"
+      "E_ZERO\020\000\022\027\n\023SESSION_TYPE_SINGLE\020\001\022\026\n\022SES"
+      "SION_TYPE_GROUP\020\002*U\n\013SessionFlag\022\025\n\021SESS"
+      "ION_FLAG_ZERO\020\000\022\027\n\023SESSION_FLAG_NORMAL\020\001"
+      "\022\026\n\022SESSION_FLAG_ONTOP\020\002*\227\001\n\013MessageType"
+      "\022\020\n\014MESSAGE_ZERO\020\000\022\034\n\030MESSAGE_TYPE_SINGL"
+      "E_TEXT\020\001\022\035\n\031MESSAGE_TYPE_SINGLE_AUDIO\020\002\022"
+      "\033\n\027MESSAGE_TYPE_GROUP_TEXT\020\003\022\034\n\030MESSAGE_"
+      "TYPE_GROUP_AUDIO\020\004*}\n\020RouteMessageType\022\026"
+      "\n\022ROUTE_MESSAGE_ZERO\020\000\022&\n\"ROUTE_MESSAGE_"
+      "FRIEND_STATUS_CHANGE\020\001\022)\n%ROUTE_MESSAGE_"
+      "FRIEND_SIGNATURE_CHANGE\020\002*U\n\nSearchType\022"
+      "\024\n\020SEARCH_TYPE_ZERO\020\000\022\027\n\023SEARCH_TYPE_ACC"
+      "OUNT\020\001\022\030\n\024SEARCH_TYPE_NICKNAME\020\002b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 3307);
+      descriptor, 3520);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "youliao.base.proto", &protobuf_RegisterTypes);
 }
@@ -419,6 +424,9 @@ bool FriendListCID_IsValid(int value) {
     case 1038:
     case 1039:
     case 1040:
+    case 1041:
+    case 1042:
+    case 1043:
       return true;
     default:
       return false;
@@ -544,6 +552,21 @@ const ::google::protobuf::EnumDescriptor* RouteMessageType_descriptor() {
   return protobuf_youliao_2ebase_2eproto::file_level_enum_descriptors[12];
 }
 bool RouteMessageType_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::google::protobuf::EnumDescriptor* SearchType_descriptor() {
+  protobuf_youliao_2ebase_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_youliao_2ebase_2eproto::file_level_enum_descriptors[13];
+}
+bool SearchType_IsValid(int value) {
   switch (value) {
     case 0:
     case 1:

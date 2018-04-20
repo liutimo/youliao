@@ -53,6 +53,8 @@ namespace DB_INTERFACE
     //保存消息记录
     void saveMessage(BasePdu *basePdu, uint32_t conn_uuid);
 
+    //搜索好友
+    void searchFriend(BasePdu *basePdu, uint32_t conn_uuid);
 
 
     /*******************会话列表************************/

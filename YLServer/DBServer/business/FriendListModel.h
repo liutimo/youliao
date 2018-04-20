@@ -5,9 +5,10 @@
 #ifndef DBSERVER_FRIENDLISTMODEL_H
 #define DBSERVER_FRIENDLISTMODEL_H
 
-#include <pdu/protobuf/youliao.server.pb.h>
+#include "pdu/protobuf/youliao.server.pb.h"
 #include "pdu/protobuf/youliao.base.pb.h"
 #include "pdu/protobuf/youliao.friendlist.pb.h"
+#include <list>
 
 using namespace youliao::pdu;
 
@@ -37,6 +38,8 @@ public:
     bool modifyFriendRemark(uint32_t user_id, uint32_t friend_id, const std::string &friendRemark);
 
     uint32_t getRelationId(uint32_t userId, uint32_t friendId);
+
+    bool searchFriend(std::string &searchData, base::SearchType searchType, std::list<base::FriendInfo> &);
 
 private:
     FriendListModel();

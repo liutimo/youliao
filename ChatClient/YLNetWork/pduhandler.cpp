@@ -91,6 +91,9 @@ void PduHandler::_HandleBasePdu(BasePdu *pdu)
     case base::CID_SESSIONLIST_ADD_SESSION:
         _HandleAddSessionRespone(pdu);
         break;
+    case base::CID_FRIENDLIST_SEARCH_FRIEND_RESPONE:
+        _HandleSearchFriendRespone(pdu);
+        break;
     default:
         std::cout << "CID" << pdu->getCID() << "  SID:" << pdu->getSID();
         break;
@@ -231,4 +234,13 @@ void PduHandler::_HandleAddSessionRespone(BasePdu *pdu)
     uint32_t sessionId = respone.session_id();
 
     emit newSession(otherId, sessionId);
+}
+
+
+void PduHandler::_HandleSearchFriendRespone(BasePdu *pdu)
+{
+    friendlist::SearchFriendRespone respone;
+    respone.ParseFromString(pdu->getMessage());
+
+    qDebug() << respone.friends_size();
 }

@@ -348,3 +348,47 @@ uint32_t FriendListModel::getRelationId(uint32_t userId, uint32_t friendId)
     DBManager::instance()->releaseConnection(dbConn);
     return relationId;
 }
+
+
+
+bool FriendListModel::searchFriend(std::string &searchData, base::SearchType searchType, list<base::FriendInfo> &result)
+{
+    bool ret = false;
+
+    auto conn = DBManager::instance()->getConnection();
+    if (conn)
+    {
+        string querySql;
+        if (searchType == base::SEARCH_TYPE_ACCOUNT)
+        {
+            querySql = "SELECT * FROM yl_user WHERE user_account =" + searchData;
+        }
+        else if (searchType == base::SEARCH_TYPE_NICKNAME)
+        {
+            querySql = "SELECT * FROM yl_user WHERE user_nickname LIKE '%"+ searchData +"%';";
+        }
+
+        ResultSet *resultSet = conn->query(querySql);
+
+        if (resultSet)
+        {
+            ret = true;
+            while (resultSet->next())
+            {
+                base::FriendInfo info;
+                info.set_friend_id((uint32_t)resultSet->getInt("user_id"));
+                info.set_friend_account((uint32_t)resultSet->getInt("user_account"));
+                info.set_friend_header_url(resultSet->getString("user_header"));
+                info.set_friend_sex(resultSet->getInt("user_sex"));
+                info.set_friend_nick(resultSet->getString("user_nickname"));
+                result.push_back(info);
+            }
+
+            delete resultSet;
+        }
+
+    }
+
+    DBManager::instance()->releaseConnection(conn);
+    return ret;
+}

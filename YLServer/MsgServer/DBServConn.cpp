@@ -146,6 +146,9 @@ void DBServConn::handlePdu(BasePdu *pdu)
         case base::CID_SESSIONLIST_ADD_SESSION:
             _HandleAddSessionRespone(pdu);
             break;
+        case base::CID_FRIENDLIST_SEARCH_FRIEND_RESPONE:
+            _HandleSearchFriendRespone(pdu);
+            break;
         default:
             break;
     }
@@ -369,4 +372,23 @@ void DBServConn::_HandleAddSessionRespone(BasePdu *basePdu)
         }
     }
 
+}
+
+void DBServConn::_HandleSearchFriendRespone(BasePdu *basePdu)
+{
+    friendlist::SearchFriendRespone respone;
+    respone.ParseFromString(basePdu->getMessage());
+
+    uint32_t userId = respone.user_id();
+    auto user = UserManager::instance()->getUser(userId);
+
+    if (user)
+    {
+        auto conn = user->getConn();
+        if (conn)
+        {
+            sendMessage(conn, respone, base::SID_FRIEND_LIST, base::CID_FRIENDLIST_SEARCH_FRIEND_RESPONE);
+        }
+
+    }
 }

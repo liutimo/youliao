@@ -394,6 +394,37 @@ namespace DB_INTERFACE
         }
     }
 
+
+    //搜索好友
+    void searchFriend(BasePdu *basePdu, uint32_t conn_uuid)
+    {
+        friendlist::SearchFriendRequest request;
+        request.ParseFromString(basePdu->getMessage());
+
+        uint32_t userId = request.user_id();
+        string searchData = request.search_data();
+        base::SearchType searchType = request.search_type();
+
+        list<base::FriendInfo> result;
+        FriendListModel::instance()->searchFriend(searchData, searchType, result);
+
+        friendlist::SearchFriendRespone respone;
+        respone.set_user_id(userId);
+
+        for (const auto &elem : result)
+        {
+            auto fri = respone.add_friends();
+            (*fri) = elem;
+        }
+
+        auto conn = findProxyConn(conn_uuid);
+
+        if (conn)
+            sendMessage(conn, respone, base::SID_SESSION, base::CID_FRIENDLIST_SEARCH_FRIEND_RESPONE);
+    }
+
+
+
     void getSessions(BasePdu *basePdu, uint32_t conn_uuid)
     {
         session::GetSessionsRequest request;

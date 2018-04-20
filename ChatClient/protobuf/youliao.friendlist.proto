@@ -119,3 +119,16 @@ message ModifyFriendRemarkRequest
     uint32 friend_id = 2;
     string friend_remark = 3;
 }
+
+message SearchFriendRequest
+{
+    uint32 user_id = 1;
+    string search_data = 2; //搜索类型
+    youliao.pdu.base.SearchType search_type = 3;  //搜索类型
+}
+
+message SearchFriendRespone
+{
+    uint32 user_id = 1;
+    repeated youliao.pdu.base.FriendInfo friends = 2; //该组下的好友
+}
