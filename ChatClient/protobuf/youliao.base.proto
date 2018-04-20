@@ -81,7 +81,7 @@ enum SessionListCID
     CID_SESSIONLIST_ZERO = 0x0000;
     CID_SESSIONLIST_ADD_SESSION = 0x0501;  //新增session
     CID_SESSIONLIST_DEL_SESSION = 0x0502;  //删除session
-    CID_SESSIONLIST_UPD_SESSION = 0x0503;  //更新session
+    CID_SESSIONLIST_UPD_SESSION = 0x0503;  //更新session  暂时无用。因为每次发送message时会自动更新
     CID_SESSIONLIST_TOP_SESSION = 0x0504;  //置顶session
     CID_SESSIONLIST_GET_SESSIONS_REQUEST = 0x0505;  //请求Session列表
     CID_SESSIONLIST_GET_SESSIONS_RESPONE = 0x0506;  //响应Session列表

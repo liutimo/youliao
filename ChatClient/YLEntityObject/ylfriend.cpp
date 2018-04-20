@@ -5,6 +5,7 @@ YLFriend::YLFriend()
 
 }
 
+
 YLFriend & YLFriend::operator =(const YLFriend &f)
 {
     friend_id_ = f.friend_id_;
@@ -17,13 +18,10 @@ YLFriend & YLFriend::operator =(const YLFriend &f)
 
     friend_remark_ = f.friend_remark_;
 
-    friend_last_message_ = f.friend_last_message_;
-
     friend_image_path_ = f.friend_image_path_;
 
     friend_group = f.friend_group;
 
-    friend_last_chat_time_ = f.friend_last_chat_time_;
 
     friend_is_online_ = f.friend_is_online_;
 }
@@ -66,11 +64,6 @@ void YLFriend::setFriendRemark(const QString &remark)
     friend_remark_ = remark;
 }
 
-void YLFriend::setFriendLastMessage(const QString &lastmsg)
-{
-    friend_last_message_  = lastmsg;
-}
-
 void YLFriend::setFriendImagePath(const QString &path)
 {
     friend_image_path_ = path;
@@ -80,10 +73,7 @@ void YLFriend::setFriendGroup(const QString &group)
 {
     friend_group = group;
 }
-void YLFriend::setFriendLastChatTime(const QString &lasttime)
-{
-    friend_last_chat_time_ = lasttime;
-}
+
 
 QString YLFriend::friendAccount() const
 {
@@ -105,10 +95,6 @@ QString YLFriend::friendRemark() const
     return friend_remark_;
 }
 
-QString YLFriend::friendLastMessage() const
-{
-    return friend_last_message_;
-}
 
 QString YLFriend::friendImagePath() const
 {
@@ -120,10 +106,6 @@ QString YLFriend::friendGroup() const
     return friend_group;
 }
 
-QString YLFriend::friendLastChatTime() const
-{
-    return friend_last_chat_time_;
-}
 
 QString YLFriend::friendImageName() const
 {

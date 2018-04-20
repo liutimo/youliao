@@ -325,14 +325,14 @@ inline bool UserStatusType_Parse(
     UserStatusType_descriptor(), name, value);
 }
 enum SessionType {
-  SESSION_ZERO = 0,
+  SESSION_TYPE_ZERO = 0,
   SESSION_TYPE_SINGLE = 1,
   SESSION_TYPE_GROUP = 2,
   SessionType_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   SessionType_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool SessionType_IsValid(int value);
-const SessionType SessionType_MIN = SESSION_ZERO;
+const SessionType SessionType_MIN = SESSION_TYPE_ZERO;
 const SessionType SessionType_MAX = SESSION_TYPE_GROUP;
 const int SessionType_ARRAYSIZE = SessionType_MAX + 1;
 
@@ -345,6 +345,28 @@ inline bool SessionType_Parse(
     const ::std::string& name, SessionType* value) {
   return ::google::protobuf::internal::ParseNamedEnum<SessionType>(
     SessionType_descriptor(), name, value);
+}
+enum SessionFlag {
+  SESSION_FLAG_ZERO = 0,
+  SESSION_FLAG_NORMAL = 1,
+  SESSION_FLAG_ONTOP = 2,
+  SessionFlag_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  SessionFlag_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+bool SessionFlag_IsValid(int value);
+const SessionFlag SessionFlag_MIN = SESSION_FLAG_ZERO;
+const SessionFlag SessionFlag_MAX = SESSION_FLAG_ONTOP;
+const int SessionFlag_ARRAYSIZE = SessionFlag_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* SessionFlag_descriptor();
+inline const ::std::string& SessionFlag_Name(SessionFlag value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    SessionFlag_descriptor(), value);
+}
+inline bool SessionFlag_Parse(
+    const ::std::string& name, SessionFlag* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<SessionFlag>(
+    SessionFlag_descriptor(), name, value);
 }
 enum MessageType {
   MESSAGE_ZERO = 0,
@@ -1935,6 +1957,11 @@ template <> struct is_proto_enum< ::youliao::pdu::base::SessionType> : ::google:
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::youliao::pdu::base::SessionType>() {
   return ::youliao::pdu::base::SessionType_descriptor();
+}
+template <> struct is_proto_enum< ::youliao::pdu::base::SessionFlag> : ::google::protobuf::internal::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::youliao::pdu::base::SessionFlag>() {
+  return ::youliao::pdu::base::SessionFlag_descriptor();
 }
 template <> struct is_proto_enum< ::youliao::pdu::base::MessageType> : ::google::protobuf::internal::true_type {};
 template <>

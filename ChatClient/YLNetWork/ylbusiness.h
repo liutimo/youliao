@@ -31,6 +31,8 @@ public:
 
     //session
     static void getSessions(uint32_t userId);
+    static void deleteSession(uint32_t userId, uint32_t sessionId);
+    static void topSession(uint32_t userId, uint32_t sessionId);
 };
 
 #endif // YLBUSINESS_H

@@ -2,7 +2,7 @@
 
 #include <QPushButton>
 #include <QMouseEvent>
-
+#include <QLabel>
 
 YLBasicWidget::YLBasicWidget(QWidget *parent) : QWidget(parent), drag_flag_(true), pressed_flag_(false)
 {
@@ -20,8 +20,12 @@ void YLBasicWidget::init()
     close_button_->setObjectName("close_button_");
     close_button_->setStyleSheet(qss_close_button);
     close_button_->setTabletTracking(true);
-
     connect(close_button_, &QPushButton::clicked, this, &YLBasicWidget::on_close);
+
+
+    m_title_label = new QLabel(this);
+    m_title_label->setStyleSheet("font:16px;");
+    m_title_label->move(5, 5);
 }
 
 void YLBasicWidget::setWidgetDraged(bool flag)
@@ -29,9 +33,15 @@ void YLBasicWidget::setWidgetDraged(bool flag)
     drag_flag_ = flag;
 }
 
+void YLBasicWidget::setWidgetTitle(const QString &title)
+{
+    m_title_label->setText(title);
+}
+
 void YLBasicWidget::resizeEvent(QResizeEvent *event)
 {
     close_button_->move(width() - 32, 0);
+    m_title_label->move(5, 5);
     QWidget::resizeEvent(event);
 }
 

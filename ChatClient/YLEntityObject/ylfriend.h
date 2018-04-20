@@ -24,13 +24,9 @@ public:
 
     void setFriendRemark(const QString &remark);
 
-    void setFriendLastMessage(const QString &lastmsg);
-
     void setFriendImagePath(const QString &path);
 
     void setFriendGroup(const QString &group);
-
-    void setFriendLastChatTime(const QString &lasttime);
 
     void setFriendOnline(bool online) { friend_is_online_ = online; }
 
@@ -42,13 +38,9 @@ public:
 
     QString friendRemark() const;
 
-    QString friendLastMessage() const;
-
     QString friendImagePath() const;
 
     QString friendGroup() const;
-
-    QString friendLastChatTime() const;
 
     QString friendImageName() const;
 
@@ -66,14 +58,10 @@ private:
     QString friend_signature_;
     //好友备注
     QString friend_remark_;
-    //与该好友的最后一条聊天消息
-    QString friend_last_message_;
     //好友头像路径
     QString friend_image_path_;
     //好友分组，暂定为QString
     QString friend_group;
-    //最后一条消息接收的时间
-    QString friend_last_chat_time_;
 
     bool friend_is_online_;
 };

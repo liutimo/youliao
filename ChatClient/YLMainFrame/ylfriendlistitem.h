@@ -4,6 +4,7 @@
 #include <QWidget>
 
 #include "YLEntityObject/ylfriend.h"
+#include "YLEntityObject/ylsession.h"
 class YLHeadFrame;
 class QLabel;
 class HttpHelper;
@@ -20,7 +21,8 @@ public:
     //set second menu
     void setSecondMenu(const QMap<int, QString> &groups, const QString &currGroupName);
 
-    void setData(const YLFriend &f);
+    void setData(const YLFriend &f, const YLSession &session = YLSession());
+
     YLFriend getData() { return friend_;}
     void setMarkTop(bool flag = false);
 private:
@@ -46,8 +48,8 @@ protected:
 
 
 signals:
-    void moveToTop(const YLFriend &);
-    void deleteFromList(const YLFriend &);
+    void moveToTop(YLSession &);
+    void deleteFromList(const YLSession &);
     void moveFriendToGroup(uint32_t friendId, uint32_t oldGroupId, uint32_t newGroupId);
     void deleteFriend(uint32_t friendId);
     void modifyRemark(uint32_t friendId, const QString &newRemark);
@@ -64,8 +66,8 @@ private:
     QAction     *action_on_top;
     YLListItemType item_type_;      //保存当前item的类型
     YLFriend friend_;
+    YLSession session_;
     HttpHelper *m_http_helper;
-    bool m_is_mark_top;
 };
 
 #endif // YLFRIENDLISTITEM_H

@@ -318,39 +318,56 @@ namespace DB_INTERFACE
             base::MessageType msgType = msg.message_type();
             uint32_t msgLen = msg.message_data().length();
             uint32_t msgId = msg.msg_id();
-
-
-
             if (base::MessageType_IsValid(msgType))
             {
                 if (msgLen > 0)
                 {
+                    MessageModel *messageModel = MessageModel::instance();
+                    //[1] 更新sender和receiver的session
+                    //[2] 保存消息
+                    // 一条消息要保存两份。 发送者和接受者各一份
+                    uint32_t senderRelatedId = FriendListModel::instance()->getRelationId(senderId, receiverId);
+                    uint32_t receiverRelatedId = FriendListModel::instance()->getRelationId(receiverId, senderId);
+
+                    if (senderRelatedId == 0 || receiverRelatedId == 0)
+                    {
+                        //两者不是互为好友的关系。消息不予保存。
+                        return;
+                    }
+
+                    uint32_t senderSessionId = SessionModel::instance()->getSessionId(senderId, receiverId, base::SESSION_TYPE_SINGLE);
+                    //Session不存在。  (从未添加过改Session)
+                    if (senderSessionId == 0)
+                    {
+                        senderSessionId = SessionModel::instance()->addSession(senderId, receiverId, base::SESSION_TYPE_SINGLE);
+                        //新增session转发到客户端
+                        session::NewSessionRespone respone;
+                        respone.set_user_id(senderId);
+                        respone.set_other_id(receiverId);
+                        respone.set_session_id(senderSessionId);
+                        respone.set_session_type(base::SESSION_TYPE_SINGLE);
+                        auto conn = findProxyConn(conn_uuid);
+                        if (conn)
+                            sendMessage(conn, respone, base::SID_SERVER, base::CID_SESSIONLIST_ADD_SESSION);
+                    }
+                    uint32_t receiverSessionId = SessionModel::instance()->getSessionId(receiverId, senderId, base::SESSION_TYPE_SINGLE);
+                    if (receiverSessionId == 0)
+                    {
+                        receiverSessionId = SessionModel::instance()->addSession(receiverId, senderId, base::SESSION_TYPE_SINGLE);
+                        //新增session转发到客户端
+                        session::NewSessionRespone respone;
+                        respone.set_user_id(receiverId);
+                        respone.set_other_id(senderId);
+                        respone.set_session_id(receiverId);
+                        respone.set_session_type(base::SESSION_TYPE_SINGLE);
+                        auto conn = findProxyConn(conn_uuid);
+                        if (conn)
+                            sendMessage(conn, respone, base::SID_SERVER, base::CID_SESSIONLIST_ADD_SESSION);
+                    }
+
+
                     if (msgType == base::MESSAGE_TYPE_SINGLE_TEXT)
                     {
-                        MessageModel *messageModel = MessageModel::instance();
-                        //[1] 更新sender和receiver的session
-                        //[2] 保存消息
-                        // 一条消息要保存两份。 发送者和接受者各一份
-                        uint32_t senderRelatedId = FriendListModel::instance()->getRelationId(senderId, receiverId);
-                        uint32_t receiverRelatedId = FriendListModel::instance()->getRelationId(receiverId, senderId);
-
-                        if (senderRelatedId == 0 || receiverRelatedId == 0)
-                        {
-                            //两者不是互为好友的关系。消息不予保存。
-                            return;
-                        }
-
-                        uint32_t senderSessionId = SessionModel::instance()->getSessionId(senderId, receiverId, base::SESSION_TYPE_SINGLE);
-                        //Session不存在。  (从未添加过改Session)
-                        if (senderSessionId == 0)
-                        {
-                            senderSessionId = SessionModel::instance()->addSession(senderId, receiverId, base::SESSION_TYPE_SINGLE);
-                        }
-                        uint32_t receiverSessionId = SessionModel::instance()->getSessionId(receiverId, senderId, base::SESSION_TYPE_SINGLE);
-                        if (receiverSessionId == 0)
-                        {
-                            receiverSessionId = SessionModel::instance()->addSession(receiverId, senderId, base::SESSION_TYPE_SINGLE);
-                        }
 
                         //保存消息到数据库
                         messageModel->saveMessage(senderRelatedId, senderId, receiverId, msgType, createdTime, msgId, msg.message_data());
@@ -400,6 +417,30 @@ namespace DB_INTERFACE
         sendMessage(conn, respone, base::SID_SERVER, base::CID_SESSIONLIST_GET_SESSIONS_RESPONE);
     }
 
+
+    //删除session
+    void deleteSession(BasePdu *basePdu, uint32_t conn_uid)
+    {
+        session::DeleteSessionRequest request;
+        request.ParseFromString(basePdu->getMessage());
+
+        uint32_t userId = request.user_id();
+        uint32_t sessionId = request.session_id();
+
+        SessionModel::instance()->removeSession(sessionId);
+
+    }
+    //置顶session
+    void topSession(BasePdu *basePdu, uint32_t conn_uid)
+    {
+        session::TopSessionRequest request;
+        request.ParseFromString(basePdu->getMessage());
+
+        uint32_t userId = request.user_id();
+        uint32_t sessionId = request.session_id();
+
+        SessionModel::instance()->topSession(sessionId);
+    }
 }
 
 

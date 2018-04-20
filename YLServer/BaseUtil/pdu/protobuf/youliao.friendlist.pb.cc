@@ -117,6 +117,16 @@ class ModifyFriendRemarkRequestDefaultTypeInternal {
   ::google::protobuf::internal::ExplicitlyConstructed<ModifyFriendRemarkRequest>
       _instance;
 } _ModifyFriendRemarkRequest_default_instance_;
+class SearchFriendRequestDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<SearchFriendRequest>
+      _instance;
+} _SearchFriendRequest_default_instance_;
+class SearchFriendResponeDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<SearchFriendRespone>
+      _instance;
+} _SearchFriendRespone_default_instance_;
 }  // namespace friendlist
 }  // namespace pdu
 }  // namespace youliao
@@ -522,7 +532,50 @@ void InitDefaultsModifyFriendRemarkRequest() {
   ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsModifyFriendRemarkRequestImpl);
 }
 
-::google::protobuf::Metadata file_level_metadata[19];
+void InitDefaultsSearchFriendRequestImpl() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+#ifdef GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  ::google::protobuf::internal::InitProtobufDefaultsForceUnique();
+#else
+  ::google::protobuf::internal::InitProtobufDefaults();
+#endif  // GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  {
+    void* ptr = &::youliao::pdu::friendlist::_SearchFriendRequest_default_instance_;
+    new (ptr) ::youliao::pdu::friendlist::SearchFriendRequest();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::youliao::pdu::friendlist::SearchFriendRequest::InitAsDefaultInstance();
+}
+
+void InitDefaultsSearchFriendRequest() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsSearchFriendRequestImpl);
+}
+
+void InitDefaultsSearchFriendResponeImpl() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+#ifdef GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  ::google::protobuf::internal::InitProtobufDefaultsForceUnique();
+#else
+  ::google::protobuf::internal::InitProtobufDefaults();
+#endif  // GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  protobuf_youliao_2ebase_2eproto::InitDefaultsFriendInfo();
+  {
+    void* ptr = &::youliao::pdu::friendlist::_SearchFriendRespone_default_instance_;
+    new (ptr) ::youliao::pdu::friendlist::SearchFriendRespone();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::youliao::pdu::friendlist::SearchFriendRespone::InitAsDefaultInstance();
+}
+
+void InitDefaultsSearchFriendRespone() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsSearchFriendResponeImpl);
+}
+
+::google::protobuf::Metadata file_level_metadata[21];
 
 const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   ~0u,  // no _has_bits_
@@ -668,6 +721,21 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::friendlist::ModifyFriendRemarkRequest, user_id_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::friendlist::ModifyFriendRemarkRequest, friend_id_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::friendlist::ModifyFriendRemarkRequest, friend_remark_),
+  ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::friendlist::SearchFriendRequest, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::friendlist::SearchFriendRequest, user_id_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::friendlist::SearchFriendRequest, search_data_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::friendlist::SearchFriendRequest, search_type_),
+  ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::friendlist::SearchFriendRespone, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::friendlist::SearchFriendRespone, user_id_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::friendlist::SearchFriendRespone, friends_),
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::youliao::pdu::friendlist::Group_Friend)},
@@ -689,6 +757,8 @@ static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROT
   { 120, -1, sizeof(::youliao::pdu::friendlist::MoveFriendToGroupRequest)},
   { 128, -1, sizeof(::youliao::pdu::friendlist::DeleteFriendRequest)},
   { 135, -1, sizeof(::youliao::pdu::friendlist::ModifyFriendRemarkRequest)},
+  { 143, -1, sizeof(::youliao::pdu::friendlist::SearchFriendRequest)},
+  { 151, -1, sizeof(::youliao::pdu::friendlist::SearchFriendRespone)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -711,6 +781,8 @@ static ::google::protobuf::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::friendlist::_MoveFriendToGroupRequest_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::friendlist::_DeleteFriendRequest_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::friendlist::_ModifyFriendRemarkRequest_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::friendlist::_SearchFriendRequest_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::friendlist::_SearchFriendRespone_default_instance_),
 };
 
 void protobuf_AssignDescriptors() {
@@ -729,7 +801,7 @@ void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) GOOGLE_PROTOBUF_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 19);
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 21);
 }
 
 void AddDescriptorsImpl() {
@@ -775,10 +847,15 @@ void AddDescriptorsImpl() {
       "\001(\r\"9\n\023DeleteFriendRequest\022\017\n\007user_id\030\001 "
       "\001(\r\022\021\n\tfriend_id\030\002 \001(\r\"V\n\031ModifyFriendRe"
       "markRequest\022\017\n\007user_id\030\001 \001(\r\022\021\n\tfriend_i"
-      "d\030\002 \001(\r\022\025\n\rfriend_remark\030\003 \001(\tb\006proto3"
+      "d\030\002 \001(\r\022\025\n\rfriend_remark\030\003 \001(\t\"n\n\023Search"
+      "FriendRequest\022\017\n\007user_id\030\001 \001(\r\022\023\n\013search"
+      "_data\030\002 \001(\t\0221\n\013search_type\030\003 \001(\0162\034.youli"
+      "ao.pdu.base.SearchType\"U\n\023SearchFriendRe"
+      "spone\022\017\n\007user_id\030\001 \001(\r\022-\n\007friends\030\002 \003(\0132"
+      "\034.youliao.pdu.base.FriendInfob\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 1638);
+      descriptor, 1837);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "youliao.friendlist.proto", &protobuf_RegisterTypes);
   ::protobuf_youliao_2ebase_2eproto::AddDescriptors();
@@ -6039,6 +6116,617 @@ void ModifyFriendRemarkRequest::InternalSwap(ModifyFriendRemarkRequest* other) {
 }
 
 
+// ===================================================================
+
+void SearchFriendRequest::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int SearchFriendRequest::kUserIdFieldNumber;
+const int SearchFriendRequest::kSearchDataFieldNumber;
+const int SearchFriendRequest::kSearchTypeFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+SearchFriendRequest::SearchFriendRequest()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    ::protobuf_youliao_2efriendlist_2eproto::InitDefaultsSearchFriendRequest();
+  }
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:youliao.pdu.friendlist.SearchFriendRequest)
+}
+SearchFriendRequest::SearchFriendRequest(const SearchFriendRequest& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  search_data_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.search_data().size() > 0) {
+    search_data_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.search_data_);
+  }
+  ::memcpy(&user_id_, &from.user_id_,
+    static_cast<size_t>(reinterpret_cast<char*>(&search_type_) -
+    reinterpret_cast<char*>(&user_id_)) + sizeof(search_type_));
+  // @@protoc_insertion_point(copy_constructor:youliao.pdu.friendlist.SearchFriendRequest)
+}
+
+void SearchFriendRequest::SharedCtor() {
+  search_data_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ::memset(&user_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&search_type_) -
+      reinterpret_cast<char*>(&user_id_)) + sizeof(search_type_));
+  _cached_size_ = 0;
+}
+
+SearchFriendRequest::~SearchFriendRequest() {
+  // @@protoc_insertion_point(destructor:youliao.pdu.friendlist.SearchFriendRequest)
+  SharedDtor();
+}
+
+void SearchFriendRequest::SharedDtor() {
+  search_data_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+
+void SearchFriendRequest::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* SearchFriendRequest::descriptor() {
+  ::protobuf_youliao_2efriendlist_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_youliao_2efriendlist_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const SearchFriendRequest& SearchFriendRequest::default_instance() {
+  ::protobuf_youliao_2efriendlist_2eproto::InitDefaultsSearchFriendRequest();
+  return *internal_default_instance();
+}
+
+
+void SearchFriendRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:youliao.pdu.friendlist.SearchFriendRequest)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  search_data_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ::memset(&user_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&search_type_) -
+      reinterpret_cast<char*>(&user_id_)) + sizeof(search_type_));
+  _internal_metadata_.Clear();
+}
+
+bool SearchFriendRequest::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:youliao.pdu.friendlist.SearchFriendRequest)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // uint32 user_id = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &user_id_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // string search_data = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_search_data()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->search_data().data(), static_cast<int>(this->search_data().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "youliao.pdu.friendlist.SearchFriendRequest.search_data"));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // .youliao.pdu.base.SearchType search_type = 3;
+      case 3: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
+          int value;
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_search_type(static_cast< ::youliao::pdu::base::SearchType >(value));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:youliao.pdu.friendlist.SearchFriendRequest)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:youliao.pdu.friendlist.SearchFriendRequest)
+  return false;
+#undef DO_
+}
+
+void SearchFriendRequest::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:youliao.pdu.friendlist.SearchFriendRequest)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->user_id(), output);
+  }
+
+  // string search_data = 2;
+  if (this->search_data().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->search_data().data(), static_cast<int>(this->search_data().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "youliao.pdu.friendlist.SearchFriendRequest.search_data");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      2, this->search_data(), output);
+  }
+
+  // .youliao.pdu.base.SearchType search_type = 3;
+  if (this->search_type() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      3, this->search_type(), output);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
+  // @@protoc_insertion_point(serialize_end:youliao.pdu.friendlist.SearchFriendRequest)
+}
+
+::google::protobuf::uint8* SearchFriendRequest::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:youliao.pdu.friendlist.SearchFriendRequest)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->user_id(), target);
+  }
+
+  // string search_data = 2;
+  if (this->search_data().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->search_data().data(), static_cast<int>(this->search_data().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "youliao.pdu.friendlist.SearchFriendRequest.search_data");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        2, this->search_data(), target);
+  }
+
+  // .youliao.pdu.base.SearchType search_type = 3;
+  if (this->search_type() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      3, this->search_type(), target);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:youliao.pdu.friendlist.SearchFriendRequest)
+  return target;
+}
+
+size_t SearchFriendRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:youliao.pdu.friendlist.SearchFriendRequest)
+  size_t total_size = 0;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
+  // string search_data = 2;
+  if (this->search_data().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->search_data());
+  }
+
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->user_id());
+  }
+
+  // .youliao.pdu.base.SearchType search_type = 3;
+  if (this->search_type() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->search_type());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void SearchFriendRequest::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:youliao.pdu.friendlist.SearchFriendRequest)
+  GOOGLE_DCHECK_NE(&from, this);
+  const SearchFriendRequest* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const SearchFriendRequest>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:youliao.pdu.friendlist.SearchFriendRequest)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:youliao.pdu.friendlist.SearchFriendRequest)
+    MergeFrom(*source);
+  }
+}
+
+void SearchFriendRequest::MergeFrom(const SearchFriendRequest& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:youliao.pdu.friendlist.SearchFriendRequest)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.search_data().size() > 0) {
+
+    search_data_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.search_data_);
+  }
+  if (from.user_id() != 0) {
+    set_user_id(from.user_id());
+  }
+  if (from.search_type() != 0) {
+    set_search_type(from.search_type());
+  }
+}
+
+void SearchFriendRequest::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:youliao.pdu.friendlist.SearchFriendRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void SearchFriendRequest::CopyFrom(const SearchFriendRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:youliao.pdu.friendlist.SearchFriendRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool SearchFriendRequest::IsInitialized() const {
+  return true;
+}
+
+void SearchFriendRequest::Swap(SearchFriendRequest* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void SearchFriendRequest::InternalSwap(SearchFriendRequest* other) {
+  using std::swap;
+  search_data_.Swap(&other->search_data_);
+  swap(user_id_, other->user_id_);
+  swap(search_type_, other->search_type_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata SearchFriendRequest::GetMetadata() const {
+  protobuf_youliao_2efriendlist_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_youliao_2efriendlist_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
+// ===================================================================
+
+void SearchFriendRespone::InitAsDefaultInstance() {
+}
+void SearchFriendRespone::clear_friends() {
+  friends_.Clear();
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int SearchFriendRespone::kUserIdFieldNumber;
+const int SearchFriendRespone::kFriendsFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+SearchFriendRespone::SearchFriendRespone()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    ::protobuf_youliao_2efriendlist_2eproto::InitDefaultsSearchFriendRespone();
+  }
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:youliao.pdu.friendlist.SearchFriendRespone)
+}
+SearchFriendRespone::SearchFriendRespone(const SearchFriendRespone& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      friends_(from.friends_),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  user_id_ = from.user_id_;
+  // @@protoc_insertion_point(copy_constructor:youliao.pdu.friendlist.SearchFriendRespone)
+}
+
+void SearchFriendRespone::SharedCtor() {
+  user_id_ = 0u;
+  _cached_size_ = 0;
+}
+
+SearchFriendRespone::~SearchFriendRespone() {
+  // @@protoc_insertion_point(destructor:youliao.pdu.friendlist.SearchFriendRespone)
+  SharedDtor();
+}
+
+void SearchFriendRespone::SharedDtor() {
+}
+
+void SearchFriendRespone::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* SearchFriendRespone::descriptor() {
+  ::protobuf_youliao_2efriendlist_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_youliao_2efriendlist_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const SearchFriendRespone& SearchFriendRespone::default_instance() {
+  ::protobuf_youliao_2efriendlist_2eproto::InitDefaultsSearchFriendRespone();
+  return *internal_default_instance();
+}
+
+
+void SearchFriendRespone::Clear() {
+// @@protoc_insertion_point(message_clear_start:youliao.pdu.friendlist.SearchFriendRespone)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  friends_.Clear();
+  user_id_ = 0u;
+  _internal_metadata_.Clear();
+}
+
+bool SearchFriendRespone::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:youliao.pdu.friendlist.SearchFriendRespone)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // uint32 user_id = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &user_id_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // repeated .youliao.pdu.base.FriendInfo friends = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(
+                input, add_friends()));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:youliao.pdu.friendlist.SearchFriendRespone)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:youliao.pdu.friendlist.SearchFriendRespone)
+  return false;
+#undef DO_
+}
+
+void SearchFriendRespone::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:youliao.pdu.friendlist.SearchFriendRespone)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->user_id(), output);
+  }
+
+  // repeated .youliao.pdu.base.FriendInfo friends = 2;
+  for (unsigned int i = 0,
+      n = static_cast<unsigned int>(this->friends_size()); i < n; i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      2,
+      this->friends(static_cast<int>(i)),
+      output);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
+  // @@protoc_insertion_point(serialize_end:youliao.pdu.friendlist.SearchFriendRespone)
+}
+
+::google::protobuf::uint8* SearchFriendRespone::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:youliao.pdu.friendlist.SearchFriendRespone)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->user_id(), target);
+  }
+
+  // repeated .youliao.pdu.base.FriendInfo friends = 2;
+  for (unsigned int i = 0,
+      n = static_cast<unsigned int>(this->friends_size()); i < n; i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageToArray(
+        2, this->friends(static_cast<int>(i)), deterministic, target);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:youliao.pdu.friendlist.SearchFriendRespone)
+  return target;
+}
+
+size_t SearchFriendRespone::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:youliao.pdu.friendlist.SearchFriendRespone)
+  size_t total_size = 0;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
+  // repeated .youliao.pdu.base.FriendInfo friends = 2;
+  {
+    unsigned int count = static_cast<unsigned int>(this->friends_size());
+    total_size += 1UL * count;
+    for (unsigned int i = 0; i < count; i++) {
+      total_size +=
+        ::google::protobuf::internal::WireFormatLite::MessageSize(
+          this->friends(static_cast<int>(i)));
+    }
+  }
+
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->user_id());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void SearchFriendRespone::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:youliao.pdu.friendlist.SearchFriendRespone)
+  GOOGLE_DCHECK_NE(&from, this);
+  const SearchFriendRespone* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const SearchFriendRespone>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:youliao.pdu.friendlist.SearchFriendRespone)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:youliao.pdu.friendlist.SearchFriendRespone)
+    MergeFrom(*source);
+  }
+}
+
+void SearchFriendRespone::MergeFrom(const SearchFriendRespone& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:youliao.pdu.friendlist.SearchFriendRespone)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  friends_.MergeFrom(from.friends_);
+  if (from.user_id() != 0) {
+    set_user_id(from.user_id());
+  }
+}
+
+void SearchFriendRespone::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:youliao.pdu.friendlist.SearchFriendRespone)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void SearchFriendRespone::CopyFrom(const SearchFriendRespone& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:youliao.pdu.friendlist.SearchFriendRespone)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool SearchFriendRespone::IsInitialized() const {
+  return true;
+}
+
+void SearchFriendRespone::Swap(SearchFriendRespone* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void SearchFriendRespone::InternalSwap(SearchFriendRespone* other) {
+  using std::swap;
+  CastToBase(&friends_)->InternalSwap(CastToBase(&other->friends_));
+  swap(user_id_, other->user_id_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata SearchFriendRespone::GetMetadata() const {
+  protobuf_youliao_2efriendlist_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_youliao_2efriendlist_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace friendlist
 }  // namespace pdu
@@ -6101,6 +6789,12 @@ template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::friendlist::Delete
 }
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::friendlist::ModifyFriendRemarkRequest* Arena::Create< ::youliao::pdu::friendlist::ModifyFriendRemarkRequest >(Arena* arena) {
   return Arena::CreateInternal< ::youliao::pdu::friendlist::ModifyFriendRemarkRequest >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::friendlist::SearchFriendRequest* Arena::Create< ::youliao::pdu::friendlist::SearchFriendRequest >(Arena* arena) {
+  return Arena::CreateInternal< ::youliao::pdu::friendlist::SearchFriendRequest >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::friendlist::SearchFriendRespone* Arena::Create< ::youliao::pdu::friendlist::SearchFriendRespone >(Arena* arena) {
+  return Arena::CreateInternal< ::youliao::pdu::friendlist::SearchFriendRespone >(arena);
 }
 }  // namespace protobuf
 }  // namespace google

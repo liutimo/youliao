@@ -291,5 +291,7 @@
         <file>res/Info/account.png</file>
         <file>res/Info/nick.png</file>
         <file>res/Info/group.png</file>
+        <file>res/MainFrame/linedit_normal.png</file>
+        <file>res/MainFrame/linedit_hover.png</file>
     </qresource>
 </RCC>

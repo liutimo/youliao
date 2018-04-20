@@ -32,6 +32,7 @@ private:
     void _HandleSignatureChangedRespone(BasePdu *);
     void _HandleAddNewFriendGroupRespone(BasePdu *);
     void _HandleGetSessionsRespone(BasePdu *);
+    void _HandleAddSessionRespone(BasePdu *);
 
     uint32_t   m_server_index;
     bool       m_open;

@@ -7,6 +7,7 @@
 #include "YLNetWork/ylbusiness.h"
 #include "YLNetWork/pduhandler.h"
 #include "YLNetWork/http/httphelper.h"
+#include "YLEntityObject/ylsession.h"
 #include "globaldata.h"
 #include "../signalforward.h"
 #include <QDebug>
@@ -52,9 +53,12 @@ void YLChatWidget::initTitleBar()
             QString msg = message;
             m_message_view->addRight(m_friend_header_path, message);
             msg.replace(re, "[Picture]");
-            m_friend.setFriendLastMessage(msg);
-            m_friend.setFriendLastChatTime(QTime::currentTime().toString("hh:mm"));
-            SignalForward::instance()->forwordUpdateSession(m_friend);
+            YLSession session = GlobalData::getSessionByFriendId(m_friend.friendId());
+            session.setOtherId(user_id);
+            session.setSessionType(base::SESSION_TYPE_SINGLE);
+            session.setSessionLastChatMessage(msg);
+            session.setSessionLastChatTime(QDateTime::currentDateTime().toTime_t());
+            SignalForward::instance()->forwordUpdateSession(session);
         }
     });
 }
@@ -169,11 +173,10 @@ void YLChatWidget::sendMessage()
 
     YLBusiness::sendMessage(GlobalData::getCurrLoginUserId(), m_friend.friendId(), content);
 
-    re.setPattern("<img.*src='.*'.*>");
-    re.setMinimal(true);
-
-    content.replace(re, "[Picture]");
-    m_friend.setFriendLastMessage(content);
-    m_friend.setFriendLastChatTime(QTime::currentTime().toString("hh:mm"));
-    SignalForward::instance()->forwordUpdateSession(m_friend);
+    YLSession session = GlobalData::getSessionByFriendId(m_friend.friendId());
+    session.setOtherId(m_friend.friendId());
+    session.setSessionLastChatMessage(content);
+    session.setSessionType(base::SESSION_TYPE_SINGLE);
+    session.setSessionLastChatTime(QDateTime::currentDateTime().toTime_t());
+    SignalForward::instance()->forwordUpdateSession(session);
 }

@@ -178,7 +178,7 @@ bool SessionModel::topSession(uint32_t sessionId)
     if (!dbConn)
         return ret;
 
-    std::string removeSql = "UPDATE yl_session set sesionn_top=1 WHERE session_id=" + std::to_string(sessionId);
+    std::string removeSql = "UPDATE yl_session SET session_top=CASE session_top WHEN 1 THEN 2 WHEN 2 THEN 1 END WHERE session_id = " + std::to_string(sessionId);
     printSql2Log(removeSql.c_str());
 
     ret = dbConn->update(removeSql);
@@ -202,7 +202,7 @@ bool SessionModel::getSessions(uint32_t userId, std::list<base::SessionInfo> &se
     if (!dbConn)
         return ret;
 
-    std::string querySql = "SELECT session_id, other_id, session_type, session_top, session_updated FROM yl_session WHERE session_status=0 AND user_id=" + std::to_string(userId);
+    std::string querySql = "SELECT session_id, other_id, session_type, session_top, session_updated FROM yl_session WHERE session_status=0 AND user_id=" + std::to_string(userId) + " order by session_updated DESC";
 
     printSql2Log(querySql.c_str());
 

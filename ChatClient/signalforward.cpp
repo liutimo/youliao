@@ -17,7 +17,7 @@ SignalForward* SignalForward::instance()
     return s_signamlForward;
 }
 
-void SignalForward::forwordUpdateSession(const YLFriend &fri)
+void SignalForward::forwordUpdateSession(const YLSession &session)
 {
-    emit updateSession(fri);
+    emit updateSession(session);
 }

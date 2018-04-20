@@ -2,7 +2,7 @@
 #define SIGNALFORWARD_H
 
 #include <QObject>
-#include <YLEntityObject/ylfriend.h>
+#include <YLEntityObject/ylsession.h>
 class SignalForward : public QObject
 {
     Q_OBJECT
@@ -12,10 +12,10 @@ public:
 
     static SignalForward* instance();
 
-    void forwordUpdateSession(const YLFriend &);
+    void forwordUpdateSession(const YLSession &);
 
 signals:
-    void updateSession(const YLFriend &);
+    void updateSession(const YLSession &);
 
 private:
     explicit SignalForward(QObject *parent = nullptr);

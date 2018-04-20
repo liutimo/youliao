@@ -143,6 +143,9 @@ void DBServConn::handlePdu(BasePdu *pdu)
         case base::CID_SESSIONLIST_GET_SESSIONS_RESPONE:
             _HandleGetSessionsRespone(pdu);
             break;
+        case base::CID_SESSIONLIST_ADD_SESSION:
+            _HandleAddSessionRespone(pdu);
+            break;
         default:
             break;
     }
@@ -340,9 +343,30 @@ void DBServConn::_HandleGetSessionsRespone(BasePdu *basePdu)
 
         if(conn)
         {
-            sendMessage(conn, reponse, base::SID_SERVER, base::CID_SESSIONLIST_GET_SESSIONS_RESPONE);
+            sendMessage(conn, reponse, base::SID_SESSION, base::CID_SESSIONLIST_GET_SESSIONS_RESPONE);
         }
     }
 }
 
 
+
+void DBServConn::_HandleAddSessionRespone(BasePdu *basePdu)
+{
+    session::NewSessionRespone respone;
+    respone.ParseFromString(basePdu->getMessage());
+
+    uint32_t userId = respone.user_id();
+
+    auto user = UserManager::instance()->getUser(userId);
+
+    if (user)
+    {
+        auto conn = user->getConn();
+
+        if (conn)
+        {
+            sendMessage(conn, respone, base::SID_SESSION, base::CID_SESSIONLIST_ADD_SESSION);
+        }
+    }
+
+}

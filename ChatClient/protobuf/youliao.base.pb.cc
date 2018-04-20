@@ -131,7 +131,7 @@ void InitDefaultsHeartBeat() {
 }
 
 ::google::protobuf::Metadata file_level_metadata[4];
-const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[12];
+const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[13];
 
 const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   ~0u,  // no _has_bits_
@@ -286,19 +286,21 @@ void AddDescriptorsImpl() {
       "DIFY_FAILED\020\003*m\n\016UserStatusType\022\024\n\020USER_"
       "STATUS_ZERO\020\000\022\026\n\022USER_STATUS_ONLINE\020\001\022\027\n"
       "\023USER_STATUS_OFFLINE\020\002\022\024\n\020USER_STATUS_HI"
-      "DE\020\003*P\n\013SessionType\022\020\n\014SESSION_ZERO\020\000\022\027\n"
-      "\023SESSION_TYPE_SINGLE\020\001\022\026\n\022SESSION_TYPE_G"
-      "ROUP\020\002*\227\001\n\013MessageType\022\020\n\014MESSAGE_ZERO\020\000"
-      "\022\034\n\030MESSAGE_TYPE_SINGLE_TEXT\020\001\022\035\n\031MESSAG"
-      "E_TYPE_SINGLE_AUDIO\020\002\022\033\n\027MESSAGE_TYPE_GR"
-      "OUP_TEXT\020\003\022\034\n\030MESSAGE_TYPE_GROUP_AUDIO\020\004"
-      "*}\n\020RouteMessageType\022\026\n\022ROUTE_MESSAGE_ZE"
-      "RO\020\000\022&\n\"ROUTE_MESSAGE_FRIEND_STATUS_CHAN"
-      "GE\020\001\022)\n%ROUTE_MESSAGE_FRIEND_SIGNATURE_C"
-      "HANGE\020\002b\006proto3"
+      "DE\020\003*U\n\013SessionType\022\025\n\021SESSION_TYPE_ZERO"
+      "\020\000\022\027\n\023SESSION_TYPE_SINGLE\020\001\022\026\n\022SESSION_T"
+      "YPE_GROUP\020\002*U\n\013SessionFlag\022\025\n\021SESSION_FL"
+      "AG_ZERO\020\000\022\027\n\023SESSION_FLAG_NORMAL\020\001\022\026\n\022SE"
+      "SSION_FLAG_ONTOP\020\002*\227\001\n\013MessageType\022\020\n\014ME"
+      "SSAGE_ZERO\020\000\022\034\n\030MESSAGE_TYPE_SINGLE_TEXT"
+      "\020\001\022\035\n\031MESSAGE_TYPE_SINGLE_AUDIO\020\002\022\033\n\027MES"
+      "SAGE_TYPE_GROUP_TEXT\020\003\022\034\n\030MESSAGE_TYPE_G"
+      "ROUP_AUDIO\020\004*}\n\020RouteMessageType\022\026\n\022ROUT"
+      "E_MESSAGE_ZERO\020\000\022&\n\"ROUTE_MESSAGE_FRIEND"
+      "_STATUS_CHANGE\020\001\022)\n%ROUTE_MESSAGE_FRIEND"
+      "_SIGNATURE_CHANGE\020\002b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 3215);
+      descriptor, 3307);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "youliao.base.proto", &protobuf_RegisterTypes);
 }
@@ -505,9 +507,24 @@ bool SessionType_IsValid(int value) {
   }
 }
 
-const ::google::protobuf::EnumDescriptor* MessageType_descriptor() {
+const ::google::protobuf::EnumDescriptor* SessionFlag_descriptor() {
   protobuf_youliao_2ebase_2eproto::protobuf_AssignDescriptorsOnce();
   return protobuf_youliao_2ebase_2eproto::file_level_enum_descriptors[10];
+}
+bool SessionFlag_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::google::protobuf::EnumDescriptor* MessageType_descriptor() {
+  protobuf_youliao_2ebase_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_youliao_2ebase_2eproto::file_level_enum_descriptors[11];
 }
 bool MessageType_IsValid(int value) {
   switch (value) {
@@ -524,7 +541,7 @@ bool MessageType_IsValid(int value) {
 
 const ::google::protobuf::EnumDescriptor* RouteMessageType_descriptor() {
   protobuf_youliao_2ebase_2eproto::protobuf_AssignDescriptorsOnce();
-  return protobuf_youliao_2ebase_2eproto::file_level_enum_descriptors[11];
+  return protobuf_youliao_2ebase_2eproto::file_level_enum_descriptors[12];
 }
 bool RouteMessageType_IsValid(int value) {
   switch (value) {

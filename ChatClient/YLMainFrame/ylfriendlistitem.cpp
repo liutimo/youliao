@@ -10,6 +10,7 @@
 #include "ylmainwidget.h"
 #include "YLNetWork/http/httphelper.h"
 #include <QDebug>
+#include <QDateTime>
 #include "YLNetWork/ylbusiness.h"
 #include "globaldata.h"
 #include "ylinfomationwidget.h"
@@ -17,7 +18,6 @@
 YLFriendListItem::YLFriendListItem(YLListItemType type, QWidget *parent) : QWidget(parent)
 {
     item_type_ = type;
-    m_is_mark_top = false;
     init();
     initMenu();
 
@@ -62,8 +62,18 @@ void YLFriendListItem::initMenu()
 
     menu_->addSeparator();
 
-    menu_->addAction(action_on_top);
-    menu_->addAction(action_remove);
+    if (item_type_ == RECENTTLYCHATITEM)
+    {
+        menu_->addAction(action_on_top);
+        menu_->addAction(action_remove);
+        connect(action_remove, &QAction::triggered, this, [this](){
+            emit deleteFromList(session_);
+        });
+
+        connect(action_on_top, &QAction::triggered, this, [this](){
+            emit moveToTop(session_);
+        });
+    }
     menu_->addAction(action_modify_remark);
     second_menu_ = menu_->addMenu("移动好友至");
     menu_->addAction(aciton_delete);
@@ -73,14 +83,6 @@ void YLFriendListItem::initMenu()
         chatWidget->resize(800, 600);
         chatWidget->setFriend(friend_);
         chatWidget->show();
-    });
-
-    connect(action_remove, &QAction::triggered, this, [this](){
-        emit deleteFromList(friend_);
-    });
-
-    connect(action_on_top, &QAction::triggered, this, [this](){
-        emit moveToTop(friend_);
     });
 
     connect(action_modify_remark, &QAction::triggered, this, [this](){
@@ -140,9 +142,9 @@ void YLFriendListItem::setSecondMenu(const QMap<int, QString> &groups, const QSt
 
 void YLFriendListItem::setMarkTop(bool flag)
 {
-    m_is_mark_top = flag;
+    session_.setSessionTop(flag);
 
-    if (m_is_mark_top)
+    if (session_.sessionTop())
     {
         action_on_top->setText("取消会话置顶");
     }
@@ -154,9 +156,10 @@ void YLFriendListItem::setMarkTop(bool flag)
 }
 
 
-void YLFriendListItem::setData(const YLFriend &friend_)
+void YLFriendListItem::setData(const YLFriend &friend_, const YLSession &session)
 {
     this->friend_ = friend_;
+    session_ = session;
     if (item_type_ == FRIENDITEM)  //作为好友列表中的item
     {
         //有备注:  备注(昵称)
@@ -173,8 +176,15 @@ void YLFriendListItem::setData(const YLFriend &friend_)
     else if (item_type_ == RECENTTLYCHATITEM)   //作为最近聊天记录列表中的item
     {
         label_up_->setText(placeholder_text_1_1.arg(friend_.friendRemark().isEmpty() ? friend_.friendNickName() : friend_.friendRemark()));
-        label_time_->setText(placeholder_text_3.arg(friend_.friendLastChatTime()));
-        label_down_->setText(placeholder_text_2.arg(friend_.friendLastMessage()));
+        QDateTime dateTime;
+        dateTime.setTime_t(session.getSessionLastChatTime());
+        label_time_->setText(placeholder_text_3.arg(dateTime.toString("hh:mm")));
+        QString msg = session.getSessionLastChatMessage();
+        QRegExp re;
+        re.setPattern("<img.*src='.*'.*>");
+        re.setMinimal(true);
+        msg.replace(re, "[Picture]");
+        label_down_->setText(placeholder_text_2.arg(msg));
         head_frame_->setHeadFromLocal(friend_.friendImagePath());
     }
 
@@ -201,7 +211,7 @@ void YLFriendListItem::mousePressEvent(QMouseEvent *event)
 
 void YLFriendListItem::paintEvent(QPaintEvent *event)
 {
-    if (m_is_mark_top)
+    if (session_.sessionTop())
     {
         QPainter painter(this);
         painter.setPen(Qt::NoPen);

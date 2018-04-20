@@ -76,6 +76,12 @@ void HandlerMap::init()
 
     //请求session列表
     m_handler_map.insert(std::make_pair(CID_SESSIONLIST_GET_SESSIONS_REQUEST, DB_INTERFACE::getSessions));
+
+    //删除session
+    m_handler_map.insert(std::make_pair(CID_SESSIONLIST_DEL_SESSION, DB_INTERFACE::deleteSession));
+
+    //置顶session
+    m_handler_map.insert(std::make_pair(CID_SESSIONLIST_TOP_SESSION, DB_INTERFACE::topSession));
 }
 
 pdu_handler_t HandlerMap::getHandler(uint16_t cid)

@@ -3,6 +3,7 @@
 
 #include <QListWidget>
 #include "YLEntityObject/ylfriend.h"
+#include "YLEntityObject/ylsession.h"
 
 class YLFriendListItem;
 class QListWidgetItem;
@@ -23,7 +24,7 @@ class YLRecentChatView : public QListWidget
 
 public:
     YLRecentChatView(QWidget *parent = nullptr);
-    void addItem(const YLFriend&);
+    void addItem(const YLSession&);
 
 
 protected:
@@ -31,14 +32,15 @@ protected:
 
 
 private slots:
-    void on_move_to_top  (const YLFriend &);
-    void on_del_from_list(const YLFriend &);
+    void on_move_to_top  (YLSession &);
+    void on_del_from_list(const YLSession &);
+    void newSession(uint32_t otherId, uint32_t sessionId);
 private:
     void updateList();
-    void add(const YLFriend&, int pos = 0);
+    void add(const YLSession&, int pos = 0);
 
-    QList<YLFriend> m_data;
-    QList<YLFriend> m_top_data;
+    QList<YLSession> m_data;
+    QList<YLSession> m_top_data;
 };
 
 #endif // YLRECENTCHATVIEW_H

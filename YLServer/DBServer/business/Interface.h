@@ -56,7 +56,13 @@ namespace DB_INTERFACE
 
 
     /*******************会话列表************************/
+    //获取session列表
     void getSessions(BasePdu *basePdu, uint32_t conn_uid);
+    //删除session
+    void deleteSession(BasePdu *basePdu, uint32_t conn_uid);
+    //置顶session
+    void topSession(BasePdu *basePdu, uint32_t conn_uid);
+
 }
 
 

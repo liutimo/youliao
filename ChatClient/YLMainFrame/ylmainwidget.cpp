@@ -13,6 +13,7 @@
 #include "YLCommonControl/ylmessagebox.h"
 #include "YLNetWork/http/httphelper.h"
 #include "YLNetWork/ylbusiness.h"
+#include "yladdfriendwidget.h"
 #include "../signalforward.h"
 #include <QTimer>
 
@@ -91,6 +92,16 @@ void YLMainWidget::init()
         head_status_frame_->setHeadFromLocal("./" + m_http_helper->getFilename());
     }, Qt::QueuedConnection);
 
+
+    add_friend_button_ = new QPushButton(this);
+    add_friend_button_->setFixedSize(60, 30);
+    add_friend_button_->move(40, height() - 30);
+
+    connect(add_friend_button_, &QPushButton::clicked, this, [](){
+        YLAddFriendWidget *w = new YLAddFriendWidget;
+        w->resize(600, 400);
+        w->show();
+    });
 }
 
 void YLMainWidget::initListWidget()

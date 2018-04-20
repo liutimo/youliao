@@ -70,6 +70,9 @@ private:
     UserInfo *m_user_info;
     QTimer *m_timer;
     HttpHelper *m_http_helper;
+
+    //ADD Friend
+    QPushButton *add_friend_button_;
 };
 
 #endif // YLMAINWIDGET_H

@@ -88,6 +88,9 @@ void PduHandler::_HandleBasePdu(BasePdu *pdu)
     case base::CID_SESSIONLIST_GET_SESSIONS_RESPONE:
         _HandleGetSessionsRespone(pdu);
         break;
+    case base::CID_SESSIONLIST_ADD_SESSION:
+        _HandleAddSessionRespone(pdu);
+        break;
     default:
         std::cout << "CID" << pdu->getCID() << "  SID:" << pdu->getSID();
         break;
@@ -219,3 +222,13 @@ void PduHandler::_HandleGetSessionsRespone(BasePdu *pdu)
 }
 
 
+void PduHandler::_HandleAddSessionRespone(BasePdu *pdu)
+{
+    session::NewSessionRespone respone;
+    respone.ParseFromString(pdu->getMessage());
+
+    uint32_t otherId = respone.other_id();
+    uint32_t sessionId = respone.session_id();
+
+    emit newSession(otherId, sessionId);
+}

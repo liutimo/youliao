@@ -69,6 +69,9 @@ enum FriendListCID
     CID_FRIENDLIST_MOVE_FRIEND_TO_GROUP_REQUEST = 0x040E;   //移动好友到摸一个分组
     CID_FRIENDLIST_DELETE_FRIEND_REQUEST        = 0x040F;   //删除好友
     CID_FRIENDLIST_MODIFY_FRIEND_REMARK_RQUEST  = 0x0410;   //修改好友备注
+    CID_FRIENDLIST_SEARCH_FRIEND_REQUEST        = 0x0411;   //搜索好友请求
+    CID_FRIENDLIST_SEARCH_FRIEND_RESPONE        = 0x0412;   //搜索好友响应
+    CID_FRIENDLIST_ADD_FRIEND_REQUEST           = 0x0413;   //请求添加好友
 }
 
 //最近会话
@@ -81,7 +84,7 @@ enum SessionListCID
     CID_SESSIONLIST_ZERO = 0x0000;
     CID_SESSIONLIST_ADD_SESSION = 0x0501;  //新增session
     CID_SESSIONLIST_DEL_SESSION = 0x0502;  //删除session
-    CID_SESSIONLIST_UPD_SESSION = 0x0503;  //更新session
+    CID_SESSIONLIST_UPD_SESSION = 0x0503;  //更新session  暂时无用。因为每次发送message时会自动更新
     CID_SESSIONLIST_TOP_SESSION = 0x0504;  //置顶session
     CID_SESSIONLIST_GET_SESSIONS_REQUEST = 0x0505;  //请求Session列表
     CID_SESSIONLIST_GET_SESSIONS_RESPONE = 0x0506;  //响应Session列表
@@ -193,4 +196,12 @@ enum RouteMessageType
     ROUTE_MESSAGE_ZERO = 0x00;
     ROUTE_MESSAGE_FRIEND_STATUS_CHANGE = 0x01;     //好友状态更改
     ROUTE_MESSAGE_FRIEND_SIGNATURE_CHANGE = 0x02;  //好友个性签名修改
+}
+
+//搜索类型
+enum SearchType
+{
+    SEARCH_TYPE_ZERO = 0x00;
+    SEARCH_TYPE_ACCOUNT = 0x01;  //按照账号搜索
+    SEARCH_TYPE_NICKNAME = 0x02; //按照昵称搜索
 }

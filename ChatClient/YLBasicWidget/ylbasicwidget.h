@@ -5,7 +5,7 @@
 
 
 class QPushButton;
-
+class QLabel;
 
 class YLBasicWidget : public QWidget
 {
@@ -25,6 +25,7 @@ public:
      */
     void setWidgetDraged(bool flag = true);
 
+    void setWidgetTitle(const QString &title);
 
 private slots:
     virtual void on_close();
@@ -42,7 +43,7 @@ protected:
     bool pressed_flag_;
 
     QPoint begin_pos_;
-
+    QLabel *m_title_label;
 };
 
 #endif // YLBASICWIDGET_H

@@ -329,7 +329,6 @@ DBConn* DBPool::getConnection()
             else
             {
                 m_free_conn_list.push_back(conn);
-                ++m_db_cur_conn_cnt;
                 log("new a connection: %s, current connection count: %d", m_pool_name.c_str(), m_db_cur_conn_cnt);
 
             }
@@ -338,6 +337,10 @@ DBConn* DBPool::getConnection()
     }
     DBConn *conn = m_free_conn_list.front();
     m_free_conn_list.pop_front();
+    ++m_db_cur_conn_cnt;
+
+    log("获取数据库连接，当前连接数%d,总连接数%d", m_db_cur_conn_cnt, m_db_max_conn_cnt);
+
     m_conndition.unlock();
     return conn;
 }
@@ -359,7 +362,8 @@ void DBPool::releaseConnection(DBConn *conn)
     {
         m_free_conn_list.push_back(conn);
     }
-
+    --m_db_cur_conn_cnt;
+    log("释放数据库连接，当前连接数%d,总连接数%d", m_db_cur_conn_cnt, m_db_max_conn_cnt);
     m_conndition.signal();
     m_conndition.unlock();
 }

@@ -166,6 +166,12 @@ void ClientConn::handlePdu(BasePdu *pdu)
         case base::CID_SESSIONLIST_GET_SESSIONS_REQUEST:
             _HandleGetSessionsRequest(pdu);
             break;
+        case base::CID_SESSIONLIST_DEL_SESSION:
+            _HandleDeleteSessionRequest(pdu);
+            break;
+        case base::CID_SESSIONLIST_TOP_SESSION:
+            _HandleTopSessionRequest(pdu);
+            break;
         default:
             std::cout << pdu->getCID() << std::endl;
             break;
@@ -506,4 +512,40 @@ void ClientConn::_HandleGetSessionsRequest(BasePdu *pdu)
 
     if (dbServConn)
         sendMessage(dbServConn, request, base::SID_SERVER, base::CID_SESSIONLIST_GET_SESSIONS_REQUEST);
+}
+
+void ClientConn::_HandleDeleteSessionRequest(BasePdu *pdu)
+{
+    session::DeleteSessionRequest request;
+    request.ParseFromString(pdu->getMessage());
+
+    uint32_t userId = request.user_id();
+    uint32_t sessionId = request.session_id();
+    log("用户%d请求删除session %d", userId, sessionId);
+
+    DBServConn *dbServConn = get_db_server_conn();
+
+    if (dbServConn)
+        sendMessage(dbServConn, request, base::SID_SERVER, base::CID_SESSIONLIST_DEL_SESSION);
+}
+
+void ClientConn::_HandleTopSessionRequest(BasePdu *pdu)
+{
+    session::TopSessionRequest request;
+    request.ParseFromString(pdu->getMessage());
+
+    uint32_t userId = request.user_id();
+    uint32_t sessionId = request.session_id();
+    log("用户%d请求(取消)置顶session %d", userId, sessionId);
+
+    DBServConn *dbServConn = get_db_server_conn();
+
+    if (dbServConn)
+        sendMessage(dbServConn, request, base::SID_SERVER, base::CID_SESSIONLIST_TOP_SESSION);
+}
+
+
+void ClientConn::_HandleSearchFriendRequest(BasePdu *pdu)
+{
+//    friendlist::SearchFriendRequest request;
 }

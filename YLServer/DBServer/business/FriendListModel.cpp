@@ -345,5 +345,6 @@ uint32_t FriendListModel::getRelationId(uint32_t userId, uint32_t friendId)
         delete resultSet;
     }
 
+    DBManager::instance()->releaseConnection(dbConn);
     return relationId;
 }

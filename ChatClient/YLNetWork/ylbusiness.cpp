@@ -214,3 +214,30 @@ void YLBusiness::getSessions(uint32_t userId)
     basePdu->writeMessage(&request);
     PduSender::instance()->addMessage(basePdu);
 }
+
+
+void YLBusiness::deleteSession(uint32_t userId, uint32_t sessionId)
+{
+    session::DeleteSessionRequest request;
+    request.set_user_id(userId);
+    request.set_session_id(sessionId);
+
+    BasePdu *basePdu = new BasePdu;
+    basePdu->setSID(SID_SESSION);
+    basePdu->setCID(CID_SESSIONLIST_DEL_SESSION);
+    basePdu->writeMessage(&request);
+    PduSender::instance()->addMessage(basePdu);
+}
+
+void YLBusiness::topSession(uint32_t userId, uint32_t sessionId)
+{
+    session::TopSessionRequest request;
+    request.set_user_id(userId);
+    request.set_session_id(sessionId);
+
+    BasePdu *basePdu = new BasePdu;
+    basePdu->setSID(SID_SESSION);
+    basePdu->setCID(CID_SESSIONLIST_TOP_SESSION);
+    basePdu->writeMessage(&request);
+    PduSender::instance()->addMessage(basePdu);
+}

@@ -176,6 +176,7 @@ void YLFriendListView::contextMenuEvent(QContextMenuEvent *event)
 void YLFriendListView::updateFriendList(const QMap<int, QVector<YLFriend>> &friends)
 {
     m_friends = friends;
+    GlobalData::setFriends(m_friends);
     updateList();
 }
 
