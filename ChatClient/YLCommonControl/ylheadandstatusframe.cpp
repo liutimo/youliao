@@ -6,12 +6,13 @@
 YLHeadAndStatusFrame::YLHeadAndStatusFrame(QWidget *parent) : YLHeadFrame(parent)
 {
     init();
+    setStyleSheet("QLabel:hover{border-image:url(:/res/head_bkg_highlight_100.png);}");
 }
 
 void YLHeadAndStatusFrame::init()
 {
 
-    resize(120, 120);
+    resize(100, 100);
     status_button_ = new QToolButton(this);
     status_button_->setFixedSize(28, 28);
     status_button_->setObjectName("status_button_");

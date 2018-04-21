@@ -26,6 +26,7 @@ signals:
     void friendGroup(uint32_t group_id, const QString &group_name);
     void sessions(const QList<base::SessionInfo>&);
     void newSession(uint32_t otherId, uint32_t sessionId);
+    void searchResult(const QVector<YLFriend> friends);
 private:
     void _HandleBasePdu(BasePdu *pdu);
     void _HandleUserLoginRespone(BasePdu *pdu);

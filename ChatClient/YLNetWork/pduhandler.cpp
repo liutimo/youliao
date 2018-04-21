@@ -27,6 +27,7 @@ PduHandler::PduHandler(QObject *parent) : QThread(parent)
     qRegisterMetaType<friend_map>("friend_map");
     qRegisterMetaType<uint32_t>("uint32_t");
     qRegisterMetaType<QList<base::SessionInfo>>("QList<base::SessionInfo>");
+    qRegisterMetaType<QVector<YLFriend>>("QVector<YLFriend>");
 }
 
 PduHandler* PduHandler::instance()
@@ -242,5 +243,19 @@ void PduHandler::_HandleSearchFriendRespone(BasePdu *pdu)
     friendlist::SearchFriendRespone respone;
     respone.ParseFromString(pdu->getMessage());
 
-    qDebug() << respone.friends_size();
+    QVector<YLFriend> friends;
+
+    for (int i = 0; i < respone.friends_size(); ++i)
+    {
+        base::FriendInfo friendInfo = respone.friends(i);
+        YLFriend fri;
+        fri.setFriendId(friendInfo.friend_id());
+        fri.setFriendAccount(QString::number(friendInfo.friend_account()));
+        fri.setFriendSex(friendInfo.friend_sex());
+        fri.setFriendImagePath(friendInfo.friend_header_url().c_str());
+        fri.setFriendNickName(friendInfo.friend_nick().c_str());
+        friends.push_back(fri);
+    }
+
+    emit searchResult(friends);
 }

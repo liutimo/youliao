@@ -27,6 +27,7 @@ public:
 
     void setWidgetTitle(const QString &title);
 
+    void setWidgetIcon(const QString &fileName);
 private slots:
     virtual void on_close();
 
@@ -41,9 +42,10 @@ protected:
 
     bool drag_flag_;
     bool pressed_flag_;
-
+    bool m_has_icon;
     QPoint begin_pos_;
     QLabel *m_title_label;
+    QLabel *m_widget_icon;
 };
 
 #endif // YLBASICWIDGET_H

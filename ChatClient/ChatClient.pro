@@ -31,6 +31,7 @@ include (YLChatWidget/YLChatWidget.pri)
 include(YLMainFrame/YLMainFrame.pri)
 include(YLEntityObject/YLEntityObject.pri)
 include(protobuf/protobuf.pri)
+include(YLAddFriendWidgets/YLAddFriendWidgets.pri)
 
 SOURCES += \
         main.cpp \

@@ -13,7 +13,7 @@
 #include "YLCommonControl/ylmessagebox.h"
 #include "YLNetWork/http/httphelper.h"
 #include "YLNetWork/ylbusiness.h"
-#include "yladdfriendwidget.h"
+#include "YLAddFriendWidgets/yladdfriendwidget.h"
 #include "../signalforward.h"
 #include <QTimer>
 

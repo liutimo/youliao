@@ -5,6 +5,7 @@ youliao::pdu::base::UserInfo GlobalData::m_user = youliao::pdu::base::UserInfo()
 QMap<int, QVector<YLFriend>> GlobalData::m_friends = QMap<int, QVector<YLFriend>> ();
 QString GlobalData::m_header_image_path = QString();
 QList<YLSession> GlobalData::m_sessions = QList<YLSession>();
+QMap<int, QString> GlobalData::m_group = QMap<int, QString>();
 
 GlobalData::GlobalData(QObject *parent) : QObject(parent)
 {
@@ -56,4 +57,14 @@ YLSession GlobalData::getSessionByFriendId(uint32_t friendId)
     }
 
     return YLSession();
+}
+
+void GlobalData::setGroup(const QMap<int, QString> &group)
+{
+    m_group = group;
+}
+
+const QMap<int, QString>& GlobalData::getGroup()
+{
+    return m_group;
 }

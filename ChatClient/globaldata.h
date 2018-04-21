@@ -23,6 +23,8 @@ public:
     static void setSessions(const QList<YLSession> &sessions);
     static YLSession getSessionByFriendId(uint32_t friendId);
 
+    static void setGroup(const QMap<int, QString> &group);
+    static const QMap<int, QString>& getGroup();
 public slots:
 
 private:
@@ -30,6 +32,7 @@ private:
     static QString m_header_image_path;
     static QMap<int, QVector<YLFriend>> m_friends;
     static QList<YLSession> m_sessions;
+    static QMap<int, QString> m_group;
 };
 
 #endif // GLOBALDATA_H

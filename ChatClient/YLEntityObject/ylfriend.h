@@ -30,6 +30,8 @@ public:
 
     void setFriendOnline(bool online) { friend_is_online_ = online; }
 
+    void setFriendSex(uint32_t sex);
+
     QString friendAccount() const;
 
     QString friendNickName() const;
@@ -43,6 +45,8 @@ public:
     QString friendGroup() const;
 
     QString friendImageName() const;
+
+    QString friendSex() const { return friend_sex_; }
 
     uint32_t friendId() const { return friend_id_; }
 
@@ -62,6 +66,9 @@ private:
     QString friend_image_path_;
     //好友分组，暂定为QString
     QString friend_group;
+
+    //sex
+    QString friend_sex_;
 
     bool friend_is_online_;
 };

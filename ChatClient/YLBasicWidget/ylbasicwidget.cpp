@@ -9,6 +9,7 @@ YLBasicWidget::YLBasicWidget(QWidget *parent) : QWidget(parent), drag_flag_(true
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowFlags(Qt::FramelessWindowHint);
     init();
+    m_has_icon = false;
 }
 
 void YLBasicWidget::init()
@@ -26,6 +27,9 @@ void YLBasicWidget::init()
     m_title_label = new QLabel(this);
     m_title_label->setStyleSheet("font:16px;");
     m_title_label->move(5, 5);
+
+    m_widget_icon = new QLabel(this);
+    m_widget_icon->setFixedSize(28, 32);
 }
 
 void YLBasicWidget::setWidgetDraged(bool flag)
@@ -38,10 +42,25 @@ void YLBasicWidget::setWidgetTitle(const QString &title)
     m_title_label->setText(title);
 }
 
+
+void YLBasicWidget::setWidgetIcon(const QString &fileName)
+{
+    m_has_icon = true;
+    m_widget_icon->setPixmap(QPixmap(fileName).scaled(QSize(28, 32), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+}
+
 void YLBasicWidget::resizeEvent(QResizeEvent *event)
 {
     close_button_->move(width() - 32, 0);
-    m_title_label->move(5, 5);
+    if (!m_has_icon)
+    {
+        m_title_label->move(5, 5);
+    }
+    else
+    {
+        m_widget_icon->move(5, 5);
+        m_title_label->move(37, 5);
+    }
     QWidget::resizeEvent(event);
 }
 

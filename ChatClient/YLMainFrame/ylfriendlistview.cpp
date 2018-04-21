@@ -40,6 +40,7 @@ YLFriendListView::YLFriendListView(QWidget *parent) : QListWidget(parent),
 
     connect(PduHandler::instance(), &PduHandler::friendgroups, this, [this](const QMap<int, QString> &groups){
        m_group = groups;
+       GlobalData::setGroup(m_group);
     });
     connect(PduHandler::instance(), &PduHandler::friendlist, this, &YLFriendListView::updateFriendList);
     connect(PduHandler::instance(), &PduHandler::friendStatusChange, this, &YLFriendListView::friendStatusChanged);
@@ -47,6 +48,7 @@ YLFriendListView::YLFriendListView(QWidget *parent) : QListWidget(parent),
     connect(PduHandler::instance(), &PduHandler::friendGroup, this, [this](uint32_t groupId, const QString &groupName)
     {
         m_group[groupId] = groupName;
+        GlobalData::setGroup(m_group);
     });
 }
 
@@ -280,6 +282,7 @@ void YLFriendListView::deleteGroup()
     m_friends[1].append(m_friends[m_group_id]);
     m_friends.remove(m_group_id);
     updateList();
+    GlobalData::setGroup(m_group);
     YLBusiness::deleteFriendGroup(GlobalData::getCurrLoginUserId(), m_group_id);
 }
 
@@ -318,6 +321,8 @@ void YLFriendListView::editFinshed()
         updateList();
         YLBusiness::renameFriendGroup(GlobalData::getCurrLoginUserId(), m_group_id, newName);
     }
+
+    GlobalData::setGroup(m_group);
 }
 
 void YLFriendListView::moveFriendToGroup(uint32_t friendId, uint32_t oldGroupId, uint32_t newGroupId)

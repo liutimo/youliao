@@ -293,5 +293,16 @@
         <file>res/Info/group.png</file>
         <file>res/MainFrame/linedit_normal.png</file>
         <file>res/MainFrame/linedit_hover.png</file>
+        <file>res/head_bkg_highlight_100.png</file>
+        <file>res/YLAddFriendWIdgets/radiobtn_tick_pushed.png</file>
+        <file>res/YLAddFriendWIdgets/radiobtn_tick_normal.png</file>
+        <file>res/YLAddFriendWIdgets/radiobtn_tick_highlight.png</file>
+        <file>res/YLAddFriendWIdgets/radiobtn_pushed.png</file>
+        <file>res/YLAddFriendWIdgets/radiobtn_normal.png</file>
+        <file>res/YLAddFriendWIdgets/radiobtn_highlight.png</file>
+        <file>res/YLAddFriendWIdgets/addfriend_normal.png</file>
+        <file>res/YLAddFriendWIdgets/addfriend_hover.png</file>
+        <file>res/YLAddFriendWIdgets/addfriend_down.png</file>
+        <file>res/YLAddFriendWIdgets/no_result.png</file>
     </qresource>
 </RCC>
