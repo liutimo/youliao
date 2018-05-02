@@ -26,10 +26,12 @@ public:
     static void deleteFriend(uint32_t userId, uint32_t friendId);
     static void modifyFriendRemark(uint32_t userId, uint32_t friendId, const QString &friendRemark);
     static void searchFriend(uint32_t userId, const QString& searchData, youliao::pdu::base::SearchType searchType);
-
+    static void addFriend(uint32_t friendId, const QString &validateData, const QString remark, uint32_t groupId);
 
     //message
     static void sendMessage(uint32_t senderId, uint32_t receiverId, const QString &message);
+    static void getLatestMsgId(uint32_t friendId);
+
 
     //session
     static void getSessions(uint32_t userId);

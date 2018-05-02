@@ -63,7 +63,7 @@ void FriendListModel::getFriendList(uint32_t user_id, uint32_t msg_serv_idx, fri
     {
         //卧槽,这个表建得有问题,怎么可以这么长的sql语句
         //查找指定用户的所有好友
-        char query_sql_1[] =    "SELECT friend_id, group_id, friend_remark, user_account, user_nickname, user_header, user_sign_info "
+        char query_sql_1[] =    "SELECT id, friend_id, group_id, friend_remark, user_account, user_nickname, user_header, user_sign_info "
                                 "FROM yl_friend, yl_user "
                                 "WHERE yl_friend.user_id = '%d' and yl_user.user_id = yl_friend.friend_id and status = '1'  "
                                 "order by yl_friend.friend_id";
@@ -89,6 +89,7 @@ void FriendListModel::getFriendList(uint32_t user_id, uint32_t msg_serv_idx, fri
             uint32_t  friendId = (uint32_t )resultSet->getInt("friend_id");
 
             auto friend_ = (*m)[group_id].add_friend_();
+            friend_->set_related_id((uint32_t)resultSet->getInt("id"));
             friend_->set_friend_id(friendId);
             friend_->set_friend_nick(resultSet->getString("user_nickname"));
             friend_->set_friend_header_url(resultSet->getString("user_header"));
@@ -358,6 +359,7 @@ bool FriendListModel::searchFriend(std::string &searchData, base::SearchType sea
     auto conn = DBManager::instance()->getConnection();
     if (conn)
     {
+
         string querySql;
         if (searchType == base::SEARCH_TYPE_ACCOUNT)
         {
@@ -391,4 +393,54 @@ bool FriendListModel::searchFriend(std::string &searchData, base::SearchType sea
 
     DBManager::instance()->releaseConnection(conn);
     return ret;
+}
+
+bool FriendListModel::addFriend(uint32_t userId, uint32_t friendId, uint32_t groupId, const std::string &remark, const std::string &validateData)
+{
+    bool ret = false;
+
+    uint32_t relationId = getRelationId(userId, friendId);
+    auto conn = DBManager::instance()->getConnection();
+    uint32_t createTime = (uint32_t)time(nullptr);
+    if (relationId == 0)
+    {
+        if (conn)
+        {
+            string insertSql = "INSERT INTO yl_friend(user_id, friend_id, group_id, created, friend_remark, validate_data) VALUES(?, ?, ?, ?, ?, ?)";
+            printSql2Log(insertSql);
+            PrepareStatement *prepareStatement = new PrepareStatement;
+            if (prepareStatement->init(conn->getMysql(), insertSql))
+            {
+                int index = 0;
+                prepareStatement->setParam(index++, userId);
+                prepareStatement->setParam(index++, friendId);
+                prepareStatement->setParam(index++, groupId);
+                prepareStatement->setParam(index++, createTime);
+                prepareStatement->setParam(index++, remark);
+                prepareStatement->setParam(index++, validateData);
+                ret = prepareStatement->executeUpdate();
+            }
+
+        }
+    }
+    else
+    {
+        string updateSql = "UPDATE yl_friend SET status = 0, group_id = ? ,created = ?, validate_data = ?, friend_remark = ? WHERE id = ?";
+        printSql2Log(updateSql);
+        PrepareStatement *prepareStatement = new PrepareStatement;
+        if (prepareStatement->init(conn->getMysql(), updateSql))
+        {
+            int index = 0;
+            prepareStatement->setParam(index++, groupId);
+            prepareStatement->setParam(index++, createTime);
+            prepareStatement->setParam(index++, validateData);
+            prepareStatement->setParam(index++, remark);
+            prepareStatement->setParam(index++, relationId);
+            ret = prepareStatement->executeUpdate();
+        }
+    }
+
+    DBManager::instance()->releaseConnection(conn);
+    return ret;
+
 }

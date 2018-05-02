@@ -16,11 +16,12 @@ private:
     void initPMenu();
 
 public slots:
-    void showContentPMenu(const QString &text);
-
+    void showContentPMenu(uint32_t msgId);
+    void loadMore();
 private:
     QWebEnginePage *m_page;
     QMenu          *m_p_menu;
+    uint32_t        m_message_id;
 };
 
 #endif // TEST_H

@@ -15,6 +15,7 @@
 #include "globaldata.h"
 #include "ylinfomationwidget.h"
 #include "YLCommonControl/ylmessagebox.h"
+#include "YLTray/ylcounterbubble.h"
 YLFriendListItem::YLFriendListItem(YLListItemType type, QWidget *parent) : QWidget(parent)
 {
     item_type_ = type;
@@ -27,6 +28,9 @@ void YLFriendListItem::init()
 {
     head_frame_ = new YLHeadFrame(this);
     head_frame_->resize(40, 40);
+
+    m_counter_bubble = new YLCounterBubble(this);
+    m_counter_bubble->hide();
 
     label_up_ = new QLabel(this);
     label_down_ = new QLabel(this);
@@ -79,9 +83,14 @@ void YLFriendListItem::initMenu()
     menu_->addAction(aciton_delete);
 
     connect(action_send_msg, &QAction::triggered, this, [this](){
-        YLChatWidget *chatWidget = new YLChatWidget();
-        chatWidget->resize(800, 600);
-        chatWidget->setFriend(friend_);
+        YLChatWidget *chatWidget = GlobalData::getChatWidget(friend_.friendId());
+        if (chatWidget == nullptr)
+        {
+            chatWidget = new YLChatWidget;
+            chatWidget->resize(800, 600);
+            chatWidget->setFriend(friend_);
+            GlobalData::addChatWidget(friend_.friendId(), chatWidget);
+        }
         chatWidget->show();
     });
 
@@ -186,6 +195,11 @@ void YLFriendListItem::setData(const YLFriend &friend_, const YLSession &session
         msg.replace(re, "[Picture]");
         label_down_->setText(placeholder_text_2.arg(msg));
         head_frame_->setHeadFromLocal(friend_.friendImagePath());
+        if (session.getUnReadMsgCount() > 0)
+        {
+            m_counter_bubble->show();
+            m_counter_bubble->setNumber(session.getUnReadMsgCount());
+        }
     }
 
 
@@ -199,6 +213,7 @@ void YLFriendListItem::resizeEvent(QResizeEvent *event)
     label_up_->move(50, head_frame_->y());
     label_down_->move(50, label_up_->y() + label_up_->height());
     label_time_->move(width() - 35, label_up_->y());
+    m_counter_bubble->move(width() - 29, label_time_->y() + label_time_->height());
     QWidget::resizeEvent(event);
 }
 

@@ -32,13 +32,17 @@ class YLChatWidget : public YLBasicWidget
 
 public:
     explicit YLChatWidget(QWidget *parent = Q_NULLPTR);
+    ~YLChatWidget();
     void setFriend(const YLFriend &);
-
 signals:
     void updateSession(YLFriend &ylFriend);
-
+    void loadFinish();
 protected:
     void resizeEvent(QResizeEvent *e);
+    void closeEvent(QCloseEvent *event);
+
+public slots:
+    void receiveMessage(uint32_t user_id, const QString &message);
 
 private slots:
     void max();

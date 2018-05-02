@@ -10,6 +10,9 @@
 #include "protobuf/youliao.friendlist.pb.h"
 #include "protobuf/youliao.message.pb.h"
 #include "protobuf/youliao.session.pb.h"
+#include "YLDataBase/yldatabase.h"
+#include "globaldata.h"
+#include "YLTray/ylmaintray.h"
 //全局PDU list
 //主线程产生的所有pdu都会放入这个list中
 //子线程循环冲list读数据发送到消息服务器
@@ -95,6 +98,9 @@ void PduHandler::_HandleBasePdu(BasePdu *pdu)
     case base::CID_FRIENDLIST_SEARCH_FRIEND_RESPONE:
         _HandleSearchFriendRespone(pdu);
         break;
+    case base::CID_MESSAGE_GET_LATEST_MSG_ID_RESPONE:
+        _HandleGetLatestMsgIdRespone(pdu);
+        break;
     default:
         std::cout << "CID" << pdu->getCID() << "  SID:" << pdu->getSID();
         break;
@@ -150,6 +156,7 @@ void PduHandler::_HandleFriendListGetRespone(BasePdu *pdu)
         {
             auto fri = c.friend_(i);
             YLFriend ylFriend;
+            ylFriend.setRelateId(fri.related_id());
             ylFriend.setFriendId(fri.friend_id());
             ylFriend.setFriendAccount(QString::number(fri.friend_account()));
             ylFriend.setFriendImagePath(fri.friend_header_url().c_str());
@@ -169,7 +176,16 @@ void PduHandler::_HandleMessageData(BasePdu *pdu)
     message::MessageData messageData;
     messageData.ParseFromString(pdu->getMessage());
 
-    emit signleMessage(messageData.from_user_id(), QString(messageData.message_data().c_str()));
+    YLDataBase::instance()->saveMessage(messageData);
+
+    auto chatWidget = GlobalData::getChatWidget(messageData.from_user_id());
+    if (chatWidget)
+        emit signleMessage(messageData.from_user_id(), QString(messageData.message_data().c_str()));
+    else
+    {
+        YLMainTray::instance()->receiveMessage(messageData);
+        emit unReadMessage(messageData.from_user_id(), messageData.message_data().c_str());
+    }
 }
 
 
@@ -219,6 +235,7 @@ void PduHandler::_HandleGetSessionsRespone(BasePdu *pdu)
     {
         base::SessionInfo si;
         si = respone.sessions(i);
+        GlobalData::setLatestMsgId(si.other_id(), si.latest_msg_id());
         sessionList.push_back(si);
     }
 
@@ -258,4 +275,16 @@ void PduHandler::_HandleSearchFriendRespone(BasePdu *pdu)
     }
 
     emit searchResult(friends);
+}
+
+
+void PduHandler::_HandleGetLatestMsgIdRespone(BasePdu *pdu)
+{
+    message::LatestMsgIdRespone respone;
+    respone.ParseFromString(pdu->getMessage());
+
+    uint32_t friId = respone.friend_id();
+    uint32_t latestMsgId = respone.latest_msg_id();
+
+    GlobalData::setLatestMsgId(friId, latestMsgId + 1);
 }

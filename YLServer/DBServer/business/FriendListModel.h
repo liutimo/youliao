@@ -41,6 +41,8 @@ public:
 
     bool searchFriend(std::string &searchData, base::SearchType searchType, std::list<base::FriendInfo> &);
 
+    bool addFriend(uint32_t userId, uint32_t friendId, uint32_t groupId, const std::string &remark, const std::string &validateData);
+
 private:
     FriendListModel();
     static FriendListModel *m_instance;

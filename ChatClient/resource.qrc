@@ -304,5 +304,8 @@
         <file>res/YLAddFriendWIdgets/addfriend_hover.png</file>
         <file>res/YLAddFriendWIdgets/addfriend_down.png</file>
         <file>res/YLAddFriendWIdgets/no_result.png</file>
+        <file>res/offline.ico</file>
+        <file>res/imonline.ico</file>
+        <file>res/YLChatWidget/time.png</file>
     </qresource>
 </RCC>

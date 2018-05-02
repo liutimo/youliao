@@ -13,9 +13,14 @@ public:
     static SignalForward* instance();
 
     void forwordUpdateSession(const YLSession &);
-
+    void forwordIgnoreAll();
+    void forwordReadAll();
+    void forwordReadOne(uint32_t friendId);
 signals:
     void updateSession(const YLSession &);
+    void ignoreAll();
+    void readAll();
+    void readOne(uint32_t friendId);
 
 private:
     explicit SignalForward(QObject *parent = nullptr);

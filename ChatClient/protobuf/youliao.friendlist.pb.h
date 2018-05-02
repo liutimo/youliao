@@ -40,7 +40,7 @@ namespace protobuf_youliao_2efriendlist_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[21];
+  static const ::google::protobuf::internal::ParseTable schema[22];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -88,6 +88,8 @@ void InitDefaultsSearchFriendRequestImpl();
 void InitDefaultsSearchFriendRequest();
 void InitDefaultsSearchFriendResponeImpl();
 void InitDefaultsSearchFriendRespone();
+void InitDefaultsAddFriendRequestImpl();
+void InitDefaultsAddFriendRequest();
 inline void InitDefaults() {
   InitDefaultsGroup_Friend();
   InitDefaultsFriendListRequest();
@@ -110,11 +112,15 @@ inline void InitDefaults() {
   InitDefaultsModifyFriendRemarkRequest();
   InitDefaultsSearchFriendRequest();
   InitDefaultsSearchFriendRespone();
+  InitDefaultsAddFriendRequest();
 }
 }  // namespace protobuf_youliao_2efriendlist_2eproto
 namespace youliao {
 namespace pdu {
 namespace friendlist {
+class AddFriendRequest;
+class AddFriendRequestDefaultTypeInternal;
+extern AddFriendRequestDefaultTypeInternal _AddFriendRequest_default_instance_;
 class AddNewFriendGroupRequest;
 class AddNewFriendGroupRequestDefaultTypeInternal;
 extern AddNewFriendGroupRequestDefaultTypeInternal _AddNewFriendGroupRequest_default_instance_;
@@ -183,6 +189,7 @@ extern SignatureChangeResquestDefaultTypeInternal _SignatureChangeResquest_defau
 }  // namespace youliao
 namespace google {
 namespace protobuf {
+template<> ::youliao::pdu::friendlist::AddFriendRequest* Arena::Create< ::youliao::pdu::friendlist::AddFriendRequest>(Arena*);
 template<> ::youliao::pdu::friendlist::AddNewFriendGroupRequest* Arena::Create< ::youliao::pdu::friendlist::AddNewFriendGroupRequest>(Arena*);
 template<> ::youliao::pdu::friendlist::AddNewFriendGroupRespone* Arena::Create< ::youliao::pdu::friendlist::AddNewFriendGroupRespone>(Arena*);
 template<> ::youliao::pdu::friendlist::DeleteFriendGroupRequest* Arena::Create< ::youliao::pdu::friendlist::DeleteFriendGroupRequest>(Arena*);
@@ -2509,6 +2516,153 @@ class SearchFriendRespone : public ::google::protobuf::Message /* @@protoc_inser
   friend struct ::protobuf_youliao_2efriendlist_2eproto::TableStruct;
   friend void ::protobuf_youliao_2efriendlist_2eproto::InitDefaultsSearchFriendResponeImpl();
 };
+// -------------------------------------------------------------------
+
+class AddFriendRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.friendlist.AddFriendRequest) */ {
+ public:
+  AddFriendRequest();
+  virtual ~AddFriendRequest();
+
+  AddFriendRequest(const AddFriendRequest& from);
+
+  inline AddFriendRequest& operator=(const AddFriendRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  AddFriendRequest(AddFriendRequest&& from) noexcept
+    : AddFriendRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline AddFriendRequest& operator=(AddFriendRequest&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const AddFriendRequest& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const AddFriendRequest* internal_default_instance() {
+    return reinterpret_cast<const AddFriendRequest*>(
+               &_AddFriendRequest_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    21;
+
+  void Swap(AddFriendRequest* other);
+  friend void swap(AddFriendRequest& a, AddFriendRequest& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline AddFriendRequest* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<AddFriendRequest>(NULL);
+  }
+
+  AddFriendRequest* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<AddFriendRequest>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const AddFriendRequest& from);
+  void MergeFrom(const AddFriendRequest& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(AddFriendRequest* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string friend_remark = 3;
+  void clear_friend_remark();
+  static const int kFriendRemarkFieldNumber = 3;
+  const ::std::string& friend_remark() const;
+  void set_friend_remark(const ::std::string& value);
+  #if LANG_CXX11
+  void set_friend_remark(::std::string&& value);
+  #endif
+  void set_friend_remark(const char* value);
+  void set_friend_remark(const char* value, size_t size);
+  ::std::string* mutable_friend_remark();
+  ::std::string* release_friend_remark();
+  void set_allocated_friend_remark(::std::string* friend_remark);
+
+  // string validateData = 5;
+  void clear_validatedata();
+  static const int kValidateDataFieldNumber = 5;
+  const ::std::string& validatedata() const;
+  void set_validatedata(const ::std::string& value);
+  #if LANG_CXX11
+  void set_validatedata(::std::string&& value);
+  #endif
+  void set_validatedata(const char* value);
+  void set_validatedata(const char* value, size_t size);
+  ::std::string* mutable_validatedata();
+  ::std::string* release_validatedata();
+  void set_allocated_validatedata(::std::string* validatedata);
+
+  // uint32 user_id = 1;
+  void clear_user_id();
+  static const int kUserIdFieldNumber = 1;
+  ::google::protobuf::uint32 user_id() const;
+  void set_user_id(::google::protobuf::uint32 value);
+
+  // uint32 friend_id = 2;
+  void clear_friend_id();
+  static const int kFriendIdFieldNumber = 2;
+  ::google::protobuf::uint32 friend_id() const;
+  void set_friend_id(::google::protobuf::uint32 value);
+
+  // uint32 group_id = 4;
+  void clear_group_id();
+  static const int kGroupIdFieldNumber = 4;
+  ::google::protobuf::uint32 group_id() const;
+  void set_group_id(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.friendlist.AddFriendRequest)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr friend_remark_;
+  ::google::protobuf::internal::ArenaStringPtr validatedata_;
+  ::google::protobuf::uint32 user_id_;
+  ::google::protobuf::uint32 friend_id_;
+  ::google::protobuf::uint32 group_id_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2efriendlist_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2efriendlist_2eproto::InitDefaultsAddFriendRequestImpl();
+};
 // ===================================================================
 
 
@@ -3689,9 +3843,163 @@ SearchFriendRespone::friends() const {
   return friends_;
 }
 
+// -------------------------------------------------------------------
+
+// AddFriendRequest
+
+// uint32 user_id = 1;
+inline void AddFriendRequest::clear_user_id() {
+  user_id_ = 0u;
+}
+inline ::google::protobuf::uint32 AddFriendRequest::user_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.friendlist.AddFriendRequest.user_id)
+  return user_id_;
+}
+inline void AddFriendRequest::set_user_id(::google::protobuf::uint32 value) {
+  
+  user_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.friendlist.AddFriendRequest.user_id)
+}
+
+// uint32 friend_id = 2;
+inline void AddFriendRequest::clear_friend_id() {
+  friend_id_ = 0u;
+}
+inline ::google::protobuf::uint32 AddFriendRequest::friend_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.friendlist.AddFriendRequest.friend_id)
+  return friend_id_;
+}
+inline void AddFriendRequest::set_friend_id(::google::protobuf::uint32 value) {
+  
+  friend_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.friendlist.AddFriendRequest.friend_id)
+}
+
+// string friend_remark = 3;
+inline void AddFriendRequest::clear_friend_remark() {
+  friend_remark_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& AddFriendRequest::friend_remark() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.friendlist.AddFriendRequest.friend_remark)
+  return friend_remark_.GetNoArena();
+}
+inline void AddFriendRequest::set_friend_remark(const ::std::string& value) {
+  
+  friend_remark_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:youliao.pdu.friendlist.AddFriendRequest.friend_remark)
+}
+#if LANG_CXX11
+inline void AddFriendRequest::set_friend_remark(::std::string&& value) {
+  
+  friend_remark_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:youliao.pdu.friendlist.AddFriendRequest.friend_remark)
+}
+#endif
+inline void AddFriendRequest::set_friend_remark(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  friend_remark_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:youliao.pdu.friendlist.AddFriendRequest.friend_remark)
+}
+inline void AddFriendRequest::set_friend_remark(const char* value, size_t size) {
+  
+  friend_remark_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:youliao.pdu.friendlist.AddFriendRequest.friend_remark)
+}
+inline ::std::string* AddFriendRequest::mutable_friend_remark() {
+  
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.friendlist.AddFriendRequest.friend_remark)
+  return friend_remark_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* AddFriendRequest::release_friend_remark() {
+  // @@protoc_insertion_point(field_release:youliao.pdu.friendlist.AddFriendRequest.friend_remark)
+  
+  return friend_remark_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void AddFriendRequest::set_allocated_friend_remark(::std::string* friend_remark) {
+  if (friend_remark != NULL) {
+    
+  } else {
+    
+  }
+  friend_remark_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), friend_remark);
+  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.friendlist.AddFriendRequest.friend_remark)
+}
+
+// uint32 group_id = 4;
+inline void AddFriendRequest::clear_group_id() {
+  group_id_ = 0u;
+}
+inline ::google::protobuf::uint32 AddFriendRequest::group_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.friendlist.AddFriendRequest.group_id)
+  return group_id_;
+}
+inline void AddFriendRequest::set_group_id(::google::protobuf::uint32 value) {
+  
+  group_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.friendlist.AddFriendRequest.group_id)
+}
+
+// string validateData = 5;
+inline void AddFriendRequest::clear_validatedata() {
+  validatedata_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& AddFriendRequest::validatedata() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.friendlist.AddFriendRequest.validateData)
+  return validatedata_.GetNoArena();
+}
+inline void AddFriendRequest::set_validatedata(const ::std::string& value) {
+  
+  validatedata_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:youliao.pdu.friendlist.AddFriendRequest.validateData)
+}
+#if LANG_CXX11
+inline void AddFriendRequest::set_validatedata(::std::string&& value) {
+  
+  validatedata_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:youliao.pdu.friendlist.AddFriendRequest.validateData)
+}
+#endif
+inline void AddFriendRequest::set_validatedata(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  validatedata_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:youliao.pdu.friendlist.AddFriendRequest.validateData)
+}
+inline void AddFriendRequest::set_validatedata(const char* value, size_t size) {
+  
+  validatedata_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:youliao.pdu.friendlist.AddFriendRequest.validateData)
+}
+inline ::std::string* AddFriendRequest::mutable_validatedata() {
+  
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.friendlist.AddFriendRequest.validateData)
+  return validatedata_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* AddFriendRequest::release_validatedata() {
+  // @@protoc_insertion_point(field_release:youliao.pdu.friendlist.AddFriendRequest.validateData)
+  
+  return validatedata_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void AddFriendRequest::set_allocated_validatedata(::std::string* validatedata) {
+  if (validatedata != NULL) {
+    
+  } else {
+    
+  }
+  validatedata_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), validatedata);
+  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.friendlist.AddFriendRequest.validateData)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

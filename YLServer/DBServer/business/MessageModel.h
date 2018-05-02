@@ -23,6 +23,7 @@ public:
 
     bool getLastMessage(uint32_t senderId, uint32_t receiverId, std::string &content);
 
+    bool getLatestMsgId(uint32_t userId, uint8_t senderId, uint32_t &msgId);
 
 private:
     MessageModel();

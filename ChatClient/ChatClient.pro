@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui network
+QT       += core gui network sql
 
 QT += webenginewidgets
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -27,11 +27,13 @@ include(YLLoginPanel/YLLoginPanel.pri)
 include(YLBasicWidget/YLBasicWidget.pri)
 include(YLCommonControl/YLCommonControl.pri)
 include(YLNetWork/YLNetWork.pri)
-include (YLChatWidget/YLChatWidget.pri)
+include(YLChatWidget/YLChatWidget.pri)
 include(YLMainFrame/YLMainFrame.pri)
 include(YLEntityObject/YLEntityObject.pri)
 include(protobuf/protobuf.pri)
+include(YLTray/YLTray.pri)
 include(YLAddFriendWidgets/YLAddFriendWidgets.pri)
+include(YLDataBase/YLDataBase.pri)
 
 SOURCES += \
         main.cpp \

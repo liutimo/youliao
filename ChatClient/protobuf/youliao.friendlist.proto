@@ -132,3 +132,13 @@ message SearchFriendRespone
     uint32 user_id = 1;
     repeated youliao.pdu.base.FriendInfo friends = 2; //该组下的好友
 }
+
+message AddFriendRequest
+{
+    uint32 user_id = 1;
+    uint32 friend_id = 2;
+    string friend_remark = 3;
+    uint32 group_id = 4;
+    string validateData = 5;
+}
+

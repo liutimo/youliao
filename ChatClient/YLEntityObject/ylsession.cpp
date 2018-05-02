@@ -2,7 +2,7 @@
 
 YLSession::YLSession()
 {
-
+    m_unread_msg_count = 0;
 }
 
 YLSession::YLSession(const YLSession &session)
@@ -18,6 +18,7 @@ YLSession &YLSession::operator =(const YLSession &session)
     m_session_top = session.getSessionTop();
     m_session_last_chat_time = session.getSessionLastChatTime();
     m_session_last_message = session.getSessionLastChatMessage();
+    m_unread_msg_count = session.m_unread_msg_count;
 }
 
 bool YLSession::operator ==(const YLSession &session) const

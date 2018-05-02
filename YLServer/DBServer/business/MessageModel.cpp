@@ -141,3 +141,43 @@ bool MessageModel::getLastMessage(uint32_t senderId, uint32_t receiverId, std::s
     DBManager::instance()->releaseConnection(dbConn);
     return ret;
 }
+
+
+
+bool MessageModel::getLatestMsgId(uint32_t senderId, uint8_t receiverId, uint32_t &msgId)
+{
+    bool ret = false;
+
+    uint32_t relateId = FriendListModel::instance()->getRelationId(senderId, receiverId);
+
+    if (relateId == 0)
+    {
+        log("用户%d和用户%d不是好友关系。无法获取消息！", senderId, receiverId);
+        return ret;
+    }
+
+    DBConn *dbConn = DBManager::instance()->getConnection();
+    if(!dbConn)
+        return ret;
+    std::string querySql = "SELECT message_id FROM yl_message FORCE INDEX(relateId_status_created_IDX) WHERE relate_id =" + std::to_string(relateId) +" AND message_status=0 ORDER BY message_created DESC LIMIT 1";
+    printSql2Log(querySql.c_str());
+
+    ResultSet *resultSet = dbConn->query(querySql);
+
+    if (!resultSet)
+    {
+        log("执行SQL失败");
+
+    }
+    else
+    {
+        while(resultSet->next())
+        {
+            msgId = (uint32_t)resultSet->getInt("message_id");
+        }
+        ret = true;
+    }
+
+    DBManager::instance()->releaseConnection(dbConn);
+    return ret;
+}

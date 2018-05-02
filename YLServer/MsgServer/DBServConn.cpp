@@ -3,6 +3,7 @@
 //
 
 #include <network/ServerInfo.h>
+#include <pdu/protobuf/youliao.message.pb.h>
 #include "DBServConn.h"
 #include "RouteConn.h"
 #include "ClientConn.h"
@@ -148,6 +149,9 @@ void DBServConn::handlePdu(BasePdu *pdu)
             break;
         case base::CID_FRIENDLIST_SEARCH_FRIEND_RESPONE:
             _HandleSearchFriendRespone(pdu);
+            break;
+        case base::CID_MESSAGE_GET_LATEST_MSG_ID_RESPONE:
+            _HandleGetLatestMsgIdRespone(pdu);
             break;
         default:
             break;
@@ -390,5 +394,25 @@ void DBServConn::_HandleSearchFriendRespone(BasePdu *basePdu)
             sendMessage(conn, respone, base::SID_FRIEND_LIST, base::CID_FRIENDLIST_SEARCH_FRIEND_RESPONE);
         }
 
+    }
+}
+
+
+void DBServConn::_HandleGetLatestMsgIdRespone(BasePdu *basePdu)
+{
+    message::LatestMsgIdRespone respone;
+    respone.ParseFromString(basePdu->getMessage());
+
+    uint32_t  userId = respone.user_id();
+
+    auto user = UserManager::instance()->getUser(userId);
+
+    if (user)
+    {
+        auto conn = user->getConn();
+        if (conn)
+        {
+            sendMessage(conn, respone, base::SID_MESSAGE, base::CID_MESSAGE_GET_LATEST_MSG_ID_RESPONE);
+        }
     }
 }

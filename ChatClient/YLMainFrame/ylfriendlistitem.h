@@ -9,6 +9,8 @@ class YLHeadFrame;
 class QLabel;
 class HttpHelper;
 class QMenu;
+class YLCounterBubble;
+
 class YLFriendListItem : public QWidget
 {
     Q_OBJECT
@@ -56,7 +58,7 @@ signals:
 
 private:
     YLHeadFrame *head_frame_;
-
+    YLCounterBubble *m_counter_bubble;
     //up和down1表示相对位置
     QLabel      *label_up_;         //如果由备注则显示备注信息，否则显示昵称
     QLabel      *label_down_;       //显示个性签名 或者最后一条聊天记录

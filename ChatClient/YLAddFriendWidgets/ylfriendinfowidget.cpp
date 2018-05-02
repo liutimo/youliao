@@ -32,8 +32,9 @@ void YLFriendInfoWidget::init()
     m_add_friend->setStyleSheet(qss_add_friend);
     m_add_friend->setFixedSize(48, 11);
     m_add_friend->move(79, 55);
-    connect(m_add_friend, &QPushButton::clicked, this, [](){
+    connect(m_add_friend, &QPushButton::clicked, this, [this](){
         YLValidateWidget *w = new YLValidateWidget;
+        w->setFriend(m_friend);
         w->show();
     });
 }

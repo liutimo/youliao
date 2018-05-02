@@ -13,6 +13,7 @@
 #include "YLCommonControl/ylmessagebox.h"
 #include "YLNetWork/http/httphelper.h"
 #include "YLNetWork/ylbusiness.h"
+#include "YLTray/ylmaintray.h"
 #include "YLAddFriendWidgets/yladdfriendwidget.h"
 #include "../signalforward.h"
 #include <QTimer>
@@ -25,6 +26,7 @@ YLMainWidget::YLMainWidget(QWidget *parent) : YLBasicWidget(parent)
 {
     resize(400, 800);
     init();
+    initTray();
     initListWidget();
     center = geometry().center();
 }
@@ -102,6 +104,16 @@ void YLMainWidget::init()
         w->resize(600, 400);
         w->show();
     });
+}
+
+
+void YLMainWidget::initTray()
+{
+    m_main_tray = YLMainTray::instance();
+    m_main_tray->show();
+
+    connect(m_main_tray, &YLMainTray::showMain, this, [this](){ this->show(); });
+    connect(m_main_tray, &YLMainTray::quit,     this, &YLMainWidget::close);
 }
 
 void YLMainWidget::initListWidget()

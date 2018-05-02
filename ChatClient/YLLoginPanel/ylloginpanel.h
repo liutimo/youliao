@@ -9,10 +9,16 @@ class QLineEdit;
 class QPushButton;
 class YLLineEdit;
 class QCheckBox;
+class YLLoginTray;
 
 class YLLoginPanel : public YLBasicWidget
 {
     Q_OBJECT
+    const QString qss_min_button     = "QPushButton#min_button_        {border-image:url(:/res/MainFrame/sysbtn_min_normal.png);}\
+                                        QPushButton#min_button_:hover  {border-image:url(:/res/MainFrame/sysbtn_min_hover.png);}\
+                                        QPushButton#min_button_:pressed{border-image:url(:/res/MainFrame/sysbtn_min_down.png);}\
+                                       ";
+
 
     const QString qss_password_     = "QLineEdit#lineedit_passwd_      {font: 13px;border-image:url(:/res/LoginPanel/edit_frame_normal_passwd.png);}\
                                        QLineEdit#lineedit_passwd_:hover{font: 13px;border-image:url(:/res/LoginPanel/edit_frame_hove_passwd.png);}";
@@ -38,6 +44,7 @@ public:
 
 private:
     void init();
+    void initTray();
     void initCheckBoxs();
     void connectToLoginServer();
 private slots:
@@ -50,6 +57,7 @@ protected:
 
 
 private:
+    QPushButton *min_button_;
 //    YLLineEdit           *lineedit_useraccount_;
     QLineEdit            *lineedit_useraccount_;
     QLineEdit            *lineedit_passwd_;
@@ -63,6 +71,8 @@ private:
     std::string m_msgsvr_ip;
     std::string m_msgsvr_port;
     bool   m_connected;
+
+    YLLoginTray *m_login_tray;
 };
 
 #endif // YLLOGINPANEL_H

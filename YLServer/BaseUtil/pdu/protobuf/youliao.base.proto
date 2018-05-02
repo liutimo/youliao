@@ -98,6 +98,8 @@ enum MessageCID
     CID_MESSAGE_DATA = 0x0601;        //发送消息
     CID_MESSAGE_SAVE = 0x0602;        //保存消息到数据库
     CID_MESSAGE_UPDATE = 0x0603;      //更新消息，第一次存入数据库的消息时未读状态。当收到Client ACK，更改其状态为已读
+    CID_MESSAGE_GET_LATEST_MSG_ID_REQUEST = 0x0604; //请求最新的消息ID
+    CID_MESSAGE_GET_LATEST_MSG_ID_RESPONE = 0x0605; //响应最新的消息ID
 }
 
 
@@ -150,16 +152,17 @@ message UserInfo
 //好友信息
 message FriendInfo
 {
-    uint32 friend_id = 1;
-    uint32 friend_account = 2;
-    uint32 friend_sex = 3;
-    string friend_nick = 4;
-    string friend_header_url =5;
-    string friend_email = 6;
-    string friend_phone = 7;
-    string friend_sign_info = 8;
-    string friend_remark = 9;
-    bool   friend_is_online = 10;
+    uint32 related_id = 1;
+    uint32 friend_id = 2;
+    uint32 friend_account = 3;
+    uint32 friend_sex = 4;
+    string friend_nick = 5;
+    string friend_header_url =6;
+    string friend_email = 7;
+    string friend_phone = 8;
+    string friend_sign_info = 9;
+    string friend_remark = 10;
+    bool   friend_is_online = 11;
 }
 
 //会话信息
@@ -170,7 +173,8 @@ message SessionInfo
     uint32 session_type = 3;
     uint32 session_top = 4;
     uint32 session_update = 5;
-    bytes last_message_data = 6;
+    uint32 latest_msg_id = 6;
+    bytes last_message_data = 7;
 }
 
 

@@ -146,7 +146,6 @@ bool SessionModel::updateSession(uint32_t sessionId)
     return ret;
 }
 
-
 bool SessionModel::removeSession(uint32_t sessionId)
 {
     bool ret = false;
@@ -212,9 +211,10 @@ bool SessionModel::getSessions(uint32_t userId, std::list<base::SessionInfo> &se
     {
         while (resultSet->next())
         {
+            uint32_t friId = (uint32_t)resultSet->getInt("other_id");
             base::SessionInfo sessionInfo;
             sessionInfo.set_session_id((uint32_t)resultSet->getInt("session_id"));
-            sessionInfo.set_other_id((uint32_t)resultSet->getInt("other_id"));
+            sessionInfo.set_other_id(friId);
             sessionInfo.set_session_type((uint32_t)resultSet->getInt("session_type"));
             sessionInfo.set_session_top((uint32_t)resultSet->getInt("session_top"));
             sessionInfo.set_session_update((uint32_t)resultSet->getInt("session_updated"));

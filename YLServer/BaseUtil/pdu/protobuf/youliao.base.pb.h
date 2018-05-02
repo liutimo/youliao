@@ -263,12 +263,14 @@ enum MessageCID {
   CID_MESSAGE_DATA = 1537,
   CID_MESSAGE_SAVE = 1538,
   CID_MESSAGE_UPDATE = 1539,
+  CID_MESSAGE_GET_LATEST_MSG_ID_REQUEST = 1540,
+  CID_MESSAGE_GET_LATEST_MSG_ID_RESPONE = 1541,
   MessageCID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   MessageCID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool MessageCID_IsValid(int value);
 const MessageCID MessageCID_MIN = CID_MESSAGE_ZERO;
-const MessageCID MessageCID_MAX = CID_MESSAGE_UPDATE;
+const MessageCID MessageCID_MAX = CID_MESSAGE_GET_LATEST_MSG_ID_RESPONE;
 const int MessageCID_ARRAYSIZE = MessageCID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* MessageCID_descriptor();
@@ -719,9 +721,9 @@ class FriendInfo : public ::google::protobuf::Message /* @@protoc_insertion_poin
 
   // accessors -------------------------------------------------------
 
-  // string friend_nick = 4;
+  // string friend_nick = 5;
   void clear_friend_nick();
-  static const int kFriendNickFieldNumber = 4;
+  static const int kFriendNickFieldNumber = 5;
   const ::std::string& friend_nick() const;
   void set_friend_nick(const ::std::string& value);
   #if LANG_CXX11
@@ -733,9 +735,9 @@ class FriendInfo : public ::google::protobuf::Message /* @@protoc_insertion_poin
   ::std::string* release_friend_nick();
   void set_allocated_friend_nick(::std::string* friend_nick);
 
-  // string friend_header_url = 5;
+  // string friend_header_url = 6;
   void clear_friend_header_url();
-  static const int kFriendHeaderUrlFieldNumber = 5;
+  static const int kFriendHeaderUrlFieldNumber = 6;
   const ::std::string& friend_header_url() const;
   void set_friend_header_url(const ::std::string& value);
   #if LANG_CXX11
@@ -747,9 +749,9 @@ class FriendInfo : public ::google::protobuf::Message /* @@protoc_insertion_poin
   ::std::string* release_friend_header_url();
   void set_allocated_friend_header_url(::std::string* friend_header_url);
 
-  // string friend_email = 6;
+  // string friend_email = 7;
   void clear_friend_email();
-  static const int kFriendEmailFieldNumber = 6;
+  static const int kFriendEmailFieldNumber = 7;
   const ::std::string& friend_email() const;
   void set_friend_email(const ::std::string& value);
   #if LANG_CXX11
@@ -761,9 +763,9 @@ class FriendInfo : public ::google::protobuf::Message /* @@protoc_insertion_poin
   ::std::string* release_friend_email();
   void set_allocated_friend_email(::std::string* friend_email);
 
-  // string friend_phone = 7;
+  // string friend_phone = 8;
   void clear_friend_phone();
-  static const int kFriendPhoneFieldNumber = 7;
+  static const int kFriendPhoneFieldNumber = 8;
   const ::std::string& friend_phone() const;
   void set_friend_phone(const ::std::string& value);
   #if LANG_CXX11
@@ -775,9 +777,9 @@ class FriendInfo : public ::google::protobuf::Message /* @@protoc_insertion_poin
   ::std::string* release_friend_phone();
   void set_allocated_friend_phone(::std::string* friend_phone);
 
-  // string friend_sign_info = 8;
+  // string friend_sign_info = 9;
   void clear_friend_sign_info();
-  static const int kFriendSignInfoFieldNumber = 8;
+  static const int kFriendSignInfoFieldNumber = 9;
   const ::std::string& friend_sign_info() const;
   void set_friend_sign_info(const ::std::string& value);
   #if LANG_CXX11
@@ -789,9 +791,9 @@ class FriendInfo : public ::google::protobuf::Message /* @@protoc_insertion_poin
   ::std::string* release_friend_sign_info();
   void set_allocated_friend_sign_info(::std::string* friend_sign_info);
 
-  // string friend_remark = 9;
+  // string friend_remark = 10;
   void clear_friend_remark();
-  static const int kFriendRemarkFieldNumber = 9;
+  static const int kFriendRemarkFieldNumber = 10;
   const ::std::string& friend_remark() const;
   void set_friend_remark(const ::std::string& value);
   #if LANG_CXX11
@@ -803,27 +805,33 @@ class FriendInfo : public ::google::protobuf::Message /* @@protoc_insertion_poin
   ::std::string* release_friend_remark();
   void set_allocated_friend_remark(::std::string* friend_remark);
 
-  // uint32 friend_id = 1;
+  // uint32 related_id = 1;
+  void clear_related_id();
+  static const int kRelatedIdFieldNumber = 1;
+  ::google::protobuf::uint32 related_id() const;
+  void set_related_id(::google::protobuf::uint32 value);
+
+  // uint32 friend_id = 2;
   void clear_friend_id();
-  static const int kFriendIdFieldNumber = 1;
+  static const int kFriendIdFieldNumber = 2;
   ::google::protobuf::uint32 friend_id() const;
   void set_friend_id(::google::protobuf::uint32 value);
 
-  // uint32 friend_account = 2;
+  // uint32 friend_account = 3;
   void clear_friend_account();
-  static const int kFriendAccountFieldNumber = 2;
+  static const int kFriendAccountFieldNumber = 3;
   ::google::protobuf::uint32 friend_account() const;
   void set_friend_account(::google::protobuf::uint32 value);
 
-  // uint32 friend_sex = 3;
+  // uint32 friend_sex = 4;
   void clear_friend_sex();
-  static const int kFriendSexFieldNumber = 3;
+  static const int kFriendSexFieldNumber = 4;
   ::google::protobuf::uint32 friend_sex() const;
   void set_friend_sex(::google::protobuf::uint32 value);
 
-  // bool friend_is_online = 10;
+  // bool friend_is_online = 11;
   void clear_friend_is_online();
-  static const int kFriendIsOnlineFieldNumber = 10;
+  static const int kFriendIsOnlineFieldNumber = 11;
   bool friend_is_online() const;
   void set_friend_is_online(bool value);
 
@@ -837,6 +845,7 @@ class FriendInfo : public ::google::protobuf::Message /* @@protoc_insertion_poin
   ::google::protobuf::internal::ArenaStringPtr friend_phone_;
   ::google::protobuf::internal::ArenaStringPtr friend_sign_info_;
   ::google::protobuf::internal::ArenaStringPtr friend_remark_;
+  ::google::protobuf::uint32 related_id_;
   ::google::protobuf::uint32 friend_id_;
   ::google::protobuf::uint32 friend_account_;
   ::google::protobuf::uint32 friend_sex_;
@@ -933,9 +942,9 @@ class SessionInfo : public ::google::protobuf::Message /* @@protoc_insertion_poi
 
   // accessors -------------------------------------------------------
 
-  // bytes last_message_data = 6;
+  // bytes last_message_data = 7;
   void clear_last_message_data();
-  static const int kLastMessageDataFieldNumber = 6;
+  static const int kLastMessageDataFieldNumber = 7;
   const ::std::string& last_message_data() const;
   void set_last_message_data(const ::std::string& value);
   #if LANG_CXX11
@@ -977,6 +986,12 @@ class SessionInfo : public ::google::protobuf::Message /* @@protoc_insertion_poi
   ::google::protobuf::uint32 session_update() const;
   void set_session_update(::google::protobuf::uint32 value);
 
+  // uint32 latest_msg_id = 6;
+  void clear_latest_msg_id();
+  static const int kLatestMsgIdFieldNumber = 6;
+  ::google::protobuf::uint32 latest_msg_id() const;
+  void set_latest_msg_id(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:youliao.pdu.base.SessionInfo)
  private:
 
@@ -987,6 +1002,7 @@ class SessionInfo : public ::google::protobuf::Message /* @@protoc_insertion_poi
   ::google::protobuf::uint32 session_type_;
   ::google::protobuf::uint32 session_top_;
   ::google::protobuf::uint32 session_update_;
+  ::google::protobuf::uint32 latest_msg_id_;
   mutable int _cached_size_;
   friend struct ::protobuf_youliao_2ebase_2eproto::TableStruct;
   friend void ::protobuf_youliao_2ebase_2eproto::InitDefaultsSessionInfoImpl();
@@ -1409,7 +1425,21 @@ inline void UserInfo::set_allocated_user_sign_info(::std::string* user_sign_info
 
 // FriendInfo
 
-// uint32 friend_id = 1;
+// uint32 related_id = 1;
+inline void FriendInfo::clear_related_id() {
+  related_id_ = 0u;
+}
+inline ::google::protobuf::uint32 FriendInfo::related_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.FriendInfo.related_id)
+  return related_id_;
+}
+inline void FriendInfo::set_related_id(::google::protobuf::uint32 value) {
+  
+  related_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.base.FriendInfo.related_id)
+}
+
+// uint32 friend_id = 2;
 inline void FriendInfo::clear_friend_id() {
   friend_id_ = 0u;
 }
@@ -1423,7 +1453,7 @@ inline void FriendInfo::set_friend_id(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:youliao.pdu.base.FriendInfo.friend_id)
 }
 
-// uint32 friend_account = 2;
+// uint32 friend_account = 3;
 inline void FriendInfo::clear_friend_account() {
   friend_account_ = 0u;
 }
@@ -1437,7 +1467,7 @@ inline void FriendInfo::set_friend_account(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:youliao.pdu.base.FriendInfo.friend_account)
 }
 
-// uint32 friend_sex = 3;
+// uint32 friend_sex = 4;
 inline void FriendInfo::clear_friend_sex() {
   friend_sex_ = 0u;
 }
@@ -1451,7 +1481,7 @@ inline void FriendInfo::set_friend_sex(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:youliao.pdu.base.FriendInfo.friend_sex)
 }
 
-// string friend_nick = 4;
+// string friend_nick = 5;
 inline void FriendInfo::clear_friend_nick() {
   friend_nick_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -1504,7 +1534,7 @@ inline void FriendInfo::set_allocated_friend_nick(::std::string* friend_nick) {
   // @@protoc_insertion_point(field_set_allocated:youliao.pdu.base.FriendInfo.friend_nick)
 }
 
-// string friend_header_url = 5;
+// string friend_header_url = 6;
 inline void FriendInfo::clear_friend_header_url() {
   friend_header_url_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -1557,7 +1587,7 @@ inline void FriendInfo::set_allocated_friend_header_url(::std::string* friend_he
   // @@protoc_insertion_point(field_set_allocated:youliao.pdu.base.FriendInfo.friend_header_url)
 }
 
-// string friend_email = 6;
+// string friend_email = 7;
 inline void FriendInfo::clear_friend_email() {
   friend_email_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -1610,7 +1640,7 @@ inline void FriendInfo::set_allocated_friend_email(::std::string* friend_email) 
   // @@protoc_insertion_point(field_set_allocated:youliao.pdu.base.FriendInfo.friend_email)
 }
 
-// string friend_phone = 7;
+// string friend_phone = 8;
 inline void FriendInfo::clear_friend_phone() {
   friend_phone_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -1663,7 +1693,7 @@ inline void FriendInfo::set_allocated_friend_phone(::std::string* friend_phone) 
   // @@protoc_insertion_point(field_set_allocated:youliao.pdu.base.FriendInfo.friend_phone)
 }
 
-// string friend_sign_info = 8;
+// string friend_sign_info = 9;
 inline void FriendInfo::clear_friend_sign_info() {
   friend_sign_info_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -1716,7 +1746,7 @@ inline void FriendInfo::set_allocated_friend_sign_info(::std::string* friend_sig
   // @@protoc_insertion_point(field_set_allocated:youliao.pdu.base.FriendInfo.friend_sign_info)
 }
 
-// string friend_remark = 9;
+// string friend_remark = 10;
 inline void FriendInfo::clear_friend_remark() {
   friend_remark_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -1769,7 +1799,7 @@ inline void FriendInfo::set_allocated_friend_remark(::std::string* friend_remark
   // @@protoc_insertion_point(field_set_allocated:youliao.pdu.base.FriendInfo.friend_remark)
 }
 
-// bool friend_is_online = 10;
+// bool friend_is_online = 11;
 inline void FriendInfo::clear_friend_is_online() {
   friend_is_online_ = false;
 }
@@ -1857,7 +1887,21 @@ inline void SessionInfo::set_session_update(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:youliao.pdu.base.SessionInfo.session_update)
 }
 
-// bytes last_message_data = 6;
+// uint32 latest_msg_id = 6;
+inline void SessionInfo::clear_latest_msg_id() {
+  latest_msg_id_ = 0u;
+}
+inline ::google::protobuf::uint32 SessionInfo::latest_msg_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.SessionInfo.latest_msg_id)
+  return latest_msg_id_;
+}
+inline void SessionInfo::set_latest_msg_id(::google::protobuf::uint32 value) {
+  
+  latest_msg_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.base.SessionInfo.latest_msg_id)
+}
+
+// bytes last_message_data = 7;
 inline void SessionInfo::clear_last_message_data() {
   last_message_data_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }

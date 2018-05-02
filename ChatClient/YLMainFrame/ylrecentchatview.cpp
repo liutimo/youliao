@@ -35,6 +35,30 @@ YLRecentChatView::YLRecentChatView(QWidget *parent) : QListWidget(parent)
     });
 
     connect(PduHandler::instance(), &PduHandler::newSession, this, &YLRecentChatView::newSession);
+    connect(PduHandler::instance(), &PduHandler::unReadMessage, this, [this](uint32_t friendId, const QString&message){
+        for (YLSession &session : m_data)
+        {
+            if (session.getOtherId() == friendId)
+            {
+                session.addUnReadMsgCount();
+                session.setSessionLastChatMessage(message);
+                break;
+            }
+        }
+
+        for (YLSession &session : m_top_data)
+        {
+            if (session.getOtherId() == friendId)
+            {
+                session.addUnReadMsgCount();
+                session.setSessionLastChatMessage(message);
+                break;
+            }
+        }
+
+        GlobalData::setSessions(m_data);
+        updateList();
+    });
 }
 
 void YLRecentChatView::add(const YLSession &session, int pos)

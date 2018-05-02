@@ -2,11 +2,14 @@
 #include <QTime>
 YLFriend::YLFriend()
 {
-
+    friend_id_ = 0;
+    relate_id_ = 0;
 }
 
-YLFriend & YLFriend::operator =(const YLFriend &f)
+YLFriend& YLFriend::operator =(const YLFriend &f)
 {
+    relate_id_ = f.relate_id_;
+
     friend_id_ = f.friend_id_;
 
     friend_account_ = f.friend_account_;
@@ -24,6 +27,7 @@ YLFriend & YLFriend::operator =(const YLFriend &f)
     friend_sex_ = f.friend_sex_;
 
     friend_is_online_ = f.friend_is_online_;
+    return *this;
 }
 
 bool YLFriend::operator ==(const YLFriend &f1) const

@@ -6,6 +6,7 @@
 #include <QLineEdit>
 #include <QComboBox>
 #include "globaldata.h"
+#include "YLNetWork/ylbusiness.h"
 #include "YLCommonControl/ylheadframe.h"
 
 YLValidateWidget::YLValidateWidget(QWidget *parent) : YLBasicWidget(parent)
@@ -14,7 +15,9 @@ YLValidateWidget::YLValidateWidget(QWidget *parent) : YLBasicWidget(parent)
     initLeft();
     initRight1();
     initRight2();
+    initRight3();
     initBottom();
+
     right2Hide();
     right3Hide();
     m_index = 1;
@@ -73,6 +76,14 @@ void YLValidateWidget::initRight2()
 
 }
 
+
+void YLValidateWidget::initRight3()
+{
+    m_result = new QLabel(this);
+    m_result->setText("add friend success!!!");
+    m_result->move(135, 50);
+}
+
 void YLValidateWidget::initBottom()
 {
     m_next = new QPushButton("下一步", this);
@@ -108,14 +119,15 @@ void YLValidateWidget::right2Show()
     m_combo_box->show();
 }
 
+
 void YLValidateWidget::right3Hide()
 {
-
+    m_result->hide();
 }
 
 void YLValidateWidget::right3Show()
 {
-
+    m_result->show();
 }
 
 void YLValidateWidget::next()
@@ -130,8 +142,17 @@ void YLValidateWidget::next()
     }
     else if (m_index == 3)
     {
+        //send request
+        uint32_t groupId = GlobalData::getGroupIdByName(m_combo_box->currentText());
+        QString validateData = m_text_eidt->toPlainText();
+        QString remark = m_line_edit->text();
+        YLBusiness::addFriend(m_friend.friendId(), validateData, remark, groupId);
+
         right1Hide();
         right2Hide();
         right3Show();
+        m_next->hide();
+        m_cancel->setText("Finsh");
     }
 }
+

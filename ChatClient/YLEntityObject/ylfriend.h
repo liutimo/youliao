@@ -14,6 +14,8 @@ public:
 
     bool operator <(const YLFriend &) const;
 
+    void setRelateId(uint32_t rid) { relate_id_ = rid;}
+
     void setFriendId(uint32_t id) { friend_id_ = id; }
 
     void setFriendAccount(const QString &account);
@@ -52,7 +54,11 @@ public:
 
     bool friendIsOnline() const { return friend_is_online_; }
 
+    uint32_t relateId() const { return relate_id_; }
+
 private:
+    uint32_t relate_id_;
+
     uint32_t friend_id_;
     //好友账号
     QString friend_account_;

@@ -4,6 +4,7 @@
 #include "YLCommonControl/ylmessagebox.h"
 #include "YLNetWork/http/httphelper.h"
 #include "YLMainFrame/ylmainwidget.h"
+#include "YLTray/yllogintray.h"
 #include "YLNetWork/ylnetservice.h"
 #include "YLNetWork/ylbusiness.h"
 #include "YLNetWork/pduhandler.h"
@@ -17,11 +18,13 @@
 #include <QPainter>
 #include <QPixmap>
 #include <QCheckBox>
+#include <QApplication>
 using namespace youliao::pdu;
 
 YLLoginPanel::YLLoginPanel(QWidget *parent) : YLBasicWidget(parent), m_connected(false)
 {
     init();
+    initTray();
     initCheckBoxs();
     connectToLoginServer();
 
@@ -33,6 +36,7 @@ YLLoginPanel::YLLoginPanel(QWidget *parent) : YLBasicWidget(parent), m_connected
             mainWidget->startHeartBeat();
             mainWidget->show();
             userInfo = nullptr;
+            m_login_tray->hide();
             hide();
         }
         else
@@ -49,6 +53,17 @@ YLLoginPanel::YLLoginPanel(QWidget *parent) : YLBasicWidget(parent), m_connected
 
 void YLLoginPanel::init()
 {
+
+    min_button_ = new QPushButton(this);
+    min_button_->resize(close_button_->size());
+    min_button_->setObjectName("min_button_");
+    min_button_->setStyleSheet(qss_min_button);
+    min_button_->move(436, 0);
+
+    connect(min_button_, &QPushButton::clicked, this, [this](){
+        hide();
+    });
+
     head_frame_           = new YLHeadAndStatusFrame(this);
     connect(head_frame_, &YLHeadAndStatusFrame::statusChanged, this, [this](YLHeadAndStatusFrame::Status s){
         //handle status changed message here;
@@ -74,6 +89,16 @@ void YLLoginPanel::init()
     lineedit_passwd_->resize(200, 35);
     pushbutton_login_->resize(200, 35);
     lineedit_useraccount_->resize(200, 35);
+}
+
+
+void YLLoginPanel::initTray()
+{
+    m_login_tray = new YLLoginTray(this);
+    m_login_tray->show();
+
+    connect(m_login_tray, &YLLoginTray::quit, this, &QApplication::quit);
+    connect(m_login_tray, &YLLoginTray::showMain, this, [this](){ this->show(); });
 }
 
 void YLLoginPanel::initCheckBoxs()

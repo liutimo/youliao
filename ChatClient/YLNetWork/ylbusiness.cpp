@@ -1,5 +1,6 @@
 #include "ylbusiness.h"
 #include "base/BasePdu.h"
+#include "globaldata.h"
 #include "pdusender.h"
 
 #include "protobuf/youliao.base.pb.h"
@@ -7,6 +8,8 @@
 #include "protobuf/youliao.friendlist.pb.h"
 #include "protobuf/youliao.message.pb.h"
 #include "protobuf/youliao.session.pb.h"
+#include "YLDataBase/yldatabase.h"
+
 #include <QDateTime>
 using namespace youliao::pdu;
 
@@ -14,7 +17,6 @@ YLBusiness::YLBusiness(QObject *parent) : QObject(parent)
 {
 
 }
-
 
 void YLBusiness::login(const QString &account, const QString &password, UserStatusType type)
 {
@@ -30,7 +32,6 @@ void YLBusiness::login(const QString &account, const QString &password, UserStat
 
     PduSender::instance()->addMessage(basePdu);
 }
-
 
 void  YLBusiness::loginOut(const uint32_t userId)
 {
@@ -88,14 +89,31 @@ void YLBusiness::sendMessage(uint32_t senderId, uint32_t receiverId, const QStri
     message::MessageData messageData;
     messageData.set_from_user_id(senderId);
     messageData.set_to_user_id(receiverId);
+    messageData.set_msg_id(GlobalData::getLatestMsgId(receiverId));
     messageData.set_create_time(QDateTime::currentDateTime().toTime_t());
     messageData.set_message_type(base::MESSAGE_TYPE_SINGLE_TEXT);
     messageData.set_message_data(message.toStdString());
-
+    YLDataBase::instance()->saveMessage(messageData, true);
     BasePdu *basePdu = new BasePdu;
     basePdu->setSID(SID_MESSAGE);
     basePdu->setCID(CID_MESSAGE_DATA);
     basePdu->writeMessage(&messageData);
+
+    PduSender::instance()->addMessage(basePdu);
+
+    GlobalData::setLatestMsgId(receiverId, messageData.msg_id() + 1);
+}
+
+void YLBusiness::getLatestMsgId(uint32_t friendId)
+{
+    message::LatestMsgIdRequest request;
+    request.set_user_id(GlobalData::getCurrLoginUserId());
+    request.set_friend_id(friendId);
+
+    BasePdu *basePdu = new BasePdu;
+    basePdu->setSID(SID_MESSAGE);
+    basePdu->setCID(CID_MESSAGE_GET_LATEST_MSG_ID_REQUEST);
+    basePdu->writeMessage(&request);
 
     PduSender::instance()->addMessage(basePdu);
 }
@@ -211,6 +229,22 @@ void YLBusiness::searchFriend(uint32_t userId, const QString& searchData, youlia
     BasePdu *basePdu = new BasePdu;
     basePdu->setSID(SID_FRIEND_LIST);
     basePdu->setCID(CID_FRIENDLIST_SEARCH_FRIEND_REQUEST);
+    basePdu->writeMessage(&request);
+    PduSender::instance()->addMessage(basePdu);
+}
+
+void YLBusiness::addFriend(uint32_t friendId, const QString &validateData, const QString remark, uint32_t groupId)
+{
+    friendlist::AddFriendRequest request;
+    request.set_user_id(GlobalData::getCurrLoginUserId());
+    request.set_friend_id(friendId);
+    request.set_validatedata(validateData.toStdString());
+    request.set_friend_remark(remark.toStdString());
+    request.set_group_id(groupId);
+
+    BasePdu *basePdu = new BasePdu;
+    basePdu->setSID(SID_FRIEND_LIST);
+    basePdu->setCID(CID_FRIENDLIST_ADD_FRIEND_REQUEST);
     basePdu->writeMessage(&request);
     PduSender::instance()->addMessage(basePdu);
 }

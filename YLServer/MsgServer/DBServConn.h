@@ -34,6 +34,7 @@ private:
     void _HandleGetSessionsRespone(BasePdu *);
     void _HandleAddSessionRespone(BasePdu *);
     void _HandleSearchFriendRespone(BasePdu *);
+    void _HandleGetLatestMsgIdRespone(BasePdu *);
 
     uint32_t   m_server_index;
     bool       m_open;

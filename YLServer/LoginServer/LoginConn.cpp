@@ -50,11 +50,9 @@ void LoginConn::onConnect(net_handle_t handle, ConnType type)
     }
 
     connMap->insert(std::make_pair(m_handle, this));
-
     netlib_option(m_handle, NETLIB_OPT_SET_CALLBACK, (void*)baseconn_callback);
     netlib_option(m_handle, NETLIB_OPT_SET_CALLBACK_DATA, (void*)connMap);
 }
-
 
 void LoginConn::handlePdu(BasePdu *basePdu)
 {

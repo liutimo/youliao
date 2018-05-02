@@ -85,6 +85,12 @@ void HandlerMap::init()
 
     //搜索好友
     m_handler_map.insert(std::make_pair(CID_FRIENDLIST_SEARCH_FRIEND_REQUEST, DB_INTERFACE::searchFriend));
+
+    //添加好友
+    m_handler_map.insert(std::make_pair(CID_FRIENDLIST_ADD_FRIEND_REQUEST, DB_INTERFACE::addFriend));
+
+    //获取最新消息ID
+    m_handler_map.insert(std::make_pair(CID_MESSAGE_GET_LATEST_MSG_ID_REQUEST, DB_INTERFACE::getLatestMsgId));
 }
 
 pdu_handler_t HandlerMap::getHandler(uint16_t cid)

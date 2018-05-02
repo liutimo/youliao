@@ -50,18 +50,27 @@ namespace DB_INTERFACE
     //获取好友状态
     void getOnlineFriendStatus(BasePdu *basePdu, uint32_t conn_uid);
 
+    //搜索好友
+    void searchFriend(BasePdu *basePdu, uint32_t conn_uuid);
+
+    //添加好友
+    void addFriend(BasePdu *basePdu, uint32_t conn_uuid);
+
+
+    /*******************消息************************/
     //保存消息记录
     void saveMessage(BasePdu *basePdu, uint32_t conn_uuid);
 
-    //搜索好友
-    void searchFriend(BasePdu *basePdu, uint32_t conn_uuid);
+    void getLatestMsgId(BasePdu *basePdu, uint32_t conn_uuid);
 
 
     /*******************会话列表************************/
     //获取session列表
     void getSessions(BasePdu *basePdu, uint32_t conn_uid);
+
     //删除session
     void deleteSession(BasePdu *basePdu, uint32_t conn_uid);
+
     //置顶session
     void topSession(BasePdu *basePdu, uint32_t conn_uid);
 

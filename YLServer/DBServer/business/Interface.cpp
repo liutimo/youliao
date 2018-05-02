@@ -395,6 +395,30 @@ namespace DB_INTERFACE
     }
 
 
+    void getLatestMsgId(BasePdu *basePdu, uint32_t conn_uuid)
+    {
+        message::LatestMsgIdRequest request;
+        request.ParseFromString(basePdu->getMessage());
+
+        uint32_t userId = request.user_id();
+        uint32_t friId = request.friend_id();
+
+        uint32_t latestMsgId = 0;
+        MessageModel::instance()->getLatestMsgId(userId, friId, latestMsgId);
+
+        message::LatestMsgIdRespone respone;
+        respone.set_user_id(userId);
+        respone.set_friend_id(friId);
+        respone.set_latest_msg_id(latestMsgId);
+
+        auto conn = findProxyConn(conn_uuid);
+
+        if (conn)
+            sendMessage(conn, respone, base::SID_SERVER, base::CID_MESSAGE_GET_LATEST_MSG_ID_RESPONE);
+
+    }
+
+
     //搜索好友
     void searchFriend(BasePdu *basePdu, uint32_t conn_uuid)
     {
@@ -423,7 +447,28 @@ namespace DB_INTERFACE
             sendMessage(conn, respone, base::SID_SESSION, base::CID_FRIENDLIST_SEARCH_FRIEND_RESPONE);
     }
 
+    //添加好友
+    void addFriend(BasePdu *basePdu, uint32_t conn_uuid)
+    {
+        friendlist::AddFriendRequest request;
+        request.ParseFromString(basePdu->getMessage());
 
+        uint32_t userId = request.user_id();
+        uint32_t friendId = request.friend_id();
+        uint32_t groupId = request.group_id();
+        string remark = request.friend_remark();
+        string validateData = request.validatedata();
+
+        FriendListModel *friendListModel = FriendListModel::instance();
+
+        bool ret = friendListModel->addFriend(userId, friendId, groupId, remark, validateData);
+
+        if (!ret)
+        {
+            //do something
+        }
+
+    }
 
     void getSessions(BasePdu *basePdu, uint32_t conn_uuid)
     {
@@ -440,6 +485,9 @@ namespace DB_INTERFACE
 
         for (base::SessionInfo &sessionInfo : list)
         {
+            uint32_t latestMsgId = 0;
+            MessageModel::instance()->getLatestMsgId(userId, sessionInfo.other_id(), latestMsgId);
+            sessionInfo.set_latest_msg_id(latestMsgId);
             auto session = respone.add_sessions();
             *session = sessionInfo;
         }

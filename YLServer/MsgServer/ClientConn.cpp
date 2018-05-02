@@ -175,6 +175,12 @@ void ClientConn::handlePdu(BasePdu *pdu)
         case base::CID_FRIENDLIST_SEARCH_FRIEND_REQUEST:
             _HandleSearchFriendRequest(pdu);
             break;
+        case base::CID_FRIENDLIST_ADD_FRIEND_REQUEST:
+            _HandleAddFriendRequest(pdu);
+            break;
+        case base::CID_MESSAGE_GET_LATEST_MSG_ID_REQUEST:
+            _HandleGetLatestMsgIdRequest(pdu);
+            break;
         default:
             std::cout << pdu->getCID() << std::endl;
             break;
@@ -564,3 +570,54 @@ void ClientConn::_HandleSearchFriendRequest(BasePdu *pdu)
         sendMessage(dbServConn, request, base::SID_SERVER, base::CID_FRIENDLIST_SEARCH_FRIEND_REQUEST);
 }
 
+
+void ClientConn::_HandleAddFriendRequest(BasePdu *pdu)
+{
+    friendlist::AddFriendRequest request;
+    request.ParseFromString(pdu->getMessage());
+
+    uint32_t userId = request.user_id();
+    uint32_t friendId = request.friend_id();
+    uint32_t groupId = request.group_id();
+    std::string reamark = request.friend_remark();
+    std::string validateData = request.validatedata();
+
+    //send to dbServer
+    auto dbConn = get_db_server_conn();
+    if (!dbConn)
+        return;
+    sendMessage(dbConn, request, base::SID_SERVER, base::CID_FRIENDLIST_ADD_FRIEND_REQUEST);
+
+    //if friend not in this msgServer then send to routeServer
+    auto user = UserManager::instance()->getUser(friendId);
+    if (user)
+    {
+        auto conn = user->getConn();
+        if (conn)
+        {
+            sendMessage(conn, request, base::SID_FRIEND_LIST, base::CID_FRIENDLIST_ADD_FRIEND_REQUEST);
+            return;
+        }
+    }
+
+    //send to routeServer
+
+}
+
+
+void ClientConn::_HandleGetLatestMsgIdRequest(BasePdu *pdu)
+{
+    message::LatestMsgIdRequest request;
+    request.ParseFromString(pdu->getMessage());
+
+    uint32_t userId = request.user_id();
+    uint32_t friendId = request.friend_id();
+
+    log("用户%d请求获取与好友%d的最新消息ID", userId, friendId);
+
+    //send to dbServer
+    auto dbConn = get_db_server_conn();
+    if (!dbConn)
+        return;
+    sendMessage(dbConn, request, base::SID_SERVER, base::CID_MESSAGE_GET_LATEST_MSG_ID_REQUEST);
+}

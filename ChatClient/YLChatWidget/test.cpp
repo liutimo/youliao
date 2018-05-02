@@ -2,7 +2,11 @@
 #include <QWebEnginePage>
 #include <QMenu>
 #include <QAction>
-Test::Test(QObject *parent) : QObject(parent)
+#include <QDebug>
+#include <QClipboard>
+#include <QGuiApplication>
+
+Test::Test(QObject *parent) : QObject(parent), m_message_id(0)
 {
     initPMenu();
 }
@@ -20,10 +24,21 @@ void Test::initPMenu()
 
     QAction *copy_action = new QAction("Copy");
     m_p_menu->addAction(copy_action);
+    connect(copy_action, &QAction::triggered, this, [this](){
+        QClipboard *cb = QGuiApplication::clipboard();
+        cb->setText(m_page->selectedText());
+    });
+   }
+
+
+void Test::showContentPMenu(uint32_t msgId)
+{
+    m_message_id = msgId;
+    m_p_menu->exec(QCursor::pos());
 }
 
 
-void Test::showContentPMenu(const QString &text)
+void Test::loadMore()
 {
-    m_p_menu->exec(QCursor::pos());
+    qDebug() << "load more";
 }

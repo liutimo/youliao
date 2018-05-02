@@ -3,6 +3,8 @@
 
 #include "YLBasicWidget/ylbasicwidget.h"
 #include "protobuf/youliao.base.pb.h"
+
+QT_BEGIN_NAMESPACE
 class QPushButton;
 class YLSearchLineEdit;
 class QLabel;
@@ -11,6 +13,8 @@ class YLHeadAndStatusFrame;
 class YLNavigationBar;
 class QTimer;
 class HttpHelper;
+class YLMainTray;
+QT_END_MOC_NAMESPACE
 
 using namespace youliao::pdu::base;
 class YLMainWidget : public YLBasicWidget
@@ -43,7 +47,7 @@ private:
 
 
     void init();
-
+    void initTray();
     void initListWidget();
 
 protected:
@@ -53,6 +57,7 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event);
     void closeEvent(QCloseEvent *event);
 private:
+    YLMainTray *m_main_tray;
     //窗口顶部按钮
     QPushButton *min_button_;
     QPushButton *skin_button_;

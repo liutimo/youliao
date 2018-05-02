@@ -27,6 +27,7 @@ private:
     void initLeft();
     void initRight1();
     void initRight2();
+    void initRight3();
     void initBottom();
 
     void right1Hide();
@@ -46,12 +47,16 @@ private:
     //right2;
     QLabel *m_remark;
     QLabel *m_group;
+    QLineEdit *m_line_edit;
+    QComboBox *m_combo_box;
+
+
+    //right3
+    QLabel *m_result;
 
     //bottom
     QPushButton *m_next;
     QPushButton *m_cancel;
-    QLineEdit *m_line_edit;
-    QComboBox *m_combo_box;
 
     //record current index
     int m_index;

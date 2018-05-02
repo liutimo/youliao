@@ -15,13 +15,17 @@
 
 YLChatWidget::YLChatWidget(QWidget *parent) : YLBasicWidget(parent)
 {
+    setAttribute(Qt::WA_DeleteOnClose);
     initTitleBar();
     initView();
-
     this->setObjectName("aaa");
     setStyleSheet("QWidget#aaa{background-color:rgb(181, 212, 240, 200);}");
 }
 
+YLChatWidget::~YLChatWidget()
+{
+    qDebug() << "YLChatWidget::~YLChatWidget()";
+}
 
 void YLChatWidget::initTitleBar()
 {
@@ -43,30 +47,41 @@ void YLChatWidget::initTitleBar()
     m_nickname_button->setStyleSheet("border:0px; font: 16px; text-align:center; background:rgba(255,255,255, 0);");
     //connect ... slot
 
+    connect(PduHandler::instance(), &PduHandler::signleMessage, this, &YLChatWidget::receiveMessage);
+}
 
-    connect(PduHandler::instance(), &PduHandler::signleMessage, this, [this](uint32_t user_id, const QString &message){
-        if (user_id == m_friend.friendId())
-        {
-            QRegExp re;
-            re.setPattern("<img.*src='.*'.*>");
-            re.setMinimal(true);
-            QString msg = message;
-            m_message_view->addRight(m_friend_header_path, message);
-            msg.replace(re, "[Picture]");
-            YLSession session = GlobalData::getSessionByFriendId(m_friend.friendId());
-            session.setOtherId(user_id);
-            session.setSessionType(base::SESSION_TYPE_SINGLE);
-            session.setSessionLastChatMessage(msg);
-            session.setSessionLastChatTime(QDateTime::currentDateTime().toTime_t());
-            SignalForward::instance()->forwordUpdateSession(session);
-        }
-    });
+
+void YLChatWidget::receiveMessage(uint32_t user_id, const QString &message)
+{
+    if (user_id == m_friend.friendId())
+    {
+        QRegExp re;
+        re.setPattern("<img.*src='.*'.*>");
+        re.setMinimal(true);
+        QString msg = message;
+        m_message_view->addLeft(m_friend_header_path, message);
+        msg.replace(re, "[Picture]");
+        YLSession session = GlobalData::getSessionByFriendId(m_friend.friendId());
+        session.setOtherId(user_id);
+        session.setSessionType(base::SESSION_TYPE_SINGLE);
+        session.setSessionLastChatMessage(msg);
+        session.setSessionLastChatTime(QDateTime::currentDateTime().toTime_t());
+        SignalForward::instance()->forwordUpdateSession(session);
+
+        //send message ack
+    }
 }
 
 void YLChatWidget::initView()
 {
     m_message_view = new YLMessageView(this);
     m_message_view->setStyleSheet(qss_scroll_bar);
+    connect(m_message_view, &YLMessageView::loadFinished, this, [this](bool f) {
+        if (f)
+        {
+           emit loadFinish();
+        }
+    } );
 
     m_quick_bar = new YLQuickBar(this);
 //    connect(m_quick_bar->getEmoticonWidget(), &YLEmoticonWidget::selected, m_message_edit_widget, &YLMessageEditWidget::addEmoticon);
@@ -117,12 +132,28 @@ void YLChatWidget::resizeEvent(QResizeEvent *e)
     YLBasicWidget::resizeEvent(e);
 }
 
+
+void YLChatWidget::closeEvent(QCloseEvent *event)
+{
+    YLBasicWidget::closeEvent(event);
+    qDebug() << "close YLChatWidget";
+    GlobalData::removeChatWidget(m_friend.friendId());
+
+}
+
 ///public
 void YLChatWidget::setFriend(const YLFriend&fri)
 {
     m_friend = fri;
     m_nickname_button->setText(m_friend.friendNickName());
-    m_friend_header_path = "file://" + QDir::currentPath() + "/" + m_friend.friendImagePath();
+    m_friend_header_path = "file://" + QDir::currentPath() + "/" + m_friend.friendImageName();
+
+    uint32_t msgId = GlobalData::getLatestMsgId(m_friend.friendId());
+    if (msgId == 0)
+    {
+        //send request
+        YLBusiness::getLatestMsgId(m_friend.friendId());
+    }
 }
 
 /// slot
@@ -164,7 +195,7 @@ void YLChatWidget::sendMessage()
     }
 
 
-    m_message_view->addLeft(GlobalData::getCurrLoginUserIconPath(), content);
+    m_message_view->addRight(GlobalData::getCurrLoginUserIconPath(), content);
 
     for (int i = 0; i < fileList.size(); ++i)
     {

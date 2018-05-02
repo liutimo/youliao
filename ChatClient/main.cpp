@@ -5,10 +5,15 @@
 #include "YLChatWidget/ylchatwidget.h"
 #include "YLMainFrame/ylinfomationwidget.h"
 #include "signalforward.h"
+#include "YLNetWork/base/util.h"
+#include "YLTray/ylmessagelistitem.h"
+#include "YLDataBase/yldatabase.h"
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    a.setQuitOnLastWindowClosed(false);
 
+    YLDataBase::instance();
 
     SignalForward::instance();
 
@@ -18,8 +23,6 @@ int main(int argc, char *argv[])
     w.resize(500, 400);
 
 
-//    YLInfomationWidget w;
-//    w.resize(730, 530);
     w.show();
 
 
