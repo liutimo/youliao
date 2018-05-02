@@ -16,6 +16,7 @@
 #include "ylinfomationwidget.h"
 #include "YLCommonControl/ylmessagebox.h"
 #include "YLTray/ylcounterbubble.h"
+#include "YLTray/ylmessagetip.h"
 YLFriendListItem::YLFriendListItem(YLListItemType type, QWidget *parent) : QWidget(parent)
 {
     item_type_ = type;
@@ -82,17 +83,7 @@ void YLFriendListItem::initMenu()
     second_menu_ = menu_->addMenu("移动好友至");
     menu_->addAction(aciton_delete);
 
-    connect(action_send_msg, &QAction::triggered, this, [this](){
-        YLChatWidget *chatWidget = GlobalData::getChatWidget(friend_.friendId());
-        if (chatWidget == nullptr)
-        {
-            chatWidget = new YLChatWidget;
-            chatWidget->resize(800, 600);
-            chatWidget->setFriend(friend_);
-            GlobalData::addChatWidget(friend_.friendId(), chatWidget);
-        }
-        chatWidget->show();
-    });
+    connect(action_send_msg, &QAction::triggered, this, &YLFriendListItem::openChatWidget);
 
     connect(action_modify_remark, &QAction::triggered, this, [this](){
         YLModifyRemarkWidget w(this);
@@ -237,3 +228,35 @@ void YLFriendListItem::paintEvent(QPaintEvent *event)
 }
 
 
+
+void YLFriendListItem::openChatWidget()
+{
+    YLChatWidget *chatWidget = GlobalData::getChatWidget(friend_.friendId());
+    if (chatWidget == nullptr)
+    {
+        chatWidget = new YLChatWidget;
+        chatWidget->resize(800, 600);
+        chatWidget->setFriend(friend_);
+        GlobalData::addChatWidget(friend_.friendId(), chatWidget);
+    }
+
+    chatWidget->show();
+
+    connect(chatWidget, &YLChatWidget::loadFinish, this, [this, chatWidget](){
+        //未读计数显示则说明有未读消息
+        if (m_counter_bubble->isVisible())
+        {
+            auto msgs = GlobalData::getMessagesByFriendId(friend_.friendId());
+
+            for (const YLMessage &msg : msgs)
+            {
+                chatWidget->receiveMessage(friend_.friendId(), msg.getMsgContent());
+            }
+
+            GlobalData::removeMessageByFriendId(friend_.friendId());
+            YLMessageTip::instance()->updateList();
+            GlobalData::setLatestMsgId(friend_.friendId(), 0);
+            emit readCompleted(friend_.friendId());
+        }
+    });
+}

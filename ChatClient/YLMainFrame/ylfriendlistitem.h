@@ -47,7 +47,8 @@ protected:
     void paintEvent(QPaintEvent *event);
 
 
-
+private slots:
+    void openChatWidget();
 
 signals:
     void moveToTop(YLSession &);
@@ -55,6 +56,7 @@ signals:
     void moveFriendToGroup(uint32_t friendId, uint32_t oldGroupId, uint32_t newGroupId);
     void deleteFriend(uint32_t friendId);
     void modifyRemark(uint32_t friendId, const QString &newRemark);
+    void readCompleted(uint32_t friId);
 
 private:
     YLHeadFrame *head_frame_;

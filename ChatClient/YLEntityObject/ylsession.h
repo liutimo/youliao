@@ -41,6 +41,8 @@ public:
 
     void addUnReadMsgCount() { ++m_unread_msg_count; }
 
+    void clearUnReadMsgCount() { m_unread_msg_count = 0; }
+
     uint32_t getSessionId() const {return m_session_id;}
 
     uint32_t getOtherId() const { return m_other_id; }

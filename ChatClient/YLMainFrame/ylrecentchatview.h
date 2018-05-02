@@ -35,6 +35,7 @@ private slots:
     void on_move_to_top  (YLSession &);
     void on_del_from_list(const YLSession &);
     void newSession(uint32_t otherId, uint32_t sessionId);
+    void readComplete(uint32_t friId);
 private:
     void updateList();
     void add(const YLSession&, int pos = 0);

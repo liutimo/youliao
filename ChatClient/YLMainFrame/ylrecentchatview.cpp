@@ -6,6 +6,7 @@
 #include <QMouseEvent>
 #include <QScrollBar>
 #include <QDebug>
+#include "signalforward.h"
 YLRecentChatView::YLRecentChatView(QWidget *parent) : QListWidget(parent)
 {
     setObjectName("YLRecentChatView");
@@ -13,6 +14,7 @@ YLRecentChatView::YLRecentChatView(QWidget *parent) : QListWidget(parent)
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setFocusPolicy(Qt::NoFocus);
     setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+    connect(SignalForward::instance(), &SignalForward::readOne, this, &YLRecentChatView::readComplete);
 
     connect(PduHandler::instance(), &PduHandler::sessions, this, [this](const QList<base::SessionInfo> &lists)
     {
@@ -69,6 +71,8 @@ void YLRecentChatView::add(const YLSession &session, int pos)
     YLFriendListItem *item_widget = new YLFriendListItem(YLFriendListItem::RECENTTLYCHATITEM);
     connect(item_widget, &YLFriendListItem::moveToTop,      this, &YLRecentChatView::on_move_to_top);
     connect(item_widget, &YLFriendListItem::deleteFromList, this, &YLRecentChatView::on_del_from_list);
+    connect(item_widget, &YLFriendListItem::readCompleted, this, &YLRecentChatView::readComplete);
+
     item_widget->setData(GlobalData::getFriendById(session.getOtherId()), session);
     setItemWidget(item, item_widget);
 }
@@ -215,4 +219,30 @@ void YLRecentChatView::newSession(uint32_t otherId, uint32_t sessionId)
 
     GlobalData::setSessions(m_data);
     updateList();
+}
+
+void YLRecentChatView::readComplete(uint32_t friendId)
+{
+
+    for (YLSession &session : m_data)
+    {
+        if (session.getOtherId() == friendId)
+        {
+            session.clearUnReadMsgCount();
+            break;
+        }
+    }
+
+    for (YLSession &session : m_top_data)
+    {
+        if (session.getOtherId() == friendId)
+        {
+            session.clearUnReadMsgCount();
+            break;
+        }
+    }
+
+    GlobalData::setSessions(m_data);
+    updateList();
+
 }
