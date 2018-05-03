@@ -461,13 +461,18 @@ namespace DB_INTERFACE
 
         FriendListModel *friendListModel = FriendListModel::instance();
 
-        bool ret = friendListModel->addFriend(userId, friendId, groupId, remark, validateData);
+        bool ret = friendListModel->addFriend(userId, friendId, groupId, remark);
 
         if (!ret)
         {
             //do something
         }
 
+        ret = friendListModel->saveAddRequest(userId, friendId, validateData);
+        if (!ret)
+        {
+
+        }
     }
 
     void getSessions(BasePdu *basePdu, uint32_t conn_uuid)

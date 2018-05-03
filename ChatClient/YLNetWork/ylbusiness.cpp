@@ -237,6 +237,8 @@ void YLBusiness::addFriend(uint32_t friendId, const QString &validateData, const
 {
     friendlist::AddFriendRequest request;
     request.set_user_id(GlobalData::getCurrLoginUserId());
+    request.set_user_head_url(GlobalData::getCurrLoginUserHeadUrl().toStdString());
+    request.set_user_nick(GlobalData::getCurrLoginUserNick().toStdString());
     request.set_friend_id(friendId);
     request.set_validatedata(validateData.toStdString());
     request.set_friend_remark(remark.toStdString());

@@ -8,6 +8,7 @@
 #include "YLNetWork/base/util.h"
 #include "YLTray/ylmessagelistitem.h"
 #include "YLDataBase/yldatabase.h"
+#include "YLAddFriendWidgets/ylvalidatemessagewidget.h"
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);

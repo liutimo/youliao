@@ -15,7 +15,7 @@ public:
     void forwordUpdateSession(const YLSession &);
     void forwordIgnoreAll();
     void forwordReadAll();
-    void forwordReadOne(uint32_t friendId);
+    void forwordReadOne(uint32_t friendId, int type);
 signals:
     void updateSession(const YLSession &);
     void ignoreAll();

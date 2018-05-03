@@ -111,6 +111,23 @@ void YLMessageTip::updateList()
         w->setFriendId(friendId);
     }
 
+    auto requests = GlobalData::getAddRequests();
+    if (requests.size() > 0)
+    {
+        const YLAddRequest &latestRequest = requests.back();
+
+        QListWidgetItem *item = new QListWidgetItem(m_list_widget);
+        m_list_widget->addItem(item);
+        item->setSizeHint(QSize(300, 45));
+        YLMessageListItem *w = new YLMessageListItem;
+        m_list_widget->setItemWidget(item, w);
+        w->setType(YLMessageListItem::REQUEST);
+        w->setNickOrRemark("验证消息");
+        w->setHeadFrame(":/res/YLAddFriendWIdgets/AddBuddy/horn@2x.png");
+        w->setCounterNumber(requests.size());
+    }
+
+
     m_list_widget->resize(QSize(300, 45 * m_list_widget->count()));
 
     resize(300, 45 * m_list_widget->count() + 60);

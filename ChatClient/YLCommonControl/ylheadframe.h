@@ -7,7 +7,7 @@
 
 #include <QLabel>
 #include <QUrl>
-
+#include "YLNetWork/http/httphelper.h"
 class QToolButton;
 class QMenu;
 class YLHeadFrame : public QLabel
@@ -28,6 +28,7 @@ private:
     QUrl url_;
     QString path_;
     bool m_online;
+    HttpHelper *m_http;
 };
 
 #endif // YLHEADFRAME_H

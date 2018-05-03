@@ -17,9 +17,11 @@ class YLMessageTip : public QWidget
 public:
     static YLMessageTip *instance();
     void updateList();
+
 signals:
     void readAll();
     void ignoreAll();
+
 public slots:
 
 private:

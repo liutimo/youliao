@@ -7,6 +7,7 @@
 #include <QApplication>
 #include "ylmessagetip.h"
 #include <QTimer>
+#include "YLNetWork/pduhandler.h"
 #include "YLEntityObject/ylmessage.h"
 YLMainTray *YLMainTray::m_instance = nullptr;
 
@@ -38,7 +39,7 @@ YLMainTray::YLMainTray(QObject *parent) : QSystemTrayIcon(parent)
     connect(this, &YLMainTray::activated, this, [this](QSystemTrayIcon::ActivationReason reason){
         if (reason == QSystemTrayIcon::Trigger)
         {
-            if(GlobalData::getMessages().size() > 0)
+            if(GlobalData::getMessages().size() > 0 || GlobalData::getAddRequests().size() > 0)
             {
                 auto w = QApplication::desktop();
                 YLMessageTip *ww = YLMessageTip::instance();
@@ -52,6 +53,8 @@ YLMainTray::YLMainTray(QObject *parent) : QSystemTrayIcon(parent)
             }
         }
     });
+
+    connect(PduHandler::instance(), &PduHandler::newAddRequest, this, &YLMainTray::newAddRequest);
 }
 
 void YLMainTray::initActions()
@@ -95,8 +98,12 @@ void YLMainTray::receiveMessage(const message::MessageData &content)
 
     m_icon_path = GlobalData::getFriendById(friendId).friendImageName();
     m_timer->start(300);
-
 }
 
+
+void YLMainTray::newAddRequest()
+{
+    YLMessageTip::instance()->updateList();
+}
 
 

@@ -101,6 +101,9 @@ void PduHandler::_HandleBasePdu(BasePdu *pdu)
     case base::CID_MESSAGE_GET_LATEST_MSG_ID_RESPONE:
         _HandleGetLatestMsgIdRespone(pdu);
         break;
+    case base::CID_FRIENDLIST_ADD_FRIEND_REQUEST:
+        _HandleAddFriendRequest(pdu);
+        break;
     default:
         std::cout << "CID" << pdu->getCID() << "  SID:" << pdu->getSID();
         break;
@@ -287,4 +290,19 @@ void PduHandler::_HandleGetLatestMsgIdRespone(BasePdu *pdu)
     uint32_t latestMsgId = respone.latest_msg_id();
 
     GlobalData::setLatestMsgId(friId, latestMsgId + 1);
+}
+
+void PduHandler::_HandleAddFriendRequest(BasePdu *pdu)
+{
+    friendlist::AddFriendRequest request;
+    request.ParseFromString(pdu->getMessage());
+
+    YLAddRequest addRequest;
+    addRequest.setOtherId(request.user_id());
+    addRequest.setOtherNick(request.user_nick().c_str());
+    addRequest.setOtherHeadUrl(request.user_head_url().c_str());
+    addRequest.setValidateData(request.validatedata().c_str());
+    GlobalData::setRequest(addRequest);
+    emit newAddRequest();
+    qDebug() << "AddFriendRequest:" << request.user_id() << " " << request.validatedata().c_str();
 }

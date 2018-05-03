@@ -395,7 +395,7 @@ bool FriendListModel::searchFriend(std::string &searchData, base::SearchType sea
     return ret;
 }
 
-bool FriendListModel::addFriend(uint32_t userId, uint32_t friendId, uint32_t groupId, const std::string &remark, const std::string &validateData)
+bool FriendListModel::addFriend(uint32_t userId, uint32_t friendId, uint32_t groupId, const std::string &remark)
 {
     bool ret = false;
 
@@ -406,7 +406,7 @@ bool FriendListModel::addFriend(uint32_t userId, uint32_t friendId, uint32_t gro
     {
         if (conn)
         {
-            string insertSql = "INSERT INTO yl_friend(user_id, friend_id, group_id, created, friend_remark, validate_data) VALUES(?, ?, ?, ?, ?, ?)";
+            string insertSql = "INSERT INTO yl_friend(user_id, friend_id, group_id, created, friend_remark) VALUES(?, ?, ?, ?, ?)";
             printSql2Log(insertSql);
             PrepareStatement *prepareStatement = new PrepareStatement;
             if (prepareStatement->init(conn->getMysql(), insertSql))
@@ -417,7 +417,6 @@ bool FriendListModel::addFriend(uint32_t userId, uint32_t friendId, uint32_t gro
                 prepareStatement->setParam(index++, groupId);
                 prepareStatement->setParam(index++, createTime);
                 prepareStatement->setParam(index++, remark);
-                prepareStatement->setParam(index++, validateData);
                 ret = prepareStatement->executeUpdate();
             }
 
@@ -425,7 +424,7 @@ bool FriendListModel::addFriend(uint32_t userId, uint32_t friendId, uint32_t gro
     }
     else
     {
-        string updateSql = "UPDATE yl_friend SET status = 0, group_id = ? ,created = ?, validate_data = ?, friend_remark = ? WHERE id = ?";
+        string updateSql = "UPDATE yl_friend SET status = 0, group_id = ? ,created = ?, friend_remark = ? WHERE id = ?";
         printSql2Log(updateSql);
         PrepareStatement *prepareStatement = new PrepareStatement;
         if (prepareStatement->init(conn->getMysql(), updateSql))
@@ -433,7 +432,6 @@ bool FriendListModel::addFriend(uint32_t userId, uint32_t friendId, uint32_t gro
             int index = 0;
             prepareStatement->setParam(index++, groupId);
             prepareStatement->setParam(index++, createTime);
-            prepareStatement->setParam(index++, validateData);
             prepareStatement->setParam(index++, remark);
             prepareStatement->setParam(index++, relationId);
             ret = prepareStatement->executeUpdate();
@@ -443,4 +441,31 @@ bool FriendListModel::addFriend(uint32_t userId, uint32_t friendId, uint32_t gro
     DBManager::instance()->releaseConnection(conn);
     return ret;
 
+}
+
+
+bool FriendListModel::saveAddRequest(uint32_t userId, uint32_t otherId, const std::string &validateData)
+{
+    bool ret = false;
+    auto conn = DBManager::instance()->getConnection();
+    uint32_t createTime = (uint32_t)time(nullptr);
+
+    if (conn)
+    {
+        std::string sql = "INSERT INTO yl_friend_request(request_sender_id, request_receiver_id, request_create_time, request_validate_data) VALUES(?, ?, ?, ?)";
+
+        PrepareStatement *prepareStatement = new PrepareStatement();
+        if (prepareStatement->init(conn->getMysql(), sql))
+        {
+            int index = 0;
+            prepareStatement->setParam(index++, userId);
+            prepareStatement->setParam(index++, otherId);
+            prepareStatement->setParam(index++, createTime);
+            prepareStatement->setParam(index++, validateData);
+            ret = prepareStatement->executeUpdate();
+        }
+    }
+
+    DBManager::instance()->releaseConnection(conn);
+    return ret;
 }

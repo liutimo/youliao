@@ -11,6 +11,7 @@
 #include "YLEntityObject/ylfriend.h"
 #include "YLEntityObject/ylsession.h"
 #include "YLChatWidget/ylchatwidget.h"
+#include "YLEntityObject/yladdrequest.h"
 
 using namespace youliao::pdu;
 
@@ -22,6 +23,8 @@ public:
     static void     setCurrLoginUser(youliao::pdu::base::UserInfo user);
     static uint32_t getCurrLoginUserId () { return m_user.user_id(); }
     static QString  getCurrLoginUserIconPath() { return m_header_image_path;}
+    static QString  getCurrLoginUserNick() { return m_user.user_nick().c_str(); }
+    static QString  getCurrLoginUserHeadUrl() { return m_user.user_header_url().c_str(); }
 
     static const YLFriend getFriendById(const uint32_t friendId);
     static void setFriends(const QMap<int, QVector<YLFriend>> &friends);
@@ -46,6 +49,11 @@ public:
     static void removeMessageByFriendId(uint32_t friId);
     static void setLatestMsgId(uint32_t friendId, uint32_t latestMsgId);
     static uint32_t getLatestMsgId(uint32_t friendId);
+
+    //add request
+    static void setRequest(const YLAddRequest &);
+    static const QVector<YLAddRequest> &getAddRequests();
+    static void clearAllRequest() { m_add_request.clear(); }
 public slots:
 
 private:
@@ -57,6 +65,8 @@ private:
     static QMap<uint32_t, YLChatWidget*> m_chat_widgets;
     static QMap<uint32_t, QVector<YLMessage>> m_messages;
     static QMap<uint32_t, uint32_t> m_message_id;
+    //add request
+    static QVector<YLAddRequest> m_add_request;
 };
 
 #endif // GLOBALDATA_H

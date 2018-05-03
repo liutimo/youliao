@@ -136,9 +136,14 @@ message SearchFriendRespone
 message AddFriendRequest
 {
     uint32 user_id = 1;
-    uint32 friend_id = 2;
-    string friend_remark = 3;
-    uint32 group_id = 4;
-    string validateData = 5;
+    string user_nick = 2;
+    string user_head_url = 3;
+    uint32 friend_id = 4;
+    string friend_remark = 5;
+    uint32 group_id = 6;
+    string validateData = 7;
 }
+
+
+
 

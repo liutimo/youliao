@@ -307,5 +307,27 @@
         <file>res/offline.ico</file>
         <file>res/imonline.ico</file>
         <file>res/YLChatWidget/time.png</file>
+        <file>res/YLAddFriendWIdgets/AddBuddy/qzone12.png</file>
+        <file>res/YLAddFriendWIdgets/AddBuddy/delbutton_normal.png</file>
+        <file>res/YLAddFriendWIdgets/AddBuddy/delbutton_highlight.png</file>
+        <file>res/YLAddFriendWIdgets/AddBuddy/delbutton_down.png</file>
+        <file>res/YLAddFriendWIdgets/AddBuddy/ask.png</file>
+        <file>res/YLAddFriendWIdgets/AddBuddy/AddBuddyNoMsg.png</file>
+        <file>res/YLAddFriendWIdgets/AddBuddy/AddBuddyMsgUnReadItem.png</file>
+        <file>res/YLAddFriendWIdgets/AddBuddy/AddBuddyMsgUnDecideItem.png</file>
+        <file>res/YLAddFriendWIdgets/AddBuddy/AddBuddyMsgReadItem.png</file>
+        <file>res/YLAddFriendWIdgets/AddBuddy/AddBuddyMsgBottom.png</file>
+        <file>res/YLAddFriendWIdgets/AddBuddy/AddBuddyHeadBorder.png</file>
+        <file>res/YLAddFriendWIdgets/AddBuddy/horn.png</file>
+        <file>res/YLAddFriendWIdgets/AddBuddy/horn@2x.png</file>
+        <file>res/YLAddFriendWIdgets/AddBuddy/btn_focus_down.png</file>
+        <file>res/YLAddFriendWIdgets/AddBuddy/btn_focus_highlight.png</file>
+        <file>res/YLAddFriendWIdgets/AddBuddy/btn_focus_normal.png</file>
+        <file>res/YLAddFriendWIdgets/AddBuddy/btnright_highlight.png</file>
+        <file>res/YLAddFriendWIdgets/AddBuddy/btnright_down.png</file>
+        <file>res/YLAddFriendWIdgets/AddBuddy/btnright_normal.png</file>
+        <file>res/YLAddFriendWIdgets/AddBuddy/btnleft_normal.png</file>
+        <file>res/YLAddFriendWIdgets/AddBuddy/btnleft_highlight.png</file>
+        <file>res/YLAddFriendWIdgets/AddBuddy/btnleft_down.png</file>
     </qresource>
 </RCC>

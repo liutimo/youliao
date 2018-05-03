@@ -2,6 +2,7 @@
 #include "globaldata.h"
 #include "YLTray/ylmessagetip.h"
 #include "YLChatWidget/ylchatwidget.h"
+#include "YLAddFriendWidgets/ylvalidatemessagewidget.h"
 SignalForward* SignalForward::s_signamlForward = nullptr;
 
 SignalForward::SignalForward(QObject *parent) : QObject(parent)
@@ -34,31 +35,40 @@ void SignalForward::forwordReadAll()
     emit readAll();
 }
 
-void SignalForward::forwordReadOne(uint32_t friendId)
+void SignalForward::forwordReadOne(uint32_t friendId, int type)
 {
-    emit readOne(friendId);
-    YLFriend fri = GlobalData::getFriendById(friendId);
-    YLChatWidget *chatWidget = GlobalData::getChatWidget(friendId);
-    if (chatWidget == nullptr)
+    if (type == 1)
     {
-        chatWidget = new YLChatWidget;
-        chatWidget->resize(800, 600);
-        chatWidget->setFriend(fri);
-        GlobalData::addChatWidget(friendId, chatWidget);
-    }
-
-    chatWidget->show();
-    connect(chatWidget, &YLChatWidget::loadFinish, this, [this, chatWidget, friendId](){
-        auto msgs = GlobalData::getMessagesByFriendId(friendId);
-
-        for (YLMessage msg : msgs)
+        emit readOne(friendId);
+        YLFriend fri = GlobalData::getFriendById(friendId);
+        YLChatWidget *chatWidget = GlobalData::getChatWidget(friendId);
+        if (chatWidget == nullptr)
         {
-            chatWidget->receiveMessage(friendId, msg.getMsgContent());
+            chatWidget = new YLChatWidget;
+            chatWidget->resize(800, 600);
+            chatWidget->setFriend(fri);
+            GlobalData::addChatWidget(friendId, chatWidget);
         }
 
-        GlobalData::removeMessageByFriendId(friendId);
-        YLMessageTip::instance()->updateList();
-    });
+        chatWidget->show();
+        connect(chatWidget, &YLChatWidget::loadFinish, this, [this, chatWidget, friendId](){
+            auto msgs = GlobalData::getMessagesByFriendId(friendId);
 
+            for (YLMessage msg : msgs)
+            {
+                chatWidget->receiveMessage(friendId, msg.getMsgContent());
+            }
+
+            GlobalData::removeMessageByFriendId(friendId);
+            YLMessageTip::instance()->updateList();
+        });
+    }
+    else if (type == 2)
+    {
+        YLValidateMessageWidget *w = new YLValidateMessageWidget;
+        w->show();
+        GlobalData::clearAllRequest();
+        YLMessageTip::instance()->updateList();
+    }
 
 }

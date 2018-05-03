@@ -6,6 +6,10 @@
 YLHeadFrame::YLHeadFrame(QWidget *parent) : QLabel(parent), m_online(false)
 {
     resize(120, 120);
+    m_http = new HttpHelper(this);
+    connect(m_http, &HttpHelper::downloadFinshed, this, [this](){
+        setHeadFromLocal(m_http->getFilename());
+    });
 }
 
 void YLHeadFrame::setHeadFromLocal(const QString &path, bool online)
@@ -18,7 +22,7 @@ void YLHeadFrame::setHeadFromLocal(const QString &path, bool online)
 void YLHeadFrame::setHeadFromUrl(const QUrl &url)
 {
     url_ = url;
-    update();
+    m_http->download(url_.toString());
 }
 
 void YLHeadFrame::paintEvent(QPaintEvent *e)

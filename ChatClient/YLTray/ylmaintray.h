@@ -26,6 +26,7 @@ signals:
     void showMain();
 
 public slots:
+    void newAddRequest();
 
 private:
     void initActions();

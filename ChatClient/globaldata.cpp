@@ -9,6 +9,7 @@ QMap<int, QString> GlobalData::m_group = QMap<int, QString>();
 QMap<uint32_t, YLChatWidget*> GlobalData::m_chat_widgets = QMap<uint32_t, YLChatWidget*>();
 QMap<uint32_t, QVector<YLMessage>> GlobalData::m_messages = QMap<uint32_t, QVector<YLMessage>>();
 QMap<uint32_t, uint32_t> GlobalData::m_message_id = QMap<uint32_t, uint32_t>();
+QVector<YLAddRequest> GlobalData::m_add_request = QVector<YLAddRequest>();
 
 GlobalData::GlobalData(QObject *parent) : QObject(parent)
 {
@@ -20,7 +21,6 @@ void GlobalData::setCurrLoginUser(youliao::pdu::base::UserInfo user)
     m_user = user;
 
     QUrl url(QString(user.user_header_url().c_str()));
-
     m_header_image_path = "file://" + QDir::currentPath() + "/" + url.fileName();
 }
 
@@ -145,4 +145,14 @@ uint32_t GlobalData::getLatestMsgId(uint32_t friendId)
         return 0;
     else
         return iter.value();
+}
+
+void GlobalData::setRequest(const YLAddRequest &req)
+{
+    m_add_request.push_back(req);
+}
+
+const QVector<YLAddRequest>& GlobalData::getAddRequests()
+{
+    return m_add_request;
 }

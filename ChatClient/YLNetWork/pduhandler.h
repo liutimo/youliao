@@ -28,6 +28,7 @@ signals:
     void newSession(uint32_t otherId, uint32_t sessionId);
     void searchResult(const QVector<YLFriend> friends);
     void unReadMessage(uint32_t friendId, const QString &message);
+    void newAddRequest();
 private:
     void _HandleBasePdu(BasePdu *pdu);
     void _HandleUserLoginRespone(BasePdu *pdu);
@@ -42,6 +43,7 @@ private:
     void _HandleAddSessionRespone(BasePdu *pdu);
     void _HandleSearchFriendRespone(BasePdu *pdu);
     void _HandleGetLatestMsgIdRespone(BasePdu *pdu);
+    void _HandleAddFriendRequest(BasePdu *pdu);
 private:
     explicit PduHandler(QObject *parent = nullptr);
 
