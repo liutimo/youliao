@@ -1,7 +1,7 @@
 #ifndef YLVALIDATEMESSAGEWIDGET_H
 #define YLVALIDATEMESSAGEWIDGET_H
 #include "YLBasicWidget/ylbasicwidget.h"
-
+#include "YLEntityObject/yladdrequest.h"
 QT_BEGIN_NAMESPACE
 class QPushButton;
 class QToolButton;
@@ -44,15 +44,13 @@ class ValidateInfomationWidget : public QWidget
     const QString qss_right_button =    "QPushButton        {border-image:url(:/res/YLAddFriendWIdgets/AddBuddy/btnright_normal.png);}\
                                          QPushButton:hover  {border-image:url(:/res/YLAddFriendWIdgets/AddBuddy/btnright_highlight.png);}\
                                          QPushButton:pressed{border-image:url(:/res/YLAddFriendWIdgets/AddBuddy/btnright_down.png);}\
-                                                ";
+                                        ";
 
 public:
     explicit ValidateInfomationWidget(QWidget *parent = nullptr);
     ~ValidateInfomationWidget();
-    void setHeadIcon(const QString &url);
-    void setNickName(const QString &nick);
-    void setValidateData(const QString &validateData);
-
+    void setAddRequest(const YLAddRequest &);
+    void setConfirmed(bool isConfirmed = false);
 protected:
     void enterEvent(QEvent *event);
     void leaveEvent(QEvent *event);
@@ -75,6 +73,7 @@ private:
     QPushButton *m_ignore_button;
 
     QLabel *m_op_text;
+    YLAddRequest m_request;
 };
 
 #endif // YLVALIDATEMESSAGEWIDGET_H

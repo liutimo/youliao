@@ -354,6 +354,7 @@ namespace DB_INTERFACE
                     if (receiverSessionId == 0)
                     {
                         receiverSessionId = SessionModel::instance()->addSession(receiverId, senderId, base::SESSION_TYPE_SINGLE);
+                        receiverSessionId = SessionModel::instance()->addSession(receiverId, senderId, base::SESSION_TYPE_SINGLE);
                         //新增session转发到客户端
                         session::NewSessionRespone respone;
                         respone.set_user_id(receiverId);
@@ -473,7 +474,100 @@ namespace DB_INTERFACE
         {
 
         }
+
+        //创建session
+        uint32_t sessionId = SessionModel::instance()->getSessionId(friendId, 3, base::SESSION_TYPE_VALIDATE_MSG);
+        if (sessionId == 0)
+        {
+            sessionId = SessionModel::instance()->addSession(friendId, 3, base::SESSION_TYPE_VALIDATE_MSG);
+            //将session信息发送到客户端
+            session::NewSessionRespone respone;
+            respone.set_user_id(friendId);
+            respone.set_other_id(3);
+            respone.set_session_id(sessionId);
+            respone.set_session_type(base::SESSION_TYPE_VALIDATE_MSG);
+
+            auto conn = findProxyConn(conn_uuid);
+            if (conn)
+                sendMessage(conn, respone, base::SID_SERVER, base::CID_SESSIONLIST_ADD_SESSION);
+        }
+        else
+        {
+            SessionModel::instance()->updateSession(sessionId);
+        }
+
+
     }
+
+
+    void addFriendRespone(BasePdu *basePdu, uint32_t conn_uuid)
+    {
+        friendlist::AddFriendRespone respone;
+        respone.ParseFromString(basePdu->getMessage());
+
+        uint32_t userId = respone.user_id();
+        uint32_t friendId = respone.friend_id();
+        uint32_t resultId = respone.result_id();
+        uint32_t groupId = respone.group_id();
+        std::string remark = respone.remark();
+
+        FriendListModel *friendListModel = FriendListModel::instance();
+
+        bool ret = friendListModel->updateAddRequest(userId, friendId, resultId);
+
+        if (!ret)
+        {
+        }
+
+        if (resultId == 1)
+        {
+            //同意添加好友
+            //[1] 修改请求者的好友信息
+            //[2] 修改响应者的好友信息
+            friendListModel->addFriend(userId, friendId, groupId, remark, 1);
+            friendListModel->addFriend(friendId, userId, 0, remark, 1);
+        }
+        else if (resultId == 2)
+        {
+            //拒绝添加好友
+            friendListModel->addFriend(friendId, userId, groupId, remark, 2);
+        }
+        else if (resultId == 3)
+        {
+            //忽略
+            friendListModel->addFriend(friendId, userId, groupId, remark, 3);
+        }
+    }
+
+    //获取好友历史记录
+    void getAddRequestHistory(BasePdu *basePdu, uint32_t conn_uuid)
+    {
+        friendlist::GetAddRequestHistoryRequest request;
+        request.ParseFromString(basePdu->getMessage());
+
+        uint32_t userId = request.user_id();
+        log("用户%d请求获取历史好友申请记录", userId);
+
+        std::list<base::AddRequestInfo> history;
+        FriendListModel *friendListModel = FriendListModel::instance();
+        friendListModel->getAddRequestHistory(userId, history);
+
+        friendlist::GetAddRequestHistoryRespone respone;
+        respone.set_user_id(userId);
+
+        for (const auto& elem : history)
+        {
+            auto info = respone.add_history();
+            (*info) = elem;
+        }
+
+        auto conn = findProxyConn(conn_uuid);
+        if (conn)
+        {
+            sendMessage(conn, respone, base::SID_SERVER, base::CID_FRIENDLIST_GET_REQUEST_HISTORY_RESPONE);
+        }
+    }
+
 
     void getSessions(BasePdu *basePdu, uint32_t conn_uuid)
     {

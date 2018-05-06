@@ -27,7 +27,9 @@ public:
     static void modifyFriendRemark(uint32_t userId, uint32_t friendId, const QString &friendRemark);
     static void searchFriend(uint32_t userId, const QString& searchData, youliao::pdu::base::SearchType searchType);
     static void addFriend(uint32_t friendId, const QString &validateData, const QString remark, uint32_t groupId);
-
+    static void addFriendRespone(uint32_t friendId, uint32_t result, uint32_t groupId = 0, const QString &remark = QString());
+    static void getAllAddRequests();
+    
     //message
     static void sendMessage(uint32_t senderId, uint32_t receiverId, const QString &message);
     static void getLatestMsgId(uint32_t friendId);

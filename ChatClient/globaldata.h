@@ -54,7 +54,8 @@ public:
     static void setRequest(const YLAddRequest &);
     static const QVector<YLAddRequest> &getAddRequests();
     static void clearAllRequest() { m_add_request.clear(); }
-public slots:
+    static void setRequestHistory(const QVector<YLAddRequest>&h) { m_add_request_history = h;}
+    static const QVector<YLAddRequest>& getRequestHistory() { return m_add_request_history; }
 
 private:
     static youliao::pdu::base::UserInfo m_user;
@@ -67,6 +68,7 @@ private:
     static QMap<uint32_t, uint32_t> m_message_id;
     //add request
     static QVector<YLAddRequest> m_add_request;
+    static QVector<YLAddRequest> m_add_request_history;
 };
 
 #endif // GLOBALDATA_H

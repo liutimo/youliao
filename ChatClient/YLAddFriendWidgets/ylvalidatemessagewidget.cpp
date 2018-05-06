@@ -1,6 +1,8 @@
 #include "ylvalidatemessagewidget.h"
 #include <QPushButton>
 #include "YLCommonControl/ylheadframe.h"
+#include "YLNetWork/ylbusiness.h"
+#include "ylconfirmwidget.h"
 #include "globaldata.h"
 #include <QVBoxLayout>
 #include <QScrollArea>
@@ -44,13 +46,24 @@ void YLValidateMessageWidget::initTop()
 
     for (int i = 0; i < requests.size(); ++i)
     {
-        YLAddRequest re = requests[i];
+        const YLAddRequest &re = requests[i];
         ValidateInfomationWidget *w = new ValidateInfomationWidget(this);
-        w->setHeadIcon(re.getOtherHeadUrl());
-        w->setNickName(re.getOtherNick());
-        w->setValidateData(re.getValidateData());
+        w->setAddRequest(re);
         layout->addWidget(w);
     }
+
+    const auto &history = GlobalData::getRequestHistory();
+
+    for (int i = 0; i < history.size(); ++i)
+    {
+        const YLAddRequest &re = history[i];
+        ValidateInfomationWidget *w = new ValidateInfomationWidget(this);
+        w->setAddRequest(re);
+        if (re.getResultId() != 0)
+            w->setConfirmed(true);
+        layout->addWidget(w);
+    }
+
     layout->setSizeConstraint(QLayout::SetFixedSize);
     layout->setContentsMargins(20, 10, 20, 10);
     widget->setLayout(layout);
@@ -109,10 +122,12 @@ void ValidateInfomationWidget::initRight()
     connect(agree, &QAction::triggered, this, [this](){
         hideRight();
         m_op_text->setText("已同意");
+        YLBusiness::addFriendRespone(m_request.getOtherId(), 1);
     });
     connect(refuse, &QAction::triggered, this, [this](){
         hideRight();
         m_op_text->setText("已拒绝");
+        YLBusiness::addFriendRespone(m_request.getOtherId(), 2);
     });
 
     m_op_text = new QLabel(this);
@@ -125,8 +140,14 @@ void ValidateInfomationWidget::initRight()
     m_left_button->move(382, 30);
     m_left_button->setStyleSheet(qss_left_button);
     connect(m_left_button, &QPushButton::clicked, this, [this](){
-        hideRight();
-        m_op_text->setText("已同意");
+        YLConfirmWidget *w = new YLConfirmWidget;
+        w->setOtherId(m_request.getOtherId());
+        w->move(mapToGlobal(geometry().center() - w->geometry().center() / 2));
+        w->show();
+        connect(w, &YLConfirmWidget::complete, this, [this](){
+            hideRight();
+            m_op_text->setText("已同意");
+        });
     });
 
 
@@ -145,6 +166,7 @@ void ValidateInfomationWidget::initRight()
     connect(m_ignore_button, &QPushButton::clicked, this, [this](){
         hideRight();
         m_op_text->setText("已忽略");
+        YLBusiness::addFriendRespone(m_request.getOtherId(), 3);
     });
 
 }
@@ -186,17 +208,35 @@ void ValidateInfomationWidget::paintEvent(QPaintEvent *event)
     painter.drawRect(rect());
 }
 
-void ValidateInfomationWidget::setHeadIcon(const QString &url)
+
+void ValidateInfomationWidget::setAddRequest(const YLAddRequest &req)
 {
-   m_head_frame->setHeadFromUrl(url);
+    m_request = req;
+
+    m_head_frame->setHeadFromUrl(m_request.getOtherHeadUrl());
+    m_nick->setText(m_request.getOtherNick());
+    m_attach_msg->setText(m_request.getValidateData());
 }
 
-void ValidateInfomationWidget::setNickName(const QString &nick)
+void ValidateInfomationWidget::setConfirmed(bool isConfirmed)
 {
-    m_nick->setText(nick);
+    if (isConfirmed)
+    {
+        hideRight();
+        uint32_t resultId = m_request.getResultId();
+        if (resultId == 1)
+        {
+            m_op_text->setText("已同意");
+        }
+        else if (resultId == 2)
+        {
+            m_op_text->setText("已拒绝");
+        }
+        else if (resultId == 3)
+        {
+            m_op_text->setText("已忽略");
+        }
+    }
 }
 
-void ValidateInfomationWidget::setValidateData(const QString &validateData)
-{
-    m_attach_msg->setText(validateData);
-}
+

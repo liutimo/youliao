@@ -4,10 +4,13 @@
 #include "YLBasicWidget/ylbasicwidget.h"
 #include "YLEntityObject/ylfriend.h"
 
+QT_BEGIN_NAMESPACE
 class QPushButton;
 class YLQuickBar;
 class YLMessageView;
 class YLMessageEditWidget;
+class YLRightPanel;
+QT_END_NAMESPACE
 
 class YLChatWidget : public YLBasicWidget
 {
@@ -30,6 +33,14 @@ class YLChatWidget : public YLBasicWidget
                                     QScrollBar::sub-line:vertical:hover{ border: 0px ;border-image: url(:/res/MainFrame/scrollbar_arrowup_highlight.png);height: 12px;subcontrol-position: top;subcontrol-origin: margin;}\
                                     QScrollBar::sub-line:vertical:pressed{border: 0px ;border-image: url(:/res/MainFrame/scrollbar_arrowup_down.png);height: 12px;subcontrol-position: top;ubcontrol-origin: margin;}";
 
+    const QString qss_split_button_left =    "QPushButton        {border-image:url(:/res/YLChatWidget/aio_splitbutton_left_normal.png);}\
+                                                QPushButton:hover  {border-image:url(:/res/YLChatWidget/aio_splitbutton_left_hover.png);}\
+                                                QPushButton:pressed{border-image:url(:/res/YLChatWidget/aio_splitbutton_left_down.png);}\
+                                                ";
+    const QString qss_split_button_right =    "QPushButton        {border-image:url(:/res/YLChatWidget/aio_splitbutton_right_normal.png);}\
+                                                 QPushButton:hover  {border-image:url(:/res/YLChatWidget/aio_splitbutton_right_hover.png);}\
+                                                 QPushButton:pressed{border-image:url(:/res/YLChatWidget/aio_splitbutton_right_down.png);}\
+                                                 ";
 public:
     explicit YLChatWidget(QWidget *parent = Q_NULLPTR);
     ~YLChatWidget();
@@ -51,6 +62,7 @@ private slots:
 
 private:
     void initTitleBar();
+    void initRight();
     void initView();
     void updatePosition();
     void updateSize();
@@ -61,6 +73,7 @@ private:
     QPushButton *m_nickname_button;
 
     YLQuickBar          *m_quick_bar;
+    YLRightPanel        *m_ritht_panel;
     YLMessageView       *m_message_view;
     YLMessageEditWidget *m_message_edit_widget;
 
@@ -70,6 +83,11 @@ private:
     YLFriend m_friend;
 
     QString m_friend_header_path;
+
+    QPushButton *m_split_button;
+    bool m_hide;
+
+    int m_scale_width;
 };
 
 #endif // YLCHATWIDGET_H

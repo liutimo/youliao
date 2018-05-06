@@ -1,31 +1,34 @@
-#ifndef YLFRIENDLISTITEM_H
-#define YLFRIENDLISTITEM_H
+#ifndef YLLISTITEM_H
+#define YLLISTITEM_H
 
 #include <QWidget>
 
 #include "YLEntityObject/ylfriend.h"
 #include "YLEntityObject/ylsession.h"
+#include "YLEntityObject/ylgroup.h"
 class YLHeadFrame;
 class QLabel;
 class HttpHelper;
 class QMenu;
 class YLCounterBubble;
 
-class YLFriendListItem : public QWidget
+class YLListItem : public QWidget
 {
     Q_OBJECT
 public:
-    typedef enum {RECENTTLYCHATITEM, FRIENDITEM} YLListItemType;
+    typedef enum {RECENTTLYCHATITEM, FRIENDITEM, GROUP ,REQUEST} YLListItemType;
 
-
-    explicit YLFriendListItem(YLListItemType type = FRIENDITEM,  QWidget *parent = nullptr);
+    explicit YLListItem(YLListItemType type = FRIENDITEM,  QWidget *parent = nullptr);
 
     //set second menu
     void setSecondMenu(const QMap<int, QString> &groups, const QString &currGroupName);
 
     void setData(const YLFriend &f, const YLSession &session = YLSession());
+    void setData(const YLGroup &g, const YLSession &session = YLSession());
+    void setData(const YLSession &session);
 
-    YLFriend getData() { return friend_;}
+    YLFriend getData() { return friend_; }
+
     void setMarkTop(bool flag = false);
 private:
     //用于显示备注信息或者昵称
@@ -74,4 +77,4 @@ private:
     HttpHelper *m_http_helper;
 };
 
-#endif // YLFRIENDLISTITEM_H
+#endif // YLLISTITEM_H

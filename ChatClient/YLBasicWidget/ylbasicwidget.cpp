@@ -43,7 +43,7 @@ void YLBasicWidget::setWidgetTitle(const QString &title)
 }
 
 
-void YLBasicWidget::setWidgetIcon(const QString &fileName)
+void YLBasicWidget::setWidgetIcon(const QString fileName)
 {
     m_has_icon = true;
     m_widget_icon->setPixmap(QPixmap(fileName).scaled(QSize(28, 32), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));

@@ -181,6 +181,12 @@ void ClientConn::handlePdu(BasePdu *pdu)
         case base::CID_MESSAGE_GET_LATEST_MSG_ID_REQUEST:
             _HandleGetLatestMsgIdRequest(pdu);
             break;
+        case base::CID_FRIENDLIST_ADD_FRIEND_RESPONE:
+            _HandleGetLatestMsgIdRespone(pdu);
+            break;
+        case base::CID_FRIENDLIST_GET_REQUEST_HISTORY_REQUEST:
+            _HandlerGetAddRequestHistoryRequest(pdu);
+            break;
         default:
             std::cout << pdu->getCID() << std::endl;
             break;
@@ -620,4 +626,68 @@ void ClientConn::_HandleGetLatestMsgIdRequest(BasePdu *pdu)
     if (!dbConn)
         return;
     sendMessage(dbConn, request, base::SID_SERVER, base::CID_MESSAGE_GET_LATEST_MSG_ID_REQUEST);
+}
+
+
+void ClientConn::_HandleGetLatestMsgIdRespone(BasePdu *pdu)
+{
+    friendlist::AddFriendRespone respone;
+    respone.ParseFromString(pdu->getMessage());
+
+    uint32_t userId = respone.user_id();
+    uint32_t friendId = respone.friend_id();
+    uint32_t resultId = respone.result_id();
+    uint32_t groupId = respone.group_id();
+    std::string remark = respone.remark();
+
+    std::string result;
+    if (resultId == 1)
+        result = "同意";
+    else if (resultId == 2)
+        result = "拒绝";
+    else if (resultId == 3)
+        result = "忽略";
+
+    log("用户%d %s 了用户%d的好友申请", userId, result.c_str(), friendId);
+
+    //通知用户
+    if (resultId != 3)
+    {
+        auto user = UserManager::instance()->getUser(friendId);
+        if (user)
+        {
+            auto conn = user->getConn();
+            if (conn)
+            {
+                sendMessage(conn, respone, base::SID_FRIEND_LIST, base::CID_FRIENDLIST_ADD_FRIEND_RESPONE);
+            }
+        }
+        else
+        {
+            //查询路由服务器
+        }
+    }
+
+    //处理结果保存到数据库
+    auto dbConn = get_db_server_conn();
+    if (dbConn)
+    {
+        sendMessage(dbConn, respone, base::SID_SERVER, base::CID_FRIENDLIST_ADD_FRIEND_RESPONE);
+    }
+}
+
+
+void ClientConn::_HandlerGetAddRequestHistoryRequest(BasePdu *pdu)
+{
+    friendlist::GetAddRequestHistoryRequest request;
+    request.ParseFromString(pdu->getMessage());
+
+    uint32_t userId = request.user_id();
+    log("用户%d请求获取历史好友申请记录", userId);
+
+    auto dbConn = get_db_server_conn();
+    if (dbConn)
+    {
+        sendMessage(dbConn, request, base::SID_SERVER, base::CID_FRIENDLIST_GET_REQUEST_HISTORY_REQUEST);
+    }
 }

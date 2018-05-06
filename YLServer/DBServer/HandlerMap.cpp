@@ -89,8 +89,14 @@ void HandlerMap::init()
     //添加好友
     m_handler_map.insert(std::make_pair(CID_FRIENDLIST_ADD_FRIEND_REQUEST, DB_INTERFACE::addFriend));
 
+    //添加好友响应
+    m_handler_map.insert(std::make_pair(CID_FRIENDLIST_ADD_FRIEND_RESPONE, DB_INTERFACE::addFriendRespone));
+
     //获取最新消息ID
     m_handler_map.insert(std::make_pair(CID_MESSAGE_GET_LATEST_MSG_ID_REQUEST, DB_INTERFACE::getLatestMsgId));
+
+    //获取好友请求的历史记录
+    m_handler_map.insert(std::make_pair(CID_FRIENDLIST_GET_REQUEST_HISTORY_REQUEST, DB_INTERFACE::getAddRequestHistory));
 }
 
 pdu_handler_t HandlerMap::getHandler(uint16_t cid)

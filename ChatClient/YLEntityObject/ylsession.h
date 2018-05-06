@@ -9,6 +9,7 @@ class YLSession : public QObject
 {
     Q_OBJECT
 public:
+    typedef enum{ FRIEND = 1, GROUP, REQUEST}SessionType;
     explicit YLSession();
 
     YLSession(const YLSession&);
@@ -42,6 +43,7 @@ public:
     void addUnReadMsgCount() { ++m_unread_msg_count; }
 
     void clearUnReadMsgCount() { m_unread_msg_count = 0; }
+
 
     uint32_t getSessionId() const {return m_session_id;}
 

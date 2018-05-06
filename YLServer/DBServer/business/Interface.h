@@ -50,12 +50,19 @@ namespace DB_INTERFACE
     //获取好友状态
     void getOnlineFriendStatus(BasePdu *basePdu, uint32_t conn_uid);
 
+    /*****************添加好友*****************/
+
     //搜索好友
     void searchFriend(BasePdu *basePdu, uint32_t conn_uuid);
 
     //添加好友
     void addFriend(BasePdu *basePdu, uint32_t conn_uuid);
 
+    //添加好友响应
+    void addFriendRespone(BasePdu *basePdu, uint32_t conn_uuid);
+
+    //获取好友历史记录
+    void getAddRequestHistory(BasePdu *basePdu, uint32_t conn_uuid);
 
     /*******************消息************************/
     //保存消息记录

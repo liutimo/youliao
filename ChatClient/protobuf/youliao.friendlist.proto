@@ -145,5 +145,23 @@ message AddFriendRequest
 }
 
 
+message AddFriendRespone
+{
+    uint32 user_id = 1;
+    uint32 friend_id = 2;
+    uint32 result_id = 3;   //1 同意 2 拒绝 3 忽略
+    uint32 group_id = 4;
+    string remark = 5;
 
+}
 
+message GetAddRequestHistoryRequest
+{
+    uint32 user_id = 1;
+}
+
+message GetAddRequestHistoryRespone
+{
+    uint32 user_id = 1;
+    repeated youliao.pdu.base.AddRequestInfo history = 2;
+}

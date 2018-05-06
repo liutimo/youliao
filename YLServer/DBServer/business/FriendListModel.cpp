@@ -288,7 +288,7 @@ bool FriendListModel::deleteFriend(uint32_t user_id, uint32_t friend_id)
     if (conn)
     {
         //删除好友,只需将status字段由1改成2
-        string update_sql = "UPDATE yl_friend set status = 2 where user_id = "+ to_string(user_id) +" and friend_id = " + to_string(friend_id);
+        string update_sql = "UPDATE yl_friend set status = 4 where user_id = "+ to_string(user_id) +" and friend_id = " + to_string(friend_id);
         printSql2Log(update_sql.c_str());
 
         if (conn->update(update_sql))
@@ -395,7 +395,7 @@ bool FriendListModel::searchFriend(std::string &searchData, base::SearchType sea
     return ret;
 }
 
-bool FriendListModel::addFriend(uint32_t userId, uint32_t friendId, uint32_t groupId, const std::string &remark)
+bool FriendListModel::addFriend(uint32_t userId, uint32_t friendId, uint32_t groupId, const std::string &remark, uint32_t status)
 {
     bool ret = false;
 
@@ -406,8 +406,8 @@ bool FriendListModel::addFriend(uint32_t userId, uint32_t friendId, uint32_t gro
     {
         if (conn)
         {
-            string insertSql = "INSERT INTO yl_friend(user_id, friend_id, group_id, created, friend_remark) VALUES(?, ?, ?, ?, ?)";
-            printSql2Log(insertSql);
+            string insertSql = "INSERT INTO yl_friend(user_id, friend_id, group_id, created, friend_remark, status) VALUES(?, ?, ?, ?, ?, ?)";
+            printSql2Log(insertSql.c_str());
             PrepareStatement *prepareStatement = new PrepareStatement;
             if (prepareStatement->init(conn->getMysql(), insertSql))
             {
@@ -417,6 +417,7 @@ bool FriendListModel::addFriend(uint32_t userId, uint32_t friendId, uint32_t gro
                 prepareStatement->setParam(index++, groupId);
                 prepareStatement->setParam(index++, createTime);
                 prepareStatement->setParam(index++, remark);
+                prepareStatement->setParam(index++, status);
                 ret = prepareStatement->executeUpdate();
             }
 
@@ -424,13 +425,16 @@ bool FriendListModel::addFriend(uint32_t userId, uint32_t friendId, uint32_t gro
     }
     else
     {
-        string updateSql = "UPDATE yl_friend SET status = 0, group_id = ? ,created = ?, friend_remark = ? WHERE id = ?";
-        printSql2Log(updateSql);
+        string childSql =  (groupId == 0 ? "" : "group_id = ? ,");
+        string updateSql = "UPDATE yl_friend SET status = ?,  " + childSql +  "created = ?, friend_remark = ? WHERE id = ?";
+        printSql2Log(updateSql.c_str());
         PrepareStatement *prepareStatement = new PrepareStatement;
         if (prepareStatement->init(conn->getMysql(), updateSql))
         {
             int index = 0;
-            prepareStatement->setParam(index++, groupId);
+            prepareStatement->setParam(index++, status);
+            if (groupId != 0)
+                prepareStatement->setParam(index++, groupId);
             prepareStatement->setParam(index++, createTime);
             prepareStatement->setParam(index++, remark);
             prepareStatement->setParam(index++, relationId);
@@ -444,6 +448,33 @@ bool FriendListModel::addFriend(uint32_t userId, uint32_t friendId, uint32_t gro
 }
 
 
+uint32_t  FriendListModel::getRequestId(uint32_t userId, uint32_t friendId)
+{
+    uint32_t requestId = 0;
+
+    DBConn *dbConn = DBManager::instance()->getConnection();
+
+    if (!dbConn)
+    {
+        return requestId;
+    }
+
+    string strSql = "SELECT id FROM yl_friend_request WHERE request_sender_id =" + to_string(userId) + " and request_receiver_id = " + to_string(friendId) + " and request_handle_time = 0";
+    printSql2Log(strSql.c_str());
+    ResultSet *resultSet = dbConn->query(strSql);
+    if (resultSet)
+    {
+        while (resultSet->next())
+        {
+            requestId = (uint32_t)resultSet->getInt("id");
+        }
+        delete resultSet;
+    }
+
+    DBManager::instance()->releaseConnection(dbConn);
+    return requestId;
+}
+
 bool FriendListModel::saveAddRequest(uint32_t userId, uint32_t otherId, const std::string &validateData)
 {
     bool ret = false;
@@ -452,20 +483,91 @@ bool FriendListModel::saveAddRequest(uint32_t userId, uint32_t otherId, const st
 
     if (conn)
     {
-        std::string sql = "INSERT INTO yl_friend_request(request_sender_id, request_receiver_id, request_create_time, request_validate_data) VALUES(?, ?, ?, ?)";
 
+        uint32_t requestId = getRequestId(userId, otherId);
+
+        if (requestId == 0)
+        {
+            std::string sql = "INSERT INTO yl_friend_request(request_sender_id, request_receiver_id, request_create_time, request_validate_data) VALUES(?, ?, ?, ?)";
+            printSql2Log(sql.c_str());
+
+            PrepareStatement *prepareStatement = new PrepareStatement();
+            if (prepareStatement->init(conn->getMysql(), sql)) {
+                int index = 0;
+                prepareStatement->setParam(index++, userId);
+                prepareStatement->setParam(index++, otherId);
+                prepareStatement->setParam(index++, createTime);
+                prepareStatement->setParam(index++, validateData);
+                ret = prepareStatement->executeUpdate();
+            }
+        }
+        else
+        {
+            std::string sql = "UPDATE yl_friend_request SET request_create_time = " + to_string(createTime) + ", request_validate_data = " + validateData + " WHERE id = " + to_string(requestId);
+            printSql2Log(sql.c_str());
+            ret = conn->update(sql);
+        }
+    }
+
+    DBManager::instance()->releaseConnection(conn);
+    return ret;
+}
+
+
+bool FriendListModel::updateAddRequest(uint32_t userId, uint32_t otherId, uint32_t resultId)
+{
+    bool ret = false;
+    auto conn = DBManager::instance()->getConnection();
+    uint32_t updateTime = (uint32_t)time(nullptr);
+
+    if (conn)
+    {
+        std::string sql = "UPDATE yl_friend_request SET request_handle_time = ?, request_handle_reslut = ? WHERE request_sender_id = ? AND request_receiver_id = ? AND request_handle_time = 0";
+        printSql2Log(sql.c_str());
         PrepareStatement *prepareStatement = new PrepareStatement();
         if (prepareStatement->init(conn->getMysql(), sql))
         {
             int index = 0;
-            prepareStatement->setParam(index++, userId);
+            prepareStatement->setParam(index++, updateTime);
+            prepareStatement->setParam(index++, resultId);
             prepareStatement->setParam(index++, otherId);
-            prepareStatement->setParam(index++, createTime);
-            prepareStatement->setParam(index++, validateData);
+            prepareStatement->setParam(index++, userId);
             ret = prepareStatement->executeUpdate();
         }
     }
 
+    DBManager::instance()->releaseConnection(conn);
+    return ret;
+}
+
+bool FriendListModel::getAddRequestHistory(uint32_t userId, std::list<base::AddRequestInfo> &history)
+{
+    bool ret = false;
+    auto conn = DBManager::instance()->getConnection();
+    if (conn)
+    {
+        std::string sql = "SELECT r.id, u.user_id, r.request_handle_reslut, r.request_handle_time, r.request_validate_data, u.user_header, u.user_nickname FROM yl_friend_request AS r, yl_user AS u WHERE request_receiver_id =" + to_string(userId) + " AND r.request_sender_id = u.user_id;";
+        printSql2Log(sql.c_str());
+        ResultSet *resultSet = conn->query(sql);
+
+        if (resultSet)
+        {
+            while (resultSet->next())
+            {
+                base::AddRequestInfo info;
+                info.set_id((uint32_t)resultSet->getInt("id"));
+                info.set_other_id((uint32_t)resultSet->getInt("user_id"));
+                info.set_result_id((uint32_t)resultSet->getInt("request_handle_reslut"));
+                info.set_handle_time((uint32_t)resultSet->getInt("request_handle_time"));
+                info.set_validate_data(resultSet->getString("request_validate_data"));
+                info.set_other_head_url(resultSet->getString("user_header"));
+                info.set_other_nick(resultSet->getString("user_nickname"));
+                history.push_back(info);
+            }
+            delete resultSet;
+        }
+        ret = true;
+    }
     DBManager::instance()->releaseConnection(conn);
     return ret;
 }

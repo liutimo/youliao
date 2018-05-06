@@ -72,6 +72,9 @@ enum FriendListCID
     CID_FRIENDLIST_SEARCH_FRIEND_REQUEST        = 0x0411;   //搜索好友请求
     CID_FRIENDLIST_SEARCH_FRIEND_RESPONE        = 0x0412;   //搜索好友响应
     CID_FRIENDLIST_ADD_FRIEND_REQUEST           = 0x0413;   //请求添加好友
+    CID_FRIENDLIST_ADD_FRIEND_RESPONE           = 0x0414;   //响应
+    CID_FRIENDLIST_GET_REQUEST_HISTORY_REQUEST  = 0x0415;   //请求获取好友请求历史
+    CID_FRIENDLIST_GET_REQUEST_HISTORY_RESPONE  = 0x0416;   //响应获取好友请求历史
 }
 
 //最近会话
@@ -177,6 +180,18 @@ message SessionInfo
     bytes last_message_data = 7;
 }
 
+//添加好友请求历史信息
+message AddRequestInfo
+{
+    uint32 id = 1;
+    uint32 other_id = 2;
+    uint32 result_id = 3;
+    uint32 handle_time = 4;
+    string validate_data = 5;
+    string other_head_url = 6;
+    string other_nick = 7;
+}
+
 
 //心跳包
 message HeartBeat
@@ -187,10 +202,11 @@ message HeartBeat
 enum MessageType
 {
     MESSAGE_ZERO = 0x00;
-    MESSAGE_TYPE_SINGLE_TEXT  = 0x01; //单人 文本
-    MESSAGE_TYPE_SINGLE_AUDIO = 0x02; //单人 语音
-    MESSAGE_TYPE_GROUP_TEXT   = 0x03; //群组 文本
-    MESSAGE_TYPE_GROUP_AUDIO  = 0x04; //群组 语音
+    MESSAGE_TYPE_SINGLE_TEXT   = 0x01; //单人 文本
+    MESSAGE_TYPE_SINGLE_AUDIO  = 0x02; //单人 语音
+    MESSAGE_TYPE_GROUP_TEXT    = 0x03; //群组 文本
+    MESSAGE_TYPE_GROUP_AUDIO   = 0x04; //群组 语音
+    MESSAGE_TYPE_VALIDATE_MSG  = 0x05; //验证消息
 }
 
 
@@ -209,3 +225,4 @@ enum SearchType
     SEARCH_TYPE_ACCOUNT = 0x01;  //按照账号搜索
     SEARCH_TYPE_NICKNAME = 0x02; //按照昵称搜索
 }
+

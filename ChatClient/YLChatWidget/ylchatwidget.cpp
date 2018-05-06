@@ -9,15 +9,18 @@
 #include "YLNetWork/http/httphelper.h"
 #include "YLEntityObject/ylsession.h"
 #include "globaldata.h"
+#include "ylrightpanel.h"
 #include "../signalforward.h"
 #include <QDebug>
 #include <QDir>
 
-YLChatWidget::YLChatWidget(QWidget *parent) : YLBasicWidget(parent)
+YLChatWidget::YLChatWidget(QWidget *parent) : YLBasicWidget(parent), m_hide(true)
 {
-    setAttribute(Qt::WA_DeleteOnClose);
+    m_scale_width = 0;
+//    setAttribute(Qt::WA_DeleteOnClose);
     initTitleBar();
     initView();
+    initRight();
     this->setObjectName("aaa");
     setStyleSheet("QWidget#aaa{background-color:rgb(181, 212, 240, 200);}");
 }
@@ -51,6 +54,35 @@ void YLChatWidget::initTitleBar()
 }
 
 
+void YLChatWidget::initRight()
+{
+    m_split_button = new QPushButton(this);
+    m_split_button->setFixedSize(13, 90);
+    m_split_button->setStyleSheet(qss_split_button_left);
+    connect(m_split_button, &QPushButton::clicked, this, [this](){
+        if (m_hide)
+        {
+            m_scale_width = 300;
+            m_split_button->setStyleSheet(qss_split_button_right);
+            m_ritht_panel->show();
+        }
+        else
+        {
+            m_scale_width = 0;
+            m_split_button->setStyleSheet(qss_split_button_left);
+            m_ritht_panel->hide();
+        }
+        updateSize();
+        updatePosition();
+        m_split_button->move(m_message_view->width() - 13, (m_message_view->geometry().bottomRight().y() - 32) / 2);
+        m_hide = !m_hide;
+    });
+
+    m_ritht_panel = new YLRightPanel(this);
+    m_ritht_panel->move(width() - 300, 32);
+    m_ritht_panel->hide();
+}
+
 void YLChatWidget::receiveMessage(uint32_t user_id, const QString &message)
 {
     if (user_id == m_friend.friendId())
@@ -75,7 +107,7 @@ void YLChatWidget::receiveMessage(uint32_t user_id, const QString &message)
 void YLChatWidget::initView()
 {
     m_message_view = new YLMessageView(this);
-    m_message_view->setStyleSheet(qss_scroll_bar);
+
     connect(m_message_view, &YLMessageView::loadFinished, this, [this](bool f) {
         if (f)
         {
@@ -110,16 +142,18 @@ void YLChatWidget::updatePosition()
     m_message_view->move(0, 32);
     m_quick_bar->move(m_message_view->geometry().bottomLeft());
     m_message_edit_widget->move(m_quick_bar->geometry().bottomLeft());
+    m_ritht_panel->move(width() - 300, 32);
+    m_split_button->move(m_message_view->width() - 13, (m_message_view->geometry().bottomRight().y() - 32) / 2);
+    m_ritht_panel->resize(300, height() - 32);
+    m_send_button->move(width() - m_scale_width - 100, height() - 30);
 
-    m_send_button->move(width() - 100, height() - 30);
-
-    m_close_button->move(width() - 200, height() - 30);
+    m_close_button->move(width() - m_scale_width - 200, height() - 30);
 }
 
 void YLChatWidget::updateSize()
 {
     int h = height() - 32;
-    int w = width();
+    int w = width()  - m_scale_width;
     m_message_view->resize(w, h / 5 * 3);
     m_quick_bar->resize(w, 26);
     m_message_edit_widget->resize(w, h / 5 * 2 - 55);

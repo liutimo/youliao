@@ -41,9 +41,15 @@ public:
 
     bool searchFriend(std::string &searchData, base::SearchType searchType, std::list<base::FriendInfo> &);
 
-    bool addFriend(uint32_t userId, uint32_t friendId, uint32_t groupId, const std::string &remark);
+    bool addFriend(uint32_t userId, uint32_t friendId, uint32_t groupId, const std::string &remark, uint32_t status = 0);
+
+    uint32_t getRequestId(uint32_t userId, uint32_t friendId);
 
     bool saveAddRequest(uint32_t userId, uint32_t otherId, const std::string &validateData);
+
+    bool updateAddRequest(uint32_t userId, uint32_t otherId, uint32_t resultId);
+
+    bool getAddRequestHistory(uint32_t userId, std::list<base::AddRequestInfo> &history);
 
 private:
     FriendListModel();

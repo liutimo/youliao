@@ -1,0 +1,19 @@
+syntax = "proto3";
+package youliao.pdu.group;
+import "youliao.base.proto";
+
+message GroupCreateRequest
+{
+    uint32 user_id = 1;
+    string group_name = 2;
+    string group_head = 3;
+    youliao.pdu.base.GroupType group_type = 4;
+}
+
+message IMGroupCreateRsp{
+    uint32 user_id = 1;
+    uint32 result_code = 2;
+    uint32 group_id = 3;
+    string group_name = 4;
+    string group_head = 5;
+}

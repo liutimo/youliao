@@ -329,5 +329,29 @@
         <file>res/YLAddFriendWIdgets/AddBuddy/btnleft_normal.png</file>
         <file>res/YLAddFriendWIdgets/AddBuddy/btnleft_highlight.png</file>
         <file>res/YLAddFriendWIdgets/AddBuddy/btnleft_down.png</file>
+        <file>res/YLChatWidget/aio_splitbutton_right_normal.png</file>
+        <file>res/YLChatWidget/aio_splitbutton_right_hover.png</file>
+        <file>res/YLChatWidget/aio_splitbutton_right_down.png</file>
+        <file>res/YLChatWidget/aio_splitbutton_left_normal.png</file>
+        <file>res/YLChatWidget/aio_splitbutton_left_hover.png</file>
+        <file>res/YLChatWidget/aio_splitbutton_left_down.png</file>
+        <file>res/YLChatWidget/sidebar_tabbutton_close_normal.png</file>
+        <file>res/YLChatWidget/sidebar_tabbutton_close_hover.png</file>
+        <file>res/YLChatWidget/sidebar_tabbutton_close_down.png</file>
+        <file>res/FileIcon/zip.png</file>
+        <file>res/FileIcon/word.png</file>
+        <file>res/FileIcon/video.png</file>
+        <file>res/FileIcon/text.png</file>
+        <file>res/FileIcon/ppt.png</file>
+        <file>res/FileIcon/pic.png</file>
+        <file>res/FileIcon/pic_psd.png</file>
+        <file>res/FileIcon/pdf.png</file>
+        <file>res/FileIcon/icon_top_ground_40.png</file>
+        <file>res/FileIcon/floder.png</file>
+        <file>res/FileIcon/exe.png</file>
+        <file>res/FileIcon/excel.png</file>
+        <file>res/FileIcon/default.png</file>
+        <file>res/FileIcon/code.png</file>
+        <file>res/FileIcon/audio.png</file>
     </qresource>
 </RCC>

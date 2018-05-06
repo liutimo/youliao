@@ -4,7 +4,7 @@
 #include <QLineEdit>
 #include <QMouseEvent>
 #include <QContextMenuEvent>
-#include "ylfriendlistitem.h"
+#include "yllistitem.h"
 #include "ylmainwidget.h"
 #include "globaldata.h"
 #include "YLCommonControl/ylmessagebox.h"
@@ -131,10 +131,10 @@ void YLFriendListView::updateList()
                 item = new QListWidgetItem;
                 addItem(item);
                 item->setSizeHint(QSize(width() - 30, 56));
-                YLFriendListItem *item_widget = new YLFriendListItem(YLFriendListItem::FRIENDITEM);
-                connect(item_widget, &YLFriendListItem::moveFriendToGroup, this, &YLFriendListView::moveFriendToGroup);
-                connect(item_widget, &YLFriendListItem::modifyRemark, this, &YLFriendListView::modifyRemark);
-                connect(item_widget, &YLFriendListItem::deleteFriend, this, &YLFriendListView::deleteFriend);
+                YLListItem *item_widget = new YLListItem(YLListItem::FRIENDITEM);
+                connect(item_widget, &YLListItem::moveFriendToGroup, this, &YLFriendListView::moveFriendToGroup);
+                connect(item_widget, &YLListItem::modifyRemark, this, &YLFriendListView::modifyRemark);
+                connect(item_widget, &YLListItem::deleteFriend, this, &YLFriendListView::deleteFriend);
 
                 item_widget->setSecondMenu(m_group, elem);
                 fri.setFriendGroup(elem);

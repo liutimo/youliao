@@ -10,7 +10,7 @@
             color:  black;
             font-family: "Arial", "san-serif";
             font-size: 16px;
-            display: inline;
+           /*display: inline;*/
         }
 
         /*自己的消息*/
@@ -141,6 +141,92 @@
         .more{overflow: hidden;padding:0px;text-align: center;}
         .more a{font-size:12px;color:#25C6FC;display: block;width: 100px;padding:0px 0;margin:0 auto;text-align:center;border-radius:3px;}
         .more a:hover{text-decoration: none;}
+
+        .pfile{
+            text-align: center; /*让div内部文字居中*/
+            max-width:50%;
+            margin-left:auto;
+            margin-right:auto;
+            margin-top:10px;
+            margin-bottom:10px;
+        }
+
+        .filetip{
+           text-align: center; /*让div内部文字居中*/
+           background-color: #fff;
+           border-radius: 20px;
+           font-size: 12px;
+           padding: 5px;
+           margin-left:auto;
+           margin-right:auto;
+           display:inline-block;
+         }
+
+
+        .fileicon
+        {
+                position: relative;
+                float: right;
+        }
+        .filename{
+                font-size:14px;
+                color:black;
+        }
+        .file
+        {
+                position: relative;
+                float: right;
+        }
+        .fileinfo
+        {
+                margin:0px;
+        }
+
+        .filesize
+        {
+                font-size:10px;
+                color:gray;
+        }
+        .tipmsg
+        {
+                font-size:12px;
+                color:gray;
+                margin:0px;
+                margin-top:3px;
+                padding:0px;
+        }
+        .file
+        {
+                position: relative;
+                float: top;
+        }
+
+        .op
+        {
+                margin:0px;
+        }
+
+
+        .openfile
+        {
+                font-size:12px;
+                color:#3DD3FA;
+                margin:0px;
+                padding:0px;
+                margin-right:10px;
+                float:right;
+        }
+
+        .opendir
+        {
+                font-size:12px;
+                color:#3DD3FA;
+                margin:0px;
+                padding:0px;
+                float:right;
+
+        }
+
         </style>
 
 
@@ -198,10 +284,42 @@
         }
         </script>
     </head>
-    <body id="content" style="background:#efefef">
-        <div class="more"><a href="javascript:;" onClick="loadmore();"><img src="qrc:/res/YLChatWidget/time.png"/>查看更多消息</a></div>
-    </body>
-    <script src="js/jquery-2.1.1.min.js">
+<body id="content" style="background:#efefef">
+    <div class="more"><a href="javascript:;" onClick="loadmore();"><img src="qrc:/res/YLChatWidget/time.png"/>查看更多消息</a></div>
 
-      </script>
+    <div class="pfile">
+        <div class="filetip">
+            <img src="qrc:/res/YLChatWidget/time.png"/>
+            对方取消接收文件夹“Default”(263.58KB)，文件夹发送失败。
+        </div>
+    </div>
+
+
+
+<div style='overflow:hidden;'>
+    <p class='divMyHead'>
+        <img src='qrc:/res/YLChatWidget/face/0.gif' width='30px' height='30px' >
+    </p>
+    <div id='1' class='triangle-right right' onmousedown='mouseDown(event)' style='display:inline-block'>
+        <div>
+        <div class="file" >
+            <p class ="fileinfo">
+                <span class="filename">后海大鲨鱼-猛犸.FLAC </span>
+                <span class="filesize"> (36.76MB) </span>
+             </p>
+            <p class="tipmsg">取消接收文件</p>
+            <p class ="op"><a href="#" class="opendir">打开文件夹</a><a href="#" class="openfile">打开</a></p>
+        </div>
+        <div class="fileicon" style="width:40px; position:relative; ">
+            <img src="file:///home/liuzheng/Desktop/FileIcon/audio.png" width="100%" />
+            <img src="file:///home/liuzheng/Desktop/cancel.png"  style="position:absolute; right:0; bottom:0;" />
+        </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script src="js/jquery-2.1.1.min.js">
+
+</script>
 </html>

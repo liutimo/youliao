@@ -1,4 +1,4 @@
-#include "ylfriendlistitem.h"
+#include "yllistitem.h"
 #include "YLCommonControl/ylheadframe.h"
 #include <QLabel>
 #include <QMenu>
@@ -17,7 +17,7 @@
 #include "YLCommonControl/ylmessagebox.h"
 #include "YLTray/ylcounterbubble.h"
 #include "YLTray/ylmessagetip.h"
-YLFriendListItem::YLFriendListItem(YLListItemType type, QWidget *parent) : QWidget(parent)
+YLListItem::YLListItem(YLListItemType type, QWidget *parent) : QWidget(parent)
 {
     item_type_ = type;
     init();
@@ -25,7 +25,7 @@ YLFriendListItem::YLFriendListItem(YLListItemType type, QWidget *parent) : QWidg
 
 }
 
-void YLFriendListItem::init()
+void YLListItem::init()
 {
     head_frame_ = new YLHeadFrame(this);
     head_frame_->resize(40, 40);
@@ -45,7 +45,7 @@ void YLFriendListItem::init()
 }
 
 
-void YLFriendListItem::initMenu()
+void YLListItem::initMenu()
 {
     menu_ = new QMenu(this);
 
@@ -83,7 +83,7 @@ void YLFriendListItem::initMenu()
     second_menu_ = menu_->addMenu("移动好友至");
     menu_->addAction(aciton_delete);
 
-    connect(action_send_msg, &QAction::triggered, this, &YLFriendListItem::openChatWidget);
+    connect(action_send_msg, &QAction::triggered, this, &YLListItem::openChatWidget);
 
     connect(action_modify_remark, &QAction::triggered, this, [this](){
         YLModifyRemarkWidget w(this);
@@ -123,7 +123,7 @@ void YLFriendListItem::initMenu()
     });
 }
 
-void YLFriendListItem::setSecondMenu(const QMap<int, QString> &groups, const QString &currGroupName)
+void YLListItem::setSecondMenu(const QMap<int, QString> &groups, const QString &currGroupName)
 {
     for (QString actionName : groups)
     {
@@ -140,7 +140,7 @@ void YLFriendListItem::setSecondMenu(const QMap<int, QString> &groups, const QSt
     }
 }
 
-void YLFriendListItem::setMarkTop(bool flag)
+void YLListItem::setMarkTop(bool flag)
 {
     session_.setSessionTop(flag);
 
@@ -156,7 +156,7 @@ void YLFriendListItem::setMarkTop(bool flag)
 }
 
 
-void YLFriendListItem::setData(const YLFriend &friend_, const YLSession &session)
+void YLListItem::setData(const YLFriend &friend_, const YLSession &session)
 {
     this->friend_ = friend_;
     session_ = session;
@@ -197,7 +197,20 @@ void YLFriendListItem::setData(const YLFriend &friend_, const YLSession &session
     m_http_helper->download(friend_.friendImagePath());
 }
 
-void YLFriendListItem::resizeEvent(QResizeEvent *event)
+void YLListItem::setData(const YLGroup &g, const YLSession &session)
+{
+
+}
+
+void YLListItem::setData(const YLSession &session)
+{
+    if (item_type_ == REQUEST)
+    {
+        label_up_->setText("验证消息");
+    }
+}
+
+void YLListItem::resizeEvent(QResizeEvent *event)
 {
     int h = height();
     head_frame_->move(5, (h - head_frame_->height()) / 2);
@@ -208,14 +221,14 @@ void YLFriendListItem::resizeEvent(QResizeEvent *event)
     QWidget::resizeEvent(event);
 }
 
-void YLFriendListItem::mousePressEvent(QMouseEvent *event)
+void YLListItem::mousePressEvent(QMouseEvent *event)
 {
     QWidget::mousePressEvent(event);
     if (event->button() == Qt::RightButton)
         menu_->exec(QCursor::pos());
 }
 
-void YLFriendListItem::paintEvent(QPaintEvent *event)
+void YLListItem::paintEvent(QPaintEvent *event)
 {
     if (session_.sessionTop())
     {
@@ -229,7 +242,7 @@ void YLFriendListItem::paintEvent(QPaintEvent *event)
 
 
 
-void YLFriendListItem::openChatWidget()
+void YLListItem::openChatWidget()
 {
     YLChatWidget *chatWidget = GlobalData::getChatWidget(friend_.friendId());
     if (chatWidget == nullptr)

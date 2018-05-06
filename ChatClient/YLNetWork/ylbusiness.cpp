@@ -251,6 +251,22 @@ void YLBusiness::addFriend(uint32_t friendId, const QString &validateData, const
     PduSender::instance()->addMessage(basePdu);
 }
 
+void YLBusiness::addFriendRespone(uint32_t friendId, uint32_t result, uint32_t groupId, const QString &remark)
+{
+    friendlist::AddFriendRespone respone;
+    respone.set_user_id(GlobalData::getCurrLoginUserId());
+    respone.set_friend_id(friendId);
+    respone.set_result_id(result);
+    respone.set_group_id(groupId);
+    respone.set_remark(remark.toStdString());
+
+    BasePdu *basePdu = new BasePdu;
+    basePdu->setSID(SID_FRIEND_LIST);
+    basePdu->setCID(CID_FRIENDLIST_ADD_FRIEND_RESPONE);
+    basePdu->writeMessage(&respone);
+    PduSender::instance()->addMessage(basePdu);
+}
+
 /******************SESSION*********************/
 void YLBusiness::getSessions(uint32_t userId)
 {
@@ -287,6 +303,18 @@ void YLBusiness::topSession(uint32_t userId, uint32_t sessionId)
     BasePdu *basePdu = new BasePdu;
     basePdu->setSID(SID_SESSION);
     basePdu->setCID(CID_SESSIONLIST_TOP_SESSION);
+    basePdu->writeMessage(&request);
+    PduSender::instance()->addMessage(basePdu);
+}
+
+void YLBusiness::getAllAddRequests()
+{
+    friendlist::GetAddRequestHistoryRequest request;
+    request.set_user_id(GlobalData::getCurrLoginUserId());
+
+    BasePdu *basePdu = new BasePdu;
+    basePdu->setSID(SID_FRIEND_LIST);
+    basePdu->setCID(CID_FRIENDLIST_GET_REQUEST_HISTORY_REQUEST);
     basePdu->writeMessage(&request);
     PduSender::instance()->addMessage(basePdu);
 }

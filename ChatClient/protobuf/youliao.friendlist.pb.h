@@ -40,7 +40,7 @@ namespace protobuf_youliao_2efriendlist_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[22];
+  static const ::google::protobuf::internal::ParseTable schema[25];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -90,6 +90,12 @@ void InitDefaultsSearchFriendResponeImpl();
 void InitDefaultsSearchFriendRespone();
 void InitDefaultsAddFriendRequestImpl();
 void InitDefaultsAddFriendRequest();
+void InitDefaultsAddFriendResponeImpl();
+void InitDefaultsAddFriendRespone();
+void InitDefaultsGetAddRequestHistoryRequestImpl();
+void InitDefaultsGetAddRequestHistoryRequest();
+void InitDefaultsGetAddRequestHistoryResponeImpl();
+void InitDefaultsGetAddRequestHistoryRespone();
 inline void InitDefaults() {
   InitDefaultsGroup_Friend();
   InitDefaultsFriendListRequest();
@@ -113,6 +119,9 @@ inline void InitDefaults() {
   InitDefaultsSearchFriendRequest();
   InitDefaultsSearchFriendRespone();
   InitDefaultsAddFriendRequest();
+  InitDefaultsAddFriendRespone();
+  InitDefaultsGetAddRequestHistoryRequest();
+  InitDefaultsGetAddRequestHistoryRespone();
 }
 }  // namespace protobuf_youliao_2efriendlist_2eproto
 namespace youliao {
@@ -121,6 +130,9 @@ namespace friendlist {
 class AddFriendRequest;
 class AddFriendRequestDefaultTypeInternal;
 extern AddFriendRequestDefaultTypeInternal _AddFriendRequest_default_instance_;
+class AddFriendRespone;
+class AddFriendResponeDefaultTypeInternal;
+extern AddFriendResponeDefaultTypeInternal _AddFriendRespone_default_instance_;
 class AddNewFriendGroupRequest;
 class AddNewFriendGroupRequestDefaultTypeInternal;
 extern AddNewFriendGroupRequestDefaultTypeInternal _AddNewFriendGroupRequest_default_instance_;
@@ -148,6 +160,12 @@ extern FriendSignatureChangedNotifyDefaultTypeInternal _FriendSignatureChangedNo
 class FriendStatusChangeMessage;
 class FriendStatusChangeMessageDefaultTypeInternal;
 extern FriendStatusChangeMessageDefaultTypeInternal _FriendStatusChangeMessage_default_instance_;
+class GetAddRequestHistoryRequest;
+class GetAddRequestHistoryRequestDefaultTypeInternal;
+extern GetAddRequestHistoryRequestDefaultTypeInternal _GetAddRequestHistoryRequest_default_instance_;
+class GetAddRequestHistoryRespone;
+class GetAddRequestHistoryResponeDefaultTypeInternal;
+extern GetAddRequestHistoryResponeDefaultTypeInternal _GetAddRequestHistoryRespone_default_instance_;
 class Group_Friend;
 class Group_FriendDefaultTypeInternal;
 extern Group_FriendDefaultTypeInternal _Group_Friend_default_instance_;
@@ -190,6 +208,7 @@ extern SignatureChangeResquestDefaultTypeInternal _SignatureChangeResquest_defau
 namespace google {
 namespace protobuf {
 template<> ::youliao::pdu::friendlist::AddFriendRequest* Arena::Create< ::youliao::pdu::friendlist::AddFriendRequest>(Arena*);
+template<> ::youliao::pdu::friendlist::AddFriendRespone* Arena::Create< ::youliao::pdu::friendlist::AddFriendRespone>(Arena*);
 template<> ::youliao::pdu::friendlist::AddNewFriendGroupRequest* Arena::Create< ::youliao::pdu::friendlist::AddNewFriendGroupRequest>(Arena*);
 template<> ::youliao::pdu::friendlist::AddNewFriendGroupRespone* Arena::Create< ::youliao::pdu::friendlist::AddNewFriendGroupRespone>(Arena*);
 template<> ::youliao::pdu::friendlist::DeleteFriendGroupRequest* Arena::Create< ::youliao::pdu::friendlist::DeleteFriendGroupRequest>(Arena*);
@@ -199,6 +218,8 @@ template<> ::youliao::pdu::friendlist::FriendListRespone* Arena::Create< ::youli
 template<> ::youliao::pdu::friendlist::FriendListRespone_FriendListEntry_DoNotUse* Arena::Create< ::youliao::pdu::friendlist::FriendListRespone_FriendListEntry_DoNotUse>(Arena*);
 template<> ::youliao::pdu::friendlist::FriendSignatureChangedNotify* Arena::Create< ::youliao::pdu::friendlist::FriendSignatureChangedNotify>(Arena*);
 template<> ::youliao::pdu::friendlist::FriendStatusChangeMessage* Arena::Create< ::youliao::pdu::friendlist::FriendStatusChangeMessage>(Arena*);
+template<> ::youliao::pdu::friendlist::GetAddRequestHistoryRequest* Arena::Create< ::youliao::pdu::friendlist::GetAddRequestHistoryRequest>(Arena*);
+template<> ::youliao::pdu::friendlist::GetAddRequestHistoryRespone* Arena::Create< ::youliao::pdu::friendlist::GetAddRequestHistoryRespone>(Arena*);
 template<> ::youliao::pdu::friendlist::Group_Friend* Arena::Create< ::youliao::pdu::friendlist::Group_Friend>(Arena*);
 template<> ::youliao::pdu::friendlist::GroupsRequest* Arena::Create< ::youliao::pdu::friendlist::GroupsRequest>(Arena*);
 template<> ::youliao::pdu::friendlist::GroupsRespone* Arena::Create< ::youliao::pdu::friendlist::GroupsRespone>(Arena*);
@@ -2693,6 +2714,364 @@ class AddFriendRequest : public ::google::protobuf::Message /* @@protoc_insertio
   friend struct ::protobuf_youliao_2efriendlist_2eproto::TableStruct;
   friend void ::protobuf_youliao_2efriendlist_2eproto::InitDefaultsAddFriendRequestImpl();
 };
+// -------------------------------------------------------------------
+
+class AddFriendRespone : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.friendlist.AddFriendRespone) */ {
+ public:
+  AddFriendRespone();
+  virtual ~AddFriendRespone();
+
+  AddFriendRespone(const AddFriendRespone& from);
+
+  inline AddFriendRespone& operator=(const AddFriendRespone& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  AddFriendRespone(AddFriendRespone&& from) noexcept
+    : AddFriendRespone() {
+    *this = ::std::move(from);
+  }
+
+  inline AddFriendRespone& operator=(AddFriendRespone&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const AddFriendRespone& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const AddFriendRespone* internal_default_instance() {
+    return reinterpret_cast<const AddFriendRespone*>(
+               &_AddFriendRespone_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    22;
+
+  void Swap(AddFriendRespone* other);
+  friend void swap(AddFriendRespone& a, AddFriendRespone& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline AddFriendRespone* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<AddFriendRespone>(NULL);
+  }
+
+  AddFriendRespone* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<AddFriendRespone>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const AddFriendRespone& from);
+  void MergeFrom(const AddFriendRespone& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(AddFriendRespone* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string remark = 5;
+  void clear_remark();
+  static const int kRemarkFieldNumber = 5;
+  const ::std::string& remark() const;
+  void set_remark(const ::std::string& value);
+  #if LANG_CXX11
+  void set_remark(::std::string&& value);
+  #endif
+  void set_remark(const char* value);
+  void set_remark(const char* value, size_t size);
+  ::std::string* mutable_remark();
+  ::std::string* release_remark();
+  void set_allocated_remark(::std::string* remark);
+
+  // uint32 user_id = 1;
+  void clear_user_id();
+  static const int kUserIdFieldNumber = 1;
+  ::google::protobuf::uint32 user_id() const;
+  void set_user_id(::google::protobuf::uint32 value);
+
+  // uint32 friend_id = 2;
+  void clear_friend_id();
+  static const int kFriendIdFieldNumber = 2;
+  ::google::protobuf::uint32 friend_id() const;
+  void set_friend_id(::google::protobuf::uint32 value);
+
+  // uint32 result_id = 3;
+  void clear_result_id();
+  static const int kResultIdFieldNumber = 3;
+  ::google::protobuf::uint32 result_id() const;
+  void set_result_id(::google::protobuf::uint32 value);
+
+  // uint32 group_id = 4;
+  void clear_group_id();
+  static const int kGroupIdFieldNumber = 4;
+  ::google::protobuf::uint32 group_id() const;
+  void set_group_id(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.friendlist.AddFriendRespone)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr remark_;
+  ::google::protobuf::uint32 user_id_;
+  ::google::protobuf::uint32 friend_id_;
+  ::google::protobuf::uint32 result_id_;
+  ::google::protobuf::uint32 group_id_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2efriendlist_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2efriendlist_2eproto::InitDefaultsAddFriendResponeImpl();
+};
+// -------------------------------------------------------------------
+
+class GetAddRequestHistoryRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.friendlist.GetAddRequestHistoryRequest) */ {
+ public:
+  GetAddRequestHistoryRequest();
+  virtual ~GetAddRequestHistoryRequest();
+
+  GetAddRequestHistoryRequest(const GetAddRequestHistoryRequest& from);
+
+  inline GetAddRequestHistoryRequest& operator=(const GetAddRequestHistoryRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  GetAddRequestHistoryRequest(GetAddRequestHistoryRequest&& from) noexcept
+    : GetAddRequestHistoryRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline GetAddRequestHistoryRequest& operator=(GetAddRequestHistoryRequest&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const GetAddRequestHistoryRequest& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const GetAddRequestHistoryRequest* internal_default_instance() {
+    return reinterpret_cast<const GetAddRequestHistoryRequest*>(
+               &_GetAddRequestHistoryRequest_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    23;
+
+  void Swap(GetAddRequestHistoryRequest* other);
+  friend void swap(GetAddRequestHistoryRequest& a, GetAddRequestHistoryRequest& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline GetAddRequestHistoryRequest* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<GetAddRequestHistoryRequest>(NULL);
+  }
+
+  GetAddRequestHistoryRequest* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<GetAddRequestHistoryRequest>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const GetAddRequestHistoryRequest& from);
+  void MergeFrom(const GetAddRequestHistoryRequest& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(GetAddRequestHistoryRequest* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // uint32 user_id = 1;
+  void clear_user_id();
+  static const int kUserIdFieldNumber = 1;
+  ::google::protobuf::uint32 user_id() const;
+  void set_user_id(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.friendlist.GetAddRequestHistoryRequest)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 user_id_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2efriendlist_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2efriendlist_2eproto::InitDefaultsGetAddRequestHistoryRequestImpl();
+};
+// -------------------------------------------------------------------
+
+class GetAddRequestHistoryRespone : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.friendlist.GetAddRequestHistoryRespone) */ {
+ public:
+  GetAddRequestHistoryRespone();
+  virtual ~GetAddRequestHistoryRespone();
+
+  GetAddRequestHistoryRespone(const GetAddRequestHistoryRespone& from);
+
+  inline GetAddRequestHistoryRespone& operator=(const GetAddRequestHistoryRespone& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  GetAddRequestHistoryRespone(GetAddRequestHistoryRespone&& from) noexcept
+    : GetAddRequestHistoryRespone() {
+    *this = ::std::move(from);
+  }
+
+  inline GetAddRequestHistoryRespone& operator=(GetAddRequestHistoryRespone&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const GetAddRequestHistoryRespone& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const GetAddRequestHistoryRespone* internal_default_instance() {
+    return reinterpret_cast<const GetAddRequestHistoryRespone*>(
+               &_GetAddRequestHistoryRespone_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    24;
+
+  void Swap(GetAddRequestHistoryRespone* other);
+  friend void swap(GetAddRequestHistoryRespone& a, GetAddRequestHistoryRespone& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline GetAddRequestHistoryRespone* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<GetAddRequestHistoryRespone>(NULL);
+  }
+
+  GetAddRequestHistoryRespone* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<GetAddRequestHistoryRespone>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const GetAddRequestHistoryRespone& from);
+  void MergeFrom(const GetAddRequestHistoryRespone& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(GetAddRequestHistoryRespone* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated .youliao.pdu.base.AddRequestInfo history = 2;
+  int history_size() const;
+  void clear_history();
+  static const int kHistoryFieldNumber = 2;
+  ::youliao::pdu::base::AddRequestInfo* mutable_history(int index);
+  ::google::protobuf::RepeatedPtrField< ::youliao::pdu::base::AddRequestInfo >*
+      mutable_history();
+  const ::youliao::pdu::base::AddRequestInfo& history(int index) const;
+  ::youliao::pdu::base::AddRequestInfo* add_history();
+  const ::google::protobuf::RepeatedPtrField< ::youliao::pdu::base::AddRequestInfo >&
+      history() const;
+
+  // uint32 user_id = 1;
+  void clear_user_id();
+  static const int kUserIdFieldNumber = 1;
+  ::google::protobuf::uint32 user_id() const;
+  void set_user_id(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.friendlist.GetAddRequestHistoryRespone)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::RepeatedPtrField< ::youliao::pdu::base::AddRequestInfo > history_;
+  ::google::protobuf::uint32 user_id_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2efriendlist_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2efriendlist_2eproto::InitDefaultsGetAddRequestHistoryResponeImpl();
+};
 // ===================================================================
 
 
@@ -4131,9 +4510,191 @@ inline void AddFriendRequest::set_allocated_validatedata(::std::string* validate
   // @@protoc_insertion_point(field_set_allocated:youliao.pdu.friendlist.AddFriendRequest.validateData)
 }
 
+// -------------------------------------------------------------------
+
+// AddFriendRespone
+
+// uint32 user_id = 1;
+inline void AddFriendRespone::clear_user_id() {
+  user_id_ = 0u;
+}
+inline ::google::protobuf::uint32 AddFriendRespone::user_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.friendlist.AddFriendRespone.user_id)
+  return user_id_;
+}
+inline void AddFriendRespone::set_user_id(::google::protobuf::uint32 value) {
+  
+  user_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.friendlist.AddFriendRespone.user_id)
+}
+
+// uint32 friend_id = 2;
+inline void AddFriendRespone::clear_friend_id() {
+  friend_id_ = 0u;
+}
+inline ::google::protobuf::uint32 AddFriendRespone::friend_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.friendlist.AddFriendRespone.friend_id)
+  return friend_id_;
+}
+inline void AddFriendRespone::set_friend_id(::google::protobuf::uint32 value) {
+  
+  friend_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.friendlist.AddFriendRespone.friend_id)
+}
+
+// uint32 result_id = 3;
+inline void AddFriendRespone::clear_result_id() {
+  result_id_ = 0u;
+}
+inline ::google::protobuf::uint32 AddFriendRespone::result_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.friendlist.AddFriendRespone.result_id)
+  return result_id_;
+}
+inline void AddFriendRespone::set_result_id(::google::protobuf::uint32 value) {
+  
+  result_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.friendlist.AddFriendRespone.result_id)
+}
+
+// uint32 group_id = 4;
+inline void AddFriendRespone::clear_group_id() {
+  group_id_ = 0u;
+}
+inline ::google::protobuf::uint32 AddFriendRespone::group_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.friendlist.AddFriendRespone.group_id)
+  return group_id_;
+}
+inline void AddFriendRespone::set_group_id(::google::protobuf::uint32 value) {
+  
+  group_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.friendlist.AddFriendRespone.group_id)
+}
+
+// string remark = 5;
+inline void AddFriendRespone::clear_remark() {
+  remark_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& AddFriendRespone::remark() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.friendlist.AddFriendRespone.remark)
+  return remark_.GetNoArena();
+}
+inline void AddFriendRespone::set_remark(const ::std::string& value) {
+  
+  remark_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:youliao.pdu.friendlist.AddFriendRespone.remark)
+}
+#if LANG_CXX11
+inline void AddFriendRespone::set_remark(::std::string&& value) {
+  
+  remark_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:youliao.pdu.friendlist.AddFriendRespone.remark)
+}
+#endif
+inline void AddFriendRespone::set_remark(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  remark_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:youliao.pdu.friendlist.AddFriendRespone.remark)
+}
+inline void AddFriendRespone::set_remark(const char* value, size_t size) {
+  
+  remark_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:youliao.pdu.friendlist.AddFriendRespone.remark)
+}
+inline ::std::string* AddFriendRespone::mutable_remark() {
+  
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.friendlist.AddFriendRespone.remark)
+  return remark_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* AddFriendRespone::release_remark() {
+  // @@protoc_insertion_point(field_release:youliao.pdu.friendlist.AddFriendRespone.remark)
+  
+  return remark_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void AddFriendRespone::set_allocated_remark(::std::string* remark) {
+  if (remark != NULL) {
+    
+  } else {
+    
+  }
+  remark_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), remark);
+  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.friendlist.AddFriendRespone.remark)
+}
+
+// -------------------------------------------------------------------
+
+// GetAddRequestHistoryRequest
+
+// uint32 user_id = 1;
+inline void GetAddRequestHistoryRequest::clear_user_id() {
+  user_id_ = 0u;
+}
+inline ::google::protobuf::uint32 GetAddRequestHistoryRequest::user_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.friendlist.GetAddRequestHistoryRequest.user_id)
+  return user_id_;
+}
+inline void GetAddRequestHistoryRequest::set_user_id(::google::protobuf::uint32 value) {
+  
+  user_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.friendlist.GetAddRequestHistoryRequest.user_id)
+}
+
+// -------------------------------------------------------------------
+
+// GetAddRequestHistoryRespone
+
+// uint32 user_id = 1;
+inline void GetAddRequestHistoryRespone::clear_user_id() {
+  user_id_ = 0u;
+}
+inline ::google::protobuf::uint32 GetAddRequestHistoryRespone::user_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.friendlist.GetAddRequestHistoryRespone.user_id)
+  return user_id_;
+}
+inline void GetAddRequestHistoryRespone::set_user_id(::google::protobuf::uint32 value) {
+  
+  user_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.friendlist.GetAddRequestHistoryRespone.user_id)
+}
+
+// repeated .youliao.pdu.base.AddRequestInfo history = 2;
+inline int GetAddRequestHistoryRespone::history_size() const {
+  return history_.size();
+}
+inline ::youliao::pdu::base::AddRequestInfo* GetAddRequestHistoryRespone::mutable_history(int index) {
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.friendlist.GetAddRequestHistoryRespone.history)
+  return history_.Mutable(index);
+}
+inline ::google::protobuf::RepeatedPtrField< ::youliao::pdu::base::AddRequestInfo >*
+GetAddRequestHistoryRespone::mutable_history() {
+  // @@protoc_insertion_point(field_mutable_list:youliao.pdu.friendlist.GetAddRequestHistoryRespone.history)
+  return &history_;
+}
+inline const ::youliao::pdu::base::AddRequestInfo& GetAddRequestHistoryRespone::history(int index) const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.friendlist.GetAddRequestHistoryRespone.history)
+  return history_.Get(index);
+}
+inline ::youliao::pdu::base::AddRequestInfo* GetAddRequestHistoryRespone::add_history() {
+  // @@protoc_insertion_point(field_add:youliao.pdu.friendlist.GetAddRequestHistoryRespone.history)
+  return history_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::youliao::pdu::base::AddRequestInfo >&
+GetAddRequestHistoryRespone::history() const {
+  // @@protoc_insertion_point(field_list:youliao.pdu.friendlist.GetAddRequestHistoryRespone.history)
+  return history_;
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

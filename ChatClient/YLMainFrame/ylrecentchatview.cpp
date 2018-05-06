@@ -1,5 +1,5 @@
 #include "ylrecentchatview.h"
-#include "ylfriendlistitem.h"
+#include "yllistitem.h"
 #include "YLNetWork/pduhandler.h"
 #include "YLNetWork/ylbusiness.h"
 #include "globaldata.h"
@@ -68,12 +68,13 @@ void YLRecentChatView::add(const YLSession &session, int pos)
     QListWidgetItem *item = new QListWidgetItem;
     insertItem(pos, item);
     item->setSizeHint(QSize(width() - 30, 56));
-    YLFriendListItem *item_widget = new YLFriendListItem(YLFriendListItem::RECENTTLYCHATITEM);
-    connect(item_widget, &YLFriendListItem::moveToTop,      this, &YLRecentChatView::on_move_to_top);
-    connect(item_widget, &YLFriendListItem::deleteFromList, this, &YLRecentChatView::on_del_from_list);
-    connect(item_widget, &YLFriendListItem::readCompleted, this, &YLRecentChatView::readComplete);
+    YLListItem *item_widget = new YLListItem(YLListItem::RECENTTLYCHATITEM);
+    connect(item_widget, &YLListItem::moveToTop,      this, &YLRecentChatView::on_move_to_top);
+    connect(item_widget, &YLListItem::deleteFromList, this, &YLRecentChatView::on_del_from_list);
+    connect(item_widget, &YLListItem::readCompleted, this, &YLRecentChatView::readComplete);
 
     item_widget->setData(GlobalData::getFriendById(session.getOtherId()), session);
+
     setItemWidget(item, item_widget);
 }
 
@@ -110,7 +111,7 @@ void YLRecentChatView::updateList()
     for (auto elem : m_top_data)
     {
         add(elem, i);
-        static_cast<YLFriendListItem*>(itemWidget(item(i++)))->setMarkTop(true);
+        static_cast<YLListItem*>(itemWidget(item(i++)))->setMarkTop(true);
     }
 
     for (auto &elem : m_data)
@@ -201,7 +202,7 @@ void YLRecentChatView::newSession(uint32_t otherId, uint32_t sessionId)
 {
     for (auto &session : m_top_data)
     {
-        if (session.getSessionType() == base::SESSION_TYPE_SINGLE && session.getOtherId() == otherId)
+        if (session.getOtherId() == otherId)
         {
             session.setSessionId(sessionId);
             break;
@@ -210,7 +211,7 @@ void YLRecentChatView::newSession(uint32_t otherId, uint32_t sessionId)
 
     for (auto &session : m_data)
     {
-        if (session.getSessionType() == base::SESSION_TYPE_SINGLE && session.getOtherId() == otherId)
+        if (session.getOtherId() == otherId)
         {
             session.setSessionId(sessionId);
             break;

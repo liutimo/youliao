@@ -153,6 +153,9 @@ void DBServConn::handlePdu(BasePdu *pdu)
         case base::CID_MESSAGE_GET_LATEST_MSG_ID_RESPONE:
             _HandleGetLatestMsgIdRespone(pdu);
             break;
+        case base::CID_FRIENDLIST_GET_REQUEST_HISTORY_RESPONE:
+            _HandleGetAddRequestHistoryRespone(pdu);
+            break;
         default:
             break;
     }
@@ -373,8 +376,11 @@ void DBServConn::_HandleAddSessionRespone(BasePdu *basePdu)
         if (conn)
         {
             sendMessage(conn, respone, base::SID_SESSION, base::CID_SESSIONLIST_ADD_SESSION);
+            return;
         }
     }
+
+    //请求路由服务器转发
 
 }
 
@@ -413,6 +419,26 @@ void DBServConn::_HandleGetLatestMsgIdRespone(BasePdu *basePdu)
         if (conn)
         {
             sendMessage(conn, respone, base::SID_MESSAGE, base::CID_MESSAGE_GET_LATEST_MSG_ID_RESPONE);
+        }
+    }
+}
+
+
+void DBServConn::_HandleGetAddRequestHistoryRespone(BasePdu *pdu)
+{
+    friendlist::GetAddRequestHistoryRespone respone;
+    respone.ParseFromString(pdu->getMessage());
+
+    uint32_t userId = respone.user_id();
+
+    auto user = UserManager::instance()->getUser(userId);
+
+    if (user)
+    {
+        auto conn = user->getConn();
+        if (conn)
+        {
+            sendMessage(conn, respone, base::SID_FRIEND_LIST, base::CID_FRIENDLIST_GET_REQUEST_HISTORY_RESPONE);
         }
     }
 }

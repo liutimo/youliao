@@ -49,6 +49,8 @@ private:
     void _HandleSearchFriendRequest(BasePdu *);
     void _HandleAddFriendRequest(BasePdu *);
     void _HandleGetLatestMsgIdRequest(BasePdu *);
+    void _HandleGetLatestMsgIdRespone(BasePdu *);
+    void _HandlerGetAddRequestHistoryRequest(BasePdu *);
 
 public:
     uint64_t m_last_heart_beat_tick;    //最后一次收到心跳包的时间

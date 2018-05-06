@@ -27,7 +27,7 @@ public:
 
     void setWidgetTitle(const QString &title);
 
-    void setWidgetIcon(const QString &fileName);
+    void setWidgetIcon(const QString fileName = ":/res/MainFrame/logo.png");
 private slots:
     virtual void on_close();
 

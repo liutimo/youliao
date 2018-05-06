@@ -14,14 +14,22 @@ public:
     void setOtherNick(const QString &nick);
     void setOtherHeadUrl(const QString &url);
     void setValidateData(const QString &validateData);
+    void setId(uint32_t id);
+    void setHandleTime(uint32_t time);
+    void setResultId(uint32_t resId);
 
     uint32_t getOtherId() const;
     QString getOtherNick() const;
     QString getOtherHeadUrl() const;
     QString getValidateData() const;
-
+    uint32_t getId() const;
+    uint32_t getHandleTime() const;
+    uint32_t getResultId() const;
 private:
+    uint32_t m_id;
     uint32_t m_other_id;
+    uint32_t m_result_id;
+    uint32_t m_handle_time;
     QString m_other_nick;
     QString m_head_url;
     QString m_validate_data;

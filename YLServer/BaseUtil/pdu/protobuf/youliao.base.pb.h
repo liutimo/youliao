@@ -37,7 +37,7 @@ namespace protobuf_youliao_2ebase_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[4];
+  static const ::google::protobuf::internal::ParseTable schema[5];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -49,18 +49,24 @@ void InitDefaultsFriendInfoImpl();
 void InitDefaultsFriendInfo();
 void InitDefaultsSessionInfoImpl();
 void InitDefaultsSessionInfo();
+void InitDefaultsAddRequestInfoImpl();
+void InitDefaultsAddRequestInfo();
 void InitDefaultsHeartBeatImpl();
 void InitDefaultsHeartBeat();
 inline void InitDefaults() {
   InitDefaultsUserInfo();
   InitDefaultsFriendInfo();
   InitDefaultsSessionInfo();
+  InitDefaultsAddRequestInfo();
   InitDefaultsHeartBeat();
 }
 }  // namespace protobuf_youliao_2ebase_2eproto
 namespace youliao {
 namespace pdu {
 namespace base {
+class AddRequestInfo;
+class AddRequestInfoDefaultTypeInternal;
+extern AddRequestInfoDefaultTypeInternal _AddRequestInfo_default_instance_;
 class FriendInfo;
 class FriendInfoDefaultTypeInternal;
 extern FriendInfoDefaultTypeInternal _FriendInfo_default_instance_;
@@ -78,6 +84,7 @@ extern UserInfoDefaultTypeInternal _UserInfo_default_instance_;
 }  // namespace youliao
 namespace google {
 namespace protobuf {
+template<> ::youliao::pdu::base::AddRequestInfo* Arena::Create< ::youliao::pdu::base::AddRequestInfo>(Arena*);
 template<> ::youliao::pdu::base::FriendInfo* Arena::Create< ::youliao::pdu::base::FriendInfo>(Arena*);
 template<> ::youliao::pdu::base::HeartBeat* Arena::Create< ::youliao::pdu::base::HeartBeat>(Arena*);
 template<> ::youliao::pdu::base::SessionInfo* Arena::Create< ::youliao::pdu::base::SessionInfo>(Arena*);
@@ -214,12 +221,15 @@ enum FriendListCID {
   CID_FRIENDLIST_SEARCH_FRIEND_REQUEST = 1041,
   CID_FRIENDLIST_SEARCH_FRIEND_RESPONE = 1042,
   CID_FRIENDLIST_ADD_FRIEND_REQUEST = 1043,
+  CID_FRIENDLIST_ADD_FRIEND_RESPONE = 1044,
+  CID_FRIENDLIST_GET_REQUEST_HISTORY_REQUEST = 1045,
+  CID_FRIENDLIST_GET_REQUEST_HISTORY_RESPONE = 1046,
   FriendListCID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   FriendListCID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool FriendListCID_IsValid(int value);
 const FriendListCID FriendListCID_MIN = CID_FRIENDLIST_ZERO;
-const FriendListCID FriendListCID_MAX = CID_FRIENDLIST_ADD_FRIEND_REQUEST;
+const FriendListCID FriendListCID_MAX = CID_FRIENDLIST_GET_REQUEST_HISTORY_RESPONE;
 const int FriendListCID_ARRAYSIZE = FriendListCID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* FriendListCID_descriptor();
@@ -333,12 +343,13 @@ enum SessionType {
   SESSION_TYPE_ZERO = 0,
   SESSION_TYPE_SINGLE = 1,
   SESSION_TYPE_GROUP = 2,
+  SESSION_TYPE_VALIDATE_MSG = 3,
   SessionType_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   SessionType_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool SessionType_IsValid(int value);
 const SessionType SessionType_MIN = SESSION_TYPE_ZERO;
-const SessionType SessionType_MAX = SESSION_TYPE_GROUP;
+const SessionType SessionType_MAX = SESSION_TYPE_VALIDATE_MSG;
 const int SessionType_ARRAYSIZE = SessionType_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* SessionType_descriptor();
@@ -379,12 +390,13 @@ enum MessageType {
   MESSAGE_TYPE_SINGLE_AUDIO = 2,
   MESSAGE_TYPE_GROUP_TEXT = 3,
   MESSAGE_TYPE_GROUP_AUDIO = 4,
+  MESSAGE_TYPE_VALIDATE_MSG = 5,
   MessageType_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   MessageType_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool MessageType_IsValid(int value);
 const MessageType MessageType_MIN = MESSAGE_ZERO;
-const MessageType MessageType_MAX = MESSAGE_TYPE_GROUP_AUDIO;
+const MessageType MessageType_MAX = MESSAGE_TYPE_VALIDATE_MSG;
 const int MessageType_ARRAYSIZE = MessageType_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* MessageType_descriptor();
@@ -1009,6 +1021,175 @@ class SessionInfo : public ::google::protobuf::Message /* @@protoc_insertion_poi
 };
 // -------------------------------------------------------------------
 
+class AddRequestInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.base.AddRequestInfo) */ {
+ public:
+  AddRequestInfo();
+  virtual ~AddRequestInfo();
+
+  AddRequestInfo(const AddRequestInfo& from);
+
+  inline AddRequestInfo& operator=(const AddRequestInfo& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  AddRequestInfo(AddRequestInfo&& from) noexcept
+    : AddRequestInfo() {
+    *this = ::std::move(from);
+  }
+
+  inline AddRequestInfo& operator=(AddRequestInfo&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const AddRequestInfo& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const AddRequestInfo* internal_default_instance() {
+    return reinterpret_cast<const AddRequestInfo*>(
+               &_AddRequestInfo_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    3;
+
+  void Swap(AddRequestInfo* other);
+  friend void swap(AddRequestInfo& a, AddRequestInfo& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline AddRequestInfo* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<AddRequestInfo>(NULL);
+  }
+
+  AddRequestInfo* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<AddRequestInfo>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const AddRequestInfo& from);
+  void MergeFrom(const AddRequestInfo& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(AddRequestInfo* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string validate_data = 5;
+  void clear_validate_data();
+  static const int kValidateDataFieldNumber = 5;
+  const ::std::string& validate_data() const;
+  void set_validate_data(const ::std::string& value);
+  #if LANG_CXX11
+  void set_validate_data(::std::string&& value);
+  #endif
+  void set_validate_data(const char* value);
+  void set_validate_data(const char* value, size_t size);
+  ::std::string* mutable_validate_data();
+  ::std::string* release_validate_data();
+  void set_allocated_validate_data(::std::string* validate_data);
+
+  // string other_head_url = 6;
+  void clear_other_head_url();
+  static const int kOtherHeadUrlFieldNumber = 6;
+  const ::std::string& other_head_url() const;
+  void set_other_head_url(const ::std::string& value);
+  #if LANG_CXX11
+  void set_other_head_url(::std::string&& value);
+  #endif
+  void set_other_head_url(const char* value);
+  void set_other_head_url(const char* value, size_t size);
+  ::std::string* mutable_other_head_url();
+  ::std::string* release_other_head_url();
+  void set_allocated_other_head_url(::std::string* other_head_url);
+
+  // string other_nick = 7;
+  void clear_other_nick();
+  static const int kOtherNickFieldNumber = 7;
+  const ::std::string& other_nick() const;
+  void set_other_nick(const ::std::string& value);
+  #if LANG_CXX11
+  void set_other_nick(::std::string&& value);
+  #endif
+  void set_other_nick(const char* value);
+  void set_other_nick(const char* value, size_t size);
+  ::std::string* mutable_other_nick();
+  ::std::string* release_other_nick();
+  void set_allocated_other_nick(::std::string* other_nick);
+
+  // uint32 id = 1;
+  void clear_id();
+  static const int kIdFieldNumber = 1;
+  ::google::protobuf::uint32 id() const;
+  void set_id(::google::protobuf::uint32 value);
+
+  // uint32 other_id = 2;
+  void clear_other_id();
+  static const int kOtherIdFieldNumber = 2;
+  ::google::protobuf::uint32 other_id() const;
+  void set_other_id(::google::protobuf::uint32 value);
+
+  // uint32 result_id = 3;
+  void clear_result_id();
+  static const int kResultIdFieldNumber = 3;
+  ::google::protobuf::uint32 result_id() const;
+  void set_result_id(::google::protobuf::uint32 value);
+
+  // uint32 handle_time = 4;
+  void clear_handle_time();
+  static const int kHandleTimeFieldNumber = 4;
+  ::google::protobuf::uint32 handle_time() const;
+  void set_handle_time(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.base.AddRequestInfo)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr validate_data_;
+  ::google::protobuf::internal::ArenaStringPtr other_head_url_;
+  ::google::protobuf::internal::ArenaStringPtr other_nick_;
+  ::google::protobuf::uint32 id_;
+  ::google::protobuf::uint32 other_id_;
+  ::google::protobuf::uint32 result_id_;
+  ::google::protobuf::uint32 handle_time_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2ebase_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2ebase_2eproto::InitDefaultsAddRequestInfoImpl();
+};
+// -------------------------------------------------------------------
+
 class HeartBeat : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.base.HeartBeat) */ {
  public:
   HeartBeat();
@@ -1044,7 +1225,7 @@ class HeartBeat : public ::google::protobuf::Message /* @@protoc_insertion_point
                &_HeartBeat_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    3;
+    4;
 
   void Swap(HeartBeat* other);
   friend void swap(HeartBeat& a, HeartBeat& b) {
@@ -1956,11 +2137,232 @@ inline void SessionInfo::set_allocated_last_message_data(::std::string* last_mes
 
 // -------------------------------------------------------------------
 
+// AddRequestInfo
+
+// uint32 id = 1;
+inline void AddRequestInfo::clear_id() {
+  id_ = 0u;
+}
+inline ::google::protobuf::uint32 AddRequestInfo::id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.AddRequestInfo.id)
+  return id_;
+}
+inline void AddRequestInfo::set_id(::google::protobuf::uint32 value) {
+  
+  id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.base.AddRequestInfo.id)
+}
+
+// uint32 other_id = 2;
+inline void AddRequestInfo::clear_other_id() {
+  other_id_ = 0u;
+}
+inline ::google::protobuf::uint32 AddRequestInfo::other_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.AddRequestInfo.other_id)
+  return other_id_;
+}
+inline void AddRequestInfo::set_other_id(::google::protobuf::uint32 value) {
+  
+  other_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.base.AddRequestInfo.other_id)
+}
+
+// uint32 result_id = 3;
+inline void AddRequestInfo::clear_result_id() {
+  result_id_ = 0u;
+}
+inline ::google::protobuf::uint32 AddRequestInfo::result_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.AddRequestInfo.result_id)
+  return result_id_;
+}
+inline void AddRequestInfo::set_result_id(::google::protobuf::uint32 value) {
+  
+  result_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.base.AddRequestInfo.result_id)
+}
+
+// uint32 handle_time = 4;
+inline void AddRequestInfo::clear_handle_time() {
+  handle_time_ = 0u;
+}
+inline ::google::protobuf::uint32 AddRequestInfo::handle_time() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.AddRequestInfo.handle_time)
+  return handle_time_;
+}
+inline void AddRequestInfo::set_handle_time(::google::protobuf::uint32 value) {
+  
+  handle_time_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.base.AddRequestInfo.handle_time)
+}
+
+// string validate_data = 5;
+inline void AddRequestInfo::clear_validate_data() {
+  validate_data_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& AddRequestInfo::validate_data() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.AddRequestInfo.validate_data)
+  return validate_data_.GetNoArena();
+}
+inline void AddRequestInfo::set_validate_data(const ::std::string& value) {
+  
+  validate_data_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:youliao.pdu.base.AddRequestInfo.validate_data)
+}
+#if LANG_CXX11
+inline void AddRequestInfo::set_validate_data(::std::string&& value) {
+  
+  validate_data_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:youliao.pdu.base.AddRequestInfo.validate_data)
+}
+#endif
+inline void AddRequestInfo::set_validate_data(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  validate_data_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:youliao.pdu.base.AddRequestInfo.validate_data)
+}
+inline void AddRequestInfo::set_validate_data(const char* value, size_t size) {
+  
+  validate_data_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:youliao.pdu.base.AddRequestInfo.validate_data)
+}
+inline ::std::string* AddRequestInfo::mutable_validate_data() {
+  
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.base.AddRequestInfo.validate_data)
+  return validate_data_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* AddRequestInfo::release_validate_data() {
+  // @@protoc_insertion_point(field_release:youliao.pdu.base.AddRequestInfo.validate_data)
+  
+  return validate_data_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void AddRequestInfo::set_allocated_validate_data(::std::string* validate_data) {
+  if (validate_data != NULL) {
+    
+  } else {
+    
+  }
+  validate_data_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), validate_data);
+  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.base.AddRequestInfo.validate_data)
+}
+
+// string other_head_url = 6;
+inline void AddRequestInfo::clear_other_head_url() {
+  other_head_url_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& AddRequestInfo::other_head_url() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.AddRequestInfo.other_head_url)
+  return other_head_url_.GetNoArena();
+}
+inline void AddRequestInfo::set_other_head_url(const ::std::string& value) {
+  
+  other_head_url_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:youliao.pdu.base.AddRequestInfo.other_head_url)
+}
+#if LANG_CXX11
+inline void AddRequestInfo::set_other_head_url(::std::string&& value) {
+  
+  other_head_url_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:youliao.pdu.base.AddRequestInfo.other_head_url)
+}
+#endif
+inline void AddRequestInfo::set_other_head_url(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  other_head_url_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:youliao.pdu.base.AddRequestInfo.other_head_url)
+}
+inline void AddRequestInfo::set_other_head_url(const char* value, size_t size) {
+  
+  other_head_url_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:youliao.pdu.base.AddRequestInfo.other_head_url)
+}
+inline ::std::string* AddRequestInfo::mutable_other_head_url() {
+  
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.base.AddRequestInfo.other_head_url)
+  return other_head_url_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* AddRequestInfo::release_other_head_url() {
+  // @@protoc_insertion_point(field_release:youliao.pdu.base.AddRequestInfo.other_head_url)
+  
+  return other_head_url_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void AddRequestInfo::set_allocated_other_head_url(::std::string* other_head_url) {
+  if (other_head_url != NULL) {
+    
+  } else {
+    
+  }
+  other_head_url_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), other_head_url);
+  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.base.AddRequestInfo.other_head_url)
+}
+
+// string other_nick = 7;
+inline void AddRequestInfo::clear_other_nick() {
+  other_nick_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& AddRequestInfo::other_nick() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.AddRequestInfo.other_nick)
+  return other_nick_.GetNoArena();
+}
+inline void AddRequestInfo::set_other_nick(const ::std::string& value) {
+  
+  other_nick_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:youliao.pdu.base.AddRequestInfo.other_nick)
+}
+#if LANG_CXX11
+inline void AddRequestInfo::set_other_nick(::std::string&& value) {
+  
+  other_nick_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:youliao.pdu.base.AddRequestInfo.other_nick)
+}
+#endif
+inline void AddRequestInfo::set_other_nick(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  other_nick_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:youliao.pdu.base.AddRequestInfo.other_nick)
+}
+inline void AddRequestInfo::set_other_nick(const char* value, size_t size) {
+  
+  other_nick_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:youliao.pdu.base.AddRequestInfo.other_nick)
+}
+inline ::std::string* AddRequestInfo::mutable_other_nick() {
+  
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.base.AddRequestInfo.other_nick)
+  return other_nick_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* AddRequestInfo::release_other_nick() {
+  // @@protoc_insertion_point(field_release:youliao.pdu.base.AddRequestInfo.other_nick)
+  
+  return other_nick_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void AddRequestInfo::set_allocated_other_nick(::std::string* other_nick) {
+  if (other_nick != NULL) {
+    
+  } else {
+    
+  }
+  other_nick_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), other_nick);
+  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.base.AddRequestInfo.other_nick)
+}
+
+// -------------------------------------------------------------------
+
 // HeartBeat
 
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

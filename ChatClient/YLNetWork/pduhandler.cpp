@@ -104,6 +104,9 @@ void PduHandler::_HandleBasePdu(BasePdu *pdu)
     case base::CID_FRIENDLIST_ADD_FRIEND_REQUEST:
         _HandleAddFriendRequest(pdu);
         break;
+    case base::CID_FRIENDLIST_GET_REQUEST_HISTORY_RESPONE:
+        _HandleGetAddRequestHistoryRespone(pdu);
+        break;
     default:
         std::cout << "CID" << pdu->getCID() << "  SID:" << pdu->getSID();
         break;
@@ -188,6 +191,22 @@ void PduHandler::_HandleMessageData(BasePdu *pdu)
     {
         YLMainTray::instance()->receiveMessage(messageData);
         emit unReadMessage(messageData.from_user_id(), messageData.message_data().c_str());
+    }
+
+    uint32_t msgType = messageData.message_type();
+    switch (msgType) {
+    case base::MESSAGE_TYPE_GROUP_TEXT:
+    case base::MESSAGE_TYPE_GROUP_AUDIO:
+        emit receiveNewMsg(YLSession::GROUP, messageData.from_user_id());
+        break;
+    case base::MESSAGE_TYPE_SINGLE_TEXT:
+    case base::MESSAGE_TYPE_SINGLE_AUDIO:
+        emit receiveNewMsg(YLSession::FRIEND, messageData.from_user_id());
+        break;
+    case base::MESSAGE_TYPE_VALIDATE_MSG:
+        emit receiveNewMsg(YLSession::REQUEST);
+    default:
+        break;
     }
 }
 
@@ -305,4 +324,29 @@ void PduHandler::_HandleAddFriendRequest(BasePdu *pdu)
     GlobalData::setRequest(addRequest);
     emit newAddRequest();
     qDebug() << "AddFriendRequest:" << request.user_id() << " " << request.validatedata().c_str();
+}
+
+
+void PduHandler::_HandleGetAddRequestHistoryRespone(BasePdu *pdu)
+{
+    friendlist::GetAddRequestHistoryRespone respone;
+    respone.ParseFromString(pdu->getMessage());
+
+    int size = respone.history_size();
+    QVector<YLAddRequest> history;
+    for (int i = 0; i < size; ++i)
+    {
+        base::AddRequestInfo info = respone.history(i);
+        YLAddRequest request;
+        request.setId(info.id());
+        request.setOtherId(info.other_id());
+        request.setOtherNick(info.other_nick().c_str());
+        request.setOtherHeadUrl(info.other_head_url().c_str());
+        request.setValidateData(info.validate_data().c_str());
+        request.setHandleTime(info.handle_time());
+        request.setResultId(info.result_id());
+        history.push_back(request);
+    }
+
+    GlobalData::setRequestHistory(history);
 }

@@ -1,22 +1,23 @@
 #include "ylmainwidget.h"
-#include "YLCommonControl/ylheadandstatusframe.h"
 #include <QPushButton>
 #include <QLabel>
 #include <QDebug>
+#include <QTimer>
 #include <QPainter>
 #include "globaldata.h"
-#include "ylsearchlineedit.h"
-#include "ylsignaturelineedit.h"
 #include "ylnavigationbar.h"
+#include "ylgrouplistview.h"
 #include "ylrecentchatview.h"
 #include "ylfriendlistview.h"
-#include "YLCommonControl/ylmessagebox.h"
-#include "YLNetWork/http/httphelper.h"
-#include "YLNetWork/ylbusiness.h"
-#include "YLTray/ylmaintray.h"
-#include "YLAddFriendWidgets/yladdfriendwidget.h"
 #include "../signalforward.h"
-#include <QTimer>
+#include "ylsearchlineedit.h"
+#include "YLTray/ylmaintray.h"
+#include "ylsignaturelineedit.h"
+#include "YLNetWork/ylbusiness.h"
+#include "YLNetWork/http/httphelper.h"
+#include "YLCommonControl/ylmessagebox.h"
+#include "YLAddFriendWidgets/yladdfriendwidget.h"
+#include "YLCommonControl/ylheadandstatusframe.h"
 
 using namespace youliao::pdu;
 
@@ -132,20 +133,12 @@ void YLMainWidget::initListWidget()
     yl_friendlist_view->move(0, 220);
     vec.push_back(yl_friendlist_view);
 
-//    //demo
-//    YLFriend y;
-//    y.setFriendImagePath(":/res/1.PNG");
-//    y.setFriendLastChatTime("11:22");
-//    y.setFriendLastMessage("你好，我是刘正！");
-//    y.setFriendNickName("刘提莫");
-//    y.setFriendSigature("我希望我的青春遇见你");
-
-//    for (int i = 0; i < 100; ++i)
-//    {
-//        y.setFriendAccount(QString::number(10000 + i));
-//        y.setFriendRemark("刘提莫" + QString::number(i));
-//        yl_recent_chat_view->addItem(y);
-//    }
+    //[3] group list
+    YLGroupListView *yl_grouplist_vide = new YLGroupListView(this);
+    yl_grouplist_vide->resize(width() - 1, height() - 250);
+    yl_grouplist_vide->move(0, 220);
+    yl_grouplist_vide->hide();
+    vec.push_back(yl_grouplist_vide);
 }
 
 void YLMainWidget::startHeartBeat()
@@ -207,6 +200,7 @@ void YLMainWidget::setUserInfo(UserInfo *userInfo)
     YLBusiness::getFriendGroupsRequest(m_user_info->user_id());
     YLBusiness::getFriendListRequest(m_user_info->user_id());
     YLBusiness::getSessions(m_user_info->user_id());
+    YLBusiness::getAllAddRequests();
     m_http_helper->download(m_user_info->user_header_url().c_str());
 }
 

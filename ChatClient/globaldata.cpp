@@ -10,6 +10,7 @@ QMap<uint32_t, YLChatWidget*> GlobalData::m_chat_widgets = QMap<uint32_t, YLChat
 QMap<uint32_t, QVector<YLMessage>> GlobalData::m_messages = QMap<uint32_t, QVector<YLMessage>>();
 QMap<uint32_t, uint32_t> GlobalData::m_message_id = QMap<uint32_t, uint32_t>();
 QVector<YLAddRequest> GlobalData::m_add_request = QVector<YLAddRequest>();
+QVector<YLAddRequest> GlobalData::m_add_request_history = QVector<YLAddRequest>();
 
 GlobalData::GlobalData(QObject *parent) : QObject(parent)
 {
