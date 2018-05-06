@@ -45,6 +45,7 @@ bool LoginModel::doLogin(const std::string &str_name, const std::string &str_pas
             if (str_pass == password)
             {
                 ret = true;
+                userInfo.set_user_account(resultSet->getInt("user_account"));
                 userInfo.set_user_sex(resultSet->getInt("user_sex"));
                 userInfo.set_user_sign_info(resultSet->getString("user_sign_info"));
                 userInfo.set_user_email(resultSet->getString("user_email"));

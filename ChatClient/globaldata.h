@@ -25,10 +25,12 @@ public:
     static QString  getCurrLoginUserIconPath() { return m_header_image_path;}
     static QString  getCurrLoginUserNick() { return m_user.user_nick().c_str(); }
     static QString  getCurrLoginUserHeadUrl() { return m_user.user_header_url().c_str(); }
+    static QString getCurrLoginUserAccount() { return QString::number(m_user.user_account()); }
 
     static const YLFriend getFriendById(const uint32_t friendId);
     static void setFriends(const QMap<int, QVector<YLFriend>> &friends);
     static uint32_t getRelateIdByFriendId(uint32_t friId);
+    static const QMap<int, QVector<YLFriend>>& getFriends() { return m_friends; }
 
     static void setSessions(const QList<YLSession> &sessions);
     static YLSession getSessionByFriendId(uint32_t friendId);

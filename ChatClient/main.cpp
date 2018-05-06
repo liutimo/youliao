@@ -17,17 +17,11 @@ int main(int argc, char *argv[])
     SignalForward::instance();
 
 
-//    YLLoginPanel w;
+//    YLCreateGroupWidget w;
 
-    YLCreateGroupWidget w;
-//    w.resize(500, 400);
-
-
+    YLLoginPanel w;
+    w.resize(500, 400);
     w.show();
 
-
-
-
     return a.exec();
-
 }

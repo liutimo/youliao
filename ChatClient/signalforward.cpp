@@ -72,3 +72,9 @@ void SignalForward::forwordReadOne(uint32_t friendId, int type)
     }
 
 }
+
+
+void SignalForward::forwardInviteGroupSelected(uint32_t friId)
+{
+    emit inviteGroupSelected(friId);
+}
