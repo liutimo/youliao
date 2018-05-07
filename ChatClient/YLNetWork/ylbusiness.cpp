@@ -8,6 +8,7 @@
 #include "protobuf/youliao.friendlist.pb.h"
 #include "protobuf/youliao.message.pb.h"
 #include "protobuf/youliao.session.pb.h"
+#include "protobuf/youliao.group.pb.h"
 #include "YLDataBase/yldatabase.h"
 
 #include <QDateTime>
@@ -315,6 +316,42 @@ void YLBusiness::getAllAddRequests()
     BasePdu *basePdu = new BasePdu;
     basePdu->setSID(SID_FRIEND_LIST);
     basePdu->setCID(CID_FRIENDLIST_GET_REQUEST_HISTORY_REQUEST);
+    basePdu->writeMessage(&request);
+    PduSender::instance()->addMessage(basePdu);
+}
+
+void YLBusiness::createGroupRequest(const QString &groupName, uint32_t groupMaxMembers,
+                               youliao::pdu::base::GroupVerifyType verifyType, const QVector<uint32_t> &members)
+{
+    group::GroupCreateRequest request;
+    request.set_group_name(groupName.toStdString());
+    request.set_group_type(base::GROUP_TYPE_NORMAL);
+    request.set_user_id(GlobalData::getCurrLoginUserId());
+    request.set_group_verify_type(verifyType);
+    request.set_group_max_members(groupMaxMembers);
+
+    for (uint32_t id : members)
+    {
+        request.add_member_ids(id);
+    }
+
+
+    BasePdu *basePdu = new BasePdu;
+    basePdu->setSID(SID_GROUP);
+    basePdu->setCID(CID_GROUP_CREATE_REQUEST);
+    basePdu->writeMessage(&request);
+    PduSender::instance()->addMessage(basePdu);
+}
+
+void YLBusiness::getGroupList()
+{
+    group::GetGroupListRequest request;
+    request.set_user_id(GlobalData::getCurrLoginUserId());
+
+
+    BasePdu *basePdu = new BasePdu;
+    basePdu->setSID(SID_GROUP);
+    basePdu->setCID(CID_GROUP_GET_LIST_REQUEST);
     basePdu->writeMessage(&request);
     PduSender::instance()->addMessage(basePdu);
 }

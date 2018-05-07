@@ -11,6 +11,7 @@ QMap<uint32_t, QVector<YLMessage>> GlobalData::m_messages = QMap<uint32_t, QVect
 QMap<uint32_t, uint32_t> GlobalData::m_message_id = QMap<uint32_t, uint32_t>();
 QVector<YLAddRequest> GlobalData::m_add_request = QVector<YLAddRequest>();
 QVector<YLAddRequest> GlobalData::m_add_request_history = QVector<YLAddRequest>();
+QList<YLGroup> GlobalData::m_groups = QList<YLGroup>();
 
 GlobalData::GlobalData(QObject *parent) : QObject(parent)
 {
@@ -156,4 +157,21 @@ void GlobalData::setRequest(const YLAddRequest &req)
 const QVector<YLAddRequest>& GlobalData::getAddRequests()
 {
     return m_add_request;
+}
+
+
+//group
+void GlobalData::setGroups(const QList<YLGroup>&groups)
+{
+    m_groups = groups;
+}
+
+void GlobalData::addToGroups(const YLGroup &group)
+{
+    m_groups.push_back(group);
+}
+
+QList<YLGroup> GlobalData::getGroups()
+{
+    return m_groups;
 }

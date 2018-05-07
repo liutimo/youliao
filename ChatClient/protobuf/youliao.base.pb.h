@@ -37,7 +37,7 @@ namespace protobuf_youliao_2ebase_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[5];
+  static const ::google::protobuf::internal::ParseTable schema[6];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -51,6 +51,8 @@ void InitDefaultsSessionInfoImpl();
 void InitDefaultsSessionInfo();
 void InitDefaultsAddRequestInfoImpl();
 void InitDefaultsAddRequestInfo();
+void InitDefaultsGroupInfoImpl();
+void InitDefaultsGroupInfo();
 void InitDefaultsHeartBeatImpl();
 void InitDefaultsHeartBeat();
 inline void InitDefaults() {
@@ -58,6 +60,7 @@ inline void InitDefaults() {
   InitDefaultsFriendInfo();
   InitDefaultsSessionInfo();
   InitDefaultsAddRequestInfo();
+  InitDefaultsGroupInfo();
   InitDefaultsHeartBeat();
 }
 }  // namespace protobuf_youliao_2ebase_2eproto
@@ -70,6 +73,9 @@ extern AddRequestInfoDefaultTypeInternal _AddRequestInfo_default_instance_;
 class FriendInfo;
 class FriendInfoDefaultTypeInternal;
 extern FriendInfoDefaultTypeInternal _FriendInfo_default_instance_;
+class GroupInfo;
+class GroupInfoDefaultTypeInternal;
+extern GroupInfoDefaultTypeInternal _GroupInfo_default_instance_;
 class HeartBeat;
 class HeartBeatDefaultTypeInternal;
 extern HeartBeatDefaultTypeInternal _HeartBeat_default_instance_;
@@ -86,6 +92,7 @@ namespace google {
 namespace protobuf {
 template<> ::youliao::pdu::base::AddRequestInfo* Arena::Create< ::youliao::pdu::base::AddRequestInfo>(Arena*);
 template<> ::youliao::pdu::base::FriendInfo* Arena::Create< ::youliao::pdu::base::FriendInfo>(Arena*);
+template<> ::youliao::pdu::base::GroupInfo* Arena::Create< ::youliao::pdu::base::GroupInfo>(Arena*);
 template<> ::youliao::pdu::base::HeartBeat* Arena::Create< ::youliao::pdu::base::HeartBeat>(Arena*);
 template<> ::youliao::pdu::base::SessionInfo* Arena::Create< ::youliao::pdu::base::SessionInfo>(Arena*);
 template<> ::youliao::pdu::base::UserInfo* Arena::Create< ::youliao::pdu::base::UserInfo>(Arena*);
@@ -103,12 +110,13 @@ enum ServiceID {
   SID_OTHER = 4,
   SID_SESSION = 5,
   SID_MESSAGE = 6,
+  SID_GROUP = 7,
   ServiceID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   ServiceID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool ServiceID_IsValid(int value);
 const ServiceID ServiceID_MIN = SID_ZERO;
-const ServiceID ServiceID_MAX = SID_MESSAGE;
+const ServiceID ServiceID_MAX = SID_GROUP;
 const int ServiceID_ARRAYSIZE = ServiceID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* ServiceID_descriptor();
@@ -293,6 +301,30 @@ inline bool MessageCID_Parse(
   return ::google::protobuf::internal::ParseNamedEnum<MessageCID>(
     MessageCID_descriptor(), name, value);
 }
+enum GroupCID {
+  CID_GROUP_ZERO = 0,
+  CID_GROUP_CREATE_REQUEST = 1793,
+  CID_GROUP_CREATE_RESPONE = 1794,
+  CID_GROUP_GET_LIST_REQUEST = 1795,
+  CID_GROUP_GET_LIST_RESPONE = 1796,
+  GroupCID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  GroupCID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+bool GroupCID_IsValid(int value);
+const GroupCID GroupCID_MIN = CID_GROUP_ZERO;
+const GroupCID GroupCID_MAX = CID_GROUP_GET_LIST_RESPONE;
+const int GroupCID_ARRAYSIZE = GroupCID_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* GroupCID_descriptor();
+inline const ::std::string& GroupCID_Name(GroupCID value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    GroupCID_descriptor(), value);
+}
+inline bool GroupCID_Parse(
+    const ::std::string& name, GroupCID* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<GroupCID>(
+    GroupCID_descriptor(), name, value);
+}
 enum ResultType {
   NONE = 0,
   NO_MSG_SERVER = 1,
@@ -343,12 +375,13 @@ enum SessionType {
   SESSION_TYPE_ZERO = 0,
   SESSION_TYPE_SINGLE = 1,
   SESSION_TYPE_GROUP = 2,
+  SESSION_TYPE_VALIDATE_MSG = 3,
   SessionType_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   SessionType_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool SessionType_IsValid(int value);
 const SessionType SessionType_MIN = SESSION_TYPE_ZERO;
-const SessionType SessionType_MAX = SESSION_TYPE_GROUP;
+const SessionType SessionType_MAX = SESSION_TYPE_VALIDATE_MSG;
 const int SessionType_ARRAYSIZE = SessionType_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* SessionType_descriptor();
@@ -451,6 +484,51 @@ inline bool SearchType_Parse(
     const ::std::string& name, SearchType* value) {
   return ::google::protobuf::internal::ParseNamedEnum<SearchType>(
     SearchType_descriptor(), name, value);
+}
+enum GroupType {
+  GROUP_TYPE_ZERO = 0,
+  GROUP_TYPE_NORMAL = 1,
+  GROUP_TYPE_TMP = 2,
+  GroupType_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  GroupType_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+bool GroupType_IsValid(int value);
+const GroupType GroupType_MIN = GROUP_TYPE_ZERO;
+const GroupType GroupType_MAX = GROUP_TYPE_TMP;
+const int GroupType_ARRAYSIZE = GroupType_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* GroupType_descriptor();
+inline const ::std::string& GroupType_Name(GroupType value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    GroupType_descriptor(), value);
+}
+inline bool GroupType_Parse(
+    const ::std::string& name, GroupType* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<GroupType>(
+    GroupType_descriptor(), name, value);
+}
+enum GroupVerifyType {
+  GROUP_VERIFY_ZERO = 0,
+  GROUP_VERIFY_NEED = 1,
+  GROUP_VERIFY_ALL = 2,
+  GROUP_VERIFY_NONE = 3,
+  GroupVerifyType_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  GroupVerifyType_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+bool GroupVerifyType_IsValid(int value);
+const GroupVerifyType GroupVerifyType_MIN = GROUP_VERIFY_ZERO;
+const GroupVerifyType GroupVerifyType_MAX = GROUP_VERIFY_NONE;
+const int GroupVerifyType_ARRAYSIZE = GroupVerifyType_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* GroupVerifyType_descriptor();
+inline const ::std::string& GroupVerifyType_Name(GroupVerifyType value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    GroupVerifyType_descriptor(), value);
+}
+inline bool GroupVerifyType_Parse(
+    const ::std::string& name, GroupVerifyType* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<GroupVerifyType>(
+    GroupVerifyType_descriptor(), name, value);
 }
 // ===================================================================
 
@@ -1189,6 +1267,188 @@ class AddRequestInfo : public ::google::protobuf::Message /* @@protoc_insertion_
 };
 // -------------------------------------------------------------------
 
+class GroupInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.base.GroupInfo) */ {
+ public:
+  GroupInfo();
+  virtual ~GroupInfo();
+
+  GroupInfo(const GroupInfo& from);
+
+  inline GroupInfo& operator=(const GroupInfo& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  GroupInfo(GroupInfo&& from) noexcept
+    : GroupInfo() {
+    *this = ::std::move(from);
+  }
+
+  inline GroupInfo& operator=(GroupInfo&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const GroupInfo& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const GroupInfo* internal_default_instance() {
+    return reinterpret_cast<const GroupInfo*>(
+               &_GroupInfo_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    4;
+
+  void Swap(GroupInfo* other);
+  friend void swap(GroupInfo& a, GroupInfo& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline GroupInfo* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<GroupInfo>(NULL);
+  }
+
+  GroupInfo* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<GroupInfo>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const GroupInfo& from);
+  void MergeFrom(const GroupInfo& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(GroupInfo* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated uint32 managers = 7;
+  int managers_size() const;
+  void clear_managers();
+  static const int kManagersFieldNumber = 7;
+  ::google::protobuf::uint32 managers(int index) const;
+  void set_managers(int index, ::google::protobuf::uint32 value);
+  void add_managers(::google::protobuf::uint32 value);
+  const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+      managers() const;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+      mutable_managers();
+
+  // repeated uint32 members = 8;
+  int members_size() const;
+  void clear_members();
+  static const int kMembersFieldNumber = 8;
+  ::google::protobuf::uint32 members(int index) const;
+  void set_members(int index, ::google::protobuf::uint32 value);
+  void add_members(::google::protobuf::uint32 value);
+  const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+      members() const;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+      mutable_members();
+
+  // string group_name = 2;
+  void clear_group_name();
+  static const int kGroupNameFieldNumber = 2;
+  const ::std::string& group_name() const;
+  void set_group_name(const ::std::string& value);
+  #if LANG_CXX11
+  void set_group_name(::std::string&& value);
+  #endif
+  void set_group_name(const char* value);
+  void set_group_name(const char* value, size_t size);
+  ::std::string* mutable_group_name();
+  ::std::string* release_group_name();
+  void set_allocated_group_name(::std::string* group_name);
+
+  // string group_head = 3;
+  void clear_group_head();
+  static const int kGroupHeadFieldNumber = 3;
+  const ::std::string& group_head() const;
+  void set_group_head(const ::std::string& value);
+  #if LANG_CXX11
+  void set_group_head(::std::string&& value);
+  #endif
+  void set_group_head(const char* value);
+  void set_group_head(const char* value, size_t size);
+  ::std::string* mutable_group_head();
+  ::std::string* release_group_head();
+  void set_allocated_group_head(::std::string* group_head);
+
+  // uint32 group_id = 1;
+  void clear_group_id();
+  static const int kGroupIdFieldNumber = 1;
+  ::google::protobuf::uint32 group_id() const;
+  void set_group_id(::google::protobuf::uint32 value);
+
+  // uint32 group_creator = 4;
+  void clear_group_creator();
+  static const int kGroupCreatorFieldNumber = 4;
+  ::google::protobuf::uint32 group_creator() const;
+  void set_group_creator(::google::protobuf::uint32 value);
+
+  // uint32 group_capacity = 5;
+  void clear_group_capacity();
+  static const int kGroupCapacityFieldNumber = 5;
+  ::google::protobuf::uint32 group_capacity() const;
+  void set_group_capacity(::google::protobuf::uint32 value);
+
+  // uint32 group_created = 6;
+  void clear_group_created();
+  static const int kGroupCreatedFieldNumber = 6;
+  ::google::protobuf::uint32 group_created() const;
+  void set_group_created(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.base.GroupInfo)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > managers_;
+  mutable int _managers_cached_byte_size_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > members_;
+  mutable int _members_cached_byte_size_;
+  ::google::protobuf::internal::ArenaStringPtr group_name_;
+  ::google::protobuf::internal::ArenaStringPtr group_head_;
+  ::google::protobuf::uint32 group_id_;
+  ::google::protobuf::uint32 group_creator_;
+  ::google::protobuf::uint32 group_capacity_;
+  ::google::protobuf::uint32 group_created_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2ebase_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2ebase_2eproto::InitDefaultsGroupInfoImpl();
+};
+// -------------------------------------------------------------------
+
 class HeartBeat : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.base.HeartBeat) */ {
  public:
   HeartBeat();
@@ -1224,7 +1484,7 @@ class HeartBeat : public ::google::protobuf::Message /* @@protoc_insertion_point
                &_HeartBeat_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    4;
+    5;
 
   void Swap(HeartBeat* other);
   friend void swap(HeartBeat& a, HeartBeat& b) {
@@ -2355,11 +2615,239 @@ inline void AddRequestInfo::set_allocated_other_nick(::std::string* other_nick) 
 
 // -------------------------------------------------------------------
 
+// GroupInfo
+
+// uint32 group_id = 1;
+inline void GroupInfo::clear_group_id() {
+  group_id_ = 0u;
+}
+inline ::google::protobuf::uint32 GroupInfo::group_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.GroupInfo.group_id)
+  return group_id_;
+}
+inline void GroupInfo::set_group_id(::google::protobuf::uint32 value) {
+  
+  group_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.base.GroupInfo.group_id)
+}
+
+// string group_name = 2;
+inline void GroupInfo::clear_group_name() {
+  group_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& GroupInfo::group_name() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.GroupInfo.group_name)
+  return group_name_.GetNoArena();
+}
+inline void GroupInfo::set_group_name(const ::std::string& value) {
+  
+  group_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:youliao.pdu.base.GroupInfo.group_name)
+}
+#if LANG_CXX11
+inline void GroupInfo::set_group_name(::std::string&& value) {
+  
+  group_name_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:youliao.pdu.base.GroupInfo.group_name)
+}
+#endif
+inline void GroupInfo::set_group_name(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  group_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:youliao.pdu.base.GroupInfo.group_name)
+}
+inline void GroupInfo::set_group_name(const char* value, size_t size) {
+  
+  group_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:youliao.pdu.base.GroupInfo.group_name)
+}
+inline ::std::string* GroupInfo::mutable_group_name() {
+  
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.base.GroupInfo.group_name)
+  return group_name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* GroupInfo::release_group_name() {
+  // @@protoc_insertion_point(field_release:youliao.pdu.base.GroupInfo.group_name)
+  
+  return group_name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void GroupInfo::set_allocated_group_name(::std::string* group_name) {
+  if (group_name != NULL) {
+    
+  } else {
+    
+  }
+  group_name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), group_name);
+  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.base.GroupInfo.group_name)
+}
+
+// string group_head = 3;
+inline void GroupInfo::clear_group_head() {
+  group_head_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& GroupInfo::group_head() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.GroupInfo.group_head)
+  return group_head_.GetNoArena();
+}
+inline void GroupInfo::set_group_head(const ::std::string& value) {
+  
+  group_head_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:youliao.pdu.base.GroupInfo.group_head)
+}
+#if LANG_CXX11
+inline void GroupInfo::set_group_head(::std::string&& value) {
+  
+  group_head_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:youliao.pdu.base.GroupInfo.group_head)
+}
+#endif
+inline void GroupInfo::set_group_head(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  group_head_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:youliao.pdu.base.GroupInfo.group_head)
+}
+inline void GroupInfo::set_group_head(const char* value, size_t size) {
+  
+  group_head_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:youliao.pdu.base.GroupInfo.group_head)
+}
+inline ::std::string* GroupInfo::mutable_group_head() {
+  
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.base.GroupInfo.group_head)
+  return group_head_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* GroupInfo::release_group_head() {
+  // @@protoc_insertion_point(field_release:youliao.pdu.base.GroupInfo.group_head)
+  
+  return group_head_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void GroupInfo::set_allocated_group_head(::std::string* group_head) {
+  if (group_head != NULL) {
+    
+  } else {
+    
+  }
+  group_head_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), group_head);
+  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.base.GroupInfo.group_head)
+}
+
+// uint32 group_creator = 4;
+inline void GroupInfo::clear_group_creator() {
+  group_creator_ = 0u;
+}
+inline ::google::protobuf::uint32 GroupInfo::group_creator() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.GroupInfo.group_creator)
+  return group_creator_;
+}
+inline void GroupInfo::set_group_creator(::google::protobuf::uint32 value) {
+  
+  group_creator_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.base.GroupInfo.group_creator)
+}
+
+// uint32 group_capacity = 5;
+inline void GroupInfo::clear_group_capacity() {
+  group_capacity_ = 0u;
+}
+inline ::google::protobuf::uint32 GroupInfo::group_capacity() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.GroupInfo.group_capacity)
+  return group_capacity_;
+}
+inline void GroupInfo::set_group_capacity(::google::protobuf::uint32 value) {
+  
+  group_capacity_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.base.GroupInfo.group_capacity)
+}
+
+// uint32 group_created = 6;
+inline void GroupInfo::clear_group_created() {
+  group_created_ = 0u;
+}
+inline ::google::protobuf::uint32 GroupInfo::group_created() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.GroupInfo.group_created)
+  return group_created_;
+}
+inline void GroupInfo::set_group_created(::google::protobuf::uint32 value) {
+  
+  group_created_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.base.GroupInfo.group_created)
+}
+
+// repeated uint32 managers = 7;
+inline int GroupInfo::managers_size() const {
+  return managers_.size();
+}
+inline void GroupInfo::clear_managers() {
+  managers_.Clear();
+}
+inline ::google::protobuf::uint32 GroupInfo::managers(int index) const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.GroupInfo.managers)
+  return managers_.Get(index);
+}
+inline void GroupInfo::set_managers(int index, ::google::protobuf::uint32 value) {
+  managers_.Set(index, value);
+  // @@protoc_insertion_point(field_set:youliao.pdu.base.GroupInfo.managers)
+}
+inline void GroupInfo::add_managers(::google::protobuf::uint32 value) {
+  managers_.Add(value);
+  // @@protoc_insertion_point(field_add:youliao.pdu.base.GroupInfo.managers)
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+GroupInfo::managers() const {
+  // @@protoc_insertion_point(field_list:youliao.pdu.base.GroupInfo.managers)
+  return managers_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+GroupInfo::mutable_managers() {
+  // @@protoc_insertion_point(field_mutable_list:youliao.pdu.base.GroupInfo.managers)
+  return &managers_;
+}
+
+// repeated uint32 members = 8;
+inline int GroupInfo::members_size() const {
+  return members_.size();
+}
+inline void GroupInfo::clear_members() {
+  members_.Clear();
+}
+inline ::google::protobuf::uint32 GroupInfo::members(int index) const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.GroupInfo.members)
+  return members_.Get(index);
+}
+inline void GroupInfo::set_members(int index, ::google::protobuf::uint32 value) {
+  members_.Set(index, value);
+  // @@protoc_insertion_point(field_set:youliao.pdu.base.GroupInfo.members)
+}
+inline void GroupInfo::add_members(::google::protobuf::uint32 value) {
+  members_.Add(value);
+  // @@protoc_insertion_point(field_add:youliao.pdu.base.GroupInfo.members)
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+GroupInfo::members() const {
+  // @@protoc_insertion_point(field_list:youliao.pdu.base.GroupInfo.members)
+  return members_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+GroupInfo::mutable_members() {
+  // @@protoc_insertion_point(field_mutable_list:youliao.pdu.base.GroupInfo.members)
+  return &members_;
+}
+
+// -------------------------------------------------------------------
+
 // HeartBeat
 
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
@@ -2413,6 +2901,11 @@ template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::youliao::pdu::base::MessageCID>() {
   return ::youliao::pdu::base::MessageCID_descriptor();
 }
+template <> struct is_proto_enum< ::youliao::pdu::base::GroupCID> : ::google::protobuf::internal::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::youliao::pdu::base::GroupCID>() {
+  return ::youliao::pdu::base::GroupCID_descriptor();
+}
 template <> struct is_proto_enum< ::youliao::pdu::base::ResultType> : ::google::protobuf::internal::true_type {};
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::youliao::pdu::base::ResultType>() {
@@ -2447,6 +2940,16 @@ template <> struct is_proto_enum< ::youliao::pdu::base::SearchType> : ::google::
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::youliao::pdu::base::SearchType>() {
   return ::youliao::pdu::base::SearchType_descriptor();
+}
+template <> struct is_proto_enum< ::youliao::pdu::base::GroupType> : ::google::protobuf::internal::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::youliao::pdu::base::GroupType>() {
+  return ::youliao::pdu::base::GroupType_descriptor();
+}
+template <> struct is_proto_enum< ::youliao::pdu::base::GroupVerifyType> : ::google::protobuf::internal::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::youliao::pdu::base::GroupVerifyType>() {
+  return ::youliao::pdu::base::GroupVerifyType_descriptor();
 }
 
 }  // namespace protobuf

@@ -36,6 +36,8 @@ private:
     void _HandleSearchFriendRespone(BasePdu *);
     void _HandleGetLatestMsgIdRespone(BasePdu *);
     void _HandleGetAddRequestHistoryRespone(BasePdu *);
+    void _HandleCreateGroupRespone(BasePdu *);
+    void _HandleGetGroupListRespone(BasePdu *);
 
     uint32_t   m_server_index;
     bool       m_open;

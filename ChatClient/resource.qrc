@@ -355,5 +355,6 @@
         <file>res/FileIcon/audio.png</file>
         <file>res/MainFrame/addFriend_btn_hover.png</file>
         <file>res/MainFrame/addFriend_btn_normal.png</file>
+        <file>res/group_default_head.png</file>
     </qresource>
 </RCC>

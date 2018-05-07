@@ -136,6 +136,7 @@ bool MessageModel::getLastMessage(uint32_t senderId, uint32_t receiverId, std::s
             content = resultSet->getString("message_content");
         }
         ret = true;
+        delete resultSet;
     }
 
     DBManager::instance()->releaseConnection(dbConn);
@@ -176,6 +177,7 @@ bool MessageModel::getLatestMsgId(uint32_t senderId, uint8_t receiverId, uint32_
             msgId = (uint32_t)resultSet->getInt("message_id");
         }
         ret = true;
+        delete resultSet;
     }
 
     DBManager::instance()->releaseConnection(dbConn);

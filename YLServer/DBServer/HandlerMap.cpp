@@ -97,6 +97,12 @@ void HandlerMap::init()
 
     //获取好友请求的历史记录
     m_handler_map.insert(std::make_pair(CID_FRIENDLIST_GET_REQUEST_HISTORY_REQUEST, DB_INTERFACE::getAddRequestHistory));
+
+    //创建群组
+    m_handler_map.insert(std::make_pair(CID_GROUP_CREATE_REQUEST, DB_INTERFACE::createGroup));
+
+    //获取群组列表
+    m_handler_map.insert(std::make_pair(CID_GROUP_GET_LIST_REQUEST, DB_INTERFACE::getGroupList));
 }
 
 pdu_handler_t HandlerMap::getHandler(uint16_t cid)

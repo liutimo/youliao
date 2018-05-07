@@ -11,6 +11,7 @@ enum ServiceID
     SID_OTHER           = 0x0004;           //其他
     SID_SESSION         = 0x0005;           //SESSION
     SID_MESSAGE         = 0x0006;           //消息
+    SID_GROUP           = 0x0007;           //群组
 }
 
 enum LoginCID
@@ -111,6 +112,10 @@ enum GroupCID
     CID_GROUP_ZERO = 0x0000;
     CID_GROUP_CREATE_REQUEST = 0x0701; // 创建群组请求
     CID_GROUP_CREATE_RESPONE = 0x0702; // 创建群组请求
+    CID_GROUP_GET_LIST_REQUEST = 0x0703; // 请求获取群组
+    CID_GROUP_GET_LIST_RESPONE = 0x0704; // 响应
+    CID_GROUP_ADD_GROUP_REQUEST = 0x0705; //请求加群
+    CID_GROUP_ADD_GROUP_RESPONE = 0x0706; //响应
 }
 
 //响应结果类型
@@ -200,6 +205,18 @@ message AddRequestInfo
     string other_nick = 7;
 }
 
+//群组信息
+message GroupInfo
+{
+    uint32 group_id = 1;        //群ID
+    string group_name = 2;      //群名称
+    string group_head = 3;      //群头像
+    uint32 group_creator = 4;   //群主
+    uint32 group_capacity = 5;  //最大成员数
+    uint32 group_created = 6;   //成立时间
+    repeated uint32 managers = 7; //管理员s
+    repeated uint32 members = 8;
+}
 
 //心跳包
 message HeartBeat
@@ -239,4 +256,12 @@ enum GroupType{
     GROUP_TYPE_ZERO         = 0x00;
     GROUP_TYPE_NORMAL		= 0x01;
     GROUP_TYPE_TMP			= 0x02;
+}
+
+//群组验证类型
+enum GroupVerifyType {
+    GROUP_VERIFY_ZERO   = 0x00;
+    GROUP_VERIFY_NEED   = 0x01; //需要验证
+    GROUP_VERIFY_ALL    = 0x02; //允许任何人
+    GROUP_VERIFY_NONE   = 0x03; //不允许任何人
 }

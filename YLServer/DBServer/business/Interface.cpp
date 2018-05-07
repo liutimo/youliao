@@ -7,12 +7,14 @@
 #include "LoginModel.h"
 #include "FriendListModel.h"
 #include "MessageModel.h"
+#include "GroupModel.h"
 #include "util/util.h"
 #include "../CachePool.h"
 #include "SessionModel.h"
 #include "pdu/protobuf/youliao.server.pb.h"
 #include "pdu/protobuf/youliao.message.pb.h"
 #include "pdu/protobuf/youliao.session.pb.h"
+#include "pdu/protobuf/youliao.group.pb.h"
 
 
 namespace DB_INTERFACE
@@ -619,6 +621,82 @@ namespace DB_INTERFACE
 
         SessionModel::instance()->topSession(sessionId);
     }
+
+
+    void createGroup(BasePdu *basePdu, uint32_t conn_uuid)
+    {
+        group::GroupCreateRequest request;
+        request.ParseFromString(basePdu->getMessage());
+
+        GroupModel *groupModel = GroupModel::instance();
+
+        uint32_t groupId = groupModel->createGroup(request.user_id(), request.group_name(), request.group_type(), request.group_verify_type(), request.group_max_members());
+
+        if (groupId != 0)
+        {
+            std::list<uint32_t> members;
+            for (int i = 0; i < request.member_ids_size(); ++i)
+            {
+                members.push_back(request.member_ids(i));
+            }
+            auto ret = groupModel->addMembers(groupId, members);
+            if (ret)
+                log("加入群成功");
+            else
+                log("加入失败");
+        }
+
+
+        base::GroupInfo *groupInfo = new base::GroupInfo;
+        groupInfo->set_group_id(groupId);
+        groupInfo->set_group_name(request.group_name());
+        groupInfo->set_group_capacity(request.group_max_members());
+        groupInfo->set_group_head("http://www.liutimo.cn/group_default_head.png");
+        groupInfo->set_group_created(request.user_id());
+
+
+        group::GroupCreateRespone respone;
+        respone.set_user_id(request.user_id());
+        respone.set_result_code(1);
+        respone.set_allocated_group_info(groupInfo);
+
+        auto conn = findProxyConn(conn_uuid);
+        if (conn)
+            sendMessage(conn, respone, base::SID_SERVER, base::CID_GROUP_CREATE_RESPONE);
+    }
+
+
+    //获取群组list
+    void getGroupList(BasePdu *basePdu, uint32_t conn_uuid)
+    {
+        group::GetGroupListRequest request;
+        request.ParseFromString(basePdu->getMessage());
+
+        uint32_t userId = request.user_id();
+
+        group::GetGroupListRespone respone;
+        respone.set_user_id(userId);
+
+        GroupModel *groupModel = GroupModel::instance();
+
+        //获取用户的所有群组
+        std::list<uint32_t> groups;
+        groupModel->getOtherGroupByUserId(userId, groups);
+        groupModel->getSelfGroupByUserId(userId, groups);
+
+        //设置每个群的信息到response
+        for (uint32_t groupId : groups)
+        {
+            base::GroupInfo *groupInfo = respone.add_group_info();
+            groupModel->getGroupInfoByGroupId(groupId, *groupInfo);
+        }
+
+        auto conn = findProxyConn(conn_uuid);
+        if (conn)
+            sendMessage(conn, respone, base::SID_SERVER, base::CID_GROUP_GET_LIST_RESPONE);
+
+    }
+
 }
 
 

@@ -11,6 +11,7 @@
 #include "YLCommonControl/ylheadframe.h"
 #include "globaldata.h"
 #include "signalforward.h"
+#include "YLNetWork/ylbusiness.h"
 
 YLCreateGroupWidget::YLCreateGroupWidget(QWidget *parent) : YLBasicWidget(parent)
 {
@@ -130,7 +131,17 @@ void YLCreateGroupWidget::init()
         }
         else
         {
-            //do something
+            base::GroupVerifyType type;
+            if (m_need_verify->isChecked())
+                type = base::GROUP_VERIFY_NEED;
+            else if (m_none_all->isChecked())
+                type = base::GROUP_VERIFY_NONE;
+            else if (m_all->isChecked())
+                type = base::GROUP_VERIFY_ALL;
+
+            QString groupName = m_lineedit_group_name->text();
+            emit createComplete(groupName);
+            YLBusiness::createGroupRequest(groupName, total, type, m_selected_friend_list_widget->getSelected());
             close();
         }
     });
@@ -232,7 +243,7 @@ void YLCreateGroupWidget::addSelectedItem(uint32_t friId)
 
 void YLCreateGroupWidget::updateInfo()
 {
-    uint32_t total = 0;
+    total = 0;
 
     if (m_200->isChecked())
         total = 200;

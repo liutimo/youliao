@@ -18,6 +18,7 @@
 #include "pdu/protobuf/youliao.friendlist.pb.h"
 #include "pdu/protobuf/youliao.message.pb.h"
 #include "pdu/protobuf/youliao.session.pb.h"
+#include "pdu/protobuf/youliao.group.pb.h"
 #include "User.h"
 #include <sys/time.h>
 using namespace youliao::util;
@@ -186,6 +187,12 @@ void ClientConn::handlePdu(BasePdu *pdu)
             break;
         case base::CID_FRIENDLIST_GET_REQUEST_HISTORY_REQUEST:
             _HandlerGetAddRequestHistoryRequest(pdu);
+            break;
+        case base::CID_GROUP_CREATE_REQUEST:
+            _HandleCreatGroupRequest(pdu);
+            break;
+        case base::CID_GROUP_GET_LIST_REQUEST:
+            _HandleGetGroupListRequest(pdu);
             break;
         default:
             std::cout << pdu->getCID() << std::endl;
@@ -689,5 +696,40 @@ void ClientConn::_HandlerGetAddRequestHistoryRequest(BasePdu *pdu)
     if (dbConn)
     {
         sendMessage(dbConn, request, base::SID_SERVER, base::CID_FRIENDLIST_GET_REQUEST_HISTORY_REQUEST);
+    }
+}
+
+void ClientConn::_HandleCreatGroupRequest(BasePdu *basePdu)
+{
+    group::GroupCreateRequest request;
+    request.ParseFromString(basePdu->getMessage());
+
+    uint32_t userId = request.user_id();
+    std::string groupName = request.group_name();
+    uint32_t groupMaxMembers = request.group_max_members();
+
+    log("用户%d请求创建群组，群名：%s 最大成员数为%d", userId, groupName.c_str(), groupMaxMembers);
+
+    auto conn = get_db_server_conn();
+    if (conn)
+    {
+        sendMessage(conn, request, base::SID_SERVER, base::CID_GROUP_CREATE_REQUEST);
+    }
+}
+
+
+void ClientConn::_HandleGetGroupListRequest(BasePdu *pdu)
+{
+    group::GetGroupListRequest request;
+    request.ParseFromString(pdu->getMessage());
+
+    uint32_t userId = request.user_id();
+
+    log("用户%d请求群组list", userId);
+
+    auto conn = get_db_server_conn();
+    if (conn)
+    {
+        sendMessage(conn, request, base::SID_SERVER, base::CID_GROUP_GET_LIST_REQUEST);
     }
 }

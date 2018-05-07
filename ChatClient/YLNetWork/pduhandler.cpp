@@ -10,6 +10,7 @@
 #include "protobuf/youliao.friendlist.pb.h"
 #include "protobuf/youliao.message.pb.h"
 #include "protobuf/youliao.session.pb.h"
+#include "protobuf/youliao.group.pb.h"
 #include "YLDataBase/yldatabase.h"
 #include "globaldata.h"
 #include "YLTray/ylmaintray.h"
@@ -31,6 +32,7 @@ PduHandler::PduHandler(QObject *parent) : QThread(parent)
     qRegisterMetaType<uint32_t>("uint32_t");
     qRegisterMetaType<QList<base::SessionInfo>>("QList<base::SessionInfo>");
     qRegisterMetaType<QVector<YLFriend>>("QVector<YLFriend>");
+    qRegisterMetaType<YLGroup>("YLGroup");
 }
 
 PduHandler* PduHandler::instance()
@@ -106,6 +108,12 @@ void PduHandler::_HandleBasePdu(BasePdu *pdu)
         break;
     case base::CID_FRIENDLIST_GET_REQUEST_HISTORY_RESPONE:
         _HandleGetAddRequestHistoryRespone(pdu);
+        break;
+    case base::CID_GROUP_CREATE_RESPONE:
+        _HandleCreatGroupRespone(pdu);
+        break;
+    case base::CID_GROUP_GET_LIST_RESPONE:
+        _HandleGetGroupListRespone(pdu);
         break;
     default:
         std::cout << "CID" << pdu->getCID() << "  SID:" << pdu->getSID();
@@ -349,4 +357,59 @@ void PduHandler::_HandleGetAddRequestHistoryRespone(BasePdu *pdu)
     }
 
     GlobalData::setRequestHistory(history);
+}
+
+
+void PduHandler::_HandleCreatGroupRespone(BasePdu *pdu)
+{
+    group::GroupCreateRespone respone;
+    respone.ParseFromString(pdu->getMessage());
+
+    uint32_t resultCode = respone.result_code();
+
+    base::GroupInfo groupInfo =  respone.group_info();
+
+    YLGroup group;
+    group.setGroupId(groupInfo.group_id());
+    group.setGroupName(groupInfo.group_name().c_str());
+    group.setGroupCapacity(groupInfo.group_capacity());
+    group.setGroupCreator(groupInfo.group_creator());
+    group.setGroupImage(groupInfo.group_head().c_str());
+    group.setCreateTime(groupInfo.group_created());
+
+    for (int i = 0; i < groupInfo.members_size(); ++i)
+        group.addMember(groupInfo.members(i));
+
+    for (int i = 0; i < groupInfo.managers_size(); ++i)
+        group.addManager(groupInfo.members(i));
+
+    GlobalData::addToGroups(group);
+    emit newGroup(group);
+}
+
+
+void PduHandler::_HandleGetGroupListRespone(BasePdu *pdu)
+{
+    group::GetGroupListRespone respone;
+    respone.ParseFromString(pdu->getMessage());
+
+    for (int i = 0; i < respone.group_info_size(); ++i)
+    {
+        base::GroupInfo groupInfo = respone.group_info(i);
+        YLGroup group;
+        group.setGroupId(groupInfo.group_id());
+        group.setGroupName(groupInfo.group_name().c_str());
+        group.setGroupCapacity(groupInfo.group_capacity());
+        group.setGroupCreator(groupInfo.group_creator());
+        group.setGroupImage(groupInfo.group_head().c_str());
+        group.setCreateTime(groupInfo.group_created());
+        for (int i = 0; i < groupInfo.members_size(); ++i)
+            group.addMember(groupInfo.members(i));
+
+        for (int i = 0; i < groupInfo.managers_size(); ++i)
+            group.addManager(groupInfo.members(i));
+
+        GlobalData::addToGroups(group);
+    }
+    emit groupList();
 }

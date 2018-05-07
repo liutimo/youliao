@@ -22,7 +22,10 @@ void YLHeadFrame::setHeadFromLocal(const QString &path, bool online)
 void YLHeadFrame::setHeadFromUrl(const QUrl &url)
 {
     url_ = url;
-    m_http->download(url_.toString());
+    if (url_.isValid())
+        m_http->download(url_.toString());
+    else
+        setHeadFromLocal(url.toString());
 }
 
 void YLHeadFrame::paintEvent(QPaintEvent *e)

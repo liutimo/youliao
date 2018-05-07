@@ -81,6 +81,14 @@ namespace DB_INTERFACE
     //置顶session
     void topSession(BasePdu *basePdu, uint32_t conn_uid);
 
+
+
+    /*******************群组************************/
+    //创建群组
+    void createGroup(BasePdu *basePdu, uint32_t conn_uid);
+
+    //获取群组list
+    void getGroupList(BasePdu *basePdu, uint32_t conn_uid);
 }
 
 

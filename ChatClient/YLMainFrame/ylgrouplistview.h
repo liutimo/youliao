@@ -1,11 +1,13 @@
 #ifndef YLGROUPLISTVIEW_H
 #define YLGROUPLISTVIEW_H
 #include <QListWidget>
-
+#include "YLEntityObject/ylgroup.h"
 QT_BEGIN_NAMESPACE
 class YLFriendListItem;
 class QListWidgetItem;
 class QMenu;
+class YLHeadFrame;
+class QLabel;
 QT_END_NAMESPACE
 class YLGroupListView : public QListWidget
 {
@@ -25,14 +27,41 @@ class YLGroupListView : public QListWidget
 public:
     YLGroupListView(QWidget *parent = nullptr);
 
+private slots:
+    void createGroupComplete(const QString &groupName);
+    void updateList();
+
 private:
     void initMenu();
+    void addGroupItem(const YLGroup &group);
 
 protected:
     void mousePressEvent(QMouseEvent *event);
 
 private:
     QMenu *m_menu;
+};
+
+class YLGroupListItem : public QWidget
+{
+    Q_OBJECT
+public:
+    YLGroupListItem(QWidget *parent = nullptr);
+    void setGroup(const YLGroup &);
+
+private:
+    void init();
+    void initMenu();
+
+protected:
+    void mousePressEvent(QMouseEvent *event);
+    void resizeEvent(QResizeEvent *event);
+
+private:
+    QMenu *m_menu;
+    YLHeadFrame *m_head_frame;
+    QLabel *m_group_name;
+    YLGroup m_group;
 };
 
 #endif // YLGROUPLISTVIEW_H

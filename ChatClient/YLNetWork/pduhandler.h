@@ -4,6 +4,7 @@
 #include "base/BasePdu.h"
 #include "protobuf/youliao.base.pb.h"
 #include "YLEntityObject/ylfriend.h"
+#include "YLEntityObject/ylgroup.h"
 using namespace youliao::pdu;
 
 typedef QMap<int, QVector<YLFriend>> friend_map;
@@ -30,6 +31,8 @@ signals:
     void unReadMessage(uint32_t friendId, const QString &message);
     void newAddRequest();
     void receiveNewMsg(uint32_t msgType, uint32_t fromId = 0);
+    void newGroup(YLGroup group);
+    void groupList();
 private:
     void _HandleBasePdu(BasePdu *pdu);
     void _HandleUserLoginRespone(BasePdu *pdu);
@@ -46,6 +49,8 @@ private:
     void _HandleGetLatestMsgIdRespone(BasePdu *pdu);
     void _HandleAddFriendRequest(BasePdu *pdu);
     void _HandleGetAddRequestHistoryRespone(BasePdu *pdu);
+    void _HandleCreatGroupRespone(BasePdu *pdu);
+    void _HandleGetGroupListRespone(BasePdu *pdu);
 private:
     explicit PduHandler(QObject *parent = nullptr);
 

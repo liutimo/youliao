@@ -39,6 +39,10 @@ public:
     static void getSessions(uint32_t userId);
     static void deleteSession(uint32_t userId, uint32_t sessionId);
     static void topSession(uint32_t userId, uint32_t sessionId);
+
+    //group
+    static void createGroupRequest(const QString &groupName, uint32_t groupMaxMembers, youliao::pdu::base::GroupVerifyType verifyType, const QVector<uint32_t> &members);
+    static void getGroupList();
 };
 
 #endif // YLBUSINESS_H

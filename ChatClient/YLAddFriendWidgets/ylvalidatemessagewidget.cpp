@@ -121,8 +121,14 @@ void ValidateInfomationWidget::initRight()
     menu->addAction(refuse);
     connect(agree, &QAction::triggered, this, [this](){
         hideRight();
-        m_op_text->setText("已同意");
-        YLBusiness::addFriendRespone(m_request.getOtherId(), 1);
+        YLConfirmWidget *w = new YLConfirmWidget;
+        w->setOtherId(m_request.getOtherId());
+        w->move(mapToGlobal(geometry().center() - w->geometry().center() / 2));
+        w->show();
+        connect(w, &YLConfirmWidget::complete, this, [this](){
+            hideRight();
+            m_op_text->setText("已同意");
+        });
     });
     connect(refuse, &QAction::triggered, this, [this](){
         hideRight();
@@ -140,14 +146,7 @@ void ValidateInfomationWidget::initRight()
     m_left_button->move(382, 30);
     m_left_button->setStyleSheet(qss_left_button);
     connect(m_left_button, &QPushButton::clicked, this, [this](){
-        YLConfirmWidget *w = new YLConfirmWidget;
-        w->setOtherId(m_request.getOtherId());
-        w->move(mapToGlobal(geometry().center() - w->geometry().center() / 2));
-        w->show();
-        connect(w, &YLConfirmWidget::complete, this, [this](){
-            hideRight();
-            m_op_text->setText("已同意");
-        });
+
     });
 
 

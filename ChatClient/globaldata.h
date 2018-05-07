@@ -12,7 +12,7 @@
 #include "YLEntityObject/ylsession.h"
 #include "YLChatWidget/ylchatwidget.h"
 #include "YLEntityObject/yladdrequest.h"
-
+#include "YLEntityObject/ylgroup.h"
 using namespace youliao::pdu;
 
 class GlobalData : public QObject
@@ -59,6 +59,10 @@ public:
     static void setRequestHistory(const QVector<YLAddRequest>&h) { m_add_request_history = h;}
     static const QVector<YLAddRequest>& getRequestHistory() { return m_add_request_history; }
 
+    //group
+    static void setGroups(const QList<YLGroup>&);
+    static void addToGroups(const YLGroup &);
+    static QList<YLGroup> getGroups();
 private:
     static youliao::pdu::base::UserInfo m_user;
     static QString m_header_image_path;
@@ -71,6 +75,11 @@ private:
     //add request
     static QVector<YLAddRequest> m_add_request;
     static QVector<YLAddRequest> m_add_request_history;
+
+
+    //group
+    static QList<YLGroup> m_groups;
+
 };
 
 #endif // GLOBALDATA_H

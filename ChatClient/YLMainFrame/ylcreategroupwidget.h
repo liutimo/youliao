@@ -38,6 +38,9 @@ private slots:
     void enableCustom(int, bool);
     void addSelectedItem(uint32_t friId);
 
+signals:
+    void createComplete(const QString &groupName);
+
 private:
     //widget1
     QLabel *m_label_group_name;
@@ -80,6 +83,7 @@ private:
     QWidget *m_widget_3;
 
     QLabel *m_tip;
+    uint32_t total;
 };
 
 
@@ -135,7 +139,7 @@ public:
     void loadSelectedList();
     void addOne(uint32_t friendId, bool first = false);
     void removeOne(uint32_t friendId);
-
+    QVector<uint32_t> getSelected() { return *m_selected_member; }
 private:
     void init();
     bool isSelected(uint32_t friId);

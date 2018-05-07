@@ -13,6 +13,7 @@
 #include "pdu/protobuf/youliao.server.pb.h"
 #include "pdu/protobuf/youliao.friendlist.pb.h"
 #include "pdu/protobuf/youliao.session.pb.h"
+#include "pdu/protobuf/youliao.group.pb.h"
 #include "User.h"
 
 using namespace youliao::pdu;
@@ -155,6 +156,12 @@ void DBServConn::handlePdu(BasePdu *pdu)
             break;
         case base::CID_FRIENDLIST_GET_REQUEST_HISTORY_RESPONE:
             _HandleGetAddRequestHistoryRespone(pdu);
+            break;
+        case base::CID_GROUP_CREATE_RESPONE:
+            _HandleCreateGroupRespone(pdu);
+            break;
+        case base::CID_GROUP_GET_LIST_RESPONE:
+            _HandleGetGroupListRespone(pdu);
             break;
         default:
             break;
@@ -440,5 +447,40 @@ void DBServConn::_HandleGetAddRequestHistoryRespone(BasePdu *pdu)
         {
             sendMessage(conn, respone, base::SID_FRIEND_LIST, base::CID_FRIENDLIST_GET_REQUEST_HISTORY_RESPONE);
         }
+    }
+}
+
+
+void DBServConn::_HandleCreateGroupRespone(BasePdu *pdu)
+{
+    group::GroupCreateRespone respone;
+    respone.ParseFromString(pdu->getMessage());
+
+    uint32_t userId = respone.user_id();
+
+    auto user = UserManager::instance()->getUser(userId);
+    if (user)
+    {
+        auto conn = user->getConn();
+        if (conn)
+        {
+            sendMessage(conn, respone, base::SID_GROUP, base::CID_GROUP_CREATE_RESPONE);
+        }
+    }
+}
+
+
+void DBServConn::_HandleGetGroupListRespone(BasePdu *basePdu)
+{
+    group::GetGroupListRespone respone;
+    respone.ParsePartialFromString(basePdu->getMessage());
+
+    uint32_t userId = respone.user_id();
+    auto user = UserManager::instance()->getUser(userId);
+    if (user)
+    {
+        auto conn = user->getConn();
+        if (conn)
+            sendMessage(conn, respone, base::SID_GROUP, base::CID_GROUP_GET_LIST_RESPONE);
     }
 }
