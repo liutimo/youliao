@@ -8,7 +8,8 @@ HEADERS += \
     $$PWD/ylinfomationwidget.h \
     $$PWD/yllistitem.h \
     $$PWD/ylgrouplistview.h \
-    $$PWD/ylcreategroupwidget.h
+    $$PWD/ylcreategroupwidget.h \
+    $$PWD/ylgroupinfowidget.h
 
 SOURCES += \
     $$PWD/ylmainwidget.cpp \
@@ -20,5 +21,6 @@ SOURCES += \
     $$PWD/ylinfomationwidget.cpp \
     $$PWD/yllistitem.cpp \
     $$PWD/ylgrouplistview.cpp \
-    $$PWD/ylcreategroupwidget.cpp
+    $$PWD/ylcreategroupwidget.cpp \
+    $$PWD/ylgroupinfowidget.cpp
 

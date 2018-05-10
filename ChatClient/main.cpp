@@ -7,6 +7,8 @@
 #include "YLDataBase/yldatabase.h"
 #include "YLChatWidget/yltransferfiletasklistwidget.h"
 #include "YLMainFrame/ylcreategroupwidget.h"
+#include "YLMainFrame/ylgroupinfowidget.h"
+#include "YLCommonControl/ylmemberlistwidget.h"
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -16,10 +18,10 @@ int main(int argc, char *argv[])
 
     SignalForward::instance();
 
-
-//    YLCreateGroupWidget w;
+//    YLGroupInfoWidget w;
 
     YLLoginPanel w;
+
     w.resize(500, 400);
     w.show();
 

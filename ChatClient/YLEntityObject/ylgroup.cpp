@@ -16,6 +16,7 @@ YLGroup::YLGroup(const YLGroup &group)
     m_members = group.m_members;
     m_group_name = group.m_group_name;
     m_head_url = group.m_head_url;
+    m_created = group.m_created;
 }
 
 YLGroup &YLGroup::operator =(const YLGroup &group)
@@ -28,6 +29,7 @@ YLGroup &YLGroup::operator =(const YLGroup &group)
     m_members = group.m_members;
     m_group_name = group.m_group_name;
     m_head_url = group.m_head_url;
+    m_created = group.m_created;
     return *this;
 
 }

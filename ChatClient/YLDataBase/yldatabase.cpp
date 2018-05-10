@@ -23,7 +23,6 @@ YLDataBase::YLDataBase(QObject *parent) : QObject(parent)
     m_database.open();
 }
 
-
 void YLDataBase::saveMessage(const MessageData &msg, bool isSender)
 {
     QString sql = "INSERT INTO yl_message(relate_id, sender_id, receiver_id, message_id, message_content, message_created)"

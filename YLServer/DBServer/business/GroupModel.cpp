@@ -199,7 +199,7 @@ bool GroupModel::getGroupManagers(uint32_t groupId, std::list<uint32_t> &manager
             ret = true;
         }
     }
-
+    DBManager::instance()->releaseConnection(conn);
     return ret;
 }
 
@@ -225,5 +225,6 @@ bool GroupModel::getGroupMembers(uint32_t groupId, std::list<uint32_t> &members)
             ret = true;
         }
     }
+    DBManager::instance()->releaseConnection(conn);
     return ret;
 }

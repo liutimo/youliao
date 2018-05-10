@@ -356,5 +356,11 @@
         <file>res/MainFrame/addFriend_btn_hover.png</file>
         <file>res/MainFrame/addFriend_btn_normal.png</file>
         <file>res/group_default_head.png</file>
+        <file>res/MainFrame/addphoto_nomal.png</file>
+        <file>res/MainFrame/addphoto_hover.png</file>
+        <file>res/MainFrame/addphoto_down.png</file>
+        <file>res/head_highlight_36.png</file>
+        <file>res/MainFrame/trad_boy.png</file>
+        <file>res/MainFrame/trad_girl.png</file>
     </qresource>
 </RCC>

@@ -11,7 +11,8 @@ QMap<uint32_t, QVector<YLMessage>> GlobalData::m_messages = QMap<uint32_t, QVect
 QMap<uint32_t, uint32_t> GlobalData::m_message_id = QMap<uint32_t, uint32_t>();
 QVector<YLAddRequest> GlobalData::m_add_request = QVector<YLAddRequest>();
 QVector<YLAddRequest> GlobalData::m_add_request_history = QVector<YLAddRequest>();
-QList<YLGroup> GlobalData::m_groups = QList<YLGroup>();
+QMap<uint32_t, YLGroup> GlobalData::m_groups = QMap<uint32_t, YLGroup>();
+QMap<uint32_t, base::UserInfo>  GlobalData::m_all_user = QMap<uint32_t, base::UserInfo>();
 
 GlobalData::GlobalData(QObject *parent) : QObject(parent)
 {
@@ -161,17 +162,72 @@ const QVector<YLAddRequest>& GlobalData::getAddRequests()
 
 
 //group
-void GlobalData::setGroups(const QList<YLGroup>&groups)
+void GlobalData::setGroups(const QMap<uint32_t, YLGroup>&groups)
 {
     m_groups = groups;
 }
 
 void GlobalData::addToGroups(const YLGroup &group)
 {
-    m_groups.push_back(group);
+    m_groups[group.getGroupId()] = group;
 }
 
-QList<YLGroup> GlobalData::getGroups()
+QMap<uint32_t, YLGroup> GlobalData::getGroups()
 {
     return m_groups;
+}
+
+void GlobalData::addUser(const base::UserInfo &user)
+{
+    m_all_user[user.user_id()] = user;
+}
+
+void GlobalData::addUsers(const QList<base::UserInfo> &users)
+{
+    for (const auto &user : users)
+    {
+        addUser(user);
+    }
+}
+
+void GlobalData::addUSers(const QVector<base::UserInfo> &users)
+{
+    for (const auto &user : users)
+    {
+        addUser(user);
+    }
+}
+
+base::UserInfo GlobalData::getCreatorByGroupId(uint32_t groupId)
+{
+    const YLGroup &group = m_groups[groupId];
+    uint32_t creatorId = group.getGroupCreator();
+
+    return m_all_user[creatorId];
+}
+
+QVector<base::UserInfo> GlobalData::getManagersByGroupId(uint32_t groupId)
+{
+    QVector<base::UserInfo> managers;
+    const YLGroup &group = m_groups[groupId];
+    const auto &ms = group.getManagers();
+
+    for (uint32_t id : ms)
+    {
+        managers.push_back(m_all_user[id]);
+    }
+    return managers;
+}
+
+QVector<base::UserInfo> GlobalData::getMembersByGroupId(uint32_t groupId)
+{
+    QVector<base::UserInfo> members;
+    const YLGroup &group = m_groups[groupId];
+    const auto &ms = group.getMembers();
+
+    for (uint32_t id : ms)
+    {
+        members.push_back(m_all_user[id]);
+    }
+    return members;
 }

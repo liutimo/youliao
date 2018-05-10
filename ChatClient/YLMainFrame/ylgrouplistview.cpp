@@ -2,6 +2,7 @@
 #include "yllistitem.h"
 #include "ylcreategroupwidget.h"
 #include "YLCommonControl/ylheadframe.h"
+#include "ylgroupinfowidget.h"
 #include "YLNetWork/ylbusiness.h"
 #include "YLNetWork/pduhandler.h"
 #include "globaldata.h"
@@ -67,7 +68,7 @@ void YLGroupListView::createGroupComplete(const QString &groupName)
 void YLGroupListView::updateList()
 {
     clear();
-    QList<YLGroup> groups = GlobalData::getGroups();
+    auto groups = GlobalData::getGroups();
     for (auto group : groups)
     {
         addGroupItem(group);
@@ -107,6 +108,13 @@ void YLGroupListItem::initMenu()
     m_menu->addAction(action_cat_info);
     m_menu->addAction(action_msg_record);
     m_menu->addAction(action_exit_group);
+
+    connect(action_cat_info, &QAction::triggered, this, [this]()
+    {
+        YLGroupInfoWidget *w = new YLGroupInfoWidget;
+        w->setGroup(m_group);
+        w->show();
+    });
 
 }
 

@@ -60,9 +60,16 @@ public:
     static const QVector<YLAddRequest>& getRequestHistory() { return m_add_request_history; }
 
     //group
-    static void setGroups(const QList<YLGroup>&);
+    static void setGroups(const QMap<uint32_t, YLGroup>&);
     static void addToGroups(const YLGroup &);
-    static QList<YLGroup> getGroups();
+    static QMap<uint32_t, YLGroup> getGroups();
+    static void addUser(const base::UserInfo&);
+    static void addUsers(const QList<base::UserInfo> &);
+    static void addUSers(const QVector<base::UserInfo> &);
+    static base::UserInfo getCreatorByGroupId(uint32_t groupId);
+    static QVector<base::UserInfo> getManagersByGroupId(uint32_t groupId);
+    static QVector<base::UserInfo> getMembersByGroupId(uint32_t groupId);
+
 private:
     static youliao::pdu::base::UserInfo m_user;
     static QString m_header_image_path;
@@ -78,7 +85,12 @@ private:
 
 
     //group
-    static QList<YLGroup> m_groups;
+    static QMap<uint32_t, YLGroup> m_groups;
+    static QMap<uint32_t, base::UserInfo> m_all_user; //group members
+
+    //登录过程需要从服务器获取很多数据。这里记录是否加载情况。
+    //只有全部加载完才会进入主界面
+    static QMap<uint32_t, bool> m_load;
 
 };
 
