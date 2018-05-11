@@ -115,6 +115,9 @@ void PduHandler::_HandleBasePdu(BasePdu *pdu)
     case base::CID_GROUP_GET_LIST_RESPONE:
         _HandleGetGroupListRespone(pdu);
         break;
+    case base::CID_GROUP_GET_MEMBER_RESPONE:
+        _HandleGetGroupMemberRespone(pdu);
+        break;
     default:
         std::cout << "CID" << pdu->getCID() << "  SID:" << pdu->getSID();
         break;
@@ -407,9 +410,28 @@ void PduHandler::_HandleGetGroupListRespone(BasePdu *pdu)
             group.addMember(groupInfo.members(i));
 
         for (int i = 0; i < groupInfo.managers_size(); ++i)
-            group.addManager(groupInfo.members(i));
+            group.addManager(groupInfo.managers(i));
 
         GlobalData::addToGroups(group);
     }
     emit groupList();
+}
+
+
+void PduHandler::_HandleGetGroupMemberRespone(BasePdu *pdu)
+{
+    group::GetGroupMemberInfoRespone respone;
+    respone.ParseFromString(pdu->getMessage());
+
+    uint32_t groupId = respone.group_id();
+    QVector<base::MemberInfo> members;
+    for (int i = 0; i < respone.member_infos_size(); ++i)
+    {
+        int memberId = respone.member_infos(i).user_id();
+        members.push_back(respone.member_infos(i));
+    }
+
+    GlobalData::setGroupMember(groupId, members);
+
+    emit groupMembers();
 }

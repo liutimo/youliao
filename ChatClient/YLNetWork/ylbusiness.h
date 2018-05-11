@@ -43,6 +43,8 @@ public:
     //group
     static void createGroupRequest(const QString &groupName, uint32_t groupMaxMembers, youliao::pdu::base::GroupVerifyType verifyType, const QVector<uint32_t> &members);
     static void getGroupList();
+    static void getGroupMembersInfo(uint32_t groupId);
+    static void modifyGroupCard(uint32_t groupId, const QString &card);
 };
 
 #endif // YLBUSINESS_H

@@ -697,6 +697,52 @@ namespace DB_INTERFACE
 
     }
 
+
+    //获取群成员
+    void getGroupMember(BasePdu *basePdu, uint32_t conn_uuid)
+    {
+        group::GetGroupMemberInfoRequest request;
+        request.ParseFromString(basePdu->getMessage());
+
+        uint32_t userId = request.user_id();
+        uint32_t groupId = request.group_id();
+
+        GroupModel *groupModel = GroupModel::instance();
+
+        //查找群成员信息
+        list<base::MemberInfo> memberInfoList;
+        groupModel->getMembersByGroupId(groupId, memberInfoList);
+
+        group::GetGroupMemberInfoRespone respone;
+        respone.set_user_id(userId);
+        respone.set_group_id(groupId);
+        for (base::MemberInfo &memberInfo : memberInfoList)
+        {
+            auto memInfo = respone.add_member_infos();
+            *memInfo = memberInfo;
+        }
+
+
+        auto conn = findProxyConn(conn_uuid);
+        if (conn)
+            sendMessage(conn, respone, base::SID_SERVER, base::CID_GROUP_GET_MEMBER_RESPONE);
+    }
+
+    //修改群名片
+    void modifyGroupCard(BasePdu *basePdu, uint32_t conn_uuid)
+    {
+        group::ModifyGroupCard request;
+        request.ParseFromString(basePdu->getMessage());
+
+        uint32_t userId = request.user_id();
+        uint32_t groupId = request.group_id();
+        std::string groupCard = request.group_card();
+
+        GroupModel *groupModel = GroupModel::instance();
+        groupModel->modifyGroupCard(groupId, userId, groupCard);
+
+    }
+
 }
 
 

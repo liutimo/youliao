@@ -33,19 +33,23 @@ private:
     void initRight1();   //width = 430
     void initRight2();   //width = 430
     void initTopNavigationBar();
+
 protected:
     void paintEvent(QPaintEvent *event);
 
 private slots:
     void uploadPhoto();
     void navigationClicked();
+    void modifyGroupCard();
+    void updateGroupMemberList();
+
     void mainShow();
     void memberShow();
     void settingShow();
-
     void mainHide();
     void memberHide();
     void settingHide();
+
 signals:
 
 private:
@@ -71,8 +75,8 @@ private:
 
     //right 成员列表
     YLMemberListWidget *m_member_list;
-
-
+    QLabel      *m_label_manager_count;
+    QPushButton *m_modify_group_card;
     //data
     YLGroup m_group;
 

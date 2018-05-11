@@ -189,7 +189,7 @@ void YLMainWidget::closeEvent(QCloseEvent *event)
     QApplication::quit();
 }
 
-/************************/
+/************************************************/
 void YLMainWidget::setUserInfo(UserInfo *userInfo)
 {
     m_user_info = userInfo;

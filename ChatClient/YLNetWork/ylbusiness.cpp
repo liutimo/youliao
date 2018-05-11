@@ -335,7 +335,6 @@ void YLBusiness::createGroupRequest(const QString &groupName, uint32_t groupMaxM
         request.add_member_ids(id);
     }
 
-
     BasePdu *basePdu = new BasePdu;
     basePdu->setSID(SID_GROUP);
     basePdu->setCID(CID_GROUP_CREATE_REQUEST);
@@ -348,10 +347,36 @@ void YLBusiness::getGroupList()
     group::GetGroupListRequest request;
     request.set_user_id(GlobalData::getCurrLoginUserId());
 
-
     BasePdu *basePdu = new BasePdu;
     basePdu->setSID(SID_GROUP);
     basePdu->setCID(CID_GROUP_GET_LIST_REQUEST);
+    basePdu->writeMessage(&request);
+    PduSender::instance()->addMessage(basePdu);
+}
+
+void YLBusiness::getGroupMembersInfo(uint32_t groupId)
+{
+    group::GetGroupMemberInfoRequest request;
+    request.set_user_id(GlobalData::getCurrLoginUserId());
+    request.set_group_id(groupId);
+
+    BasePdu *basePdu = new BasePdu;
+    basePdu->setSID(SID_GROUP);
+    basePdu->setCID(CID_GROUP_GET_MEMBER_REQUEST);
+    basePdu->writeMessage(&request);
+    PduSender::instance()->addMessage(basePdu);
+}
+
+void YLBusiness::modifyGroupCard(uint32_t groupId, const QString &card)
+{
+    group::ModifyGroupCard request;
+    request.set_user_id(GlobalData::getCurrLoginUserId());
+    request.set_group_id(groupId);
+    request.set_group_card(card.toStdString());
+
+    BasePdu *basePdu = new BasePdu;
+    basePdu->setSID(SID_GROUP);
+    basePdu->setCID(CID_GROUP_MODIFY_CARD_RESQUEST);
     basePdu->writeMessage(&request);
     PduSender::instance()->addMessage(basePdu);
 }

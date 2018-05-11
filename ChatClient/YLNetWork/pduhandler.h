@@ -33,6 +33,8 @@ signals:
     void receiveNewMsg(uint32_t msgType, uint32_t fromId = 0);
     void newGroup(YLGroup group);
     void groupList();
+    void groupMembers();
+
 private:
     void _HandleBasePdu(BasePdu *pdu);
     void _HandleUserLoginRespone(BasePdu *pdu);
@@ -51,6 +53,7 @@ private:
     void _HandleGetAddRequestHistoryRespone(BasePdu *pdu);
     void _HandleCreatGroupRespone(BasePdu *pdu);
     void _HandleGetGroupListRespone(BasePdu *pdu);
+    void _HandleGetGroupMemberRespone(BasePdu *pdu);
 private:
     explicit PduHandler(QObject *parent = nullptr);
 

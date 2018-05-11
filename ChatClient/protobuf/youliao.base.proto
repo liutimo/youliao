@@ -110,10 +110,15 @@ enum MessageCID
 enum GroupCID
 {
     CID_GROUP_ZERO = 0x0000;
-    CID_GROUP_CREATE_REQUEST = 0x0701; // 创建群组请求
-    CID_GROUP_CREATE_RESPONE = 0x0702; // 创建群组请求
-    CID_GROUP_GET_LIST_REQUEST = 0x0703; // 请求获取群组
-    CID_GROUP_GET_LIST_RESPONE = 0x0704; // 响应
+    CID_GROUP_CREATE_REQUEST        = 0x0701; // 创建群组请求
+    CID_GROUP_CREATE_RESPONE        = 0x0702; // 创建群组请求
+    CID_GROUP_GET_LIST_REQUEST      = 0x0703; // 请求获取群组
+    CID_GROUP_GET_LIST_RESPONE      = 0x0704; // 响应
+    CID_GROUP_ADD_GROUP_REQUEST     = 0x0705; //请求加群
+    CID_GROUP_ADD_GROUP_RESPONE     = 0x0706; //响应
+    CID_GROUP_GET_MEMBER_REQUEST    = 0x0707; //请求群成员
+    CID_GROUP_GET_MEMBER_RESPONE    = 0x0708;
+    CID_GROUP_MODIFY_CARD_RESQUEST  = 0x0709; //请求修改群名片，修改结果不通知客户端
 }
 
 //响应结果类型
@@ -190,6 +195,16 @@ message SessionInfo
     uint32 latest_msg_id = 6;
     bytes last_message_data = 7;
 }
+
+//群成员信息
+message MemberInfo
+{
+    uint32 user_id = 1;
+    string group_card = 2;
+    uint32 last_chat_time = 3;
+    UserInfo user_info = 4;
+}
+
 
 //添加好友请求历史信息
 message AddRequestInfo

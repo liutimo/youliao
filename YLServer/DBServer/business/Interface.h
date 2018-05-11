@@ -89,6 +89,12 @@ namespace DB_INTERFACE
 
     //获取群组list
     void getGroupList(BasePdu *basePdu, uint32_t conn_uid);
+
+    //获取群成员
+    void getGroupMember(BasePdu *basePdu, uint32_t conn_uuid);
+
+    //修改群名片
+    void modifyGroupCard(BasePdu *basePdu, uint32_t conn_uuid);
 }
 
 

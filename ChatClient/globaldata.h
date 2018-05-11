@@ -69,7 +69,8 @@ public:
     static base::UserInfo getCreatorByGroupId(uint32_t groupId);
     static QVector<base::UserInfo> getManagersByGroupId(uint32_t groupId);
     static QVector<base::UserInfo> getMembersByGroupId(uint32_t groupId);
-
+    static void setGroupMember(uint32_t groupId, const QVector<base::MemberInfo> &members);
+    static base::MemberInfo& getMemberInfo(uint32_t groupId, uint32_t memberId);
 private:
     static youliao::pdu::base::UserInfo m_user;
     static QString m_header_image_path;
@@ -86,7 +87,8 @@ private:
 
     //group
     static QMap<uint32_t, YLGroup> m_groups;
-    static QMap<uint32_t, base::UserInfo> m_all_user; //group members
+    static QMap<uint32_t, base::UserInfo> m_all_user; //所有的用户信息
+    static QMap<uint32_t, QMap<uint32_t, base::MemberInfo>> m_group_member; //群成员信息
 
     //登录过程需要从服务器获取很多数据。这里记录是否加载情况。
     //只有全部加载完才会进入主界面

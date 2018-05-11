@@ -37,7 +37,7 @@ namespace protobuf_youliao_2ebase_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[6];
+  static const ::google::protobuf::internal::ParseTable schema[7];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -49,6 +49,8 @@ void InitDefaultsFriendInfoImpl();
 void InitDefaultsFriendInfo();
 void InitDefaultsSessionInfoImpl();
 void InitDefaultsSessionInfo();
+void InitDefaultsMemberInfoImpl();
+void InitDefaultsMemberInfo();
 void InitDefaultsAddRequestInfoImpl();
 void InitDefaultsAddRequestInfo();
 void InitDefaultsGroupInfoImpl();
@@ -59,6 +61,7 @@ inline void InitDefaults() {
   InitDefaultsUserInfo();
   InitDefaultsFriendInfo();
   InitDefaultsSessionInfo();
+  InitDefaultsMemberInfo();
   InitDefaultsAddRequestInfo();
   InitDefaultsGroupInfo();
   InitDefaultsHeartBeat();
@@ -79,6 +82,9 @@ extern GroupInfoDefaultTypeInternal _GroupInfo_default_instance_;
 class HeartBeat;
 class HeartBeatDefaultTypeInternal;
 extern HeartBeatDefaultTypeInternal _HeartBeat_default_instance_;
+class MemberInfo;
+class MemberInfoDefaultTypeInternal;
+extern MemberInfoDefaultTypeInternal _MemberInfo_default_instance_;
 class SessionInfo;
 class SessionInfoDefaultTypeInternal;
 extern SessionInfoDefaultTypeInternal _SessionInfo_default_instance_;
@@ -94,6 +100,7 @@ template<> ::youliao::pdu::base::AddRequestInfo* Arena::Create< ::youliao::pdu::
 template<> ::youliao::pdu::base::FriendInfo* Arena::Create< ::youliao::pdu::base::FriendInfo>(Arena*);
 template<> ::youliao::pdu::base::GroupInfo* Arena::Create< ::youliao::pdu::base::GroupInfo>(Arena*);
 template<> ::youliao::pdu::base::HeartBeat* Arena::Create< ::youliao::pdu::base::HeartBeat>(Arena*);
+template<> ::youliao::pdu::base::MemberInfo* Arena::Create< ::youliao::pdu::base::MemberInfo>(Arena*);
 template<> ::youliao::pdu::base::SessionInfo* Arena::Create< ::youliao::pdu::base::SessionInfo>(Arena*);
 template<> ::youliao::pdu::base::UserInfo* Arena::Create< ::youliao::pdu::base::UserInfo>(Arena*);
 }  // namespace protobuf
@@ -307,12 +314,17 @@ enum GroupCID {
   CID_GROUP_CREATE_RESPONE = 1794,
   CID_GROUP_GET_LIST_REQUEST = 1795,
   CID_GROUP_GET_LIST_RESPONE = 1796,
+  CID_GROUP_ADD_GROUP_REQUEST = 1797,
+  CID_GROUP_ADD_GROUP_RESPONE = 1798,
+  CID_GROUP_GET_MEMBER_REQUEST = 1799,
+  CID_GROUP_GET_MEMBER_RESPONE = 1800,
+  CID_GROUP_MODIFY_CARD_RESQUEST = 1801,
   GroupCID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   GroupCID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool GroupCID_IsValid(int value);
 const GroupCID GroupCID_MIN = CID_GROUP_ZERO;
-const GroupCID GroupCID_MAX = CID_GROUP_GET_LIST_RESPONE;
+const GroupCID GroupCID_MAX = CID_GROUP_MODIFY_CARD_RESQUEST;
 const int GroupCID_ARRAYSIZE = GroupCID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* GroupCID_descriptor();
@@ -1098,6 +1110,141 @@ class SessionInfo : public ::google::protobuf::Message /* @@protoc_insertion_poi
 };
 // -------------------------------------------------------------------
 
+class MemberInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.base.MemberInfo) */ {
+ public:
+  MemberInfo();
+  virtual ~MemberInfo();
+
+  MemberInfo(const MemberInfo& from);
+
+  inline MemberInfo& operator=(const MemberInfo& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  MemberInfo(MemberInfo&& from) noexcept
+    : MemberInfo() {
+    *this = ::std::move(from);
+  }
+
+  inline MemberInfo& operator=(MemberInfo&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MemberInfo& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MemberInfo* internal_default_instance() {
+    return reinterpret_cast<const MemberInfo*>(
+               &_MemberInfo_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    3;
+
+  void Swap(MemberInfo* other);
+  friend void swap(MemberInfo& a, MemberInfo& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MemberInfo* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<MemberInfo>(NULL);
+  }
+
+  MemberInfo* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<MemberInfo>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const MemberInfo& from);
+  void MergeFrom(const MemberInfo& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(MemberInfo* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string group_card = 2;
+  void clear_group_card();
+  static const int kGroupCardFieldNumber = 2;
+  const ::std::string& group_card() const;
+  void set_group_card(const ::std::string& value);
+  #if LANG_CXX11
+  void set_group_card(::std::string&& value);
+  #endif
+  void set_group_card(const char* value);
+  void set_group_card(const char* value, size_t size);
+  ::std::string* mutable_group_card();
+  ::std::string* release_group_card();
+  void set_allocated_group_card(::std::string* group_card);
+
+  // .youliao.pdu.base.UserInfo user_info = 4;
+  bool has_user_info() const;
+  void clear_user_info();
+  static const int kUserInfoFieldNumber = 4;
+  const ::youliao::pdu::base::UserInfo& user_info() const;
+  ::youliao::pdu::base::UserInfo* release_user_info();
+  ::youliao::pdu::base::UserInfo* mutable_user_info();
+  void set_allocated_user_info(::youliao::pdu::base::UserInfo* user_info);
+
+  // uint32 user_id = 1;
+  void clear_user_id();
+  static const int kUserIdFieldNumber = 1;
+  ::google::protobuf::uint32 user_id() const;
+  void set_user_id(::google::protobuf::uint32 value);
+
+  // uint32 last_chat_time = 3;
+  void clear_last_chat_time();
+  static const int kLastChatTimeFieldNumber = 3;
+  ::google::protobuf::uint32 last_chat_time() const;
+  void set_last_chat_time(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.base.MemberInfo)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr group_card_;
+  ::youliao::pdu::base::UserInfo* user_info_;
+  ::google::protobuf::uint32 user_id_;
+  ::google::protobuf::uint32 last_chat_time_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2ebase_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2ebase_2eproto::InitDefaultsMemberInfoImpl();
+};
+// -------------------------------------------------------------------
+
 class AddRequestInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.base.AddRequestInfo) */ {
  public:
   AddRequestInfo();
@@ -1133,7 +1280,7 @@ class AddRequestInfo : public ::google::protobuf::Message /* @@protoc_insertion_
                &_AddRequestInfo_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    3;
+    4;
 
   void Swap(AddRequestInfo* other);
   friend void swap(AddRequestInfo& a, AddRequestInfo& b) {
@@ -1302,7 +1449,7 @@ class GroupInfo : public ::google::protobuf::Message /* @@protoc_insertion_point
                &_GroupInfo_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    4;
+    5;
 
   void Swap(GroupInfo* other);
   friend void swap(GroupInfo& a, GroupInfo& b) {
@@ -1484,7 +1631,7 @@ class HeartBeat : public ::google::protobuf::Message /* @@protoc_insertion_point
                &_HeartBeat_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    5;
+    6;
 
   void Swap(HeartBeat* other);
   friend void swap(HeartBeat& a, HeartBeat& b) {
@@ -2396,6 +2543,142 @@ inline void SessionInfo::set_allocated_last_message_data(::std::string* last_mes
 
 // -------------------------------------------------------------------
 
+// MemberInfo
+
+// uint32 user_id = 1;
+inline void MemberInfo::clear_user_id() {
+  user_id_ = 0u;
+}
+inline ::google::protobuf::uint32 MemberInfo::user_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.MemberInfo.user_id)
+  return user_id_;
+}
+inline void MemberInfo::set_user_id(::google::protobuf::uint32 value) {
+  
+  user_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.base.MemberInfo.user_id)
+}
+
+// string group_card = 2;
+inline void MemberInfo::clear_group_card() {
+  group_card_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& MemberInfo::group_card() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.MemberInfo.group_card)
+  return group_card_.GetNoArena();
+}
+inline void MemberInfo::set_group_card(const ::std::string& value) {
+  
+  group_card_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:youliao.pdu.base.MemberInfo.group_card)
+}
+#if LANG_CXX11
+inline void MemberInfo::set_group_card(::std::string&& value) {
+  
+  group_card_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:youliao.pdu.base.MemberInfo.group_card)
+}
+#endif
+inline void MemberInfo::set_group_card(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  group_card_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:youliao.pdu.base.MemberInfo.group_card)
+}
+inline void MemberInfo::set_group_card(const char* value, size_t size) {
+  
+  group_card_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:youliao.pdu.base.MemberInfo.group_card)
+}
+inline ::std::string* MemberInfo::mutable_group_card() {
+  
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.base.MemberInfo.group_card)
+  return group_card_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* MemberInfo::release_group_card() {
+  // @@protoc_insertion_point(field_release:youliao.pdu.base.MemberInfo.group_card)
+  
+  return group_card_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MemberInfo::set_allocated_group_card(::std::string* group_card) {
+  if (group_card != NULL) {
+    
+  } else {
+    
+  }
+  group_card_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), group_card);
+  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.base.MemberInfo.group_card)
+}
+
+// uint32 last_chat_time = 3;
+inline void MemberInfo::clear_last_chat_time() {
+  last_chat_time_ = 0u;
+}
+inline ::google::protobuf::uint32 MemberInfo::last_chat_time() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.MemberInfo.last_chat_time)
+  return last_chat_time_;
+}
+inline void MemberInfo::set_last_chat_time(::google::protobuf::uint32 value) {
+  
+  last_chat_time_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.base.MemberInfo.last_chat_time)
+}
+
+// .youliao.pdu.base.UserInfo user_info = 4;
+inline bool MemberInfo::has_user_info() const {
+  return this != internal_default_instance() && user_info_ != NULL;
+}
+inline void MemberInfo::clear_user_info() {
+  if (GetArenaNoVirtual() == NULL && user_info_ != NULL) {
+    delete user_info_;
+  }
+  user_info_ = NULL;
+}
+inline const ::youliao::pdu::base::UserInfo& MemberInfo::user_info() const {
+  const ::youliao::pdu::base::UserInfo* p = user_info_;
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.MemberInfo.user_info)
+  return p != NULL ? *p : *reinterpret_cast<const ::youliao::pdu::base::UserInfo*>(
+      &::youliao::pdu::base::_UserInfo_default_instance_);
+}
+inline ::youliao::pdu::base::UserInfo* MemberInfo::release_user_info() {
+  // @@protoc_insertion_point(field_release:youliao.pdu.base.MemberInfo.user_info)
+  
+  ::youliao::pdu::base::UserInfo* temp = user_info_;
+  user_info_ = NULL;
+  return temp;
+}
+inline ::youliao::pdu::base::UserInfo* MemberInfo::mutable_user_info() {
+  
+  if (user_info_ == NULL) {
+    user_info_ = ::google::protobuf::Arena::Create< ::youliao::pdu::base::UserInfo >(
+        GetArenaNoVirtual());
+  }
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.base.MemberInfo.user_info)
+  return user_info_;
+}
+inline void MemberInfo::set_allocated_user_info(::youliao::pdu::base::UserInfo* user_info) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete user_info_;
+  }
+  if (user_info) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      user_info = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, user_info, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  user_info_ = user_info;
+  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.base.MemberInfo.user_info)
+}
+
+// -------------------------------------------------------------------
+
 // AddRequestInfo
 
 // uint32 id = 1;
@@ -2846,6 +3129,8 @@ GroupInfo::mutable_members() {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

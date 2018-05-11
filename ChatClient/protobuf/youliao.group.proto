@@ -29,3 +29,36 @@ message GetGroupListRespone
     uint32 user_id = 1;
     repeated youliao.pdu.base.GroupInfo group_info = 2;
 }
+
+//获取群成员信息
+message GetGroupMemberInfoRequest
+{
+    uint32 user_id = 1;
+    uint32 group_id = 2;
+}
+
+message GetGroupMemberInfoRespone
+{
+    uint32 user_id = 1;
+    uint32 group_id = 2;
+    repeated youliao.pdu.base.MemberInfo member_infos = 3;
+}
+
+//修改群名片
+message ModifyGroupCard
+{
+    uint32 user_id = 1;
+    uint32 group_id = 2;
+    string group_card = 3;
+}
+
+//搜索群组
+
+
+//请求添加群
+
+//踢出去
+
+//退群
+
+//修改群公告

@@ -1,8 +1,14 @@
 #include "yllineedit.h"
 #include <QPushButton>
+#include <QDebug>
 YLLineEdit::YLLineEdit(QWidget *parent) : QLineEdit(parent)
 {
     init();
+}
+
+YLLineEdit::~YLLineEdit()
+{
+    qDebug() << "~YLLineEdit()";
 }
 
 void YLLineEdit::init()
@@ -27,6 +33,11 @@ void YLLineEdit::setButtonSize(const QSize &size)
     button_custom_->resize(size);
 }
 
+void YLLineEdit::hideButton()
+{
+    button_custom_->hide();
+}
+
 void YLLineEdit::resizeEvent(QResizeEvent *event)
 {
     int w = button_custom_->width();
@@ -34,4 +45,10 @@ void YLLineEdit::resizeEvent(QResizeEvent *event)
     button_custom_->move(width() - w, (height() - h) / 2);
 
     QLineEdit::resizeEvent(event);
+}
+
+void YLLineEdit::focusOutEvent(QFocusEvent *event)
+{
+    emit loseFocus();
+    QLineEdit::focusOutEvent(event);
 }

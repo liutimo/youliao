@@ -37,6 +37,11 @@ class SessionInfoDefaultTypeInternal {
   ::google::protobuf::internal::ExplicitlyConstructed<SessionInfo>
       _instance;
 } _SessionInfo_default_instance_;
+class MemberInfoDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<MemberInfo>
+      _instance;
+} _MemberInfo_default_instance_;
 class AddRequestInfoDefaultTypeInternal {
  public:
   ::google::protobuf::internal::ExplicitlyConstructed<AddRequestInfo>
@@ -119,6 +124,28 @@ void InitDefaultsSessionInfo() {
   ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsSessionInfoImpl);
 }
 
+void InitDefaultsMemberInfoImpl() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+#ifdef GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  ::google::protobuf::internal::InitProtobufDefaultsForceUnique();
+#else
+  ::google::protobuf::internal::InitProtobufDefaults();
+#endif  // GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  protobuf_youliao_2ebase_2eproto::InitDefaultsUserInfo();
+  {
+    void* ptr = &::youliao::pdu::base::_MemberInfo_default_instance_;
+    new (ptr) ::youliao::pdu::base::MemberInfo();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::youliao::pdu::base::MemberInfo::InitAsDefaultInstance();
+}
+
+void InitDefaultsMemberInfo() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsMemberInfoImpl);
+}
+
 void InitDefaultsAddRequestInfoImpl() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -182,7 +209,7 @@ void InitDefaultsHeartBeat() {
   ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsHeartBeatImpl);
 }
 
-::google::protobuf::Metadata file_level_metadata[6];
+::google::protobuf::Metadata file_level_metadata[7];
 const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[17];
 
 const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
@@ -228,6 +255,15 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::base::SessionInfo, latest_msg_id_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::base::SessionInfo, last_message_data_),
   ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::base::MemberInfo, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::base::MemberInfo, user_id_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::base::MemberInfo, group_card_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::base::MemberInfo, last_chat_time_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::base::MemberInfo, user_info_),
+  ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::base::AddRequestInfo, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
@@ -262,15 +298,17 @@ static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROT
   { 0, -1, sizeof(::youliao::pdu::base::UserInfo)},
   { 13, -1, sizeof(::youliao::pdu::base::FriendInfo)},
   { 29, -1, sizeof(::youliao::pdu::base::SessionInfo)},
-  { 41, -1, sizeof(::youliao::pdu::base::AddRequestInfo)},
-  { 53, -1, sizeof(::youliao::pdu::base::GroupInfo)},
-  { 66, -1, sizeof(::youliao::pdu::base::HeartBeat)},
+  { 41, -1, sizeof(::youliao::pdu::base::MemberInfo)},
+  { 50, -1, sizeof(::youliao::pdu::base::AddRequestInfo)},
+  { 62, -1, sizeof(::youliao::pdu::base::GroupInfo)},
+  { 75, -1, sizeof(::youliao::pdu::base::HeartBeat)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::base::_UserInfo_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::base::_FriendInfo_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::base::_SessionInfo_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::base::_MemberInfo_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::base::_AddRequestInfo_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::base::_GroupInfo_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::base::_HeartBeat_default_instance_),
@@ -292,7 +330,7 @@ void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) GOOGLE_PROTOBUF_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 6);
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 7);
 }
 
 void AddDescriptorsImpl() {
@@ -314,107 +352,115 @@ void AddDescriptorsImpl() {
       "\010other_id\030\002 \001(\r\022\024\n\014session_type\030\003 \001(\r\022\023\n"
       "\013session_top\030\004 \001(\r\022\026\n\016session_update\030\005 \001"
       "(\r\022\025\n\rlatest_msg_id\030\006 \001(\r\022\031\n\021last_messag"
-      "e_data\030\007 \001(\014\"\231\001\n\016AddRequestInfo\022\n\n\002id\030\001 "
-      "\001(\r\022\020\n\010other_id\030\002 \001(\r\022\021\n\tresult_id\030\003 \001(\r"
-      "\022\023\n\013handle_time\030\004 \001(\r\022\025\n\rvalidate_data\030\005"
-      " \001(\t\022\026\n\016other_head_url\030\006 \001(\t\022\022\n\nother_ni"
-      "ck\030\007 \001(\t\"\256\001\n\tGroupInfo\022\020\n\010group_id\030\001 \001(\r"
-      "\022\022\n\ngroup_name\030\002 \001(\t\022\022\n\ngroup_head\030\003 \001(\t"
-      "\022\025\n\rgroup_creator\030\004 \001(\r\022\026\n\016group_capacit"
-      "y\030\005 \001(\r\022\025\n\rgroup_created\030\006 \001(\r\022\020\n\010manage"
-      "rs\030\007 \003(\r\022\017\n\007members\030\010 \003(\r\"\013\n\tHeartBeat*\215"
-      "\001\n\tServiceID\022\014\n\010SID_ZERO\020\000\022\r\n\tSID_LOGIN\020"
-      "\001\022\023\n\017SID_FRIEND_LIST\020\002\022\016\n\nSID_SERVER\020\003\022\r"
-      "\n\tSID_OTHER\020\004\022\017\n\013SID_SESSION\020\005\022\017\n\013SID_ME"
-      "SSAGE\020\006\022\r\n\tSID_GROUP\020\007*\313\001\n\010LoginCID\022\022\n\016C"
-      "ID_LOGIN_ZERO\020\000\022 \n\033CID_LOGIN_REQUSET_MSG"
-      "SERVER\020\201\002\022 \n\033CID_LOGIN_RESPONE_MSGSERVER"
-      "\020\202\002\022 \n\033CID_LOGIN_REQUEST_USERLOGIN\020\203\002\022 \n"
-      "\033CID_LOGIN_RESPONE_USERLOGIN\020\204\002\022#\n\036CID_L"
-      "OGIN_REQUEST_USERLOGINOUT\020\205\002*\364\003\n\tServerC"
-      "ID\022\023\n\017CID_SERVER_ZERO\020\000\022\036\n\031CID_SERVER_MS"
-      "GSERVER_INFO\020\201\004\022 \n\033CID_SERVER_VALIDATE_R"
-      "EQUEST\020\202\004\022 \n\033CID_SERVER_VALIDATE_RESPONE"
-      "\020\203\004\022\033\n\026CID_SERVER_USER_LOGOUT\020\204\004\022\031\n\024CID_"
-      "SERVER_ROUTE_MSG\020\205\004\022\037\n\032CID_SERVER_ROUTE_"
-      "BROADCAST\020\206\004\022*\n%CID_SERVER_GET_ONLINE_FR"
-      "IENDS_REQUEST\020\207\004\022*\n%CID_SERVER_GET_ONLIN"
-      "E_FRIENDS_RESPONE\020\210\004\022(\n#CID_SERVER_GET_S"
-      "ERVER_INDEX_REQUEST\020\211\004\022(\n#CID_SERVER_GET"
-      "_SERVER_INDEX_RESPONE\020\212\004\022\035\n\030CID_SERVER_R"
-      "OUTE_MESSAGE\020\213\004\022(\n#CID_SERVER_GET_FRIEND"
-      "_ONLINE_STATUS\020\214\004\022 \n\033CID_SERVER_ROUTE_TO"
-      "_MESSAGE\020\215\004*8\n\010OtherCID\022\022\n\016CID_OTHER_ZER"
-      "O\020\000\022\030\n\023CID_OTHER_HEARTBEAT\020\201\006*\362\007\n\rFriend"
-      "ListCID\022\027\n\023CID_FRIENDLIST_ZERO\020\000\022\037\n\032CID_"
-      "FRIENDLIST_GET_REQUEST\020\201\010\022\037\n\032CID_FRIENDL"
-      "IST_GET_RESPONE\020\202\010\022(\n#CID_FRIENDLIST_FRI"
-      "END_STATUS_CHANGE\020\203\010\022-\n(CID_FRIENDLIST_S"
-      "IGNATURE_CHANGED_REQUEST\020\204\010\022-\n(CID_FRIEN"
-      "DLIST_SIGNATURE_CHANGED_RESPONE\020\205\010\022,\n\'CI"
-      "D_FRIENDLIST_FRIEND_SIGNATURE_CHANGED\020\206\010"
-      "\022,\n\'CID_FRIENDLIST_MODEFY_FRIEND_GROUP_N"
-      "AME\020\207\010\022,\n\'CID_FRIENDLIST_ADD_FRIEND_GROU"
-      "P_REQUEST\020\210\010\022,\n\'CID_FRIENDLIST_ADD_FRIEN"
-      "D_GROUP_RESPONE\020\211\010\022&\n!CID_FRIENDLIST_GET"
-      "_GROUPS_REQUEST\020\212\010\022&\n!CID_FRIENDLIST_GET"
-      "_GROUPS_REPSONE\020\213\010\022/\n*CID_FRIENDLIST_REN"
-      "AME_FRIEND_GROUP_REQUEST\020\214\010\022/\n*CID_FRIEN"
-      "DLIST_DELETE_FRIEND_GROUP_REQUEST\020\215\010\0220\n+"
-      "CID_FRIENDLIST_MOVE_FRIEND_TO_GROUP_REQU"
-      "EST\020\216\010\022)\n$CID_FRIENDLIST_DELETE_FRIEND_R"
-      "EQUEST\020\217\010\022/\n*CID_FRIENDLIST_MODIFY_FRIEN"
-      "D_REMARK_RQUEST\020\220\010\022)\n$CID_FRIENDLIST_SEA"
-      "RCH_FRIEND_REQUEST\020\221\010\022)\n$CID_FRIENDLIST_"
-      "SEARCH_FRIEND_RESPONE\020\222\010\022&\n!CID_FRIENDLI"
-      "ST_ADD_FRIEND_REQUEST\020\223\010\022&\n!CID_FRIENDLI"
-      "ST_ADD_FRIEND_RESPONE\020\224\010\022/\n*CID_FRIENDLI"
-      "ST_GET_REQUEST_HISTORY_REQUEST\020\225\010\022/\n*CID"
-      "_FRIENDLIST_GET_REQUEST_HISTORY_RESPONE\020"
-      "\226\010*\210\002\n\016SessionListCID\022\030\n\024CID_SESSIONLIST"
-      "_ZERO\020\000\022 \n\033CID_SESSIONLIST_ADD_SESSION\020\201"
-      "\n\022 \n\033CID_SESSIONLIST_DEL_SESSION\020\202\n\022 \n\033C"
-      "ID_SESSIONLIST_UPD_SESSION\020\203\n\022 \n\033CID_SES"
-      "SIONLIST_TOP_SESSION\020\204\n\022)\n$CID_SESSIONLI"
-      "ST_GET_SESSIONS_REQUEST\020\205\n\022)\n$CID_SESSIO"
-      "NLIST_GET_SESSIONS_RESPONE\020\206\n*\301\001\n\nMessag"
-      "eCID\022\024\n\020CID_MESSAGE_ZERO\020\000\022\025\n\020CID_MESSAG"
-      "E_DATA\020\201\014\022\025\n\020CID_MESSAGE_SAVE\020\202\014\022\027\n\022CID_"
-      "MESSAGE_UPDATE\020\203\014\022*\n%CID_MESSAGE_GET_LAT"
-      "EST_MSG_ID_REQUEST\020\204\014\022*\n%CID_MESSAGE_GET"
-      "_LATEST_MSG_ID_RESPONE\020\205\014*\236\001\n\010GroupCID\022\022"
-      "\n\016CID_GROUP_ZERO\020\000\022\035\n\030CID_GROUP_CREATE_R"
-      "EQUEST\020\201\016\022\035\n\030CID_GROUP_CREATE_RESPONE\020\202\016"
-      "\022\037\n\032CID_GROUP_GET_LIST_REQUEST\020\203\016\022\037\n\032CID"
-      "_GROUP_GET_LIST_RESPONE\020\204\016*[\n\nResultType"
-      "\022\010\n\004NONE\020\000\022\021\n\rNO_MSG_SERVER\020\001\022\023\n\017MSG_SER"
-      "VER_FULL\020\002\022\033\n\027SIGNATURE_MODIFY_FAILED\020\003*"
-      "m\n\016UserStatusType\022\024\n\020USER_STATUS_ZERO\020\000\022"
-      "\026\n\022USER_STATUS_ONLINE\020\001\022\027\n\023USER_STATUS_O"
-      "FFLINE\020\002\022\024\n\020USER_STATUS_HIDE\020\003*t\n\013Sessio"
-      "nType\022\025\n\021SESSION_TYPE_ZERO\020\000\022\027\n\023SESSION_"
-      "TYPE_SINGLE\020\001\022\026\n\022SESSION_TYPE_GROUP\020\002\022\035\n"
-      "\031SESSION_TYPE_VALIDATE_MSG\020\003*U\n\013SessionF"
-      "lag\022\025\n\021SESSION_FLAG_ZERO\020\000\022\027\n\023SESSION_FL"
-      "AG_NORMAL\020\001\022\026\n\022SESSION_FLAG_ONTOP\020\002*\266\001\n\013"
-      "MessageType\022\020\n\014MESSAGE_ZERO\020\000\022\034\n\030MESSAGE"
-      "_TYPE_SINGLE_TEXT\020\001\022\035\n\031MESSAGE_TYPE_SING"
-      "LE_AUDIO\020\002\022\033\n\027MESSAGE_TYPE_GROUP_TEXT\020\003\022"
-      "\034\n\030MESSAGE_TYPE_GROUP_AUDIO\020\004\022\035\n\031MESSAGE"
-      "_TYPE_VALIDATE_MSG\020\005*}\n\020RouteMessageType"
-      "\022\026\n\022ROUTE_MESSAGE_ZERO\020\000\022&\n\"ROUTE_MESSAG"
-      "E_FRIEND_STATUS_CHANGE\020\001\022)\n%ROUTE_MESSAG"
-      "E_FRIEND_SIGNATURE_CHANGE\020\002*U\n\nSearchTyp"
-      "e\022\024\n\020SEARCH_TYPE_ZERO\020\000\022\027\n\023SEARCH_TYPE_A"
-      "CCOUNT\020\001\022\030\n\024SEARCH_TYPE_NICKNAME\020\002*K\n\tGr"
-      "oupType\022\023\n\017GROUP_TYPE_ZERO\020\000\022\025\n\021GROUP_TY"
-      "PE_NORMAL\020\001\022\022\n\016GROUP_TYPE_TMP\020\002*l\n\017Group"
-      "VerifyType\022\025\n\021GROUP_VERIFY_ZERO\020\000\022\025\n\021GRO"
-      "UP_VERIFY_NEED\020\001\022\024\n\020GROUP_VERIFY_ALL\020\002\022\025"
-      "\n\021GROUP_VERIFY_NONE\020\003b\006proto3"
+      "e_data\030\007 \001(\014\"x\n\nMemberInfo\022\017\n\007user_id\030\001 "
+      "\001(\r\022\022\n\ngroup_card\030\002 \001(\t\022\026\n\016last_chat_tim"
+      "e\030\003 \001(\r\022-\n\tuser_info\030\004 \001(\0132\032.youliao.pdu"
+      ".base.UserInfo\"\231\001\n\016AddRequestInfo\022\n\n\002id\030"
+      "\001 \001(\r\022\020\n\010other_id\030\002 \001(\r\022\021\n\tresult_id\030\003 \001"
+      "(\r\022\023\n\013handle_time\030\004 \001(\r\022\025\n\rvalidate_data"
+      "\030\005 \001(\t\022\026\n\016other_head_url\030\006 \001(\t\022\022\n\nother_"
+      "nick\030\007 \001(\t\"\256\001\n\tGroupInfo\022\020\n\010group_id\030\001 \001"
+      "(\r\022\022\n\ngroup_name\030\002 \001(\t\022\022\n\ngroup_head\030\003 \001"
+      "(\t\022\025\n\rgroup_creator\030\004 \001(\r\022\026\n\016group_capac"
+      "ity\030\005 \001(\r\022\025\n\rgroup_created\030\006 \001(\r\022\020\n\010mana"
+      "gers\030\007 \003(\r\022\017\n\007members\030\010 \003(\r\"\013\n\tHeartBeat"
+      "*\215\001\n\tServiceID\022\014\n\010SID_ZERO\020\000\022\r\n\tSID_LOGI"
+      "N\020\001\022\023\n\017SID_FRIEND_LIST\020\002\022\016\n\nSID_SERVER\020\003"
+      "\022\r\n\tSID_OTHER\020\004\022\017\n\013SID_SESSION\020\005\022\017\n\013SID_"
+      "MESSAGE\020\006\022\r\n\tSID_GROUP\020\007*\313\001\n\010LoginCID\022\022\n"
+      "\016CID_LOGIN_ZERO\020\000\022 \n\033CID_LOGIN_REQUSET_M"
+      "SGSERVER\020\201\002\022 \n\033CID_LOGIN_RESPONE_MSGSERV"
+      "ER\020\202\002\022 \n\033CID_LOGIN_REQUEST_USERLOGIN\020\203\002\022"
+      " \n\033CID_LOGIN_RESPONE_USERLOGIN\020\204\002\022#\n\036CID"
+      "_LOGIN_REQUEST_USERLOGINOUT\020\205\002*\364\003\n\tServe"
+      "rCID\022\023\n\017CID_SERVER_ZERO\020\000\022\036\n\031CID_SERVER_"
+      "MSGSERVER_INFO\020\201\004\022 \n\033CID_SERVER_VALIDATE"
+      "_REQUEST\020\202\004\022 \n\033CID_SERVER_VALIDATE_RESPO"
+      "NE\020\203\004\022\033\n\026CID_SERVER_USER_LOGOUT\020\204\004\022\031\n\024CI"
+      "D_SERVER_ROUTE_MSG\020\205\004\022\037\n\032CID_SERVER_ROUT"
+      "E_BROADCAST\020\206\004\022*\n%CID_SERVER_GET_ONLINE_"
+      "FRIENDS_REQUEST\020\207\004\022*\n%CID_SERVER_GET_ONL"
+      "INE_FRIENDS_RESPONE\020\210\004\022(\n#CID_SERVER_GET"
+      "_SERVER_INDEX_REQUEST\020\211\004\022(\n#CID_SERVER_G"
+      "ET_SERVER_INDEX_RESPONE\020\212\004\022\035\n\030CID_SERVER"
+      "_ROUTE_MESSAGE\020\213\004\022(\n#CID_SERVER_GET_FRIE"
+      "ND_ONLINE_STATUS\020\214\004\022 \n\033CID_SERVER_ROUTE_"
+      "TO_MESSAGE\020\215\004*8\n\010OtherCID\022\022\n\016CID_OTHER_Z"
+      "ERO\020\000\022\030\n\023CID_OTHER_HEARTBEAT\020\201\006*\362\007\n\rFrie"
+      "ndListCID\022\027\n\023CID_FRIENDLIST_ZERO\020\000\022\037\n\032CI"
+      "D_FRIENDLIST_GET_REQUEST\020\201\010\022\037\n\032CID_FRIEN"
+      "DLIST_GET_RESPONE\020\202\010\022(\n#CID_FRIENDLIST_F"
+      "RIEND_STATUS_CHANGE\020\203\010\022-\n(CID_FRIENDLIST"
+      "_SIGNATURE_CHANGED_REQUEST\020\204\010\022-\n(CID_FRI"
+      "ENDLIST_SIGNATURE_CHANGED_RESPONE\020\205\010\022,\n\'"
+      "CID_FRIENDLIST_FRIEND_SIGNATURE_CHANGED\020"
+      "\206\010\022,\n\'CID_FRIENDLIST_MODEFY_FRIEND_GROUP"
+      "_NAME\020\207\010\022,\n\'CID_FRIENDLIST_ADD_FRIEND_GR"
+      "OUP_REQUEST\020\210\010\022,\n\'CID_FRIENDLIST_ADD_FRI"
+      "END_GROUP_RESPONE\020\211\010\022&\n!CID_FRIENDLIST_G"
+      "ET_GROUPS_REQUEST\020\212\010\022&\n!CID_FRIENDLIST_G"
+      "ET_GROUPS_REPSONE\020\213\010\022/\n*CID_FRIENDLIST_R"
+      "ENAME_FRIEND_GROUP_REQUEST\020\214\010\022/\n*CID_FRI"
+      "ENDLIST_DELETE_FRIEND_GROUP_REQUEST\020\215\010\0220"
+      "\n+CID_FRIENDLIST_MOVE_FRIEND_TO_GROUP_RE"
+      "QUEST\020\216\010\022)\n$CID_FRIENDLIST_DELETE_FRIEND"
+      "_REQUEST\020\217\010\022/\n*CID_FRIENDLIST_MODIFY_FRI"
+      "END_REMARK_RQUEST\020\220\010\022)\n$CID_FRIENDLIST_S"
+      "EARCH_FRIEND_REQUEST\020\221\010\022)\n$CID_FRIENDLIS"
+      "T_SEARCH_FRIEND_RESPONE\020\222\010\022&\n!CID_FRIEND"
+      "LIST_ADD_FRIEND_REQUEST\020\223\010\022&\n!CID_FRIEND"
+      "LIST_ADD_FRIEND_RESPONE\020\224\010\022/\n*CID_FRIEND"
+      "LIST_GET_REQUEST_HISTORY_REQUEST\020\225\010\022/\n*C"
+      "ID_FRIENDLIST_GET_REQUEST_HISTORY_RESPON"
+      "E\020\226\010*\210\002\n\016SessionListCID\022\030\n\024CID_SESSIONLI"
+      "ST_ZERO\020\000\022 \n\033CID_SESSIONLIST_ADD_SESSION"
+      "\020\201\n\022 \n\033CID_SESSIONLIST_DEL_SESSION\020\202\n\022 \n"
+      "\033CID_SESSIONLIST_UPD_SESSION\020\203\n\022 \n\033CID_S"
+      "ESSIONLIST_TOP_SESSION\020\204\n\022)\n$CID_SESSION"
+      "LIST_GET_SESSIONS_REQUEST\020\205\n\022)\n$CID_SESS"
+      "IONLIST_GET_SESSIONS_RESPONE\020\206\n*\301\001\n\nMess"
+      "ageCID\022\024\n\020CID_MESSAGE_ZERO\020\000\022\025\n\020CID_MESS"
+      "AGE_DATA\020\201\014\022\025\n\020CID_MESSAGE_SAVE\020\202\014\022\027\n\022CI"
+      "D_MESSAGE_UPDATE\020\203\014\022*\n%CID_MESSAGE_GET_L"
+      "ATEST_MSG_ID_REQUEST\020\204\014\022*\n%CID_MESSAGE_G"
+      "ET_LATEST_MSG_ID_RESPONE\020\205\014*\315\002\n\010GroupCID"
+      "\022\022\n\016CID_GROUP_ZERO\020\000\022\035\n\030CID_GROUP_CREATE"
+      "_REQUEST\020\201\016\022\035\n\030CID_GROUP_CREATE_RESPONE\020"
+      "\202\016\022\037\n\032CID_GROUP_GET_LIST_REQUEST\020\203\016\022\037\n\032C"
+      "ID_GROUP_GET_LIST_RESPONE\020\204\016\022 \n\033CID_GROU"
+      "P_ADD_GROUP_REQUEST\020\205\016\022 \n\033CID_GROUP_ADD_"
+      "GROUP_RESPONE\020\206\016\022!\n\034CID_GROUP_GET_MEMBER"
+      "_REQUEST\020\207\016\022!\n\034CID_GROUP_GET_MEMBER_RESP"
+      "ONE\020\210\016\022#\n\036CID_GROUP_MODIFY_CARD_RESQUEST"
+      "\020\211\016*[\n\nResultType\022\010\n\004NONE\020\000\022\021\n\rNO_MSG_SE"
+      "RVER\020\001\022\023\n\017MSG_SERVER_FULL\020\002\022\033\n\027SIGNATURE"
+      "_MODIFY_FAILED\020\003*m\n\016UserStatusType\022\024\n\020US"
+      "ER_STATUS_ZERO\020\000\022\026\n\022USER_STATUS_ONLINE\020\001"
+      "\022\027\n\023USER_STATUS_OFFLINE\020\002\022\024\n\020USER_STATUS"
+      "_HIDE\020\003*t\n\013SessionType\022\025\n\021SESSION_TYPE_Z"
+      "ERO\020\000\022\027\n\023SESSION_TYPE_SINGLE\020\001\022\026\n\022SESSIO"
+      "N_TYPE_GROUP\020\002\022\035\n\031SESSION_TYPE_VALIDATE_"
+      "MSG\020\003*U\n\013SessionFlag\022\025\n\021SESSION_FLAG_ZER"
+      "O\020\000\022\027\n\023SESSION_FLAG_NORMAL\020\001\022\026\n\022SESSION_"
+      "FLAG_ONTOP\020\002*\266\001\n\013MessageType\022\020\n\014MESSAGE_"
+      "ZERO\020\000\022\034\n\030MESSAGE_TYPE_SINGLE_TEXT\020\001\022\035\n\031"
+      "MESSAGE_TYPE_SINGLE_AUDIO\020\002\022\033\n\027MESSAGE_T"
+      "YPE_GROUP_TEXT\020\003\022\034\n\030MESSAGE_TYPE_GROUP_A"
+      "UDIO\020\004\022\035\n\031MESSAGE_TYPE_VALIDATE_MSG\020\005*}\n"
+      "\020RouteMessageType\022\026\n\022ROUTE_MESSAGE_ZERO\020"
+      "\000\022&\n\"ROUTE_MESSAGE_FRIEND_STATUS_CHANGE\020"
+      "\001\022)\n%ROUTE_MESSAGE_FRIEND_SIGNATURE_CHAN"
+      "GE\020\002*U\n\nSearchType\022\024\n\020SEARCH_TYPE_ZERO\020\000"
+      "\022\027\n\023SEARCH_TYPE_ACCOUNT\020\001\022\030\n\024SEARCH_TYPE"
+      "_NICKNAME\020\002*K\n\tGroupType\022\023\n\017GROUP_TYPE_Z"
+      "ERO\020\000\022\025\n\021GROUP_TYPE_NORMAL\020\001\022\022\n\016GROUP_TY"
+      "PE_TMP\020\002*l\n\017GroupVerifyType\022\025\n\021GROUP_VER"
+      "IFY_ZERO\020\000\022\025\n\021GROUP_VERIFY_NEED\020\001\022\024\n\020GRO"
+      "UP_VERIFY_ALL\020\002\022\025\n\021GROUP_VERIFY_NONE\020\003b\006"
+      "proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 4549);
+      descriptor, 4846);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "youliao.base.proto", &protobuf_RegisterTypes);
 }
@@ -594,6 +640,11 @@ bool GroupCID_IsValid(int value) {
     case 1794:
     case 1795:
     case 1796:
+    case 1797:
+    case 1798:
+    case 1799:
+    case 1800:
+    case 1801:
       return true;
     default:
       return false;
@@ -2522,6 +2573,385 @@ void SessionInfo::InternalSwap(SessionInfo* other) {
 
 // ===================================================================
 
+void MemberInfo::InitAsDefaultInstance() {
+  ::youliao::pdu::base::_MemberInfo_default_instance_._instance.get_mutable()->user_info_ = const_cast< ::youliao::pdu::base::UserInfo*>(
+      ::youliao::pdu::base::UserInfo::internal_default_instance());
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int MemberInfo::kUserIdFieldNumber;
+const int MemberInfo::kGroupCardFieldNumber;
+const int MemberInfo::kLastChatTimeFieldNumber;
+const int MemberInfo::kUserInfoFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+MemberInfo::MemberInfo()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    ::protobuf_youliao_2ebase_2eproto::InitDefaultsMemberInfo();
+  }
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:youliao.pdu.base.MemberInfo)
+}
+MemberInfo::MemberInfo(const MemberInfo& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  group_card_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.group_card().size() > 0) {
+    group_card_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.group_card_);
+  }
+  if (from.has_user_info()) {
+    user_info_ = new ::youliao::pdu::base::UserInfo(*from.user_info_);
+  } else {
+    user_info_ = NULL;
+  }
+  ::memcpy(&user_id_, &from.user_id_,
+    static_cast<size_t>(reinterpret_cast<char*>(&last_chat_time_) -
+    reinterpret_cast<char*>(&user_id_)) + sizeof(last_chat_time_));
+  // @@protoc_insertion_point(copy_constructor:youliao.pdu.base.MemberInfo)
+}
+
+void MemberInfo::SharedCtor() {
+  group_card_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ::memset(&user_info_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&last_chat_time_) -
+      reinterpret_cast<char*>(&user_info_)) + sizeof(last_chat_time_));
+  _cached_size_ = 0;
+}
+
+MemberInfo::~MemberInfo() {
+  // @@protoc_insertion_point(destructor:youliao.pdu.base.MemberInfo)
+  SharedDtor();
+}
+
+void MemberInfo::SharedDtor() {
+  group_card_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (this != internal_default_instance()) delete user_info_;
+}
+
+void MemberInfo::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* MemberInfo::descriptor() {
+  ::protobuf_youliao_2ebase_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_youliao_2ebase_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const MemberInfo& MemberInfo::default_instance() {
+  ::protobuf_youliao_2ebase_2eproto::InitDefaultsMemberInfo();
+  return *internal_default_instance();
+}
+
+
+void MemberInfo::Clear() {
+// @@protoc_insertion_point(message_clear_start:youliao.pdu.base.MemberInfo)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  group_card_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (GetArenaNoVirtual() == NULL && user_info_ != NULL) {
+    delete user_info_;
+  }
+  user_info_ = NULL;
+  ::memset(&user_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&last_chat_time_) -
+      reinterpret_cast<char*>(&user_id_)) + sizeof(last_chat_time_));
+  _internal_metadata_.Clear();
+}
+
+bool MemberInfo::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:youliao.pdu.base.MemberInfo)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // uint32 user_id = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &user_id_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // string group_card = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_group_card()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->group_card().data(), static_cast<int>(this->group_card().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "youliao.pdu.base.MemberInfo.group_card"));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint32 last_chat_time = 3;
+      case 3: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &last_chat_time_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // .youliao.pdu.base.UserInfo user_info = 4;
+      case 4: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(34u /* 34 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(
+               input, mutable_user_info()));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:youliao.pdu.base.MemberInfo)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:youliao.pdu.base.MemberInfo)
+  return false;
+#undef DO_
+}
+
+void MemberInfo::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:youliao.pdu.base.MemberInfo)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->user_id(), output);
+  }
+
+  // string group_card = 2;
+  if (this->group_card().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->group_card().data(), static_cast<int>(this->group_card().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "youliao.pdu.base.MemberInfo.group_card");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      2, this->group_card(), output);
+  }
+
+  // uint32 last_chat_time = 3;
+  if (this->last_chat_time() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->last_chat_time(), output);
+  }
+
+  // .youliao.pdu.base.UserInfo user_info = 4;
+  if (this->has_user_info()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      4, *user_info_, output);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
+  // @@protoc_insertion_point(serialize_end:youliao.pdu.base.MemberInfo)
+}
+
+::google::protobuf::uint8* MemberInfo::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:youliao.pdu.base.MemberInfo)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->user_id(), target);
+  }
+
+  // string group_card = 2;
+  if (this->group_card().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->group_card().data(), static_cast<int>(this->group_card().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "youliao.pdu.base.MemberInfo.group_card");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        2, this->group_card(), target);
+  }
+
+  // uint32 last_chat_time = 3;
+  if (this->last_chat_time() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->last_chat_time(), target);
+  }
+
+  // .youliao.pdu.base.UserInfo user_info = 4;
+  if (this->has_user_info()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageToArray(
+        4, *user_info_, deterministic, target);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:youliao.pdu.base.MemberInfo)
+  return target;
+}
+
+size_t MemberInfo::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:youliao.pdu.base.MemberInfo)
+  size_t total_size = 0;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
+  // string group_card = 2;
+  if (this->group_card().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->group_card());
+  }
+
+  // .youliao.pdu.base.UserInfo user_info = 4;
+  if (this->has_user_info()) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSize(
+        *user_info_);
+  }
+
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->user_id());
+  }
+
+  // uint32 last_chat_time = 3;
+  if (this->last_chat_time() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->last_chat_time());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void MemberInfo::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:youliao.pdu.base.MemberInfo)
+  GOOGLE_DCHECK_NE(&from, this);
+  const MemberInfo* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const MemberInfo>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:youliao.pdu.base.MemberInfo)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:youliao.pdu.base.MemberInfo)
+    MergeFrom(*source);
+  }
+}
+
+void MemberInfo::MergeFrom(const MemberInfo& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:youliao.pdu.base.MemberInfo)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.group_card().size() > 0) {
+
+    group_card_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.group_card_);
+  }
+  if (from.has_user_info()) {
+    mutable_user_info()->::youliao::pdu::base::UserInfo::MergeFrom(from.user_info());
+  }
+  if (from.user_id() != 0) {
+    set_user_id(from.user_id());
+  }
+  if (from.last_chat_time() != 0) {
+    set_last_chat_time(from.last_chat_time());
+  }
+}
+
+void MemberInfo::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:youliao.pdu.base.MemberInfo)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MemberInfo::CopyFrom(const MemberInfo& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:youliao.pdu.base.MemberInfo)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MemberInfo::IsInitialized() const {
+  return true;
+}
+
+void MemberInfo::Swap(MemberInfo* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void MemberInfo::InternalSwap(MemberInfo* other) {
+  using std::swap;
+  group_card_.Swap(&other->group_card_);
+  swap(user_info_, other->user_info_);
+  swap(user_id_, other->user_id_);
+  swap(last_chat_time_, other->last_chat_time_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata MemberInfo::GetMetadata() const {
+  protobuf_youliao_2ebase_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_youliao_2ebase_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
+// ===================================================================
+
 void AddRequestInfo::InitAsDefaultInstance() {
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
@@ -3824,6 +4254,9 @@ template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::base::FriendInfo* 
 }
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::base::SessionInfo* Arena::Create< ::youliao::pdu::base::SessionInfo >(Arena* arena) {
   return Arena::CreateInternal< ::youliao::pdu::base::SessionInfo >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::base::MemberInfo* Arena::Create< ::youliao::pdu::base::MemberInfo >(Arena* arena) {
+  return Arena::CreateInternal< ::youliao::pdu::base::MemberInfo >(arena);
 }
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::base::AddRequestInfo* Arena::Create< ::youliao::pdu::base::AddRequestInfo >(Arena* arena) {
   return Arena::CreateInternal< ::youliao::pdu::base::AddRequestInfo >(arena);

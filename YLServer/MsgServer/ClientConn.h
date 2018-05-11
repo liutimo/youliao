@@ -55,6 +55,9 @@ private:
     //group
     void _HandleCreatGroupRequest(BasePdu *);
     void _HandleGetGroupListRequest(BasePdu *);
+    void _HandleGetGroupMemberRequest(BasePdu *);
+    void _HandleModifyGroupCardRequest(BasePdu *);
+
 public:
     uint64_t m_last_heart_beat_tick;    //最后一次收到心跳包的时间
 

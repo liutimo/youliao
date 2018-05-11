@@ -103,6 +103,12 @@ void HandlerMap::init()
 
     //获取群组列表
     m_handler_map.insert(std::make_pair(CID_GROUP_GET_LIST_REQUEST, DB_INTERFACE::getGroupList));
+
+    //获取群成员
+    m_handler_map.insert(std::make_pair(CID_GROUP_GET_MEMBER_REQUEST, DB_INTERFACE::getGroupMember));
+
+    //修改群名片
+    m_handler_map.insert(std::make_pair(CID_GROUP_MODIFY_CARD_RESQUEST, DB_INTERFACE::modifyGroupCard));
 }
 
 pdu_handler_t HandlerMap::getHandler(uint16_t cid)

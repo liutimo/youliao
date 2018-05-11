@@ -13,7 +13,7 @@ QVector<YLAddRequest> GlobalData::m_add_request = QVector<YLAddRequest>();
 QVector<YLAddRequest> GlobalData::m_add_request_history = QVector<YLAddRequest>();
 QMap<uint32_t, YLGroup> GlobalData::m_groups = QMap<uint32_t, YLGroup>();
 QMap<uint32_t, base::UserInfo>  GlobalData::m_all_user = QMap<uint32_t, base::UserInfo>();
-
+QMap<uint32_t, QMap<uint32_t, base::MemberInfo>> GlobalData::m_group_member = QMap<uint32_t, QMap<uint32_t, base::MemberInfo>>();
 GlobalData::GlobalData(QObject *parent) : QObject(parent)
 {
 
@@ -230,4 +230,23 @@ QVector<base::UserInfo> GlobalData::getMembersByGroupId(uint32_t groupId)
         members.push_back(m_all_user[id]);
     }
     return members;
+}
+
+void GlobalData::setGroupMember(uint32_t groupId, const QVector<base::MemberInfo> &members)
+{
+    QMap<uint32_t, base::MemberInfo> map;
+    for (const base::MemberInfo &mem : members)
+    {
+        map[mem.user_id()] = mem;
+    }
+
+    m_group_member[groupId] = map;
+
+}
+
+base::MemberInfo& GlobalData::getMemberInfo(uint32_t groupId, uint32_t memberId)
+{
+    auto iter = m_group_member.find(groupId);
+    if (iter != m_group_member.end())
+        return (*iter)[memberId];
 }

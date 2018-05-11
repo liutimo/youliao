@@ -50,6 +50,7 @@ uint32_t GroupModel::createGroup(uint32_t userId, std::string groupName, base::G
         }
     }
     DBManager::instance()->releaseConnection(conn);
+    addCreator(groupId, userId);
     return groupId;
 }
 
@@ -74,6 +75,23 @@ bool GroupModel::addMembers(uint32_t groupId, const std::list<uint32_t> &members
     return ret;
 }
 
+//添加成员
+bool GroupModel::addMember(uint32_t groupId, uint32_t memberId)
+{
+    return addOne(groupId, memberId, 0);
+}
+
+//添加管理员
+bool GroupModel::addManager(uint32_t groupId, uint32_t managerId)
+{
+    return addOne(groupId, managerId, 1);
+}
+
+//添加群主
+bool GroupModel::addCreator(uint32_t groupId, uint32_t creator)
+{
+    return addOne(groupId, creator, 2);
+}
 
 bool GroupModel::getGroupInfoByGroupId(uint32_t groupId, base::GroupInfo &groupInfo)
 {
@@ -176,6 +194,53 @@ bool GroupModel::getSelfGroupByUserId(uint32_t userId, std::list<uint32_t> &grou
     return ret;
 }
 
+//获取群成员
+bool GroupModel::getMembersByGroupId(uint32_t groupId, std::list<base::MemberInfo> &members)
+{
+    bool ret = false;
+
+    auto conn = DBManager::instance()->getConnection();
+    if (conn)
+    {
+        std::string sql = "SELECT member_id, group_card, last_chat_time FROM yl_group_member WHERE status = 1 AND group_id = " + std::to_string(groupId);
+        printSql2Log(sql.c_str());
+        ResultSet *resultSet = conn->query(sql);
+        if (resultSet)
+        {
+            while (resultSet->next())
+            {
+                base::MemberInfo memberInfo;
+                memberInfo.set_user_id((uint32_t)resultSet->getInt("member_id"));
+                memberInfo.set_group_card(resultSet->getString("group_card"));
+                memberInfo.set_last_chat_time((uint32_t)resultSet->getInt("last_chat_time"));
+                members.push_back(memberInfo);
+            }
+
+            delete resultSet;
+            ret = true;
+        }
+    }
+
+    DBManager::instance()->releaseConnection(conn);
+    return ret;
+}
+
+
+//修改群名片
+bool GroupModel::modifyGroupCard(uint32_t groupId, uint32_t memberId, const std::string &groupCard)
+{
+    auto ret = false;
+    auto conn = DBManager::instance()->getConnection();
+    if (conn)
+    {
+        std::string sql = "UPDATE yl_group_member SET group_card = " + groupCard + " WHERE group_id = " + std::to_string(groupId) + " AND member_id = " + std::to_string(memberId);
+        printSql2Log(sql.c_str());
+        ret = conn->update(sql);
+    }
+    DBManager::instance()->releaseConnection(conn);
+    return ret;
+}
+
 
 bool GroupModel::getGroupManagers(uint32_t groupId, std::list<uint32_t> &managers)
 {
@@ -226,5 +291,57 @@ bool GroupModel::getGroupMembers(uint32_t groupId, std::list<uint32_t> &members)
         }
     }
     DBManager::instance()->releaseConnection(conn);
+    return ret;
+}
+
+uint32_t GroupModel::getId(uint32_t groupId, uint32_t userId)
+{
+    uint32_t id = 0;
+    auto conn = DBManager::instance()->getConnection();
+    if (conn)
+    {
+        std::string sql = "SELECT id FROM yl_group_member WHERE group_id  = " + std::to_string(groupId) + " AND member_id = " + std::to_string(userId);
+        printSql2Log(sql.c_str());
+
+        ResultSet *resultSet = conn->query(sql);
+        if (resultSet)
+        {
+            while (resultSet->next())
+            {
+                id = (uint32_t)resultSet->getInt("id");
+            }
+            delete resultSet;
+        }
+    }
+    DBManager::instance()->releaseConnection(conn);
+    return id;
+}
+
+bool GroupModel::addOne(uint32_t groupId, uint32_t userId, uint32_t type)
+{
+    bool ret = false;
+    uint32_t id = getId(groupId, userId);
+    if (id == 0)
+    {
+        auto conn = DBManager::instance()->getConnection();
+        if (conn)
+        {
+            std::string sql = "INSERT INTO yl_group_member(group_id, member_id, type, status) VALUES( " + std::to_string(groupId) + "," + std::to_string(userId) + ", " + std::to_string(type) + ", 1)";
+            printSql2Log(sql.c_str());
+            ret = conn->update(sql);
+        }
+        DBManager::instance()->releaseConnection(conn);
+    }
+    else
+    {
+        auto conn = DBManager::instance()->getConnection();
+        if (conn)
+        {
+            std::string sql = "UPDATE yl_group_member SET status = 1, type = " + std::to_string(type) + "WHERE id = " + std::to_string(id);
+            printSql2Log(sql.c_str());
+            ret = conn->update(sql);
+        }
+        DBManager::instance()->releaseConnection(conn);
+    }
     return ret;
 }

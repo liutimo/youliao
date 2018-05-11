@@ -2,7 +2,13 @@
 #include <QLabel>
 #include <QHeaderView>
 #include <QFontMetrics>
+#include <QScrollBar>
+#include <QDateTime>
+#include <QMouseEvent>
+#include "yllineedit.h"
+#include "globaldata.h"
 #include "YLCommonControl/ylheadframe.h"
+#include "YLNetWork/ylbusiness.h"
 YLMemberListWidget::YLMemberListWidget(QWidget *parent) : QTableWidget(parent)
 {
     m_last_row_color = QColor(0x00,0xff,0x00,0x00);//透明颜色
@@ -17,10 +23,6 @@ YLMemberListWidget::YLMemberListWidget(QWidget *parent) : QTableWidget(parent)
     setSelectionMode(QAbstractItemView::SingleSelection);   //设置选择模式为单行选中
     setEditTriggers(QAbstractItemView::NoEditTriggers);     //禁止编辑
     setMouseTracking(true);
-
-    QStringList list;
-    list << "成员" << "群名片" << "最后一次发言时间";
-    setHorizontalHeaderLabels(list);
 
     horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
     horizontalHeader()->setDefaultAlignment(Qt::AlignCenter);
@@ -37,39 +39,79 @@ YLMemberListWidget::YLMemberListWidget(QWidget *parent) : QTableWidget(parent)
     setStyleSheet("QTableView::item:selected{background-color:#F5F5F5;}QTableView::item{color:#777777;}" + qss_scroll_bar);
 
     connect(this,SIGNAL(cellEntered(int,int)),this,SLOT(cellEntered(int,int)));
+
+
+    m_line_edit = new YLLineEdit;
+    m_line_edit->hideButton();
+    m_line_edit->setFixedSize(95, 30);
+    connect(m_line_edit, &YLLineEdit::loseFocus, this, [this](){
+        auto iter = m_row_id.find(GlobalData::getCurrLoginUserId());
+        if (iter == m_row_id.end())
+            return;
+        int row = m_row_id[GlobalData::getCurrLoginUserId()];
+        item(row, 1)->setText(m_line_edit->text());
+        emit groupCardChanged(GlobalData::getCurrLoginUserId(), m_line_edit->text());
+        removeCellWidget(row, 1);
+        m_line_edit = new YLLineEdit;
+        m_line_edit->hideButton();
+        m_line_edit->setFixedSize(95, 30);
+    });
 }
 
 YLMemberListWidget::~YLMemberListWidget()
-{
-
+{  
 }
 
-void YLMemberListWidget::setRow(const QString &name, MemberNameWidgetItem::MemberType type, const QString &groupNick, const QString &lastChatTime)
+void YLMemberListWidget::setHeader()
 {
+    QStringList list;
+    list << "成员" << "群名片" << "最后一次发言时间";
+    setHorizontalHeaderLabels(list);
+    m_row_id.clear();
+}
+
+void YLMemberListWidget::setRow(const base::MemberInfo &memberInfo, MemberNameWidgetItem::MemberType type)
+{
+
     int row = rowCount();
     insertRow(row);
+
+    m_row_id[memberInfo.user_id()] = row;
 
     QTableWidgetItem *c1 = new QTableWidgetItem;
     c1->setSizeHint(QSize(130, 30));
     setItem(row, 0, c1);
 
     MemberNameWidgetItem *w1 = new MemberNameWidgetItem;
-    w1->setMemberName(name);
+    w1->setMemberName(QString::number(memberInfo.user_id()));
     w1->setMemberType(type);
     setCellWidget(rowCount() - 1, 0, w1);
 
     QTableWidgetItem *c2 = new QTableWidgetItem;
-    c2->setText(groupNick);
+    c2->setText(memberInfo.group_card().c_str());
     c2->setTextAlignment(Qt::AlignCenter);
     setItem(row, 1, c2);
 
 
     QTableWidgetItem *c3 = new QTableWidgetItem;
-    c3->setText(lastChatTime);
+    c3->setText(QDateTime::fromTime_t(memberInfo.last_chat_time()).toString("yyyy/MM/dd"));
     c3->setTextAlignment(Qt::AlignCenter);
     setItem(row, 2, c3);
 }
 
+void YLMemberListWidget::modifyGroupCard()
+{
+    //假设userId对应的用户第五行
+    auto iter = m_row_id.find(GlobalData::getCurrLoginUserId());
+    if (iter == m_row_id.end())
+        return;
+
+    int row = m_row_id[GlobalData::getCurrLoginUserId()];
+    m_line_edit->setText(item(row, 1)->text());
+    m_line_edit->selectAll();
+    setCellWidget(row, 1, m_line_edit);
+    m_line_edit->setFocus();
+}
 
 void YLMemberListWidget::leaveEvent(QEvent *event)
 {
@@ -78,6 +120,24 @@ void YLMemberListWidget::leaveEvent(QEvent *event)
     {
         setRowColor(m_previous_color_row, m_last_row_color);
     }
+}
+
+void YLMemberListWidget::mousePressEvent(QMouseEvent *event)
+{
+    if (m_line_edit->isVisible())
+    {
+        auto iter = m_row_id.find(GlobalData::getCurrLoginUserId());
+        if (iter == m_row_id.end())
+            return;
+        int row = m_row_id[GlobalData::getCurrLoginUserId()];
+        item(row, 1)->setText(m_line_edit->text());
+        emit groupCardChanged(GlobalData::getCurrLoginUserId(), m_line_edit->text());
+        removeCellWidget(row, 1);
+        m_line_edit = new YLLineEdit;
+        m_line_edit->hideButton();
+        m_line_edit->setFixedSize(95, 30);
+    }
+    QTableWidget::mousePressEvent(event);
 }
 
 void YLMemberListWidget::cellEntered(int row, int column)

@@ -1,6 +1,9 @@
 #include "ylgroupinfowidget.h"
 #include "YLCommonControl/ylheadframe.h"
 #include "YLCommonControl/ylmemberlistwidget.h"
+#include "YLNetWork/ylbusiness.h"
+#include "YLNetWork/pduhandler.h"
+#include "globaldata.h"
 #include <QToolButton>
 #include <QLabel>
 #include <QPushButton>
@@ -20,6 +23,8 @@ YLGroupInfoWidget::YLGroupInfoWidget(QWidget *parent) : YLBasicWidget(parent), i
 
     memberHide();
     settingHide();
+
+    connect(PduHandler::instance(), &PduHandler::groupMembers, this, &YLGroupInfoWidget::updateGroupMemberList);
 }
 
 void YLGroupInfoWidget::initTopNavigationBar()
@@ -128,27 +133,24 @@ void YLGroupInfoWidget::initRight2()
     m_member_list = new YLMemberListWidget(this);
     m_member_list->setFixedSize(400, 350);
     m_member_list->move(210, 95);
+    connect(m_member_list, &YLMemberListWidget::groupCardChanged, this, [this](uint32_t memberId, QString groupCard){
+        auto &member = GlobalData::getMemberInfo(m_group.getGroupId(), memberId);
+        member.set_group_card(groupCard.toStdString());
+        YLBusiness::modifyGroupCard(m_group.getGroupId(), groupCard);
+    });
 
-    m_member_list->setRow("我是谁的某某某123", MemberNameWidgetItem::GROUPOWER, "刘正", "2017年4月20日");
-    m_member_list->setRow("我去前面探探路", MemberNameWidgetItem::GROUPMANAGER, "提莫", "2018年4月20日");
-    m_member_list->setRow("我只是一个普通成员", MemberNameWidgetItem::GROUPMEMBER, "哎哎哎", "2018年1月20日");
+    m_label_manager_count = new QLabel(this);
+    m_label_manager_count->setFixedSize(100, 20);
+    m_label_manager_count->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+    m_label_manager_count->move(220, 70);
 
 
-    m_member_list->setRow("我是谁的某某某123", MemberNameWidgetItem::GROUPOWER, "刘正", "2017年4月20日");
-    m_member_list->setRow("我去前面探探路", MemberNameWidgetItem::GROUPMANAGER, "提莫", "2018年4月20日");
-    m_member_list->setRow("我只是一个普通成员", MemberNameWidgetItem::GROUPMEMBER, "哎哎哎", "2018年1月20日");
+    m_modify_group_card = new QPushButton("修改我的群名片", this);
+    m_modify_group_card->setFixedSize(100, 20);
+    m_modify_group_card->setStyleSheet("border:0px; color:#31C0F6;");
+    m_modify_group_card->move(480, 70);
+    connect(m_modify_group_card, &QPushButton::clicked, this, &YLGroupInfoWidget::modifyGroupCard);
 
-    m_member_list->setRow("我是谁的某某某123", MemberNameWidgetItem::GROUPOWER, "刘正", "2017年4月20日");
-    m_member_list->setRow("我去前面探探路", MemberNameWidgetItem::GROUPMANAGER, "提莫", "2018年4月20日");
-    m_member_list->setRow("我只是一个普通成员", MemberNameWidgetItem::GROUPMEMBER, "哎哎哎", "2018年1月20日");
-
-    m_member_list->setRow("我是谁的某某某123", MemberNameWidgetItem::GROUPOWER, "刘正", "2017年4月20日");
-    m_member_list->setRow("我去前面探探路", MemberNameWidgetItem::GROUPMANAGER, "提莫", "2018年4月20日");
-    m_member_list->setRow("我只是一个普通成员", MemberNameWidgetItem::GROUPMEMBER, "哎哎哎", "2018年1月20日");
-
-    m_member_list->setRow("我是谁的某某某123", MemberNameWidgetItem::GROUPOWER, "刘正", "2017年4月20日");
-    m_member_list->setRow("我去前面探探路", MemberNameWidgetItem::GROUPMANAGER, "提莫", "2018年4月20日");
-    m_member_list->setRow("我只是一个普通成员", MemberNameWidgetItem::GROUPMEMBER, "哎哎哎", "2018年1月20日");
 }
 
 void YLGroupInfoWidget::setGroup(const YLGroup &group)
@@ -161,6 +163,10 @@ void YLGroupInfoWidget::setGroup(const YLGroup &group)
     m_photo->setPixmap(QPixmap("./" + url.fileName()).scaled(m_photo->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
     m_group_intro->setText(QString("该群创建于%1:").arg(QDateTime::fromTime_t(m_group.getCreateTime()).toString("yyyy/mm/dd")));
     m_label_member_distr->setText(QString("<p style='color:gray;'>群员分布(%1/%2)</p>").arg(1 + group.getManagers().size() + group.getMembers().size()).arg(m_group.getGroupCapacity()));
+    m_label_manager_count->setText(QString("管理员: %1/10人").arg(m_group.getManagers().size() + 1));
+
+    //发送网络请求
+    YLBusiness::getGroupMembersInfo(m_group.getGroupId());
 }
 
 
@@ -173,7 +179,6 @@ void YLGroupInfoWidget::paintEvent(QPaintEvent *event)
 
     p.setBrush(Qt::white);
     p.drawRect(200, 0, 430, 450);
-
 
     p.setPen(Qt::gray);
     p.drawLine(210, 59, 620, 59);
@@ -188,6 +193,36 @@ void YLGroupInfoWidget::uploadPhoto()
     qDebug() << m_filename;
 }
 
+
+void YLGroupInfoWidget::modifyGroupCard()
+{
+    m_member_list->modifyGroupCard();
+}
+
+
+void YLGroupInfoWidget::updateGroupMemberList()
+{
+    m_member_list->clear();
+    m_member_list->setHeader();
+    auto managers = m_group.getManagers();
+    auto members = m_group.getMembers();
+    uint32_t creatorId = m_group.getGroupCreator();
+
+    base::MemberInfo memberInfo = GlobalData::getMemberInfo(m_group.getGroupId(), creatorId);
+    m_member_list->setRow(memberInfo, MemberNameWidgetItem::GROUPOWER);
+
+    for (uint32_t managerId : managers)
+    {
+        base::MemberInfo memberInfo = GlobalData::getMemberInfo(m_group.getGroupId(), managerId);
+        m_member_list->setRow(memberInfo, MemberNameWidgetItem::GROUPMANAGER);
+    }
+
+    for (uint32_t memberId : members)
+    {
+        base::MemberInfo memberInfo = GlobalData::getMemberInfo(m_group.getGroupId(), memberId);
+        m_member_list->setRow(memberInfo, MemberNameWidgetItem::GROUPMEMBER);
+    }
+}
 
 void YLGroupInfoWidget::navigationClicked()
 {
@@ -245,6 +280,8 @@ void YLGroupInfoWidget::mainShow()
 void YLGroupInfoWidget::memberShow()
 {
     m_member_list->show();
+    m_label_manager_count->show();
+    m_modify_group_card->show();
 }
 
 void YLGroupInfoWidget::settingShow()
@@ -268,6 +305,8 @@ void YLGroupInfoWidget::mainHide()
 void YLGroupInfoWidget::memberHide()
 {
     m_member_list->hide();
+    m_label_manager_count->hide();
+    m_modify_group_card->hide();
 }
 
 void YLGroupInfoWidget::settingHide()

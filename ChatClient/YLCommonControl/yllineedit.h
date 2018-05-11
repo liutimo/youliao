@@ -24,7 +24,7 @@ class YLLineEdit : public QLineEdit
     Q_OBJECT
 public:
     YLLineEdit(QWidget *parent = nullptr);
-
+    ~YLLineEdit();
     /**
      * 设置lineedit内部按钮的三态图片
      * @brief setButtonIcon
@@ -33,18 +33,19 @@ public:
      * @param pressed
      */
     void setButtonIcon(const QString &normalPath, const QString &hoverPath, const QString &pressedPath);
-
     void setButtonSize(const QSize &size);
+    void hideButton();
 
 private:
     void init();
 
 signals:
     void button_clicked();
+    void loseFocus();
 
 protected:
     void resizeEvent(QResizeEvent *event);
-
+    void focusOutEvent(QFocusEvent *);
 private:
     QPushButton *button_custom_;
 };

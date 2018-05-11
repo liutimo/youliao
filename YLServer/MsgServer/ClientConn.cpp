@@ -194,6 +194,12 @@ void ClientConn::handlePdu(BasePdu *pdu)
         case base::CID_GROUP_GET_LIST_REQUEST:
             _HandleGetGroupListRequest(pdu);
             break;
+        case base::CID_GROUP_GET_MEMBER_REQUEST:
+            _HandleGetGroupMemberRequest(pdu);
+            break;
+        case base::CID_GROUP_MODIFY_CARD_RESQUEST:
+            _HandleModifyGroupCardRequest(pdu);
+            break;
         default:
             std::cout << pdu->getCID() << std::endl;
             break;
@@ -733,3 +739,35 @@ void ClientConn::_HandleGetGroupListRequest(BasePdu *pdu)
         sendMessage(conn, request, base::SID_SERVER, base::CID_GROUP_GET_LIST_REQUEST);
     }
 }
+
+
+void ClientConn::_HandleGetGroupMemberRequest(BasePdu *basePdu)
+{
+    group::GetGroupMemberInfoRequest request;
+    request.ParseFromString(basePdu->getMessage());
+
+    uint32_t userId = request.user_id();
+    uint32_t groupId = request.group_id();
+    log("用户%d请求获取群%d的成员信息", userId, groupId);
+
+    auto conn = get_db_server_conn();
+    if (conn)
+        sendMessage(conn, request, base::SID_SERVER, base::CID_GROUP_GET_MEMBER_REQUEST);
+}
+
+void ClientConn::_HandleModifyGroupCardRequest(BasePdu *basePdu)
+{
+    group::ModifyGroupCard request;
+    request.ParseFromString(basePdu->getMessage());
+
+    uint32_t userId = request.user_id();
+    uint32_t groupId = request.group_id();
+    std::string groupCard = request.group_card();
+
+    log("用户%d请求修改群%d的群名片为%s", userId, groupId, groupCard.c_str());
+
+    auto conn = get_db_server_conn();
+    if (conn)
+        sendMessage(conn, request, base::SID_SERVER, base::CID_GROUP_MODIFY_CARD_RESQUEST);
+}
+
