@@ -380,3 +380,31 @@ void YLBusiness::modifyGroupCard(uint32_t groupId, const QString &card)
     basePdu->writeMessage(&request);
     PduSender::instance()->addMessage(basePdu);
 }
+
+
+void YLBusiness::searchGroup(const QString &searchData, youliao::pdu::base::SearchType searchType)
+{
+    group::SearchGroupRequest request;
+    request.set_user_id(GlobalData::getCurrLoginUserId());
+    request.set_search_data(searchData.toStdString());
+    request.set_search_type(searchType);
+
+    BasePdu *basePdu = new BasePdu;
+    basePdu->setSID(SID_GROUP);
+    basePdu->setCID(CID_GROUP_SEARCH_GROUP_REQUEST);
+    basePdu->writeMessage(&request);
+    PduSender::instance()->addMessage(basePdu);
+}
+
+void YLBusiness::addGroup(uint32_t groupId)
+{
+    group::AddGroupRequest request;
+    request.set_user_id(GlobalData::getCurrLoginUserId());
+    request.set_group_id(groupId);
+
+    BasePdu *basePdu = new BasePdu;
+    basePdu->setSID(SID_GROUP);
+    basePdu->setCID(CID_GROUP_ADD_GROUP_REQUEST);
+    basePdu->writeMessage(&request);
+    PduSender::instance()->addMessage(basePdu);
+}

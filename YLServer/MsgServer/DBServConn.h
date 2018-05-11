@@ -39,6 +39,7 @@ private:
     void _HandleCreateGroupRespone(BasePdu *);
     void _HandleGetGroupListRespone(BasePdu *);
     void _HandleGetGroupMemberRespone(BasePdu *);
+    void _HandleSearchGroupRespone(BasePdu *);
 
     uint32_t   m_server_index;
     bool       m_open;

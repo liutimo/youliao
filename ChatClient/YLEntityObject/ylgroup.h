@@ -31,6 +31,8 @@ public:
 
     void setCreateTime(uint32_t createTime);
 
+    void setVerifyType(uint32_t type);
+
     uint32_t getGroupId() const;
 
     QString getGroupName() const;
@@ -46,11 +48,16 @@ public:
     QVector<uint32_t> getManagers() const;
 
     uint32_t getCreateTime() const;
+
+    uint32_t getVerifyType() const;
+
+    uint32_t getCount() const { return 1 + m_managers.size() + m_members.size(); }
 private:
     uint32_t m_group_id;
     uint32_t m_creator;
     uint32_t m_capacity;
     uint32_t m_created;
+    uint32_t m_verify_type;
     QVector<uint32_t> m_managers;
     QVector<uint32_t> m_members;
     QString m_group_name;

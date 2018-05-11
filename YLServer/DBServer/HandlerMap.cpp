@@ -109,6 +109,9 @@ void HandlerMap::init()
 
     //修改群名片
     m_handler_map.insert(std::make_pair(CID_GROUP_MODIFY_CARD_RESQUEST, DB_INTERFACE::modifyGroupCard));
+
+    //搜索群组
+    m_handler_map.insert(std::make_pair(CID_GROUP_SEARCH_GROUP_REQUEST, DB_INTERFACE::searchGroup));
 }
 
 pdu_handler_t HandlerMap::getHandler(uint16_t cid)

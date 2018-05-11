@@ -319,12 +319,14 @@ enum GroupCID {
   CID_GROUP_GET_MEMBER_REQUEST = 1799,
   CID_GROUP_GET_MEMBER_RESPONE = 1800,
   CID_GROUP_MODIFY_CARD_RESQUEST = 1801,
+  CID_GROUP_SEARCH_GROUP_REQUEST = 1802,
+  CID_GROUP_SEARCH_GROUP_RESPONE = 1803,
   GroupCID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   GroupCID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool GroupCID_IsValid(int value);
 const GroupCID GroupCID_MIN = CID_GROUP_ZERO;
-const GroupCID GroupCID_MAX = CID_GROUP_MODIFY_CARD_RESQUEST;
+const GroupCID GroupCID_MAX = CID_GROUP_SEARCH_GROUP_RESPONE;
 const int GroupCID_ARRAYSIZE = GroupCID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* GroupCID_descriptor();
@@ -1576,6 +1578,12 @@ class GroupInfo : public ::google::protobuf::Message /* @@protoc_insertion_point
   ::google::protobuf::uint32 group_created() const;
   void set_group_created(::google::protobuf::uint32 value);
 
+  // uint32 group_verify_type = 9;
+  void clear_group_verify_type();
+  static const int kGroupVerifyTypeFieldNumber = 9;
+  ::google::protobuf::uint32 group_verify_type() const;
+  void set_group_verify_type(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:youliao.pdu.base.GroupInfo)
  private:
 
@@ -1590,6 +1598,7 @@ class GroupInfo : public ::google::protobuf::Message /* @@protoc_insertion_point
   ::google::protobuf::uint32 group_creator_;
   ::google::protobuf::uint32 group_capacity_;
   ::google::protobuf::uint32 group_created_;
+  ::google::protobuf::uint32 group_verify_type_;
   mutable int _cached_size_;
   friend struct ::protobuf_youliao_2ebase_2eproto::TableStruct;
   friend void ::protobuf_youliao_2ebase_2eproto::InitDefaultsGroupInfoImpl();
@@ -3120,6 +3129,20 @@ inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
 GroupInfo::mutable_members() {
   // @@protoc_insertion_point(field_mutable_list:youliao.pdu.base.GroupInfo.members)
   return &members_;
+}
+
+// uint32 group_verify_type = 9;
+inline void GroupInfo::clear_group_verify_type() {
+  group_verify_type_ = 0u;
+}
+inline ::google::protobuf::uint32 GroupInfo::group_verify_type() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.GroupInfo.group_verify_type)
+  return group_verify_type_;
+}
+inline void GroupInfo::set_group_verify_type(::google::protobuf::uint32 value) {
+  
+  group_verify_type_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.base.GroupInfo.group_verify_type)
 }
 
 // -------------------------------------------------------------------

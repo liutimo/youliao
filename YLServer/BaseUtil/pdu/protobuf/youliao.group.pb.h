@@ -37,7 +37,7 @@ namespace protobuf_youliao_2egroup_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[7];
+  static const ::google::protobuf::internal::ParseTable schema[10];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -57,6 +57,12 @@ void InitDefaultsGetGroupMemberInfoResponeImpl();
 void InitDefaultsGetGroupMemberInfoRespone();
 void InitDefaultsModifyGroupCardImpl();
 void InitDefaultsModifyGroupCard();
+void InitDefaultsSearchGroupRequestImpl();
+void InitDefaultsSearchGroupRequest();
+void InitDefaultsSearchGroupResponeImpl();
+void InitDefaultsSearchGroupRespone();
+void InitDefaultsAddGroupRequestImpl();
+void InitDefaultsAddGroupRequest();
 inline void InitDefaults() {
   InitDefaultsGroupCreateRequest();
   InitDefaultsGroupCreateRespone();
@@ -65,11 +71,17 @@ inline void InitDefaults() {
   InitDefaultsGetGroupMemberInfoRequest();
   InitDefaultsGetGroupMemberInfoRespone();
   InitDefaultsModifyGroupCard();
+  InitDefaultsSearchGroupRequest();
+  InitDefaultsSearchGroupRespone();
+  InitDefaultsAddGroupRequest();
 }
 }  // namespace protobuf_youliao_2egroup_2eproto
 namespace youliao {
 namespace pdu {
 namespace group {
+class AddGroupRequest;
+class AddGroupRequestDefaultTypeInternal;
+extern AddGroupRequestDefaultTypeInternal _AddGroupRequest_default_instance_;
 class GetGroupListRequest;
 class GetGroupListRequestDefaultTypeInternal;
 extern GetGroupListRequestDefaultTypeInternal _GetGroupListRequest_default_instance_;
@@ -91,11 +103,18 @@ extern GroupCreateResponeDefaultTypeInternal _GroupCreateRespone_default_instanc
 class ModifyGroupCard;
 class ModifyGroupCardDefaultTypeInternal;
 extern ModifyGroupCardDefaultTypeInternal _ModifyGroupCard_default_instance_;
+class SearchGroupRequest;
+class SearchGroupRequestDefaultTypeInternal;
+extern SearchGroupRequestDefaultTypeInternal _SearchGroupRequest_default_instance_;
+class SearchGroupRespone;
+class SearchGroupResponeDefaultTypeInternal;
+extern SearchGroupResponeDefaultTypeInternal _SearchGroupRespone_default_instance_;
 }  // namespace group
 }  // namespace pdu
 }  // namespace youliao
 namespace google {
 namespace protobuf {
+template<> ::youliao::pdu::group::AddGroupRequest* Arena::Create< ::youliao::pdu::group::AddGroupRequest>(Arena*);
 template<> ::youliao::pdu::group::GetGroupListRequest* Arena::Create< ::youliao::pdu::group::GetGroupListRequest>(Arena*);
 template<> ::youliao::pdu::group::GetGroupListRespone* Arena::Create< ::youliao::pdu::group::GetGroupListRespone>(Arena*);
 template<> ::youliao::pdu::group::GetGroupMemberInfoRequest* Arena::Create< ::youliao::pdu::group::GetGroupMemberInfoRequest>(Arena*);
@@ -103,6 +122,8 @@ template<> ::youliao::pdu::group::GetGroupMemberInfoRespone* Arena::Create< ::yo
 template<> ::youliao::pdu::group::GroupCreateRequest* Arena::Create< ::youliao::pdu::group::GroupCreateRequest>(Arena*);
 template<> ::youliao::pdu::group::GroupCreateRespone* Arena::Create< ::youliao::pdu::group::GroupCreateRespone>(Arena*);
 template<> ::youliao::pdu::group::ModifyGroupCard* Arena::Create< ::youliao::pdu::group::ModifyGroupCard>(Arena*);
+template<> ::youliao::pdu::group::SearchGroupRequest* Arena::Create< ::youliao::pdu::group::SearchGroupRequest>(Arena*);
+template<> ::youliao::pdu::group::SearchGroupRespone* Arena::Create< ::youliao::pdu::group::SearchGroupRespone>(Arena*);
 }  // namespace protobuf
 }  // namespace google
 namespace youliao {
@@ -974,6 +995,357 @@ class ModifyGroupCard : public ::google::protobuf::Message /* @@protoc_insertion
   friend struct ::protobuf_youliao_2egroup_2eproto::TableStruct;
   friend void ::protobuf_youliao_2egroup_2eproto::InitDefaultsModifyGroupCardImpl();
 };
+// -------------------------------------------------------------------
+
+class SearchGroupRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.group.SearchGroupRequest) */ {
+ public:
+  SearchGroupRequest();
+  virtual ~SearchGroupRequest();
+
+  SearchGroupRequest(const SearchGroupRequest& from);
+
+  inline SearchGroupRequest& operator=(const SearchGroupRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  SearchGroupRequest(SearchGroupRequest&& from) noexcept
+    : SearchGroupRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline SearchGroupRequest& operator=(SearchGroupRequest&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const SearchGroupRequest& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const SearchGroupRequest* internal_default_instance() {
+    return reinterpret_cast<const SearchGroupRequest*>(
+               &_SearchGroupRequest_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    7;
+
+  void Swap(SearchGroupRequest* other);
+  friend void swap(SearchGroupRequest& a, SearchGroupRequest& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline SearchGroupRequest* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<SearchGroupRequest>(NULL);
+  }
+
+  SearchGroupRequest* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<SearchGroupRequest>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const SearchGroupRequest& from);
+  void MergeFrom(const SearchGroupRequest& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(SearchGroupRequest* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string search_data = 2;
+  void clear_search_data();
+  static const int kSearchDataFieldNumber = 2;
+  const ::std::string& search_data() const;
+  void set_search_data(const ::std::string& value);
+  #if LANG_CXX11
+  void set_search_data(::std::string&& value);
+  #endif
+  void set_search_data(const char* value);
+  void set_search_data(const char* value, size_t size);
+  ::std::string* mutable_search_data();
+  ::std::string* release_search_data();
+  void set_allocated_search_data(::std::string* search_data);
+
+  // uint32 user_id = 1;
+  void clear_user_id();
+  static const int kUserIdFieldNumber = 1;
+  ::google::protobuf::uint32 user_id() const;
+  void set_user_id(::google::protobuf::uint32 value);
+
+  // .youliao.pdu.base.SearchType search_type = 3;
+  void clear_search_type();
+  static const int kSearchTypeFieldNumber = 3;
+  ::youliao::pdu::base::SearchType search_type() const;
+  void set_search_type(::youliao::pdu::base::SearchType value);
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.group.SearchGroupRequest)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr search_data_;
+  ::google::protobuf::uint32 user_id_;
+  int search_type_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2egroup_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2egroup_2eproto::InitDefaultsSearchGroupRequestImpl();
+};
+// -------------------------------------------------------------------
+
+class SearchGroupRespone : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.group.SearchGroupRespone) */ {
+ public:
+  SearchGroupRespone();
+  virtual ~SearchGroupRespone();
+
+  SearchGroupRespone(const SearchGroupRespone& from);
+
+  inline SearchGroupRespone& operator=(const SearchGroupRespone& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  SearchGroupRespone(SearchGroupRespone&& from) noexcept
+    : SearchGroupRespone() {
+    *this = ::std::move(from);
+  }
+
+  inline SearchGroupRespone& operator=(SearchGroupRespone&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const SearchGroupRespone& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const SearchGroupRespone* internal_default_instance() {
+    return reinterpret_cast<const SearchGroupRespone*>(
+               &_SearchGroupRespone_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    8;
+
+  void Swap(SearchGroupRespone* other);
+  friend void swap(SearchGroupRespone& a, SearchGroupRespone& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline SearchGroupRespone* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<SearchGroupRespone>(NULL);
+  }
+
+  SearchGroupRespone* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<SearchGroupRespone>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const SearchGroupRespone& from);
+  void MergeFrom(const SearchGroupRespone& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(SearchGroupRespone* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated .youliao.pdu.base.GroupInfo groups = 2;
+  int groups_size() const;
+  void clear_groups();
+  static const int kGroupsFieldNumber = 2;
+  ::youliao::pdu::base::GroupInfo* mutable_groups(int index);
+  ::google::protobuf::RepeatedPtrField< ::youliao::pdu::base::GroupInfo >*
+      mutable_groups();
+  const ::youliao::pdu::base::GroupInfo& groups(int index) const;
+  ::youliao::pdu::base::GroupInfo* add_groups();
+  const ::google::protobuf::RepeatedPtrField< ::youliao::pdu::base::GroupInfo >&
+      groups() const;
+
+  // uint32 user_id = 1;
+  void clear_user_id();
+  static const int kUserIdFieldNumber = 1;
+  ::google::protobuf::uint32 user_id() const;
+  void set_user_id(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.group.SearchGroupRespone)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::RepeatedPtrField< ::youliao::pdu::base::GroupInfo > groups_;
+  ::google::protobuf::uint32 user_id_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2egroup_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2egroup_2eproto::InitDefaultsSearchGroupResponeImpl();
+};
+// -------------------------------------------------------------------
+
+class AddGroupRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.group.AddGroupRequest) */ {
+ public:
+  AddGroupRequest();
+  virtual ~AddGroupRequest();
+
+  AddGroupRequest(const AddGroupRequest& from);
+
+  inline AddGroupRequest& operator=(const AddGroupRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  AddGroupRequest(AddGroupRequest&& from) noexcept
+    : AddGroupRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline AddGroupRequest& operator=(AddGroupRequest&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const AddGroupRequest& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const AddGroupRequest* internal_default_instance() {
+    return reinterpret_cast<const AddGroupRequest*>(
+               &_AddGroupRequest_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    9;
+
+  void Swap(AddGroupRequest* other);
+  friend void swap(AddGroupRequest& a, AddGroupRequest& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline AddGroupRequest* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<AddGroupRequest>(NULL);
+  }
+
+  AddGroupRequest* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<AddGroupRequest>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const AddGroupRequest& from);
+  void MergeFrom(const AddGroupRequest& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(AddGroupRequest* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // uint32 user_id = 1;
+  void clear_user_id();
+  static const int kUserIdFieldNumber = 1;
+  ::google::protobuf::uint32 user_id() const;
+  void set_user_id(::google::protobuf::uint32 value);
+
+  // uint32 group_id = 2;
+  void clear_group_id();
+  static const int kGroupIdFieldNumber = 2;
+  ::google::protobuf::uint32 group_id() const;
+  void set_group_id(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.group.AddGroupRequest)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 user_id_;
+  ::google::protobuf::uint32 group_id_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2egroup_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2egroup_2eproto::InitDefaultsAddGroupRequestImpl();
+};
 // ===================================================================
 
 
@@ -1493,9 +1865,177 @@ inline void ModifyGroupCard::set_allocated_group_card(::std::string* group_card)
   // @@protoc_insertion_point(field_set_allocated:youliao.pdu.group.ModifyGroupCard.group_card)
 }
 
+// -------------------------------------------------------------------
+
+// SearchGroupRequest
+
+// uint32 user_id = 1;
+inline void SearchGroupRequest::clear_user_id() {
+  user_id_ = 0u;
+}
+inline ::google::protobuf::uint32 SearchGroupRequest::user_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.group.SearchGroupRequest.user_id)
+  return user_id_;
+}
+inline void SearchGroupRequest::set_user_id(::google::protobuf::uint32 value) {
+  
+  user_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.group.SearchGroupRequest.user_id)
+}
+
+// string search_data = 2;
+inline void SearchGroupRequest::clear_search_data() {
+  search_data_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& SearchGroupRequest::search_data() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.group.SearchGroupRequest.search_data)
+  return search_data_.GetNoArena();
+}
+inline void SearchGroupRequest::set_search_data(const ::std::string& value) {
+  
+  search_data_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:youliao.pdu.group.SearchGroupRequest.search_data)
+}
+#if LANG_CXX11
+inline void SearchGroupRequest::set_search_data(::std::string&& value) {
+  
+  search_data_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:youliao.pdu.group.SearchGroupRequest.search_data)
+}
+#endif
+inline void SearchGroupRequest::set_search_data(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  search_data_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:youliao.pdu.group.SearchGroupRequest.search_data)
+}
+inline void SearchGroupRequest::set_search_data(const char* value, size_t size) {
+  
+  search_data_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:youliao.pdu.group.SearchGroupRequest.search_data)
+}
+inline ::std::string* SearchGroupRequest::mutable_search_data() {
+  
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.group.SearchGroupRequest.search_data)
+  return search_data_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* SearchGroupRequest::release_search_data() {
+  // @@protoc_insertion_point(field_release:youliao.pdu.group.SearchGroupRequest.search_data)
+  
+  return search_data_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void SearchGroupRequest::set_allocated_search_data(::std::string* search_data) {
+  if (search_data != NULL) {
+    
+  } else {
+    
+  }
+  search_data_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), search_data);
+  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.group.SearchGroupRequest.search_data)
+}
+
+// .youliao.pdu.base.SearchType search_type = 3;
+inline void SearchGroupRequest::clear_search_type() {
+  search_type_ = 0;
+}
+inline ::youliao::pdu::base::SearchType SearchGroupRequest::search_type() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.group.SearchGroupRequest.search_type)
+  return static_cast< ::youliao::pdu::base::SearchType >(search_type_);
+}
+inline void SearchGroupRequest::set_search_type(::youliao::pdu::base::SearchType value) {
+  
+  search_type_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.group.SearchGroupRequest.search_type)
+}
+
+// -------------------------------------------------------------------
+
+// SearchGroupRespone
+
+// uint32 user_id = 1;
+inline void SearchGroupRespone::clear_user_id() {
+  user_id_ = 0u;
+}
+inline ::google::protobuf::uint32 SearchGroupRespone::user_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.group.SearchGroupRespone.user_id)
+  return user_id_;
+}
+inline void SearchGroupRespone::set_user_id(::google::protobuf::uint32 value) {
+  
+  user_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.group.SearchGroupRespone.user_id)
+}
+
+// repeated .youliao.pdu.base.GroupInfo groups = 2;
+inline int SearchGroupRespone::groups_size() const {
+  return groups_.size();
+}
+inline ::youliao::pdu::base::GroupInfo* SearchGroupRespone::mutable_groups(int index) {
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.group.SearchGroupRespone.groups)
+  return groups_.Mutable(index);
+}
+inline ::google::protobuf::RepeatedPtrField< ::youliao::pdu::base::GroupInfo >*
+SearchGroupRespone::mutable_groups() {
+  // @@protoc_insertion_point(field_mutable_list:youliao.pdu.group.SearchGroupRespone.groups)
+  return &groups_;
+}
+inline const ::youliao::pdu::base::GroupInfo& SearchGroupRespone::groups(int index) const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.group.SearchGroupRespone.groups)
+  return groups_.Get(index);
+}
+inline ::youliao::pdu::base::GroupInfo* SearchGroupRespone::add_groups() {
+  // @@protoc_insertion_point(field_add:youliao.pdu.group.SearchGroupRespone.groups)
+  return groups_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::youliao::pdu::base::GroupInfo >&
+SearchGroupRespone::groups() const {
+  // @@protoc_insertion_point(field_list:youliao.pdu.group.SearchGroupRespone.groups)
+  return groups_;
+}
+
+// -------------------------------------------------------------------
+
+// AddGroupRequest
+
+// uint32 user_id = 1;
+inline void AddGroupRequest::clear_user_id() {
+  user_id_ = 0u;
+}
+inline ::google::protobuf::uint32 AddGroupRequest::user_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.group.AddGroupRequest.user_id)
+  return user_id_;
+}
+inline void AddGroupRequest::set_user_id(::google::protobuf::uint32 value) {
+  
+  user_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.group.AddGroupRequest.user_id)
+}
+
+// uint32 group_id = 2;
+inline void AddGroupRequest::clear_group_id() {
+  group_id_ = 0u;
+}
+inline ::google::protobuf::uint32 AddGroupRequest::group_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.group.AddGroupRequest.group_id)
+  return group_id_;
+}
+inline void AddGroupRequest::set_group_id(::google::protobuf::uint32 value) {
+  
+  group_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.group.AddGroupRequest.group_id)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

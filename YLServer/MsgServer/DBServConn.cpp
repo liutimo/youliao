@@ -166,6 +166,9 @@ void DBServConn::handlePdu(BasePdu *pdu)
         case base::CID_GROUP_GET_MEMBER_RESPONE:
             _HandleGetGroupMemberRespone(pdu);
             break;
+        case base::CID_GROUP_SEARCH_GROUP_RESPONE:
+            _HandleSearchGroupRespone(pdu);
+            break;
         default:
             break;
     }
@@ -500,5 +503,20 @@ void DBServConn::_HandleGetGroupMemberRespone(BasePdu *basePdu)
         auto conn = user->getConn();
         if (conn)
             sendMessage(conn, respone, base::SID_GROUP, base::CID_GROUP_GET_MEMBER_RESPONE);
+    }
+}
+
+void DBServConn::_HandleSearchGroupRespone(BasePdu *basePdu)
+{
+    group::SearchGroupRespone respone;
+    respone.ParseFromString(basePdu->getMessage());
+
+    uint32_t userId = respone.user_id();
+    auto user = UserManager::instance()->getUser(userId);
+    if (user)
+    {
+        auto conn = user->getConn();
+        if (conn)
+            sendMessage(conn, respone, base::SID_GROUP, base::CID_GROUP_SEARCH_GROUP_RESPONE);
     }
 }

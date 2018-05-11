@@ -34,6 +34,7 @@ signals:
     void newGroup(YLGroup group);
     void groupList();
     void groupMembers();
+    void searchGroupResult(const QVector<YLGroup> friends);
 
 private:
     void _HandleBasePdu(BasePdu *pdu);
@@ -54,6 +55,7 @@ private:
     void _HandleCreatGroupRespone(BasePdu *pdu);
     void _HandleGetGroupListRespone(BasePdu *pdu);
     void _HandleGetGroupMemberRespone(BasePdu *pdu);
+    void _HandleSearchGroupRespone(BasePdu *pdu);
 private:
     explicit PduHandler(QObject *parent = nullptr);
 

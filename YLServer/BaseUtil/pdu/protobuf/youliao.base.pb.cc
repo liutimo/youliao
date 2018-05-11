@@ -288,6 +288,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::base::GroupInfo, group_created_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::base::GroupInfo, managers_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::base::GroupInfo, members_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::base::GroupInfo, group_verify_type_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::base::HeartBeat, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -301,7 +302,7 @@ static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROT
   { 41, -1, sizeof(::youliao::pdu::base::MemberInfo)},
   { 50, -1, sizeof(::youliao::pdu::base::AddRequestInfo)},
   { 62, -1, sizeof(::youliao::pdu::base::GroupInfo)},
-  { 75, -1, sizeof(::youliao::pdu::base::HeartBeat)},
+  { 76, -1, sizeof(::youliao::pdu::base::HeartBeat)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -359,108 +360,110 @@ void AddDescriptorsImpl() {
       "\001 \001(\r\022\020\n\010other_id\030\002 \001(\r\022\021\n\tresult_id\030\003 \001"
       "(\r\022\023\n\013handle_time\030\004 \001(\r\022\025\n\rvalidate_data"
       "\030\005 \001(\t\022\026\n\016other_head_url\030\006 \001(\t\022\022\n\nother_"
-      "nick\030\007 \001(\t\"\256\001\n\tGroupInfo\022\020\n\010group_id\030\001 \001"
+      "nick\030\007 \001(\t\"\311\001\n\tGroupInfo\022\020\n\010group_id\030\001 \001"
       "(\r\022\022\n\ngroup_name\030\002 \001(\t\022\022\n\ngroup_head\030\003 \001"
       "(\t\022\025\n\rgroup_creator\030\004 \001(\r\022\026\n\016group_capac"
       "ity\030\005 \001(\r\022\025\n\rgroup_created\030\006 \001(\r\022\020\n\010mana"
-      "gers\030\007 \003(\r\022\017\n\007members\030\010 \003(\r\"\013\n\tHeartBeat"
-      "*\215\001\n\tServiceID\022\014\n\010SID_ZERO\020\000\022\r\n\tSID_LOGI"
-      "N\020\001\022\023\n\017SID_FRIEND_LIST\020\002\022\016\n\nSID_SERVER\020\003"
-      "\022\r\n\tSID_OTHER\020\004\022\017\n\013SID_SESSION\020\005\022\017\n\013SID_"
-      "MESSAGE\020\006\022\r\n\tSID_GROUP\020\007*\313\001\n\010LoginCID\022\022\n"
-      "\016CID_LOGIN_ZERO\020\000\022 \n\033CID_LOGIN_REQUSET_M"
-      "SGSERVER\020\201\002\022 \n\033CID_LOGIN_RESPONE_MSGSERV"
-      "ER\020\202\002\022 \n\033CID_LOGIN_REQUEST_USERLOGIN\020\203\002\022"
-      " \n\033CID_LOGIN_RESPONE_USERLOGIN\020\204\002\022#\n\036CID"
-      "_LOGIN_REQUEST_USERLOGINOUT\020\205\002*\364\003\n\tServe"
-      "rCID\022\023\n\017CID_SERVER_ZERO\020\000\022\036\n\031CID_SERVER_"
-      "MSGSERVER_INFO\020\201\004\022 \n\033CID_SERVER_VALIDATE"
-      "_REQUEST\020\202\004\022 \n\033CID_SERVER_VALIDATE_RESPO"
-      "NE\020\203\004\022\033\n\026CID_SERVER_USER_LOGOUT\020\204\004\022\031\n\024CI"
-      "D_SERVER_ROUTE_MSG\020\205\004\022\037\n\032CID_SERVER_ROUT"
-      "E_BROADCAST\020\206\004\022*\n%CID_SERVER_GET_ONLINE_"
-      "FRIENDS_REQUEST\020\207\004\022*\n%CID_SERVER_GET_ONL"
-      "INE_FRIENDS_RESPONE\020\210\004\022(\n#CID_SERVER_GET"
-      "_SERVER_INDEX_REQUEST\020\211\004\022(\n#CID_SERVER_G"
-      "ET_SERVER_INDEX_RESPONE\020\212\004\022\035\n\030CID_SERVER"
-      "_ROUTE_MESSAGE\020\213\004\022(\n#CID_SERVER_GET_FRIE"
-      "ND_ONLINE_STATUS\020\214\004\022 \n\033CID_SERVER_ROUTE_"
-      "TO_MESSAGE\020\215\004*8\n\010OtherCID\022\022\n\016CID_OTHER_Z"
-      "ERO\020\000\022\030\n\023CID_OTHER_HEARTBEAT\020\201\006*\362\007\n\rFrie"
-      "ndListCID\022\027\n\023CID_FRIENDLIST_ZERO\020\000\022\037\n\032CI"
-      "D_FRIENDLIST_GET_REQUEST\020\201\010\022\037\n\032CID_FRIEN"
-      "DLIST_GET_RESPONE\020\202\010\022(\n#CID_FRIENDLIST_F"
-      "RIEND_STATUS_CHANGE\020\203\010\022-\n(CID_FRIENDLIST"
-      "_SIGNATURE_CHANGED_REQUEST\020\204\010\022-\n(CID_FRI"
-      "ENDLIST_SIGNATURE_CHANGED_RESPONE\020\205\010\022,\n\'"
-      "CID_FRIENDLIST_FRIEND_SIGNATURE_CHANGED\020"
-      "\206\010\022,\n\'CID_FRIENDLIST_MODEFY_FRIEND_GROUP"
-      "_NAME\020\207\010\022,\n\'CID_FRIENDLIST_ADD_FRIEND_GR"
-      "OUP_REQUEST\020\210\010\022,\n\'CID_FRIENDLIST_ADD_FRI"
-      "END_GROUP_RESPONE\020\211\010\022&\n!CID_FRIENDLIST_G"
-      "ET_GROUPS_REQUEST\020\212\010\022&\n!CID_FRIENDLIST_G"
-      "ET_GROUPS_REPSONE\020\213\010\022/\n*CID_FRIENDLIST_R"
-      "ENAME_FRIEND_GROUP_REQUEST\020\214\010\022/\n*CID_FRI"
-      "ENDLIST_DELETE_FRIEND_GROUP_REQUEST\020\215\010\0220"
-      "\n+CID_FRIENDLIST_MOVE_FRIEND_TO_GROUP_RE"
-      "QUEST\020\216\010\022)\n$CID_FRIENDLIST_DELETE_FRIEND"
-      "_REQUEST\020\217\010\022/\n*CID_FRIENDLIST_MODIFY_FRI"
-      "END_REMARK_RQUEST\020\220\010\022)\n$CID_FRIENDLIST_S"
-      "EARCH_FRIEND_REQUEST\020\221\010\022)\n$CID_FRIENDLIS"
-      "T_SEARCH_FRIEND_RESPONE\020\222\010\022&\n!CID_FRIEND"
-      "LIST_ADD_FRIEND_REQUEST\020\223\010\022&\n!CID_FRIEND"
-      "LIST_ADD_FRIEND_RESPONE\020\224\010\022/\n*CID_FRIEND"
-      "LIST_GET_REQUEST_HISTORY_REQUEST\020\225\010\022/\n*C"
-      "ID_FRIENDLIST_GET_REQUEST_HISTORY_RESPON"
-      "E\020\226\010*\210\002\n\016SessionListCID\022\030\n\024CID_SESSIONLI"
-      "ST_ZERO\020\000\022 \n\033CID_SESSIONLIST_ADD_SESSION"
-      "\020\201\n\022 \n\033CID_SESSIONLIST_DEL_SESSION\020\202\n\022 \n"
-      "\033CID_SESSIONLIST_UPD_SESSION\020\203\n\022 \n\033CID_S"
-      "ESSIONLIST_TOP_SESSION\020\204\n\022)\n$CID_SESSION"
-      "LIST_GET_SESSIONS_REQUEST\020\205\n\022)\n$CID_SESS"
-      "IONLIST_GET_SESSIONS_RESPONE\020\206\n*\301\001\n\nMess"
-      "ageCID\022\024\n\020CID_MESSAGE_ZERO\020\000\022\025\n\020CID_MESS"
-      "AGE_DATA\020\201\014\022\025\n\020CID_MESSAGE_SAVE\020\202\014\022\027\n\022CI"
-      "D_MESSAGE_UPDATE\020\203\014\022*\n%CID_MESSAGE_GET_L"
-      "ATEST_MSG_ID_REQUEST\020\204\014\022*\n%CID_MESSAGE_G"
-      "ET_LATEST_MSG_ID_RESPONE\020\205\014*\315\002\n\010GroupCID"
-      "\022\022\n\016CID_GROUP_ZERO\020\000\022\035\n\030CID_GROUP_CREATE"
-      "_REQUEST\020\201\016\022\035\n\030CID_GROUP_CREATE_RESPONE\020"
-      "\202\016\022\037\n\032CID_GROUP_GET_LIST_REQUEST\020\203\016\022\037\n\032C"
-      "ID_GROUP_GET_LIST_RESPONE\020\204\016\022 \n\033CID_GROU"
-      "P_ADD_GROUP_REQUEST\020\205\016\022 \n\033CID_GROUP_ADD_"
-      "GROUP_RESPONE\020\206\016\022!\n\034CID_GROUP_GET_MEMBER"
-      "_REQUEST\020\207\016\022!\n\034CID_GROUP_GET_MEMBER_RESP"
-      "ONE\020\210\016\022#\n\036CID_GROUP_MODIFY_CARD_RESQUEST"
-      "\020\211\016*[\n\nResultType\022\010\n\004NONE\020\000\022\021\n\rNO_MSG_SE"
-      "RVER\020\001\022\023\n\017MSG_SERVER_FULL\020\002\022\033\n\027SIGNATURE"
-      "_MODIFY_FAILED\020\003*m\n\016UserStatusType\022\024\n\020US"
-      "ER_STATUS_ZERO\020\000\022\026\n\022USER_STATUS_ONLINE\020\001"
-      "\022\027\n\023USER_STATUS_OFFLINE\020\002\022\024\n\020USER_STATUS"
-      "_HIDE\020\003*t\n\013SessionType\022\025\n\021SESSION_TYPE_Z"
-      "ERO\020\000\022\027\n\023SESSION_TYPE_SINGLE\020\001\022\026\n\022SESSIO"
-      "N_TYPE_GROUP\020\002\022\035\n\031SESSION_TYPE_VALIDATE_"
-      "MSG\020\003*U\n\013SessionFlag\022\025\n\021SESSION_FLAG_ZER"
-      "O\020\000\022\027\n\023SESSION_FLAG_NORMAL\020\001\022\026\n\022SESSION_"
-      "FLAG_ONTOP\020\002*\266\001\n\013MessageType\022\020\n\014MESSAGE_"
-      "ZERO\020\000\022\034\n\030MESSAGE_TYPE_SINGLE_TEXT\020\001\022\035\n\031"
-      "MESSAGE_TYPE_SINGLE_AUDIO\020\002\022\033\n\027MESSAGE_T"
-      "YPE_GROUP_TEXT\020\003\022\034\n\030MESSAGE_TYPE_GROUP_A"
-      "UDIO\020\004\022\035\n\031MESSAGE_TYPE_VALIDATE_MSG\020\005*}\n"
-      "\020RouteMessageType\022\026\n\022ROUTE_MESSAGE_ZERO\020"
-      "\000\022&\n\"ROUTE_MESSAGE_FRIEND_STATUS_CHANGE\020"
-      "\001\022)\n%ROUTE_MESSAGE_FRIEND_SIGNATURE_CHAN"
-      "GE\020\002*U\n\nSearchType\022\024\n\020SEARCH_TYPE_ZERO\020\000"
-      "\022\027\n\023SEARCH_TYPE_ACCOUNT\020\001\022\030\n\024SEARCH_TYPE"
-      "_NICKNAME\020\002*K\n\tGroupType\022\023\n\017GROUP_TYPE_Z"
-      "ERO\020\000\022\025\n\021GROUP_TYPE_NORMAL\020\001\022\022\n\016GROUP_TY"
-      "PE_TMP\020\002*l\n\017GroupVerifyType\022\025\n\021GROUP_VER"
-      "IFY_ZERO\020\000\022\025\n\021GROUP_VERIFY_NEED\020\001\022\024\n\020GRO"
-      "UP_VERIFY_ALL\020\002\022\025\n\021GROUP_VERIFY_NONE\020\003b\006"
-      "proto3"
+      "gers\030\007 \003(\r\022\017\n\007members\030\010 \003(\r\022\031\n\021group_ver"
+      "ify_type\030\t \001(\r\"\013\n\tHeartBeat*\215\001\n\tServiceI"
+      "D\022\014\n\010SID_ZERO\020\000\022\r\n\tSID_LOGIN\020\001\022\023\n\017SID_FR"
+      "IEND_LIST\020\002\022\016\n\nSID_SERVER\020\003\022\r\n\tSID_OTHER"
+      "\020\004\022\017\n\013SID_SESSION\020\005\022\017\n\013SID_MESSAGE\020\006\022\r\n\t"
+      "SID_GROUP\020\007*\313\001\n\010LoginCID\022\022\n\016CID_LOGIN_ZE"
+      "RO\020\000\022 \n\033CID_LOGIN_REQUSET_MSGSERVER\020\201\002\022 "
+      "\n\033CID_LOGIN_RESPONE_MSGSERVER\020\202\002\022 \n\033CID_"
+      "LOGIN_REQUEST_USERLOGIN\020\203\002\022 \n\033CID_LOGIN_"
+      "RESPONE_USERLOGIN\020\204\002\022#\n\036CID_LOGIN_REQUES"
+      "T_USERLOGINOUT\020\205\002*\364\003\n\tServerCID\022\023\n\017CID_S"
+      "ERVER_ZERO\020\000\022\036\n\031CID_SERVER_MSGSERVER_INF"
+      "O\020\201\004\022 \n\033CID_SERVER_VALIDATE_REQUEST\020\202\004\022 "
+      "\n\033CID_SERVER_VALIDATE_RESPONE\020\203\004\022\033\n\026CID_"
+      "SERVER_USER_LOGOUT\020\204\004\022\031\n\024CID_SERVER_ROUT"
+      "E_MSG\020\205\004\022\037\n\032CID_SERVER_ROUTE_BROADCAST\020\206"
+      "\004\022*\n%CID_SERVER_GET_ONLINE_FRIENDS_REQUE"
+      "ST\020\207\004\022*\n%CID_SERVER_GET_ONLINE_FRIENDS_R"
+      "ESPONE\020\210\004\022(\n#CID_SERVER_GET_SERVER_INDEX"
+      "_REQUEST\020\211\004\022(\n#CID_SERVER_GET_SERVER_IND"
+      "EX_RESPONE\020\212\004\022\035\n\030CID_SERVER_ROUTE_MESSAG"
+      "E\020\213\004\022(\n#CID_SERVER_GET_FRIEND_ONLINE_STA"
+      "TUS\020\214\004\022 \n\033CID_SERVER_ROUTE_TO_MESSAGE\020\215\004"
+      "*8\n\010OtherCID\022\022\n\016CID_OTHER_ZERO\020\000\022\030\n\023CID_"
+      "OTHER_HEARTBEAT\020\201\006*\362\007\n\rFriendListCID\022\027\n\023"
+      "CID_FRIENDLIST_ZERO\020\000\022\037\n\032CID_FRIENDLIST_"
+      "GET_REQUEST\020\201\010\022\037\n\032CID_FRIENDLIST_GET_RES"
+      "PONE\020\202\010\022(\n#CID_FRIENDLIST_FRIEND_STATUS_"
+      "CHANGE\020\203\010\022-\n(CID_FRIENDLIST_SIGNATURE_CH"
+      "ANGED_REQUEST\020\204\010\022-\n(CID_FRIENDLIST_SIGNA"
+      "TURE_CHANGED_RESPONE\020\205\010\022,\n\'CID_FRIENDLIS"
+      "T_FRIEND_SIGNATURE_CHANGED\020\206\010\022,\n\'CID_FRI"
+      "ENDLIST_MODEFY_FRIEND_GROUP_NAME\020\207\010\022,\n\'C"
+      "ID_FRIENDLIST_ADD_FRIEND_GROUP_REQUEST\020\210"
+      "\010\022,\n\'CID_FRIENDLIST_ADD_FRIEND_GROUP_RES"
+      "PONE\020\211\010\022&\n!CID_FRIENDLIST_GET_GROUPS_REQ"
+      "UEST\020\212\010\022&\n!CID_FRIENDLIST_GET_GROUPS_REP"
+      "SONE\020\213\010\022/\n*CID_FRIENDLIST_RENAME_FRIEND_"
+      "GROUP_REQUEST\020\214\010\022/\n*CID_FRIENDLIST_DELET"
+      "E_FRIEND_GROUP_REQUEST\020\215\010\0220\n+CID_FRIENDL"
+      "IST_MOVE_FRIEND_TO_GROUP_REQUEST\020\216\010\022)\n$C"
+      "ID_FRIENDLIST_DELETE_FRIEND_REQUEST\020\217\010\022/"
+      "\n*CID_FRIENDLIST_MODIFY_FRIEND_REMARK_RQ"
+      "UEST\020\220\010\022)\n$CID_FRIENDLIST_SEARCH_FRIEND_"
+      "REQUEST\020\221\010\022)\n$CID_FRIENDLIST_SEARCH_FRIE"
+      "ND_RESPONE\020\222\010\022&\n!CID_FRIENDLIST_ADD_FRIE"
+      "ND_REQUEST\020\223\010\022&\n!CID_FRIENDLIST_ADD_FRIE"
+      "ND_RESPONE\020\224\010\022/\n*CID_FRIENDLIST_GET_REQU"
+      "EST_HISTORY_REQUEST\020\225\010\022/\n*CID_FRIENDLIST"
+      "_GET_REQUEST_HISTORY_RESPONE\020\226\010*\210\002\n\016Sess"
+      "ionListCID\022\030\n\024CID_SESSIONLIST_ZERO\020\000\022 \n\033"
+      "CID_SESSIONLIST_ADD_SESSION\020\201\n\022 \n\033CID_SE"
+      "SSIONLIST_DEL_SESSION\020\202\n\022 \n\033CID_SESSIONL"
+      "IST_UPD_SESSION\020\203\n\022 \n\033CID_SESSIONLIST_TO"
+      "P_SESSION\020\204\n\022)\n$CID_SESSIONLIST_GET_SESS"
+      "IONS_REQUEST\020\205\n\022)\n$CID_SESSIONLIST_GET_S"
+      "ESSIONS_RESPONE\020\206\n*\301\001\n\nMessageCID\022\024\n\020CID"
+      "_MESSAGE_ZERO\020\000\022\025\n\020CID_MESSAGE_DATA\020\201\014\022\025"
+      "\n\020CID_MESSAGE_SAVE\020\202\014\022\027\n\022CID_MESSAGE_UPD"
+      "ATE\020\203\014\022*\n%CID_MESSAGE_GET_LATEST_MSG_ID_"
+      "REQUEST\020\204\014\022*\n%CID_MESSAGE_GET_LATEST_MSG"
+      "_ID_RESPONE\020\205\014*\227\003\n\010GroupCID\022\022\n\016CID_GROUP"
+      "_ZERO\020\000\022\035\n\030CID_GROUP_CREATE_REQUEST\020\201\016\022\035"
+      "\n\030CID_GROUP_CREATE_RESPONE\020\202\016\022\037\n\032CID_GRO"
+      "UP_GET_LIST_REQUEST\020\203\016\022\037\n\032CID_GROUP_GET_"
+      "LIST_RESPONE\020\204\016\022 \n\033CID_GROUP_ADD_GROUP_R"
+      "EQUEST\020\205\016\022 \n\033CID_GROUP_ADD_GROUP_RESPONE"
+      "\020\206\016\022!\n\034CID_GROUP_GET_MEMBER_REQUEST\020\207\016\022!"
+      "\n\034CID_GROUP_GET_MEMBER_RESPONE\020\210\016\022#\n\036CID"
+      "_GROUP_MODIFY_CARD_RESQUEST\020\211\016\022#\n\036CID_GR"
+      "OUP_SEARCH_GROUP_REQUEST\020\212\016\022#\n\036CID_GROUP"
+      "_SEARCH_GROUP_RESPONE\020\213\016*[\n\nResultType\022\010"
+      "\n\004NONE\020\000\022\021\n\rNO_MSG_SERVER\020\001\022\023\n\017MSG_SERVE"
+      "R_FULL\020\002\022\033\n\027SIGNATURE_MODIFY_FAILED\020\003*m\n"
+      "\016UserStatusType\022\024\n\020USER_STATUS_ZERO\020\000\022\026\n"
+      "\022USER_STATUS_ONLINE\020\001\022\027\n\023USER_STATUS_OFF"
+      "LINE\020\002\022\024\n\020USER_STATUS_HIDE\020\003*t\n\013SessionT"
+      "ype\022\025\n\021SESSION_TYPE_ZERO\020\000\022\027\n\023SESSION_TY"
+      "PE_SINGLE\020\001\022\026\n\022SESSION_TYPE_GROUP\020\002\022\035\n\031S"
+      "ESSION_TYPE_VALIDATE_MSG\020\003*U\n\013SessionFla"
+      "g\022\025\n\021SESSION_FLAG_ZERO\020\000\022\027\n\023SESSION_FLAG"
+      "_NORMAL\020\001\022\026\n\022SESSION_FLAG_ONTOP\020\002*\266\001\n\013Me"
+      "ssageType\022\020\n\014MESSAGE_ZERO\020\000\022\034\n\030MESSAGE_T"
+      "YPE_SINGLE_TEXT\020\001\022\035\n\031MESSAGE_TYPE_SINGLE"
+      "_AUDIO\020\002\022\033\n\027MESSAGE_TYPE_GROUP_TEXT\020\003\022\034\n"
+      "\030MESSAGE_TYPE_GROUP_AUDIO\020\004\022\035\n\031MESSAGE_T"
+      "YPE_VALIDATE_MSG\020\005*}\n\020RouteMessageType\022\026"
+      "\n\022ROUTE_MESSAGE_ZERO\020\000\022&\n\"ROUTE_MESSAGE_"
+      "FRIEND_STATUS_CHANGE\020\001\022)\n%ROUTE_MESSAGE_"
+      "FRIEND_SIGNATURE_CHANGE\020\002*U\n\nSearchType\022"
+      "\024\n\020SEARCH_TYPE_ZERO\020\000\022\027\n\023SEARCH_TYPE_ACC"
+      "OUNT\020\001\022\030\n\024SEARCH_TYPE_NICKNAME\020\002*K\n\tGrou"
+      "pType\022\023\n\017GROUP_TYPE_ZERO\020\000\022\025\n\021GROUP_TYPE"
+      "_NORMAL\020\001\022\022\n\016GROUP_TYPE_TMP\020\002*l\n\017GroupVe"
+      "rifyType\022\025\n\021GROUP_VERIFY_ZERO\020\000\022\025\n\021GROUP"
+      "_VERIFY_NEED\020\001\022\024\n\020GROUP_VERIFY_ALL\020\002\022\025\n\021"
+      "GROUP_VERIFY_NONE\020\003b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 4846);
+      descriptor, 4947);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "youliao.base.proto", &protobuf_RegisterTypes);
 }
@@ -645,6 +648,8 @@ bool GroupCID_IsValid(int value) {
     case 1799:
     case 1800:
     case 1801:
+    case 1802:
+    case 1803:
       return true;
     default:
       return false;
@@ -3479,6 +3484,7 @@ const int GroupInfo::kGroupCapacityFieldNumber;
 const int GroupInfo::kGroupCreatedFieldNumber;
 const int GroupInfo::kManagersFieldNumber;
 const int GroupInfo::kMembersFieldNumber;
+const int GroupInfo::kGroupVerifyTypeFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 GroupInfo::GroupInfo()
@@ -3505,8 +3511,8 @@ GroupInfo::GroupInfo(const GroupInfo& from)
     group_head_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.group_head_);
   }
   ::memcpy(&group_id_, &from.group_id_,
-    static_cast<size_t>(reinterpret_cast<char*>(&group_created_) -
-    reinterpret_cast<char*>(&group_id_)) + sizeof(group_created_));
+    static_cast<size_t>(reinterpret_cast<char*>(&group_verify_type_) -
+    reinterpret_cast<char*>(&group_id_)) + sizeof(group_verify_type_));
   // @@protoc_insertion_point(copy_constructor:youliao.pdu.base.GroupInfo)
 }
 
@@ -3514,8 +3520,8 @@ void GroupInfo::SharedCtor() {
   group_name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   group_head_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&group_id_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&group_created_) -
-      reinterpret_cast<char*>(&group_id_)) + sizeof(group_created_));
+      reinterpret_cast<char*>(&group_verify_type_) -
+      reinterpret_cast<char*>(&group_id_)) + sizeof(group_verify_type_));
   _cached_size_ = 0;
 }
 
@@ -3556,8 +3562,8 @@ void GroupInfo::Clear() {
   group_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   group_head_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&group_id_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&group_created_) -
-      reinterpret_cast<char*>(&group_id_)) + sizeof(group_created_));
+      reinterpret_cast<char*>(&group_verify_type_) -
+      reinterpret_cast<char*>(&group_id_)) + sizeof(group_verify_type_));
   _internal_metadata_.Clear();
 }
 
@@ -3697,6 +3703,20 @@ bool GroupInfo::MergePartialFromCodedStream(
         break;
       }
 
+      // uint32 group_verify_type = 9;
+      case 9: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(72u /* 72 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &group_verify_type_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
       default: {
       handle_unusual:
         if (tag == 0) {
@@ -3785,6 +3805,11 @@ void GroupInfo::SerializeWithCachedSizes(
       this->members(i), output);
   }
 
+  // uint32 group_verify_type = 9;
+  if (this->group_verify_type() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(9, this->group_verify_type(), output);
+  }
+
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
@@ -3865,6 +3890,11 @@ void GroupInfo::SerializeWithCachedSizes(
             _members_cached_byte_size_), target);
     target = ::google::protobuf::internal::WireFormatLite::
       WriteUInt32NoTagToArray(this->members_, target);
+  }
+
+  // uint32 group_verify_type = 9;
+  if (this->group_verify_type() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(9, this->group_verify_type(), target);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -3958,6 +3988,13 @@ size_t GroupInfo::ByteSizeLong() const {
         this->group_created());
   }
 
+  // uint32 group_verify_type = 9;
+  if (this->group_verify_type() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->group_verify_type());
+  }
+
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = cached_size;
@@ -4009,6 +4046,9 @@ void GroupInfo::MergeFrom(const GroupInfo& from) {
   if (from.group_created() != 0) {
     set_group_created(from.group_created());
   }
+  if (from.group_verify_type() != 0) {
+    set_group_verify_type(from.group_verify_type());
+  }
 }
 
 void GroupInfo::CopyFrom(const ::google::protobuf::Message& from) {
@@ -4043,6 +4083,7 @@ void GroupInfo::InternalSwap(GroupInfo* other) {
   swap(group_creator_, other->group_creator_);
   swap(group_capacity_, other->group_capacity_);
   swap(group_created_, other->group_created_);
+  swap(group_verify_type_, other->group_verify_type_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   swap(_cached_size_, other->_cached_size_);
 }

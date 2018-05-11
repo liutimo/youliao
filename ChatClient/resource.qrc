@@ -362,5 +362,6 @@
         <file>res/head_highlight_36.png</file>
         <file>res/MainFrame/trad_boy.png</file>
         <file>res/MainFrame/trad_girl.png</file>
+        <file>res/YLAddFriendWIdgets/icon_group_selected.png</file>
     </qresource>
 </RCC>

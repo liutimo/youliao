@@ -743,6 +743,32 @@ namespace DB_INTERFACE
 
     }
 
+    //搜索群组
+    void searchGroup(BasePdu *basePdu, uint32_t conn_uuid)
+    {
+        group::SearchGroupRequest request;
+        request.ParseFromString(basePdu->getMessage());
+
+        uint32_t userId = request.user_id();
+        base::SearchType type = request.search_type();
+        std::string searchData = request.search_data();
+
+        GroupModel *groupModel = GroupModel::instance();
+        std::list<base::GroupInfo> groupList;
+        groupModel->searchGroup(userId, searchData, type, groupList);
+
+        group::SearchGroupRespone respone;
+        respone.set_user_id(userId);
+        for (auto &group : groupList)
+        {
+            auto g = respone.add_groups();
+            *g = group;
+        }
+
+        auto conn = findProxyConn(conn_uuid);
+        if (conn)
+        {
+            sendMessage(conn, respone, base::SID_SERVER, base::CID_GROUP_SEARCH_GROUP_RESPONE);
+        }
+    }
 }
-
-

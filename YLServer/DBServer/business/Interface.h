@@ -95,6 +95,9 @@ namespace DB_INTERFACE
 
     //修改群名片
     void modifyGroupCard(BasePdu *basePdu, uint32_t conn_uuid);
+
+    //搜索群组
+    void searchGroup(BasePdu *basePdu, uint32_t conn_uuid);
 }
 
 

@@ -119,6 +119,8 @@ enum GroupCID
     CID_GROUP_GET_MEMBER_REQUEST    = 0x0707; //请求群成员
     CID_GROUP_GET_MEMBER_RESPONE    = 0x0708;
     CID_GROUP_MODIFY_CARD_RESQUEST  = 0x0709; //请求修改群名片，修改结果不通知客户端
+    CID_GROUP_SEARCH_GROUP_REQUEST  = 0x070A;
+    CID_GROUP_SEARCH_GROUP_RESPONE  = 0x070B;
 }
 
 //响应结果类型
@@ -227,8 +229,9 @@ message GroupInfo
     uint32 group_creator = 4;   //群主
     uint32 group_capacity = 5;  //最大成员数
     uint32 group_created = 6;   //成立时间
-    repeated uint32 managers = 7; //管理员s
+    repeated uint32 managers = 7; //管理员
     repeated uint32 members = 8;
+    uint32 group_verify_type = 9;
 }
 
 //心跳包

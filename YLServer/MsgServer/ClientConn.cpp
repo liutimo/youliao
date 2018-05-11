@@ -200,6 +200,9 @@ void ClientConn::handlePdu(BasePdu *pdu)
         case base::CID_GROUP_MODIFY_CARD_RESQUEST:
             _HandleModifyGroupCardRequest(pdu);
             break;
+        case base::CID_GROUP_SEARCH_GROUP_REQUEST:
+            _HandleSearchGroupRequest(pdu);
+            break;
         default:
             std::cout << pdu->getCID() << std::endl;
             break;
@@ -771,3 +774,18 @@ void ClientConn::_HandleModifyGroupCardRequest(BasePdu *basePdu)
         sendMessage(conn, request, base::SID_SERVER, base::CID_GROUP_MODIFY_CARD_RESQUEST);
 }
 
+
+void ClientConn::_HandleSearchGroupRequest(BasePdu *basePdu)
+{
+    group::SearchGroupRequest request;
+    request.ParseFromString(basePdu->getMessage());
+
+    uint32_t userId = request.user_id();
+    base::SearchType type = request.search_type();
+    std::string searchData = request.search_data();
+    log("用户%d 以%d方式搜索%s", userId, type, searchData.c_str());
+
+    auto conn = get_db_server_conn();
+    if (conn)
+        sendMessage(conn, request, base::SID_SERVER, base::CID_GROUP_SEARCH_GROUP_REQUEST);
+}

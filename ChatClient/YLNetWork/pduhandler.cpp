@@ -33,6 +33,7 @@ PduHandler::PduHandler(QObject *parent) : QThread(parent)
     qRegisterMetaType<QList<base::SessionInfo>>("QList<base::SessionInfo>");
     qRegisterMetaType<QVector<YLFriend>>("QVector<YLFriend>");
     qRegisterMetaType<YLGroup>("YLGroup");
+    qRegisterMetaType<QVector<YLGroup>>("QVector<YLGroup>");
 }
 
 PduHandler* PduHandler::instance()
@@ -117,6 +118,9 @@ void PduHandler::_HandleBasePdu(BasePdu *pdu)
         break;
     case base::CID_GROUP_GET_MEMBER_RESPONE:
         _HandleGetGroupMemberRespone(pdu);
+        break;
+    case base::CID_GROUP_SEARCH_GROUP_RESPONE:
+        _HandleSearchGroupRespone(pdu);
         break;
     default:
         std::cout << "CID" << pdu->getCID() << "  SID:" << pdu->getSID();
@@ -379,6 +383,7 @@ void PduHandler::_HandleCreatGroupRespone(BasePdu *pdu)
     group.setGroupCreator(groupInfo.group_creator());
     group.setGroupImage(groupInfo.group_head().c_str());
     group.setCreateTime(groupInfo.group_created());
+    group.setVerifyType(groupInfo.group_verify_type());
 
     for (int i = 0; i < groupInfo.members_size(); ++i)
         group.addMember(groupInfo.members(i));
@@ -406,6 +411,7 @@ void PduHandler::_HandleGetGroupListRespone(BasePdu *pdu)
         group.setGroupCreator(groupInfo.group_creator());
         group.setGroupImage(groupInfo.group_head().c_str());
         group.setCreateTime(groupInfo.group_created());
+        group.setVerifyType(groupInfo.group_verify_type());
         for (int i = 0; i < groupInfo.members_size(); ++i)
             group.addMember(groupInfo.members(i));
 
@@ -434,4 +440,34 @@ void PduHandler::_HandleGetGroupMemberRespone(BasePdu *pdu)
     GlobalData::setGroupMember(groupId, members);
 
     emit groupMembers();
+}
+
+
+void PduHandler::_HandleSearchGroupRespone(BasePdu *pdu)
+{
+    group::SearchGroupRespone respone;
+    respone.ParseFromString(pdu->getMessage());
+
+    QVector<YLGroup> groups;
+
+    for (int i = 0; i < respone.groups_size(); ++i)
+    {
+        base::GroupInfo groupInfo = respone.groups(i);
+        YLGroup group;
+        group.setGroupId(groupInfo.group_id());
+        group.setGroupName(groupInfo.group_name().c_str());
+        group.setGroupCapacity(groupInfo.group_capacity());
+        group.setGroupCreator(groupInfo.group_creator());
+        group.setGroupImage(groupInfo.group_head().c_str());
+        group.setCreateTime(groupInfo.group_created());
+        group.setVerifyType(groupInfo.group_verify_type());
+        for (int i = 0; i < groupInfo.members_size(); ++i)
+            group.addMember(groupInfo.members(i));
+
+        for (int i = 0; i < groupInfo.managers_size(); ++i)
+            group.addManager(groupInfo.managers(i));
+        groups.push_back(group);
+    }
+
+    emit searchGroupResult(groups);
 }

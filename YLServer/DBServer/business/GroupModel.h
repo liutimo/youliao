@@ -42,6 +42,10 @@ public:
 
     //修改群名片
     bool modifyGroupCard(uint32_t groupId, uint32_t memberId, const std::string &groupCard);
+
+    //搜索群
+    bool searchGroup(uint32_t userId, const std::string &searchData ,base::SearchType tye, std::list<base::GroupInfo> &groupList);
+
 private:
     bool getGroupManagers(uint32_t groupId, std::list<uint32_t> &managers);
     bool getGroupMembers(uint32_t groupId, std::list<uint32_t> &members);

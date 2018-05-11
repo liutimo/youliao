@@ -1,13 +1,17 @@
 #ifndef YLADDFRIENDWIDGET_H
 #define YLADDFRIENDWIDGET_H
 #include "YLEntityObject/ylfriend.h"
+#include "YLEntityObject/ylgroup.h"
 #include "YLBasicWidget/ylbasicwidget.h"
 #include <QVector>
 
+QT_BEGIN_NAMESPACE
 class QLineEdit;
 class QRadioButton;
 class QTableWidget;
 class QLabel;
+class QButtonGroup;
+QT_END_NAMESPACE
 
 class YLAddFriendWidget : public YLBasicWidget
 {
@@ -29,7 +33,7 @@ signals:
 
 private slots:
     void friends(const QVector<YLFriend> &fris);
-
+    void groups(const QVector<YLGroup> &groups);
 private:
     void init();
     void init_table_widget();
@@ -40,7 +44,17 @@ private:
     QPushButton *m_search_button;
     QRadioButton *m_search_by_account;
     QRadioButton *m_search_by_nickname;
+
+    QRadioButton *m_search_friend;
+    QRadioButton *m_search_group;
+
     QTableWidget *m_table_widget;
+
+    QButtonGroup *m_search_mode;    //搜索方式 按账号 或者 昵称
+    QButtonGroup *m_search_type;    //搜索类型 群组  或者 好友
+
+    QLabel *m_mode;
+    QLabel *m_type;
 
     QLabel *m_label_icon;
     QLabel *m_label_tips;

@@ -53,9 +53,28 @@ message ModifyGroupCard
 }
 
 //搜索群组
+message SearchGroupRequest
+{
+    uint32 user_id = 1;
+    string search_data = 2;
+    youliao.pdu.base.SearchType search_type = 3;  //搜索类型
+}
 
+
+message SearchGroupRespone
+{
+    uint32 user_id = 1;
+    repeated youliao.pdu.base.GroupInfo groups = 2; //该组下的好友
+}
 
 //请求添加群
+message AddGroupRequest
+{
+    uint32 user_id = 1;
+    uint32 group_id = 2;
+}
+
+
 
 //踢出去
 

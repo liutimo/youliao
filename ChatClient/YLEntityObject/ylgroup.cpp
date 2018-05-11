@@ -17,6 +17,7 @@ YLGroup::YLGroup(const YLGroup &group)
     m_group_name = group.m_group_name;
     m_head_url = group.m_head_url;
     m_created = group.m_created;
+    m_verify_type = group.m_verify_type;
 }
 
 YLGroup &YLGroup::operator =(const YLGroup &group)
@@ -30,6 +31,7 @@ YLGroup &YLGroup::operator =(const YLGroup &group)
     m_group_name = group.m_group_name;
     m_head_url = group.m_head_url;
     m_created = group.m_created;
+    m_verify_type = group.m_verify_type;
     return *this;
 
 }
@@ -91,6 +93,11 @@ void YLGroup::setCreateTime(uint32_t createTime)
     m_created = createTime;
 }
 
+void YLGroup::setVerifyType(uint32_t type)
+{
+    m_verify_type = type;
+}
+
 uint32_t YLGroup::getGroupId() const
 {
     return m_group_id;
@@ -129,4 +136,9 @@ QVector<uint32_t> YLGroup::getManagers() const
 uint32_t YLGroup::getCreateTime() const
 {
     return m_created;
+}
+
+uint32_t YLGroup::getVerifyType() const
+{
+    return m_verify_type;
 }

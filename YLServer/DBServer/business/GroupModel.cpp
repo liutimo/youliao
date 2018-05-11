@@ -111,8 +111,9 @@ bool GroupModel::getGroupInfoByGroupId(uint32_t groupId, base::GroupInfo &groupI
                 groupInfo.set_group_created((uint32_t)resultSet->getInt("group_created"));
                 groupInfo.set_group_name(resultSet->getString("group_name"));
                 groupInfo.set_group_head(resultSet->getString("group_head"));
-                groupInfo.set_group_capacity((uint32_t)resultSet->getInt("group+user_max_count"));
+                groupInfo.set_group_capacity((uint32_t)resultSet->getInt("group_user_max_count"));
                 groupInfo.set_group_creator((uint32_t)resultSet->getInt("group_creator"));
+                groupInfo.set_group_verify_type((uint32_t)resultSet->getInt("group_verify"));
 
                 //查找群管理员成员
                 std::list<uint32_t> groupManagers;
@@ -237,6 +238,64 @@ bool GroupModel::modifyGroupCard(uint32_t groupId, uint32_t memberId, const std:
         printSql2Log(sql.c_str());
         ret = conn->update(sql);
     }
+    DBManager::instance()->releaseConnection(conn);
+    return ret;
+}
+
+//搜索群
+bool GroupModel::searchGroup(uint32_t userId, const std::string &searchData, base::SearchType searchType, std::list<base::GroupInfo> &groupList)
+{
+    bool ret = false;
+
+    auto conn = DBManager::instance()->getConnection();
+    if (conn)
+    {
+
+        std::string querySql;
+        if (searchType == base::SEARCH_TYPE_ACCOUNT)
+        {
+            querySql = "SELECT * FROM yl_group WHERE group_id =" + searchData;
+        }
+        else if (searchType == base::SEARCH_TYPE_NICKNAME)
+        {
+            querySql = "SELECT * FROM yl_group WHERE group_name LIKE '%"+ searchData +"%';";
+        }
+
+        ResultSet *resultSet = conn->query(querySql);
+
+        if (resultSet)
+        {
+            ret = true;
+            while (resultSet->next())
+            {
+                base::GroupInfo groupInfo;
+                uint32_t groupId = (uint32_t)resultSet->getInt("group_id");
+                groupInfo.set_group_id(groupId);
+                groupInfo.set_group_created((uint32_t)resultSet->getInt("group_created"));
+                groupInfo.set_group_name(resultSet->getString("group_name"));
+                groupInfo.set_group_head(resultSet->getString("group_head"));
+                groupInfo.set_group_capacity((uint32_t)resultSet->getInt("group_user_max_count"));
+                groupInfo.set_group_creator((uint32_t)resultSet->getInt("group_creator"));
+                groupInfo.set_group_verify_type((uint32_t)resultSet->getInt("group_verify"));
+                //查找群管理员成员
+                std::list<uint32_t> groupManagers;
+                getGroupManagers(groupId, groupManagers);
+                for (uint32_t manager : groupManagers)
+                    groupInfo.add_managers(manager);
+
+                //查找群管理员成员
+                std::list<uint32_t> groupMembers;
+                getGroupMembers(groupId, groupMembers);
+                for (uint32_t member : groupMembers)
+                    groupInfo.add_members(member);
+                groupList.push_back(groupInfo);
+            }
+
+            delete resultSet;
+        }
+
+    }
+
     DBManager::instance()->releaseConnection(conn);
     return ret;
 }
