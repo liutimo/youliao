@@ -122,6 +122,12 @@ void PduHandler::_HandleBasePdu(BasePdu *pdu)
     case base::CID_GROUP_SEARCH_GROUP_RESPONE:
         _HandleSearchGroupRespone(pdu);
         break;
+    case base::CID_GROUP_ADD_GROUP_RESPONE:
+        _HandleAddGroupRespone(pdu);
+        break;
+    case base::CID_GROUP_VERIFY_NOTIFY:
+        _HandleVerifyNotify(pdu);
+        break;
     default:
         std::cout << "CID" << pdu->getCID() << "  SID:" << pdu->getSID();
         break;
@@ -470,4 +476,53 @@ void PduHandler::_HandleSearchGroupRespone(BasePdu *pdu)
     }
 
     emit searchGroupResult(groups);
+}
+
+void PduHandler::_HandleAddGroupRespone(BasePdu *pdu)
+{
+    group::AddGroupRespone respone;
+    respone.ParseFromString(pdu->getMessage());
+
+    uint32_t userId  = respone.user_id();
+    uint32_t resCode = respone.result_coid();
+    if (resCode == 1)
+    {
+        base::GroupInfo groupInfo = respone.group_info();
+
+        YLGroup group;
+        group.setGroupId(groupInfo.group_id());
+        group.setGroupName(groupInfo.group_name().c_str());
+        group.setGroupCapacity(groupInfo.group_capacity());
+        group.setGroupCreator(groupInfo.group_creator());
+        group.setGroupImage(groupInfo.group_head().c_str());
+        group.setCreateTime(groupInfo.group_created());
+        group.setVerifyType(groupInfo.group_verify_type());
+        for (int i = 0; i < groupInfo.members_size(); ++i)
+            group.addMember(groupInfo.members(i));
+        for (int i = 0; i < groupInfo.managers_size(); ++i)
+            group.addManager(groupInfo.members(i));
+
+        GlobalData::addToGroups(group);
+
+        emit newGroup(group);
+    }
+}
+
+void PduHandler::_HandleVerifyNotify(BasePdu *pdu)
+{
+    group::GroupVerifyNotify notify;
+    notify.ParseFromString(pdu->getMessage());
+    uint32_t requestId = notify.user_id();
+    uint32_t groupId = notify.group_id();
+    base::UserInfo requestUserInfo = notify.user_info();
+
+    YLAddRequest addRequest;
+    addRequest.setOtherId(requestId);
+    addRequest.setOtherNick(requestUserInfo.user_nick().c_str());
+    addRequest.setOtherHeadUrl(requestUserInfo.user_header_url().c_str());
+    addRequest.setValidateData(notify.verify_data().c_str());
+    addRequest.setGroupId(groupId);
+    GlobalData::setRequest(addRequest);
+
+    emit newAddRequest();
 }

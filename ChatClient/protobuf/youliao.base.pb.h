@@ -321,12 +321,13 @@ enum GroupCID {
   CID_GROUP_MODIFY_CARD_RESQUEST = 1801,
   CID_GROUP_SEARCH_GROUP_REQUEST = 1802,
   CID_GROUP_SEARCH_GROUP_RESPONE = 1803,
+  CID_GROUP_VERIFY_NOTIFY = 1804,
   GroupCID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   GroupCID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool GroupCID_IsValid(int value);
 const GroupCID GroupCID_MIN = CID_GROUP_ZERO;
-const GroupCID GroupCID_MAX = CID_GROUP_SEARCH_GROUP_RESPONE;
+const GroupCID GroupCID_MAX = CID_GROUP_VERIFY_NOTIFY;
 const int GroupCID_ARRAYSIZE = GroupCID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* GroupCID_descriptor();

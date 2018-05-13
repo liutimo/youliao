@@ -21,6 +21,7 @@
 #include <string.h>
 #include "../log/log.h"
 #include "../pdu/BasePdu.h"
+#include <sys/time.h>
 
 
 //输出日志
@@ -30,6 +31,9 @@ static youliao::log::Log g_log("youliao");
 #define printSql2Log(sql) log("执行SQL语句: %s", sql)
 //
 #define NO_USERD(arg) ((void)arg)
+
+uint64_t get_tick_count();
+
 
 
 template <typename Conn, typename MessageLite>

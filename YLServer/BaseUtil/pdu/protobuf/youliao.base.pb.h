@@ -37,7 +37,7 @@ namespace protobuf_youliao_2ebase_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[7];
+  static const ::google::protobuf::internal::ParseTable schema[8];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -55,6 +55,8 @@ void InitDefaultsAddRequestInfoImpl();
 void InitDefaultsAddRequestInfo();
 void InitDefaultsGroupInfoImpl();
 void InitDefaultsGroupInfo();
+void InitDefaultsIpAddressImpl();
+void InitDefaultsIpAddress();
 void InitDefaultsHeartBeatImpl();
 void InitDefaultsHeartBeat();
 inline void InitDefaults() {
@@ -64,6 +66,7 @@ inline void InitDefaults() {
   InitDefaultsMemberInfo();
   InitDefaultsAddRequestInfo();
   InitDefaultsGroupInfo();
+  InitDefaultsIpAddress();
   InitDefaultsHeartBeat();
 }
 }  // namespace protobuf_youliao_2ebase_2eproto
@@ -82,6 +85,9 @@ extern GroupInfoDefaultTypeInternal _GroupInfo_default_instance_;
 class HeartBeat;
 class HeartBeatDefaultTypeInternal;
 extern HeartBeatDefaultTypeInternal _HeartBeat_default_instance_;
+class IpAddress;
+class IpAddressDefaultTypeInternal;
+extern IpAddressDefaultTypeInternal _IpAddress_default_instance_;
 class MemberInfo;
 class MemberInfoDefaultTypeInternal;
 extern MemberInfoDefaultTypeInternal _MemberInfo_default_instance_;
@@ -100,6 +106,7 @@ template<> ::youliao::pdu::base::AddRequestInfo* Arena::Create< ::youliao::pdu::
 template<> ::youliao::pdu::base::FriendInfo* Arena::Create< ::youliao::pdu::base::FriendInfo>(Arena*);
 template<> ::youliao::pdu::base::GroupInfo* Arena::Create< ::youliao::pdu::base::GroupInfo>(Arena*);
 template<> ::youliao::pdu::base::HeartBeat* Arena::Create< ::youliao::pdu::base::HeartBeat>(Arena*);
+template<> ::youliao::pdu::base::IpAddress* Arena::Create< ::youliao::pdu::base::IpAddress>(Arena*);
 template<> ::youliao::pdu::base::MemberInfo* Arena::Create< ::youliao::pdu::base::MemberInfo>(Arena*);
 template<> ::youliao::pdu::base::SessionInfo* Arena::Create< ::youliao::pdu::base::SessionInfo>(Arena*);
 template<> ::youliao::pdu::base::UserInfo* Arena::Create< ::youliao::pdu::base::UserInfo>(Arena*);
@@ -176,12 +183,14 @@ enum ServerCID {
   CID_SERVER_ROUTE_MESSAGE = 523,
   CID_SERVER_GET_FRIEND_ONLINE_STATUS = 524,
   CID_SERVER_ROUTE_TO_MESSAGE = 525,
+  CID_SERVER_FILE_SERVER_IP_REQUEST = 526,
+  CID_SERVER_FILE_SERVER_IP_RESPONE = 527,
   ServerCID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   ServerCID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool ServerCID_IsValid(int value);
 const ServerCID ServerCID_MIN = CID_SERVER_ZERO;
-const ServerCID ServerCID_MAX = CID_SERVER_ROUTE_TO_MESSAGE;
+const ServerCID ServerCID_MAX = CID_SERVER_FILE_SERVER_IP_RESPONE;
 const int ServerCID_ARRAYSIZE = ServerCID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* ServerCID_descriptor();
@@ -321,12 +330,13 @@ enum GroupCID {
   CID_GROUP_MODIFY_CARD_RESQUEST = 1801,
   CID_GROUP_SEARCH_GROUP_REQUEST = 1802,
   CID_GROUP_SEARCH_GROUP_RESPONE = 1803,
+  CID_GROUP_VERIFY_NOTIFY = 1804,
   GroupCID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   GroupCID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool GroupCID_IsValid(int value);
 const GroupCID GroupCID_MIN = CID_GROUP_ZERO;
-const GroupCID GroupCID_MAX = CID_GROUP_SEARCH_GROUP_RESPONE;
+const GroupCID GroupCID_MAX = CID_GROUP_VERIFY_NOTIFY;
 const int GroupCID_ARRAYSIZE = GroupCID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* GroupCID_descriptor();
@@ -1605,6 +1615,124 @@ class GroupInfo : public ::google::protobuf::Message /* @@protoc_insertion_point
 };
 // -------------------------------------------------------------------
 
+class IpAddress : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.base.IpAddress) */ {
+ public:
+  IpAddress();
+  virtual ~IpAddress();
+
+  IpAddress(const IpAddress& from);
+
+  inline IpAddress& operator=(const IpAddress& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  IpAddress(IpAddress&& from) noexcept
+    : IpAddress() {
+    *this = ::std::move(from);
+  }
+
+  inline IpAddress& operator=(IpAddress&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const IpAddress& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const IpAddress* internal_default_instance() {
+    return reinterpret_cast<const IpAddress*>(
+               &_IpAddress_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    6;
+
+  void Swap(IpAddress* other);
+  friend void swap(IpAddress& a, IpAddress& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline IpAddress* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<IpAddress>(NULL);
+  }
+
+  IpAddress* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<IpAddress>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const IpAddress& from);
+  void MergeFrom(const IpAddress& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(IpAddress* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string ip = 1;
+  void clear_ip();
+  static const int kIpFieldNumber = 1;
+  const ::std::string& ip() const;
+  void set_ip(const ::std::string& value);
+  #if LANG_CXX11
+  void set_ip(::std::string&& value);
+  #endif
+  void set_ip(const char* value);
+  void set_ip(const char* value, size_t size);
+  ::std::string* mutable_ip();
+  ::std::string* release_ip();
+  void set_allocated_ip(::std::string* ip);
+
+  // uint32 port = 2;
+  void clear_port();
+  static const int kPortFieldNumber = 2;
+  ::google::protobuf::uint32 port() const;
+  void set_port(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.base.IpAddress)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr ip_;
+  ::google::protobuf::uint32 port_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2ebase_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2ebase_2eproto::InitDefaultsIpAddressImpl();
+};
+// -------------------------------------------------------------------
+
 class HeartBeat : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.base.HeartBeat) */ {
  public:
   HeartBeat();
@@ -1640,7 +1768,7 @@ class HeartBeat : public ::google::protobuf::Message /* @@protoc_insertion_point
                &_HeartBeat_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    6;
+    7;
 
   void Swap(HeartBeat* other);
   friend void swap(HeartBeat& a, HeartBeat& b) {
@@ -3147,11 +3275,84 @@ inline void GroupInfo::set_group_verify_type(::google::protobuf::uint32 value) {
 
 // -------------------------------------------------------------------
 
+// IpAddress
+
+// string ip = 1;
+inline void IpAddress::clear_ip() {
+  ip_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& IpAddress::ip() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.IpAddress.ip)
+  return ip_.GetNoArena();
+}
+inline void IpAddress::set_ip(const ::std::string& value) {
+  
+  ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:youliao.pdu.base.IpAddress.ip)
+}
+#if LANG_CXX11
+inline void IpAddress::set_ip(::std::string&& value) {
+  
+  ip_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:youliao.pdu.base.IpAddress.ip)
+}
+#endif
+inline void IpAddress::set_ip(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:youliao.pdu.base.IpAddress.ip)
+}
+inline void IpAddress::set_ip(const char* value, size_t size) {
+  
+  ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:youliao.pdu.base.IpAddress.ip)
+}
+inline ::std::string* IpAddress::mutable_ip() {
+  
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.base.IpAddress.ip)
+  return ip_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* IpAddress::release_ip() {
+  // @@protoc_insertion_point(field_release:youliao.pdu.base.IpAddress.ip)
+  
+  return ip_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void IpAddress::set_allocated_ip(::std::string* ip) {
+  if (ip != NULL) {
+    
+  } else {
+    
+  }
+  ip_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ip);
+  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.base.IpAddress.ip)
+}
+
+// uint32 port = 2;
+inline void IpAddress::clear_port() {
+  port_ = 0u;
+}
+inline ::google::protobuf::uint32 IpAddress::port() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.base.IpAddress.port)
+  return port_;
+}
+inline void IpAddress::set_port(::google::protobuf::uint32 value) {
+  
+  port_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.base.IpAddress.port)
+}
+
+// -------------------------------------------------------------------
+
 // HeartBeat
 
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

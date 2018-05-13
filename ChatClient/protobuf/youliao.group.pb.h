@@ -37,7 +37,7 @@ namespace protobuf_youliao_2egroup_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[10];
+  static const ::google::protobuf::internal::ParseTable schema[13];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -63,6 +63,12 @@ void InitDefaultsSearchGroupResponeImpl();
 void InitDefaultsSearchGroupRespone();
 void InitDefaultsAddGroupRequestImpl();
 void InitDefaultsAddGroupRequest();
+void InitDefaultsAddGroupResponeImpl();
+void InitDefaultsAddGroupRespone();
+void InitDefaultsGroupVerifyNotifyImpl();
+void InitDefaultsGroupVerifyNotify();
+void InitDefaultsGroupVerifyNotifyUsersImpl();
+void InitDefaultsGroupVerifyNotifyUsers();
 inline void InitDefaults() {
   InitDefaultsGroupCreateRequest();
   InitDefaultsGroupCreateRespone();
@@ -74,6 +80,9 @@ inline void InitDefaults() {
   InitDefaultsSearchGroupRequest();
   InitDefaultsSearchGroupRespone();
   InitDefaultsAddGroupRequest();
+  InitDefaultsAddGroupRespone();
+  InitDefaultsGroupVerifyNotify();
+  InitDefaultsGroupVerifyNotifyUsers();
 }
 }  // namespace protobuf_youliao_2egroup_2eproto
 namespace youliao {
@@ -82,6 +91,9 @@ namespace group {
 class AddGroupRequest;
 class AddGroupRequestDefaultTypeInternal;
 extern AddGroupRequestDefaultTypeInternal _AddGroupRequest_default_instance_;
+class AddGroupRespone;
+class AddGroupResponeDefaultTypeInternal;
+extern AddGroupResponeDefaultTypeInternal _AddGroupRespone_default_instance_;
 class GetGroupListRequest;
 class GetGroupListRequestDefaultTypeInternal;
 extern GetGroupListRequestDefaultTypeInternal _GetGroupListRequest_default_instance_;
@@ -100,6 +112,12 @@ extern GroupCreateRequestDefaultTypeInternal _GroupCreateRequest_default_instanc
 class GroupCreateRespone;
 class GroupCreateResponeDefaultTypeInternal;
 extern GroupCreateResponeDefaultTypeInternal _GroupCreateRespone_default_instance_;
+class GroupVerifyNotify;
+class GroupVerifyNotifyDefaultTypeInternal;
+extern GroupVerifyNotifyDefaultTypeInternal _GroupVerifyNotify_default_instance_;
+class GroupVerifyNotifyUsers;
+class GroupVerifyNotifyUsersDefaultTypeInternal;
+extern GroupVerifyNotifyUsersDefaultTypeInternal _GroupVerifyNotifyUsers_default_instance_;
 class ModifyGroupCard;
 class ModifyGroupCardDefaultTypeInternal;
 extern ModifyGroupCardDefaultTypeInternal _ModifyGroupCard_default_instance_;
@@ -115,12 +133,15 @@ extern SearchGroupResponeDefaultTypeInternal _SearchGroupRespone_default_instanc
 namespace google {
 namespace protobuf {
 template<> ::youliao::pdu::group::AddGroupRequest* Arena::Create< ::youliao::pdu::group::AddGroupRequest>(Arena*);
+template<> ::youliao::pdu::group::AddGroupRespone* Arena::Create< ::youliao::pdu::group::AddGroupRespone>(Arena*);
 template<> ::youliao::pdu::group::GetGroupListRequest* Arena::Create< ::youliao::pdu::group::GetGroupListRequest>(Arena*);
 template<> ::youliao::pdu::group::GetGroupListRespone* Arena::Create< ::youliao::pdu::group::GetGroupListRespone>(Arena*);
 template<> ::youliao::pdu::group::GetGroupMemberInfoRequest* Arena::Create< ::youliao::pdu::group::GetGroupMemberInfoRequest>(Arena*);
 template<> ::youliao::pdu::group::GetGroupMemberInfoRespone* Arena::Create< ::youliao::pdu::group::GetGroupMemberInfoRespone>(Arena*);
 template<> ::youliao::pdu::group::GroupCreateRequest* Arena::Create< ::youliao::pdu::group::GroupCreateRequest>(Arena*);
 template<> ::youliao::pdu::group::GroupCreateRespone* Arena::Create< ::youliao::pdu::group::GroupCreateRespone>(Arena*);
+template<> ::youliao::pdu::group::GroupVerifyNotify* Arena::Create< ::youliao::pdu::group::GroupVerifyNotify>(Arena*);
+template<> ::youliao::pdu::group::GroupVerifyNotifyUsers* Arena::Create< ::youliao::pdu::group::GroupVerifyNotifyUsers>(Arena*);
 template<> ::youliao::pdu::group::ModifyGroupCard* Arena::Create< ::youliao::pdu::group::ModifyGroupCard>(Arena*);
 template<> ::youliao::pdu::group::SearchGroupRequest* Arena::Create< ::youliao::pdu::group::SearchGroupRequest>(Arena*);
 template<> ::youliao::pdu::group::SearchGroupRespone* Arena::Create< ::youliao::pdu::group::SearchGroupRespone>(Arena*);
@@ -1324,6 +1345,20 @@ class AddGroupRequest : public ::google::protobuf::Message /* @@protoc_insertion
 
   // accessors -------------------------------------------------------
 
+  // string verify_data = 3;
+  void clear_verify_data();
+  static const int kVerifyDataFieldNumber = 3;
+  const ::std::string& verify_data() const;
+  void set_verify_data(const ::std::string& value);
+  #if LANG_CXX11
+  void set_verify_data(::std::string&& value);
+  #endif
+  void set_verify_data(const char* value);
+  void set_verify_data(const char* value, size_t size);
+  ::std::string* mutable_verify_data();
+  ::std::string* release_verify_data();
+  void set_allocated_verify_data(::std::string* verify_data);
+
   // uint32 user_id = 1;
   void clear_user_id();
   static const int kUserIdFieldNumber = 1;
@@ -1340,11 +1375,387 @@ class AddGroupRequest : public ::google::protobuf::Message /* @@protoc_insertion
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr verify_data_;
   ::google::protobuf::uint32 user_id_;
   ::google::protobuf::uint32 group_id_;
   mutable int _cached_size_;
   friend struct ::protobuf_youliao_2egroup_2eproto::TableStruct;
   friend void ::protobuf_youliao_2egroup_2eproto::InitDefaultsAddGroupRequestImpl();
+};
+// -------------------------------------------------------------------
+
+class AddGroupRespone : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.group.AddGroupRespone) */ {
+ public:
+  AddGroupRespone();
+  virtual ~AddGroupRespone();
+
+  AddGroupRespone(const AddGroupRespone& from);
+
+  inline AddGroupRespone& operator=(const AddGroupRespone& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  AddGroupRespone(AddGroupRespone&& from) noexcept
+    : AddGroupRespone() {
+    *this = ::std::move(from);
+  }
+
+  inline AddGroupRespone& operator=(AddGroupRespone&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const AddGroupRespone& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const AddGroupRespone* internal_default_instance() {
+    return reinterpret_cast<const AddGroupRespone*>(
+               &_AddGroupRespone_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    10;
+
+  void Swap(AddGroupRespone* other);
+  friend void swap(AddGroupRespone& a, AddGroupRespone& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline AddGroupRespone* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<AddGroupRespone>(NULL);
+  }
+
+  AddGroupRespone* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<AddGroupRespone>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const AddGroupRespone& from);
+  void MergeFrom(const AddGroupRespone& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(AddGroupRespone* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // .youliao.pdu.base.GroupInfo group_info = 3;
+  bool has_group_info() const;
+  void clear_group_info();
+  static const int kGroupInfoFieldNumber = 3;
+  const ::youliao::pdu::base::GroupInfo& group_info() const;
+  ::youliao::pdu::base::GroupInfo* release_group_info();
+  ::youliao::pdu::base::GroupInfo* mutable_group_info();
+  void set_allocated_group_info(::youliao::pdu::base::GroupInfo* group_info);
+
+  // uint32 user_id = 1;
+  void clear_user_id();
+  static const int kUserIdFieldNumber = 1;
+  ::google::protobuf::uint32 user_id() const;
+  void set_user_id(::google::protobuf::uint32 value);
+
+  // uint32 result_coid = 2;
+  void clear_result_coid();
+  static const int kResultCoidFieldNumber = 2;
+  ::google::protobuf::uint32 result_coid() const;
+  void set_result_coid(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.group.AddGroupRespone)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::youliao::pdu::base::GroupInfo* group_info_;
+  ::google::protobuf::uint32 user_id_;
+  ::google::protobuf::uint32 result_coid_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2egroup_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2egroup_2eproto::InitDefaultsAddGroupResponeImpl();
+};
+// -------------------------------------------------------------------
+
+class GroupVerifyNotify : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.group.GroupVerifyNotify) */ {
+ public:
+  GroupVerifyNotify();
+  virtual ~GroupVerifyNotify();
+
+  GroupVerifyNotify(const GroupVerifyNotify& from);
+
+  inline GroupVerifyNotify& operator=(const GroupVerifyNotify& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  GroupVerifyNotify(GroupVerifyNotify&& from) noexcept
+    : GroupVerifyNotify() {
+    *this = ::std::move(from);
+  }
+
+  inline GroupVerifyNotify& operator=(GroupVerifyNotify&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const GroupVerifyNotify& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const GroupVerifyNotify* internal_default_instance() {
+    return reinterpret_cast<const GroupVerifyNotify*>(
+               &_GroupVerifyNotify_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    11;
+
+  void Swap(GroupVerifyNotify* other);
+  friend void swap(GroupVerifyNotify& a, GroupVerifyNotify& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline GroupVerifyNotify* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<GroupVerifyNotify>(NULL);
+  }
+
+  GroupVerifyNotify* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<GroupVerifyNotify>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const GroupVerifyNotify& from);
+  void MergeFrom(const GroupVerifyNotify& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(GroupVerifyNotify* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string verify_Data = 4;
+  void clear_verify_data();
+  static const int kVerifyDataFieldNumber = 4;
+  const ::std::string& verify_data() const;
+  void set_verify_data(const ::std::string& value);
+  #if LANG_CXX11
+  void set_verify_data(::std::string&& value);
+  #endif
+  void set_verify_data(const char* value);
+  void set_verify_data(const char* value, size_t size);
+  ::std::string* mutable_verify_data();
+  ::std::string* release_verify_data();
+  void set_allocated_verify_data(::std::string* verify_data);
+
+  // .youliao.pdu.base.UserInfo user_info = 3;
+  bool has_user_info() const;
+  void clear_user_info();
+  static const int kUserInfoFieldNumber = 3;
+  const ::youliao::pdu::base::UserInfo& user_info() const;
+  ::youliao::pdu::base::UserInfo* release_user_info();
+  ::youliao::pdu::base::UserInfo* mutable_user_info();
+  void set_allocated_user_info(::youliao::pdu::base::UserInfo* user_info);
+
+  // uint32 user_id = 1;
+  void clear_user_id();
+  static const int kUserIdFieldNumber = 1;
+  ::google::protobuf::uint32 user_id() const;
+  void set_user_id(::google::protobuf::uint32 value);
+
+  // uint32 group_id = 2;
+  void clear_group_id();
+  static const int kGroupIdFieldNumber = 2;
+  ::google::protobuf::uint32 group_id() const;
+  void set_group_id(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.group.GroupVerifyNotify)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr verify_data_;
+  ::youliao::pdu::base::UserInfo* user_info_;
+  ::google::protobuf::uint32 user_id_;
+  ::google::protobuf::uint32 group_id_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2egroup_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2egroup_2eproto::InitDefaultsGroupVerifyNotifyImpl();
+};
+// -------------------------------------------------------------------
+
+class GroupVerifyNotifyUsers : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.group.GroupVerifyNotifyUsers) */ {
+ public:
+  GroupVerifyNotifyUsers();
+  virtual ~GroupVerifyNotifyUsers();
+
+  GroupVerifyNotifyUsers(const GroupVerifyNotifyUsers& from);
+
+  inline GroupVerifyNotifyUsers& operator=(const GroupVerifyNotifyUsers& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  GroupVerifyNotifyUsers(GroupVerifyNotifyUsers&& from) noexcept
+    : GroupVerifyNotifyUsers() {
+    *this = ::std::move(from);
+  }
+
+  inline GroupVerifyNotifyUsers& operator=(GroupVerifyNotifyUsers&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const GroupVerifyNotifyUsers& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const GroupVerifyNotifyUsers* internal_default_instance() {
+    return reinterpret_cast<const GroupVerifyNotifyUsers*>(
+               &_GroupVerifyNotifyUsers_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    12;
+
+  void Swap(GroupVerifyNotifyUsers* other);
+  friend void swap(GroupVerifyNotifyUsers& a, GroupVerifyNotifyUsers& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline GroupVerifyNotifyUsers* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<GroupVerifyNotifyUsers>(NULL);
+  }
+
+  GroupVerifyNotifyUsers* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<GroupVerifyNotifyUsers>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const GroupVerifyNotifyUsers& from);
+  void MergeFrom(const GroupVerifyNotifyUsers& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(GroupVerifyNotifyUsers* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated uint32 notify_users = 1;
+  int notify_users_size() const;
+  void clear_notify_users();
+  static const int kNotifyUsersFieldNumber = 1;
+  ::google::protobuf::uint32 notify_users(int index) const;
+  void set_notify_users(int index, ::google::protobuf::uint32 value);
+  void add_notify_users(::google::protobuf::uint32 value);
+  const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+      notify_users() const;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+      mutable_notify_users();
+
+  // .youliao.pdu.group.GroupVerifyNotify verify_notify = 2;
+  bool has_verify_notify() const;
+  void clear_verify_notify();
+  static const int kVerifyNotifyFieldNumber = 2;
+  const ::youliao::pdu::group::GroupVerifyNotify& verify_notify() const;
+  ::youliao::pdu::group::GroupVerifyNotify* release_verify_notify();
+  ::youliao::pdu::group::GroupVerifyNotify* mutable_verify_notify();
+  void set_allocated_verify_notify(::youliao::pdu::group::GroupVerifyNotify* verify_notify);
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.group.GroupVerifyNotifyUsers)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > notify_users_;
+  mutable int _notify_users_cached_byte_size_;
+  ::youliao::pdu::group::GroupVerifyNotify* verify_notify_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2egroup_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2egroup_2eproto::InitDefaultsGroupVerifyNotifyUsersImpl();
 };
 // ===================================================================
 
@@ -2027,9 +2438,360 @@ inline void AddGroupRequest::set_group_id(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:youliao.pdu.group.AddGroupRequest.group_id)
 }
 
+// string verify_data = 3;
+inline void AddGroupRequest::clear_verify_data() {
+  verify_data_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& AddGroupRequest::verify_data() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.group.AddGroupRequest.verify_data)
+  return verify_data_.GetNoArena();
+}
+inline void AddGroupRequest::set_verify_data(const ::std::string& value) {
+  
+  verify_data_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:youliao.pdu.group.AddGroupRequest.verify_data)
+}
+#if LANG_CXX11
+inline void AddGroupRequest::set_verify_data(::std::string&& value) {
+  
+  verify_data_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:youliao.pdu.group.AddGroupRequest.verify_data)
+}
+#endif
+inline void AddGroupRequest::set_verify_data(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  verify_data_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:youliao.pdu.group.AddGroupRequest.verify_data)
+}
+inline void AddGroupRequest::set_verify_data(const char* value, size_t size) {
+  
+  verify_data_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:youliao.pdu.group.AddGroupRequest.verify_data)
+}
+inline ::std::string* AddGroupRequest::mutable_verify_data() {
+  
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.group.AddGroupRequest.verify_data)
+  return verify_data_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* AddGroupRequest::release_verify_data() {
+  // @@protoc_insertion_point(field_release:youliao.pdu.group.AddGroupRequest.verify_data)
+  
+  return verify_data_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void AddGroupRequest::set_allocated_verify_data(::std::string* verify_data) {
+  if (verify_data != NULL) {
+    
+  } else {
+    
+  }
+  verify_data_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), verify_data);
+  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.group.AddGroupRequest.verify_data)
+}
+
+// -------------------------------------------------------------------
+
+// AddGroupRespone
+
+// uint32 user_id = 1;
+inline void AddGroupRespone::clear_user_id() {
+  user_id_ = 0u;
+}
+inline ::google::protobuf::uint32 AddGroupRespone::user_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.group.AddGroupRespone.user_id)
+  return user_id_;
+}
+inline void AddGroupRespone::set_user_id(::google::protobuf::uint32 value) {
+  
+  user_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.group.AddGroupRespone.user_id)
+}
+
+// uint32 result_coid = 2;
+inline void AddGroupRespone::clear_result_coid() {
+  result_coid_ = 0u;
+}
+inline ::google::protobuf::uint32 AddGroupRespone::result_coid() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.group.AddGroupRespone.result_coid)
+  return result_coid_;
+}
+inline void AddGroupRespone::set_result_coid(::google::protobuf::uint32 value) {
+  
+  result_coid_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.group.AddGroupRespone.result_coid)
+}
+
+// .youliao.pdu.base.GroupInfo group_info = 3;
+inline bool AddGroupRespone::has_group_info() const {
+  return this != internal_default_instance() && group_info_ != NULL;
+}
+inline const ::youliao::pdu::base::GroupInfo& AddGroupRespone::group_info() const {
+  const ::youliao::pdu::base::GroupInfo* p = group_info_;
+  // @@protoc_insertion_point(field_get:youliao.pdu.group.AddGroupRespone.group_info)
+  return p != NULL ? *p : *reinterpret_cast<const ::youliao::pdu::base::GroupInfo*>(
+      &::youliao::pdu::base::_GroupInfo_default_instance_);
+}
+inline ::youliao::pdu::base::GroupInfo* AddGroupRespone::release_group_info() {
+  // @@protoc_insertion_point(field_release:youliao.pdu.group.AddGroupRespone.group_info)
+  
+  ::youliao::pdu::base::GroupInfo* temp = group_info_;
+  group_info_ = NULL;
+  return temp;
+}
+inline ::youliao::pdu::base::GroupInfo* AddGroupRespone::mutable_group_info() {
+  
+  if (group_info_ == NULL) {
+    group_info_ = ::google::protobuf::Arena::Create< ::youliao::pdu::base::GroupInfo >(
+        GetArenaNoVirtual());
+  }
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.group.AddGroupRespone.group_info)
+  return group_info_;
+}
+inline void AddGroupRespone::set_allocated_group_info(::youliao::pdu::base::GroupInfo* group_info) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete reinterpret_cast< ::google::protobuf::MessageLite*>(group_info_);
+  }
+  if (group_info) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      group_info = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, group_info, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  group_info_ = group_info;
+  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.group.AddGroupRespone.group_info)
+}
+
+// -------------------------------------------------------------------
+
+// GroupVerifyNotify
+
+// uint32 user_id = 1;
+inline void GroupVerifyNotify::clear_user_id() {
+  user_id_ = 0u;
+}
+inline ::google::protobuf::uint32 GroupVerifyNotify::user_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.group.GroupVerifyNotify.user_id)
+  return user_id_;
+}
+inline void GroupVerifyNotify::set_user_id(::google::protobuf::uint32 value) {
+  
+  user_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.group.GroupVerifyNotify.user_id)
+}
+
+// uint32 group_id = 2;
+inline void GroupVerifyNotify::clear_group_id() {
+  group_id_ = 0u;
+}
+inline ::google::protobuf::uint32 GroupVerifyNotify::group_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.group.GroupVerifyNotify.group_id)
+  return group_id_;
+}
+inline void GroupVerifyNotify::set_group_id(::google::protobuf::uint32 value) {
+  
+  group_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.group.GroupVerifyNotify.group_id)
+}
+
+// .youliao.pdu.base.UserInfo user_info = 3;
+inline bool GroupVerifyNotify::has_user_info() const {
+  return this != internal_default_instance() && user_info_ != NULL;
+}
+inline const ::youliao::pdu::base::UserInfo& GroupVerifyNotify::user_info() const {
+  const ::youliao::pdu::base::UserInfo* p = user_info_;
+  // @@protoc_insertion_point(field_get:youliao.pdu.group.GroupVerifyNotify.user_info)
+  return p != NULL ? *p : *reinterpret_cast<const ::youliao::pdu::base::UserInfo*>(
+      &::youliao::pdu::base::_UserInfo_default_instance_);
+}
+inline ::youliao::pdu::base::UserInfo* GroupVerifyNotify::release_user_info() {
+  // @@protoc_insertion_point(field_release:youliao.pdu.group.GroupVerifyNotify.user_info)
+  
+  ::youliao::pdu::base::UserInfo* temp = user_info_;
+  user_info_ = NULL;
+  return temp;
+}
+inline ::youliao::pdu::base::UserInfo* GroupVerifyNotify::mutable_user_info() {
+  
+  if (user_info_ == NULL) {
+    user_info_ = ::google::protobuf::Arena::Create< ::youliao::pdu::base::UserInfo >(
+        GetArenaNoVirtual());
+  }
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.group.GroupVerifyNotify.user_info)
+  return user_info_;
+}
+inline void GroupVerifyNotify::set_allocated_user_info(::youliao::pdu::base::UserInfo* user_info) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete reinterpret_cast< ::google::protobuf::MessageLite*>(user_info_);
+  }
+  if (user_info) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      user_info = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, user_info, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  user_info_ = user_info;
+  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.group.GroupVerifyNotify.user_info)
+}
+
+// string verify_Data = 4;
+inline void GroupVerifyNotify::clear_verify_data() {
+  verify_data_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& GroupVerifyNotify::verify_data() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.group.GroupVerifyNotify.verify_Data)
+  return verify_data_.GetNoArena();
+}
+inline void GroupVerifyNotify::set_verify_data(const ::std::string& value) {
+  
+  verify_data_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:youliao.pdu.group.GroupVerifyNotify.verify_Data)
+}
+#if LANG_CXX11
+inline void GroupVerifyNotify::set_verify_data(::std::string&& value) {
+  
+  verify_data_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:youliao.pdu.group.GroupVerifyNotify.verify_Data)
+}
+#endif
+inline void GroupVerifyNotify::set_verify_data(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  verify_data_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:youliao.pdu.group.GroupVerifyNotify.verify_Data)
+}
+inline void GroupVerifyNotify::set_verify_data(const char* value, size_t size) {
+  
+  verify_data_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:youliao.pdu.group.GroupVerifyNotify.verify_Data)
+}
+inline ::std::string* GroupVerifyNotify::mutable_verify_data() {
+  
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.group.GroupVerifyNotify.verify_Data)
+  return verify_data_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* GroupVerifyNotify::release_verify_data() {
+  // @@protoc_insertion_point(field_release:youliao.pdu.group.GroupVerifyNotify.verify_Data)
+  
+  return verify_data_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void GroupVerifyNotify::set_allocated_verify_data(::std::string* verify_data) {
+  if (verify_data != NULL) {
+    
+  } else {
+    
+  }
+  verify_data_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), verify_data);
+  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.group.GroupVerifyNotify.verify_Data)
+}
+
+// -------------------------------------------------------------------
+
+// GroupVerifyNotifyUsers
+
+// repeated uint32 notify_users = 1;
+inline int GroupVerifyNotifyUsers::notify_users_size() const {
+  return notify_users_.size();
+}
+inline void GroupVerifyNotifyUsers::clear_notify_users() {
+  notify_users_.Clear();
+}
+inline ::google::protobuf::uint32 GroupVerifyNotifyUsers::notify_users(int index) const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.group.GroupVerifyNotifyUsers.notify_users)
+  return notify_users_.Get(index);
+}
+inline void GroupVerifyNotifyUsers::set_notify_users(int index, ::google::protobuf::uint32 value) {
+  notify_users_.Set(index, value);
+  // @@protoc_insertion_point(field_set:youliao.pdu.group.GroupVerifyNotifyUsers.notify_users)
+}
+inline void GroupVerifyNotifyUsers::add_notify_users(::google::protobuf::uint32 value) {
+  notify_users_.Add(value);
+  // @@protoc_insertion_point(field_add:youliao.pdu.group.GroupVerifyNotifyUsers.notify_users)
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+GroupVerifyNotifyUsers::notify_users() const {
+  // @@protoc_insertion_point(field_list:youliao.pdu.group.GroupVerifyNotifyUsers.notify_users)
+  return notify_users_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+GroupVerifyNotifyUsers::mutable_notify_users() {
+  // @@protoc_insertion_point(field_mutable_list:youliao.pdu.group.GroupVerifyNotifyUsers.notify_users)
+  return &notify_users_;
+}
+
+// .youliao.pdu.group.GroupVerifyNotify verify_notify = 2;
+inline bool GroupVerifyNotifyUsers::has_verify_notify() const {
+  return this != internal_default_instance() && verify_notify_ != NULL;
+}
+inline void GroupVerifyNotifyUsers::clear_verify_notify() {
+  if (GetArenaNoVirtual() == NULL && verify_notify_ != NULL) {
+    delete verify_notify_;
+  }
+  verify_notify_ = NULL;
+}
+inline const ::youliao::pdu::group::GroupVerifyNotify& GroupVerifyNotifyUsers::verify_notify() const {
+  const ::youliao::pdu::group::GroupVerifyNotify* p = verify_notify_;
+  // @@protoc_insertion_point(field_get:youliao.pdu.group.GroupVerifyNotifyUsers.verify_notify)
+  return p != NULL ? *p : *reinterpret_cast<const ::youliao::pdu::group::GroupVerifyNotify*>(
+      &::youliao::pdu::group::_GroupVerifyNotify_default_instance_);
+}
+inline ::youliao::pdu::group::GroupVerifyNotify* GroupVerifyNotifyUsers::release_verify_notify() {
+  // @@protoc_insertion_point(field_release:youliao.pdu.group.GroupVerifyNotifyUsers.verify_notify)
+  
+  ::youliao::pdu::group::GroupVerifyNotify* temp = verify_notify_;
+  verify_notify_ = NULL;
+  return temp;
+}
+inline ::youliao::pdu::group::GroupVerifyNotify* GroupVerifyNotifyUsers::mutable_verify_notify() {
+  
+  if (verify_notify_ == NULL) {
+    verify_notify_ = ::google::protobuf::Arena::Create< ::youliao::pdu::group::GroupVerifyNotify >(
+        GetArenaNoVirtual());
+  }
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.group.GroupVerifyNotifyUsers.verify_notify)
+  return verify_notify_;
+}
+inline void GroupVerifyNotifyUsers::set_allocated_verify_notify(::youliao::pdu::group::GroupVerifyNotify* verify_notify) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete verify_notify_;
+  }
+  if (verify_notify) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      verify_notify = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, verify_notify, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  verify_notify_ = verify_notify;
+  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.group.GroupVerifyNotifyUsers.verify_notify)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

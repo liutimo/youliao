@@ -363,5 +363,14 @@
         <file>res/MainFrame/trad_boy.png</file>
         <file>res/MainFrame/trad_girl.png</file>
         <file>res/YLAddFriendWIdgets/icon_group_selected.png</file>
+        <file>res/YLChatWidget/page_close_btn_normal.png</file>
+        <file>res/YLChatWidget/page_close_btn_hover.png</file>
+        <file>res/YLChatWidget/page_close_btn_click.png</file>
+        <file>res/YLChatWidget/1.png</file>
+        <file>res/YLChatWidget/2.png</file>
+        <file>res/YLChatWidget/nonotice.png</file>
+        <file>res/YLChatWidget/SearchIcon_normal.png</file>
+        <file>res/YLChatWidget/SearchIcon_hover.png</file>
+        <file>res/YLChatWidget/SearchIcon_down.png</file>
     </qresource>
 </RCC>

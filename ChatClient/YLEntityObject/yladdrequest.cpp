@@ -15,6 +15,7 @@ YLAddRequest::YLAddRequest(const YLAddRequest &req)
     m_validate_data = req.m_validate_data;
     m_handle_time = req.m_handle_time;
     m_result_id = req.m_result_id;
+    m_group_id = req.m_group_id;
 }
 
 
@@ -27,6 +28,7 @@ YLAddRequest& YLAddRequest::operator=(const YLAddRequest &req)
     m_validate_data = req.m_validate_data;
     m_handle_time = req.m_handle_time;
     m_result_id = req.m_result_id;
+    m_group_id = req.m_group_id;
     return *this;
 }
 
@@ -65,6 +67,11 @@ void YLAddRequest::setResultId(uint32_t resId)
     m_result_id = resId;
 }
 
+void YLAddRequest::setGroupId(uint32_t groupId)
+{
+    m_group_id = groupId;
+}
+
 uint32_t YLAddRequest::getOtherId() const
 {
     return m_other_id;
@@ -98,4 +105,9 @@ uint32_t YLAddRequest::getHandleTime() const
 uint32_t YLAddRequest::getResultId() const
 {
     return m_result_id;
+}
+
+uint32_t YLAddRequest::getGroupId() const
+{
+    return m_group_id;
 }

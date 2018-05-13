@@ -771,4 +771,75 @@ namespace DB_INTERFACE
             sendMessage(conn, respone, base::SID_SERVER, base::CID_GROUP_SEARCH_GROUP_RESPONE);
         }
     }
+
+    //添加群组
+    void addGroup(BasePdu *basePdu, uint32_t conn_uuid)
+    {
+        group::AddGroupRequest request;
+        request.ParseFromString(basePdu->getMessage());
+
+        uint32_t userId = request.user_id();
+        uint32_t groupId = request.group_id();
+        std::string verifyData = request.verify_data();
+
+        GroupModel *groupModel = GroupModel::instance();
+
+        base::GroupVerifyType type = groupModel->getVerofyTypeByGroupId(groupId);
+
+        if (type == base::GROUP_VERIFY_NEED)    //需要验证信息 转发消息到管理员和群组
+        {
+
+            // [1]获取请求用户信息
+            base::UserInfo *userInfo = new base::UserInfo;
+            LoginModel *loginModel = new LoginModel;
+            loginModel->getUserInfo(userId, *userInfo);
+
+            // [2]设置返回的验证信息
+            group::GroupVerifyNotify *groupVerifyNotify = new group::GroupVerifyNotify;
+            groupVerifyNotify->set_user_id(userId);
+            groupVerifyNotify->set_group_id(groupId);
+            groupVerifyNotify->set_verify_data(verifyData);
+            groupVerifyNotify->set_allocated_user_info(userInfo);
+
+            // [3]获取管理员和群主
+            base::GroupInfo groupInfo;
+            groupModel->getGroupInfoByGroupId(groupId, groupInfo);
+
+
+            // [4]构造响应包
+            group::GroupVerifyNotifyUsers groupVerifyNotifyUsers;
+            groupVerifyNotifyUsers.add_notify_users(groupInfo.group_creator());     // 添加群主
+            for (int i = 0; i < groupInfo.managers_size(); ++i)                     // 添加管理员
+            {
+                groupVerifyNotifyUsers.add_notify_users(groupInfo.managers(i));
+            }
+
+            // [5]发送到消息服务器
+            auto conn = findProxyConn(conn_uuid);
+            if (conn)
+            {
+                sendMessage(conn, groupVerifyNotifyUsers, base::SID_SERVER, base::CID_GROUP_VERIFY_NOTIFY);
+            }
+
+        }
+        else if (type == base::GROUP_VERIFY_ALL)
+        {
+            //无需验证信息，直接加入
+            //考虑加入后是否通知群员。
+            bool ret = groupModel->addMember(groupId, userId);
+            base::GroupInfo *groupInfo = new base::GroupInfo;
+            groupModel->getGroupInfoByGroupId(groupId, *groupInfo);
+
+            group::AddGroupRespone respone;
+            respone.set_user_id(userId);
+            respone.set_result_coid(ret ? 1 : 2);
+            respone.set_allocated_group_info(groupInfo);
+
+            auto conn = findProxyConn(conn_uuid);
+            if (conn)
+                sendMessage(conn, respone, base::SID_SERVER, base::CID_GROUP_ADD_GROUP_RESPONE);
+        }
+
+
+    }
 }

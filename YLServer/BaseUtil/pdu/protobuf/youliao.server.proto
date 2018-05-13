@@ -116,10 +116,21 @@ message RouteMessage
 
 message GetServerIndexRequest
 {
-
 }
 
 message GetServerIndexRespone
 {
     uint32 index = 1;
+}
+
+
+//文件服务器
+message FileServerIPRequest
+{
+
+}
+
+message FileServerIPRespone
+{
+    repeated youliao.pdu.base.IpAddress ip_addr_list = 1;
 }

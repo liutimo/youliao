@@ -10,6 +10,11 @@ class MemberListWidgetItem;
 class YLLineEdit;
 QT_END_NAMESPACE
 
+
+/**
+ * @brief The MemberNameWidgetItem class
+ * 用于群信息界面中的成员列表
+ */
 class MemberNameWidgetItem : public QWidget
 {
     Q_OBJECT

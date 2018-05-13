@@ -92,6 +92,16 @@ class GetServerIndexResponeDefaultTypeInternal {
   ::google::protobuf::internal::ExplicitlyConstructed<GetServerIndexRespone>
       _instance;
 } _GetServerIndexRespone_default_instance_;
+class FileServerIPRequestDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<FileServerIPRequest>
+      _instance;
+} _FileServerIPRequest_default_instance_;
+class FileServerIPResponeDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<FileServerIPRespone>
+      _instance;
+} _FileServerIPRespone_default_instance_;
 }  // namespace server
 }  // namespace pdu
 }  // namespace youliao
@@ -391,7 +401,50 @@ void InitDefaultsGetServerIndexRespone() {
   ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsGetServerIndexResponeImpl);
 }
 
-::google::protobuf::Metadata file_level_metadata[14];
+void InitDefaultsFileServerIPRequestImpl() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+#ifdef GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  ::google::protobuf::internal::InitProtobufDefaultsForceUnique();
+#else
+  ::google::protobuf::internal::InitProtobufDefaults();
+#endif  // GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  {
+    void* ptr = &::youliao::pdu::server::_FileServerIPRequest_default_instance_;
+    new (ptr) ::youliao::pdu::server::FileServerIPRequest();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::youliao::pdu::server::FileServerIPRequest::InitAsDefaultInstance();
+}
+
+void InitDefaultsFileServerIPRequest() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsFileServerIPRequestImpl);
+}
+
+void InitDefaultsFileServerIPResponeImpl() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+#ifdef GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  ::google::protobuf::internal::InitProtobufDefaultsForceUnique();
+#else
+  ::google::protobuf::internal::InitProtobufDefaults();
+#endif  // GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  protobuf_youliao_2ebase_2eproto::InitDefaultsIpAddress();
+  {
+    void* ptr = &::youliao::pdu::server::_FileServerIPRespone_default_instance_;
+    new (ptr) ::youliao::pdu::server::FileServerIPRespone();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::youliao::pdu::server::FileServerIPRespone::InitAsDefaultInstance();
+}
+
+void InitDefaultsFileServerIPRespone() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsFileServerIPResponeImpl);
+}
+
+::google::protobuf::Metadata file_level_metadata[16];
 
 const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   ~0u,  // no _has_bits_
@@ -516,6 +569,17 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::GetServerIndexRespone, index_),
+  ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::FileServerIPRequest, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::FileServerIPRespone, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::FileServerIPRespone, ip_addr_list_),
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::youliao::pdu::server::ValidateRequest)},
@@ -532,6 +596,8 @@ static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROT
   { 100, -1, sizeof(::youliao::pdu::server::RouteMessage)},
   { 111, -1, sizeof(::youliao::pdu::server::GetServerIndexRequest)},
   { 116, -1, sizeof(::youliao::pdu::server::GetServerIndexRespone)},
+  { 122, -1, sizeof(::youliao::pdu::server::FileServerIPRequest)},
+  { 127, -1, sizeof(::youliao::pdu::server::FileServerIPRespone)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -549,6 +615,8 @@ static ::google::protobuf::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::server::_RouteMessage_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::server::_GetServerIndexRequest_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::server::_GetServerIndexRespone_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::server::_FileServerIPRequest_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::server::_FileServerIPRespone_default_instance_),
 };
 
 void protobuf_AssignDescriptors() {
@@ -567,7 +635,7 @@ void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) GOOGLE_PROTOBUF_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 14);
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 16);
 }
 
 void AddDescriptorsImpl() {
@@ -615,11 +683,13 @@ void AddDescriptorsImpl() {
       "eate_time\030\004 \001(\r\0223\n\014message_type\030\005 \001(\0162\035."
       "youliao.pdu.base.MessageType\022\024\n\014message_"
       "data\030\006 \001(\014\"\027\n\025GetServerIndexRequest\"&\n\025G"
-      "etServerIndexRespone\022\r\n\005index\030\001 \001(\rb\006pro"
-      "to3"
+      "etServerIndexRespone\022\r\n\005index\030\001 \001(\r\"\025\n\023F"
+      "ileServerIPRequest\"H\n\023FileServerIPRespon"
+      "e\0221\n\014ip_addr_list\030\001 \003(\0132\033.youliao.pdu.ba"
+      "se.IpAddressb\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 1723);
+      descriptor, 1820);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "youliao.server.proto", &protobuf_RegisterTypes);
   ::protobuf_youliao_2ebase_2eproto::AddDescriptors();
@@ -5293,6 +5363,433 @@ void GetServerIndexRespone::InternalSwap(GetServerIndexRespone* other) {
 }
 
 
+// ===================================================================
+
+void FileServerIPRequest::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+FileServerIPRequest::FileServerIPRequest()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    ::protobuf_youliao_2eserver_2eproto::InitDefaultsFileServerIPRequest();
+  }
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:youliao.pdu.server.FileServerIPRequest)
+}
+FileServerIPRequest::FileServerIPRequest(const FileServerIPRequest& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  // @@protoc_insertion_point(copy_constructor:youliao.pdu.server.FileServerIPRequest)
+}
+
+void FileServerIPRequest::SharedCtor() {
+  _cached_size_ = 0;
+}
+
+FileServerIPRequest::~FileServerIPRequest() {
+  // @@protoc_insertion_point(destructor:youliao.pdu.server.FileServerIPRequest)
+  SharedDtor();
+}
+
+void FileServerIPRequest::SharedDtor() {
+}
+
+void FileServerIPRequest::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* FileServerIPRequest::descriptor() {
+  ::protobuf_youliao_2eserver_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_youliao_2eserver_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const FileServerIPRequest& FileServerIPRequest::default_instance() {
+  ::protobuf_youliao_2eserver_2eproto::InitDefaultsFileServerIPRequest();
+  return *internal_default_instance();
+}
+
+
+void FileServerIPRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:youliao.pdu.server.FileServerIPRequest)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _internal_metadata_.Clear();
+}
+
+bool FileServerIPRequest::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:youliao.pdu.server.FileServerIPRequest)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+  handle_unusual:
+    if (tag == 0) {
+      goto success;
+    }
+    DO_(::google::protobuf::internal::WireFormat::SkipField(
+          input, tag, _internal_metadata_.mutable_unknown_fields()));
+  }
+success:
+  // @@protoc_insertion_point(parse_success:youliao.pdu.server.FileServerIPRequest)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:youliao.pdu.server.FileServerIPRequest)
+  return false;
+#undef DO_
+}
+
+void FileServerIPRequest::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:youliao.pdu.server.FileServerIPRequest)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
+  // @@protoc_insertion_point(serialize_end:youliao.pdu.server.FileServerIPRequest)
+}
+
+::google::protobuf::uint8* FileServerIPRequest::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:youliao.pdu.server.FileServerIPRequest)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:youliao.pdu.server.FileServerIPRequest)
+  return target;
+}
+
+size_t FileServerIPRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:youliao.pdu.server.FileServerIPRequest)
+  size_t total_size = 0;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void FileServerIPRequest::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:youliao.pdu.server.FileServerIPRequest)
+  GOOGLE_DCHECK_NE(&from, this);
+  const FileServerIPRequest* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const FileServerIPRequest>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:youliao.pdu.server.FileServerIPRequest)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:youliao.pdu.server.FileServerIPRequest)
+    MergeFrom(*source);
+  }
+}
+
+void FileServerIPRequest::MergeFrom(const FileServerIPRequest& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:youliao.pdu.server.FileServerIPRequest)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+}
+
+void FileServerIPRequest::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:youliao.pdu.server.FileServerIPRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void FileServerIPRequest::CopyFrom(const FileServerIPRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:youliao.pdu.server.FileServerIPRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool FileServerIPRequest::IsInitialized() const {
+  return true;
+}
+
+void FileServerIPRequest::Swap(FileServerIPRequest* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void FileServerIPRequest::InternalSwap(FileServerIPRequest* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata FileServerIPRequest::GetMetadata() const {
+  protobuf_youliao_2eserver_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_youliao_2eserver_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
+// ===================================================================
+
+void FileServerIPRespone::InitAsDefaultInstance() {
+}
+void FileServerIPRespone::clear_ip_addr_list() {
+  ip_addr_list_.Clear();
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int FileServerIPRespone::kIpAddrListFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+FileServerIPRespone::FileServerIPRespone()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    ::protobuf_youliao_2eserver_2eproto::InitDefaultsFileServerIPRespone();
+  }
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:youliao.pdu.server.FileServerIPRespone)
+}
+FileServerIPRespone::FileServerIPRespone(const FileServerIPRespone& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      ip_addr_list_(from.ip_addr_list_),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  // @@protoc_insertion_point(copy_constructor:youliao.pdu.server.FileServerIPRespone)
+}
+
+void FileServerIPRespone::SharedCtor() {
+  _cached_size_ = 0;
+}
+
+FileServerIPRespone::~FileServerIPRespone() {
+  // @@protoc_insertion_point(destructor:youliao.pdu.server.FileServerIPRespone)
+  SharedDtor();
+}
+
+void FileServerIPRespone::SharedDtor() {
+}
+
+void FileServerIPRespone::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* FileServerIPRespone::descriptor() {
+  ::protobuf_youliao_2eserver_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_youliao_2eserver_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const FileServerIPRespone& FileServerIPRespone::default_instance() {
+  ::protobuf_youliao_2eserver_2eproto::InitDefaultsFileServerIPRespone();
+  return *internal_default_instance();
+}
+
+
+void FileServerIPRespone::Clear() {
+// @@protoc_insertion_point(message_clear_start:youliao.pdu.server.FileServerIPRespone)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  ip_addr_list_.Clear();
+  _internal_metadata_.Clear();
+}
+
+bool FileServerIPRespone::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:youliao.pdu.server.FileServerIPRespone)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // repeated .youliao.pdu.base.IpAddress ip_addr_list = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(
+                input, add_ip_addr_list()));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:youliao.pdu.server.FileServerIPRespone)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:youliao.pdu.server.FileServerIPRespone)
+  return false;
+#undef DO_
+}
+
+void FileServerIPRespone::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:youliao.pdu.server.FileServerIPRespone)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // repeated .youliao.pdu.base.IpAddress ip_addr_list = 1;
+  for (unsigned int i = 0,
+      n = static_cast<unsigned int>(this->ip_addr_list_size()); i < n; i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      1,
+      this->ip_addr_list(static_cast<int>(i)),
+      output);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
+  // @@protoc_insertion_point(serialize_end:youliao.pdu.server.FileServerIPRespone)
+}
+
+::google::protobuf::uint8* FileServerIPRespone::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:youliao.pdu.server.FileServerIPRespone)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // repeated .youliao.pdu.base.IpAddress ip_addr_list = 1;
+  for (unsigned int i = 0,
+      n = static_cast<unsigned int>(this->ip_addr_list_size()); i < n; i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageToArray(
+        1, this->ip_addr_list(static_cast<int>(i)), deterministic, target);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:youliao.pdu.server.FileServerIPRespone)
+  return target;
+}
+
+size_t FileServerIPRespone::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:youliao.pdu.server.FileServerIPRespone)
+  size_t total_size = 0;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
+  // repeated .youliao.pdu.base.IpAddress ip_addr_list = 1;
+  {
+    unsigned int count = static_cast<unsigned int>(this->ip_addr_list_size());
+    total_size += 1UL * count;
+    for (unsigned int i = 0; i < count; i++) {
+      total_size +=
+        ::google::protobuf::internal::WireFormatLite::MessageSize(
+          this->ip_addr_list(static_cast<int>(i)));
+    }
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void FileServerIPRespone::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:youliao.pdu.server.FileServerIPRespone)
+  GOOGLE_DCHECK_NE(&from, this);
+  const FileServerIPRespone* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const FileServerIPRespone>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:youliao.pdu.server.FileServerIPRespone)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:youliao.pdu.server.FileServerIPRespone)
+    MergeFrom(*source);
+  }
+}
+
+void FileServerIPRespone::MergeFrom(const FileServerIPRespone& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:youliao.pdu.server.FileServerIPRespone)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  ip_addr_list_.MergeFrom(from.ip_addr_list_);
+}
+
+void FileServerIPRespone::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:youliao.pdu.server.FileServerIPRespone)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void FileServerIPRespone::CopyFrom(const FileServerIPRespone& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:youliao.pdu.server.FileServerIPRespone)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool FileServerIPRespone::IsInitialized() const {
+  return true;
+}
+
+void FileServerIPRespone::Swap(FileServerIPRespone* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void FileServerIPRespone::InternalSwap(FileServerIPRespone* other) {
+  using std::swap;
+  CastToBase(&ip_addr_list_)->InternalSwap(CastToBase(&other->ip_addr_list_));
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata FileServerIPRespone::GetMetadata() const {
+  protobuf_youliao_2eserver_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_youliao_2eserver_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace server
 }  // namespace pdu
@@ -5340,6 +5837,12 @@ template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::server::GetServerI
 }
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::server::GetServerIndexRespone* Arena::Create< ::youliao::pdu::server::GetServerIndexRespone >(Arena* arena) {
   return Arena::CreateInternal< ::youliao::pdu::server::GetServerIndexRespone >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::server::FileServerIPRequest* Arena::Create< ::youliao::pdu::server::FileServerIPRequest >(Arena* arena) {
+  return Arena::CreateInternal< ::youliao::pdu::server::FileServerIPRequest >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::server::FileServerIPRespone* Arena::Create< ::youliao::pdu::server::FileServerIPRespone >(Arena* arena) {
+  return Arena::CreateInternal< ::youliao::pdu::server::FileServerIPRespone >(arena);
 }
 }  // namespace protobuf
 }  // namespace google

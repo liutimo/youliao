@@ -46,7 +46,7 @@ public:
     static void getGroupMembersInfo(uint32_t groupId);
     static void modifyGroupCard(uint32_t groupId, const QString &card);
     static void searchGroup(const QString &searchData, youliao::pdu::base::SearchType searchType);
-    static void addGroup(uint32_t groupId);
+    static void addGroup(uint32_t groupId, const QString &verifyData = QString());
 };
 
 #endif // YLBUSINESS_H

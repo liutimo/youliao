@@ -22,6 +22,12 @@ void YLValidateGroupWidget::setGroup(const YLGroup &group)
 {
     m_group = group;
 
+    m_group_name->setText(m_group.getGroupName());
+    m_head_frame->setHeadFromUrl(m_group.getGroupImage());
+    m_group_id->setText(QString::number(m_group.getGroupId()));
+    m_group_member_count->setText(QString("成员: %1人").arg(m_group.getCount()));
+//    m_group_intro->setText("");
+
     uint32_t verifyType = m_group.getVerifyType();
     if (verifyType == 1) // 需要验证
     {
@@ -34,7 +40,7 @@ void YLValidateGroupWidget::setGroup(const YLGroup &group)
         m_text_eidt->hide();
         m_info->show();
         //send Request
-//        YLBusiness::addGroup(m_group.getGroupId());
+        YLBusiness::addGroup(m_group.getGroupId());
     }
 }
 
@@ -95,4 +101,5 @@ void YLValidateGroupWidget::next()
     m_text_eidt->hide();
     m_info->show();
     m_info->setText("已发送加群申请！！！！！！");
+    YLBusiness::addGroup(m_group.getGroupId(), m_text_eidt->toPlainText());
 }

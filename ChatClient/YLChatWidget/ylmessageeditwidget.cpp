@@ -12,10 +12,12 @@
 YLMessageEditWidget::YLMessageEditWidget(QWidget *parent)
     : QTextEdit(parent)
 {
+    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setStyleSheet("background:transparent;");
     setAcceptRichText(true);
     initMenu();
     QFont f = font();
-    f.setPixelSize(24);
+    f.setPixelSize(12);
     setFont(f);
 }
 

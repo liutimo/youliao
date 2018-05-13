@@ -72,9 +72,32 @@ message AddGroupRequest
 {
     uint32 user_id = 1;
     uint32 group_id = 2;
+    string verify_data = 3;
 }
 
+message AddGroupRespone
+{
+    uint32 user_id = 1;
+    uint32 result_coid = 2;                         // 1 成功  2 失败
+    youliao.pdu.base.GroupInfo group_info = 3;
+}
 
+//验证信息 发送给群主和管理员
+message  GroupVerifyNotify
+{
+    uint32 user_id = 1;
+    uint32 group_id = 2;
+    youliao.pdu.base.UserInfo user_info = 3;
+    string verify_Data = 4;
+}
+
+//由dbserver 发送至 msgserver
+//再由msgserver处理后发送至 routeserver
+message GroupVerifyNotifyUsers
+{
+    repeated uint32 notify_users = 1;           //需要通知的用户， 群主和管理员
+    GroupVerifyNotify verify_notify = 2;
+}
 
 //踢出去
 

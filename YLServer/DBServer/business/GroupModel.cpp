@@ -234,7 +234,7 @@ bool GroupModel::modifyGroupCard(uint32_t groupId, uint32_t memberId, const std:
     auto conn = DBManager::instance()->getConnection();
     if (conn)
     {
-        std::string sql = "UPDATE yl_group_member SET group_card = " + groupCard + " WHERE group_id = " + std::to_string(groupId) + " AND member_id = " + std::to_string(memberId);
+        std::string sql = "UPDATE yl_group_member SET group_card = '" + groupCard + "' WHERE group_id = " + std::to_string(groupId) + " AND member_id = " + std::to_string(memberId);
         printSql2Log(sql.c_str());
         ret = conn->update(sql);
     }
@@ -298,6 +298,33 @@ bool GroupModel::searchGroup(uint32_t userId, const std::string &searchData, bas
 
     DBManager::instance()->releaseConnection(conn);
     return ret;
+}
+
+base::GroupVerifyType  GroupModel::getVerofyTypeByGroupId(uint32_t groupId)
+{
+    base::GroupVerifyType type = base::GROUP_VERIFY_NEED;
+
+    auto conn = DBManager::instance()->getConnection();
+    if (conn)
+    {
+        std::string sql = "SELECT group_verify FROM yl_group WHERE group_id = " + std::to_string(groupId);
+        printSql2Log(sql.c_str());
+
+        ResultSet *resultSet = conn->query(sql);
+        if (resultSet)
+        {
+            while (resultSet->next())
+            {
+                uint32_t res = (uint32_t)resultSet->getInt("group_verify");
+                type = static_cast<base::GroupVerifyType>(res);
+            }
+
+            delete resultSet;
+        }
+    }
+    DBManager::instance()->releaseConnection(conn);
+
+    return type;
 }
 
 
@@ -396,7 +423,7 @@ bool GroupModel::addOne(uint32_t groupId, uint32_t userId, uint32_t type)
         auto conn = DBManager::instance()->getConnection();
         if (conn)
         {
-            std::string sql = "UPDATE yl_group_member SET status = 1, type = " + std::to_string(type) + "WHERE id = " + std::to_string(id);
+            std::string sql = "UPDATE yl_group_member SET status = 1, type = " + std::to_string(type) + " WHERE id = " + std::to_string(id);
             printSql2Log(sql.c_str());
             ret = conn->update(sql);
         }

@@ -4,11 +4,14 @@
 #include "YLLoginPanel/ylloginpanel.h"
 #include "signalforward.h"
 #include "YLDataBase/yldatabase.h"
-#include "YLAddFriendWidgets/ylvalidategroupwidget.h"
+#include "YLChatWidget/ylchatlistwidget.h"
+#include "YLChatWidget/ylsinglechatwidget.h"
+#include "YLChatWidget/ylgroupchatwidget.h"
+#include "YLCommonControl/ylgroupmemberlistwidget.h"
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    a.setQuitOnLastWindowClosed(false);
+//    a.setQuitOnLastWindowClosed(false);
 
     YLDataBase::instance();
 

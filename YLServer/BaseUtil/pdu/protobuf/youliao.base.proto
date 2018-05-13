@@ -41,7 +41,8 @@ enum ServerCID
     CID_SERVER_ROUTE_MESSAGE              = 0x020B;     //MsgServer请求RouteServer转发消息
     CID_SERVER_GET_FRIEND_ONLINE_STATUS   = 0x020C;     //RouteServer请求DBServer好友在线状态
     CID_SERVER_ROUTE_TO_MESSAGE           = 0x020D;     //RouteServer发送MsgServer
-
+    CID_SERVER_FILE_SERVER_IP_REQUEST     = 0x020E;
+    CID_SERVER_FILE_SERVER_IP_RESPONE     = 0x020F;
 }
 
 enum OtherCID
@@ -121,6 +122,7 @@ enum GroupCID
     CID_GROUP_MODIFY_CARD_RESQUEST  = 0x0709; //请求修改群名片，修改结果不通知客户端
     CID_GROUP_SEARCH_GROUP_REQUEST  = 0x070A;
     CID_GROUP_SEARCH_GROUP_RESPONE  = 0x070B;
+    CID_GROUP_VERIFY_NOTIFY         = 0x070C; //通知
 }
 
 //响应结果类型
@@ -233,6 +235,16 @@ message GroupInfo
     repeated uint32 members = 8;
     uint32 group_verify_type = 9;
 }
+
+//消息服务器发送给loginserver
+//fileserver发送MsgServer
+message IpAddress
+{
+    string ip   = 1;
+    uint32 port = 2;
+}
+
+
 
 //心跳包
 message HeartBeat

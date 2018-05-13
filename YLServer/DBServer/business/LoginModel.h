@@ -23,6 +23,7 @@ public:
 
     bool doLogin(const std::string &str_name, const std::string &str_pass, base::UserInfo &userInfo);
     bool doLogout(uint32_t userId);
+    bool getUserInfo(uint32_t userId, base::UserInfo &userInfo);
 private:
 
 };

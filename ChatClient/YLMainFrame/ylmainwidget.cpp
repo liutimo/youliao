@@ -10,7 +10,7 @@
 #include "ylrecentchatview.h"
 #include "ylfriendlistview.h"
 #include "../signalforward.h"
-#include "ylsearchlineedit.h"
+#include "YLCommonControl/ylsearchlineedit.h"
 #include "YLTray/ylmaintray.h"
 #include "ylsignaturelineedit.h"
 #include "YLNetWork/ylbusiness.h"

@@ -5,6 +5,7 @@
 #include "ylgroupinfowidget.h"
 #include "YLNetWork/ylbusiness.h"
 #include "YLNetWork/pduhandler.h"
+#include "YLChatWidget/ylgroupchatwidget.h"
 #include "globaldata.h"
 #include <QMouseEvent>
 #include <QScrollBar>
@@ -108,6 +109,11 @@ void YLGroupListItem::initMenu()
     m_menu->addAction(action_cat_info);
     m_menu->addAction(action_msg_record);
     m_menu->addAction(action_exit_group);
+
+    connect(action_send_msg, &QAction::triggered, this, [this](){
+        YLGroupChatWidget *w = new YLGroupChatWidget;
+        w->show();
+    });
 
     connect(action_cat_info, &QAction::triggered, this, [this]()
     {

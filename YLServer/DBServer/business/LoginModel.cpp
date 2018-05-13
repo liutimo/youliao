@@ -24,6 +24,36 @@ LoginModel::~LoginModel()
 
 }
 
+bool LoginModel::getUserInfo(uint32_t userId, base::UserInfo &userInfo)
+{
+    bool ret = false;
+    DBConn *dbConn = DBManager::instance()->getConnection();
+    if (dbConn)
+    {
+
+        std::string str_sql = "select * from yl_user where user_id=" + std::to_string(userId);
+        printSql2Log(str_sql.c_str());
+        ResultSet *resultSet = dbConn->query(str_sql);
+
+        if (resultSet && resultSet->next())
+        {
+                ret = true;
+                userInfo.set_user_account((uint32_t)resultSet->getInt("user_account"));
+                userInfo.set_user_sex((uint32_t)resultSet->getInt("user_sex"));
+                userInfo.set_user_sign_info(resultSet->getString("user_sign_info"));
+                userInfo.set_user_email(resultSet->getString("user_email"));
+                userInfo.set_user_header_url(resultSet->getString("user_header"));
+                userInfo.set_user_phone(resultSet->getString("user_phone"));
+                userInfo.set_user_nick(resultSet->getString("user_nickname"));
+                userInfo.set_user_id((uint32_t)resultSet->getInt("user_id"));
+            }
+        }
+
+    DBManager::instance()->releaseConnection(dbConn);
+    return ret;
+}
+
+
 bool LoginModel::doLogin(const std::string &str_name, const std::string &str_pass, base::UserInfo &userInfo)
 {
     bool ret = false;

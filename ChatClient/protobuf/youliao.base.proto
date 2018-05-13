@@ -121,6 +121,7 @@ enum GroupCID
     CID_GROUP_MODIFY_CARD_RESQUEST  = 0x0709; //请求修改群名片，修改结果不通知客户端
     CID_GROUP_SEARCH_GROUP_REQUEST  = 0x070A;
     CID_GROUP_SEARCH_GROUP_RESPONE  = 0x070B;
+    CID_GROUP_VERIFY_NOTIFY         = 0x070C; //通知
 }
 
 //响应结果类型

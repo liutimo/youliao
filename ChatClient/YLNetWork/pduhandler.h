@@ -56,6 +56,8 @@ private:
     void _HandleGetGroupListRespone(BasePdu *pdu);
     void _HandleGetGroupMemberRespone(BasePdu *pdu);
     void _HandleSearchGroupRespone(BasePdu *pdu);
+    void _HandleAddGroupRespone(BasePdu *pdu);
+    void _HandleVerifyNotify(BasePdu *pdu);
 private:
     explicit PduHandler(QObject *parent = nullptr);
 

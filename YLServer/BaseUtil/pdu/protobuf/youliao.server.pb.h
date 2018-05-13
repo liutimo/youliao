@@ -40,7 +40,7 @@ namespace protobuf_youliao_2eserver_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[14];
+  static const ::google::protobuf::internal::ParseTable schema[16];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -74,6 +74,10 @@ void InitDefaultsGetServerIndexRequestImpl();
 void InitDefaultsGetServerIndexRequest();
 void InitDefaultsGetServerIndexResponeImpl();
 void InitDefaultsGetServerIndexRespone();
+void InitDefaultsFileServerIPRequestImpl();
+void InitDefaultsFileServerIPRequest();
+void InitDefaultsFileServerIPResponeImpl();
+void InitDefaultsFileServerIPRespone();
 inline void InitDefaults() {
   InitDefaultsValidateRequest();
   InitDefaultsValidateRespone();
@@ -89,11 +93,19 @@ inline void InitDefaults() {
   InitDefaultsRouteMessage();
   InitDefaultsGetServerIndexRequest();
   InitDefaultsGetServerIndexRespone();
+  InitDefaultsFileServerIPRequest();
+  InitDefaultsFileServerIPRespone();
 }
 }  // namespace protobuf_youliao_2eserver_2eproto
 namespace youliao {
 namespace pdu {
 namespace server {
+class FileServerIPRequest;
+class FileServerIPRequestDefaultTypeInternal;
+extern FileServerIPRequestDefaultTypeInternal _FileServerIPRequest_default_instance_;
+class FileServerIPRespone;
+class FileServerIPResponeDefaultTypeInternal;
+extern FileServerIPResponeDefaultTypeInternal _FileServerIPRespone_default_instance_;
 class GetServerIndexRequest;
 class GetServerIndexRequestDefaultTypeInternal;
 extern GetServerIndexRequestDefaultTypeInternal _GetServerIndexRequest_default_instance_;
@@ -141,6 +153,8 @@ extern ValidateResponeDefaultTypeInternal _ValidateRespone_default_instance_;
 }  // namespace youliao
 namespace google {
 namespace protobuf {
+template<> ::youliao::pdu::server::FileServerIPRequest* Arena::Create< ::youliao::pdu::server::FileServerIPRequest>(Arena*);
+template<> ::youliao::pdu::server::FileServerIPRespone* Arena::Create< ::youliao::pdu::server::FileServerIPRespone>(Arena*);
 template<> ::youliao::pdu::server::GetServerIndexRequest* Arena::Create< ::youliao::pdu::server::GetServerIndexRequest>(Arena*);
 template<> ::youliao::pdu::server::GetServerIndexRespone* Arena::Create< ::youliao::pdu::server::GetServerIndexRespone>(Arena*);
 template<> ::youliao::pdu::server::MsgServerInfo* Arena::Create< ::youliao::pdu::server::MsgServerInfo>(Arena*);
@@ -1897,6 +1911,211 @@ class GetServerIndexRespone : public ::google::protobuf::Message /* @@protoc_ins
   friend struct ::protobuf_youliao_2eserver_2eproto::TableStruct;
   friend void ::protobuf_youliao_2eserver_2eproto::InitDefaultsGetServerIndexResponeImpl();
 };
+// -------------------------------------------------------------------
+
+class FileServerIPRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.server.FileServerIPRequest) */ {
+ public:
+  FileServerIPRequest();
+  virtual ~FileServerIPRequest();
+
+  FileServerIPRequest(const FileServerIPRequest& from);
+
+  inline FileServerIPRequest& operator=(const FileServerIPRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  FileServerIPRequest(FileServerIPRequest&& from) noexcept
+    : FileServerIPRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline FileServerIPRequest& operator=(FileServerIPRequest&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const FileServerIPRequest& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const FileServerIPRequest* internal_default_instance() {
+    return reinterpret_cast<const FileServerIPRequest*>(
+               &_FileServerIPRequest_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    14;
+
+  void Swap(FileServerIPRequest* other);
+  friend void swap(FileServerIPRequest& a, FileServerIPRequest& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline FileServerIPRequest* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<FileServerIPRequest>(NULL);
+  }
+
+  FileServerIPRequest* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<FileServerIPRequest>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const FileServerIPRequest& from);
+  void MergeFrom(const FileServerIPRequest& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(FileServerIPRequest* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.server.FileServerIPRequest)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2eserver_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2eserver_2eproto::InitDefaultsFileServerIPRequestImpl();
+};
+// -------------------------------------------------------------------
+
+class FileServerIPRespone : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.server.FileServerIPRespone) */ {
+ public:
+  FileServerIPRespone();
+  virtual ~FileServerIPRespone();
+
+  FileServerIPRespone(const FileServerIPRespone& from);
+
+  inline FileServerIPRespone& operator=(const FileServerIPRespone& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  FileServerIPRespone(FileServerIPRespone&& from) noexcept
+    : FileServerIPRespone() {
+    *this = ::std::move(from);
+  }
+
+  inline FileServerIPRespone& operator=(FileServerIPRespone&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const FileServerIPRespone& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const FileServerIPRespone* internal_default_instance() {
+    return reinterpret_cast<const FileServerIPRespone*>(
+               &_FileServerIPRespone_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    15;
+
+  void Swap(FileServerIPRespone* other);
+  friend void swap(FileServerIPRespone& a, FileServerIPRespone& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline FileServerIPRespone* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<FileServerIPRespone>(NULL);
+  }
+
+  FileServerIPRespone* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<FileServerIPRespone>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const FileServerIPRespone& from);
+  void MergeFrom(const FileServerIPRespone& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(FileServerIPRespone* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated .youliao.pdu.base.IpAddress ip_addr_list = 1;
+  int ip_addr_list_size() const;
+  void clear_ip_addr_list();
+  static const int kIpAddrListFieldNumber = 1;
+  ::youliao::pdu::base::IpAddress* mutable_ip_addr_list(int index);
+  ::google::protobuf::RepeatedPtrField< ::youliao::pdu::base::IpAddress >*
+      mutable_ip_addr_list();
+  const ::youliao::pdu::base::IpAddress& ip_addr_list(int index) const;
+  ::youliao::pdu::base::IpAddress* add_ip_addr_list();
+  const ::google::protobuf::RepeatedPtrField< ::youliao::pdu::base::IpAddress >&
+      ip_addr_list() const;
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.server.FileServerIPRespone)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::RepeatedPtrField< ::youliao::pdu::base::IpAddress > ip_addr_list_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2eserver_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2eserver_2eproto::InitDefaultsFileServerIPResponeImpl();
+};
 // ===================================================================
 
 
@@ -3227,9 +3446,48 @@ inline void GetServerIndexRespone::set_index(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:youliao.pdu.server.GetServerIndexRespone.index)
 }
 
+// -------------------------------------------------------------------
+
+// FileServerIPRequest
+
+// -------------------------------------------------------------------
+
+// FileServerIPRespone
+
+// repeated .youliao.pdu.base.IpAddress ip_addr_list = 1;
+inline int FileServerIPRespone::ip_addr_list_size() const {
+  return ip_addr_list_.size();
+}
+inline ::youliao::pdu::base::IpAddress* FileServerIPRespone::mutable_ip_addr_list(int index) {
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.server.FileServerIPRespone.ip_addr_list)
+  return ip_addr_list_.Mutable(index);
+}
+inline ::google::protobuf::RepeatedPtrField< ::youliao::pdu::base::IpAddress >*
+FileServerIPRespone::mutable_ip_addr_list() {
+  // @@protoc_insertion_point(field_mutable_list:youliao.pdu.server.FileServerIPRespone.ip_addr_list)
+  return &ip_addr_list_;
+}
+inline const ::youliao::pdu::base::IpAddress& FileServerIPRespone::ip_addr_list(int index) const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.server.FileServerIPRespone.ip_addr_list)
+  return ip_addr_list_.Get(index);
+}
+inline ::youliao::pdu::base::IpAddress* FileServerIPRespone::add_ip_addr_list() {
+  // @@protoc_insertion_point(field_add:youliao.pdu.server.FileServerIPRespone.ip_addr_list)
+  return ip_addr_list_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::youliao::pdu::base::IpAddress >&
+FileServerIPRespone::ip_addr_list() const {
+  // @@protoc_insertion_point(field_list:youliao.pdu.server.FileServerIPRespone.ip_addr_list)
+  return ip_addr_list_;
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

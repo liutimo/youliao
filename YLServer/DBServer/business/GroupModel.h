@@ -46,6 +46,7 @@ public:
     //搜索群
     bool searchGroup(uint32_t userId, const std::string &searchData ,base::SearchType tye, std::list<base::GroupInfo> &groupList);
 
+    base::GroupVerifyType getVerofyTypeByGroupId(uint32_t groupId);
 private:
     bool getGroupManagers(uint32_t groupId, std::list<uint32_t> &managers);
     bool getGroupMembers(uint32_t groupId, std::list<uint32_t> &members);

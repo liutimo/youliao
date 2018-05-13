@@ -396,11 +396,12 @@ void YLBusiness::searchGroup(const QString &searchData, youliao::pdu::base::Sear
     PduSender::instance()->addMessage(basePdu);
 }
 
-void YLBusiness::addGroup(uint32_t groupId)
+void YLBusiness::addGroup(uint32_t groupId, const QString &verifyData)
 {
     group::AddGroupRequest request;
     request.set_user_id(GlobalData::getCurrLoginUserId());
     request.set_group_id(groupId);
+    request.set_verify_data(verifyData.toStdString());
 
     BasePdu *basePdu = new BasePdu;
     basePdu->setSID(SID_GROUP);

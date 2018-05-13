@@ -112,6 +112,10 @@ void HandlerMap::init()
 
     //搜索群组
     m_handler_map.insert(std::make_pair(CID_GROUP_SEARCH_GROUP_REQUEST, DB_INTERFACE::searchGroup));
+
+    //添加群组
+    m_handler_map.insert(std::make_pair(CID_GROUP_ADD_GROUP_REQUEST, DB_INTERFACE::addGroup));
+
 }
 
 pdu_handler_t HandlerMap::getHandler(uint16_t cid)

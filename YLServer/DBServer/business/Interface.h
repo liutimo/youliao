@@ -98,6 +98,9 @@ namespace DB_INTERFACE
 
     //搜索群组
     void searchGroup(BasePdu *basePdu, uint32_t conn_uuid);
+
+    //添加群组
+    void addGroup(BasePdu *basePdu, uint32_t conn_uuid);
 }
 
 
