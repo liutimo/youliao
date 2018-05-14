@@ -1,5 +1,4 @@
 HEADERS += \
-    $$PWD/ylchatwidget.h \
     $$PWD/ylmessageeditwidget.h \
     $$PWD/ylquickbar.h \
     $$PWD/ylemoticonwidget.h \
@@ -12,7 +11,6 @@ HEADERS += \
     $$PWD/ylgroupchatwidget.h
 
 SOURCES += \
-    $$PWD/ylchatwidget.cpp \
     $$PWD/ylmessageeditwidget.cpp \
     $$PWD/ylquickbar.cpp \
     $$PWD/ylemoticonwidget.cpp \

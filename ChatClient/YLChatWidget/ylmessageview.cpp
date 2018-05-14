@@ -44,3 +44,9 @@ void YLMessageView::copy()
 {
 
 }
+
+void YLMessageView::mousePressEvent(QMouseEvent *event)
+{
+    this->setFocus();
+    QWebEngineView::mousePressEvent(event);
+}

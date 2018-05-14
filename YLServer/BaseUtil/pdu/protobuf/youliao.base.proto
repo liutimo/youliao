@@ -12,6 +12,7 @@ enum ServiceID
     SID_SESSION         = 0x0005;           //SESSION
     SID_MESSAGE         = 0x0006;           //消息
     SID_GROUP           = 0x0007;           //群组
+    SID_FILE            = 0x0008;           //文件
 }
 
 enum LoginCID
@@ -43,6 +44,8 @@ enum ServerCID
     CID_SERVER_ROUTE_TO_MESSAGE           = 0x020D;     //RouteServer发送MsgServer
     CID_SERVER_FILE_SERVER_IP_REQUEST     = 0x020E;
     CID_SERVER_FILE_SERVER_IP_RESPONE     = 0x020F;
+    CID_SERVER_FILE_TRANSFER_REQUEST      = 0x0210;   //由消息服务器发送给文件服务器
+    CID_SERVER_FILE_TRANSFER_RESPONE      = 0x0211;   //由文件服务器发送给消息服务器
 }
 
 enum OtherCID
@@ -124,6 +127,17 @@ enum GroupCID
     CID_GROUP_SEARCH_GROUP_RESPONE  = 0x070B;
     CID_GROUP_VERIFY_NOTIFY         = 0x070C; //通知
 }
+
+
+//文件
+enum FileCID
+{
+    CID_FILE_ZERO           = 0x0000;
+    CID_FILE_REQUEST        = 0x0801;   //发送给消息服务器
+    CID_FILE_RESPONE        = 0x0802;
+    CID_FILE_NOTIFY         = 0x0803;   //通知接受者
+}
+
 
 //响应结果类型
 enum ResultType
@@ -292,4 +306,19 @@ enum GroupVerifyType {
     GROUP_VERIFY_NEED   = 0x01; //需要验证
     GROUP_VERIFY_ALL    = 0x02; //允许任何人
     GROUP_VERIFY_NONE   = 0x03; //不允许任何人
+}
+
+//文件传输类型
+enum TransferFileType{
+    FILE_TYPE_ZERO          = 0x00;
+    FILE_TYPE_ONLINE        = 0x01;
+    FILE_TYPE_OFFLINE       = 0x02;
+}
+
+enum ClientFileRole{
+    CLIENT_ZERO = 0x00;
+    CLIENT_REALTIME_SENDER  = 0x01;
+    CLIENT_REALTIME_RECVER  = 0x02;
+    CLIENT_OFFLINE_UPLOAD   = 0x03;
+    CLIENT_OFFLINE_DOWNLOAD = 0x04;
 }

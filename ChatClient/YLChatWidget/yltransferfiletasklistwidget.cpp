@@ -13,22 +13,6 @@ YLTransferFileTaskListWidget::YLTransferFileTaskListWidget(QWidget *parent) : QW
     m_scroll_area->setFixedWidth(300);
     m_widget = new QWidget(this);
 
-
-    YLSendFileWidget *w1 = new YLSendFileWidget();
-    YLSendFileWidget *w2 = new YLSendFileWidget();
-    YLSendFileWidget *w3 = new YLSendFileWidget();
-
-    YLReceiveFileWidget *ww1 = new YLReceiveFileWidget();
-    YLReceiveFileWidget *ww2 = new YLReceiveFileWidget();
-    YLReceiveFileWidget *ww3 = new YLReceiveFileWidget();
-
-    m_v_layout->addWidget(w1);
-    m_v_layout->addWidget(ww1);
-    m_v_layout->addWidget(w2);
-    m_v_layout->addWidget(ww2);
-    m_v_layout->addWidget(ww3);
-    m_v_layout->addWidget(w3);
-
     m_widget->setLayout(m_v_layout);
 
     m_scroll_area->setWidget(m_widget);
@@ -45,6 +29,13 @@ YLTransferFileTaskListWidget::~YLTransferFileTaskListWidget()
 
 }
 
+
+void YLTransferFileTaskListWidget::addSendFile(const QString &fileName, uint32_t fileSize)
+{
+    YLSendFileWidget *w = new YLSendFileWidget;
+    w->setFileInfo(fileName, fileSize);
+    m_v_layout->addWidget(w);
+}
 
 void YLTransferFileTaskListWidget::initLayout()
 {
@@ -116,6 +107,26 @@ void YLSendFileWidget::init()
     m_speed->setText("800.09kb/s");
     m_speed->move(50, 50);
 }
+
+void YLSendFileWidget::setFileInfo(const QString &fileName, uint32_t fileSize)
+{
+    QString s;
+    if (fileSize < 1024)
+    {
+        s = QString::number(fileSize) + "Bytes";
+    }
+    else if (fileSize > 1024 && fileSize < 1024 * 1024)
+    {
+        s = QString::number(fileSize / 1024.0) + "KB";
+    }
+    else if (fileSize > 1024 * 1024 && fileSize < 1024 * 1024 * 1024)
+    {
+        s = QString::number(fileSize / 1024.0 / 1024.0) + "MB";
+    }
+    m_file_info->setText(QString("%1 (%2)").arg(fileName).arg(s));
+}
+
+
 
 /*******************YLReceiveFileWidget****************/
 YLReceiveFileWidget::YLReceiveFileWidget(QWidget *parent) : QWidget(parent)

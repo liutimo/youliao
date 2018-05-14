@@ -16,6 +16,8 @@ public:
 public slots:
     void copy();
 
+protected:
+    void mousePressEvent(QMouseEvent *event);
 private:
     QWebChannel *channel;
 };

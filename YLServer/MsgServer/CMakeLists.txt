@@ -11,7 +11,7 @@ LINK_DIRECTORIES(../BaseUtil)
 AUX_SOURCE_DIRECTORY(./ SRC_LIST)
 
 
-set(SOURCE_FILES ${SRC_LIST})
+set(SOURCE_FILES ${SRC_LIST} FileServerConn.cpp FileServerConn.h)
 
 find_package(Protobuf REQUIRED)
 

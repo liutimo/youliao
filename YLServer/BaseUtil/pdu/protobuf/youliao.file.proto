@@ -1,0 +1,35 @@
+syntax = "proto3";
+package youliao.pdu.file;
+import "youliao.base.proto";
+
+
+message SendFileRequest
+{
+    uint32 from_user_id = 1;
+    uint32 to_user_id = 2;
+    string file_name = 3;
+    uint32 file_size = 4;
+    youliao.pdu.base.TransferFileType trans_mode = 5;
+}
+
+message SendFileRespone{
+    uint32 result_code = 1;			//1: 失败 0:成功
+    uint32 from_user_id = 2;
+    uint32 to_user_id = 3;
+    string file_name = 4;
+    string task_id = 5;
+    repeated youliao.pdu.base.IpAddress ip_addr_list = 6;
+    youliao.pdu.base.TransferFileType trans_mode = 7;
+}
+
+//通知接收方
+message FileNotify{
+    uint32 from_user_id = 1;
+    uint32 to_user_id = 2;
+    string file_name = 3;
+    uint32 file_size = 4;
+    string task_id = 5;
+    repeated youliao.pdu.base.IpAddress ip_addr_list = 6;
+    youliao.pdu.base.TransferFileType trans_mode = 7;
+    uint32 offline_ready = 8;				//1:True 0:False
+}

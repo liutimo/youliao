@@ -7,7 +7,9 @@ HEADERS += \
     $$PWD/ylmemberlistwidget.h \
     $$PWD/ylsearchlineedit.h \
     $$PWD/ylgroupnoticewidget.h \
-    $$PWD/ylgroupmemberlistwidget.h
+    $$PWD/ylgroupmemberlistwidget.h \
+    $$PWD/ylmenubutton.h \
+    $$PWD/ylbutton.h
 
 SOURCES += \
     $$PWD/ylheadframe.cpp \
@@ -18,5 +20,7 @@ SOURCES += \
     $$PWD/ylmemberlistwidget.cpp \
     $$PWD/ylsearchlineedit.cpp \
     $$PWD/ylgroupnoticewidget.cpp \
-    $$PWD/ylgroupmemberlistwidget.cpp
+    $$PWD/ylgroupmemberlistwidget.cpp \
+    $$PWD/ylmenubutton.cpp \
+    $$PWD/ylbutton.cpp
 

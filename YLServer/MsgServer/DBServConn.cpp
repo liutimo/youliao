@@ -169,6 +169,12 @@ void DBServConn::handlePdu(BasePdu *pdu)
         case base::CID_GROUP_SEARCH_GROUP_RESPONE:
             _HandleSearchGroupRespone(pdu);
             break;
+        case base::CID_GROUP_ADD_GROUP_RESPONE:
+            _HandleAddGroupRespone(pdu);
+            break;
+        case base::CID_GROUP_VERIFY_NOTIFY:
+            _HandleVerifyNotify(pdu);
+            break;
         default:
             break;
     }
@@ -518,5 +524,51 @@ void DBServConn::_HandleSearchGroupRespone(BasePdu *basePdu)
         auto conn = user->getConn();
         if (conn)
             sendMessage(conn, respone, base::SID_GROUP, base::CID_GROUP_SEARCH_GROUP_RESPONE);
+    }
+}
+
+
+void DBServConn::_HandleAddGroupRespone(BasePdu *basePdu)
+{
+    group::AddGroupRespone respone;
+    respone.ParseFromString(basePdu->getMessage());
+
+    uint32_t userId = respone.user_id();
+    auto user = UserManager::instance()->getUser(userId);
+    if (user)
+    {
+        auto conn = user->getConn();
+        if (conn)
+            sendMessage(conn, respone, base::SID_GROUP, base::CID_GROUP_ADD_GROUP_RESPONE);
+    }
+}
+
+
+void DBServConn::_HandleVerifyNotify(BasePdu *basePdu)
+{
+    group::GroupVerifyNotifyUsers groupVerifyNotifyUsers;
+    groupVerifyNotifyUsers.ParseFromString(basePdu->getMessage());
+
+    group::GroupVerifyNotify groupVerifyNotify = groupVerifyNotifyUsers.verify_notify();
+
+    std::list<uint32_t> routeUser; //需要转发到路由服务器  可能是没在线也可能时未在当前服务器登录
+    for (int i = 0; i < groupVerifyNotifyUsers.notify_users_size(); ++i) {
+        uint32_t userId = groupVerifyNotifyUsers.notify_users(i);
+        auto user = UserManager::instance()->getUser(userId);
+        if (!user)
+        {
+            routeUser.push_back(userId);
+            continue;
+        }
+
+        auto conn = user->getConn();
+        if (!conn)
+        {
+            routeUser.push_back(userId);
+            continue;
+        }
+
+        //直接发送
+        sendMessage(conn, groupVerifyNotify, base::SID_GROUP, base::CID_GROUP_VERIFY_NOTIFY);
     }
 }

@@ -10,7 +10,7 @@
 #include "YLEntityObject/ylmessage.h"
 #include "YLEntityObject/ylfriend.h"
 #include "YLEntityObject/ylsession.h"
-#include "YLChatWidget/ylchatwidget.h"
+#include "YLChatWidget/ylsinglechatwidget.h"
 #include "YLEntityObject/yladdrequest.h"
 #include "YLEntityObject/ylgroup.h"
 using namespace youliao::pdu;
@@ -40,9 +40,9 @@ public:
     static const uint32_t getGroupIdByName(const QString &name);
 
     //////////chat widget
-    static void addChatWidget(uint32_t friendId, YLChatWidget *chatWidget);
-    static void removeChatWidget(uint32_t friendId);
-    static YLChatWidget* getChatWidget(uint32_t friendId);
+    static void addSingleChatWidget(uint32_t friendId, YLSingleChatWidget *singleChatWidget);
+    static void removeSingleChatWidget(uint32_t friendId);
+    static YLSingleChatWidget* getSingleChatWidget(uint32_t friendId);
 
     //message
     static void addMessage(uint32_t friendId, const YLMessage& message);
@@ -77,7 +77,7 @@ private:
     static QMap<int, QVector<YLFriend>> m_friends;
     static QList<YLSession> m_sessions;
     static QMap<int, QString> m_group;
-    static QMap<uint32_t, YLChatWidget*> m_chat_widgets;
+    static QMap<uint32_t, YLSingleChatWidget*> m_single_chat_widgets;
     static QMap<uint32_t, QVector<YLMessage>> m_messages;
     static QMap<uint32_t, uint32_t> m_message_id;
     //add request

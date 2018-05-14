@@ -26,7 +26,7 @@ public:
 
 private:
     void _HandleGetFileServerIpRequest(BasePdu *);
-
+    void _HandleMsgFileTransfreRequest(BasePdu *);
 private:
     bool m_connected;
 };

@@ -11,9 +11,9 @@ LINK_LIBRARIES(log4cxx)
 
 AUX_SOURCE_DIRECTORY(./ SRC_CURR)
 
-set(SOURCE_FILES ${SRC_CURR} MsgServerConn.cpp MsgServerConn.h)
+set(SOURCE_FILES ${SRC_CURR})
 
 find_package(Protobuf REQUIRED)
 add_executable(FileServer ${SOURCE_FILES})
 
-TARGET_LINK_LIBRARIES(FileServer BaseUtil protobuf)
+TARGET_LINK_LIBRARIES(FileServer BaseUtil protobuf uuid)

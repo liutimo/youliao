@@ -9,6 +9,7 @@
 #include "protobuf/youliao.message.pb.h"
 #include "protobuf/youliao.session.pb.h"
 #include "protobuf/youliao.group.pb.h"
+#include "protobuf/youliao.file.pb.h"
 #include "YLDataBase/yldatabase.h"
 
 #include <QDateTime>
@@ -406,6 +407,25 @@ void YLBusiness::addGroup(uint32_t groupId, const QString &verifyData)
     BasePdu *basePdu = new BasePdu;
     basePdu->setSID(SID_GROUP);
     basePdu->setCID(CID_GROUP_ADD_GROUP_REQUEST);
+    basePdu->writeMessage(&request);
+    PduSender::instance()->addMessage(basePdu);
+}
+
+void YLBusiness::sendFileRequest(uint32_t friId, const QString &fileName, uint32_t fileSize, bool isOnline)
+{
+    file::SendFileRequest request;
+    request.set_from_user_id(GlobalData::getCurrLoginUserId());
+    request.set_to_user_id(friId);
+    request.set_file_name(fileName.toStdString());
+    request.set_file_size(fileSize);
+    if (isOnline)
+        request.set_trans_mode(base::FILE_TYPE_ONLINE);
+    else
+        request.set_trans_mode(base::FILE_TYPE_OFFLINE);
+
+    BasePdu *basePdu = new BasePdu;
+    basePdu->setSID(SID_FILE);
+    basePdu->setCID(CID_FILE_REQUEST);
     basePdu->writeMessage(&request);
     PduSender::instance()->addMessage(basePdu);
 }

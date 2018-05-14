@@ -205,9 +205,9 @@ void PduHandler::_HandleMessageData(BasePdu *pdu)
 
     YLDataBase::instance()->saveMessage(messageData);
 
-    auto chatWidget = GlobalData::getChatWidget(messageData.from_user_id());
-    if (chatWidget)
-        emit signleMessage(messageData.from_user_id(), QString(messageData.message_data().c_str()));
+    auto singleChatWidget = GlobalData::getSingleChatWidget(messageData.from_user_id());
+    if (singleChatWidget)
+        singleChatWidget->receiveMessage(messageData.from_user_id(), QString(messageData.message_data().c_str()));
     else
     {
         YLMainTray::instance()->receiveMessage(messageData);

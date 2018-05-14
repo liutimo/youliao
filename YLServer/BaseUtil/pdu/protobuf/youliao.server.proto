@@ -134,3 +134,23 @@ message FileServerIPRespone
 {
     repeated youliao.pdu.base.IpAddress ip_addr_list = 1;
 }
+
+message FileTransferRequest
+{
+    uint32 from_user_id = 1;
+    uint32 to_user_id = 2;
+    string file_name = 3;
+    uint32 file_size = 4;
+    youliao.pdu.base.TransferFileType trans_mode = 5;
+}
+
+message FileTransferRespone
+{
+    uint32 from_user_id = 1;
+    uint32 to_user_id = 2;
+    string file_name = 3;
+    uint32 file_size = 4;
+    string task_id = 5;
+    uint32 result_code = 6;
+    youliao.pdu.base.TransferFileType trans_mode = 7;
+}

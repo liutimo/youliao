@@ -40,6 +40,8 @@ private:
     void _HandleGetGroupListRespone(BasePdu *);
     void _HandleGetGroupMemberRespone(BasePdu *);
     void _HandleSearchGroupRespone(BasePdu *);
+    void _HandleAddGroupRespone(BasePdu *);
+    void _HandleVerifyNotify(BasePdu *);
 
     uint32_t   m_server_index;
     bool       m_open;

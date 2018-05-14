@@ -6,7 +6,7 @@ QMap<int, QVector<YLFriend>> GlobalData::m_friends = QMap<int, QVector<YLFriend>
 QString GlobalData::m_header_image_path = QString();
 QList<YLSession> GlobalData::m_sessions = QList<YLSession>();
 QMap<int, QString> GlobalData::m_group = QMap<int, QString>();
-QMap<uint32_t, YLChatWidget*> GlobalData::m_chat_widgets = QMap<uint32_t, YLChatWidget*>();
+QMap<uint32_t, YLSingleChatWidget*> GlobalData::m_single_chat_widgets = QMap<uint32_t, YLSingleChatWidget*>();
 QMap<uint32_t, QVector<YLMessage>> GlobalData::m_messages = QMap<uint32_t, QVector<YLMessage>>();
 QMap<uint32_t, uint32_t> GlobalData::m_message_id = QMap<uint32_t, uint32_t>();
 QVector<YLAddRequest> GlobalData::m_add_request = QVector<YLAddRequest>();
@@ -88,21 +88,21 @@ const uint32_t GlobalData::getGroupIdByName(const QString &name)
 }
 
 /////////////chat widget
-void GlobalData::addChatWidget(uint32_t friendId, YLChatWidget *chatWidget)
+void GlobalData::addSingleChatWidget(uint32_t friendId, YLSingleChatWidget *chatWidget)
 {
-    m_chat_widgets[friendId] = chatWidget;
+    m_single_chat_widgets[friendId] = chatWidget;
 }
 
 
-void GlobalData::removeChatWidget(uint32_t friendId)
+void GlobalData::removeSingleChatWidget(uint32_t friendId)
 {
-    m_chat_widgets.remove(friendId);
+    m_single_chat_widgets.remove(friendId);
 }
 
-YLChatWidget* GlobalData::getChatWidget(uint32_t friendId)
+YLSingleChatWidget* GlobalData::getSingleChatWidget(uint32_t friendId)
 {
-    auto iter = m_chat_widgets.find(friendId);
-    if (iter == m_chat_widgets.cend())
+    auto iter = m_single_chat_widgets.find(friendId);
+    if (iter == m_single_chat_widgets.cend())
         return nullptr;
     else
         return *iter;

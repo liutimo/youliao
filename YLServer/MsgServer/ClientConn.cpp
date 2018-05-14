@@ -19,8 +19,10 @@
 #include "pdu/protobuf/youliao.message.pb.h"
 #include "pdu/protobuf/youliao.session.pb.h"
 #include "pdu/protobuf/youliao.group.pb.h"
+#include "pdu/protobuf/youliao.file.pb.h"
 #include "User.h"
 #include <sys/time.h>
+#include "FileServerConn.h"
 using namespace youliao::util;
 
 static ClientConnMap_t g_client_conn_map;
@@ -202,6 +204,12 @@ void ClientConn::handlePdu(BasePdu *pdu)
             break;
         case base::CID_GROUP_SEARCH_GROUP_REQUEST:
             _HandleSearchGroupRequest(pdu);
+            break;
+        case base::CID_GROUP_ADD_GROUP_REQUEST:
+            _HandleAddGroupRequest(pdu);
+            break;
+        case base::CID_FILE_REQUEST:
+            _HandleClientFileRequest(pdu);
             break;
         default:
             std::cout << pdu->getCID() << std::endl;
@@ -788,4 +796,84 @@ void ClientConn::_HandleSearchGroupRequest(BasePdu *basePdu)
     auto conn = get_db_server_conn();
     if (conn)
         sendMessage(conn, request, base::SID_SERVER, base::CID_GROUP_SEARCH_GROUP_REQUEST);
+}
+
+
+void ClientConn::_HandleAddGroupRequest(BasePdu *basePdu)
+{
+    group::AddGroupRequest request;
+    request.ParseFromString(basePdu->getMessage());
+
+    uint32_t userId = request.user_id();
+    uint32_t groupId = request.group_id();
+    std::string verifyData = request.verify_data();
+
+    log("用户%d请求加入群%d, 验证信息:%s", userId, groupId, verifyData);
+
+
+    auto conn = get_db_server_conn();
+    if (conn)
+        sendMessage(conn, request, base::SID_SERVER, base::CID_GROUP_ADD_GROUP_REQUEST);
+}
+
+void ClientConn::_HandleClientFileRequest(BasePdu *pdu)
+{
+    file::SendFileRequest request;
+    request.ParseFromString(pdu->getMessage());
+
+    uint32_t fromId = request.from_user_id();
+    uint32_t toId = request.to_user_id();
+    std::string fileName = request.file_name();
+    uint32_t fileSize = request.file_size();
+    base::TransferFileType type = request.trans_mode();
+
+    log("收到来自用户%d的传输文件请求.接受者:%d, 文件名：%s, 文件大小:%d, 传输模式:%d", fromId, toId, fileName.c_str(), fileSize, type);
+    FileServerConn *conn = get_random_file_server_conn();
+    if (conn)
+    {
+        server::FileTransferRequest request1;
+        request1.set_from_user_id(fromId);
+        request1.set_to_user_id(toId);
+        request1.set_file_name(fileName);
+        request1.set_file_size(fileSize);
+        request1.set_trans_mode(type);
+
+        //离线文件，直接发送到文件服务器
+        if (type == base::FILE_TYPE_OFFLINE)
+            sendMessage(conn, request1, base::SID_SERVER, base::CID_SERVER_FILE_TRANSFER_REQUEST);
+        else
+        {
+            //在线文件
+            auto user = UserManager::instance()->getUser(toId);
+            //用户当前服务器登录
+            if (user)
+                sendMessage(conn, request1, base::SID_SERVER, base::CID_SERVER_FILE_TRANSFER_REQUEST);
+            else
+            {
+               //用户未在当前服务器登录，查询路由服务器
+
+            }
+        }
+
+    }
+    else
+    {
+        //无可用的消息服务器
+        file::SendFileRespone respone;
+        respone.set_result_code(1);
+        respone.set_from_user_id(fromId);
+        respone.set_to_user_id(toId);
+        respone.set_file_name(fileName);
+        respone.set_trans_mode(type);
+        respone.set_task_id("");
+
+        BasePdu basePdu;
+        basePdu.setSID(base::SID_FILE);
+        basePdu.setCID(base::CID_SERVER_FILE_TRANSFER_RESPONE);
+        basePdu.writeMessage(&respone);
+        sendBasePdu(&basePdu);
+
+    }
+
+
 }

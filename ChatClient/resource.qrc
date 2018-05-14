@@ -42,8 +42,6 @@
         <file>res/YLChatWidget/sysbtn_max_hover.png</file>
         <file>res/YLChatWidget/sysbtn_max_normal.png</file>
         <file>res/YLChatWidget/aio_quickbar_face.png</file>
-        <file>res/YLChatWidget/aio_quickbar_face_hover.png</file>
-        <file>res/YLChatWidget/aio_quickbar_face_selected.png</file>
         <file>res/YLChatWidget/face/0.gif</file>
         <file>res/YLChatWidget/face/1.gif</file>
         <file>res/YLChatWidget/face/2.gif</file>
@@ -372,5 +370,14 @@
         <file>res/YLChatWidget/SearchIcon_normal.png</file>
         <file>res/YLChatWidget/SearchIcon_hover.png</file>
         <file>res/YLChatWidget/SearchIcon_down.png</file>
+        <file>res/YLChatWidget/aio_quickbar_cut.png</file>
+        <file>res/YLChatWidget/aio_quickbar_font.png</file>
+        <file>res/YLChatWidget/aio_quickbar_gif.png</file>
+        <file>res/YLChatWidget/aio_quickbar_more.png</file>
+        <file>res/YLChatWidget/aio_quickbar_register.png</file>
+        <file>res/YLChatWidget/aio_quickbar_sendpic.png</file>
+        <file>res/YLChatWidget/aio_quickbar_uploadfile.png</file>
+        <file>res/YLChatWidget/bkg_selected.png</file>
+        <file>res/YLChatWidget/bkg_hover.png</file>
     </qresource>
 </RCC>

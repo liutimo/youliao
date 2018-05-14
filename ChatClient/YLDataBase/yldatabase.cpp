@@ -25,31 +25,31 @@ YLDataBase::YLDataBase(QObject *parent) : QObject(parent)
 
 void YLDataBase::saveMessage(const MessageData &msg, bool isSender)
 {
-    QString sql = "INSERT INTO yl_message(relate_id, sender_id, receiver_id, message_id, message_content, message_created)"
-                  "VALUES(?, ?, ?, ?, ?, ?)";
+//    QString sql = "INSERT INTO yl_message(relate_id, sender_id, receiver_id, message_id, message_content, message_created)"
+//                  "VALUES(?, ?, ?, ?, ?, ?)";
 
 
-    uint32_t friId = msg.from_user_id();
+//    uint32_t friId = msg.from_user_id();
 
-    if (isSender)
-    {
-        friId = msg.to_user_id();
-    }
+//    if (isSender)
+//    {
+//        friId = msg.to_user_id();
+//    }
 
-    QSqlQuery query;
-    query.prepare(sql);
-    query.addBindValue(GlobalData::getRelateIdByFriendId(friId));
-    query.addBindValue(msg.from_user_id());
-    query.addBindValue(msg.to_user_id());
-    query.addBindValue(msg.msg_id());
-    query.addBindValue(msg.message_data().c_str());
-    query.addBindValue(msg.create_time());
+//    QSqlQuery query;
+//    query.prepare(sql);
+//    query.addBindValue(GlobalData::getRelateIdByFriendId(friId));
+//    query.addBindValue(msg.from_user_id());
+//    query.addBindValue(msg.to_user_id());
+//    query.addBindValue(msg.msg_id());
+//    query.addBindValue(msg.message_data().c_str());
+//    query.addBindValue(msg.create_time());
 
-    bool flag = query.exec();
-    if (flag)
-        qDebug() << "insert success";
-    else
-    {
-        qDebug() << query.lastError().text();
-    }
+//    bool flag = query.exec();
+//    if (flag)
+//        qDebug() << "insert success";
+//    else
+//    {
+//        qDebug() << query.lastError().text();
+//    }
 }

@@ -5,7 +5,8 @@
 #include "MsgServerConn.h"
 #include "util/util.h"
 #include "network/netlib.h"
-
+#include "TransferTask.h"
+#include "TransferTaskManager.h"
 #include "pdu/protobuf/youliao.base.pb.h"
 #include "pdu/protobuf/youliao.server.pb.h"
 
@@ -62,6 +63,9 @@ void MsgServerConn::handlePdu(BasePdu *pdu)
         case base::CID_SERVER_FILE_SERVER_IP_REQUEST:
             _HandleGetFileServerIpRequest(pdu);
             break;
+        case base::CID_SERVER_FILE_TRANSFER_REQUEST:
+            _HandleMsgFileTransfreRequest(pdu);
+            break;
         default:
             log("位置的CID:%d", pdu->getCID());
             break;
@@ -82,4 +86,52 @@ void MsgServerConn::_HandleGetFileServerIpRequest(BasePdu *basePdu)
     pdu.setCID(base::CID_SERVER_FILE_SERVER_IP_RESPONE);
     pdu.writeMessage(&respone);
     sendBasePdu(&pdu);
+}
+
+
+void MsgServerConn::_HandleMsgFileTransfreRequest(BasePdu *pdu)
+{
+    server::FileTransferRequest request;
+    request.ParseFromString(pdu->getMessage());
+
+    uint32_t fromId = request.from_user_id();
+    uint32_t toId = request.to_user_id();
+
+    server::FileTransferRespone respone;
+    respone.set_result_code(1);
+    respone.set_from_user_id(fromId);
+    respone.set_to_user_id(toId);
+    respone.set_file_name(request.file_name());
+    respone.set_file_size(request.file_size());
+    respone.set_task_id("");
+    respone.set_trans_mode(request.trans_mode());
+
+    bool rv = false;
+
+    do {
+        std::string taskId = generateUUID();
+        if (taskId.empty())
+            break;
+
+        BaseTransferTask* transferTask = TransferTaskManager::instance()->newTransferTask(request.trans_mode(), taskId, fromId, toId, request.file_name(), request.file_size());
+
+        if (transferTask == nullptr)
+        {
+            //创建失败
+            break;
+        }
+
+        respone.set_result_code(0);
+        respone.set_task_id(taskId);
+        rv = true;
+    }while (0);
+
+    BasePdu basePdu;
+    basePdu.setSID(base::SID_SERVER);
+    basePdu.setCID(base::CID_SERVER_FILE_TRANSFER_RESPONE);
+    basePdu.writeMessage(&respone);
+    sendBasePdu(&basePdu);
+
+    if (!rv) //创建失败，关闭连接
+        close();
 }

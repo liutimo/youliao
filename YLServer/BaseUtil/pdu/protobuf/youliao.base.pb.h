@@ -125,12 +125,13 @@ enum ServiceID {
   SID_SESSION = 5,
   SID_MESSAGE = 6,
   SID_GROUP = 7,
+  SID_FILE = 8,
   ServiceID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   ServiceID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool ServiceID_IsValid(int value);
 const ServiceID ServiceID_MIN = SID_ZERO;
-const ServiceID ServiceID_MAX = SID_GROUP;
+const ServiceID ServiceID_MAX = SID_FILE;
 const int ServiceID_ARRAYSIZE = ServiceID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* ServiceID_descriptor();
@@ -185,12 +186,14 @@ enum ServerCID {
   CID_SERVER_ROUTE_TO_MESSAGE = 525,
   CID_SERVER_FILE_SERVER_IP_REQUEST = 526,
   CID_SERVER_FILE_SERVER_IP_RESPONE = 527,
+  CID_SERVER_FILE_TRANSFER_REQUEST = 528,
+  CID_SERVER_FILE_TRANSFER_RESPONE = 529,
   ServerCID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   ServerCID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool ServerCID_IsValid(int value);
 const ServerCID ServerCID_MIN = CID_SERVER_ZERO;
-const ServerCID ServerCID_MAX = CID_SERVER_FILE_SERVER_IP_RESPONE;
+const ServerCID ServerCID_MAX = CID_SERVER_FILE_TRANSFER_RESPONE;
 const int ServerCID_ARRAYSIZE = ServerCID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* ServerCID_descriptor();
@@ -348,6 +351,29 @@ inline bool GroupCID_Parse(
     const ::std::string& name, GroupCID* value) {
   return ::google::protobuf::internal::ParseNamedEnum<GroupCID>(
     GroupCID_descriptor(), name, value);
+}
+enum FileCID {
+  CID_FILE_ZERO = 0,
+  CID_FILE_REQUEST = 2049,
+  CID_FILE_RESPONE = 2050,
+  CID_FILE_NOTIFY = 2051,
+  FileCID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  FileCID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+bool FileCID_IsValid(int value);
+const FileCID FileCID_MIN = CID_FILE_ZERO;
+const FileCID FileCID_MAX = CID_FILE_NOTIFY;
+const int FileCID_ARRAYSIZE = FileCID_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* FileCID_descriptor();
+inline const ::std::string& FileCID_Name(FileCID value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    FileCID_descriptor(), value);
+}
+inline bool FileCID_Parse(
+    const ::std::string& name, FileCID* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<FileCID>(
+    FileCID_descriptor(), name, value);
 }
 enum ResultType {
   NONE = 0,
@@ -553,6 +579,52 @@ inline bool GroupVerifyType_Parse(
     const ::std::string& name, GroupVerifyType* value) {
   return ::google::protobuf::internal::ParseNamedEnum<GroupVerifyType>(
     GroupVerifyType_descriptor(), name, value);
+}
+enum TransferFileType {
+  FILE_TYPE_ZERO = 0,
+  FILE_TYPE_ONLINE = 1,
+  FILE_TYPE_OFFLINE = 2,
+  TransferFileType_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  TransferFileType_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+bool TransferFileType_IsValid(int value);
+const TransferFileType TransferFileType_MIN = FILE_TYPE_ZERO;
+const TransferFileType TransferFileType_MAX = FILE_TYPE_OFFLINE;
+const int TransferFileType_ARRAYSIZE = TransferFileType_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* TransferFileType_descriptor();
+inline const ::std::string& TransferFileType_Name(TransferFileType value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    TransferFileType_descriptor(), value);
+}
+inline bool TransferFileType_Parse(
+    const ::std::string& name, TransferFileType* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<TransferFileType>(
+    TransferFileType_descriptor(), name, value);
+}
+enum ClientFileRole {
+  CLIENT_ZERO = 0,
+  CLIENT_REALTIME_SENDER = 1,
+  CLIENT_REALTIME_RECVER = 2,
+  CLIENT_OFFLINE_UPLOAD = 3,
+  CLIENT_OFFLINE_DOWNLOAD = 4,
+  ClientFileRole_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  ClientFileRole_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+bool ClientFileRole_IsValid(int value);
+const ClientFileRole ClientFileRole_MIN = CLIENT_ZERO;
+const ClientFileRole ClientFileRole_MAX = CLIENT_OFFLINE_DOWNLOAD;
+const int ClientFileRole_ARRAYSIZE = ClientFileRole_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* ClientFileRole_descriptor();
+inline const ::std::string& ClientFileRole_Name(ClientFileRole value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    ClientFileRole_descriptor(), value);
+}
+inline bool ClientFileRole_Parse(
+    const ::std::string& name, ClientFileRole* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<ClientFileRole>(
+    ClientFileRole_descriptor(), name, value);
 }
 // ===================================================================
 
@@ -3415,6 +3487,11 @@ template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::youliao::pdu::base::GroupCID>() {
   return ::youliao::pdu::base::GroupCID_descriptor();
 }
+template <> struct is_proto_enum< ::youliao::pdu::base::FileCID> : ::google::protobuf::internal::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::youliao::pdu::base::FileCID>() {
+  return ::youliao::pdu::base::FileCID_descriptor();
+}
 template <> struct is_proto_enum< ::youliao::pdu::base::ResultType> : ::google::protobuf::internal::true_type {};
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::youliao::pdu::base::ResultType>() {
@@ -3459,6 +3536,16 @@ template <> struct is_proto_enum< ::youliao::pdu::base::GroupVerifyType> : ::goo
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::youliao::pdu::base::GroupVerifyType>() {
   return ::youliao::pdu::base::GroupVerifyType_descriptor();
+}
+template <> struct is_proto_enum< ::youliao::pdu::base::TransferFileType> : ::google::protobuf::internal::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::youliao::pdu::base::TransferFileType>() {
+  return ::youliao::pdu::base::TransferFileType_descriptor();
+}
+template <> struct is_proto_enum< ::youliao::pdu::base::ClientFileRole> : ::google::protobuf::internal::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::youliao::pdu::base::ClientFileRole>() {
+  return ::youliao::pdu::base::ClientFileRole_descriptor();
 }
 
 }  // namespace protobuf

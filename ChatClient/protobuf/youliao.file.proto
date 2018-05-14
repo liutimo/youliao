@@ -1,0 +1,13 @@
+syntax = "proto3";
+package youliao.pdu.file;
+import "youliao.base.proto";
+
+
+message SendFileRequest
+{
+    uint32 from_user_id = 1;
+    uint32 to_user_id = 2;
+    string file_name = 3;
+    uint32 file_size = 4;
+    youliao.pdu.base.TransferFileType trans_mode = 5;
+}

@@ -20,7 +20,7 @@ public:
     ~YLTransferFileTaskListWidget();
 
     void initLayout();
-
+    void addSendFile(const QString &fileName, uint32_t fileSize);
 private:
     QVBoxLayout *m_v_layout;
     QHBoxLayout *m_h_layout;
@@ -37,9 +37,11 @@ class YLSendFileWidget : public QWidget
 public:
     explicit YLSendFileWidget(QWidget *parent = nullptr);
     ~YLSendFileWidget();
-    void init();
+    void setFileInfo(const QString &fileName, uint32_t fileSize);
 
 private:
+    void init();
+
     QLabel *m_file_icon;
     QLabel *m_file_info;    //name + size
     QLabel *m_in_icon;

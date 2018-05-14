@@ -47,6 +47,9 @@ public:
     static void modifyGroupCard(uint32_t groupId, const QString &card);
     static void searchGroup(const QString &searchData, youliao::pdu::base::SearchType searchType);
     static void addGroup(uint32_t groupId, const QString &verifyData = QString());
+    
+    //file
+    static void sendFileRequest(uint32_t friId, const QString &fileName, uint32_t fileSize, bool isOnline);
 };
 
 #endif // YLBUSINESS_H

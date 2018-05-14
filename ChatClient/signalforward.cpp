@@ -1,7 +1,7 @@
 #include "signalforward.h"
 #include "globaldata.h"
 #include "YLTray/ylmessagetip.h"
-#include "YLChatWidget/ylchatwidget.h"
+#include "YLChatWidget/ylsinglechatwidget.h"
 #include "YLAddFriendWidgets/ylvalidatemessagewidget.h"
 SignalForward* SignalForward::s_signamlForward = nullptr;
 
@@ -41,22 +41,21 @@ void SignalForward::forwordReadOne(uint32_t friendId, int type)
     {
         emit readOne(friendId);
         YLFriend fri = GlobalData::getFriendById(friendId);
-        YLChatWidget *chatWidget = GlobalData::getChatWidget(friendId);
-        if (chatWidget == nullptr)
+        YLSingleChatWidget *singleChatWidget = GlobalData::getSingleChatWidget(friendId);
+        if (singleChatWidget == nullptr)
         {
-            chatWidget = new YLChatWidget;
-            chatWidget->resize(800, 600);
-            chatWidget->setFriend(fri);
-            GlobalData::addChatWidget(friendId, chatWidget);
+            singleChatWidget = new YLSingleChatWidget;
+            singleChatWidget->setFriend(fri);
+            GlobalData::addSingleChatWidget(friendId, singleChatWidget);
         }
 
-        chatWidget->show();
-        connect(chatWidget, &YLChatWidget::loadFinish, this, [this, chatWidget, friendId](){
+        singleChatWidget->show();
+        connect(singleChatWidget, &YLSingleChatWidget::loadFinish, this, [this, singleChatWidget, friendId](){
             auto msgs = GlobalData::getMessagesByFriendId(friendId);
 
             for (YLMessage msg : msgs)
             {
-                chatWidget->receiveMessage(friendId, msg.getMsgContent());
+                singleChatWidget->receiveMessage(friendId, msg.getMsgContent());
             }
 
             GlobalData::removeMessageByFriendId(friendId);

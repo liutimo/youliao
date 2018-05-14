@@ -8,6 +8,8 @@
 #include "YLChatWidget/ylsinglechatwidget.h"
 #include "YLChatWidget/ylgroupchatwidget.h"
 #include "YLCommonControl/ylgroupmemberlistwidget.h"
+#include "YLCommonControl/ylbutton.h"
+#include <QMenu>
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -20,6 +22,9 @@ int main(int argc, char *argv[])
     YLLoginPanel w;
     w.resize(500, 400);
     w.show();
+
+//    YLSingleChatWidget w;
+//    w.show();
 
     return a.exec();
 }

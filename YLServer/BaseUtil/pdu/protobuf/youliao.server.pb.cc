@@ -102,6 +102,16 @@ class FileServerIPResponeDefaultTypeInternal {
   ::google::protobuf::internal::ExplicitlyConstructed<FileServerIPRespone>
       _instance;
 } _FileServerIPRespone_default_instance_;
+class FileTransferRequestDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<FileTransferRequest>
+      _instance;
+} _FileTransferRequest_default_instance_;
+class FileTransferResponeDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<FileTransferRespone>
+      _instance;
+} _FileTransferRespone_default_instance_;
 }  // namespace server
 }  // namespace pdu
 }  // namespace youliao
@@ -444,7 +454,49 @@ void InitDefaultsFileServerIPRespone() {
   ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsFileServerIPResponeImpl);
 }
 
-::google::protobuf::Metadata file_level_metadata[16];
+void InitDefaultsFileTransferRequestImpl() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+#ifdef GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  ::google::protobuf::internal::InitProtobufDefaultsForceUnique();
+#else
+  ::google::protobuf::internal::InitProtobufDefaults();
+#endif  // GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  {
+    void* ptr = &::youliao::pdu::server::_FileTransferRequest_default_instance_;
+    new (ptr) ::youliao::pdu::server::FileTransferRequest();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::youliao::pdu::server::FileTransferRequest::InitAsDefaultInstance();
+}
+
+void InitDefaultsFileTransferRequest() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsFileTransferRequestImpl);
+}
+
+void InitDefaultsFileTransferResponeImpl() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+#ifdef GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  ::google::protobuf::internal::InitProtobufDefaultsForceUnique();
+#else
+  ::google::protobuf::internal::InitProtobufDefaults();
+#endif  // GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  {
+    void* ptr = &::youliao::pdu::server::_FileTransferRespone_default_instance_;
+    new (ptr) ::youliao::pdu::server::FileTransferRespone();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::youliao::pdu::server::FileTransferRespone::InitAsDefaultInstance();
+}
+
+void InitDefaultsFileTransferRespone() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsFileTransferResponeImpl);
+}
+
+::google::protobuf::Metadata file_level_metadata[18];
 
 const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   ~0u,  // no _has_bits_
@@ -580,6 +632,28 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::FileServerIPRespone, ip_addr_list_),
+  ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::FileTransferRequest, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::FileTransferRequest, from_user_id_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::FileTransferRequest, to_user_id_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::FileTransferRequest, file_name_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::FileTransferRequest, file_size_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::FileTransferRequest, trans_mode_),
+  ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::FileTransferRespone, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::FileTransferRespone, from_user_id_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::FileTransferRespone, to_user_id_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::FileTransferRespone, file_name_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::FileTransferRespone, file_size_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::FileTransferRespone, task_id_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::FileTransferRespone, result_code_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::FileTransferRespone, trans_mode_),
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::youliao::pdu::server::ValidateRequest)},
@@ -598,6 +672,8 @@ static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROT
   { 116, -1, sizeof(::youliao::pdu::server::GetServerIndexRespone)},
   { 122, -1, sizeof(::youliao::pdu::server::FileServerIPRequest)},
   { 127, -1, sizeof(::youliao::pdu::server::FileServerIPRespone)},
+  { 133, -1, sizeof(::youliao::pdu::server::FileTransferRequest)},
+  { 143, -1, sizeof(::youliao::pdu::server::FileTransferRespone)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -617,6 +693,8 @@ static ::google::protobuf::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::server::_GetServerIndexRespone_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::server::_FileServerIPRequest_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::server::_FileServerIPRespone_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::server::_FileTransferRequest_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::server::_FileTransferRespone_default_instance_),
 };
 
 void protobuf_AssignDescriptors() {
@@ -635,7 +713,7 @@ void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) GOOGLE_PROTOBUF_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 16);
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 18);
 }
 
 void AddDescriptorsImpl() {
@@ -686,10 +764,19 @@ void AddDescriptorsImpl() {
       "etServerIndexRespone\022\r\n\005index\030\001 \001(\r\"\025\n\023F"
       "ileServerIPRequest\"H\n\023FileServerIPRespon"
       "e\0221\n\014ip_addr_list\030\001 \003(\0132\033.youliao.pdu.ba"
-      "se.IpAddressb\006proto3"
+      "se.IpAddress\"\235\001\n\023FileTransferRequest\022\024\n\014"
+      "from_user_id\030\001 \001(\r\022\022\n\nto_user_id\030\002 \001(\r\022\021"
+      "\n\tfile_name\030\003 \001(\t\022\021\n\tfile_size\030\004 \001(\r\0226\n\n"
+      "trans_mode\030\005 \001(\0162\".youliao.pdu.base.Tran"
+      "sferFileType\"\303\001\n\023FileTransferRespone\022\024\n\014"
+      "from_user_id\030\001 \001(\r\022\022\n\nto_user_id\030\002 \001(\r\022\021"
+      "\n\tfile_name\030\003 \001(\t\022\021\n\tfile_size\030\004 \001(\r\022\017\n\007"
+      "task_id\030\005 \001(\t\022\023\n\013result_code\030\006 \001(\r\0226\n\ntr"
+      "ans_mode\030\007 \001(\0162\".youliao.pdu.base.Transf"
+      "erFileTypeb\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 1820);
+      descriptor, 2178);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "youliao.server.proto", &protobuf_RegisterTypes);
   ::protobuf_youliao_2ebase_2eproto::AddDescriptors();
@@ -5790,6 +5877,907 @@ void FileServerIPRespone::InternalSwap(FileServerIPRespone* other) {
 }
 
 
+// ===================================================================
+
+void FileTransferRequest::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int FileTransferRequest::kFromUserIdFieldNumber;
+const int FileTransferRequest::kToUserIdFieldNumber;
+const int FileTransferRequest::kFileNameFieldNumber;
+const int FileTransferRequest::kFileSizeFieldNumber;
+const int FileTransferRequest::kTransModeFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+FileTransferRequest::FileTransferRequest()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    ::protobuf_youliao_2eserver_2eproto::InitDefaultsFileTransferRequest();
+  }
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:youliao.pdu.server.FileTransferRequest)
+}
+FileTransferRequest::FileTransferRequest(const FileTransferRequest& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  file_name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.file_name().size() > 0) {
+    file_name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.file_name_);
+  }
+  ::memcpy(&from_user_id_, &from.from_user_id_,
+    static_cast<size_t>(reinterpret_cast<char*>(&trans_mode_) -
+    reinterpret_cast<char*>(&from_user_id_)) + sizeof(trans_mode_));
+  // @@protoc_insertion_point(copy_constructor:youliao.pdu.server.FileTransferRequest)
+}
+
+void FileTransferRequest::SharedCtor() {
+  file_name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ::memset(&from_user_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&trans_mode_) -
+      reinterpret_cast<char*>(&from_user_id_)) + sizeof(trans_mode_));
+  _cached_size_ = 0;
+}
+
+FileTransferRequest::~FileTransferRequest() {
+  // @@protoc_insertion_point(destructor:youliao.pdu.server.FileTransferRequest)
+  SharedDtor();
+}
+
+void FileTransferRequest::SharedDtor() {
+  file_name_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+
+void FileTransferRequest::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* FileTransferRequest::descriptor() {
+  ::protobuf_youliao_2eserver_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_youliao_2eserver_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const FileTransferRequest& FileTransferRequest::default_instance() {
+  ::protobuf_youliao_2eserver_2eproto::InitDefaultsFileTransferRequest();
+  return *internal_default_instance();
+}
+
+
+void FileTransferRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:youliao.pdu.server.FileTransferRequest)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  file_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ::memset(&from_user_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&trans_mode_) -
+      reinterpret_cast<char*>(&from_user_id_)) + sizeof(trans_mode_));
+  _internal_metadata_.Clear();
+}
+
+bool FileTransferRequest::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:youliao.pdu.server.FileTransferRequest)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // uint32 from_user_id = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &from_user_id_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint32 to_user_id = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &to_user_id_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // string file_name = 3;
+      case 3: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(26u /* 26 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_file_name()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->file_name().data(), static_cast<int>(this->file_name().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "youliao.pdu.server.FileTransferRequest.file_name"));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint32 file_size = 4;
+      case 4: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(32u /* 32 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &file_size_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // .youliao.pdu.base.TransferFileType trans_mode = 5;
+      case 5: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(40u /* 40 & 0xFF */)) {
+          int value;
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_trans_mode(static_cast< ::youliao::pdu::base::TransferFileType >(value));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:youliao.pdu.server.FileTransferRequest)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:youliao.pdu.server.FileTransferRequest)
+  return false;
+#undef DO_
+}
+
+void FileTransferRequest::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:youliao.pdu.server.FileTransferRequest)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 from_user_id = 1;
+  if (this->from_user_id() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->from_user_id(), output);
+  }
+
+  // uint32 to_user_id = 2;
+  if (this->to_user_id() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->to_user_id(), output);
+  }
+
+  // string file_name = 3;
+  if (this->file_name().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->file_name().data(), static_cast<int>(this->file_name().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "youliao.pdu.server.FileTransferRequest.file_name");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      3, this->file_name(), output);
+  }
+
+  // uint32 file_size = 4;
+  if (this->file_size() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->file_size(), output);
+  }
+
+  // .youliao.pdu.base.TransferFileType trans_mode = 5;
+  if (this->trans_mode() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      5, this->trans_mode(), output);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
+  // @@protoc_insertion_point(serialize_end:youliao.pdu.server.FileTransferRequest)
+}
+
+::google::protobuf::uint8* FileTransferRequest::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:youliao.pdu.server.FileTransferRequest)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 from_user_id = 1;
+  if (this->from_user_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->from_user_id(), target);
+  }
+
+  // uint32 to_user_id = 2;
+  if (this->to_user_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->to_user_id(), target);
+  }
+
+  // string file_name = 3;
+  if (this->file_name().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->file_name().data(), static_cast<int>(this->file_name().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "youliao.pdu.server.FileTransferRequest.file_name");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        3, this->file_name(), target);
+  }
+
+  // uint32 file_size = 4;
+  if (this->file_size() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->file_size(), target);
+  }
+
+  // .youliao.pdu.base.TransferFileType trans_mode = 5;
+  if (this->trans_mode() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      5, this->trans_mode(), target);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:youliao.pdu.server.FileTransferRequest)
+  return target;
+}
+
+size_t FileTransferRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:youliao.pdu.server.FileTransferRequest)
+  size_t total_size = 0;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
+  // string file_name = 3;
+  if (this->file_name().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->file_name());
+  }
+
+  // uint32 from_user_id = 1;
+  if (this->from_user_id() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->from_user_id());
+  }
+
+  // uint32 to_user_id = 2;
+  if (this->to_user_id() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->to_user_id());
+  }
+
+  // uint32 file_size = 4;
+  if (this->file_size() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->file_size());
+  }
+
+  // .youliao.pdu.base.TransferFileType trans_mode = 5;
+  if (this->trans_mode() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->trans_mode());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void FileTransferRequest::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:youliao.pdu.server.FileTransferRequest)
+  GOOGLE_DCHECK_NE(&from, this);
+  const FileTransferRequest* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const FileTransferRequest>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:youliao.pdu.server.FileTransferRequest)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:youliao.pdu.server.FileTransferRequest)
+    MergeFrom(*source);
+  }
+}
+
+void FileTransferRequest::MergeFrom(const FileTransferRequest& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:youliao.pdu.server.FileTransferRequest)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.file_name().size() > 0) {
+
+    file_name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.file_name_);
+  }
+  if (from.from_user_id() != 0) {
+    set_from_user_id(from.from_user_id());
+  }
+  if (from.to_user_id() != 0) {
+    set_to_user_id(from.to_user_id());
+  }
+  if (from.file_size() != 0) {
+    set_file_size(from.file_size());
+  }
+  if (from.trans_mode() != 0) {
+    set_trans_mode(from.trans_mode());
+  }
+}
+
+void FileTransferRequest::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:youliao.pdu.server.FileTransferRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void FileTransferRequest::CopyFrom(const FileTransferRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:youliao.pdu.server.FileTransferRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool FileTransferRequest::IsInitialized() const {
+  return true;
+}
+
+void FileTransferRequest::Swap(FileTransferRequest* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void FileTransferRequest::InternalSwap(FileTransferRequest* other) {
+  using std::swap;
+  file_name_.Swap(&other->file_name_);
+  swap(from_user_id_, other->from_user_id_);
+  swap(to_user_id_, other->to_user_id_);
+  swap(file_size_, other->file_size_);
+  swap(trans_mode_, other->trans_mode_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata FileTransferRequest::GetMetadata() const {
+  protobuf_youliao_2eserver_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_youliao_2eserver_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
+// ===================================================================
+
+void FileTransferRespone::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int FileTransferRespone::kFromUserIdFieldNumber;
+const int FileTransferRespone::kToUserIdFieldNumber;
+const int FileTransferRespone::kFileNameFieldNumber;
+const int FileTransferRespone::kFileSizeFieldNumber;
+const int FileTransferRespone::kTaskIdFieldNumber;
+const int FileTransferRespone::kResultCodeFieldNumber;
+const int FileTransferRespone::kTransModeFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+FileTransferRespone::FileTransferRespone()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    ::protobuf_youliao_2eserver_2eproto::InitDefaultsFileTransferRespone();
+  }
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:youliao.pdu.server.FileTransferRespone)
+}
+FileTransferRespone::FileTransferRespone(const FileTransferRespone& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  file_name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.file_name().size() > 0) {
+    file_name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.file_name_);
+  }
+  task_id_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.task_id().size() > 0) {
+    task_id_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.task_id_);
+  }
+  ::memcpy(&from_user_id_, &from.from_user_id_,
+    static_cast<size_t>(reinterpret_cast<char*>(&trans_mode_) -
+    reinterpret_cast<char*>(&from_user_id_)) + sizeof(trans_mode_));
+  // @@protoc_insertion_point(copy_constructor:youliao.pdu.server.FileTransferRespone)
+}
+
+void FileTransferRespone::SharedCtor() {
+  file_name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  task_id_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ::memset(&from_user_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&trans_mode_) -
+      reinterpret_cast<char*>(&from_user_id_)) + sizeof(trans_mode_));
+  _cached_size_ = 0;
+}
+
+FileTransferRespone::~FileTransferRespone() {
+  // @@protoc_insertion_point(destructor:youliao.pdu.server.FileTransferRespone)
+  SharedDtor();
+}
+
+void FileTransferRespone::SharedDtor() {
+  file_name_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  task_id_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+
+void FileTransferRespone::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* FileTransferRespone::descriptor() {
+  ::protobuf_youliao_2eserver_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_youliao_2eserver_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const FileTransferRespone& FileTransferRespone::default_instance() {
+  ::protobuf_youliao_2eserver_2eproto::InitDefaultsFileTransferRespone();
+  return *internal_default_instance();
+}
+
+
+void FileTransferRespone::Clear() {
+// @@protoc_insertion_point(message_clear_start:youliao.pdu.server.FileTransferRespone)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  file_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  task_id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ::memset(&from_user_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&trans_mode_) -
+      reinterpret_cast<char*>(&from_user_id_)) + sizeof(trans_mode_));
+  _internal_metadata_.Clear();
+}
+
+bool FileTransferRespone::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:youliao.pdu.server.FileTransferRespone)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // uint32 from_user_id = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &from_user_id_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint32 to_user_id = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &to_user_id_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // string file_name = 3;
+      case 3: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(26u /* 26 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_file_name()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->file_name().data(), static_cast<int>(this->file_name().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "youliao.pdu.server.FileTransferRespone.file_name"));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint32 file_size = 4;
+      case 4: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(32u /* 32 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &file_size_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // string task_id = 5;
+      case 5: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(42u /* 42 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_task_id()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->task_id().data(), static_cast<int>(this->task_id().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "youliao.pdu.server.FileTransferRespone.task_id"));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint32 result_code = 6;
+      case 6: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(48u /* 48 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &result_code_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // .youliao.pdu.base.TransferFileType trans_mode = 7;
+      case 7: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(56u /* 56 & 0xFF */)) {
+          int value;
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_trans_mode(static_cast< ::youliao::pdu::base::TransferFileType >(value));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:youliao.pdu.server.FileTransferRespone)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:youliao.pdu.server.FileTransferRespone)
+  return false;
+#undef DO_
+}
+
+void FileTransferRespone::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:youliao.pdu.server.FileTransferRespone)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 from_user_id = 1;
+  if (this->from_user_id() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->from_user_id(), output);
+  }
+
+  // uint32 to_user_id = 2;
+  if (this->to_user_id() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->to_user_id(), output);
+  }
+
+  // string file_name = 3;
+  if (this->file_name().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->file_name().data(), static_cast<int>(this->file_name().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "youliao.pdu.server.FileTransferRespone.file_name");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      3, this->file_name(), output);
+  }
+
+  // uint32 file_size = 4;
+  if (this->file_size() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->file_size(), output);
+  }
+
+  // string task_id = 5;
+  if (this->task_id().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->task_id().data(), static_cast<int>(this->task_id().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "youliao.pdu.server.FileTransferRespone.task_id");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      5, this->task_id(), output);
+  }
+
+  // uint32 result_code = 6;
+  if (this->result_code() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->result_code(), output);
+  }
+
+  // .youliao.pdu.base.TransferFileType trans_mode = 7;
+  if (this->trans_mode() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      7, this->trans_mode(), output);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
+  // @@protoc_insertion_point(serialize_end:youliao.pdu.server.FileTransferRespone)
+}
+
+::google::protobuf::uint8* FileTransferRespone::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:youliao.pdu.server.FileTransferRespone)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 from_user_id = 1;
+  if (this->from_user_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->from_user_id(), target);
+  }
+
+  // uint32 to_user_id = 2;
+  if (this->to_user_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->to_user_id(), target);
+  }
+
+  // string file_name = 3;
+  if (this->file_name().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->file_name().data(), static_cast<int>(this->file_name().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "youliao.pdu.server.FileTransferRespone.file_name");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        3, this->file_name(), target);
+  }
+
+  // uint32 file_size = 4;
+  if (this->file_size() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->file_size(), target);
+  }
+
+  // string task_id = 5;
+  if (this->task_id().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->task_id().data(), static_cast<int>(this->task_id().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "youliao.pdu.server.FileTransferRespone.task_id");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        5, this->task_id(), target);
+  }
+
+  // uint32 result_code = 6;
+  if (this->result_code() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(6, this->result_code(), target);
+  }
+
+  // .youliao.pdu.base.TransferFileType trans_mode = 7;
+  if (this->trans_mode() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      7, this->trans_mode(), target);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:youliao.pdu.server.FileTransferRespone)
+  return target;
+}
+
+size_t FileTransferRespone::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:youliao.pdu.server.FileTransferRespone)
+  size_t total_size = 0;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
+  // string file_name = 3;
+  if (this->file_name().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->file_name());
+  }
+
+  // string task_id = 5;
+  if (this->task_id().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->task_id());
+  }
+
+  // uint32 from_user_id = 1;
+  if (this->from_user_id() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->from_user_id());
+  }
+
+  // uint32 to_user_id = 2;
+  if (this->to_user_id() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->to_user_id());
+  }
+
+  // uint32 file_size = 4;
+  if (this->file_size() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->file_size());
+  }
+
+  // uint32 result_code = 6;
+  if (this->result_code() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->result_code());
+  }
+
+  // .youliao.pdu.base.TransferFileType trans_mode = 7;
+  if (this->trans_mode() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->trans_mode());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void FileTransferRespone::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:youliao.pdu.server.FileTransferRespone)
+  GOOGLE_DCHECK_NE(&from, this);
+  const FileTransferRespone* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const FileTransferRespone>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:youliao.pdu.server.FileTransferRespone)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:youliao.pdu.server.FileTransferRespone)
+    MergeFrom(*source);
+  }
+}
+
+void FileTransferRespone::MergeFrom(const FileTransferRespone& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:youliao.pdu.server.FileTransferRespone)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.file_name().size() > 0) {
+
+    file_name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.file_name_);
+  }
+  if (from.task_id().size() > 0) {
+
+    task_id_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.task_id_);
+  }
+  if (from.from_user_id() != 0) {
+    set_from_user_id(from.from_user_id());
+  }
+  if (from.to_user_id() != 0) {
+    set_to_user_id(from.to_user_id());
+  }
+  if (from.file_size() != 0) {
+    set_file_size(from.file_size());
+  }
+  if (from.result_code() != 0) {
+    set_result_code(from.result_code());
+  }
+  if (from.trans_mode() != 0) {
+    set_trans_mode(from.trans_mode());
+  }
+}
+
+void FileTransferRespone::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:youliao.pdu.server.FileTransferRespone)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void FileTransferRespone::CopyFrom(const FileTransferRespone& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:youliao.pdu.server.FileTransferRespone)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool FileTransferRespone::IsInitialized() const {
+  return true;
+}
+
+void FileTransferRespone::Swap(FileTransferRespone* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void FileTransferRespone::InternalSwap(FileTransferRespone* other) {
+  using std::swap;
+  file_name_.Swap(&other->file_name_);
+  task_id_.Swap(&other->task_id_);
+  swap(from_user_id_, other->from_user_id_);
+  swap(to_user_id_, other->to_user_id_);
+  swap(file_size_, other->file_size_);
+  swap(result_code_, other->result_code_);
+  swap(trans_mode_, other->trans_mode_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata FileTransferRespone::GetMetadata() const {
+  protobuf_youliao_2eserver_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_youliao_2eserver_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace server
 }  // namespace pdu
@@ -5843,6 +6831,12 @@ template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::server::FileServer
 }
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::server::FileServerIPRespone* Arena::Create< ::youliao::pdu::server::FileServerIPRespone >(Arena* arena) {
   return Arena::CreateInternal< ::youliao::pdu::server::FileServerIPRespone >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::server::FileTransferRequest* Arena::Create< ::youliao::pdu::server::FileTransferRequest >(Arena* arena) {
+  return Arena::CreateInternal< ::youliao::pdu::server::FileTransferRequest >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::server::FileTransferRespone* Arena::Create< ::youliao::pdu::server::FileTransferRespone >(Arena* arena) {
+  return Arena::CreateInternal< ::youliao::pdu::server::FileTransferRespone >(arena);
 }
 }  // namespace protobuf
 }  // namespace google

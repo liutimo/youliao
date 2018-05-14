@@ -5,7 +5,7 @@
 #include <QPainter>
 #include <QPixmap>
 #include <QMouseEvent>
-#include "YLChatWidget/ylchatwidget.h"
+#include "YLChatWidget/ylsinglechatwidget.h"
 #include "YLCommonControl/ylmodifyremark.h"
 #include "ylmainwidget.h"
 #include "YLNetWork/http/httphelper.h"
@@ -244,32 +244,30 @@ void YLListItem::paintEvent(QPaintEvent *event)
 
 void YLListItem::openChatWidget()
 {
-    YLChatWidget *chatWidget = GlobalData::getChatWidget(friend_.friendId());
-    if (chatWidget == nullptr)
+    YLSingleChatWidget *singleChatWidget = GlobalData::getSingleChatWidget(friend_.friendId());
+    if (singleChatWidget == nullptr)
     {
-        chatWidget = new YLChatWidget;
-        chatWidget->resize(800, 600);
-        chatWidget->setFriend(friend_);
-        GlobalData::addChatWidget(friend_.friendId(), chatWidget);
-    }
-
-    chatWidget->show();
-
-    connect(chatWidget, &YLChatWidget::loadFinish, this, [this, chatWidget](){
-        //未读计数显示则说明有未读消息
-        if (m_counter_bubble->isVisible())
-        {
-            auto msgs = GlobalData::getMessagesByFriendId(friend_.friendId());
-
-            for (const YLMessage &msg : msgs)
+        singleChatWidget = new YLSingleChatWidget;
+        singleChatWidget->setFriend(friend_);
+        GlobalData::addSingleChatWidget(friend_.friendId(), singleChatWidget);
+        connect(singleChatWidget, &YLSingleChatWidget::loadFinish, this, [this, singleChatWidget](){
+            //未读计数显示则说明有未读消息
+            if (m_counter_bubble->isVisible())
             {
-                chatWidget->receiveMessage(friend_.friendId(), msg.getMsgContent());
-            }
+                auto msgs = GlobalData::getMessagesByFriendId(friend_.friendId());
 
-            GlobalData::removeMessageByFriendId(friend_.friendId());
-            YLMessageTip::instance()->updateList();
-            GlobalData::setLatestMsgId(friend_.friendId(), 0);
-            emit readCompleted(friend_.friendId());
-        }
-    });
+                for (const YLMessage &msg : msgs)
+                {
+                    singleChatWidget->receiveMessage(friend_.friendId(), msg.getMsgContent());
+                }
+
+                GlobalData::removeMessageByFriendId(friend_.friendId());
+                YLMessageTip::instance()->updateList();
+                GlobalData::setLatestMsgId(friend_.friendId(), 0);
+                emit readCompleted(friend_.friendId());
+            }
+            });
+    }
+    singleChatWidget->show();
+
 }
