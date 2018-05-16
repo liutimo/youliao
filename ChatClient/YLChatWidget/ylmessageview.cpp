@@ -40,6 +40,23 @@ void YLMessageView::addLeft(const QString &head, const QString &content)
     page()->runJavaScript(script);
 }
 
+
+void YLMessageView::addCancelSend(const QString &fileName, const QString &fileSize)
+{
+    QString script = QString("document.getElementById(\"content\").insertAdjacentHTML(\"beforeEnd\",\"<div class='pfile'><div class='filetip'> <img src='qrc:/res/YLChatWidget/time.png'/> 您取消接收文件“%1” (%2)的发送，文件传输失败。</div></div>\")").arg(fileName).arg(fileSize);
+    page()->runJavaScript(script);
+    script = QString("keepOnBottom()");
+    page()->runJavaScript(script);
+}
+
+void YLMessageView::addCancelRecv(const QString &fileName, const QString &fileSize)
+{
+    QString script = QString("document.getElementById(\"content\").insertAdjacentHTML(\"beforeEnd\",\"<div class='pfile'><div class='filetip'> <img src='qrc:/res/YLChatWidget/time.png'/> 对方取消接收“%1”(%2)，文件发送失败</div></div>\")").arg(fileName).arg(fileSize);
+    page()->runJavaScript(script);
+    script = QString("keepOnBottom()");
+    page()->runJavaScript(script);
+}
+
 void YLMessageView::copy()
 {
 

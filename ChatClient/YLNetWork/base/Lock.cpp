@@ -43,6 +43,17 @@ void Mutex::unlock()
     pthread_mutex_unlock(&m_mutex);
 }
 
+///////////////////////////////////
+AutoLock::AutoLock(Mutex &mutex) : m_mutex(mutex)
+{
+    m_mutex.lock();
+}
+
+AutoLock::~AutoLock()
+{
+    m_mutex.unlock();
+}
+
 //////////////////////////////////
 Condition::Condition() : Mutex()
 {

@@ -32,6 +32,7 @@ namespace youliao
         enum
         {
             NETWORK_CONNECT = 0,    //连接进入
+            NETWORK_CONFIRM,        // 连接成功建立后的第一次写
             NETWORK_READ,           //可读
             NETWORK_WRITE,          //可写
             NETWORK_CLOSE           //关闭连接

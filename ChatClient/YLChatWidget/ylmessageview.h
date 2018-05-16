@@ -13,6 +13,9 @@ public:
 
     void addLeft(const QString &, const QString &);
     void addRight(const QString &, const QString&);
+    void addCancelSend(const QString &, const QString &);
+    void addCancelRecv(const QString &, const QString &);
+
 public slots:
     void copy();
 

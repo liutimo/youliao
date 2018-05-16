@@ -9,7 +9,6 @@
 #include "YLNetWork/http/httphelper.h"
 #include "yltransferfiletasklistwidget.h"
 #include "YLChatWidget/ylemoticonwidget.h"
-
 #include <QDir>
 #include <QLabel>
 #include <QPixmap>
@@ -44,6 +43,34 @@ void YLSingleChatWidget::setFriend(const YLFriend &fri)
         //send request
         YLBusiness::getLatestMsgId(m_friend.friendId());
     }
+}
+
+
+void YLSingleChatWidget::addSendFileItem(const QString &taskId)
+{
+    if (m_transfer_file_widget->count() < 1)
+    {
+            m_split_button->show();
+            m_hide = false;
+    }
+    m_transfer_file_widget->addSendFile(taskId);
+}
+
+
+void YLSingleChatWidget::addRecvFileItem(const QString &taskId)
+{
+    if (m_transfer_file_widget->count() < 1)
+    {
+            m_split_button->show();
+            m_hide = false;
+    }
+    m_transfer_file_widget->addRecvFile(taskId);
+}
+
+
+void YLSingleChatWidget::updateFileTransferProgressBar(const QString &taskId, uint32_t progress)
+{
+    m_transfer_file_widget->updateFileTransferProgressBar(taskId, progress);
 }
 
 void YLSingleChatWidget::init()
@@ -142,6 +169,13 @@ void YLSingleChatWidget::initRight()
 
     m_transfer_file_widget = new YLTransferFileTaskListWidget(this);
     m_transfer_file_widget->hide();
+    connect(m_transfer_file_widget, &YLTransferFileTaskListWidget::cancelSend, this, [this](const QString &fileName, const QString &fileSize){
+        m_message_view->addCancelSend(fileName, fileSize);
+    });
+
+    connect(m_transfer_file_widget, &YLTransferFileTaskListWidget::cancelRecv, this, [this](const QString &fileName, const QString &fileSize){
+        m_message_view->addCancelRecv(fileName, fileSize);
+    });
 }
 
 void YLSingleChatWidget::updateSizeAndPosition()
@@ -280,10 +314,5 @@ void YLSingleChatWidget::selectFile()
     QString filePath = QFileDialog::getOpenFileName(this, "选择", QDir::homePath());
 
     QFile file(filePath);
-
-    m_transfer_file_widget->addSendFile(file.fileName(), file.size());
-    m_split_button->show();
-    m_hide = false;
-
     YLBusiness::sendFileRequest(m_friend.friendId(), file.fileName(), file.size(), m_friend.friendIsOnline());
 }

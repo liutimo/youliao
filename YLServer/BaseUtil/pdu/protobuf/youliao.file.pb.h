@@ -37,7 +37,7 @@ namespace protobuf_youliao_2efile_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[3];
+  static const ::google::protobuf::internal::ParseTable schema[8];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -49,18 +49,48 @@ void InitDefaultsSendFileResponeImpl();
 void InitDefaultsSendFileRespone();
 void InitDefaultsFileNotifyImpl();
 void InitDefaultsFileNotify();
+void InitDefaultsGetFileBlockRequestImpl();
+void InitDefaultsGetFileBlockRequest();
+void InitDefaultsGetFileBlockResponeImpl();
+void InitDefaultsGetFileBlockRespone();
+void InitDefaultsClientFileStateImpl();
+void InitDefaultsClientFileState();
+void InitDefaultsLoginFileServerRequestImpl();
+void InitDefaultsLoginFileServerRequest();
+void InitDefaultsLoginFileServerResponeImpl();
+void InitDefaultsLoginFileServerRespone();
 inline void InitDefaults() {
   InitDefaultsSendFileRequest();
   InitDefaultsSendFileRespone();
   InitDefaultsFileNotify();
+  InitDefaultsGetFileBlockRequest();
+  InitDefaultsGetFileBlockRespone();
+  InitDefaultsClientFileState();
+  InitDefaultsLoginFileServerRequest();
+  InitDefaultsLoginFileServerRespone();
 }
 }  // namespace protobuf_youliao_2efile_2eproto
 namespace youliao {
 namespace pdu {
 namespace file {
+class ClientFileState;
+class ClientFileStateDefaultTypeInternal;
+extern ClientFileStateDefaultTypeInternal _ClientFileState_default_instance_;
 class FileNotify;
 class FileNotifyDefaultTypeInternal;
 extern FileNotifyDefaultTypeInternal _FileNotify_default_instance_;
+class GetFileBlockRequest;
+class GetFileBlockRequestDefaultTypeInternal;
+extern GetFileBlockRequestDefaultTypeInternal _GetFileBlockRequest_default_instance_;
+class GetFileBlockRespone;
+class GetFileBlockResponeDefaultTypeInternal;
+extern GetFileBlockResponeDefaultTypeInternal _GetFileBlockRespone_default_instance_;
+class LoginFileServerRequest;
+class LoginFileServerRequestDefaultTypeInternal;
+extern LoginFileServerRequestDefaultTypeInternal _LoginFileServerRequest_default_instance_;
+class LoginFileServerRespone;
+class LoginFileServerResponeDefaultTypeInternal;
+extern LoginFileServerResponeDefaultTypeInternal _LoginFileServerRespone_default_instance_;
 class SendFileRequest;
 class SendFileRequestDefaultTypeInternal;
 extern SendFileRequestDefaultTypeInternal _SendFileRequest_default_instance_;
@@ -72,7 +102,12 @@ extern SendFileResponeDefaultTypeInternal _SendFileRespone_default_instance_;
 }  // namespace youliao
 namespace google {
 namespace protobuf {
+template<> ::youliao::pdu::file::ClientFileState* Arena::Create< ::youliao::pdu::file::ClientFileState>(Arena*);
 template<> ::youliao::pdu::file::FileNotify* Arena::Create< ::youliao::pdu::file::FileNotify>(Arena*);
+template<> ::youliao::pdu::file::GetFileBlockRequest* Arena::Create< ::youliao::pdu::file::GetFileBlockRequest>(Arena*);
+template<> ::youliao::pdu::file::GetFileBlockRespone* Arena::Create< ::youliao::pdu::file::GetFileBlockRespone>(Arena*);
+template<> ::youliao::pdu::file::LoginFileServerRequest* Arena::Create< ::youliao::pdu::file::LoginFileServerRequest>(Arena*);
+template<> ::youliao::pdu::file::LoginFileServerRespone* Arena::Create< ::youliao::pdu::file::LoginFileServerRespone>(Arena*);
 template<> ::youliao::pdu::file::SendFileRequest* Arena::Create< ::youliao::pdu::file::SendFileRequest>(Arena*);
 template<> ::youliao::pdu::file::SendFileRespone* Arena::Create< ::youliao::pdu::file::SendFileRespone>(Arena*);
 }  // namespace protobuf
@@ -560,6 +595,660 @@ class FileNotify : public ::google::protobuf::Message /* @@protoc_insertion_poin
   mutable int _cached_size_;
   friend struct ::protobuf_youliao_2efile_2eproto::TableStruct;
   friend void ::protobuf_youliao_2efile_2eproto::InitDefaultsFileNotifyImpl();
+};
+// -------------------------------------------------------------------
+
+class GetFileBlockRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.file.GetFileBlockRequest) */ {
+ public:
+  GetFileBlockRequest();
+  virtual ~GetFileBlockRequest();
+
+  GetFileBlockRequest(const GetFileBlockRequest& from);
+
+  inline GetFileBlockRequest& operator=(const GetFileBlockRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  GetFileBlockRequest(GetFileBlockRequest&& from) noexcept
+    : GetFileBlockRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline GetFileBlockRequest& operator=(GetFileBlockRequest&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const GetFileBlockRequest& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const GetFileBlockRequest* internal_default_instance() {
+    return reinterpret_cast<const GetFileBlockRequest*>(
+               &_GetFileBlockRequest_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    3;
+
+  void Swap(GetFileBlockRequest* other);
+  friend void swap(GetFileBlockRequest& a, GetFileBlockRequest& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline GetFileBlockRequest* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<GetFileBlockRequest>(NULL);
+  }
+
+  GetFileBlockRequest* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<GetFileBlockRequest>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const GetFileBlockRequest& from);
+  void MergeFrom(const GetFileBlockRequest& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(GetFileBlockRequest* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string task_id = 1;
+  void clear_task_id();
+  static const int kTaskIdFieldNumber = 1;
+  const ::std::string& task_id() const;
+  void set_task_id(const ::std::string& value);
+  #if LANG_CXX11
+  void set_task_id(::std::string&& value);
+  #endif
+  void set_task_id(const char* value);
+  void set_task_id(const char* value, size_t size);
+  ::std::string* mutable_task_id();
+  ::std::string* release_task_id();
+  void set_allocated_task_id(::std::string* task_id);
+
+  // uint32 user_id = 2;
+  void clear_user_id();
+  static const int kUserIdFieldNumber = 2;
+  ::google::protobuf::uint32 user_id() const;
+  void set_user_id(::google::protobuf::uint32 value);
+
+  // .youliao.pdu.base.TransferFileType trans_mode = 3;
+  void clear_trans_mode();
+  static const int kTransModeFieldNumber = 3;
+  ::youliao::pdu::base::TransferFileType trans_mode() const;
+  void set_trans_mode(::youliao::pdu::base::TransferFileType value);
+
+  // uint32 offest = 4;
+  void clear_offest();
+  static const int kOffestFieldNumber = 4;
+  ::google::protobuf::uint32 offest() const;
+  void set_offest(::google::protobuf::uint32 value);
+
+  // uint32 data_size = 5;
+  void clear_data_size();
+  static const int kDataSizeFieldNumber = 5;
+  ::google::protobuf::uint32 data_size() const;
+  void set_data_size(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.file.GetFileBlockRequest)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr task_id_;
+  ::google::protobuf::uint32 user_id_;
+  int trans_mode_;
+  ::google::protobuf::uint32 offest_;
+  ::google::protobuf::uint32 data_size_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2efile_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2efile_2eproto::InitDefaultsGetFileBlockRequestImpl();
+};
+// -------------------------------------------------------------------
+
+class GetFileBlockRespone : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.file.GetFileBlockRespone) */ {
+ public:
+  GetFileBlockRespone();
+  virtual ~GetFileBlockRespone();
+
+  GetFileBlockRespone(const GetFileBlockRespone& from);
+
+  inline GetFileBlockRespone& operator=(const GetFileBlockRespone& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  GetFileBlockRespone(GetFileBlockRespone&& from) noexcept
+    : GetFileBlockRespone() {
+    *this = ::std::move(from);
+  }
+
+  inline GetFileBlockRespone& operator=(GetFileBlockRespone&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const GetFileBlockRespone& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const GetFileBlockRespone* internal_default_instance() {
+    return reinterpret_cast<const GetFileBlockRespone*>(
+               &_GetFileBlockRespone_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    4;
+
+  void Swap(GetFileBlockRespone* other);
+  friend void swap(GetFileBlockRespone& a, GetFileBlockRespone& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline GetFileBlockRespone* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<GetFileBlockRespone>(NULL);
+  }
+
+  GetFileBlockRespone* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<GetFileBlockRespone>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const GetFileBlockRespone& from);
+  void MergeFrom(const GetFileBlockRespone& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(GetFileBlockRespone* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string task_id = 2;
+  void clear_task_id();
+  static const int kTaskIdFieldNumber = 2;
+  const ::std::string& task_id() const;
+  void set_task_id(const ::std::string& value);
+  #if LANG_CXX11
+  void set_task_id(::std::string&& value);
+  #endif
+  void set_task_id(const char* value);
+  void set_task_id(const char* value, size_t size);
+  ::std::string* mutable_task_id();
+  ::std::string* release_task_id();
+  void set_allocated_task_id(::std::string* task_id);
+
+  // bytes file_data = 5;
+  void clear_file_data();
+  static const int kFileDataFieldNumber = 5;
+  const ::std::string& file_data() const;
+  void set_file_data(const ::std::string& value);
+  #if LANG_CXX11
+  void set_file_data(::std::string&& value);
+  #endif
+  void set_file_data(const char* value);
+  void set_file_data(const void* value, size_t size);
+  ::std::string* mutable_file_data();
+  ::std::string* release_file_data();
+  void set_allocated_file_data(::std::string* file_data);
+
+  // uint32 result_code = 1;
+  void clear_result_code();
+  static const int kResultCodeFieldNumber = 1;
+  ::google::protobuf::uint32 result_code() const;
+  void set_result_code(::google::protobuf::uint32 value);
+
+  // uint32 user_id = 3;
+  void clear_user_id();
+  static const int kUserIdFieldNumber = 3;
+  ::google::protobuf::uint32 user_id() const;
+  void set_user_id(::google::protobuf::uint32 value);
+
+  // uint32 offest = 4;
+  void clear_offest();
+  static const int kOffestFieldNumber = 4;
+  ::google::protobuf::uint32 offest() const;
+  void set_offest(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.file.GetFileBlockRespone)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr task_id_;
+  ::google::protobuf::internal::ArenaStringPtr file_data_;
+  ::google::protobuf::uint32 result_code_;
+  ::google::protobuf::uint32 user_id_;
+  ::google::protobuf::uint32 offest_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2efile_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2efile_2eproto::InitDefaultsGetFileBlockResponeImpl();
+};
+// -------------------------------------------------------------------
+
+class ClientFileState : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.file.ClientFileState) */ {
+ public:
+  ClientFileState();
+  virtual ~ClientFileState();
+
+  ClientFileState(const ClientFileState& from);
+
+  inline ClientFileState& operator=(const ClientFileState& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  ClientFileState(ClientFileState&& from) noexcept
+    : ClientFileState() {
+    *this = ::std::move(from);
+  }
+
+  inline ClientFileState& operator=(ClientFileState&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ClientFileState& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const ClientFileState* internal_default_instance() {
+    return reinterpret_cast<const ClientFileState*>(
+               &_ClientFileState_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    5;
+
+  void Swap(ClientFileState* other);
+  friend void swap(ClientFileState& a, ClientFileState& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline ClientFileState* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<ClientFileState>(NULL);
+  }
+
+  ClientFileState* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<ClientFileState>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const ClientFileState& from);
+  void MergeFrom(const ClientFileState& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(ClientFileState* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string task_id = 2;
+  void clear_task_id();
+  static const int kTaskIdFieldNumber = 2;
+  const ::std::string& task_id() const;
+  void set_task_id(const ::std::string& value);
+  #if LANG_CXX11
+  void set_task_id(::std::string&& value);
+  #endif
+  void set_task_id(const char* value);
+  void set_task_id(const char* value, size_t size);
+  ::std::string* mutable_task_id();
+  ::std::string* release_task_id();
+  void set_allocated_task_id(::std::string* task_id);
+
+  // uint32 user_id = 1;
+  void clear_user_id();
+  static const int kUserIdFieldNumber = 1;
+  ::google::protobuf::uint32 user_id() const;
+  void set_user_id(::google::protobuf::uint32 value);
+
+  // .youliao.pdu.base.ClientFileState state = 3;
+  void clear_state();
+  static const int kStateFieldNumber = 3;
+  ::youliao::pdu::base::ClientFileState state() const;
+  void set_state(::youliao::pdu::base::ClientFileState value);
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.file.ClientFileState)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr task_id_;
+  ::google::protobuf::uint32 user_id_;
+  int state_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2efile_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2efile_2eproto::InitDefaultsClientFileStateImpl();
+};
+// -------------------------------------------------------------------
+
+class LoginFileServerRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.file.LoginFileServerRequest) */ {
+ public:
+  LoginFileServerRequest();
+  virtual ~LoginFileServerRequest();
+
+  LoginFileServerRequest(const LoginFileServerRequest& from);
+
+  inline LoginFileServerRequest& operator=(const LoginFileServerRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  LoginFileServerRequest(LoginFileServerRequest&& from) noexcept
+    : LoginFileServerRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline LoginFileServerRequest& operator=(LoginFileServerRequest&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const LoginFileServerRequest& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const LoginFileServerRequest* internal_default_instance() {
+    return reinterpret_cast<const LoginFileServerRequest*>(
+               &_LoginFileServerRequest_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    6;
+
+  void Swap(LoginFileServerRequest* other);
+  friend void swap(LoginFileServerRequest& a, LoginFileServerRequest& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline LoginFileServerRequest* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<LoginFileServerRequest>(NULL);
+  }
+
+  LoginFileServerRequest* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<LoginFileServerRequest>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const LoginFileServerRequest& from);
+  void MergeFrom(const LoginFileServerRequest& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(LoginFileServerRequest* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string task_id = 2;
+  void clear_task_id();
+  static const int kTaskIdFieldNumber = 2;
+  const ::std::string& task_id() const;
+  void set_task_id(const ::std::string& value);
+  #if LANG_CXX11
+  void set_task_id(::std::string&& value);
+  #endif
+  void set_task_id(const char* value);
+  void set_task_id(const char* value, size_t size);
+  ::std::string* mutable_task_id();
+  ::std::string* release_task_id();
+  void set_allocated_task_id(::std::string* task_id);
+
+  // uint32 user_id = 1;
+  void clear_user_id();
+  static const int kUserIdFieldNumber = 1;
+  ::google::protobuf::uint32 user_id() const;
+  void set_user_id(::google::protobuf::uint32 value);
+
+  // .youliao.pdu.base.ClientFileRole client_role = 3;
+  void clear_client_role();
+  static const int kClientRoleFieldNumber = 3;
+  ::youliao::pdu::base::ClientFileRole client_role() const;
+  void set_client_role(::youliao::pdu::base::ClientFileRole value);
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.file.LoginFileServerRequest)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr task_id_;
+  ::google::protobuf::uint32 user_id_;
+  int client_role_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2efile_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2efile_2eproto::InitDefaultsLoginFileServerRequestImpl();
+};
+// -------------------------------------------------------------------
+
+class LoginFileServerRespone : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.file.LoginFileServerRespone) */ {
+ public:
+  LoginFileServerRespone();
+  virtual ~LoginFileServerRespone();
+
+  LoginFileServerRespone(const LoginFileServerRespone& from);
+
+  inline LoginFileServerRespone& operator=(const LoginFileServerRespone& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  LoginFileServerRespone(LoginFileServerRespone&& from) noexcept
+    : LoginFileServerRespone() {
+    *this = ::std::move(from);
+  }
+
+  inline LoginFileServerRespone& operator=(LoginFileServerRespone&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const LoginFileServerRespone& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const LoginFileServerRespone* internal_default_instance() {
+    return reinterpret_cast<const LoginFileServerRespone*>(
+               &_LoginFileServerRespone_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    7;
+
+  void Swap(LoginFileServerRespone* other);
+  friend void swap(LoginFileServerRespone& a, LoginFileServerRespone& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline LoginFileServerRespone* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<LoginFileServerRespone>(NULL);
+  }
+
+  LoginFileServerRespone* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<LoginFileServerRespone>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const LoginFileServerRespone& from);
+  void MergeFrom(const LoginFileServerRespone& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(LoginFileServerRespone* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string task_id = 2;
+  void clear_task_id();
+  static const int kTaskIdFieldNumber = 2;
+  const ::std::string& task_id() const;
+  void set_task_id(const ::std::string& value);
+  #if LANG_CXX11
+  void set_task_id(::std::string&& value);
+  #endif
+  void set_task_id(const char* value);
+  void set_task_id(const char* value, size_t size);
+  ::std::string* mutable_task_id();
+  ::std::string* release_task_id();
+  void set_allocated_task_id(::std::string* task_id);
+
+  // uint32 result_code = 1;
+  void clear_result_code();
+  static const int kResultCodeFieldNumber = 1;
+  ::google::protobuf::uint32 result_code() const;
+  void set_result_code(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.file.LoginFileServerRespone)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr task_id_;
+  ::google::protobuf::uint32 result_code_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2efile_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2efile_2eproto::InitDefaultsLoginFileServerResponeImpl();
 };
 // ===================================================================
 
@@ -1081,9 +1770,525 @@ inline void FileNotify::set_offline_ready(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:youliao.pdu.file.FileNotify.offline_ready)
 }
 
+// -------------------------------------------------------------------
+
+// GetFileBlockRequest
+
+// string task_id = 1;
+inline void GetFileBlockRequest::clear_task_id() {
+  task_id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& GetFileBlockRequest::task_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.file.GetFileBlockRequest.task_id)
+  return task_id_.GetNoArena();
+}
+inline void GetFileBlockRequest::set_task_id(const ::std::string& value) {
+  
+  task_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:youliao.pdu.file.GetFileBlockRequest.task_id)
+}
+#if LANG_CXX11
+inline void GetFileBlockRequest::set_task_id(::std::string&& value) {
+  
+  task_id_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:youliao.pdu.file.GetFileBlockRequest.task_id)
+}
+#endif
+inline void GetFileBlockRequest::set_task_id(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  task_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:youliao.pdu.file.GetFileBlockRequest.task_id)
+}
+inline void GetFileBlockRequest::set_task_id(const char* value, size_t size) {
+  
+  task_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:youliao.pdu.file.GetFileBlockRequest.task_id)
+}
+inline ::std::string* GetFileBlockRequest::mutable_task_id() {
+  
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.file.GetFileBlockRequest.task_id)
+  return task_id_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* GetFileBlockRequest::release_task_id() {
+  // @@protoc_insertion_point(field_release:youliao.pdu.file.GetFileBlockRequest.task_id)
+  
+  return task_id_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void GetFileBlockRequest::set_allocated_task_id(::std::string* task_id) {
+  if (task_id != NULL) {
+    
+  } else {
+    
+  }
+  task_id_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), task_id);
+  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.file.GetFileBlockRequest.task_id)
+}
+
+// uint32 user_id = 2;
+inline void GetFileBlockRequest::clear_user_id() {
+  user_id_ = 0u;
+}
+inline ::google::protobuf::uint32 GetFileBlockRequest::user_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.file.GetFileBlockRequest.user_id)
+  return user_id_;
+}
+inline void GetFileBlockRequest::set_user_id(::google::protobuf::uint32 value) {
+  
+  user_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.file.GetFileBlockRequest.user_id)
+}
+
+// .youliao.pdu.base.TransferFileType trans_mode = 3;
+inline void GetFileBlockRequest::clear_trans_mode() {
+  trans_mode_ = 0;
+}
+inline ::youliao::pdu::base::TransferFileType GetFileBlockRequest::trans_mode() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.file.GetFileBlockRequest.trans_mode)
+  return static_cast< ::youliao::pdu::base::TransferFileType >(trans_mode_);
+}
+inline void GetFileBlockRequest::set_trans_mode(::youliao::pdu::base::TransferFileType value) {
+  
+  trans_mode_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.file.GetFileBlockRequest.trans_mode)
+}
+
+// uint32 offest = 4;
+inline void GetFileBlockRequest::clear_offest() {
+  offest_ = 0u;
+}
+inline ::google::protobuf::uint32 GetFileBlockRequest::offest() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.file.GetFileBlockRequest.offest)
+  return offest_;
+}
+inline void GetFileBlockRequest::set_offest(::google::protobuf::uint32 value) {
+  
+  offest_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.file.GetFileBlockRequest.offest)
+}
+
+// uint32 data_size = 5;
+inline void GetFileBlockRequest::clear_data_size() {
+  data_size_ = 0u;
+}
+inline ::google::protobuf::uint32 GetFileBlockRequest::data_size() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.file.GetFileBlockRequest.data_size)
+  return data_size_;
+}
+inline void GetFileBlockRequest::set_data_size(::google::protobuf::uint32 value) {
+  
+  data_size_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.file.GetFileBlockRequest.data_size)
+}
+
+// -------------------------------------------------------------------
+
+// GetFileBlockRespone
+
+// uint32 result_code = 1;
+inline void GetFileBlockRespone::clear_result_code() {
+  result_code_ = 0u;
+}
+inline ::google::protobuf::uint32 GetFileBlockRespone::result_code() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.file.GetFileBlockRespone.result_code)
+  return result_code_;
+}
+inline void GetFileBlockRespone::set_result_code(::google::protobuf::uint32 value) {
+  
+  result_code_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.file.GetFileBlockRespone.result_code)
+}
+
+// string task_id = 2;
+inline void GetFileBlockRespone::clear_task_id() {
+  task_id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& GetFileBlockRespone::task_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.file.GetFileBlockRespone.task_id)
+  return task_id_.GetNoArena();
+}
+inline void GetFileBlockRespone::set_task_id(const ::std::string& value) {
+  
+  task_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:youliao.pdu.file.GetFileBlockRespone.task_id)
+}
+#if LANG_CXX11
+inline void GetFileBlockRespone::set_task_id(::std::string&& value) {
+  
+  task_id_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:youliao.pdu.file.GetFileBlockRespone.task_id)
+}
+#endif
+inline void GetFileBlockRespone::set_task_id(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  task_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:youliao.pdu.file.GetFileBlockRespone.task_id)
+}
+inline void GetFileBlockRespone::set_task_id(const char* value, size_t size) {
+  
+  task_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:youliao.pdu.file.GetFileBlockRespone.task_id)
+}
+inline ::std::string* GetFileBlockRespone::mutable_task_id() {
+  
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.file.GetFileBlockRespone.task_id)
+  return task_id_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* GetFileBlockRespone::release_task_id() {
+  // @@protoc_insertion_point(field_release:youliao.pdu.file.GetFileBlockRespone.task_id)
+  
+  return task_id_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void GetFileBlockRespone::set_allocated_task_id(::std::string* task_id) {
+  if (task_id != NULL) {
+    
+  } else {
+    
+  }
+  task_id_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), task_id);
+  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.file.GetFileBlockRespone.task_id)
+}
+
+// uint32 user_id = 3;
+inline void GetFileBlockRespone::clear_user_id() {
+  user_id_ = 0u;
+}
+inline ::google::protobuf::uint32 GetFileBlockRespone::user_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.file.GetFileBlockRespone.user_id)
+  return user_id_;
+}
+inline void GetFileBlockRespone::set_user_id(::google::protobuf::uint32 value) {
+  
+  user_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.file.GetFileBlockRespone.user_id)
+}
+
+// uint32 offest = 4;
+inline void GetFileBlockRespone::clear_offest() {
+  offest_ = 0u;
+}
+inline ::google::protobuf::uint32 GetFileBlockRespone::offest() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.file.GetFileBlockRespone.offest)
+  return offest_;
+}
+inline void GetFileBlockRespone::set_offest(::google::protobuf::uint32 value) {
+  
+  offest_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.file.GetFileBlockRespone.offest)
+}
+
+// bytes file_data = 5;
+inline void GetFileBlockRespone::clear_file_data() {
+  file_data_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& GetFileBlockRespone::file_data() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.file.GetFileBlockRespone.file_data)
+  return file_data_.GetNoArena();
+}
+inline void GetFileBlockRespone::set_file_data(const ::std::string& value) {
+  
+  file_data_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:youliao.pdu.file.GetFileBlockRespone.file_data)
+}
+#if LANG_CXX11
+inline void GetFileBlockRespone::set_file_data(::std::string&& value) {
+  
+  file_data_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:youliao.pdu.file.GetFileBlockRespone.file_data)
+}
+#endif
+inline void GetFileBlockRespone::set_file_data(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  file_data_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:youliao.pdu.file.GetFileBlockRespone.file_data)
+}
+inline void GetFileBlockRespone::set_file_data(const void* value, size_t size) {
+  
+  file_data_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:youliao.pdu.file.GetFileBlockRespone.file_data)
+}
+inline ::std::string* GetFileBlockRespone::mutable_file_data() {
+  
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.file.GetFileBlockRespone.file_data)
+  return file_data_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* GetFileBlockRespone::release_file_data() {
+  // @@protoc_insertion_point(field_release:youliao.pdu.file.GetFileBlockRespone.file_data)
+  
+  return file_data_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void GetFileBlockRespone::set_allocated_file_data(::std::string* file_data) {
+  if (file_data != NULL) {
+    
+  } else {
+    
+  }
+  file_data_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), file_data);
+  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.file.GetFileBlockRespone.file_data)
+}
+
+// -------------------------------------------------------------------
+
+// ClientFileState
+
+// uint32 user_id = 1;
+inline void ClientFileState::clear_user_id() {
+  user_id_ = 0u;
+}
+inline ::google::protobuf::uint32 ClientFileState::user_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.file.ClientFileState.user_id)
+  return user_id_;
+}
+inline void ClientFileState::set_user_id(::google::protobuf::uint32 value) {
+  
+  user_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.file.ClientFileState.user_id)
+}
+
+// string task_id = 2;
+inline void ClientFileState::clear_task_id() {
+  task_id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& ClientFileState::task_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.file.ClientFileState.task_id)
+  return task_id_.GetNoArena();
+}
+inline void ClientFileState::set_task_id(const ::std::string& value) {
+  
+  task_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:youliao.pdu.file.ClientFileState.task_id)
+}
+#if LANG_CXX11
+inline void ClientFileState::set_task_id(::std::string&& value) {
+  
+  task_id_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:youliao.pdu.file.ClientFileState.task_id)
+}
+#endif
+inline void ClientFileState::set_task_id(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  task_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:youliao.pdu.file.ClientFileState.task_id)
+}
+inline void ClientFileState::set_task_id(const char* value, size_t size) {
+  
+  task_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:youliao.pdu.file.ClientFileState.task_id)
+}
+inline ::std::string* ClientFileState::mutable_task_id() {
+  
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.file.ClientFileState.task_id)
+  return task_id_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* ClientFileState::release_task_id() {
+  // @@protoc_insertion_point(field_release:youliao.pdu.file.ClientFileState.task_id)
+  
+  return task_id_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void ClientFileState::set_allocated_task_id(::std::string* task_id) {
+  if (task_id != NULL) {
+    
+  } else {
+    
+  }
+  task_id_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), task_id);
+  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.file.ClientFileState.task_id)
+}
+
+// .youliao.pdu.base.ClientFileState state = 3;
+inline void ClientFileState::clear_state() {
+  state_ = 0;
+}
+inline ::youliao::pdu::base::ClientFileState ClientFileState::state() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.file.ClientFileState.state)
+  return static_cast< ::youliao::pdu::base::ClientFileState >(state_);
+}
+inline void ClientFileState::set_state(::youliao::pdu::base::ClientFileState value) {
+  
+  state_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.file.ClientFileState.state)
+}
+
+// -------------------------------------------------------------------
+
+// LoginFileServerRequest
+
+// uint32 user_id = 1;
+inline void LoginFileServerRequest::clear_user_id() {
+  user_id_ = 0u;
+}
+inline ::google::protobuf::uint32 LoginFileServerRequest::user_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.file.LoginFileServerRequest.user_id)
+  return user_id_;
+}
+inline void LoginFileServerRequest::set_user_id(::google::protobuf::uint32 value) {
+  
+  user_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.file.LoginFileServerRequest.user_id)
+}
+
+// string task_id = 2;
+inline void LoginFileServerRequest::clear_task_id() {
+  task_id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& LoginFileServerRequest::task_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.file.LoginFileServerRequest.task_id)
+  return task_id_.GetNoArena();
+}
+inline void LoginFileServerRequest::set_task_id(const ::std::string& value) {
+  
+  task_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:youliao.pdu.file.LoginFileServerRequest.task_id)
+}
+#if LANG_CXX11
+inline void LoginFileServerRequest::set_task_id(::std::string&& value) {
+  
+  task_id_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:youliao.pdu.file.LoginFileServerRequest.task_id)
+}
+#endif
+inline void LoginFileServerRequest::set_task_id(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  task_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:youliao.pdu.file.LoginFileServerRequest.task_id)
+}
+inline void LoginFileServerRequest::set_task_id(const char* value, size_t size) {
+  
+  task_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:youliao.pdu.file.LoginFileServerRequest.task_id)
+}
+inline ::std::string* LoginFileServerRequest::mutable_task_id() {
+  
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.file.LoginFileServerRequest.task_id)
+  return task_id_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* LoginFileServerRequest::release_task_id() {
+  // @@protoc_insertion_point(field_release:youliao.pdu.file.LoginFileServerRequest.task_id)
+  
+  return task_id_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void LoginFileServerRequest::set_allocated_task_id(::std::string* task_id) {
+  if (task_id != NULL) {
+    
+  } else {
+    
+  }
+  task_id_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), task_id);
+  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.file.LoginFileServerRequest.task_id)
+}
+
+// .youliao.pdu.base.ClientFileRole client_role = 3;
+inline void LoginFileServerRequest::clear_client_role() {
+  client_role_ = 0;
+}
+inline ::youliao::pdu::base::ClientFileRole LoginFileServerRequest::client_role() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.file.LoginFileServerRequest.client_role)
+  return static_cast< ::youliao::pdu::base::ClientFileRole >(client_role_);
+}
+inline void LoginFileServerRequest::set_client_role(::youliao::pdu::base::ClientFileRole value) {
+  
+  client_role_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.file.LoginFileServerRequest.client_role)
+}
+
+// -------------------------------------------------------------------
+
+// LoginFileServerRespone
+
+// uint32 result_code = 1;
+inline void LoginFileServerRespone::clear_result_code() {
+  result_code_ = 0u;
+}
+inline ::google::protobuf::uint32 LoginFileServerRespone::result_code() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.file.LoginFileServerRespone.result_code)
+  return result_code_;
+}
+inline void LoginFileServerRespone::set_result_code(::google::protobuf::uint32 value) {
+  
+  result_code_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.file.LoginFileServerRespone.result_code)
+}
+
+// string task_id = 2;
+inline void LoginFileServerRespone::clear_task_id() {
+  task_id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& LoginFileServerRespone::task_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.file.LoginFileServerRespone.task_id)
+  return task_id_.GetNoArena();
+}
+inline void LoginFileServerRespone::set_task_id(const ::std::string& value) {
+  
+  task_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:youliao.pdu.file.LoginFileServerRespone.task_id)
+}
+#if LANG_CXX11
+inline void LoginFileServerRespone::set_task_id(::std::string&& value) {
+  
+  task_id_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:youliao.pdu.file.LoginFileServerRespone.task_id)
+}
+#endif
+inline void LoginFileServerRespone::set_task_id(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  task_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:youliao.pdu.file.LoginFileServerRespone.task_id)
+}
+inline void LoginFileServerRespone::set_task_id(const char* value, size_t size) {
+  
+  task_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:youliao.pdu.file.LoginFileServerRespone.task_id)
+}
+inline ::std::string* LoginFileServerRespone::mutable_task_id() {
+  
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.file.LoginFileServerRespone.task_id)
+  return task_id_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* LoginFileServerRespone::release_task_id() {
+  // @@protoc_insertion_point(field_release:youliao.pdu.file.LoginFileServerRespone.task_id)
+  
+  return task_id_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void LoginFileServerRespone::set_allocated_task_id(::std::string* task_id) {
+  if (task_id != NULL) {
+    
+  } else {
+    
+  }
+  task_id_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), task_id);
+  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.file.LoginFileServerRespone.task_id)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

@@ -58,6 +58,9 @@ private:
     void _HandleSearchGroupRespone(BasePdu *pdu);
     void _HandleAddGroupRespone(BasePdu *pdu);
     void _HandleVerifyNotify(BasePdu *pdu);
+    void _handleSendFileRespone(BasePdu *pdu);
+    void _HandleFileNotify(BasePdu *pdu);
+
 private:
     explicit PduHandler(QObject *parent = nullptr);
 

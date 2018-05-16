@@ -357,12 +357,17 @@ enum FileCID {
   CID_FILE_REQUEST = 2049,
   CID_FILE_RESPONE = 2050,
   CID_FILE_NOTIFY = 2051,
+  CID_FILE_GET_BLOCK_REQUEST = 2052,
+  CID_FILE_GET_BLOCK_RESPONE = 2053,
+  CID_FILE_STATE = 2054,
+  CID_FILE_LOGIN_REQUEST = 2055,
+  CID_FILE_LOGIN_RESPONE = 2056,
   FileCID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   FileCID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool FileCID_IsValid(int value);
 const FileCID FileCID_MIN = CID_FILE_ZERO;
-const FileCID FileCID_MAX = CID_FILE_NOTIFY;
+const FileCID FileCID_MAX = CID_FILE_LOGIN_RESPONE;
 const int FileCID_ARRAYSIZE = FileCID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* FileCID_descriptor();
@@ -625,6 +630,30 @@ inline bool ClientFileRole_Parse(
     const ::std::string& name, ClientFileRole* value) {
   return ::google::protobuf::internal::ParseNamedEnum<ClientFileRole>(
     ClientFileRole_descriptor(), name, value);
+}
+enum ClientFileState {
+  CLIENT_FILE_ZERO = 0,
+  CLIENT_FILE_PEER_READY = 1,
+  CLIENT_FILE_CANCEL = 2,
+  CLIENT_FILE_REFUSE = 3,
+  CLIENT_FILE_DONE = 4,
+  ClientFileState_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  ClientFileState_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+bool ClientFileState_IsValid(int value);
+const ClientFileState ClientFileState_MIN = CLIENT_FILE_ZERO;
+const ClientFileState ClientFileState_MAX = CLIENT_FILE_DONE;
+const int ClientFileState_ARRAYSIZE = ClientFileState_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* ClientFileState_descriptor();
+inline const ::std::string& ClientFileState_Name(ClientFileState value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    ClientFileState_descriptor(), value);
+}
+inline bool ClientFileState_Parse(
+    const ::std::string& name, ClientFileState* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<ClientFileState>(
+    ClientFileState_descriptor(), name, value);
 }
 // ===================================================================
 
@@ -3546,6 +3575,11 @@ template <> struct is_proto_enum< ::youliao::pdu::base::ClientFileRole> : ::goog
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::youliao::pdu::base::ClientFileRole>() {
   return ::youliao::pdu::base::ClientFileRole_descriptor();
+}
+template <> struct is_proto_enum< ::youliao::pdu::base::ClientFileState> : ::google::protobuf::internal::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::youliao::pdu::base::ClientFileState>() {
+  return ::youliao::pdu::base::ClientFileState_descriptor();
 }
 
 }  // namespace protobuf

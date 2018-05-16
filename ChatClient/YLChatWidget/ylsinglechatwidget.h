@@ -28,6 +28,10 @@ public:
     ~YLSingleChatWidget();
     void setFriend(const YLFriend &fri);
 
+    void addSendFileItem(const QString &taskId);
+    void addRecvFileItem(const QString &taskId);
+    void updateFileTransferProgressBar(const QString &taskId, uint32_t progress);
+
 signals:
     void loadFinish();
 

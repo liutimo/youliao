@@ -11,7 +11,7 @@ public:
     virtual ~LoginConn();
 
     bool connect(const std::string &server_ip, uint16_t port);
-
+    void onConfirm();
     void handlePdu(BasePdu *) override;
 private:
     void _ConnectToMsgServer(const std::string &server_ip, uint16_t port);

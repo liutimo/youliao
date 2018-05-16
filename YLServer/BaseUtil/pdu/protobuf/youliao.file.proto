@@ -33,3 +33,45 @@ message FileNotify{
     youliao.pdu.base.TransferFileType trans_mode = 7;
     uint32 offline_ready = 8;				//1:True 0:False
 }
+
+//请求文件块
+message GetFileBlockRequest
+{
+    string task_id = 1;
+    uint32 user_id = 2;
+    youliao.pdu.base.TransferFileType trans_mode = 3;
+    uint32 offest = 4;
+    uint32 data_size = 5;
+}
+
+//文件块响应
+message GetFileBlockRespone
+{
+    uint32 result_code = 1;
+    string task_id = 2;
+    uint32 user_id = 3;
+    uint32 offest = 4;
+    bytes file_data = 5;
+}
+
+//客户端处理文件状态
+message ClientFileState
+{
+    uint32 user_id = 1;
+    string task_id = 2;
+    youliao.pdu.base.ClientFileState state = 3;
+}
+
+//登录文件服务器
+message LoginFileServerRequest
+{
+    uint32 user_id = 1;
+    string task_id = 2;
+    youliao.pdu.base.ClientFileRole client_role = 3;
+}
+
+message LoginFileServerRespone
+{
+    uint32 result_code = 1;
+    string task_id = 2;
+}

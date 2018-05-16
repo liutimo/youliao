@@ -55,11 +55,6 @@ void MsgServConn::connect(const std::string &server_ip, uint16_t port)
     pduSender->connect();
     pduSender->setMsgServConn(this);
 
-//    log("启动pdu处理线程");
-//    if (!PduHandler::instance())
-//    {
-//        exit(0);
-//    }
 }
 
 void MsgServConn::handlePdu(BasePdu *pdu)

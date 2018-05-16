@@ -1,5 +1,4 @@
 #include "yladdrequest.h"
-
 YLAddRequest::YLAddRequest(QObject *parent) : QObject(parent)
 {
 
@@ -111,3 +110,4 @@ uint32_t YLAddRequest::getGroupId() const
 {
     return m_group_id;
 }
+

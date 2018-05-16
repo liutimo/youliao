@@ -20,7 +20,8 @@ HEADERS += \
     $$PWD/pdusender.h \
     $$PWD/ylbusiness.h \
     $$PWD/pduhandler.h \
-    $$PWD/http/httphelper.h
+    $$PWD/http/httphelper.h \
+    $$PWD/login/ylfiletransferconn.h
 
 SOURCES += \
     $$PWD/base/BaseConn.cpp \
@@ -39,5 +40,6 @@ SOURCES += \
     $$PWD/pdusender.cpp \
     $$PWD/ylbusiness.cpp \
     $$PWD/pduhandler.cpp \
-    $$PWD/http/httphelper.cpp
+    $$PWD/http/httphelper.cpp \
+    $$PWD/login/ylfiletransferconn.cpp
 

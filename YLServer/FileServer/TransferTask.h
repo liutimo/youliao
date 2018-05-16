@@ -202,11 +202,11 @@ public:
     }
 
     // 检查输入是否合法
-    virtual bool CheckByUserIDAndFileRole(uint32_t user_id, int file_role) const { return false; }
+    virtual bool checkByUserIDAndFileRole(uint32_t user_id, int file_role) const { return false; }
 
-    virtual int DoRecvData(uint32_t user_id, uint32_t offset, const char* data, uint32_t data_size) { return -1; }
+    virtual int doRecvData(uint32_t user_id, uint32_t offset, const char* data, uint32_t data_size) { return -1; }
 
-    virtual int DoPullFileRequest(uint32_t user_id, uint32_t offset, uint32_t data_size, std::string* data) { return -1; }
+    virtual int doPullFileRequest(uint32_t user_id, uint32_t offset, uint32_t data_size, std::string* data) { return -1; }
 
 
 protected:

@@ -1,12 +1,15 @@
 #include "yltransferfiletasklistwidget.h"
 #include <QLabel>
-#include <QProgressBar>
-#include <QPushButton>
-#include <QPixmap>
-#include <QScrollArea>
 #include <QDebug>
+#include <QPixmap>
+#include <QPushButton>
+#include <QScrollArea>
 #include <QVBoxLayout>
-YLTransferFileTaskListWidget::YLTransferFileTaskListWidget(QWidget *parent) : QWidget(parent)
+#include <QProgressBar>
+#include <QTimer>
+#include "YLFileTransfer/ylfiletransfermanager.h"
+#include "YLFileTransfer/ylfiletransferthread.h"
+YLTransferFileTaskListWidget::YLTransferFileTaskListWidget(QWidget *parent) : QWidget(parent), m_count(0)
 {
     initLayout();
     m_scroll_area = new QScrollArea(this);
@@ -26,16 +29,61 @@ YLTransferFileTaskListWidget::~YLTransferFileTaskListWidget()
     qDebug() << "~YLTransferFileTaskListWidget()";
     delete m_v_layout;
     delete m_h_layout;
-
 }
 
 
-void YLTransferFileTaskListWidget::addSendFile(const QString &fileName, uint32_t fileSize)
+void YLTransferFileTaskListWidget::addSendFile(const QString &taskId)
 {
     YLSendFileWidget *w = new YLSendFileWidget;
-    w->setFileInfo(fileName, fileSize);
+    w->setTaskId(taskId);
     m_v_layout->addWidget(w);
+    ++m_count;
+
+    m_file_send_map[taskId] = w;
+
+    connect(w, &YLSendFileWidget::cancel, this, [this](const QString& fileName, const QString &fileSize){
+        emit cancelSend(fileName, fileSize);
+        auto key = m_file_send_map.key((YLSendFileWidget*)sender());
+        m_file_send_map.remove(key);
+        --m_count;
+    });
 }
+
+void YLTransferFileTaskListWidget::updateFileTransferProgressBar(const QString &taskId, uint32_t progress)
+{
+    YLSendFileWidget *sendWidget = m_file_send_map[taskId];
+    if (sendWidget)
+    {
+        sendWidget->updateProgressBar(progress);
+        return;
+    }
+
+    YLReceiveFileWidget *recvWidget = m_file_recv_map[taskId];
+    if (recvWidget)
+    {
+        recvWidget->updateProgressBar(progress);
+        return;
+    }
+
+}
+
+void YLTransferFileTaskListWidget::addRecvFile(const QString &taskId)
+{
+    YLReceiveFileWidget *w = new YLReceiveFileWidget;
+    w->setTaskId(taskId);
+    m_v_layout->addWidget(w);
+    ++m_count;
+
+    m_file_recv_map[taskId] = w;
+
+    connect(w, &YLReceiveFileWidget::cancel, this, [this](const QString& fileName, const QString &fileSize){
+        emit cancelRecv(fileName, fileSize);
+        auto key = m_file_recv_map.key((YLReceiveFileWidget*)sender());
+        m_file_recv_map.remove(key);
+        --m_count;
+    });
+}
+
 
 void YLTransferFileTaskListWidget::initLayout()
 {
@@ -45,6 +93,11 @@ void YLTransferFileTaskListWidget::initLayout()
 
     m_h_layout = new QHBoxLayout;
     m_h_layout->setMargin(0);
+}
+
+int YLTransferFileTaskListWidget::count()
+{
+    return m_count;
 }
 
 /*********************YLSendFileWidget******************/
@@ -67,7 +120,7 @@ void YLSendFileWidget::init()
     m_file_icon->setPixmap(QPixmap(":/res/FileIcon/audio.png"));
     m_file_icon->move(5, 10);
 
-    m_file_info = new QLabel("赤裸裸.mp3 (5.4M)", this);
+    m_file_info = new QLabel(this);
     QFont f = m_file_info->font();
     f.setPixelSize(10);
     m_file_info->setFont(f);
@@ -78,6 +131,7 @@ void YLSendFileWidget::init()
     m_cancel->move(260, 50);
     m_cancel->setStyleSheet(qss_button);
     connect(m_cancel, &QPushButton::clicked, this, [this](){
+        emit cancel(m_file_name, m_file_size);
         close();
     });
 
@@ -99,17 +153,28 @@ void YLSendFileWidget::init()
     m_transfer_progress = new QProgressBar(this);
     m_transfer_progress->setFixedSize(240, 5);
     m_transfer_progress->move(50, 35);
-    m_transfer_progress->setMaximum(100);
-    m_transfer_progress->setValue(50);
     m_transfer_progress->setTextVisible(false);
 
     m_speed = new QLabel(this);
-    m_speed->setText("800.09kb/s");
+    m_speed->setText("等待传输中...");
     m_speed->move(50, 50);
 }
 
-void YLSendFileWidget::setFileInfo(const QString &fileName, uint32_t fileSize)
+void YLSendFileWidget::setTaskId(const QString &taskId)
 {
+    m_task_id = taskId;
+
+    YLTransferFileEntity entity;
+    if (!YLTransferFileEntityManager::instance()->getFileInfoByTaskId(taskId.toStdString(), entity))
+        return;
+
+    uint32_t fileSize = entity.m_file_size;
+    m_file_name = entity.m_file_name.c_str();
+
+
+    m_transfer_progress->setMaximum(fileSize);
+    m_transfer_progress->setValue(0);
+
     QString s;
     if (fileSize < 1024)
     {
@@ -123,13 +188,20 @@ void YLSendFileWidget::setFileInfo(const QString &fileName, uint32_t fileSize)
     {
         s = QString::number(fileSize / 1024.0 / 1024.0) + "MB";
     }
-    m_file_info->setText(QString("%1 (%2)").arg(fileName).arg(s));
+
+    m_file_size = s;
+    m_file_info->setText(QString("%1 (%2)").arg(m_file_name).arg(s));
+}
+
+void YLSendFileWidget::updateProgressBar(uint32_t progress)
+{
+    m_transfer_progress->setValue(progress);
 }
 
 
 
 /*******************YLReceiveFileWidget****************/
-YLReceiveFileWidget::YLReceiveFileWidget(QWidget *parent) : QWidget(parent)
+YLReceiveFileWidget::YLReceiveFileWidget(QWidget *parent) : QWidget(parent), m_last_time_progress(0)
 {
     setFixedSize(300, 75);
     init();
@@ -143,7 +215,7 @@ void YLReceiveFileWidget::init()
     m_file_icon->setPixmap(QPixmap(":/res/FileIcon/audio.png"));
     m_file_icon->move(5, 10);
 
-    m_file_info = new QLabel("赤裸裸.mp3 (5.4M)", this);
+    m_file_info = new QLabel(this);
     QFont f = m_file_info->font();
     f.setPixelSize(10);
     m_file_info->setFont(f);
@@ -154,12 +226,21 @@ void YLReceiveFileWidget::init()
     m_cancel->move(260, 50);
     m_cancel->setStyleSheet(qss_button);
     connect(m_cancel, &QPushButton::clicked, this, [this](){
+        m_timer->stop();
+        emit cancel(m_file_name, m_file_size);
         close();
     });
     m_receive = new QPushButton("接收", this);
     m_receive->setFixedSize(35, 22);
     m_receive->move(180, 50);
     m_receive->setStyleSheet(qss_button);
+    connect(m_receive, &QPushButton::clicked, this, [this]()
+    {
+        m_receive->hide();
+        m_save_as->hide();
+        YLTransferFileEntityManager::instance()->acceptFileTransfer(m_task_id.toStdString());
+        m_timer->start(500);
+    });
 
     m_save_as = new QPushButton("另存为", this);
     m_save_as->setFixedSize(35, 22);
@@ -174,6 +255,74 @@ void YLReceiveFileWidget::init()
     m_transfer_progress->setTextVisible(false);
 
     m_speed = new QLabel(this);
-    m_speed->setText("800.09kb/s");
+    m_speed->setText("等待传输中...");
     m_speed->move(50, 50);
+
+    m_timer = new QTimer(this);
+    connect(m_timer, &QTimer::timeout, this, [this](){
+        YLTransferFileEntity entity;
+        if (!YLTransferFileEntityManager::instance()->getFileInfoByTaskId(m_task_id.toStdString(), entity))
+            return;
+
+        uint32_t progress = entity.m_progress;
+
+        //0.5s内接收
+        double size = (progress - m_last_time_progress);
+        m_last_time_progress = progress;
+        size /= 0.5;
+
+        QString s;
+        if (size < 1024)
+        {
+            s = QString::number(size) + "Bytes";
+        }
+        else if (size > 1024 && size < 1024 * 1024)
+        {
+            s = QString::number(size / 1024.0) + "KB";
+        }
+        else if (size > 1024 * 1024 && size < 1024 * 1024 * 1024)
+        {
+            s = QString::number(size / 1024.0 / 1024.0) + "MB";
+        }
+
+        m_speed->setText(s + "/s");
+    });
+
+}
+
+void YLReceiveFileWidget::setTaskId(const QString &taskId)
+{
+    m_task_id = taskId;
+
+    YLTransferFileEntity entity;
+    if (!YLTransferFileEntityManager::instance()->getFileInfoByTaskId(taskId.toStdString(), entity))
+        return;
+
+    uint32_t fileSize = entity.m_file_size;
+    m_file_name = entity.m_file_name.c_str();
+
+    m_transfer_progress->setMaximum(fileSize);
+    m_transfer_progress->setValue(0);
+
+    QString s;
+    if (fileSize < 1024)
+    {
+        s = QString::number(fileSize) + "Bytes";
+    }
+    else if (fileSize > 1024 && fileSize < 1024 * 1024)
+    {
+        s = QString::number(fileSize / 1024.0) + "KB";
+    }
+    else if (fileSize > 1024 * 1024 && fileSize < 1024 * 1024 * 1024)
+    {
+        s = QString::number(fileSize / 1024.0 / 1024.0) + "MB";
+    }
+    m_file_size = s;
+    m_file_info->setText(QString("%1 (%2)").arg(m_file_name).arg(s));
+}
+
+
+void YLReceiveFileWidget::updateProgressBar(uint32_t progress)
+{
+    m_transfer_progress->setValue(progress);
 }

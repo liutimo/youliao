@@ -27,15 +27,6 @@ bool LoginConn::connect(const std::string &server_ip, uint16_t port)
     if (m_handle != -1)
     {
         login_conn_map.insert(std::make_pair(m_handle, this));
-        //发送消息服务器请求
-        login::MsgServerRequest request;
-        BasePdu *basePdu = new BasePdu;
-        basePdu->setSID(base::SID_LOGIN);
-        basePdu->setCID(base::CID_LOGIN_REQUSET_MSGSERVER);
-        basePdu->writeMessage(&request);
-
-        sendBasePdu(basePdu);
-        delete basePdu;
 
         return true;
     }
@@ -44,6 +35,19 @@ bool LoginConn::connect(const std::string &server_ip, uint16_t port)
         onClose();
         return false;
     }
+}
+
+void LoginConn::onConfirm()
+{
+    //发送消息服务器请求
+    login::MsgServerRequest request;
+    BasePdu *basePdu = new BasePdu;
+    basePdu->setSID(base::SID_LOGIN);
+    basePdu->setCID(base::CID_LOGIN_REQUSET_MSGSERVER);
+    basePdu->writeMessage(&request);
+
+    sendBasePdu(basePdu);
+    delete basePdu;
 }
 
 void LoginConn::handlePdu(BasePdu *pdu)

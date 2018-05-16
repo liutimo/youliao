@@ -34,6 +34,7 @@ include(protobuf/protobuf.pri)
 include(YLTray/YLTray.pri)
 include(YLAddFriendWidgets/YLAddFriendWidgets.pri)
 include(YLDataBase/YLDataBase.pri)
+include(YLFileTransfer/YLFileTransfer.pri)
 
 SOURCES += \
         main.cpp \

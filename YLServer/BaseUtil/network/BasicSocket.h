@@ -41,7 +41,8 @@ namespace youliao
             void setCallBack(callback_t callback) { m_callback = callback; }
             void setCallBackData(callback_data data) { m_callback_data = data; }
             void setSocketState(SocketState state) { m_state = state; }
-
+            void setSendBufferSize(uint32_t sendSize);
+            void setRecvBufferSize(uint32_t recvSize);
 
             net_handle_t getHandle() const { return m_handle; }
 

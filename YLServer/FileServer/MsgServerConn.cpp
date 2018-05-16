@@ -132,6 +132,8 @@ void MsgServerConn::_HandleMsgFileTransfreRequest(BasePdu *pdu)
     basePdu.writeMessage(&respone);
     sendBasePdu(&basePdu);
 
-    if (!rv) //创建失败，关闭连接
-        close();
+    if (!rv) //任务创建失败
+    {
+        //告知客户端，无法传输文件
+    }
 }

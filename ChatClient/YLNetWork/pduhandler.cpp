@@ -11,8 +11,11 @@
 #include "protobuf/youliao.message.pb.h"
 #include "protobuf/youliao.session.pb.h"
 #include "protobuf/youliao.group.pb.h"
+#include "protobuf/youliao.file.pb.h"
 #include "YLDataBase/yldatabase.h"
 #include "globaldata.h"
+#include "YLFileTransfer/yltransferfile.h"
+#include "YLFileTransfer/ylfiletransfermanager.h"
 #include "YLTray/ylmaintray.h"
 //全局PDU list
 //主线程产生的所有pdu都会放入这个list中
@@ -127,6 +130,12 @@ void PduHandler::_HandleBasePdu(BasePdu *pdu)
         break;
     case base::CID_GROUP_VERIFY_NOTIFY:
         _HandleVerifyNotify(pdu);
+        break;
+    case base::CID_FILE_RESPONE:
+        _handleSendFileRespone(pdu);
+        break;
+    case base::CID_FILE_NOTIFY:
+        _HandleFileNotify(pdu);
         break;
     default:
         std::cout << "CID" << pdu->getCID() << "  SID:" << pdu->getSID();
@@ -526,3 +535,92 @@ void PduHandler::_HandleVerifyNotify(BasePdu *pdu)
 
     emit newAddRequest();
 }
+
+void PduHandler::_handleSendFileRespone(BasePdu *pdu)
+{
+    file::SendFileRespone respone;
+    respone.ParseFromString(pdu->getMessage());
+
+    uint32_t resultCode = respone.result_code();
+
+    if (resultCode != 0)
+    {
+        //任务创建失败！更新ＵＩ
+        return;
+    }
+    //保存任务信息
+    YLTransferFileEntity fileEntity;
+    fileEntity.m_task_id    = respone.task_id();
+    fileEntity.m_from_id    = respone.from_user_id();
+    fileEntity.m_to_id      = respone.to_user_id();
+    fileEntity.m_file_name  = respone.file_name();
+    fileEntity.setSaveFilePath(respone.file_name());    //?
+    fileEntity.m_time       = (uint32_t)time(nullptr);
+    uint32_t transMode      = respone.trans_mode();
+    if (base::FILE_TYPE_ONLINE == transMode)
+        fileEntity.m_client_role = base::CLIENT_REALTIME_SENDER;
+    else if (base::FILE_TYPE_OFFLINE == transMode)
+        fileEntity.m_client_role = base::CLIENT_OFFLINE_UPLOAD;
+
+    fileEntity.m_file_object = new YLTransferFile(respone.file_name(), false);
+
+    if (fileEntity.m_file_object)
+    {
+        fileEntity.m_file_size = fileEntity.m_file_object->length();
+    }
+
+    //连接到文件服务器
+    const base::IpAddress &ipAddress = respone.ip_addr_list(0);
+    fileEntity.m_ip = ipAddress.ip();
+    fileEntity.m_port = ipAddress.port();
+
+    if (!YLTransferFileEntityManager::instance()->pushYLTransferFileEntity(fileEntity))
+    {
+        YLTransferFileEntityManager::instance()->updateFileInfoBysTaskID(fileEntity);
+    }
+
+    //连接到文件服务器
+    YLTransferFileEntityManager::instance()->openFileSocketByTaskId(fileEntity.m_task_id);
+}
+
+
+void PduHandler::_HandleFileNotify(BasePdu *pdu)
+{
+    file::FileNotify fileNotify;
+    fileNotify.ParseFromString(pdu->getMessage());
+
+    YLTransferFileEntity entity;
+    entity.m_file_name  = fileNotify.file_name();
+    entity.m_from_id    = fileNotify.from_user_id();
+    entity.m_to_id      = fileNotify.to_user_id();
+    entity.m_task_id    = fileNotify.task_id();
+    entity.m_file_size  = fileNotify.file_size();
+
+    entity.m_file_object = new YLTransferFile(entity.m_file_name, true);
+
+    base::IpAddress ipAddress = fileNotify.ip_addr_list(0);
+    entity.m_ip = ipAddress.ip();
+    entity.m_port = ipAddress.port();
+
+    base::TransferFileType mode =  fileNotify.trans_mode();
+    if (mode == base::FILE_TYPE_ONLINE)
+    {
+        entity.m_client_role = base::CLIENT_REALTIME_RECVER;
+    }
+    else if (mode == base::FILE_TYPE_OFFLINE)
+    {
+        entity.m_client_role = base::CLIENT_OFFLINE_DOWNLOAD;
+    }
+    entity.m_time = (uint32_t)time(nullptr);
+
+    YLTransferFileEntityManager::instance()->pushYLTransferFileEntity(entity);
+
+    if (1 == fileNotify.offline_ready())
+    {
+        //离线文件传输结束
+    }
+
+    //连接服务器
+    YLTransferFileEntityManager::instance()->openFileSocketByTaskId(entity.m_task_id);
+}
+

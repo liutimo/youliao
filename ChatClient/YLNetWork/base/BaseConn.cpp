@@ -41,6 +41,9 @@ void youliao::network::baseconn_callback(callback_data data, uint8_t msg, net_ha
         case NETWORK_CLOSE:
             baseConn->onClose();
             break;
+        case NETWORK_CONFIRM:
+            baseConn->onConfirm();
+            break;
         case NETWORK_READ:
             baseConn->onRead();
             break;

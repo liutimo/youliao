@@ -35,6 +35,16 @@ namespace youliao
             pthread_mutexattr_t     m_mutexattr;
         };
 
+        class AutoLock
+        {
+        public:
+            AutoLock(Mutex &mutex);
+            ~AutoLock();
+
+        private:
+            Mutex &m_mutex;
+        };
+
         class Condition : public Mutex
         {
         public:

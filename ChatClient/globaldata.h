@@ -12,6 +12,7 @@
 #include "YLEntityObject/ylsession.h"
 #include "YLChatWidget/ylsinglechatwidget.h"
 #include "YLEntityObject/yladdrequest.h"
+#include "YLEntityObject/ylfile.h"
 #include "YLEntityObject/ylgroup.h"
 using namespace youliao::pdu;
 
@@ -71,6 +72,9 @@ public:
     static QVector<base::UserInfo> getMembersByGroupId(uint32_t groupId);
     static void setGroupMember(uint32_t groupId, const QVector<base::MemberInfo> &members);
     static base::MemberInfo& getMemberInfo(uint32_t groupId, uint32_t memberId);
+
+
+    //文件
 private:
     static youliao::pdu::base::UserInfo m_user;
     static QString m_header_image_path;
@@ -94,6 +98,8 @@ private:
     //只有全部加载完才会进入主界面
     static QMap<uint32_t, bool> m_load;
 
+
+    //文件
 };
 
 #endif // GLOBALDATA_H

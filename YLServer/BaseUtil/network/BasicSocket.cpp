@@ -60,6 +60,31 @@ BaseSocket::~BaseSocket()
 
 }
 
+void BaseSocket::setSendBufferSize(uint32_t sendSize)
+{
+    int ret = setsockopt(m_handle, SOL_SOCKET, SO_SNDBUF, &sendSize, 4);
+    if (ret == NETWORK_ERROR)
+    {}
+
+    socklen_t len = 4;
+    int size = 0;
+    getsockopt(m_handle, SOL_SOCKET, SO_SNDBUF, &size, &len);
+    log("socket = %d, sendBufferSize=%d", m_handle, size);
+}
+
+void BaseSocket::setRecvBufferSize(uint32_t recvSize)
+{
+    int ret = setsockopt(m_handle, SOL_SOCKET, SO_RCVBUF, &recvSize, 4);
+    if (ret == NETWORK_ERROR) {
+        log("set SO_RCVBUF failed for fd=%d", m_handle);
+    }
+
+    socklen_t len = 4;
+    int size = 0;
+    getsockopt(m_handle, SOL_SOCKET, SO_RCVBUF, &size, &len);
+    log("socket=%d recv_buf_size=%d", m_handle, size);
+}
+
 int BaseSocket::listen(const std::string &serv_ip, uint16_t port, callback_t callback, callback_data data)
 {
     if (m_handle == NETWORK_ERROR)

@@ -21,6 +21,8 @@ namespace youliao
     {
         static const int NETLIB_OPT_SET_CALLBACK        =  1;
         static const int NETLIB_OPT_SET_CALLBACK_DATA   =  2;
+        static const int NETLIB_OPT_SET_SEND_BUF_SIZE	=  3;
+        static const int NETLIB_OPT_SET_RECV_BUF_SIZE	=  4;
 
         static inline int netlib_init()
         {
@@ -102,6 +104,12 @@ namespace youliao
                     break;
                 case NETLIB_OPT_SET_CALLBACK_DATA:
                     baseSocket->setCallBackData((callback_data)optval);
+                    break;
+                case NETLIB_OPT_SET_SEND_BUF_SIZE:
+                    baseSocket->setSendBufferSize(*(uint32_t*)optval);
+                    break;
+                case NETLIB_OPT_SET_RECV_BUF_SIZE:
+                    baseSocket->setRecvBufferSize(*(uint32_t*)optval);
                     break;
                 default:
                     break;

@@ -44,6 +44,8 @@ enum ServerCID
     CID_SERVER_ROUTE_TO_MESSAGE           = 0x020D;     //RouteServer发送MsgServer
     CID_SERVER_FILE_SERVER_IP_REQUEST     = 0x020E;
     CID_SERVER_FILE_SERVER_IP_RESPONE     = 0x020F;
+    CID_SERVER_FILE_TRANSFER_REQUEST      = 0x0210;   //由消息服务器发送给文件服务器
+    CID_SERVER_FILE_TRANSFER_RESPONE      = 0x0211;   //由文件服务器发送给消息服务器
 }
 
 enum OtherCID
@@ -125,14 +127,18 @@ enum GroupCID
     CID_GROUP_SEARCH_GROUP_RESPONE  = 0x070B;
     CID_GROUP_VERIFY_NOTIFY         = 0x070C; //通知
 }
-
-
 //文件
 enum FileCID
 {
     CID_FILE_ZERO           = 0x0000;
     CID_FILE_REQUEST        = 0x0801;   //发送给消息服务器
     CID_FILE_RESPONE        = 0x0802;
+    CID_FILE_NOTIFY         = 0x0803;   //通知接受者
+    CID_FILE_GET_BLOCK_REQUEST  = 0x0804;
+    CID_FILE_GET_BLOCK_RESPONE  = 0x0805;
+    CID_FILE_STATE              = 0x0806;
+    CID_FILE_LOGIN_REQUEST      = 0x0807;
+    CID_FILE_LOGIN_RESPONE      = 0x0808;
 }
 
 
@@ -310,4 +316,22 @@ enum TransferFileType{
     FILE_TYPE_ZERO          = 0x00;
     FILE_TYPE_ONLINE        = 0x01;
     FILE_TYPE_OFFLINE       = 0x02;
+}
+
+enum ClientFileRole{
+    CLIENT_ZERO = 0x00;
+    CLIENT_REALTIME_SENDER  = 0x01;
+    CLIENT_REALTIME_RECVER  = 0x02;
+    CLIENT_OFFLINE_UPLOAD   = 0x03;
+    CLIENT_OFFLINE_DOWNLOAD = 0x04;
+}
+
+
+enum ClientFileState
+{
+    CLIENT_FILE_ZERO        = 0x00;
+    CLIENT_FILE_PEER_READY  = 0x01;
+    CLIENT_FILE_CANCEL      = 0x02;
+    CLIENT_FILE_REFUSE      = 0x03;
+    CLIENT_FILE_DONE        = 0x04;
 }

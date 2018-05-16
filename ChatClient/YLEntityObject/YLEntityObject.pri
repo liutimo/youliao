@@ -4,7 +4,8 @@ HEADERS += \
     $$PWD/ylfriend.h \
     $$PWD/ylsession.h \
     $$PWD/ylmessage.h \
-    $$PWD/yladdrequest.h
+    $$PWD/yladdrequest.h \
+    $$PWD/ylfile.h
 
 SOURCES += \
     $$PWD/yluser.cpp \
@@ -12,4 +13,5 @@ SOURCES += \
     $$PWD/ylfriend.cpp \
     $$PWD/ylsession.cpp \
     $$PWD/ylmessage.cpp \
-    $$PWD/yladdrequest.cpp
+    $$PWD/yladdrequest.cpp \
+    $$PWD/ylfile.cpp

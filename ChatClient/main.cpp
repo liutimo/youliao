@@ -4,16 +4,16 @@
 #include "YLLoginPanel/ylloginpanel.h"
 #include "signalforward.h"
 #include "YLDataBase/yldatabase.h"
-#include "YLChatWidget/ylchatlistwidget.h"
-#include "YLChatWidget/ylsinglechatwidget.h"
-#include "YLChatWidget/ylgroupchatwidget.h"
-#include "YLCommonControl/ylgroupmemberlistwidget.h"
-#include "YLCommonControl/ylbutton.h"
+#include "YLFileTransfer/ylfiletransferreceiver.h"
+#include "YLFileTransfer/yltransferfile.h"
 #include <QMenu>
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-//    a.setQuitOnLastWindowClosed(false);
+    a.setQuitOnLastWindowClosed(false);
+
+    //启动文件接收线程
+    YLFileTransferReceiver::instance();
 
     YLDataBase::instance();
 
@@ -23,8 +23,6 @@ int main(int argc, char *argv[])
     w.resize(500, 400);
     w.show();
 
-//    YLSingleChatWidget w;
-//    w.show();
 
     return a.exec();
 }

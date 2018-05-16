@@ -29,8 +29,6 @@ void* Thread::start_routine(void *arg)
     Thread *pThread = static_cast<Thread*>(arg);
     pThread->run();
     pThread->m_running = false;
-
-
     //execute over
     //exit thread
     pthread_exit(0);

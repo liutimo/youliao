@@ -42,6 +42,7 @@ FileServerConn *get_random_file_server_conn()
 {
     FileServerConn *conn = nullptr;
 
+    return (FileServerConn*)g_file_server_list[0].server_conn;
     if (0 == g_file_server_count)
     {
         return conn;
@@ -49,7 +50,7 @@ FileServerConn *get_random_file_server_conn()
 
     int32_t randomNum = rand() % g_file_server_count;
     conn = (FileServerConn*)g_file_server_list[randomNum].server_conn;
-    if (conn && conn->isOpen())
+    if (conn != nullptr && conn->isOpen())
         return conn;
     else
     {
@@ -63,6 +64,7 @@ FileServerConn *get_random_file_server_conn()
             }
         }
     }
+    return nullptr;
 }
 
 FileServerConn::FileServerConn() : m_open(false), m_server_index(0)
@@ -207,6 +209,8 @@ void FileServerConn::_HandleFileMsgTransferRespone(BasePdu *basePdu)
         fileNotify.set_file_size(fileSize);
         fileNotify.set_trans_mode(transMode);
         fileNotify.set_offline_ready(0);
+        fileNotify.set_task_id(taskId);
+
         for (auto iter = ipAddressList->begin(); iter != ipAddressList->end(); ++iter)
         {
             auto addr = fileNotify.add_ip_addr_list();

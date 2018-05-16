@@ -3,11 +3,14 @@
 #include "YLTray/ylmessagetip.h"
 #include "YLChatWidget/ylsinglechatwidget.h"
 #include "YLAddFriendWidgets/ylvalidatemessagewidget.h"
+#include "YLFileTransfer/ylfiletransferreceiver.h"
 SignalForward* SignalForward::s_signamlForward = nullptr;
 
 SignalForward::SignalForward(QObject *parent) : QObject(parent)
 {
-
+    connect(YLFileTransferReceiver::instance(), &YLFileTransferReceiver::addSendFileItem, this, &SignalForward::forwardAddSendFileItem);
+    connect(YLFileTransferReceiver::instance(), &YLFileTransferReceiver::addRecvFileItem, this, &SignalForward::forwardAddRecvFileItem);
+    connect(YLFileTransferReceiver::instance(), &YLFileTransferReceiver::updateProgressBar, this, &SignalForward::forwardUpdateProgressBar);
 }
 
 SignalForward* SignalForward::instance()
@@ -76,4 +79,26 @@ void SignalForward::forwordReadOne(uint32_t friendId, int type)
 void SignalForward::forwardInviteGroupSelected(uint32_t friId)
 {
     emit inviteGroupSelected(friId);
+}
+
+void SignalForward::forwardAddSendFileItem(uint32_t userId, const QString &taskId)
+{
+    GlobalData::getSingleChatWidget(userId)->addSendFileItem(taskId);
+}
+
+
+void SignalForward::forwardAddRecvFileItem(uint32_t userId, const QString &taskId)
+{
+
+    GlobalData::getSingleChatWidget(userId)->addRecvFileItem(taskId);
+}
+
+void SignalForward::forwardUpdateProgressBar(uint32_t userId, const QString &taskId ,uint32_t currentProgress)
+{
+    GlobalData::getSingleChatWidget(userId)->updateFileTransferProgressBar(taskId, currentProgress);
+}
+
+void SignalForward:: forwardTransferComplete(uint32_t userId, const QString &taskId)
+{
+
 }
