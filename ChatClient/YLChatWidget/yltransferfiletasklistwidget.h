@@ -28,6 +28,10 @@ public:
     void addSendFile(const QString &taskId);
     void addRecvFile(const QString &taskId);
     void updateFileTransferProgressBar(const QString &taskId, uint32_t progress);
+    void transferComplete(const QString &taskId);
+    void cancelFileTransfer(const QString &taskId);
+    void refuseFileTransfer(const QString &taskId);
+
 
     int count();
 signals:
@@ -75,6 +79,8 @@ private:
     QString m_file_name;
     QString m_file_size;
     QString m_task_id;
+
+    uint32_t m_start_time;
 };
 
 class YLReceiveFileWidget : public QWidget

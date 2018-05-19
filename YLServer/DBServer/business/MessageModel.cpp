@@ -4,10 +4,10 @@
 
 #include "MessageModel.h"
 #include "../DBPool.h"
-#include "../CachePool.h"
 #include "util/util.h"
 #include "FriendListModel.h"
 
+using namespace std;
 
 MessageModel* MessageModel::m_instance = nullptr;
 
@@ -28,27 +28,27 @@ MessageModel::~MessageModel()
 
 }
 
-bool MessageModel::getFriendOnlineStatus(uint32_t friend_id, int &msg_idx)
-{
-    auto conn = CacheManager::instance()->getCacheConn("OnlineUser");
-
-    msg_idx = 0;
-    if (conn)
-    {
-        string msgIdx =  conn->hget("user_map", to_string(friend_id));
-        if (msgIdx.empty())
-            return false;
-        else
-        {
-            msg_idx = atoi(msgIdx.c_str());
-            return true;
-        }
-
-    }
-    CacheManager::instance()->releaseCacheConn(conn);
-
-    return false;
-}
+//bool MessageModel::getFriendOnlineStatus(uint32_t friend_id, int &msg_idx)
+//{
+//    auto conn = CacheManager::instance()->getCacheConn("OnlineUser");
+//
+//    msg_idx = 0;
+//    if (conn)
+//    {
+//        string msgIdx =  conn->hget("user_map", to_string(friend_id));
+//        if (msgIdx.empty())
+//            return false;
+//        else
+//        {
+//            msg_idx = atoi(msgIdx.c_str());
+//            return true;
+//        }
+//
+//    }
+//    CacheManager::instance()->releaseCacheConn(conn);
+//
+//    return false;
+//}
 
 bool MessageModel::saveMessage(uint32_t relatedId, uint32_t senderId, uint32_t receiverId,
                                uint32_t messageType, uint32_t createTime, uint32_t messageId, const std::string &content)

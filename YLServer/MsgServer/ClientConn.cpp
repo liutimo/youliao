@@ -282,7 +282,6 @@ void ClientConn::_HandleFriendListGetRequest(BasePdu *pdu)
     }
 
     friendListRequest.set_msg_serv_idx(getMsgServIdx());
-    set_attach_data(friendListRequest, m_handle);
 
     DBServConn *dbServConn = get_db_server_conn();
 
@@ -316,34 +315,44 @@ void ClientConn::_HandleClientLoginOutRequest(BasePdu *pdu)
         conn->onClose();
     }
 
-    DBServConn *dbServConn = get_db_server_conn();
+    //发送到路由服务器
+    server::UserGoOffline userGoOffline;
+    userGoOffline.set_user_id(userId);
 
-    if (dbServConn)
-    {
-        server::UserOffline userOffline;
-        userOffline.set_user_id(userId);
-        BasePdu basePdu;
-        basePdu.setSID(base::SID_SERVER);
-        basePdu.setCID(base::CID_SERVER_USER_LOGOUT);
-        basePdu.writeMessage(&userOffline);
-        dbServConn->sendBasePdu(&basePdu);
-    }
-
-    //发送好友下线通知
-    server::RouteStatusChange routeMessage;
-    routeMessage.set_user_id(m_user_id);
-    routeMessage.set_route_status_type(base::ROUTE_MESSAGE_FRIEND_STATUS_CHANGE);
-    set_attach_data(routeMessage, base::USER_STATUS_OFFLINE);
-
-    BasePdu basePdu1;
-    basePdu1.setSID(base::SID_SERVER);
-    basePdu1.setCID(base::CID_SERVER_ROUTE_BROADCAST);
-    basePdu1.writeMessage(&routeMessage);
-
-    auto routeConn = get_route_server_conn();
-
+    RouteConn *routeConn = get_route_server_conn();
     if (routeConn)
-        routeConn->sendBasePdu(&basePdu1);
+        sendMessage(routeConn, userGoOffline, base::SID_SERVER, base::CID_SERVER_USER_GO_OFFLINE);
+
+//    DBServConn *dbServConn = get_db_server_conn();
+//
+//    if (dbServConn)
+//    {
+//        server::UserOffline userOffline;
+//        userOffline.set_user_id(userId);
+//        BasePdu basePdu;
+//        basePdu.setSID(base::SID_SERVER);
+//        basePdu.setCID(base::CID_SERVER_USER_LOGOUT);
+//        basePdu.writeMessage(&userOffline);
+//        dbServConn->sendBasePdu(&basePdu);
+//    }
+//
+//    //发送好友下线通知
+//    server::RouteStatusChange routeMessage;
+//    routeMessage.set_user_id(m_user_id);
+//    routeMessage.set_route_status_type(base::ROUTE_MESSAGE_FRIEND_STATUS_CHANGE);
+//    set_attach_data(routeMessage, base::USER_STATUS_OFFLINE);
+//
+//    BasePdu basePdu1;
+//    basePdu1.setSID(base::SID_SERVER);
+//    basePdu1.setCID(base::CID_SERVER_ROUTE_BROADCAST);
+//    basePdu1.writeMessage(&routeMessage);
+//
+//    auto routeConn = get_route_server_conn();
+//
+//    if (routeConn)
+//        routeConn->sendBasePdu(&basePdu1);
+
+
 }
 
 void ClientConn::_HandleMessageDataRequest(BasePdu *pdu)

@@ -8,6 +8,7 @@
 #include "YLCommonControl/ylbutton.h"
 #include "YLNetWork/http/httphelper.h"
 #include "yltransferfiletasklistwidget.h"
+#include "YLFileTransfer/ylfiletransfermanager.h"
 #include "YLChatWidget/ylemoticonwidget.h"
 #include <QDir>
 #include <QLabel>
@@ -71,6 +72,86 @@ void YLSingleChatWidget::addRecvFileItem(const QString &taskId)
 void YLSingleChatWidget::updateFileTransferProgressBar(const QString &taskId, uint32_t progress)
 {
     m_transfer_file_widget->updateFileTransferProgressBar(taskId, progress);
+}
+
+
+void YLSingleChatWidget::transferComplete(const QString &taskId)
+{
+    YLTransferFileEntity entity;
+    if (!YLTransferFileEntityManager::instance()->getFileInfoByTaskId(taskId.toStdString(), entity))
+        return;
+    QString s;
+    uint32_t size = entity.m_file_size;
+    if (size < 1024)
+    {
+        s = QString::number(size) + "Bytes";
+    }
+    else if (size > 1024 && size < 1024 * 1024)
+    {
+        s = QString::number(size / 1024.0) + "KB";
+    }
+    else if (size > 1024 * 1024 && size < 1024 * 1024 * 1024)
+    {
+        s = QString::number(size / 1024.0 / 1024.0) + "MB";
+    }
+    if (entity.m_client_role == base::CLIENT_REALTIME_SENDER)
+        m_message_view->sendFileSuccess(m_friend_header_path, entity.m_file_name.c_str(), s);
+    else
+        m_message_view->recvFileSuccess(m_friend_header_path, entity.m_file_name.c_str(), s);
+    m_transfer_file_widget->transferComplete(taskId);
+}
+
+
+void YLSingleChatWidget::cancelFileTransfer(const QString &taskId)
+{
+    YLTransferFileEntity entity;
+    if (!YLTransferFileEntityManager::instance()->getFileInfoByTaskId(taskId.toStdString(), entity))
+        return;
+    QString s;
+    uint32_t size = entity.m_file_size;
+    if (size < 1024)
+    {
+        s = QString::number(size) + "Bytes";
+    }
+    else if (size > 1024 && size < 1024 * 1024)
+    {
+        s = QString::number(size / 1024.0) + "KB";
+    }
+    else if (size > 1024 * 1024 && size < 1024 * 1024 * 1024)
+    {
+        s = QString::number(size / 1024.0 / 1024.0) + "MB";
+    }
+    if (entity.m_client_role == base::CLIENT_REALTIME_SENDER)
+        m_message_view->opponentCancalRecv(entity.m_file_name.c_str(), s);
+    else
+        m_message_view->opponentCancalSend(entity.m_file_name.c_str(), s);
+
+    m_transfer_file_widget->cancelFileTransfer(taskId);
+}
+
+void YLSingleChatWidget::refuseFileTransfer(const QString &taskId)
+{
+    YLTransferFileEntity entity;
+    if (!YLTransferFileEntityManager::instance()->getFileInfoByTaskId(taskId.toStdString(), entity))
+        return;
+    QString s;
+    uint32_t size = entity.m_file_size;
+    if (size < 1024)
+    {
+        s = QString::number(size) + "Bytes";
+    }
+    else if (size > 1024 && size < 1024 * 1024)
+    {
+        s = QString::number(size / 1024.0) + "KB";
+    }
+    else if (size > 1024 * 1024 && size < 1024 * 1024 * 1024)
+    {
+        s = QString::number(size / 1024.0 / 1024.0) + "MB";
+    }
+
+    m_message_view->opponentRefuseRecv(entity.m_file_name.c_str(), s);;
+
+    m_transfer_file_widget->refuseFileTransfer(taskId);
 }
 
 void YLSingleChatWidget::init()
@@ -312,6 +393,9 @@ void YLSingleChatWidget::selectFile()
 {
     //暂时只能发送文件
     QString filePath = QFileDialog::getOpenFileName(this, "选择", QDir::homePath());
+
+    if (filePath.isEmpty())
+        return;
 
     QFile file(filePath);
     YLBusiness::sendFileRequest(m_friend.friendId(), file.fileName(), file.size(), m_friend.friendIsOnline());

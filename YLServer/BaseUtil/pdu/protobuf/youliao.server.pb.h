@@ -40,7 +40,7 @@ namespace protobuf_youliao_2eserver_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[18];
+  static const ::google::protobuf::internal::ParseTable schema[20];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -82,6 +82,10 @@ void InitDefaultsFileTransferRequestImpl();
 void InitDefaultsFileTransferRequest();
 void InitDefaultsFileTransferResponeImpl();
 void InitDefaultsFileTransferRespone();
+void InitDefaultsUserGoOnlineImpl();
+void InitDefaultsUserGoOnline();
+void InitDefaultsUserGoOfflineImpl();
+void InitDefaultsUserGoOffline();
 inline void InitDefaults() {
   InitDefaultsValidateRequest();
   InitDefaultsValidateRespone();
@@ -101,6 +105,8 @@ inline void InitDefaults() {
   InitDefaultsFileServerIPRespone();
   InitDefaultsFileTransferRequest();
   InitDefaultsFileTransferRespone();
+  InitDefaultsUserGoOnline();
+  InitDefaultsUserGoOffline();
 }
 }  // namespace protobuf_youliao_2eserver_2eproto
 namespace youliao {
@@ -151,6 +157,12 @@ extern RouteMessageForwardDefaultTypeInternal _RouteMessageForward_default_insta
 class RouteStatusChange;
 class RouteStatusChangeDefaultTypeInternal;
 extern RouteStatusChangeDefaultTypeInternal _RouteStatusChange_default_instance_;
+class UserGoOffline;
+class UserGoOfflineDefaultTypeInternal;
+extern UserGoOfflineDefaultTypeInternal _UserGoOffline_default_instance_;
+class UserGoOnline;
+class UserGoOnlineDefaultTypeInternal;
+extern UserGoOnlineDefaultTypeInternal _UserGoOnline_default_instance_;
 class UserOffline;
 class UserOfflineDefaultTypeInternal;
 extern UserOfflineDefaultTypeInternal _UserOffline_default_instance_;
@@ -180,6 +192,8 @@ template<> ::youliao::pdu::server::RouteGetOnlineFriendRespone_OnlineFirendsEntr
 template<> ::youliao::pdu::server::RouteMessage* Arena::Create< ::youliao::pdu::server::RouteMessage>(Arena*);
 template<> ::youliao::pdu::server::RouteMessageForward* Arena::Create< ::youliao::pdu::server::RouteMessageForward>(Arena*);
 template<> ::youliao::pdu::server::RouteStatusChange* Arena::Create< ::youliao::pdu::server::RouteStatusChange>(Arena*);
+template<> ::youliao::pdu::server::UserGoOffline* Arena::Create< ::youliao::pdu::server::UserGoOffline>(Arena*);
+template<> ::youliao::pdu::server::UserGoOnline* Arena::Create< ::youliao::pdu::server::UserGoOnline>(Arena*);
 template<> ::youliao::pdu::server::UserOffline* Arena::Create< ::youliao::pdu::server::UserOffline>(Arena*);
 template<> ::youliao::pdu::server::ValidateRequest* Arena::Create< ::youliao::pdu::server::ValidateRequest>(Arena*);
 template<> ::youliao::pdu::server::ValidateRespone* Arena::Create< ::youliao::pdu::server::ValidateRespone>(Arena*);
@@ -2430,6 +2444,226 @@ class FileTransferRespone : public ::google::protobuf::Message /* @@protoc_inser
   friend struct ::protobuf_youliao_2eserver_2eproto::TableStruct;
   friend void ::protobuf_youliao_2eserver_2eproto::InitDefaultsFileTransferResponeImpl();
 };
+// -------------------------------------------------------------------
+
+class UserGoOnline : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.server.UserGoOnline) */ {
+ public:
+  UserGoOnline();
+  virtual ~UserGoOnline();
+
+  UserGoOnline(const UserGoOnline& from);
+
+  inline UserGoOnline& operator=(const UserGoOnline& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  UserGoOnline(UserGoOnline&& from) noexcept
+    : UserGoOnline() {
+    *this = ::std::move(from);
+  }
+
+  inline UserGoOnline& operator=(UserGoOnline&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const UserGoOnline& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const UserGoOnline* internal_default_instance() {
+    return reinterpret_cast<const UserGoOnline*>(
+               &_UserGoOnline_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    18;
+
+  void Swap(UserGoOnline* other);
+  friend void swap(UserGoOnline& a, UserGoOnline& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline UserGoOnline* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<UserGoOnline>(NULL);
+  }
+
+  UserGoOnline* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<UserGoOnline>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const UserGoOnline& from);
+  void MergeFrom(const UserGoOnline& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(UserGoOnline* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // uint32 user_id = 1;
+  void clear_user_id();
+  static const int kUserIdFieldNumber = 1;
+  ::google::protobuf::uint32 user_id() const;
+  void set_user_id(::google::protobuf::uint32 value);
+
+  // uint32 msg_index = 2;
+  void clear_msg_index();
+  static const int kMsgIndexFieldNumber = 2;
+  ::google::protobuf::uint32 msg_index() const;
+  void set_msg_index(::google::protobuf::uint32 value);
+
+  // .youliao.pdu.base.UserStatusType user_state = 3;
+  void clear_user_state();
+  static const int kUserStateFieldNumber = 3;
+  ::youliao::pdu::base::UserStatusType user_state() const;
+  void set_user_state(::youliao::pdu::base::UserStatusType value);
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.server.UserGoOnline)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 user_id_;
+  ::google::protobuf::uint32 msg_index_;
+  int user_state_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2eserver_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2eserver_2eproto::InitDefaultsUserGoOnlineImpl();
+};
+// -------------------------------------------------------------------
+
+class UserGoOffline : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.server.UserGoOffline) */ {
+ public:
+  UserGoOffline();
+  virtual ~UserGoOffline();
+
+  UserGoOffline(const UserGoOffline& from);
+
+  inline UserGoOffline& operator=(const UserGoOffline& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  UserGoOffline(UserGoOffline&& from) noexcept
+    : UserGoOffline() {
+    *this = ::std::move(from);
+  }
+
+  inline UserGoOffline& operator=(UserGoOffline&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const UserGoOffline& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const UserGoOffline* internal_default_instance() {
+    return reinterpret_cast<const UserGoOffline*>(
+               &_UserGoOffline_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    19;
+
+  void Swap(UserGoOffline* other);
+  friend void swap(UserGoOffline& a, UserGoOffline& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline UserGoOffline* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<UserGoOffline>(NULL);
+  }
+
+  UserGoOffline* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<UserGoOffline>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const UserGoOffline& from);
+  void MergeFrom(const UserGoOffline& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(UserGoOffline* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // uint32 user_id = 1;
+  void clear_user_id();
+  static const int kUserIdFieldNumber = 1;
+  ::google::protobuf::uint32 user_id() const;
+  void set_user_id(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.server.UserGoOffline)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 user_id_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2eserver_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2eserver_2eproto::InitDefaultsUserGoOfflineImpl();
+};
 // ===================================================================
 
 
@@ -4088,9 +4322,77 @@ inline void FileTransferRespone::set_trans_mode(::youliao::pdu::base::TransferFi
   // @@protoc_insertion_point(field_set:youliao.pdu.server.FileTransferRespone.trans_mode)
 }
 
+// -------------------------------------------------------------------
+
+// UserGoOnline
+
+// uint32 user_id = 1;
+inline void UserGoOnline::clear_user_id() {
+  user_id_ = 0u;
+}
+inline ::google::protobuf::uint32 UserGoOnline::user_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.server.UserGoOnline.user_id)
+  return user_id_;
+}
+inline void UserGoOnline::set_user_id(::google::protobuf::uint32 value) {
+  
+  user_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.server.UserGoOnline.user_id)
+}
+
+// uint32 msg_index = 2;
+inline void UserGoOnline::clear_msg_index() {
+  msg_index_ = 0u;
+}
+inline ::google::protobuf::uint32 UserGoOnline::msg_index() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.server.UserGoOnline.msg_index)
+  return msg_index_;
+}
+inline void UserGoOnline::set_msg_index(::google::protobuf::uint32 value) {
+  
+  msg_index_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.server.UserGoOnline.msg_index)
+}
+
+// .youliao.pdu.base.UserStatusType user_state = 3;
+inline void UserGoOnline::clear_user_state() {
+  user_state_ = 0;
+}
+inline ::youliao::pdu::base::UserStatusType UserGoOnline::user_state() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.server.UserGoOnline.user_state)
+  return static_cast< ::youliao::pdu::base::UserStatusType >(user_state_);
+}
+inline void UserGoOnline::set_user_state(::youliao::pdu::base::UserStatusType value) {
+  
+  user_state_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.server.UserGoOnline.user_state)
+}
+
+// -------------------------------------------------------------------
+
+// UserGoOffline
+
+// uint32 user_id = 1;
+inline void UserGoOffline::clear_user_id() {
+  user_id_ = 0u;
+}
+inline ::google::protobuf::uint32 UserGoOffline::user_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.server.UserGoOffline.user_id)
+  return user_id_;
+}
+inline void UserGoOffline::set_user_id(::google::protobuf::uint32 value) {
+  
+  user_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.server.UserGoOffline.user_id)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

@@ -73,6 +73,12 @@ struct OfflineFileHeader
         sprintf(m_file_name, fileName.c_str(), 512 < fileName.length() ? 512 : fileName.length());
     }
 
+    void setFileSize(uint32_t size)
+    {
+        m_file_size = size;
+    }
+
+
     std::string getTaskId() const {
         return m_task_id;
     }
@@ -237,7 +243,7 @@ public:
     virtual uint32_t getTransferMode() const override;
 
     virtual bool changePullState(uint32_t userId, int fileRole) override;
-    virtual bool checkByUserIDAndFileRole(uint32_t userId, int fileRole) const;
+    virtual bool checkByUserIDAndFileRole(uint32_t userId, int fileRole) const override ;
 
     virtual int doRecvData(uint32_t userId, uint32_t offset, const char* data, uint32_t dataSize) ;
     virtual int doPullFileRequest(uint32_t userId, uint32_t offset, uint32_t dataSize, std::string* data);
@@ -248,6 +254,69 @@ typedef std::map<std::string, BaseTransferTask*> TransferTaskMap;
 typedef std::map<BaseConn *, BaseTransferTask*> TransferTaskConnMap;
 
 
+////////////////////////////////////////////////
+#define SEGMENT_SIZE 32768
+
+class OfflineTransferTask : public  BaseTransferTask
+{
+public:
+    OfflineTransferTask(const std::string &taskId, uint32_t fromUserId, uint32_t toUserId, const std::string &fileName, uint32_t fileSize)
+    : BaseTransferTask(taskId, fromUserId, toUserId, fileName, fileSize)
+    {
+        m_fp = nullptr;
+        m_transfered_index = 0;
+        m_segment_size = setMaxSegmentSize(fileSize);
+    }
+
+    virtual ~OfflineTransferTask()
+    {
+        if (m_fp)
+        {
+            fclose(m_fp);
+            m_fp = nullptr;
+        }
+    }
+
+    static OfflineTransferTask* loadFromDisk(const std::string& task_id, uint32_t user_id);
+
+    virtual uint32_t getTransferMode() const;
+
+    virtual bool changePullState(uint32_t userId, int file_role);
+
+    virtual bool checkByUserIDAndFileRole(uint32_t user_id, int file_role) const override;
+
+    virtual int doRecvData(uint32_t userId, uint32_t offest, const char *data, uint32_t size);
+    virtual int doPullFileRequest(uint32_t userId, uint32_t offest, uint32_t dataSize, std::string &data);
+
+    inline int getSegmentSize() const { return m_segment_size; }
+
+    inline int getNextSegmentBlockSize()
+    {
+        int blockSize = SEGMENT_SIZE;
+        if (m_transfered_index + 1 == m_segment_size)
+            blockSize = m_file_size - m_transfered_index * SEGMENT_SIZE;
+        return blockSize;
+    }
+
+    uint32_t getNextOffest() const
+    {
+        return SEGMENT_SIZE * m_transfered_index;
+    }
+
+private:
+    inline int setMaxSegmentSize(uint32_t fileSize)
+    {
+        int segSize = fileSize / SEGMENT_SIZE;
+        if (fileSize % SEGMENT_SIZE != 0)
+            segSize = fileSize / SEGMENT_SIZE + 1;
+        return segSize;
+    }
+
+    FILE   *m_fp;
+    int     m_transfered_index;
+    int     m_segment_size;
+};
 
 std::string generateUUID();
+const char* getCurrentOfflinePath();
 #endif //LOGINSERVER_TRANSFERTASK_H

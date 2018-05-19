@@ -35,7 +35,8 @@ namespace youliao
             NETWORK_READ,           //可读
             NETWORK_WRITE,          //可写
             NETWORK_CLOSE,          //关闭连接
-            NETWORK_LOOP            //循环
+            NETWORK_LOOP,           //循环
+            NETWORK_CONFIRM         //验证
         };
 
 

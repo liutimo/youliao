@@ -5,7 +5,6 @@
 #include "ProxyConn.h"
 
 #include "pdu/protobuf/youliao.friendlist.pb.h"
-#include "CachePool.h"
 
 #include "business/Interface.h"
 using namespace youliao::pdu;

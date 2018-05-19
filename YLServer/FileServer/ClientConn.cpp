@@ -98,6 +98,9 @@ void ClientConn::handlePdu(BasePdu *basePdu)
         case base::CID_FILE_GET_BLOCK_RESPONE:
             _HandleClientGetFileBlockRespone(basePdu);
             break;
+        case base::CID_FILE_STATE:
+            _HandleCLientFileStates(basePdu);
+            break;
         default:
             break;
     }
@@ -125,7 +128,9 @@ void ClientConn::_HandleClientLoginRequest(BasePdu *basePdu)
             if (role == base::CLIENT_OFFLINE_DOWNLOAD)
             {
                 //离线文件不存在
-                //暂时不处理
+                transferTask = TransferTaskManager::instance()->newTransferTask(taskId, userId);
+                if (transferTask == nullptr)
+                    break;
             }
             else
             {
@@ -182,7 +187,20 @@ void ClientConn::_HandleClientLoginRequest(BasePdu *basePdu)
         }
         else if (transferTask->getState() == WaitingUpload)
         {
-            //创建离线任务信息
+            OfflineTransferTask *offlineTransferTask = reinterpret_cast<OfflineTransferTask*>(transferTask);
+
+            file::GetFileBlockRequest request1;
+            request1.set_task_id(taskId);
+            request1.set_user_id(userId);
+            request1.set_trans_mode(base::FILE_TYPE_OFFLINE);
+            request1.set_offest(0);
+            request1.set_data_size(offlineTransferTask->getNextSegmentBlockSize());
+
+            BasePdu basePdu2;
+            basePdu2.setSID(base::SID_FILE);
+            basePdu2.setCID(base::CID_FILE_GET_BLOCK_REQUEST);
+            basePdu2.writeMessage(&request1);
+            sendBasePdu(&basePdu2);
         }
     }
     else
@@ -247,12 +265,21 @@ void ClientConn::_HandleClientGetFileBlockRequest(BasePdu *basePdu)
         }
         else
         {
-
+            BasePdu basePdu1;
+            basePdu1.setSID(base::SID_FILE);
+            basePdu1.setCID(base::CID_FILE_GET_BLOCK_RESPONE);
+            basePdu1.writeMessage(&respone);
+//            if (rv == 1)
+//            {
+//                _StatesNotify(base::CLIENT_FILE_DONE, taskId, m_transfer_task->getFromUserId(), this);
+//            }
         }
 
     }while (0);
 
 
+    if (rv != 0)
+        close();
 }
 
 
@@ -296,6 +323,28 @@ void ClientConn::_HandleClientGetFileBlockRespone(BasePdu *basePdu)
          {
              //离线文件
              //发送pull请求到客户端，获取下一次的数据
+             if (rv == 1)
+             {
+                 _StatesNotify(base::CLIENT_FILE_DONE, taskId, userId, this);
+             }
+             else
+             {
+                OfflineTransferTask* offlineTransferTask = reinterpret_cast<OfflineTransferTask*>(m_transfer_task);
+                file::GetFileBlockRequest request;
+                request.set_task_id(taskId);
+                request.set_user_id(userId);
+                request.set_trans_mode(static_cast<base::TransferFileType>(offlineTransferTask->getTransferMode()));
+                request.set_offest(offlineTransferTask->getNextOffest());
+                request.set_data_size(offlineTransferTask->getNextSegmentBlockSize());
+
+                BasePdu basePdu1;
+                basePdu1.setSID(base::SID_FILE);
+                basePdu1.setCID(base::CID_FILE_GET_BLOCK_REQUEST);
+                basePdu1.writeMessage(&request);
+                sendBasePdu(&basePdu1);
+             }
+
+
          }
 
 
@@ -309,6 +358,58 @@ void ClientConn::_HandleClientGetFileBlockRespone(BasePdu *basePdu)
     }
 
 }
+
+
+void ClientConn::_HandleCLientFileStates(BasePdu *basePdu)
+{
+    if (!m_auth || !m_transfer_task)
+        return;
+
+    file::ClientFileState fileState;
+    fileState.ParseFromString(basePdu->getMessage());
+
+    std::string taskId  = fileState.task_id();
+    uint32_t userId     = fileState.user_id();
+    uint32_t fileStat   = fileState.state();
+
+    log("Recv FileState, user_id=%d, task_id=%s, file_stat=%d", userId, taskId.c_str(), fileStat);
+
+    bool rv = false;
+
+    do
+    {
+        if (userId != m_user_id)
+            break;
+
+        if (m_transfer_task->getTaskId() != taskId)
+            break;
+
+        switch (fileStat)
+        {
+            case base::CLIENT_FILE_CANCEL:
+            case base::CLIENT_FILE_DONE:
+            case base::CLIENT_FILE_REFUSE:
+            {
+                BaseConn *conn = m_transfer_task->getOpponentConn(userId);
+                if (conn)
+                {
+                    sendMessage(conn, fileState, base::SID_FILE, base::CID_FILE_STATE);
+                }
+                rv = true;
+                break;
+            }
+            default:
+                break;
+        }
+
+    }while (0);
+
+    //关闭连接
+    close();
+
+
+}
+
 
 
 int ClientConn::_StatesNotify(int state, const std::string& task_id, uint32_t user_id, BaseConn* conn)

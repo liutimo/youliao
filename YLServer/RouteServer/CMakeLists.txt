@@ -8,11 +8,11 @@ LINK_LIBRARIES(log4cxx)
 AUX_SOURCE_DIRECTORY(./ SRC_CURR)
 
 INCLUDE_DIRECTORIES(/usr/local/include)
-LINK_DIRECTORIES(/usr/local/lib)
+LINK_DIRECTORIES(/usr/local/lib ./)
 
 set(SOURCE_FILES ${SRC_CURR})
 find_package(Protobuf REQUIRED)
 
 add_executable(RouteServer ${SRC_CURR})
 
-TARGET_LINK_LIBRARIES(RouteServer BaseUtil protobuf)
+TARGET_LINK_LIBRARIES(RouteServer BaseUtil protobuf hiredis pthread)

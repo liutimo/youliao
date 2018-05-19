@@ -1,0 +1,3 @@
+/home/liuzheng/youliao/YLServer/DBServer/CMakeFiles/edit_cache.dir
+/home/liuzheng/youliao/YLServer/DBServer/CMakeFiles/rebuild_cache.dir
+/home/liuzheng/youliao/YLServer/DBServer/CMakeFiles/DBServer.dir

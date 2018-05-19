@@ -23,15 +23,6 @@ message ValidateRespone
 }
 
 
-
-//用户下线
-//由MsgServer发送给DBServer
-//刷新CacheDB的数据
-message UserOffline
-{
-    uint32 user_id = 1;
-}
-
 //
 message MsgServerInfo
 {
@@ -154,3 +145,23 @@ message FileTransferRespone
     uint32 result_code = 6;
     youliao.pdu.base.TransferFileType trans_mode = 7;
 }
+
+
+//由消息服务器到路由服务器//
+
+//[1] 用户上线
+message UserGoOnline
+{
+    uint32 user_id      = 1;
+    uint32 msg_index    = 2;       //用户所登录的消息服务器index
+    youliao.pdu.base.UserStatusType user_state = 3; //在线或者隐身
+
+}
+
+//[2] 用户下线
+message UserGoOffline
+{
+    uint32 user_id      = 1;
+}
+
+

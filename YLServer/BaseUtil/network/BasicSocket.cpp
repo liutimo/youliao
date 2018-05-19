@@ -285,7 +285,7 @@ void BaseSocket::onWrite()
         {
             //连接成功建立
             m_state = BASESOCKET_STATE_CONNECTED;
-            m_callback(m_callback_data, NETWORK_WRITE, m_handle, NULL);
+            m_callback(m_callback_data, NETWORK_CONFIRM, m_handle, NULL);
         }
     }
     else if (m_state == BASESOCKET_STATE_CONNECTED)

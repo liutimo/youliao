@@ -1,4 +1,5 @@
 #include <iostream>
+#include <network/ServerInfo.h>
 #include "network/ServerInfo.h"
 #include "ClientConn.h"
 #include "network/netlib.h"
@@ -21,7 +22,10 @@ void clientconn_callback(callback_data data, uint8_t msg, net_handle_t handle, v
 
 int main() {
 
-    setMsgServIdx(10);
+    //设置消息服务器ID
+    setMsgServIdx(1);
+
+
     netlib_init();
 
     //连接数据库服务器
@@ -44,8 +48,10 @@ int main() {
 
     //连接消息服务器
     serv_info_t *s2 = new serv_info_t;
+//    s2->server_ip = "192.168.31.100";
     s2->server_ip = "127.0.0.1";
     s2->server_port = 9001;
+
 
     init_file_server_conn(s2, 1);
 

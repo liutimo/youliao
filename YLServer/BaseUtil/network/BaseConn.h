@@ -37,7 +37,7 @@ namespace youliao
             virtual void onWrite();
             virtual void onClose();
             virtual void onWriteComplete() {}
-
+            virtual void onConfirm() {};
             virtual void handlePdu(pdu::BasePdu *) {}
 
 

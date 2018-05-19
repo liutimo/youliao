@@ -11,7 +11,6 @@
 
 #include "LoginModel.h"
 #include "../DBPool.h"
-#include "../CachePool.h"
 #include "util/util.h"
 
 LoginModel::LoginModel()
@@ -93,18 +92,18 @@ bool LoginModel::doLogin(const std::string &str_name, const std::string &str_pas
     return ret;
 }
 
-bool LoginModel::doLogout(uint32_t userId)
-{
-    auto conn = CacheManager::instance()->getCacheConn("OnlineUser");
-
-    if (conn != nullptr)
-    {
-        auto ret = conn->hdel("user_map", to_string(userId));
-        if (ret == 1)
-
-            log("用户%d注销登录!", userId);
-        else
-            log("用户%d注销登录失败!", userId);
-    }
-    CacheManager::instance()->releaseCacheConn(conn);
-}
+//bool LoginModel::doLogout(uint32_t userId)
+//{
+//    auto conn = CacheManager::instance()->getCacheConn("OnlineUser");
+//
+//    if (conn != nullptr)
+//    {
+//        auto ret = conn->hdel("user_map", to_string(userId));
+//        if (ret == 1)
+//
+//            log("用户%d注销登录!", userId);
+//        else
+//            log("用户%d注销登录失败!", userId);
+//    }
+//    CacheManager::instance()->releaseCacheConn(conn);
+//}

@@ -21,10 +21,10 @@ namespace DB_INTERFACE
     void getFriendList(BasePdu* basePdu, uint32_t conn_uuid);
 
     //用户离线
-    void logout(BasePdu* basePdu, uint32_t conn_uuid);
+//    void logout(BasePdu* basePdu, uint32_t conn_uuid);
 
     //获取在线好友
-    void getOnlineFriends(BasePdu *basePdu, uint32_t conn_uid);
+//    void getOnlineFriends(BasePdu *basePdu, uint32_t conn_uid);
 
     //修改个性签名
     void modifySignature(BasePdu *basePdu, uint32_t conn_uid);
@@ -48,7 +48,7 @@ namespace DB_INTERFACE
     void modifyFriendRemark(BasePdu *basePdu, uint32_t conn_uid);
 
     //获取好友状态
-    void getOnlineFriendStatus(BasePdu *basePdu, uint32_t conn_uid);
+//    void getOnlineFriendStatus(BasePdu *basePdu, uint32_t conn_uid);
 
     /*****************添加好友*****************/
 

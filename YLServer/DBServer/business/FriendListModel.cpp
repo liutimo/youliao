@@ -5,8 +5,8 @@
 #include "FriendListModel.h"
 #include "../DBPool.h"
 #include "util/util.h"
-#include "../CachePool.h"
-#include <cstring>
+#include <string>
+using namespace std;
 
 FriendListModel* FriendListModel::m_instance = nullptr;
 
@@ -78,8 +78,6 @@ void FriendListModel::getFriendList(uint32_t user_id, uint32_t msg_serv_idx, fri
 
         auto m = friendListRespone.mutable_friend_list();
 
-        auto cacheConn = CacheManager::instance()->getCacheConn("OnlineUser");
-
         string mapName = "OnlineFriend_" + to_string(user_id);
         while (resultSet->next()) {
             uint32_t group_id = (uint32_t)resultSet->getInt("group_id");
@@ -96,56 +94,59 @@ void FriendListModel::getFriendList(uint32_t user_id, uint32_t msg_serv_idx, fri
             friend_->set_friend_sign_info(resultSet->getString("user_sign_info"));
             friend_->set_friend_account((uint32_t)resultSet->getInt("user_account"));
             friend_->set_friend_remark(resultSet->getString("friend_remark"));
-            //该好友在线
-            string friendIdStr = to_string(friendId);
-            if (!cacheConn->hget("user_map", friendIdStr).empty())
-            {
-                //创建该用户的在线好友map
-                string field = resultSet->getString("friend_id");
-                string value = cacheConn->hget("user_map", friendIdStr);
-                cacheConn->hset(mapName, field, value);
-                log("msg server index %s", value.c_str());
-                log("%s online ", friendIdStr.c_str());
-                friend_->set_friend_is_online(true);
-            } else {
-                friend_->set_friend_is_online(false);
 
-                log("%s is't online ", resultSet->getString("friend_id").c_str());
-            }
+            //好友在线信息改由routeserver 维护
+            //该消息到达MsgServer后， 转发routerServer查询好友在线信息
+
+//            //该好友在线
+//            string friendIdStr = to_string(friendId);
+//            if (!cacheConn->hget("user_map", friendIdStr).empty())
+//            {
+//                //创建该用户的在线好友map
+//                string field = resultSet->getString("friend_id");
+//                string value = cacheConn->hget("user_map", friendIdStr);
+//                cacheConn->hset(mapName, field, value);
+//                log("msg server index %s", value.c_str());
+//                log("%s online ", friendIdStr.c_str());
+//                friend_->set_friend_is_online(true);
+//            } else {
+//                friend_->set_friend_is_online(false);
+//
+//                log("%s is't online ", resultSet->getString("friend_id").c_str());
+//            }
         }
         delete resultSet;
 
-        CacheManager::instance()->releaseCacheConn(cacheConn);
     }
 
     manager->releaseConnection(conn);
 }
 
-void FriendListModel::getOnlineFriends(uint32_t user_id, server::RouteGetOnlineFriendRespone &routeGetOnlineFriendRespone)
-{
-    auto conn = CacheManager::instance()->getCacheConn("OnlineUser");
-
-    if (conn)
-    {
-        string mapName = "OnlineFriend_" + to_string(user_id);
-        map<string, string> onlineFriends;
-        conn->hgetAll(mapName, onlineFriends);
-        log("Redis: MapName = %s, 有%d个在线好友", mapName.c_str(), onlineFriends.size());
-        log("----------------------------");
-        auto onlineFriendMap = routeGetOnlineFriendRespone.mutable_online_firends();
-
-        for (auto elem : onlineFriends)
-        {
-            string friendId = elem.first;
-            string msg_idx = elem.second;
-            log("| key = %s value = %s |", friendId.c_str(), msg_idx.c_str());
-            (*onlineFriendMap)[atoi(friendId.c_str())] = (uint32_t )atoi(msg_idx.c_str());
-        }
-        log("----------------------------");
-    }
-
-    CacheManager::instance()->releaseCacheConn(conn);
-}
+//void FriendListModel::getOnlineFriends(uint32_t user_id, server::RouteGetOnlineFriendRespone &routeGetOnlineFriendRespone)
+//{
+//    auto conn = CacheManager::instance()->getCacheConn("OnlineUser");
+//
+//    if (conn)
+//    {
+//        string mapName = "OnlineFriend_" + to_string(user_id);
+//        map<string, string> onlineFriends;
+//        conn->hgetAll(mapName, onlineFriends);
+//        log("Redis: MapName = %s, 有%d个在线好友", mapName.c_str(), onlineFriends.size());
+//        log("----------------------------");
+//        auto onlineFriendMap = routeGetOnlineFriendRespone.mutable_online_firends();
+//
+//        for (auto elem : onlineFriends)
+//        {
+//            string friendId = elem.first;
+//            string msg_idx = elem.second;
+//            log("| key = %s value = %s |", friendId.c_str(), msg_idx.c_str());
+//            (*onlineFriendMap)[atoi(friendId.c_str())] = (uint32_t )atoi(msg_idx.c_str());
+//        }
+//        log("----------------------------");
+//    }
+//
+//    CacheManager::instance()->releaseCacheConn(conn);
+//}
 
 
 bool FriendListModel::modifySignature(uint32_t user_id, const std::string &signature)

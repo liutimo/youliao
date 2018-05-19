@@ -112,6 +112,16 @@ class FileTransferResponeDefaultTypeInternal {
   ::google::protobuf::internal::ExplicitlyConstructed<FileTransferRespone>
       _instance;
 } _FileTransferRespone_default_instance_;
+class UserGoOnlineDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<UserGoOnline>
+      _instance;
+} _UserGoOnline_default_instance_;
+class UserGoOfflineDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<UserGoOffline>
+      _instance;
+} _UserGoOffline_default_instance_;
 }  // namespace server
 }  // namespace pdu
 }  // namespace youliao
@@ -496,7 +506,49 @@ void InitDefaultsFileTransferRespone() {
   ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsFileTransferResponeImpl);
 }
 
-::google::protobuf::Metadata file_level_metadata[18];
+void InitDefaultsUserGoOnlineImpl() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+#ifdef GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  ::google::protobuf::internal::InitProtobufDefaultsForceUnique();
+#else
+  ::google::protobuf::internal::InitProtobufDefaults();
+#endif  // GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  {
+    void* ptr = &::youliao::pdu::server::_UserGoOnline_default_instance_;
+    new (ptr) ::youliao::pdu::server::UserGoOnline();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::youliao::pdu::server::UserGoOnline::InitAsDefaultInstance();
+}
+
+void InitDefaultsUserGoOnline() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsUserGoOnlineImpl);
+}
+
+void InitDefaultsUserGoOfflineImpl() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+#ifdef GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  ::google::protobuf::internal::InitProtobufDefaultsForceUnique();
+#else
+  ::google::protobuf::internal::InitProtobufDefaults();
+#endif  // GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  {
+    void* ptr = &::youliao::pdu::server::_UserGoOffline_default_instance_;
+    new (ptr) ::youliao::pdu::server::UserGoOffline();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::youliao::pdu::server::UserGoOffline::InitAsDefaultInstance();
+}
+
+void InitDefaultsUserGoOffline() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsUserGoOfflineImpl);
+}
+
+::google::protobuf::Metadata file_level_metadata[20];
 
 const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   ~0u,  // no _has_bits_
@@ -654,6 +706,20 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::FileTransferRespone, task_id_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::FileTransferRespone, result_code_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::FileTransferRespone, trans_mode_),
+  ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::UserGoOnline, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::UserGoOnline, user_id_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::UserGoOnline, msg_index_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::UserGoOnline, user_state_),
+  ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::UserGoOffline, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::server::UserGoOffline, user_id_),
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::youliao::pdu::server::ValidateRequest)},
@@ -674,6 +740,8 @@ static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROT
   { 127, -1, sizeof(::youliao::pdu::server::FileServerIPRespone)},
   { 133, -1, sizeof(::youliao::pdu::server::FileTransferRequest)},
   { 143, -1, sizeof(::youliao::pdu::server::FileTransferRespone)},
+  { 155, -1, sizeof(::youliao::pdu::server::UserGoOnline)},
+  { 163, -1, sizeof(::youliao::pdu::server::UserGoOffline)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -695,6 +763,8 @@ static ::google::protobuf::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::server::_FileServerIPRespone_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::server::_FileTransferRequest_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::server::_FileTransferRespone_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::server::_UserGoOnline_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::server::_UserGoOffline_default_instance_),
 };
 
 void protobuf_AssignDescriptors() {
@@ -713,7 +783,7 @@ void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) GOOGLE_PROTOBUF_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 18);
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 20);
 }
 
 void AddDescriptorsImpl() {
@@ -773,10 +843,13 @@ void AddDescriptorsImpl() {
       "\n\tfile_name\030\003 \001(\t\022\021\n\tfile_size\030\004 \001(\r\022\017\n\007"
       "task_id\030\005 \001(\t\022\023\n\013result_code\030\006 \001(\r\0226\n\ntr"
       "ans_mode\030\007 \001(\0162\".youliao.pdu.base.Transf"
-      "erFileTypeb\006proto3"
+      "erFileType\"h\n\014UserGoOnline\022\017\n\007user_id\030\001 "
+      "\001(\r\022\021\n\tmsg_index\030\002 \001(\r\0224\n\nuser_state\030\003 \001"
+      "(\0162 .youliao.pdu.base.UserStatusType\" \n\r"
+      "UserGoOffline\022\017\n\007user_id\030\001 \001(\rb\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 2178);
+      descriptor, 2318);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "youliao.server.proto", &protobuf_RegisterTypes);
   ::protobuf_youliao_2ebase_2eproto::AddDescriptors();
@@ -6778,6 +6851,548 @@ void FileTransferRespone::InternalSwap(FileTransferRespone* other) {
 }
 
 
+// ===================================================================
+
+void UserGoOnline::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int UserGoOnline::kUserIdFieldNumber;
+const int UserGoOnline::kMsgIndexFieldNumber;
+const int UserGoOnline::kUserStateFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+UserGoOnline::UserGoOnline()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    ::protobuf_youliao_2eserver_2eproto::InitDefaultsUserGoOnline();
+  }
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:youliao.pdu.server.UserGoOnline)
+}
+UserGoOnline::UserGoOnline(const UserGoOnline& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::memcpy(&user_id_, &from.user_id_,
+    static_cast<size_t>(reinterpret_cast<char*>(&user_state_) -
+    reinterpret_cast<char*>(&user_id_)) + sizeof(user_state_));
+  // @@protoc_insertion_point(copy_constructor:youliao.pdu.server.UserGoOnline)
+}
+
+void UserGoOnline::SharedCtor() {
+  ::memset(&user_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&user_state_) -
+      reinterpret_cast<char*>(&user_id_)) + sizeof(user_state_));
+  _cached_size_ = 0;
+}
+
+UserGoOnline::~UserGoOnline() {
+  // @@protoc_insertion_point(destructor:youliao.pdu.server.UserGoOnline)
+  SharedDtor();
+}
+
+void UserGoOnline::SharedDtor() {
+}
+
+void UserGoOnline::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* UserGoOnline::descriptor() {
+  ::protobuf_youliao_2eserver_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_youliao_2eserver_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const UserGoOnline& UserGoOnline::default_instance() {
+  ::protobuf_youliao_2eserver_2eproto::InitDefaultsUserGoOnline();
+  return *internal_default_instance();
+}
+
+
+void UserGoOnline::Clear() {
+// @@protoc_insertion_point(message_clear_start:youliao.pdu.server.UserGoOnline)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  ::memset(&user_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&user_state_) -
+      reinterpret_cast<char*>(&user_id_)) + sizeof(user_state_));
+  _internal_metadata_.Clear();
+}
+
+bool UserGoOnline::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:youliao.pdu.server.UserGoOnline)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // uint32 user_id = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &user_id_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint32 msg_index = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &msg_index_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // .youliao.pdu.base.UserStatusType user_state = 3;
+      case 3: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
+          int value;
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_user_state(static_cast< ::youliao::pdu::base::UserStatusType >(value));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:youliao.pdu.server.UserGoOnline)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:youliao.pdu.server.UserGoOnline)
+  return false;
+#undef DO_
+}
+
+void UserGoOnline::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:youliao.pdu.server.UserGoOnline)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->user_id(), output);
+  }
+
+  // uint32 msg_index = 2;
+  if (this->msg_index() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->msg_index(), output);
+  }
+
+  // .youliao.pdu.base.UserStatusType user_state = 3;
+  if (this->user_state() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      3, this->user_state(), output);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
+  // @@protoc_insertion_point(serialize_end:youliao.pdu.server.UserGoOnline)
+}
+
+::google::protobuf::uint8* UserGoOnline::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:youliao.pdu.server.UserGoOnline)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->user_id(), target);
+  }
+
+  // uint32 msg_index = 2;
+  if (this->msg_index() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->msg_index(), target);
+  }
+
+  // .youliao.pdu.base.UserStatusType user_state = 3;
+  if (this->user_state() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      3, this->user_state(), target);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:youliao.pdu.server.UserGoOnline)
+  return target;
+}
+
+size_t UserGoOnline::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:youliao.pdu.server.UserGoOnline)
+  size_t total_size = 0;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->user_id());
+  }
+
+  // uint32 msg_index = 2;
+  if (this->msg_index() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->msg_index());
+  }
+
+  // .youliao.pdu.base.UserStatusType user_state = 3;
+  if (this->user_state() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->user_state());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void UserGoOnline::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:youliao.pdu.server.UserGoOnline)
+  GOOGLE_DCHECK_NE(&from, this);
+  const UserGoOnline* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const UserGoOnline>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:youliao.pdu.server.UserGoOnline)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:youliao.pdu.server.UserGoOnline)
+    MergeFrom(*source);
+  }
+}
+
+void UserGoOnline::MergeFrom(const UserGoOnline& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:youliao.pdu.server.UserGoOnline)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.user_id() != 0) {
+    set_user_id(from.user_id());
+  }
+  if (from.msg_index() != 0) {
+    set_msg_index(from.msg_index());
+  }
+  if (from.user_state() != 0) {
+    set_user_state(from.user_state());
+  }
+}
+
+void UserGoOnline::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:youliao.pdu.server.UserGoOnline)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void UserGoOnline::CopyFrom(const UserGoOnline& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:youliao.pdu.server.UserGoOnline)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool UserGoOnline::IsInitialized() const {
+  return true;
+}
+
+void UserGoOnline::Swap(UserGoOnline* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void UserGoOnline::InternalSwap(UserGoOnline* other) {
+  using std::swap;
+  swap(user_id_, other->user_id_);
+  swap(msg_index_, other->msg_index_);
+  swap(user_state_, other->user_state_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata UserGoOnline::GetMetadata() const {
+  protobuf_youliao_2eserver_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_youliao_2eserver_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
+// ===================================================================
+
+void UserGoOffline::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int UserGoOffline::kUserIdFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+UserGoOffline::UserGoOffline()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    ::protobuf_youliao_2eserver_2eproto::InitDefaultsUserGoOffline();
+  }
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:youliao.pdu.server.UserGoOffline)
+}
+UserGoOffline::UserGoOffline(const UserGoOffline& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  user_id_ = from.user_id_;
+  // @@protoc_insertion_point(copy_constructor:youliao.pdu.server.UserGoOffline)
+}
+
+void UserGoOffline::SharedCtor() {
+  user_id_ = 0u;
+  _cached_size_ = 0;
+}
+
+UserGoOffline::~UserGoOffline() {
+  // @@protoc_insertion_point(destructor:youliao.pdu.server.UserGoOffline)
+  SharedDtor();
+}
+
+void UserGoOffline::SharedDtor() {
+}
+
+void UserGoOffline::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* UserGoOffline::descriptor() {
+  ::protobuf_youliao_2eserver_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_youliao_2eserver_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const UserGoOffline& UserGoOffline::default_instance() {
+  ::protobuf_youliao_2eserver_2eproto::InitDefaultsUserGoOffline();
+  return *internal_default_instance();
+}
+
+
+void UserGoOffline::Clear() {
+// @@protoc_insertion_point(message_clear_start:youliao.pdu.server.UserGoOffline)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  user_id_ = 0u;
+  _internal_metadata_.Clear();
+}
+
+bool UserGoOffline::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:youliao.pdu.server.UserGoOffline)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // uint32 user_id = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &user_id_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:youliao.pdu.server.UserGoOffline)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:youliao.pdu.server.UserGoOffline)
+  return false;
+#undef DO_
+}
+
+void UserGoOffline::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:youliao.pdu.server.UserGoOffline)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->user_id(), output);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
+  // @@protoc_insertion_point(serialize_end:youliao.pdu.server.UserGoOffline)
+}
+
+::google::protobuf::uint8* UserGoOffline::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:youliao.pdu.server.UserGoOffline)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->user_id(), target);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:youliao.pdu.server.UserGoOffline)
+  return target;
+}
+
+size_t UserGoOffline::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:youliao.pdu.server.UserGoOffline)
+  size_t total_size = 0;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->user_id());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void UserGoOffline::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:youliao.pdu.server.UserGoOffline)
+  GOOGLE_DCHECK_NE(&from, this);
+  const UserGoOffline* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const UserGoOffline>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:youliao.pdu.server.UserGoOffline)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:youliao.pdu.server.UserGoOffline)
+    MergeFrom(*source);
+  }
+}
+
+void UserGoOffline::MergeFrom(const UserGoOffline& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:youliao.pdu.server.UserGoOffline)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.user_id() != 0) {
+    set_user_id(from.user_id());
+  }
+}
+
+void UserGoOffline::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:youliao.pdu.server.UserGoOffline)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void UserGoOffline::CopyFrom(const UserGoOffline& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:youliao.pdu.server.UserGoOffline)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool UserGoOffline::IsInitialized() const {
+  return true;
+}
+
+void UserGoOffline::Swap(UserGoOffline* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void UserGoOffline::InternalSwap(UserGoOffline* other) {
+  using std::swap;
+  swap(user_id_, other->user_id_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata UserGoOffline::GetMetadata() const {
+  protobuf_youliao_2eserver_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_youliao_2eserver_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace server
 }  // namespace pdu
@@ -6837,6 +7452,12 @@ template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::server::FileTransf
 }
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::server::FileTransferRespone* Arena::Create< ::youliao::pdu::server::FileTransferRespone >(Arena* arena) {
   return Arena::CreateInternal< ::youliao::pdu::server::FileTransferRespone >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::server::UserGoOnline* Arena::Create< ::youliao::pdu::server::UserGoOnline >(Arena* arena) {
+  return Arena::CreateInternal< ::youliao::pdu::server::UserGoOnline >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::server::UserGoOffline* Arena::Create< ::youliao::pdu::server::UserGoOffline >(Arena* arena) {
+  return Arena::CreateInternal< ::youliao::pdu::server::UserGoOffline >(arena);
 }
 }  // namespace protobuf
 }  // namespace google

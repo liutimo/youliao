@@ -32,20 +32,32 @@ enum ServerCID
     CID_SERVER_MSGSERVER_INFO = 0x0201;          //消息服务器主动发送该消息给登录服务器
     CID_SERVER_VALIDATE_REQUEST = 0x0202;        //msg server向db server发送用户校验信息
     CID_SERVER_VALIDATE_RESPONE = 0x0203;
-    CID_SERVER_USER_LOGOUT      = 0x0204;        //由消息服务器发送给数据库服务器
-    CID_SERVER_ROUTE_MSG        = 0x0205;
-    CID_SERVER_ROUTE_BROADCAST  = 0x0206;
-    CID_SERVER_GET_ONLINE_FRIENDS_REQUEST = 0x0207;
-    CID_SERVER_GET_ONLINE_FRIENDS_RESPONE = 0x0208;
-    CID_SERVER_GET_SERVER_INDEX_REQUEST   = 0x0209;
-    CID_SERVER_GET_SERVER_INDEX_RESPONE   = 0x020A;
-    CID_SERVER_ROUTE_MESSAGE              = 0x020B;     //MsgServer请求RouteServer转发消息
-    CID_SERVER_GET_FRIEND_ONLINE_STATUS   = 0x020C;     //RouteServer请求DBServer好友在线状态
-    CID_SERVER_ROUTE_TO_MESSAGE           = 0x020D;     //RouteServer发送MsgServer
-    CID_SERVER_FILE_SERVER_IP_REQUEST     = 0x020E;
-    CID_SERVER_FILE_SERVER_IP_RESPONE     = 0x020F;
-    CID_SERVER_FILE_TRANSFER_REQUEST      = 0x0210;   //由消息服务器发送给文件服务器
-    CID_SERVER_FILE_TRANSFER_RESPONE      = 0x0211;   //由文件服务器发送给消息服务器
+    CID_SERVER_ROUTE_MSG        = 0x0204;
+    CID_SERVER_ROUTE_BROADCAST  = 0x0205;
+    CID_SERVER_GET_SERVER_INDEX_REQUEST   = 0x0206;
+    CID_SERVER_GET_SERVER_INDEX_RESPONE   = 0x0207;
+    CID_SERVER_ROUTE_MESSAGE              = 0x0208;     //MsgServer请求RouteServer转发消息
+    CID_SERVER_FILE_SERVER_IP_REQUEST     = 0x0209;
+    CID_SERVER_FILE_SERVER_IP_RESPONE     = 0x020A;
+    CID_SERVER_FILE_TRANSFER_REQUEST      = 0x020B;   //由消息服务器发送给文件服务器
+    CID_SERVER_FILE_TRANSFER_RESPONE      = 0x020C;   //由文件服务器发送给消息服务器
+
+    //消息服务器到路由服务器uint32 user_id      = 1;
+    CID_SERVER_USER_GO_ONLINE            = 0x020D;      //用户上线
+    CID_SERVER_USER_GO_OFFLINE           = 0x020E;      //用户下线
+    CID_SERVER_GET_FRIENDS_STATUS_REQUEST   = 0x020F;   //获取好友列表中好友在线状态
+    CID_SERVER_GET_FRIENDS_STATUS_RESPONE   = 0x0210;   //
+
+
+
+
+    //已删除
+
+    //    CID_SERVER_USER_LOGOUT      = 0x0204;        //由消息服务器发送给数据库服务器
+    //    CID_SERVER_GET_ONLINE_FRIENDS_REQUEST = 0x0207;
+    //    CID_SERVER_GET_ONLINE_FRIENDS_RESPONE = 0x0208;
+    //    CID_SERVER_GET_FRIEND_ONLINE_STATUS   = 0x020C;     //RouteServer请求DBServer好友在线状态
+    //    CID_SERVER_ROUTE_TO_MESSAGE           = 0x020D;     //RouteServer发送MsgServer
 }
 
 enum OtherCID

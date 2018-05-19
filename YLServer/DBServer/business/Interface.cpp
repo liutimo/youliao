@@ -9,13 +9,13 @@
 #include "MessageModel.h"
 #include "GroupModel.h"
 #include "util/util.h"
-#include "../CachePool.h"
 #include "SessionModel.h"
 #include "pdu/protobuf/youliao.server.pb.h"
 #include "pdu/protobuf/youliao.message.pb.h"
 #include "pdu/protobuf/youliao.session.pb.h"
 #include "pdu/protobuf/youliao.group.pb.h"
 
+using namespace std;
 
 namespace DB_INTERFACE
 {
@@ -32,11 +32,11 @@ namespace DB_INTERFACE
         base::UserInfo *userInfo = new base::UserInfo;
         if (loginModel.doLogin(validateRequest.user_name(), validateRequest.user_pwd(), *userInfo))
         {
-            //将其登录状态保存到redis, 格式为user_id : msg_serv_id
-            auto conn = CacheManager::instance()->getCacheConn("OnlineUser");
-            conn->hset("user_map", to_string(userInfo->user_id()), to_string(validateRequest.msg_serv_id()));
-
-            CacheManager::instance()->releaseCacheConn(conn);
+//            //将其登录状态保存到redis, 格式为user_id : msg_serv_id
+//            auto conn = CacheManager::instance()->getCacheConn("OnlineUser");
+//            conn->hset("user_map", to_string(userInfo->user_id()), to_string(validateRequest.msg_serv_id()));
+//
+//            CacheManager::instance()->releaseCacheConn(conn);
 
             validateRespone.set_user_name(validateRequest.user_name());
             validateRespone.set_result_code(0);
@@ -91,7 +91,7 @@ namespace DB_INTERFACE
         friendListRequest.ParseFromString(basePdu->getMessage());
 
         friendlist::FriendListRespone friendListRespone;
-        friendListRespone.set_attach_data(friendListRequest.attach_data());
+        friendListRespone.set_user_id(friendListRequest.user_id());
 
         FriendListModel *friendListModel = FriendListModel::instance() ;
         friendListModel->getFriendList(friendListRequest.user_id(), friendListRequest.msg_serv_idx(), friendListRespone);
@@ -105,40 +105,40 @@ namespace DB_INTERFACE
         delete pdu;
     }
 
-    void logout(BasePdu* basePdu, uint32_t conn_uid)
-    {
-        server::UserOffline userOffline;
-        userOffline.ParseFromString(basePdu->getMessage());
+//    void logout(BasePdu* basePdu, uint32_t conn_uid)
+//    {
+//        server::UserOffline userOffline;
+//        userOffline.ParseFromString(basePdu->getMessage());
+//
+//        uint32_t userId = userOffline.user_id();
+//
+//        LoginModel loginModel;
+//        loginModel.doLogout(userId);
+//    }
+//
 
-        uint32_t userId = userOffline.user_id();
-
-        LoginModel loginModel;
-        loginModel.doLogout(userId);
-    }
-
-
-    void getOnlineFriends(BasePdu *basePdu, uint32_t conn_uuid)
-    {
-        server::RouteGetOnlineFirendRequest routeGetOnlineFirendRequest;
-        routeGetOnlineFirendRequest.ParseFromString(basePdu->getMessage());
-
-        uint32_t userId = routeGetOnlineFirendRequest.user_id();
-
-        server::RouteGetOnlineFriendRespone routeGetOnlineFriendRespone;
-        routeGetOnlineFriendRespone.set_user_id(userId);
-        routeGetOnlineFriendRespone.set_route_status_type(routeGetOnlineFirendRequest.route_status_type());
-        routeGetOnlineFriendRespone.set_attach_data(routeGetOnlineFirendRequest.attach_data());
-
-        FriendListModel *friendListModel = FriendListModel::instance() ;
-        friendListModel->getOnlineFriends(userId, routeGetOnlineFriendRespone);
-
-        BasePdu basePdu1;
-        basePdu1.setSID(base::SID_SERVER);
-        basePdu1.setCID(base::CID_SERVER_GET_ONLINE_FRIENDS_RESPONE);
-        basePdu1.writeMessage(&routeGetOnlineFriendRespone);
-
-        findProxyConn(conn_uuid)->sendBasePdu(&basePdu1);
-    }
+//    void getOnlineFriends(BasePdu *basePdu, uint32_t conn_uuid)
+//    {
+//        server::RouteGetOnlineFirendRequest routeGetOnlineFirendRequest;
+//        routeGetOnlineFirendRequest.ParseFromString(basePdu->getMessage());
+//
+//        uint32_t userId = routeGetOnlineFirendRequest.user_id();
+//
+//        server::RouteGetOnlineFriendRespone routeGetOnlineFriendRespone;
+//        routeGetOnlineFriendRespone.set_user_id(userId);
+//        routeGetOnlineFriendRespone.set_route_status_type(routeGetOnlineFirendRequest.route_status_type());
+//        routeGetOnlineFriendRespone.set_attach_data(routeGetOnlineFirendRequest.attach_data());
+//
+//        FriendListModel *friendListModel = FriendListModel::instance() ;
+//        friendListModel->getOnlineFriends(userId, routeGetOnlineFriendRespone);
+//
+//        BasePdu basePdu1;
+//        basePdu1.setSID(base::SID_SERVER);
+//        basePdu1.setCID(base::CID_SERVER_GET_ONLINE_FRIENDS_RESPONE);
+//        basePdu1.writeMessage(&routeGetOnlineFriendRespone);
+//
+//        findProxyConn(conn_uuid)->sendBasePdu(&basePdu1);
+//    }
 
 
     void modifySignature(BasePdu *basePdu, uint32_t conn_uid)
@@ -269,43 +269,43 @@ namespace DB_INTERFACE
 
 
 
-    //获取好友状态
-    void getOnlineFriendStatus(BasePdu *basePdu, uint32_t conn_uid)
-    {
-        server::RouteGetFriendOnlineStatus routeGetFriendOnlineStatus;
-        routeGetFriendOnlineStatus.ParseFromString(basePdu->getMessage());
-
-        MessageModel *messageModel = MessageModel::instance();
-
-        int msgIdx = 0;
-
-        if(messageModel->getFriendOnlineStatus(routeGetFriendOnlineStatus.friend_id(), msgIdx))
-        {
-            if (msgIdx != 0)
-            {
-                server::RouteGetFriendOnlineStatus reply;
-                reply.set_user_id(routeGetFriendOnlineStatus.user_id());
-                reply.set_friend_id(routeGetFriendOnlineStatus.friend_id());
-                reply.set_msg_id(routeGetFriendOnlineStatus.msg_id());
-                reply.set_create_time(routeGetFriendOnlineStatus.create_time());
-                reply.set_message_data(routeGetFriendOnlineStatus.message_data());
-                reply.set_msg_idx(msgIdx);
-                reply.set_message_type(routeGetFriendOnlineStatus.message_type());
-
-                BasePdu basePdu1;
-                basePdu1.setSID(base::SID_SERVER);
-                basePdu1.setCID(base::CID_SERVER_GET_FRIEND_ONLINE_STATUS);
-                basePdu1.writeMessage(&reply);
-
-                findProxyConn(conn_uid)->sendBasePdu(&basePdu1);
-            }
-
-            //消息服务器ID错误。忽略
-        }
-
-        //不在线。忽略
-
-    }
+//    //获取好友状态
+//    void getOnlineFriendStatus(BasePdu *basePdu, uint32_t conn_uid)
+//    {
+//        server::RouteGetFriendOnlineStatus routeGetFriendOnlineStatus;
+//        routeGetFriendOnlineStatus.ParseFromString(basePdu->getMessage());
+//
+//        MessageModel *messageModel = MessageModel::instance();
+//
+//        int msgIdx = 0;
+//
+//        if(messageModel->getFriendOnlineStatus(routeGetFriendOnlineStatus.friend_id(), msgIdx))
+//        {
+//            if (msgIdx != 0)
+//            {
+//                server::RouteGetFriendOnlineStatus reply;
+//                reply.set_user_id(routeGetFriendOnlineStatus.user_id());
+//                reply.set_friend_id(routeGetFriendOnlineStatus.friend_id());
+//                reply.set_msg_id(routeGetFriendOnlineStatus.msg_id());
+//                reply.set_create_time(routeGetFriendOnlineStatus.create_time());
+//                reply.set_message_data(routeGetFriendOnlineStatus.message_data());
+//                reply.set_msg_idx(msgIdx);
+//                reply.set_message_type(routeGetFriendOnlineStatus.message_type());
+//
+//                BasePdu basePdu1;
+//                basePdu1.setSID(base::SID_SERVER);
+//                basePdu1.setCID(base::CID_SERVER_GET_FRIEND_ONLINE_STATUS);
+//                basePdu1.writeMessage(&reply);
+//
+//                findProxyConn(conn_uid)->sendBasePdu(&basePdu1);
+//            }
+//
+//            //消息服务器ID错误。忽略
+//        }
+//
+//        //不在线。忽略
+//
+//    }
 
 
     //保存消息记录

@@ -17,6 +17,7 @@ public:
     virtual ~RouteConn();
 
     virtual void close();
+    virtual void onConfirm() override;
 
     void onConnect(net_handle_t handle) override;
     void onClose() override;
@@ -24,6 +25,11 @@ public:
     void handlePdu(BasePdu *basePdu) override ;
 
 private:
+    void _HandleUserGoOnline(BasePdu *basePdu);
+    void _HandleUserGoOffline(BasePdu *basePdu);
+    void _HandleGetFriendsStatusRequest(BasePdu *basePdu);
+
+
     void _HandleRouteMessage(BasePdu *basePdu);
     void _HandleMessageServerIndex(BasePdu *basePdu);
     void _HandleBroadcastMsg(BasePdu *basePdu);

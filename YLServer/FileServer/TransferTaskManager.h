@@ -17,6 +17,8 @@ public:
 
     BaseTransferTask* newTransferTask(uint32_t transMode, const std::string& taskId, uint32_t fromUserId, uint32_t toUserId, const std::string& fileName, uint32_t fileSize);
 
+    OfflineTransferTask* newTransferTask(const std::string &taskId, uint32_t toUserId);
+
     bool deleteTransferTask(const std::string &taskId);
     bool deleteTransferTaskByConnClose(const std::string &taskId);
 

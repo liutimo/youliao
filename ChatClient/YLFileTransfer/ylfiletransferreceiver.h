@@ -16,6 +16,8 @@ signals:
     void addRecvFileItem(uint32_t userId, const QString &taskId);        //添加接收文件的item
     void updateProgressBar(uint32_t userId, const QString &taskId ,uint32_t currentProgress);
     void transferComplete(uint32_t userId, const QString &taskId);
+    void cancelFileTransfer(uint32_t userId, const QString &taskId);
+    void refuseFileTransfer(uint32_t userId, const QString &taskID);
 
 private:
     static YLFileTransferReceiver *m_instance;

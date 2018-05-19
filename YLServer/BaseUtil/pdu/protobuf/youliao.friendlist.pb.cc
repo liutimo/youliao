@@ -697,7 +697,6 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _weak_field_map_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::friendlist::FriendListRequest, user_id_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::friendlist::FriendListRequest, msg_serv_idx_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::friendlist::FriendListRequest, attach_data_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::friendlist::FriendListRespone_FriendListEntry_DoNotUse, _has_bits_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::friendlist::FriendListRespone_FriendListEntry_DoNotUse, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -712,8 +711,8 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::friendlist::FriendListRespone, user_id_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::friendlist::FriendListRespone, friend_list_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::friendlist::FriendListRespone, attach_data_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::friendlist::GroupsRequest, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -742,6 +741,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::friendlist::FriendStatusChangeMessage, user_id_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::friendlist::FriendStatusChangeMessage, friend_id_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::friendlist::FriendStatusChangeMessage, user_status_type_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::friendlist::SignatureChangeResquest, _internal_metadata_),
@@ -880,12 +880,12 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::youliao::pdu::friendlist::Group_Friend)},
   { 7, -1, sizeof(::youliao::pdu::friendlist::FriendListRequest)},
-  { 15, 22, sizeof(::youliao::pdu::friendlist::FriendListRespone_FriendListEntry_DoNotUse)},
-  { 24, -1, sizeof(::youliao::pdu::friendlist::FriendListRespone)},
-  { 31, -1, sizeof(::youliao::pdu::friendlist::GroupsRequest)},
-  { 37, 44, sizeof(::youliao::pdu::friendlist::GroupsRespone_UserGroupsEntry_DoNotUse)},
-  { 46, -1, sizeof(::youliao::pdu::friendlist::GroupsRespone)},
-  { 53, -1, sizeof(::youliao::pdu::friendlist::FriendStatusChangeMessage)},
+  { 14, 21, sizeof(::youliao::pdu::friendlist::FriendListRespone_FriendListEntry_DoNotUse)},
+  { 23, -1, sizeof(::youliao::pdu::friendlist::FriendListRespone)},
+  { 30, -1, sizeof(::youliao::pdu::friendlist::GroupsRequest)},
+  { 36, 43, sizeof(::youliao::pdu::friendlist::GroupsRespone_UserGroupsEntry_DoNotUse)},
+  { 45, -1, sizeof(::youliao::pdu::friendlist::GroupsRespone)},
+  { 52, -1, sizeof(::youliao::pdu::friendlist::FriendStatusChangeMessage)},
   { 60, -1, sizeof(::youliao::pdu::friendlist::SignatureChangeResquest)},
   { 67, -1, sizeof(::youliao::pdu::friendlist::SignatureChangeRespone)},
   { 75, -1, sizeof(::youliao::pdu::friendlist::FriendSignatureChangedNotify)},
@@ -958,63 +958,63 @@ void AddDescriptorsImpl() {
       "\n\030youliao.friendlist.proto\022\026youliao.pdu."
       "friendlist\032\022youliao.base.proto\"N\n\014Group_"
       "Friend\022\020\n\010group_id\030\001 \001(\r\022,\n\006friend\030\003 \003(\013"
-      "2\034.youliao.pdu.base.FriendInfo\"O\n\021Friend"
+      "2\034.youliao.pdu.base.FriendInfo\":\n\021Friend"
       "ListRequest\022\017\n\007user_id\030\001 \001(\r\022\024\n\014msg_serv"
-      "_idx\030\002 \001(\r\022\023\n\013attach_data\030\024 \001(\014\"\321\001\n\021Frie"
-      "ndListRespone\022N\n\013friend_list\030\001 \003(\01329.you"
-      "liao.pdu.friendlist.FriendListRespone.Fr"
-      "iendListEntry\022\023\n\013attach_data\030\024 \001(\014\032W\n\017Fr"
-      "iendListEntry\022\013\n\003key\030\001 \001(\r\0223\n\005value\030\002 \001("
-      "\0132$.youliao.pdu.friendlist.Group_Friend:"
-      "\0028\001\" \n\rGroupsRequest\022\017\n\007user_id\030\001 \001(\r\"\237\001"
-      "\n\rGroupsRespone\022\017\n\007user_id\030\001 \001(\r\022J\n\013user"
-      "_groups\030\002 \003(\01325.youliao.pdu.friendlist.G"
-      "roupsRespone.UserGroupsEntry\0321\n\017UserGrou"
-      "psEntry\022\013\n\003key\030\001 \001(\r\022\r\n\005value\030\002 \001(\t:\0028\001\""
-      "h\n\031FriendStatusChangeMessage\022\017\n\007user_id\030"
-      "\001 \001(\r\022:\n\020user_status_type\030\002 \001(\0162 .youlia"
-      "o.pdu.base.UserStatusType\"B\n\027SignatureCh"
-      "angeResquest\022\017\n\007user_id\030\001 \001(\r\022\026\n\016user_si"
-      "gnature\030\002 \001(\t\"t\n\026SignatureChangeRespone\022"
-      "\017\n\007user_id\030\001 \001(\r\022\026\n\016user_signature\030\002 \001(\t"
-      "\0221\n\013result_type\030\003 \001(\0162\034.youliao.pdu.base"
-      ".ResultType\"K\n\034FriendSignatureChangedNot"
-      "ify\022\021\n\tfriend_id\030\001 \001(\r\022\030\n\020friend_signatr"
-      "ue\030\002 \001(\t\"Y\n\034ModifyFriendGroupNameRequest"
-      "\022\017\n\007user_id\030\001 \001(\r\022\020\n\010group_id\030\002 \001(\r\022\026\n\016n"
-      "ew_group_name\030\003 \001(\t\"C\n\030AddNewFriendGroup"
-      "Request\022\017\n\007user_id\030\001 \001(\r\022\026\n\016new_group_na"
-      "me\030\002 \001(\t\"Q\n\030AddNewFriendGroupRespone\022\017\n\007"
-      "user_id\030\001 \001(\r\022\020\n\010group_id\030\002 \001(\r\022\022\n\ngroup"
-      "_name\030\003 \001(\t\"U\n\030RenameFriendGroupRequest\022"
-      "\017\n\007user_id\030\001 \001(\r\022\020\n\010group_id\030\002 \001(\r\022\026\n\016gr"
-      "oup_new_name\030\003 \001(\t\"=\n\030DeleteFriendGroupR"
-      "equest\022\017\n\007user_id\030\001 \001(\r\022\020\n\010group_id\030\002 \001("
-      "\r\"P\n\030MoveFriendToGroupRequest\022\017\n\007user_id"
-      "\030\001 \001(\r\022\021\n\tfriend_id\030\002 \001(\r\022\020\n\010group_id\030\003 "
-      "\001(\r\"9\n\023DeleteFriendRequest\022\017\n\007user_id\030\001 "
-      "\001(\r\022\021\n\tfriend_id\030\002 \001(\r\"V\n\031ModifyFriendRe"
-      "markRequest\022\017\n\007user_id\030\001 \001(\r\022\021\n\tfriend_i"
-      "d\030\002 \001(\r\022\025\n\rfriend_remark\030\003 \001(\t\"n\n\023Search"
-      "FriendRequest\022\017\n\007user_id\030\001 \001(\r\022\023\n\013search"
-      "_data\030\002 \001(\t\0221\n\013search_type\030\003 \001(\0162\034.youli"
-      "ao.pdu.base.SearchType\"U\n\023SearchFriendRe"
-      "spone\022\017\n\007user_id\030\001 \001(\r\022-\n\007friends\030\002 \003(\0132"
-      "\034.youliao.pdu.base.FriendInfo\"\237\001\n\020AddFri"
-      "endRequest\022\017\n\007user_id\030\001 \001(\r\022\021\n\tuser_nick"
-      "\030\002 \001(\t\022\025\n\ruser_head_url\030\003 \001(\t\022\021\n\tfriend_"
-      "id\030\004 \001(\r\022\025\n\rfriend_remark\030\005 \001(\t\022\020\n\010group"
-      "_id\030\006 \001(\r\022\024\n\014validateData\030\007 \001(\t\"k\n\020AddFr"
-      "iendRespone\022\017\n\007user_id\030\001 \001(\r\022\021\n\tfriend_i"
-      "d\030\002 \001(\r\022\021\n\tresult_id\030\003 \001(\r\022\020\n\010group_id\030\004"
-      " \001(\r\022\016\n\006remark\030\005 \001(\t\".\n\033GetAddRequestHis"
-      "toryRequest\022\017\n\007user_id\030\001 \001(\r\"a\n\033GetAddRe"
-      "questHistoryRespone\022\017\n\007user_id\030\001 \001(\r\0221\n\007"
-      "history\030\002 \003(\0132 .youliao.pdu.base.AddRequ"
-      "estInfob\006proto3"
+      "_idx\030\002 \001(\r\"\315\001\n\021FriendListRespone\022\017\n\007user"
+      "_id\030\001 \001(\r\022N\n\013friend_list\030\002 \003(\01329.youliao"
+      ".pdu.friendlist.FriendListRespone.Friend"
+      "ListEntry\032W\n\017FriendListEntry\022\013\n\003key\030\001 \001("
+      "\r\0223\n\005value\030\002 \001(\0132$.youliao.pdu.friendlis"
+      "t.Group_Friend:\0028\001\" \n\rGroupsRequest\022\017\n\007u"
+      "ser_id\030\001 \001(\r\"\237\001\n\rGroupsRespone\022\017\n\007user_i"
+      "d\030\001 \001(\r\022J\n\013user_groups\030\002 \003(\01325.youliao.p"
+      "du.friendlist.GroupsRespone.UserGroupsEn"
+      "try\0321\n\017UserGroupsEntry\022\013\n\003key\030\001 \001(\r\022\r\n\005v"
+      "alue\030\002 \001(\t:\0028\001\"{\n\031FriendStatusChangeMess"
+      "age\022\017\n\007user_id\030\001 \001(\r\022\021\n\tfriend_id\030\002 \001(\r\022"
+      ":\n\020user_status_type\030\003 \001(\0162 .youliao.pdu."
+      "base.UserStatusType\"B\n\027SignatureChangeRe"
+      "squest\022\017\n\007user_id\030\001 \001(\r\022\026\n\016user_signatur"
+      "e\030\002 \001(\t\"t\n\026SignatureChangeRespone\022\017\n\007use"
+      "r_id\030\001 \001(\r\022\026\n\016user_signature\030\002 \001(\t\0221\n\013re"
+      "sult_type\030\003 \001(\0162\034.youliao.pdu.base.Resul"
+      "tType\"K\n\034FriendSignatureChangedNotify\022\021\n"
+      "\tfriend_id\030\001 \001(\r\022\030\n\020friend_signatrue\030\002 \001"
+      "(\t\"Y\n\034ModifyFriendGroupNameRequest\022\017\n\007us"
+      "er_id\030\001 \001(\r\022\020\n\010group_id\030\002 \001(\r\022\026\n\016new_gro"
+      "up_name\030\003 \001(\t\"C\n\030AddNewFriendGroupReques"
+      "t\022\017\n\007user_id\030\001 \001(\r\022\026\n\016new_group_name\030\002 \001"
+      "(\t\"Q\n\030AddNewFriendGroupRespone\022\017\n\007user_i"
+      "d\030\001 \001(\r\022\020\n\010group_id\030\002 \001(\r\022\022\n\ngroup_name\030"
+      "\003 \001(\t\"U\n\030RenameFriendGroupRequest\022\017\n\007use"
+      "r_id\030\001 \001(\r\022\020\n\010group_id\030\002 \001(\r\022\026\n\016group_ne"
+      "w_name\030\003 \001(\t\"=\n\030DeleteFriendGroupRequest"
+      "\022\017\n\007user_id\030\001 \001(\r\022\020\n\010group_id\030\002 \001(\r\"P\n\030M"
+      "oveFriendToGroupRequest\022\017\n\007user_id\030\001 \001(\r"
+      "\022\021\n\tfriend_id\030\002 \001(\r\022\020\n\010group_id\030\003 \001(\r\"9\n"
+      "\023DeleteFriendRequest\022\017\n\007user_id\030\001 \001(\r\022\021\n"
+      "\tfriend_id\030\002 \001(\r\"V\n\031ModifyFriendRemarkRe"
+      "quest\022\017\n\007user_id\030\001 \001(\r\022\021\n\tfriend_id\030\002 \001("
+      "\r\022\025\n\rfriend_remark\030\003 \001(\t\"n\n\023SearchFriend"
+      "Request\022\017\n\007user_id\030\001 \001(\r\022\023\n\013search_data\030"
+      "\002 \001(\t\0221\n\013search_type\030\003 \001(\0162\034.youliao.pdu"
+      ".base.SearchType\"U\n\023SearchFriendRespone\022"
+      "\017\n\007user_id\030\001 \001(\r\022-\n\007friends\030\002 \003(\0132\034.youl"
+      "iao.pdu.base.FriendInfo\"\237\001\n\020AddFriendReq"
+      "uest\022\017\n\007user_id\030\001 \001(\r\022\021\n\tuser_nick\030\002 \001(\t"
+      "\022\025\n\ruser_head_url\030\003 \001(\t\022\021\n\tfriend_id\030\004 \001"
+      "(\r\022\025\n\rfriend_remark\030\005 \001(\t\022\020\n\010group_id\030\006 "
+      "\001(\r\022\024\n\014validateData\030\007 \001(\t\"k\n\020AddFriendRe"
+      "spone\022\017\n\007user_id\030\001 \001(\r\022\021\n\tfriend_id\030\002 \001("
+      "\r\022\021\n\tresult_id\030\003 \001(\r\022\020\n\010group_id\030\004 \001(\r\022\016"
+      "\n\006remark\030\005 \001(\t\".\n\033GetAddRequestHistoryRe"
+      "quest\022\017\n\007user_id\030\001 \001(\r\"a\n\033GetAddRequestH"
+      "istoryRespone\022\017\n\007user_id\030\001 \001(\r\0221\n\007histor"
+      "y\030\002 \003(\0132 .youliao.pdu.base.AddRequestInf"
+      "ob\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 2255);
+      descriptor, 2249);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "youliao.friendlist.proto", &protobuf_RegisterTypes);
   ::protobuf_youliao_2ebase_2eproto::AddDescriptors();
@@ -1321,7 +1321,6 @@ void FriendListRequest::InitAsDefaultInstance() {
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int FriendListRequest::kUserIdFieldNumber;
 const int FriendListRequest::kMsgServIdxFieldNumber;
-const int FriendListRequest::kAttachDataFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 FriendListRequest::FriendListRequest()
@@ -1337,10 +1336,6 @@ FriendListRequest::FriendListRequest(const FriendListRequest& from)
       _internal_metadata_(NULL),
       _cached_size_(0) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
-  attach_data_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  if (from.attach_data().size() > 0) {
-    attach_data_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.attach_data_);
-  }
   ::memcpy(&user_id_, &from.user_id_,
     static_cast<size_t>(reinterpret_cast<char*>(&msg_serv_idx_) -
     reinterpret_cast<char*>(&user_id_)) + sizeof(msg_serv_idx_));
@@ -1348,7 +1343,6 @@ FriendListRequest::FriendListRequest(const FriendListRequest& from)
 }
 
 void FriendListRequest::SharedCtor() {
-  attach_data_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&user_id_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&msg_serv_idx_) -
       reinterpret_cast<char*>(&user_id_)) + sizeof(msg_serv_idx_));
@@ -1361,7 +1355,6 @@ FriendListRequest::~FriendListRequest() {
 }
 
 void FriendListRequest::SharedDtor() {
-  attach_data_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 void FriendListRequest::SetCachedSize(int size) const {
@@ -1386,7 +1379,6 @@ void FriendListRequest::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  attach_data_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&user_id_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&msg_serv_idx_) -
       reinterpret_cast<char*>(&user_id_)) + sizeof(msg_serv_idx_));
@@ -1399,7 +1391,7 @@ bool FriendListRequest::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:youliao.pdu.friendlist.FriendListRequest)
   for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(16383u);
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
@@ -1425,18 +1417,6 @@ bool FriendListRequest::MergePartialFromCodedStream(
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &msg_serv_idx_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // bytes attach_data = 20;
-      case 20: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(162u /* 162 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
-                input, this->mutable_attach_data()));
         } else {
           goto handle_unusual;
         }
@@ -1479,12 +1459,6 @@ void FriendListRequest::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->msg_serv_idx(), output);
   }
 
-  // bytes attach_data = 20;
-  if (this->attach_data().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
-      20, this->attach_data(), output);
-  }
-
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
@@ -1509,13 +1483,6 @@ void FriendListRequest::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->msg_serv_idx(), target);
   }
 
-  // bytes attach_data = 20;
-  if (this->attach_data().size() > 0) {
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
-        20, this->attach_data(), target);
-  }
-
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
@@ -1533,13 +1500,6 @@ size_t FriendListRequest::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
   }
-  // bytes attach_data = 20;
-  if (this->attach_data().size() > 0) {
-    total_size += 2 +
-      ::google::protobuf::internal::WireFormatLite::BytesSize(
-        this->attach_data());
-  }
-
   // uint32 user_id = 1;
   if (this->user_id() != 0) {
     total_size += 1 +
@@ -1583,10 +1543,6 @@ void FriendListRequest::MergeFrom(const FriendListRequest& from) {
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from.attach_data().size() > 0) {
-
-    attach_data_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.attach_data_);
-  }
   if (from.user_id() != 0) {
     set_user_id(from.user_id());
   }
@@ -1619,7 +1575,6 @@ void FriendListRequest::Swap(FriendListRequest* other) {
 }
 void FriendListRequest::InternalSwap(FriendListRequest* other) {
   using std::swap;
-  attach_data_.Swap(&other->attach_data_);
   swap(user_id_, other->user_id_);
   swap(msg_serv_idx_, other->msg_serv_idx_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
@@ -1654,8 +1609,8 @@ void FriendListRespone_FriendListEntry_DoNotUse::MergeFrom(
 void FriendListRespone::InitAsDefaultInstance() {
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int FriendListRespone::kUserIdFieldNumber;
 const int FriendListRespone::kFriendListFieldNumber;
-const int FriendListRespone::kAttachDataFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 FriendListRespone::FriendListRespone()
@@ -1672,15 +1627,12 @@ FriendListRespone::FriendListRespone(const FriendListRespone& from)
       _cached_size_(0) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   friend_list_.MergeFrom(from.friend_list_);
-  attach_data_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  if (from.attach_data().size() > 0) {
-    attach_data_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.attach_data_);
-  }
+  user_id_ = from.user_id_;
   // @@protoc_insertion_point(copy_constructor:youliao.pdu.friendlist.FriendListRespone)
 }
 
 void FriendListRespone::SharedCtor() {
-  attach_data_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  user_id_ = 0u;
   _cached_size_ = 0;
 }
 
@@ -1690,7 +1642,6 @@ FriendListRespone::~FriendListRespone() {
 }
 
 void FriendListRespone::SharedDtor() {
-  attach_data_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 void FriendListRespone::SetCachedSize(int size) const {
@@ -1716,7 +1667,7 @@ void FriendListRespone::Clear() {
   (void) cached_has_bits;
 
   friend_list_.Clear();
-  attach_data_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  user_id_ = 0u;
   _internal_metadata_.Clear();
 }
 
@@ -1726,14 +1677,28 @@ bool FriendListRespone::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:youliao.pdu.friendlist.FriendListRespone)
   for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(16383u);
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // map<uint32, .youliao.pdu.friendlist.Group_Friend> friend_list = 1;
+      // uint32 user_id = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &user_id_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // map<uint32, .youliao.pdu.friendlist.Group_Friend> friend_list = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
           FriendListRespone_FriendListEntry_DoNotUse::Parser< ::google::protobuf::internal::MapField<
               FriendListRespone_FriendListEntry_DoNotUse,
               ::google::protobuf::uint32, ::youliao::pdu::friendlist::Group_Friend,
@@ -1743,18 +1708,6 @@ bool FriendListRespone::MergePartialFromCodedStream(
             ::google::protobuf::Map< ::google::protobuf::uint32, ::youliao::pdu::friendlist::Group_Friend > > parser(&friend_list_);
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
               input, &parser));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // bytes attach_data = 20;
-      case 20: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(162u /* 162 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
-                input, this->mutable_attach_data()));
         } else {
           goto handle_unusual;
         }
@@ -1787,7 +1740,12 @@ void FriendListRespone::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // map<uint32, .youliao.pdu.friendlist.Group_Friend> friend_list = 1;
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->user_id(), output);
+  }
+
+  // map<uint32, .youliao.pdu.friendlist.Group_Friend> friend_list = 2;
   if (!this->friend_list().empty()) {
     typedef ::google::protobuf::Map< ::google::protobuf::uint32, ::youliao::pdu::friendlist::Group_Friend >::const_pointer
         ConstPtr;
@@ -1811,7 +1769,7 @@ void FriendListRespone::SerializeWithCachedSizes(
         entry.reset(friend_list_.NewEntryWrapper(
             items[static_cast<ptrdiff_t>(i)].second->first, items[static_cast<ptrdiff_t>(i)].second->second));
         ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-            1, *entry, output);
+            2, *entry, output);
       }
     } else {
       ::google::protobuf::scoped_ptr<FriendListRespone_FriendListEntry_DoNotUse> entry;
@@ -1821,15 +1779,9 @@ void FriendListRespone::SerializeWithCachedSizes(
         entry.reset(friend_list_.NewEntryWrapper(
             it->first, it->second));
         ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-            1, *entry, output);
+            2, *entry, output);
       }
     }
-  }
-
-  // bytes attach_data = 20;
-  if (this->attach_data().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
-      20, this->attach_data(), output);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -1846,7 +1798,12 @@ void FriendListRespone::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // map<uint32, .youliao.pdu.friendlist.Group_Friend> friend_list = 1;
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->user_id(), target);
+  }
+
+  // map<uint32, .youliao.pdu.friendlist.Group_Friend> friend_list = 2;
   if (!this->friend_list().empty()) {
     typedef ::google::protobuf::Map< ::google::protobuf::uint32, ::youliao::pdu::friendlist::Group_Friend >::const_pointer
         ConstPtr;
@@ -1871,7 +1828,7 @@ void FriendListRespone::SerializeWithCachedSizes(
             items[static_cast<ptrdiff_t>(i)].second->first, items[static_cast<ptrdiff_t>(i)].second->second));
         target = ::google::protobuf::internal::WireFormatLite::
                    InternalWriteMessageNoVirtualToArray(
-                       1, *entry, deterministic, target);
+                       2, *entry, deterministic, target);
 ;
       }
     } else {
@@ -1883,17 +1840,10 @@ void FriendListRespone::SerializeWithCachedSizes(
             it->first, it->second));
         target = ::google::protobuf::internal::WireFormatLite::
                    InternalWriteMessageNoVirtualToArray(
-                       1, *entry, deterministic, target);
+                       2, *entry, deterministic, target);
 ;
       }
     }
-  }
-
-  // bytes attach_data = 20;
-  if (this->attach_data().size() > 0) {
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
-        20, this->attach_data(), target);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -1913,7 +1863,7 @@ size_t FriendListRespone::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
   }
-  // map<uint32, .youliao.pdu.friendlist.Group_Friend> friend_list = 1;
+  // map<uint32, .youliao.pdu.friendlist.Group_Friend> friend_list = 2;
   total_size += 1 *
       ::google::protobuf::internal::FromIntSize(this->friend_list_size());
   {
@@ -1927,11 +1877,11 @@ size_t FriendListRespone::ByteSizeLong() const {
     }
   }
 
-  // bytes attach_data = 20;
-  if (this->attach_data().size() > 0) {
-    total_size += 2 +
-      ::google::protobuf::internal::WireFormatLite::BytesSize(
-        this->attach_data());
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->user_id());
   }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
@@ -1964,9 +1914,8 @@ void FriendListRespone::MergeFrom(const FriendListRespone& from) {
   (void) cached_has_bits;
 
   friend_list_.MergeFrom(from.friend_list_);
-  if (from.attach_data().size() > 0) {
-
-    attach_data_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.attach_data_);
+  if (from.user_id() != 0) {
+    set_user_id(from.user_id());
   }
 }
 
@@ -1995,7 +1944,7 @@ void FriendListRespone::Swap(FriendListRespone* other) {
 void FriendListRespone::InternalSwap(FriendListRespone* other) {
   using std::swap;
   friend_list_.Swap(&other->friend_list_);
-  attach_data_.Swap(&other->attach_data_);
+  swap(user_id_, other->user_id_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   swap(_cached_size_, other->_cached_size_);
 }
@@ -2635,6 +2584,7 @@ void FriendStatusChangeMessage::InitAsDefaultInstance() {
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int FriendStatusChangeMessage::kUserIdFieldNumber;
+const int FriendStatusChangeMessage::kFriendIdFieldNumber;
 const int FriendStatusChangeMessage::kUserStatusTypeFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -2724,10 +2674,24 @@ bool FriendStatusChangeMessage::MergePartialFromCodedStream(
         break;
       }
 
-      // .youliao.pdu.base.UserStatusType user_status_type = 2;
+      // uint32 friend_id = 2;
       case 2: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &friend_id_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // .youliao.pdu.base.UserStatusType user_status_type = 3;
+      case 3: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
@@ -2770,10 +2734,15 @@ void FriendStatusChangeMessage::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->user_id(), output);
   }
 
-  // .youliao.pdu.base.UserStatusType user_status_type = 2;
+  // uint32 friend_id = 2;
+  if (this->friend_id() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->friend_id(), output);
+  }
+
+  // .youliao.pdu.base.UserStatusType user_status_type = 3;
   if (this->user_status_type() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
-      2, this->user_status_type(), output);
+      3, this->user_status_type(), output);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -2795,10 +2764,15 @@ void FriendStatusChangeMessage::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->user_id(), target);
   }
 
-  // .youliao.pdu.base.UserStatusType user_status_type = 2;
+  // uint32 friend_id = 2;
+  if (this->friend_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->friend_id(), target);
+  }
+
+  // .youliao.pdu.base.UserStatusType user_status_type = 3;
   if (this->user_status_type() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
-      2, this->user_status_type(), target);
+      3, this->user_status_type(), target);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -2825,7 +2799,14 @@ size_t FriendStatusChangeMessage::ByteSizeLong() const {
         this->user_id());
   }
 
-  // .youliao.pdu.base.UserStatusType user_status_type = 2;
+  // uint32 friend_id = 2;
+  if (this->friend_id() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->friend_id());
+  }
+
+  // .youliao.pdu.base.UserStatusType user_status_type = 3;
   if (this->user_status_type() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->user_status_type());
@@ -2863,6 +2844,9 @@ void FriendStatusChangeMessage::MergeFrom(const FriendStatusChangeMessage& from)
   if (from.user_id() != 0) {
     set_user_id(from.user_id());
   }
+  if (from.friend_id() != 0) {
+    set_friend_id(from.friend_id());
+  }
   if (from.user_status_type() != 0) {
     set_user_status_type(from.user_status_type());
   }
@@ -2893,6 +2877,7 @@ void FriendStatusChangeMessage::Swap(FriendStatusChangeMessage* other) {
 void FriendStatusChangeMessage::InternalSwap(FriendStatusChangeMessage* other) {
   using std::swap;
   swap(user_id_, other->user_id_);
+  swap(friend_id_, other->friend_id_);
   swap(user_status_type_, other->user_status_type_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   swap(_cached_size_, other->_cached_size_);

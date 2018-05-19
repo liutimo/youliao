@@ -193,9 +193,13 @@ void DBServConn::_HandleValidateRespone(BasePdu *pdu)
 
     log("收到服务器登录校验用户%d响应", clientConn->getUserId());
 
+    bool loginSuccess = false;
+
+    base::UserInfo *userInfo = nullptr;
+
     if (clientConn)
     {
-        base::UserInfo *userInfo = new base::UserInfo(validateRespone.user_info());
+        userInfo = new base::UserInfo(validateRespone.user_info());
 
         if (UserManager::instance()->isLogin(userInfo->user_id()))
         {
@@ -211,6 +215,7 @@ void DBServConn::_HandleValidateRespone(BasePdu *pdu)
             userLoginRespone.set_result_code(base::NONE);
             //  登录成功
             UserManager::instance()->addUser(userInfo->user_id(), clientConn);
+            loginSuccess = true;
         }
 
         userLoginRespone.set_allocated_user_info(userInfo);
@@ -223,6 +228,21 @@ void DBServConn::_HandleValidateRespone(BasePdu *pdu)
         basePdu->writeMessage(&userLoginRespone);
         clientConn->sendBasePdu(basePdu);
         delete basePdu;
+
+    }
+
+    //登录成功，更新路由服务器中的状态
+    if (loginSuccess)
+    {
+        server::UserGoOnline userGoOnline;
+        userGoOnline.set_user_id(userInfo->user_id());
+        userGoOnline.set_msg_index(1);
+        userGoOnline.set_user_state(base::USER_STATUS_ONLINE);
+
+        auto conn = get_route_server_conn();
+
+        if (conn)
+            sendMessage(conn, userGoOnline, base::SID_SERVER, base::CID_SERVER_USER_GO_ONLINE);
     }
 }
 
@@ -251,39 +271,12 @@ void DBServConn::_HandleFriendListRespone(BasePdu *pdu)
     friendlist::FriendListRespone friendListRespone;
     friendListRespone.ParseFromString(pdu->getMessage());
 
-    uint32_t handle = get_attach_data(friendListRespone);
-
-    ClientConn *clientConn = findConn(handle);
-
-    if (!clientConn)
-        return;
-
-    log("发送好友列表到用户%d", clientConn->getUserId());
-
-    //发送好友列表给客户端
-    BasePdu basePdu;
-    basePdu.setSID(base::SID_FRIEND_LIST);
-    basePdu.setCID(base::CID_FRIENDLIST_GET_RESPONE);
-    basePdu.writeMessage(&friendListRespone);
-    clientConn->sendBasePdu(&basePdu);
-
+    //直接转发路由服务器获取好友在线状态
     RouteConn *routeConn = get_route_server_conn();
     if (!routeConn)
         return;
 
-    //发送好友上线通知
-    //之所以在这里发送，是因为DBServer是在获取好友列表时更新 在线好友列表
-    server::RouteStatusChange routeMessage;
-    routeMessage.set_user_id(clientConn->getUserId());
-    routeMessage.set_route_status_type(base::ROUTE_MESSAGE_FRIEND_STATUS_CHANGE);
-    set_attach_data(routeMessage, base::USER_STATUS_ONLINE);
-
-    BasePdu basePdu1;
-    basePdu1.setSID(base::SID_SERVER);
-    basePdu1.setCID(base::CID_SERVER_ROUTE_BROADCAST);
-    basePdu1.writeMessage(&routeMessage);
-
-    routeConn->sendBasePdu(&basePdu1);
+    sendMessage(routeConn, friendListRespone, base::SID_SERVER, base::CID_SERVER_GET_FRIENDS_STATUS_REQUEST);
 }
 
 void DBServConn::_HandleSignatureChangedRespone(BasePdu *pdu)

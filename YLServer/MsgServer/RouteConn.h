@@ -21,14 +21,15 @@ public:
 
     virtual void close();
     void onClose() override;
+    void onConfirm() override ;
     void handlePdu(BasePdu *) override;
 
     bool isOpen() const { return m_open; }
 
 private:
-    void _HandleGetServerIndexRequest(BasePdu *);
+    void _HandleGetFriendsStatusRespone(BasePdu *basePdu);
     void _HandleRouteBroadcast(BasePdu *);
-    void _HandleRouteToMessage(BasePdu *);
+    void _HandleHandleStatusChange(BasePdu *);
 
     uint32_t   m_server_index;
     bool       m_open;

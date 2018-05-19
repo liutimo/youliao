@@ -72,6 +72,7 @@ BaseTransferTask* TransferTaskManager::newTransferTask(uint32_t transMode, const
         else if (transMode == base::FILE_TYPE_OFFLINE)
         {
             //离线文件
+            transferTask = new OfflineTransferTask(taskId, fromUserId, toUserId, fileName, fileSize);
         }
         else
         {
@@ -89,6 +90,16 @@ BaseTransferTask* TransferTaskManager::newTransferTask(uint32_t transMode, const
     }
     return  transferTask;
 }
+
+OfflineTransferTask* TransferTaskManager::newTransferTask(const std::string &taskId, uint32_t toUserId)
+{
+    OfflineTransferTask* transferTask = OfflineTransferTask::loadFromDisk(taskId, toUserId);
+    if (transferTask)
+        m_transfer_tasks.insert(std::make_pair(taskId, transferTask));
+
+    return transferTask;
+}
+
 
 bool TransferTaskManager::deleteTransferTaskByConnClose(const std::string &taskId)
 {

@@ -246,7 +246,7 @@ void PduHandler::_HandleFriendStatusChangeMessage(BasePdu *pdu)
     friendlist::FriendStatusChangeMessage friendStatusChangeMessage;
     friendStatusChangeMessage.ParseFromString(pdu->getMessage());
 
-    uint32_t changedUserId = friendStatusChangeMessage.user_id();
+    uint32_t changedUserId = friendStatusChangeMessage.friend_id();
     uint32_t status = friendStatusChangeMessage.user_status_type();
 
     emit friendStatusChange(changedUserId, status);
@@ -590,13 +590,22 @@ void PduHandler::_HandleFileNotify(BasePdu *pdu)
     fileNotify.ParseFromString(pdu->getMessage());
 
     YLTransferFileEntity entity;
-    entity.m_file_name  = fileNotify.file_name();
     entity.m_from_id    = fileNotify.from_user_id();
     entity.m_to_id      = fileNotify.to_user_id();
     entity.m_task_id    = fileNotify.task_id();
     entity.m_file_size  = fileNotify.file_size();
 
-    entity.m_file_object = new YLTransferFile(entity.m_file_name, true);
+    //设置文件名
+    std::string fileName = fileNotify.file_name();
+    int pos = fileName.find_last_of('/');
+    fileName = fileName.substr(pos + 1);
+    entity.m_file_name  = fileName;
+
+    //设置文件保存目录
+    entity.setSaveFilePath("/home/liuzheng/Documents/youliao/FileRecv/");
+
+
+    entity.m_file_object = new YLTransferFile(entity.getSaveFilePath() + fileName , true);
 
     base::IpAddress ipAddress = fileNotify.ip_addr_list(0);
     entity.m_ip = ipAddress.ip();

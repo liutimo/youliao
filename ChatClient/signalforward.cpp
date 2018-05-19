@@ -11,6 +11,9 @@ SignalForward::SignalForward(QObject *parent) : QObject(parent)
     connect(YLFileTransferReceiver::instance(), &YLFileTransferReceiver::addSendFileItem, this, &SignalForward::forwardAddSendFileItem);
     connect(YLFileTransferReceiver::instance(), &YLFileTransferReceiver::addRecvFileItem, this, &SignalForward::forwardAddRecvFileItem);
     connect(YLFileTransferReceiver::instance(), &YLFileTransferReceiver::updateProgressBar, this, &SignalForward::forwardUpdateProgressBar);
+    connect(YLFileTransferReceiver::instance(), &YLFileTransferReceiver::transferComplete, this, &SignalForward::forwardTransferComplete);
+    connect(YLFileTransferReceiver::instance(), &YLFileTransferReceiver::refuseFileTransfer, this, &SignalForward::forwardRefuseFileTransfer);
+    connect(YLFileTransferReceiver::instance(), &YLFileTransferReceiver::cancelFileTransfer, this, &SignalForward::forwardCancelFileTransfer);
 }
 
 SignalForward* SignalForward::instance()
@@ -83,22 +86,43 @@ void SignalForward::forwardInviteGroupSelected(uint32_t friId)
 
 void SignalForward::forwardAddSendFileItem(uint32_t userId, const QString &taskId)
 {
-    GlobalData::getSingleChatWidget(userId)->addSendFileItem(taskId);
+    auto w = GlobalData::getSingleChatWidget(userId);
+    if (w)
+        w->addSendFileItem(taskId);
 }
 
 
 void SignalForward::forwardAddRecvFileItem(uint32_t userId, const QString &taskId)
 {
-
-    GlobalData::getSingleChatWidget(userId)->addRecvFileItem(taskId);
+    auto w = GlobalData::getSingleChatWidget(userId);
+    if (w)
+        w->addRecvFileItem(taskId);
 }
 
 void SignalForward::forwardUpdateProgressBar(uint32_t userId, const QString &taskId ,uint32_t currentProgress)
 {
-    GlobalData::getSingleChatWidget(userId)->updateFileTransferProgressBar(taskId, currentProgress);
+    auto w = GlobalData::getSingleChatWidget(userId);
+    if (w)
+        w->updateFileTransferProgressBar(taskId, currentProgress);
 }
 
-void SignalForward:: forwardTransferComplete(uint32_t userId, const QString &taskId)
+void SignalForward::forwardTransferComplete(uint32_t userId, const QString &taskId)
 {
+    auto w = GlobalData::getSingleChatWidget(userId);
+    if (w)
+        w->transferComplete(taskId);
+}
 
+void SignalForward::forwardCancelFileTransfer(uint32_t userId, const QString &taskId)
+{
+    auto w = GlobalData::getSingleChatWidget(userId);
+    if (w)
+        w->cancelFileTransfer(taskId);
+}
+
+void SignalForward::forwardRefuseFileTransfer(uint32_t userId, const QString &taskId)
+{
+    auto w = GlobalData::getSingleChatWidget(userId);
+    if (w)
+        w->refuseFileTransfer(taskId);
 }

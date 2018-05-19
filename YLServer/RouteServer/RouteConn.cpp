@@ -2,15 +2,15 @@
 // Created by liuzheng on 18-4-9.
 //
 
-#include <pdu/protobuf/youliao.base.pb.h>
-#include <pdu/protobuf/youliao.server.pb.h>
+#include "pdu/protobuf/youliao.base.pb.h"
+#include "pdu/protobuf/youliao.friendlist.pb.h"
+#include "pdu/protobuf/youliao.server.pb.h"
 #include "RouteConn.h"
 #include "util/util.h"
 #include "network/netlib.h"
-#include "DBServConn.h"
+#include "CachePool.h"
 static BaseConnMap_t g_route_conn_map;
 static std::map<uint32_t, RouteConn*> g_msg_conn_idx_map;
-
 
 
 void addRouteConn(uint32_t index, RouteConn *routeConn)
@@ -26,14 +26,6 @@ RouteConn *getRouteConn(uint32_t index)
         return nullptr;
 
     return iter->second;
-}
-
-template <class T>
-void set_attach_data(T &t, net_handle_t data)
-{
-    SimpleBuffer simpleBuffer;
-    simpleBuffer.writeUInt32(data);
-    t.set_attach_data(simpleBuffer.getBuffer(), simpleBuffer.getWriteOffest());
 }
 
 
@@ -58,6 +50,15 @@ void RouteConn::onClose()
     close();
 }
 
+void RouteConn::onConfirm()
+{
+    server::GetServerIndexRequest request;
+
+    auto c = this;
+    sendMessage(c, request, base::SID_SERVER, base::CID_SERVER_GET_SERVER_INDEX_REQUEST);
+}
+
+
 void RouteConn::onConnect(net_handle_t handle)
 {
     m_handle = handle;
@@ -74,16 +75,163 @@ void RouteConn::handlePdu(BasePdu *basePdu)
         case base::CID_SERVER_ROUTE_BROADCAST:
             _HandleBroadcastMsg(basePdu);
             break;
-        case base::CID_SERVER_GET_ONLINE_FRIENDS_RESPONE:
+        case base::CID_SERVER_GET_SERVER_INDEX_RESPONE:
             _HandleMessageServerIndex(basePdu);
             break;
         case base::CID_SERVER_ROUTE_MESSAGE:
             _HandleRouteMessage(basePdu);
             break;
+        case base::CID_SERVER_USER_GO_ONLINE:
+            _HandleUserGoOnline(basePdu);
+            break;
+        case base::CID_SERVER_USER_GO_OFFLINE:
+            _HandleUserGoOffline(basePdu);
+            break;
+        case base::CID_SERVER_GET_FRIENDS_STATUS_REQUEST:
+            _HandleGetFriendsStatusRequest(basePdu);
+            break;
         default:
             break;
     }
 
+}
+
+
+void RouteConn::_HandleUserGoOnline(BasePdu *basePdu)
+{
+    server::UserGoOnline userGoOnline;
+    userGoOnline.ParseFromString(basePdu->getMessage());
+
+    uint32_t userId = userGoOnline.user_id();
+    uint32_t msdIdx = userGoOnline.msg_index();
+    base::UserStatusType statusType = userGoOnline.user_state();
+
+    log("用户%d在消息服务器%d上以状态%d登录", userId, msdIdx, statusType);
+
+    //保存入redis
+    auto conn = CacheManager::instance()->getCacheConn("OnlineUser");
+
+    if (conn)
+    {
+        //user_map 是 用户ID 和 用户在线状态的 key : value 组合
+        conn->hset("user_map", std::to_string(userId), std::to_string(statusType));
+
+        //user_msg_idx 是 用户ID 和 用户所登录的消息服务器idx 的 key ： value 组合
+        conn->hset("user_msg_idx", std::to_string(userId), std::to_string(msdIdx));
+    }
+
+    CacheManager::instance()->releaseCacheConn(conn);
+}
+
+
+void RouteConn::_HandleUserGoOffline(BasePdu *basePdu)
+{
+    server::UserGoOffline userGoOffline;
+    userGoOffline.ParseFromString(basePdu->getMessage());
+    uint32_t userId = userGoOffline.user_id();
+
+
+    log("用户%d注销", userId);
+
+    //保存入redis
+    auto conn = CacheManager::instance()->getCacheConn("OnlineUser");
+
+    std::string setName = "user_online_friends_" + std::to_string(userId);
+    if (conn)
+    {
+        //删除其在线信息
+        conn->hdel("user_map", std::to_string(userId));
+        conn->hdel("user_msg_idx", std::to_string(userId));
+
+        //通知好友其在线，并且从好友的在线好友列表中移除
+
+        //[1] 获取在线好友
+        std::list<uint32_t> members = conn->sMembers(setName);
+
+        friendlist::FriendStatusChangeMessage msg;
+        msg.set_friend_id(userId);
+        msg.set_user_status_type(base::USER_STATUS_OFFLINE);
+
+        for(uint32_t friId : members)
+        {
+            msg.set_user_id(friId);
+            std::string msgIdx = conn->hget("user_msg_idx", std::to_string(friId));
+            auto msgConn = getRouteConn((uint32_t)atoi(msgIdx.c_str()));
+            if (msgConn)
+                sendMessage(msgConn, msg, base::SID_SERVER, base::CID_FRIENDLIST_FRIEND_STATUS_CHANGE);
+        }
+
+
+    }
+
+    CacheManager::instance()->releaseCacheConn(conn);
+}
+
+
+
+void RouteConn::_HandleGetFriendsStatusRequest(BasePdu *basePdu)
+{
+    friendlist::FriendListRespone friendListRespone;
+    friendListRespone.ParseFromString(basePdu->getMessage());
+
+    uint32_t userId = friendListRespone.user_id();
+
+    //获取好友在线状态
+    auto conn = CacheManager::instance()->getCacheConn("OnlineUser");
+
+    if (!conn)
+        return;
+
+    std::list<uint32_t> onlineFriends;
+
+    //::google::protobuf::Map< ::google::protobuf::uint32, ::youliao::pdu::friendlist::Group_Friend >
+    auto& friendInfos = *(friendListRespone.mutable_friend_list());
+    for (auto &pair : friendInfos)
+    {
+        auto &group = pair.second;
+        for (int i = 0; i < group.friend__size(); ++i) {
+            base::FriendInfo &friendInfo = *(group.mutable_friend_(i));
+
+            uint32_t friendId = friendInfo.friend_id();
+            std::string rv = conn->hget("user_map", std::to_string(friendId));
+
+            if (rv.empty())
+            {
+                friendInfo.set_friend_is_online(false);
+            }
+            else
+            {
+                onlineFriends.push_back(friendId);
+                friendInfo.set_friend_is_online(true);
+            }
+        }
+    }
+
+
+    sendMessage(this, friendListRespone, base::SID_SERVER, base::CID_SERVER_GET_FRIENDS_STATUS_RESPONE);
+
+
+    //2. 通知其在线好友 用户上线
+    friendlist::FriendStatusChangeMessage msg;
+    msg.set_friend_id(userId);
+    msg.set_user_status_type(base::USER_STATUS_ONLINE);
+
+
+    //3. 发送通知，并且构建当前用户的在线好友redis set
+    std::string setName = "user_online_friends_" + std::to_string(userId);
+    for (uint32_t friId : onlineFriends)
+    {
+        msg.set_user_id(friId);
+        std::string msgIdx = conn->hget("user_msg_idx", std::to_string(friId));
+        auto msgConn = getRouteConn((uint32_t)atoi(msgIdx.c_str()));
+        if (msgConn)
+            sendMessage(msgConn, msg, base::SID_SERVER, base::CID_FRIENDLIST_FRIEND_STATUS_CHANGE);
+
+        conn->sAdd(setName, std::to_string(friId));
+    }
+
+
+    CacheManager::instance()->releaseCacheConn(conn);
 }
 
 
@@ -100,17 +248,6 @@ void RouteConn::_HandleRouteMessage(BasePdu *basePdu)
     request.set_message_type(routeMessageForward.message_type());
     request.set_message_data(routeMessageForward.message_data());
 
-    DBServConn *conn = get_db_server_conn();
-
-    if (!conn)
-        return;
-
-    BasePdu basePdu1;
-    basePdu1.setSID(base::SID_SERVER);
-    basePdu1.setCID(base::CID_SERVER_GET_FRIEND_ONLINE_STATUS);
-    basePdu1.writeMessage(&request);
-
-    conn->sendBasePdu(&basePdu1);
 
 }
 
@@ -127,26 +264,5 @@ void RouteConn::_HandleMessageServerIndex(BasePdu *basePdu)
 
 void RouteConn::_HandleBroadcastMsg(BasePdu *basePdu)
 {
-    auto dbServConn = get_db_server_conn();
-    if (!dbServConn)
-        return;
 
-    log("处理来自MsgServer的广播请求");
-
-    server::RouteBroadcastStatusChange routeBroadcastStatusChange;
-    routeBroadcastStatusChange.ParseFromString(basePdu->getMessage());
-
-    uint32_t  userID = routeBroadcastStatusChange.user_id();
-
-    server::RouteGetOnlineFirendRequest routeGetOnlineFirendRequest;
-    routeGetOnlineFirendRequest.set_user_id(userID);
-    routeGetOnlineFirendRequest.set_route_status_type(routeBroadcastStatusChange.route_status_type());
-    routeGetOnlineFirendRequest.set_attach_data(routeBroadcastStatusChange.attach_data());
-
-    BasePdu pdu;
-    pdu.setSID(base::SID_SERVER);
-    pdu.setCID(base::CID_SERVER_GET_ONLINE_FRIENDS_REQUEST);
-    pdu.writeMessage(&routeGetOnlineFirendRequest);
-    log("发送用户%d在线好友列表请求到DBServer", userID);
-    dbServConn->sendBasePdu(&pdu);
 }

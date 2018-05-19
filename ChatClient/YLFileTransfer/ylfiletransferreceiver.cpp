@@ -139,6 +139,9 @@ void YLFileTransferReceiver::_HandleFileState(BasePdu *pdu)
             }
             YLTransferFileEntityManager::instance()->updateFileInfoBysTaskID(entity);
             //通知UI
+            uint32_t userId = 0;
+            entity.m_client_role == base::ClientFileRole::CLIENT_REALTIME_SENDER ? userId = entity.m_to_id : userId = entity.m_from_id;
+            emit cancelFileTransfer(userId, taskId.c_str());
         }
         break;
     case base::CLIENT_FILE_REFUSE:
@@ -150,6 +153,9 @@ void YLFileTransferReceiver::_HandleFileState(BasePdu *pdu)
             }
             YLTransferFileEntityManager::instance()->updateFileInfoBysTaskID(entity);
             //通知UI
+            uint32_t userId = 0;
+            entity.m_client_role == base::ClientFileRole::CLIENT_REALTIME_SENDER ? userId = entity.m_to_id : userId = entity.m_from_id;
+            emit refuseFileTransfer(userId, taskId.c_str());
         }
         break;
     case base::CLIENT_FILE_DONE:
@@ -161,6 +167,8 @@ void YLFileTransferReceiver::_HandleFileState(BasePdu *pdu)
             }
             YLTransferFileEntityManager::instance()->updateFileInfoBysTaskID(entity);
             //通知UI
+
+            emit transferComplete(entity.m_from_id, taskId.c_str());
         }
         break;
     default:
@@ -251,8 +259,7 @@ void YLFileTransferReceiver::_HandleGetFileBlockRespone(BasePdu *basePdu)
     entity.m_progress = offest + dataSize;
     if (entity.m_progress < entity.m_file_size)
     {
-        //更新ui
-
+        emit updateProgressBar(entity.m_from_id, taskId.c_str(), entity.m_progress);
         //继续请求
         base::TransferFileType mode = entity.m_client_role == base::CLIENT_OFFLINE_DOWNLOAD ? base::FILE_TYPE_OFFLINE : base::FILE_TYPE_OFFLINE;
         file::GetFileBlockRequest request;
@@ -300,6 +307,7 @@ void YLFileTransferReceiver::_HandleGetFileBlockRespone(BasePdu *basePdu)
         }
 
         //更新UI
+        emit transferComplete(entity.m_from_id, taskId.c_str());
     }
 
     YLTransferFileEntityManager::instance()->updateFileInfoBysTaskID(entity);

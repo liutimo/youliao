@@ -37,6 +37,7 @@ private:
     void _HandleClientLoginRequest(BasePdu *);
     void _HandleClientGetFileBlockRequest(BasePdu *);
     void _HandleClientGetFileBlockRespone(BasePdu *);
+    void _HandleCLientFileStates(BasePdu *);
 
 
     int _StatesNotify(int state, const std::string& task_id, uint32_t user_id, BaseConn* conn);

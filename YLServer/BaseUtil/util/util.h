@@ -37,7 +37,7 @@ uint64_t get_tick_count();
 
 
 template <typename Conn, typename MessageLite>
-void sendMessage(Conn &conn, MessageLite &messageLite, uint16_t SID, uint16_t CID)
+void sendMessage(Conn *conn, MessageLite &messageLite, uint16_t SID, uint16_t CID)
 {
     youliao::pdu::BasePdu basePdu;
     basePdu.setSID(SID);

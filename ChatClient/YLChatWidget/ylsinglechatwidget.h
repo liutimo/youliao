@@ -31,6 +31,9 @@ public:
     void addSendFileItem(const QString &taskId);
     void addRecvFileItem(const QString &taskId);
     void updateFileTransferProgressBar(const QString &taskId, uint32_t progress);
+    void transferComplete(const QString &taskId);
+    void cancelFileTransfer(const QString &taskId);
+    void refuseFileTransfer(const QString &taskId);
 
 signals:
     void loadFinish();

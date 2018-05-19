@@ -15,7 +15,11 @@ public:
     void addRight(const QString &, const QString&);
     void addCancelSend(const QString &, const QString &);
     void addCancelRecv(const QString &, const QString &);
-
+    void sendFileSuccess(const QString &, const QString &, const QString &);
+    void recvFileSuccess(const QString &, const QString &, const QString &);
+    void opponentCancalSend(const QString &, const QString&);
+    void opponentCancalRecv(const QString &, const QString&);
+    void opponentRefuseRecv(const QString &, const QString&);
 public slots:
     void copy();
 

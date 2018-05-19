@@ -6,6 +6,7 @@
 #include <QScrollArea>
 #include <QVBoxLayout>
 #include <QProgressBar>
+#include <QDateTime>
 #include <QTimer>
 #include "YLFileTransfer/ylfiletransfermanager.h"
 #include "YLFileTransfer/ylfiletransferthread.h"
@@ -67,6 +68,59 @@ void YLTransferFileTaskListWidget::updateFileTransferProgressBar(const QString &
 
 }
 
+
+void YLTransferFileTaskListWidget::transferComplete(const QString &taskId)
+{
+    YLSendFileWidget *sendWidget = m_file_send_map[taskId];
+    if (sendWidget)
+    {
+        sendWidget->close();
+        return;
+    }
+
+    YLReceiveFileWidget *recvWidget = m_file_recv_map[taskId];
+    if (recvWidget)
+    {
+        recvWidget->close();
+        return;
+    }
+}
+
+
+void YLTransferFileTaskListWidget::cancelFileTransfer(const QString &taskId)
+{
+    YLSendFileWidget *sendWidget = m_file_send_map[taskId];
+    if (sendWidget)
+    {
+        sendWidget->close();
+        return;
+    }
+
+    YLReceiveFileWidget *recvWidget = m_file_recv_map[taskId];
+    if (recvWidget)
+    {
+        recvWidget->close();
+        return;
+    }
+}
+
+void YLTransferFileTaskListWidget::refuseFileTransfer(const QString &taskId)
+{
+    YLSendFileWidget *sendWidget = m_file_send_map[taskId];
+    if (sendWidget)
+    {
+        sendWidget->close();
+        return;
+    }
+
+    YLReceiveFileWidget *recvWidget = m_file_recv_map[taskId];
+    if (recvWidget)
+    {
+        recvWidget->close();
+        return;
+    }
+}
+
 void YLTransferFileTaskListWidget::addRecvFile(const QString &taskId)
 {
     YLReceiveFileWidget *w = new YLReceiveFileWidget;
@@ -105,6 +159,8 @@ YLSendFileWidget::YLSendFileWidget(QWidget *parent) : QWidget(parent)
 {
     setFixedSize(300, 75);
     init();
+
+    m_start_time = QDateTime::currentDateTime().toTime_t();
 }
 
 
@@ -131,6 +187,7 @@ void YLSendFileWidget::init()
     m_cancel->move(260, 50);
     m_cancel->setStyleSheet(qss_button);
     connect(m_cancel, &QPushButton::clicked, this, [this](){
+        YLTransferFileEntityManager::instance()->cancelFileTransfer(m_task_id.toStdString());
         emit cancel(m_file_name, m_file_size);
         close();
     });
@@ -196,6 +253,25 @@ void YLSendFileWidget::setTaskId(const QString &taskId)
 void YLSendFileWidget::updateProgressBar(uint32_t progress)
 {
     m_transfer_progress->setValue(progress);
+
+    uint32_t currentTime = QDateTime::currentDateTime().toTime_t();
+
+    double speed = progress / ((currentTime - m_start_time) / 1000.0);
+    QString s;
+    if (speed < 1024)
+    {
+        s = QString::number(speed) + "Bytes";
+    }
+    else if (speed > 1024 && speed < 1024 * 1024)
+    {
+        s = QString::number(speed / 1024.0) + "KB";
+    }
+    else if (speed > 1024 * 1024 && speed < 1024 * 1024 * 1024)
+    {
+        s = QString::number(speed / 1024.0 / 1024.0) + "MB";
+    }
+
+    m_speed->setText(s + "/s");
 }
 
 
@@ -228,6 +304,7 @@ void YLReceiveFileWidget::init()
     connect(m_cancel, &QPushButton::clicked, this, [this](){
         m_timer->stop();
         emit cancel(m_file_name, m_file_size);
+        YLTransferFileEntityManager::instance()->cancelFileTransfer(m_task_id.toStdString());
         close();
     });
     m_receive = new QPushButton("接收", this);
@@ -239,7 +316,7 @@ void YLReceiveFileWidget::init()
         m_receive->hide();
         m_save_as->hide();
         YLTransferFileEntityManager::instance()->acceptFileTransfer(m_task_id.toStdString());
-        m_timer->start(500);
+        m_timer->start(1000);
     });
 
     m_save_as = new QPushButton("另存为", this);

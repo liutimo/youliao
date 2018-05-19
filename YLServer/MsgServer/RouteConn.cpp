@@ -3,7 +3,7 @@
 //
 
 #include "RouteConn.h"
-#include <pdu/protobuf/youliao.friendlist.pb.h>
+#include "pdu/protobuf/youliao.friendlist.pb.h"
 #include "pdu/protobuf/youliao.message.pb.h"
 #include "network/netlib.h"
 #include "pdu/protobuf/youliao.login.pb.h"
@@ -112,36 +112,32 @@ void RouteConn::onClose()
     close();
 }
 
+void RouteConn::onConfirm()
+{
+    server::GetServerIndexRespone respone;
+    respone.set_index(getMsgServIdx());
+
+    sendMessage(this, respone, base::SID_SERVER, base::CID_SERVER_GET_SERVER_INDEX_RESPONE);
+}
+
+
 void RouteConn::handlePdu(BasePdu *pdu)
 {
     switch (pdu->getCID())
     {
-        case base::CID_SERVER_GET_SERVER_INDEX_REQUEST:
-            _HandleGetServerIndexRequest(pdu);
-            break;
         case base::CID_SERVER_ROUTE_BROADCAST:
             _HandleRouteBroadcast(pdu);
             break;
-        case base::CID_SERVER_ROUTE_TO_MESSAGE:
-            _HandleRouteToMessage(pdu);
+        case base::CID_SERVER_GET_FRIENDS_STATUS_RESPONE:
+            _HandleGetFriendsStatusRespone(pdu);
+            break;
+        case base::CID_FRIENDLIST_FRIEND_STATUS_CHANGE:
+            _HandleHandleStatusChange(pdu);
             break;
         default:
             break;
     }
 
-}
-
-
-void RouteConn::_HandleGetServerIndexRequest(BasePdu *basePdu)
-{
-    server::GetServerIndexRespone getServerIndexRespone;
-    getServerIndexRespone.set_index(10);
-    BasePdu basePdu1;
-    basePdu1.setSID(base::SID_SERVER);
-    basePdu1.setCID(base::CID_SERVER_GET_ONLINE_FRIENDS_RESPONE);
-    basePdu1.writeMessage(&getServerIndexRespone);
-
-    sendBasePdu(&basePdu1);
 }
 
 
@@ -200,28 +196,70 @@ void RouteConn::_HandleRouteBroadcast(BasePdu *basePdu)
     }
 }
 
-void RouteConn::_HandleRouteToMessage(BasePdu *basePdu)
-{
-    server::RouteMessage routeMessage;
-    routeMessage.ParseFromString(basePdu->getMessage());
 
-    auto user = UserManager::instance()->getUser(routeMessage.friend_id());
+void RouteConn::_HandleHandleStatusChange(BasePdu *basePdu)
+{
+    friendlist::FriendStatusChangeMessage msg;
+    msg.ParseFromString(basePdu->getMessage());
+
+    uint32_t userId = msg.user_id();
+
+    auto user = UserManager::instance()->getUser(userId);
+    if (user)
+    {
+        auto conn = user->getConn();
+
+        if (conn)
+            sendMessage(conn, msg, base::SID_FRIEND_LIST, base::CID_FRIENDLIST_FRIEND_STATUS_CHANGE);
+    }
+
+}
+//
+//void RouteConn::_HandleRouteToMessage(BasePdu *basePdu)
+//{
+//    server::RouteMessage routeMessage;
+//    routeMessage.ParseFromString(basePdu->getMessage());
+//
+//    auto user = UserManager::instance()->getUser(routeMessage.friend_id());
+//
+//    if (!user)
+//        return;;
+//
+//    message::MessageData messageData;
+//    messageData.set_from_user_id(routeMessage.user_id());
+//    messageData.set_to_user_id(routeMessage.friend_id());
+//    messageData.set_message_data(routeMessage.message_data());
+//    messageData.set_message_type(routeMessage.message_type());
+//    messageData.set_create_time(routeMessage.create_time());
+//    messageData.set_msg_id(routeMessage.msg_id());
+//
+//    BasePdu basePdu1;
+//    basePdu1.setSID(base::SID_MESSAGE);
+//    basePdu1.setCID(base::CID_MESSAGE_DATA);
+//    basePdu1.writeMessage(&messageData);
+//
+//    user->getConn()->sendBasePdu(&basePdu1);
+//}
+
+void RouteConn::_HandleGetFriendsStatusRespone(BasePdu *basePdu)
+{
+    friendlist::FriendListRespone friendListRespone;
+    friendListRespone.ParseFromString(basePdu->getMessage());
+
+    uint32_t userId = friendListRespone.user_id();
+
+    auto user = UserManager::instance()->getUser(userId);
 
     if (!user)
-        return;;
+        return;
 
-    message::MessageData messageData;
-    messageData.set_from_user_id(routeMessage.user_id());
-    messageData.set_to_user_id(routeMessage.friend_id());
-    messageData.set_message_data(routeMessage.message_data());
-    messageData.set_message_type(routeMessage.message_type());
-    messageData.set_create_time(routeMessage.create_time());
-    messageData.set_msg_id(routeMessage.msg_id());
+    ClientConn *clientConn = user->getConn();
 
-    BasePdu basePdu1;
-    basePdu1.setSID(base::SID_MESSAGE);
-    basePdu1.setCID(base::CID_MESSAGE_DATA);
-    basePdu1.writeMessage(&messageData);
+    if (!clientConn)
+        return;
 
-    user->getConn()->sendBasePdu(&basePdu1);
+    log("发送好友列表到用户%d", clientConn->getUserId());
+
+    //发送好友列表给客户端
+    sendMessage(clientConn, friendListRespone, base::SID_FRIEND_LIST, base::CID_FRIENDLIST_GET_RESPONE);
 }

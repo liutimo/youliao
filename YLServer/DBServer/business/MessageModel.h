@@ -17,7 +17,7 @@ public:
     static MessageModel* instance();
     ~MessageModel();
 
-    bool getFriendOnlineStatus(uint32_t friend_id, int &msg_idx);
+//    bool getFriendOnlineStatus(uint32_t friend_id, int &msg_idx);
 
     bool saveMessage(uint32_t relatedId, uint32_t senderId, uint32_t receiverId, uint32_t messageType, uint32_t createTime, uint32_t messageId, const std::string &content);
 

@@ -21,7 +21,8 @@ public:
     void forwardAddRecvFileItem(uint32_t userId, const QString &taskId);
     void forwardUpdateProgressBar(uint32_t userId, const QString &taskId ,uint32_t currentProgress);
     void forwardTransferComplete(uint32_t userId, const QString &taskId);
-
+    void forwardCancelFileTransfer(uint32_t userId, const QString &taskId);
+    void forwardRefuseFileTransfer(uint32_t userId, const QString &taskId);
 
 //    void updateProgressBar(uint32_t userId, const QString &taskId ,uint32_t currentProgress);
 //    void transferComplete(uint32_t userId, const QString &taskId);
