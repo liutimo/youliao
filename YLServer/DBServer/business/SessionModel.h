@@ -19,6 +19,7 @@ public:
 
     //获取Session id
     //flag用于判断session是否存在(但是已经删除了，即status=1)
+    //type 1 好友 2群组 3 验证消息
     uint32_t getSessionId(uint32_t userId, uint32_t otherId, uint32_t type, bool flag = false);
 
     //新增

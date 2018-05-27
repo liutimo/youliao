@@ -190,20 +190,6 @@ class MessageData : public ::google::protobuf::Message /* @@protoc_insertion_poi
   ::std::string* release_message_data();
   void set_allocated_message_data(::std::string* message_data);
 
-  // bytes attach_data = 8;
-  void clear_attach_data();
-  static const int kAttachDataFieldNumber = 8;
-  const ::std::string& attach_data() const;
-  void set_attach_data(const ::std::string& value);
-  #if LANG_CXX11
-  void set_attach_data(::std::string&& value);
-  #endif
-  void set_attach_data(const char* value);
-  void set_attach_data(const void* value, size_t size);
-  ::std::string* mutable_attach_data();
-  ::std::string* release_attach_data();
-  void set_allocated_attach_data(::std::string* attach_data);
-
   // uint32 relate_id = 1;
   void clear_relate_id();
   static const int kRelateIdFieldNumber = 1;
@@ -216,11 +202,11 @@ class MessageData : public ::google::protobuf::Message /* @@protoc_insertion_poi
   ::google::protobuf::uint32 from_user_id() const;
   void set_from_user_id(::google::protobuf::uint32 value);
 
-  // uint32 to_user_id = 3;
-  void clear_to_user_id();
-  static const int kToUserIdFieldNumber = 3;
-  ::google::protobuf::uint32 to_user_id() const;
-  void set_to_user_id(::google::protobuf::uint32 value);
+  // uint32 to_id = 3;
+  void clear_to_id();
+  static const int kToIdFieldNumber = 3;
+  ::google::protobuf::uint32 to_id() const;
+  void set_to_id(::google::protobuf::uint32 value);
 
   // uint32 msg_id = 4;
   void clear_msg_id();
@@ -240,18 +226,31 @@ class MessageData : public ::google::protobuf::Message /* @@protoc_insertion_poi
   ::youliao::pdu::base::MessageType message_type() const;
   void set_message_type(::youliao::pdu::base::MessageType value);
 
+  // uint32 audio_time = 8;
+  void clear_audio_time();
+  static const int kAudioTimeFieldNumber = 8;
+  ::google::protobuf::uint32 audio_time() const;
+  void set_audio_time(::google::protobuf::uint32 value);
+
+  // uint32 to_user_id = 9;
+  void clear_to_user_id();
+  static const int kToUserIdFieldNumber = 9;
+  ::google::protobuf::uint32 to_user_id() const;
+  void set_to_user_id(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:youliao.pdu.message.MessageData)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::ArenaStringPtr message_data_;
-  ::google::protobuf::internal::ArenaStringPtr attach_data_;
   ::google::protobuf::uint32 relate_id_;
   ::google::protobuf::uint32 from_user_id_;
-  ::google::protobuf::uint32 to_user_id_;
+  ::google::protobuf::uint32 to_id_;
   ::google::protobuf::uint32 msg_id_;
   ::google::protobuf::uint32 create_time_;
   int message_type_;
+  ::google::protobuf::uint32 audio_time_;
+  ::google::protobuf::uint32 to_user_id_;
   mutable int _cached_size_;
   friend struct ::protobuf_youliao_2emessage_2eproto::TableStruct;
   friend void ::protobuf_youliao_2emessage_2eproto::InitDefaultsMessageDataImpl();
@@ -639,18 +638,18 @@ inline void MessageData::set_from_user_id(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:youliao.pdu.message.MessageData.from_user_id)
 }
 
-// uint32 to_user_id = 3;
-inline void MessageData::clear_to_user_id() {
-  to_user_id_ = 0u;
+// uint32 to_id = 3;
+inline void MessageData::clear_to_id() {
+  to_id_ = 0u;
 }
-inline ::google::protobuf::uint32 MessageData::to_user_id() const {
-  // @@protoc_insertion_point(field_get:youliao.pdu.message.MessageData.to_user_id)
-  return to_user_id_;
+inline ::google::protobuf::uint32 MessageData::to_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.message.MessageData.to_id)
+  return to_id_;
 }
-inline void MessageData::set_to_user_id(::google::protobuf::uint32 value) {
+inline void MessageData::set_to_id(::google::protobuf::uint32 value) {
   
-  to_user_id_ = value;
-  // @@protoc_insertion_point(field_set:youliao.pdu.message.MessageData.to_user_id)
+  to_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.message.MessageData.to_id)
 }
 
 // uint32 msg_id = 4;
@@ -748,57 +747,32 @@ inline void MessageData::set_allocated_message_data(::std::string* message_data)
   // @@protoc_insertion_point(field_set_allocated:youliao.pdu.message.MessageData.message_data)
 }
 
-// bytes attach_data = 8;
-inline void MessageData::clear_attach_data() {
-  attach_data_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+// uint32 audio_time = 8;
+inline void MessageData::clear_audio_time() {
+  audio_time_ = 0u;
 }
-inline const ::std::string& MessageData::attach_data() const {
-  // @@protoc_insertion_point(field_get:youliao.pdu.message.MessageData.attach_data)
-  return attach_data_.GetNoArena();
+inline ::google::protobuf::uint32 MessageData::audio_time() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.message.MessageData.audio_time)
+  return audio_time_;
 }
-inline void MessageData::set_attach_data(const ::std::string& value) {
+inline void MessageData::set_audio_time(::google::protobuf::uint32 value) {
   
-  attach_data_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:youliao.pdu.message.MessageData.attach_data)
+  audio_time_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.message.MessageData.audio_time)
 }
-#if LANG_CXX11
-inline void MessageData::set_attach_data(::std::string&& value) {
+
+// uint32 to_user_id = 9;
+inline void MessageData::clear_to_user_id() {
+  to_user_id_ = 0u;
+}
+inline ::google::protobuf::uint32 MessageData::to_user_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.message.MessageData.to_user_id)
+  return to_user_id_;
+}
+inline void MessageData::set_to_user_id(::google::protobuf::uint32 value) {
   
-  attach_data_.SetNoArena(
-    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:youliao.pdu.message.MessageData.attach_data)
-}
-#endif
-inline void MessageData::set_attach_data(const char* value) {
-  GOOGLE_DCHECK(value != NULL);
-  
-  attach_data_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:youliao.pdu.message.MessageData.attach_data)
-}
-inline void MessageData::set_attach_data(const void* value, size_t size) {
-  
-  attach_data_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:youliao.pdu.message.MessageData.attach_data)
-}
-inline ::std::string* MessageData::mutable_attach_data() {
-  
-  // @@protoc_insertion_point(field_mutable:youliao.pdu.message.MessageData.attach_data)
-  return attach_data_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline ::std::string* MessageData::release_attach_data() {
-  // @@protoc_insertion_point(field_release:youliao.pdu.message.MessageData.attach_data)
-  
-  return attach_data_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline void MessageData::set_allocated_attach_data(::std::string* attach_data) {
-  if (attach_data != NULL) {
-    
-  } else {
-    
-  }
-  attach_data_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), attach_data);
-  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.message.MessageData.attach_data)
+  to_user_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.message.MessageData.to_user_id)
 }
 
 // -------------------------------------------------------------------

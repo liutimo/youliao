@@ -140,12 +140,13 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _weak_field_map_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::message::MessageData, relate_id_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::message::MessageData, from_user_id_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::message::MessageData, to_user_id_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::message::MessageData, to_id_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::message::MessageData, msg_id_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::message::MessageData, create_time_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::message::MessageData, message_type_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::message::MessageData, message_data_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::message::MessageData, attach_data_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::message::MessageData, audio_time_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::message::MessageData, to_user_id_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::message::MessageDataAck, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -172,9 +173,9 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::youliao::pdu::message::MessageData)},
-  { 13, -1, sizeof(::youliao::pdu::message::MessageDataAck)},
-  { 21, -1, sizeof(::youliao::pdu::message::LatestMsgIdRequest)},
-  { 28, -1, sizeof(::youliao::pdu::message::LatestMsgIdRespone)},
+  { 14, -1, sizeof(::youliao::pdu::message::MessageDataAck)},
+  { 22, -1, sizeof(::youliao::pdu::message::LatestMsgIdRequest)},
+  { 29, -1, sizeof(::youliao::pdu::message::LatestMsgIdRespone)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -207,21 +208,21 @@ void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
       "\n\025youliao.message.proto\022\023youliao.pdu.mes"
-      "sage\032\022youliao.base.proto\"\317\001\n\013MessageData"
+      "sage\032\022youliao.base.proto\"\335\001\n\013MessageData"
       "\022\021\n\trelate_id\030\001 \001(\r\022\024\n\014from_user_id\030\002 \001("
-      "\r\022\022\n\nto_user_id\030\003 \001(\r\022\016\n\006msg_id\030\004 \001(\r\022\023\n"
-      "\013create_time\030\005 \001(\r\0223\n\014message_type\030\006 \001(\016"
-      "2\035.youliao.pdu.base.MessageType\022\024\n\014messa"
-      "ge_data\030\007 \001(\014\022\023\n\013attach_data\030\010 \001(\014\"J\n\016Me"
-      "ssageDataAck\022\024\n\014from_user_id\030\001 \001(\r\022\022\n\nto"
-      "_user_id\030\002 \001(\r\022\016\n\006msg_id\030\003 \001(\r\"8\n\022Latest"
-      "MsgIdRequest\022\017\n\007user_id\030\001 \001(\r\022\021\n\tfriend_"
-      "id\030\002 \001(\r\"O\n\022LatestMsgIdRespone\022\017\n\007user_i"
-      "d\030\001 \001(\r\022\021\n\tfriend_id\030\002 \001(\r\022\025\n\rlatest_msg"
-      "_id\030\003 \001(\rb\006proto3"
+      "\r\022\r\n\005to_id\030\003 \001(\r\022\016\n\006msg_id\030\004 \001(\r\022\023\n\013crea"
+      "te_time\030\005 \001(\r\0223\n\014message_type\030\006 \001(\0162\035.yo"
+      "uliao.pdu.base.MessageType\022\024\n\014message_da"
+      "ta\030\007 \001(\014\022\022\n\naudio_time\030\010 \001(\r\022\022\n\nto_user_"
+      "id\030\t \001(\r\"J\n\016MessageDataAck\022\024\n\014from_user_"
+      "id\030\001 \001(\r\022\022\n\nto_user_id\030\002 \001(\r\022\016\n\006msg_id\030\003"
+      " \001(\r\"8\n\022LatestMsgIdRequest\022\017\n\007user_id\030\001 "
+      "\001(\r\022\021\n\tfriend_id\030\002 \001(\r\"O\n\022LatestMsgIdRes"
+      "pone\022\017\n\007user_id\030\001 \001(\r\022\021\n\tfriend_id\030\002 \001(\r"
+      "\022\025\n\rlatest_msg_id\030\003 \001(\rb\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 497);
+      descriptor, 511);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "youliao.message.proto", &protobuf_RegisterTypes);
   ::protobuf_youliao_2ebase_2eproto::AddDescriptors();
@@ -249,12 +250,13 @@ void MessageData::InitAsDefaultInstance() {
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int MessageData::kRelateIdFieldNumber;
 const int MessageData::kFromUserIdFieldNumber;
-const int MessageData::kToUserIdFieldNumber;
+const int MessageData::kToIdFieldNumber;
 const int MessageData::kMsgIdFieldNumber;
 const int MessageData::kCreateTimeFieldNumber;
 const int MessageData::kMessageTypeFieldNumber;
 const int MessageData::kMessageDataFieldNumber;
-const int MessageData::kAttachDataFieldNumber;
+const int MessageData::kAudioTimeFieldNumber;
+const int MessageData::kToUserIdFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 MessageData::MessageData()
@@ -274,22 +276,17 @@ MessageData::MessageData(const MessageData& from)
   if (from.message_data().size() > 0) {
     message_data_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.message_data_);
   }
-  attach_data_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  if (from.attach_data().size() > 0) {
-    attach_data_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.attach_data_);
-  }
   ::memcpy(&relate_id_, &from.relate_id_,
-    static_cast<size_t>(reinterpret_cast<char*>(&message_type_) -
-    reinterpret_cast<char*>(&relate_id_)) + sizeof(message_type_));
+    static_cast<size_t>(reinterpret_cast<char*>(&to_user_id_) -
+    reinterpret_cast<char*>(&relate_id_)) + sizeof(to_user_id_));
   // @@protoc_insertion_point(copy_constructor:youliao.pdu.message.MessageData)
 }
 
 void MessageData::SharedCtor() {
   message_data_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  attach_data_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&relate_id_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&message_type_) -
-      reinterpret_cast<char*>(&relate_id_)) + sizeof(message_type_));
+      reinterpret_cast<char*>(&to_user_id_) -
+      reinterpret_cast<char*>(&relate_id_)) + sizeof(to_user_id_));
   _cached_size_ = 0;
 }
 
@@ -300,7 +297,6 @@ MessageData::~MessageData() {
 
 void MessageData::SharedDtor() {
   message_data_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  attach_data_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 void MessageData::SetCachedSize(int size) const {
@@ -326,10 +322,9 @@ void MessageData::Clear() {
   (void) cached_has_bits;
 
   message_data_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  attach_data_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&relate_id_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&message_type_) -
-      reinterpret_cast<char*>(&relate_id_)) + sizeof(message_type_));
+      reinterpret_cast<char*>(&to_user_id_) -
+      reinterpret_cast<char*>(&relate_id_)) + sizeof(to_user_id_));
   _internal_metadata_.Clear();
 }
 
@@ -371,14 +366,14 @@ bool MessageData::MergePartialFromCodedStream(
         break;
       }
 
-      // uint32 to_user_id = 3;
+      // uint32 to_id = 3;
       case 3: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &to_user_id_)));
+                 input, &to_id_)));
         } else {
           goto handle_unusual;
         }
@@ -440,12 +435,28 @@ bool MessageData::MergePartialFromCodedStream(
         break;
       }
 
-      // bytes attach_data = 8;
+      // uint32 audio_time = 8;
       case 8: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(66u /* 66 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
-                input, this->mutable_attach_data()));
+            static_cast< ::google::protobuf::uint8>(64u /* 64 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &audio_time_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint32 to_user_id = 9;
+      case 9: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(72u /* 72 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &to_user_id_)));
         } else {
           goto handle_unusual;
         }
@@ -488,9 +499,9 @@ void MessageData::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->from_user_id(), output);
   }
 
-  // uint32 to_user_id = 3;
-  if (this->to_user_id() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->to_user_id(), output);
+  // uint32 to_id = 3;
+  if (this->to_id() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->to_id(), output);
   }
 
   // uint32 msg_id = 4;
@@ -515,10 +526,14 @@ void MessageData::SerializeWithCachedSizes(
       7, this->message_data(), output);
   }
 
-  // bytes attach_data = 8;
-  if (this->attach_data().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
-      8, this->attach_data(), output);
+  // uint32 audio_time = 8;
+  if (this->audio_time() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(8, this->audio_time(), output);
+  }
+
+  // uint32 to_user_id = 9;
+  if (this->to_user_id() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(9, this->to_user_id(), output);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -545,9 +560,9 @@ void MessageData::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->from_user_id(), target);
   }
 
-  // uint32 to_user_id = 3;
-  if (this->to_user_id() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->to_user_id(), target);
+  // uint32 to_id = 3;
+  if (this->to_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->to_id(), target);
   }
 
   // uint32 msg_id = 4;
@@ -573,11 +588,14 @@ void MessageData::SerializeWithCachedSizes(
         7, this->message_data(), target);
   }
 
-  // bytes attach_data = 8;
-  if (this->attach_data().size() > 0) {
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
-        8, this->attach_data(), target);
+  // uint32 audio_time = 8;
+  if (this->audio_time() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(8, this->audio_time(), target);
+  }
+
+  // uint32 to_user_id = 9;
+  if (this->to_user_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(9, this->to_user_id(), target);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -604,13 +622,6 @@ size_t MessageData::ByteSizeLong() const {
         this->message_data());
   }
 
-  // bytes attach_data = 8;
-  if (this->attach_data().size() > 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::BytesSize(
-        this->attach_data());
-  }
-
   // uint32 relate_id = 1;
   if (this->relate_id() != 0) {
     total_size += 1 +
@@ -625,11 +636,11 @@ size_t MessageData::ByteSizeLong() const {
         this->from_user_id());
   }
 
-  // uint32 to_user_id = 3;
-  if (this->to_user_id() != 0) {
+  // uint32 to_id = 3;
+  if (this->to_id() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->to_user_id());
+        this->to_id());
   }
 
   // uint32 msg_id = 4;
@@ -650,6 +661,20 @@ size_t MessageData::ByteSizeLong() const {
   if (this->message_type() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->message_type());
+  }
+
+  // uint32 audio_time = 8;
+  if (this->audio_time() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->audio_time());
+  }
+
+  // uint32 to_user_id = 9;
+  if (this->to_user_id() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->to_user_id());
   }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
@@ -685,18 +710,14 @@ void MessageData::MergeFrom(const MessageData& from) {
 
     message_data_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.message_data_);
   }
-  if (from.attach_data().size() > 0) {
-
-    attach_data_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.attach_data_);
-  }
   if (from.relate_id() != 0) {
     set_relate_id(from.relate_id());
   }
   if (from.from_user_id() != 0) {
     set_from_user_id(from.from_user_id());
   }
-  if (from.to_user_id() != 0) {
-    set_to_user_id(from.to_user_id());
+  if (from.to_id() != 0) {
+    set_to_id(from.to_id());
   }
   if (from.msg_id() != 0) {
     set_msg_id(from.msg_id());
@@ -706,6 +727,12 @@ void MessageData::MergeFrom(const MessageData& from) {
   }
   if (from.message_type() != 0) {
     set_message_type(from.message_type());
+  }
+  if (from.audio_time() != 0) {
+    set_audio_time(from.audio_time());
+  }
+  if (from.to_user_id() != 0) {
+    set_to_user_id(from.to_user_id());
   }
 }
 
@@ -734,13 +761,14 @@ void MessageData::Swap(MessageData* other) {
 void MessageData::InternalSwap(MessageData* other) {
   using std::swap;
   message_data_.Swap(&other->message_data_);
-  attach_data_.Swap(&other->attach_data_);
   swap(relate_id_, other->relate_id_);
   swap(from_user_id_, other->from_user_id_);
-  swap(to_user_id_, other->to_user_id_);
+  swap(to_id_, other->to_id_);
   swap(msg_id_, other->msg_id_);
   swap(create_time_, other->create_time_);
   swap(message_type_, other->message_type_);
+  swap(audio_time_, other->audio_time_);
+  swap(to_user_id_, other->to_user_id_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   swap(_cached_size_, other->_cached_size_);
 }

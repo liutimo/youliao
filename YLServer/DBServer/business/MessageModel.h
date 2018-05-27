@@ -19,7 +19,14 @@ public:
 
 //    bool getFriendOnlineStatus(uint32_t friend_id, int &msg_idx);
 
-    bool saveMessage(uint32_t relatedId, uint32_t senderId, uint32_t receiverId, uint32_t messageType, uint32_t createTime, uint32_t messageId, const std::string &content);
+    bool saveMessage(uint32_t relatedId, uint32_t senderId, uint32_t receiverId, uint32_t messageType,
+                     uint32_t createTime, uint32_t messageId, const std::string &content);
+
+    bool saveAudioMessage(uint32_t relatedId, uint32_t senderId, uint32_t receiverId, uint32_t createTime,
+                          uint32_t messageId, const std::string &content);
+
+    bool saveGroupMesage(uint32_t groupId, uint32_t senderId, uint32_t messageType, uint32_t createTime,
+                         uint32_t messageId, const std::string &content);
 
     bool getLastMessage(uint32_t senderId, uint32_t receiverId, std::string &content);
 

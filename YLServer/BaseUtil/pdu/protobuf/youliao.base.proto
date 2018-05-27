@@ -42,11 +42,14 @@ enum ServerCID
     CID_SERVER_FILE_TRANSFER_REQUEST      = 0x020B;   //由消息服务器发送给文件服务器
     CID_SERVER_FILE_TRANSFER_RESPONE      = 0x020C;   //由文件服务器发送给消息服务器
 
-    //消息服务器到路由服务器uint32 user_id      = 1;
+    //消息服务器到路由服务器
     CID_SERVER_USER_GO_ONLINE            = 0x020D;      //用户上线
     CID_SERVER_USER_GO_OFFLINE           = 0x020E;      //用户下线
     CID_SERVER_GET_FRIENDS_STATUS_REQUEST   = 0x020F;   //获取好友列表中好友在线状态
     CID_SERVER_GET_FRIENDS_STATUS_RESPONE   = 0x0210;   //
+
+    CID_SERVER_GET_ONLINE_GROUP_MEMBER      = 0x0212;   //群在线成员信息 保存到群组成员信息中
+    CID_SERVER_FORWARD_GROUP_MESSAGE        = 0x0211;   //转发群组消息
 
 
 
