@@ -112,6 +112,8 @@ void YLGroupListItem::initMenu()
 
     connect(action_send_msg, &QAction::triggered, this, [this](){
         YLGroupChatWidget *w = new YLGroupChatWidget;
+        w->setGroup(m_group);
+        GlobalData::addGroupChatWidget(m_group.getGroupId(), w);
         w->show();
     });
 

@@ -30,6 +30,7 @@ private:
     void _HandleGetFriendsStatusRespone(BasePdu *basePdu);
     void _HandleRouteBroadcast(BasePdu *);
     void _HandleHandleStatusChange(BasePdu *);
+    void _HandleForwardGroupMessage(BasePdu *);
 
     uint32_t   m_server_index;
     bool       m_open;

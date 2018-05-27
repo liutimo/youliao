@@ -1,21 +1,19 @@
 #include "test.h"
-#include <QWebEnginePage>
+#include "ylmessageview.h"
 #include <QMenu>
 #include <QAction>
 #include <QDebug>
 #include <QClipboard>
 #include <QGuiApplication>
 
-Test::Test(QObject *parent) : QObject(parent), m_message_id(0)
+Test::Test(QObject *parent) : QObject(parent), m_message_id(0), m_load_more_is_emit(false)
 {
     initPMenu();
 }
 
-void Test::setPage(QWebEnginePage *page)
+void Test::setView(YLMessageView *view)
 {
-    m_page = page;
-
-//    connect(m_page, &QWebEnginePage::selectionChanged, [this](){qDebug() << m_page->selectedText();});
+    m_view = view;
 }
 
 void Test::initPMenu()
@@ -24,11 +22,18 @@ void Test::initPMenu()
 
     QAction *copy_action = new QAction("Copy");
     m_p_menu->addAction(copy_action);
-    connect(copy_action, &QAction::triggered, this, [this](){
-        QClipboard *cb = QGuiApplication::clipboard();
-        cb->setText(m_page->selectedText());
-    });
-   }
+//    connect(copy_action, &QAction::triggered, this, [this](){
+//        QClipboard *cb = QGuiApplication::clipboard();
+//        cb->setText(m_page->selectedText());
+//    });
+}
+
+
+void Test::playAudio(uint32_t msgId)
+{
+    m_message_id = msgId;
+    emit startPlayAudio(msgId);
+}
 
 
 void Test::showContentPMenu(uint32_t msgId)
@@ -41,4 +46,6 @@ void Test::showContentPMenu(uint32_t msgId)
 void Test::loadMore()
 {
     qDebug() << "load more";
+    m_view->loadMore();
+
 }

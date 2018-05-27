@@ -481,6 +481,8 @@ void DBServConn::_HandleGetGroupListRespone(BasePdu *basePdu)
     respone.ParsePartialFromString(basePdu->getMessage());
 
     uint32_t userId = respone.user_id();
+
+    //[1] 发送到客户端
     auto user = UserManager::instance()->getUser(userId);
     if (user)
     {
@@ -488,6 +490,11 @@ void DBServConn::_HandleGetGroupListRespone(BasePdu *basePdu)
         if (conn)
             sendMessage(conn, respone, base::SID_GROUP, base::CID_GROUP_GET_LIST_RESPONE);
     }
+
+    //[2] 发送到路由服务器
+    auto conn = get_route_server_conn();
+    if (conn)
+        sendMessage(conn, respone, base::SID_SERVER, base::CID_SERVER_GET_ONLINE_GROUP_MEMBER);
 }
 
 void DBServConn::_HandleGetGroupMemberRespone(BasePdu *basePdu)
@@ -496,6 +503,8 @@ void DBServConn::_HandleGetGroupMemberRespone(BasePdu *basePdu)
     respone.ParseFromString(basePdu->getMessage());
 
     uint32_t userId = respone.user_id();
+    uint32_t groupSize = respone.member_infos_size();
+
     auto user = UserManager::instance()->getUser(userId);
     if (user)
     {

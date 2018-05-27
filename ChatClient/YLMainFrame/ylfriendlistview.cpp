@@ -30,7 +30,7 @@ YLFriendListView::YLFriendListView(QWidget *parent) : QListWidget(parent),
     connect(this, &YLFriendListView::itemDoubleClicked, this, [this](QListWidgetItem *item){
         if (qFind(m_group_item, item) != m_group_item.cend())
         {
-            QString groupName = item->text().split(QRegExp("(\\(\\d/\\d\\))")).at(0);
+            QString groupName = item->text().split(QRegExp("(\\(\\d+/\\d+\\))")).at(0);
             int groupId = m_group.key(groupName);
             m_group_show[groupId] = !m_group_show[groupId];
             updateList();

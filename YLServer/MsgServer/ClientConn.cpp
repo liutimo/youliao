@@ -360,62 +360,63 @@ void ClientConn::_HandleMessageDataRequest(BasePdu *pdu)
     message::MessageData messageData;
     messageData.ParseFromString(pdu->getMessage());
 
-    uint32_t toUserID = messageData.to_user_id();
+    uint32_t toUserID = messageData.to_id();
+
+    base::MessageType messageType = messageData.message_type();
 
     log("用户%d发送消息到用户%d", messageData.from_user_id(), toUserID);
 
-    User *user = UserManager::instance()->getUser(toUserID);
-
-    //[1] 将消息发送到数据库服务器。 消息状态记为未读
+    //将消息发送到数据库服务器。 消息状态记为未读
     DBServConn *dbServConn = get_db_server_conn();
-
     if (!dbServConn)
         return;
-
     sendMessage(dbServConn, messageData, base::SID_SERVER, base::CID_MESSAGE_SAVE);
 
-    //[2] 转发消息
-    if (user == nullptr)
-    {
-        //接收者不在当前服务器,或者未登录.
-        //将消息转发到路由服务器。
-        server::RouteMessageForward routeMessageForward;
-        routeMessageForward.set_user_id(getUserId());
-        routeMessageForward.set_friend_id(toUserID);
-        routeMessageForward.set_create_time(messageData.create_time());
-        routeMessageForward.set_msg_id(messageData.msg_id());
-        routeMessageForward.set_message_type(messageData.message_type());
-        routeMessageForward.set_message_data(messageData.message_data());
 
+
+    if (messageType == base::MESSAGE_TYPE_SINGLE_TEXT || messageType == base::MESSAGE_TYPE_SINGLE_AUDIO)
+    {
+        User *user = UserManager::instance()->getUser(toUserID);
+        //路由转发
+        if (user == nullptr)
+        {
+            //接收者不在当前服务器,或者未登录.
+            //将消息转发到路由服务器。
+            server::RouteMessageForward routeMessageForward;
+            routeMessageForward.set_user_id(getUserId());
+            routeMessageForward.set_friend_id(toUserID);
+            routeMessageForward.set_create_time(messageData.create_time());
+            routeMessageForward.set_msg_id(messageData.msg_id());
+            routeMessageForward.set_message_type(messageData.message_type());
+            routeMessageForward.set_message_data(messageData.message_data());
+
+            RouteConn *routeConn = get_route_server_conn();
+
+            if (!routeConn)
+                return;
+            sendMessage(routeConn, routeMessageForward, base::SID_SERVER, base::CID_SERVER_ROUTE_MESSAGE);
+        }
+        else
+        {
+            //接受者在当前服务器登录
+            //将消息转发到客户端，收到客户端已读请求后将消息状态改为已读
+            auto conn = user->getConn();
+            if (conn)
+                sendMessage(conn, messageData, base::SID_MESSAGE, base::CID_MESSAGE_DATA);
+        }
+    }
+    else if (messageType == base::MESSAGE_TYPE_GROUP_TEXT || messageType == base::MESSAGE_TYPE_GROUP_AUDIO)
+    {
+        //群组消息
+        //直接转发路由
         RouteConn *routeConn = get_route_server_conn();
 
         if (!routeConn)
             return;
-//        {
-//            BasePdu basePdu;
-//            basePdu.setSID(base::SID_SERVER);
-//            basePdu.setCID(base::CID_SERVER_ROUTE_MESSAGE);
-//            basePdu.writeMessage(&routeMessageForward);
-//
-//            routeConn->sendBasePdu(&basePdu);
-//        }
-
-        sendMessage(routeConn, routeMessageForward, base::SID_SERVER, base::CID_SERVER_ROUTE_MESSAGE);
-
+        sendMessage(routeConn, messageData, base::SID_SERVER, base::CID_SERVER_FORWARD_GROUP_MESSAGE);
     }
-    else
-    {
-        //接受者在当前服务器登录
-        //将消息转发到客户端，收到客户端已读请求后将消息状态改为已读
-        BasePdu basePdu;
-        basePdu.setSID(base::SID_MESSAGE);
-        basePdu.setCID(base::CID_MESSAGE_DATA);
-        basePdu.writeMessage(&messageData);
 
-        auto conn = user->getConn();
-        if (conn)
-            conn->sendBasePdu(&basePdu);
-    }
+
 }
 
 void ClientConn::_HandleSignatureChangeRequest(BasePdu *pdu)

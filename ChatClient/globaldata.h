@@ -14,6 +14,7 @@
 #include "YLEntityObject/yladdrequest.h"
 #include "YLEntityObject/ylfile.h"
 #include "YLEntityObject/ylgroup.h"
+#include "YLChatWidget/ylgroupchatwidget.h"
 using namespace youliao::pdu;
 
 class GlobalData : public QObject
@@ -45,6 +46,11 @@ public:
     static void removeSingleChatWidget(uint32_t friendId);
     static YLSingleChatWidget* getSingleChatWidget(uint32_t friendId);
 
+    static void addGroupChatWidget(uint32_t groupId, YLGroupChatWidget *groupChatWidget);
+    static void removeGroupChatWidget(uint32_t groupId);
+    static YLGroupChatWidget* getGroupChatWidget(uint32_t groupId);
+
+
     //message
     static void addMessage(uint32_t friendId, const YLMessage& message);
     static QVector<YLMessage> getMessagesByFriendId(uint32_t friendId);
@@ -52,6 +58,8 @@ public:
     static void removeMessageByFriendId(uint32_t friId);
     static void setLatestMsgId(uint32_t friendId, uint32_t latestMsgId);
     static uint32_t getLatestMsgId(uint32_t friendId);
+    static void setGroupLatestMsgId(uint32_t friendId, uint32_t latestMsgId);
+    static uint32_t getGroupLatestMsgId(uint32_t friendId);
 
     //add request
     static void setRequest(const YLAddRequest &);
@@ -67,13 +75,16 @@ public:
     static void addUser(const base::UserInfo&);
     static void addUsers(const QList<base::UserInfo> &);
     static void addUSers(const QVector<base::UserInfo> &);
+    static YLGroup getGroupByGroupId(uint32_t groupId);
     static base::UserInfo getCreatorByGroupId(uint32_t groupId);
     static QVector<base::UserInfo> getManagersByGroupId(uint32_t groupId);
     static QVector<base::UserInfo> getMembersByGroupId(uint32_t groupId);
     static void setGroupMember(uint32_t groupId, const QVector<base::MemberInfo> &members);
     static base::MemberInfo& getMemberInfo(uint32_t groupId, uint32_t memberId);
 
-
+    //audio
+    static void addAudio(const QString &, const QString &);
+    static const QString& getAudio(const QString &);
     //文件
 private:
     static youliao::pdu::base::UserInfo m_user;
@@ -84,6 +95,7 @@ private:
     static QMap<uint32_t, YLSingleChatWidget*> m_single_chat_widgets;
     static QMap<uint32_t, QVector<YLMessage>> m_messages;
     static QMap<uint32_t, uint32_t> m_message_id;
+
     //add request
     static QVector<YLAddRequest> m_add_request;
     static QVector<YLAddRequest> m_add_request_history;
@@ -93,12 +105,16 @@ private:
     static QMap<uint32_t, YLGroup> m_groups;
     static QMap<uint32_t, base::UserInfo> m_all_user; //所有的用户信息
     static QMap<uint32_t, QMap<uint32_t, base::MemberInfo>> m_group_member; //群成员信息
+    static QMap<uint32_t, uint32_t> m_group_message_id;
+    static QMap<uint32_t, YLGroupChatWidget*> m_group_chat_widgets;
+
 
     //登录过程需要从服务器获取很多数据。这里记录是否加载情况。
     //只有全部加载完才会进入主界面
     static QMap<uint32_t, bool> m_load;
 
-
+    //audio
+    static QMap<QString, QString> m_audio_map;
     //文件
 };
 

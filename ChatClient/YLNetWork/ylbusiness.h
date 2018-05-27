@@ -32,8 +32,9 @@ public:
     
     //message
     static void sendMessage(uint32_t senderId, uint32_t receiverId, const QString &message);
+    static void sendAudioMessage(uint32_t senderId, uint32_t receiverId, const QString &filename, uint32_t time);
     static void getLatestMsgId(uint32_t friendId);
-
+    static void sendGroupTextMessage(uint32_t groupId, uint32_t userId, const QString &message);
 
     //session
     static void getSessions(uint32_t userId);
@@ -47,7 +48,7 @@ public:
     static void modifyGroupCard(uint32_t groupId, const QString &card);
     static void searchGroup(const QString &searchData, youliao::pdu::base::SearchType searchType);
     static void addGroup(uint32_t groupId, const QString &verifyData = QString());
-    
+
     //file
     static void sendFileRequest(uint32_t friId, const QString &fileName, uint32_t fileSize, bool isOnline);
 };

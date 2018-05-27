@@ -134,6 +134,9 @@ void RouteConn::handlePdu(BasePdu *pdu)
         case base::CID_FRIENDLIST_FRIEND_STATUS_CHANGE:
             _HandleHandleStatusChange(pdu);
             break;
+        case base::CID_SERVER_FORWARD_GROUP_MESSAGE:
+            _HandleForwardGroupMessage(pdu);
+            break;
         default:
             break;
     }
@@ -262,4 +265,23 @@ void RouteConn::_HandleGetFriendsStatusRespone(BasePdu *basePdu)
 
     //发送好友列表给客户端
     sendMessage(clientConn, friendListRespone, base::SID_FRIEND_LIST, base::CID_FRIENDLIST_GET_RESPONE);
+}
+
+
+void RouteConn::_HandleForwardGroupMessage(BasePdu *basePdu)
+{
+    message::MessageData msg;
+    msg.ParseFromString(basePdu->getMessage());
+
+    uint32_t toUserId = msg.to_user_id();
+
+    auto user = UserManager::instance()->getUser(toUserId);
+    if (user)
+    {
+        auto conn = user->getConn();
+        if (conn)
+            sendMessage(conn, msg, base::SID_MESSAGE, base::CID_MESSAGE_DATA);
+    }
+
+
 }

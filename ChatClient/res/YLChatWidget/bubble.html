@@ -247,10 +247,40 @@
                     bridge.showContentPMenu(target.id);
                 });
             }
+
         }
 
-        function loadmore()
+        function audioLeftMouseDown(e)
         {
+            if(e.button == 0)
+            {
+                var target = e.target || e.srcElement;
+                var img = target.children[0];
+                img.src = 'qrc:/res/YLChatWidget/left.gif';
+                new QWebChannel(qt.webChannelTransport, function(channel)
+                {
+                    window.bridge = channel.objects.T;
+                    bridge.playAudio(target.id);
+                });
+            }
+        }
+        function audioRightMouseDown(e)
+        {
+            if(e.button == 0)
+            {
+                var target = e.target || e.srcElement;
+                var img = target.children[0];
+                img.src = 'qrc:/res/YLChatWidget/right.gif';
+
+            }
+        }
+
+        function loadmore1()
+        {
+            var parent = document.getElementById("content");
+	    var child = document.getElementById("more");
+            parent.removeChild(child);
+		
             new QWebChannel(qt.webChannelTransport, function(channel)
                 {
                     window.bridge = channel.objects.T;
@@ -286,9 +316,14 @@
         </script>
     </head>
     <body id="content" style="background:#FAFAFA;">
-    <div class="more"><a href="javascript:;" onClick="loadmore();"><img src="qrc:/res/YLChatWidget/time.png"/>查看更多消息</a></div>
+    <div id="more" class="more"><a href="javascript:;" onClick="loadmore1();"><img src="qrc:/res/YLChatWidget/time.png"/>查看更多消息</a></div>
 
 
+    <!--<div style='overflow:hidden;'>
+    <p class='divMyHead'>
+    <img src='%1' width='30px' height='30px' > </p>
+    <p id='1' class='triangle-right right'><span  onmousedown='audioRightMouseDown(event)'><img src = 'qrc:/res/YLChatWidget/right.png' width='20px' height='20px'/> &nbsp&nbsp&nbsp&nbsp%2</span></p>
+    </div>-->
 
 </body>
 <script src="js/jquery-2.1.1.min.js">

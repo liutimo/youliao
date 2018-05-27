@@ -90,12 +90,43 @@ void YLBusiness::sendMessage(uint32_t senderId, uint32_t receiverId, const QStri
 {
     message::MessageData messageData;
     messageData.set_from_user_id(senderId);
-    messageData.set_to_user_id(receiverId);
+    messageData.set_to_id(receiverId);
     messageData.set_msg_id(GlobalData::getLatestMsgId(receiverId));
     messageData.set_create_time(QDateTime::currentDateTime().toTime_t());
     messageData.set_message_type(base::MESSAGE_TYPE_SINGLE_TEXT);
     messageData.set_message_data(message.toStdString());
-    YLDataBase::instance()->saveMessage(messageData, true);
+
+    //保存到树数据库
+    {
+        YLDataBase db;
+        db.saveMessage(messageData);
+    }
+
+    BasePdu *basePdu = new BasePdu;
+    basePdu->setSID(SID_MESSAGE);
+    basePdu->setCID(CID_MESSAGE_DATA);
+    basePdu->writeMessage(&messageData);
+
+    PduSender::instance()->addMessage(basePdu);
+
+    GlobalData::setLatestMsgId(receiverId, messageData.msg_id() + 1);
+}
+
+void YLBusiness::sendAudioMessage(uint32_t senderId, uint32_t receiverId, const QString &filename, uint32_t time)
+{
+    message::MessageData messageData;
+    messageData.set_from_user_id(senderId);
+    messageData.set_to_id(receiverId);
+    messageData.set_msg_id(GlobalData::getLatestMsgId(receiverId));
+    messageData.set_create_time(QDateTime::currentDateTime().toTime_t());
+    messageData.set_message_type(base::MESSAGE_TYPE_SINGLE_AUDIO);
+    messageData.set_audio_time(time);
+
+    QFile file(filename);
+    file.open(QIODevice::ReadOnly);
+    messageData.set_message_data(file.readAll().toStdString());
+    file.close();
+
     BasePdu *basePdu = new BasePdu;
     basePdu->setSID(SID_MESSAGE);
     basePdu->setCID(CID_MESSAGE_DATA);
@@ -118,6 +149,27 @@ void YLBusiness::getLatestMsgId(uint32_t friendId)
     basePdu->writeMessage(&request);
 
     PduSender::instance()->addMessage(basePdu);
+}
+
+void YLBusiness::sendGroupTextMessage(uint32_t groupId, uint32_t userId, const QString &message)
+{
+    message::MessageData msg;
+    msg.set_from_user_id(userId);
+    msg.set_to_id(groupId);
+    msg.set_msg_id(GlobalData::getGroupLatestMsgId(groupId));
+    msg.set_create_time(QDateTime::currentDateTime().toTime_t());
+    msg.set_message_type(base::MESSAGE_TYPE_GROUP_TEXT);
+    msg.set_message_data(message.toStdString());
+//    YLDataBase::instance()->saveMessage(messageData, true);
+
+    BasePdu *basePdu = new BasePdu;
+    basePdu->setSID(SID_MESSAGE);
+    basePdu->setCID(CID_MESSAGE_DATA);
+    basePdu->writeMessage(&msg);
+
+    PduSender::instance()->addMessage(basePdu);
+
+    GlobalData::setGroupLatestMsgId(groupId, msg.msg_id() + 1);
 }
 
 void YLBusiness::modifySignature(uint32_t userId, const QString &signature)

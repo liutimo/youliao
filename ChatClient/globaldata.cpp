@@ -14,6 +14,10 @@ QVector<YLAddRequest> GlobalData::m_add_request_history = QVector<YLAddRequest>(
 QMap<uint32_t, YLGroup> GlobalData::m_groups = QMap<uint32_t, YLGroup>();
 QMap<uint32_t, base::UserInfo>  GlobalData::m_all_user = QMap<uint32_t, base::UserInfo>();
 QMap<uint32_t, QMap<uint32_t, base::MemberInfo>> GlobalData::m_group_member = QMap<uint32_t, QMap<uint32_t, base::MemberInfo>>();
+QMap<uint32_t, YLGroupChatWidget*>  GlobalData::m_group_chat_widgets = QMap<uint32_t, YLGroupChatWidget*>();
+QMap<QString, QString> GlobalData::m_audio_map = QMap<QString, QString>();
+//group
+QMap<uint32_t, uint32_t> GlobalData::m_group_message_id = QMap<uint32_t, uint32_t>();
 
 GlobalData::GlobalData(QObject *parent) : QObject(parent)
 {
@@ -109,6 +113,25 @@ YLSingleChatWidget* GlobalData::getSingleChatWidget(uint32_t friendId)
         return *iter;
 }
 
+void GlobalData::addGroupChatWidget(uint32_t groupId, YLGroupChatWidget *groupChatWidget)
+{
+    m_group_chat_widgets[groupId] = groupChatWidget;
+}
+
+void GlobalData::removeGroupChatWidget(uint32_t groupId)
+{
+    m_group_chat_widgets.remove(groupId);
+}
+
+YLGroupChatWidget* GlobalData::getGroupChatWidget(uint32_t groupId)
+{
+    auto iter = m_group_chat_widgets.find(groupId);
+    if (iter == m_group_chat_widgets.cend())
+        return nullptr;
+    else
+        return *iter;
+}
+
 /////////////////message
 void GlobalData::addMessage(uint32_t friendId, const YLMessage& message)
 {
@@ -146,6 +169,21 @@ uint32_t GlobalData::getLatestMsgId(uint32_t friendId)
 {
     auto iter = m_message_id.find(friendId);
     if (iter == m_message_id.end())
+        return 0;
+    else
+        return iter.value();
+}
+
+
+void GlobalData::setGroupLatestMsgId(uint32_t groupId, uint32_t latestMsgId)
+{
+    m_group_message_id[groupId] = latestMsgId;
+}
+
+uint32_t GlobalData::getGroupLatestMsgId(uint32_t groupId)
+{
+    auto iter = m_group_message_id.find(groupId);
+    if (iter == m_group_message_id.end())
         return 0;
     else
         return iter.value();
@@ -199,6 +237,16 @@ void GlobalData::addUSers(const QVector<base::UserInfo> &users)
     }
 }
 
+
+YLGroup GlobalData::getGroupByGroupId(uint32_t groupId)
+{
+    auto iter = m_groups.find(groupId);
+    if (iter != m_groups.end())
+        return YLGroup();
+    else
+        return *iter;
+}
+
 base::UserInfo GlobalData::getCreatorByGroupId(uint32_t groupId)
 {
     const YLGroup &group = m_groups[groupId];
@@ -250,6 +298,21 @@ base::MemberInfo& GlobalData::getMemberInfo(uint32_t groupId, uint32_t memberId)
     auto iter = m_group_member.find(groupId);
     if (iter != m_group_member.end())
         return (*iter)[memberId];
+}
+
+//audio
+void GlobalData::addAudio(const QString &key, const QString &value)
+{
+    m_audio_map[key] = value;
+}
+
+const QString& GlobalData::getAudio(const QString &key)
+{
+    static QString sTmp = "";
+    auto iter = m_audio_map.find(key);
+    if (iter != m_audio_map.end())
+        return *iter;
+    return sTmp;
 }
 
 //文件

@@ -63,17 +63,19 @@ QString HttpHelper::upload(const QString &fileName)
 
     QHttpPart imagePart;
     imagePart.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("image/jpeg"));
-    imagePart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant(QString("form-data; name=\"myfile\"; filename=\"%1\"").arg(uploadFileName)));
+    imagePart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant(QString("form-data; name=\"file\"; filename=\"%1\"").arg(uploadFileName + ".png")));
     imagePart.setBodyDevice(file);
 
     file->setParent(multiPart);
     multiPart->append(imagePart);
 
 
-    QNetworkRequest req(QUrl("http://182.254.219.254/upload.php"));
+    QNetworkRequest req(QUrl("http://www.liutimo.cn/uploadImage.php"));
 
     QNetworkReply *reply =  m_manager->post(req, multiPart);
-
+    connect(reply, &QNetworkReply::finished, this, [this, reply](){
+        qDebug() << reply->readAll();
+    });
     multiPart->setParent(reply);
 
     return uploadFileName + ".png";

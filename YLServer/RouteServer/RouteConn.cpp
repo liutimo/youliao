@@ -5,6 +5,8 @@
 #include "pdu/protobuf/youliao.base.pb.h"
 #include "pdu/protobuf/youliao.friendlist.pb.h"
 #include "pdu/protobuf/youliao.server.pb.h"
+#include "pdu/protobuf/youliao.group.pb.h"
+#include "pdu/protobuf/youliao.message.pb.h"
 #include "RouteConn.h"
 #include "util/util.h"
 #include "network/netlib.h"
@@ -25,13 +27,13 @@ RouteConn *getRouteConn(uint32_t index)
     if (iter == g_msg_conn_idx_map.end())
         return nullptr;
 
-    return iter->second;
+    return static_cast<RouteConn *>(iter->second);
 }
 
 
 RouteConn::RouteConn() : BaseConn()
 {
-
+    m_index = 0;
 }
 
 RouteConn::~RouteConn()
@@ -41,6 +43,24 @@ RouteConn::~RouteConn()
 
 void RouteConn::close()
 {
+    if (m_handle != NETWORK_ERROR)
+    {
+        netlib_close(m_handle);
+    }
+
+    auto iter = g_route_conn_map.find(m_handle);
+
+    if (iter != g_route_conn_map.end())
+    {
+        g_route_conn_map.erase(iter);
+    }
+
+    auto iter1 = g_msg_conn_idx_map.find(m_index);
+
+    if (iter1 != g_msg_conn_idx_map.end())
+    {
+        g_msg_conn_idx_map.erase(iter1);
+    }
 
 }
 
@@ -89,6 +109,12 @@ void RouteConn::handlePdu(BasePdu *basePdu)
             break;
         case base::CID_SERVER_GET_FRIENDS_STATUS_REQUEST:
             _HandleGetFriendsStatusRequest(basePdu);
+            break;
+        case base::CID_SERVER_GET_ONLINE_GROUP_MEMBER:
+            _HandleGetGroupOnlineMember(basePdu);
+            break;
+        case base::CID_SERVER_FORWARD_GROUP_MESSAGE:
+            _HandleForwardGroupMessage(basePdu);
             break;
         default:
             break;
@@ -152,16 +178,25 @@ void RouteConn::_HandleUserGoOffline(BasePdu *basePdu)
         msg.set_friend_id(userId);
         msg.set_user_status_type(base::USER_STATUS_OFFLINE);
 
+        //[2] 通知好友下线消息
         for(uint32_t friId : members)
         {
             msg.set_user_id(friId);
             std::string msgIdx = conn->hget("user_msg_idx", std::to_string(friId));
-            auto msgConn = getRouteConn((uint32_t)atoi(msgIdx.c_str()));
+            RouteConn* msgConn = getRouteConn((uint32_t)atoi(msgIdx.c_str()));
             if (msgConn)
                 sendMessage(msgConn, msg, base::SID_SERVER, base::CID_FRIENDLIST_FRIEND_STATUS_CHANGE);
         }
 
+        setName = "user_groups_" + std::to_string(userId);
+        //删除群组在线信息
+        std::list<uint32_t> groups = conn->sMembers(setName);
 
+        for (uint32_t groupId : groups)
+        {
+            setName = "group_online_members_" + std::to_string(groupId);
+            conn->sRem(setName, std::to_string(userId));
+        }
     }
 
     CacheManager::instance()->releaseCacheConn(conn);
@@ -235,6 +270,63 @@ void RouteConn::_HandleGetFriendsStatusRequest(BasePdu *basePdu)
 }
 
 
+void RouteConn::_HandleGetGroupOnlineMember(BasePdu *basePdu)
+{
+    group::GetGroupListRespone msg;
+    msg.ParseFromString(basePdu->getMessage());
+
+    uint32_t userId = msg.user_id();
+
+
+    auto conn = CacheManager::instance()->getCacheConn("OnlineUser");
+    if (conn)
+    {
+
+        std::string setName2 = "user_groups_" + std::to_string(userId);
+        for (int i = 0; i < msg.group_info_size(); ++i)
+        {
+            uint32_t groupId = msg.group_info(i).group_id();
+            std::string setName1 = "group_online_members_" + std::to_string(groupId);
+            conn->sAdd(setName1, std::to_string(userId));
+            conn->sAdd(setName2, std::to_string(groupId));
+        }
+    }
+    CacheManager::instance()->releaseCacheConn(conn);
+}
+
+
+void RouteConn::_HandleForwardGroupMessage(BasePdu *basePdu)
+{
+    message::MessageData msg;
+    msg.ParseFromString(basePdu->getMessage());
+
+//    base::MessageType  msgType = msg.message_type();
+//    if (msgType != base::MESSAGE_TYPE_GROUP_AUDIO || msgType != base::MESSAGE_TYPE_GROUP_TEXT)
+//        return;
+
+    uint32_t groupId = msg.to_id();
+    std::string setName = "group_online_members_" + std::to_string(groupId);
+
+    auto conn = CacheManager::instance()->getCacheConn("OnlineUser");
+    if (conn)
+    {
+        //获取群组在线成员
+        auto onlineMembers = conn->sMembers(setName);
+        for (uint32_t memberId : onlineMembers)
+        {
+            //获取群成员所在消息服务器ID
+            std::string msgServIdx = conn->hget("user_msg_idx", std::to_string(memberId));
+            auto msgConn = getRouteConn((uint32_t)atoi(msgServIdx.c_str()));
+            msg.set_to_user_id(memberId);
+            if (msgConn)
+                sendMessage(msgConn, msg, base::SID_SERVER, base::CID_SERVER_FORWARD_GROUP_MESSAGE);
+        }
+    }
+
+    CacheManager::instance()->releaseCacheConn(conn);
+
+}
+
 void RouteConn::_HandleRouteMessage(BasePdu *basePdu)
 {
     server::RouteMessageForward routeMessageForward;
@@ -257,6 +349,8 @@ void RouteConn::_HandleMessageServerIndex(BasePdu *basePdu)
     getServerIndexRespone.ParseFromString(basePdu->getMessage());
 
     uint32_t index= getServerIndexRespone.index();
+
+    m_index = index;
 
     addRouteConn(index, this);
 }

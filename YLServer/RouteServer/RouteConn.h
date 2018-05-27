@@ -28,11 +28,14 @@ private:
     void _HandleUserGoOnline(BasePdu *basePdu);
     void _HandleUserGoOffline(BasePdu *basePdu);
     void _HandleGetFriendsStatusRequest(BasePdu *basePdu);
-
+    void _HandleGetGroupOnlineMember(BasePdu *basePdu);
+    void _HandleForwardGroupMessage(BasePdu *basePdu);
 
     void _HandleRouteMessage(BasePdu *basePdu);
     void _HandleMessageServerIndex(BasePdu *basePdu);
     void _HandleBroadcastMsg(BasePdu *basePdu);
+
+    uint32_t  m_index;
 };
 
 void addRouteConn(uint32_t index, RouteConn *routeConn);

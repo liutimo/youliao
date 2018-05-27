@@ -8,6 +8,7 @@
 #include "YLCommonControl/ylbutton.h"
 #include "YLNetWork/http/httphelper.h"
 #include "yltransferfiletasklistwidget.h"
+#include "YLCommonControl/ylrecordaudiowidget.h"
 #include "YLFileTransfer/ylfiletransfermanager.h"
 #include "YLChatWidget/ylemoticonwidget.h"
 #include <QDir>
@@ -19,7 +20,7 @@
 #include <QHBoxLayout>
 #include <QFile>
 #include <QFileDialog>
-
+#include "YLDataBase/yldatabase.h"
 YLSingleChatWidget::YLSingleChatWidget(QWidget *parent) : QWidget(parent), m_hide(true), m_scale_width(0)
 {
     setAttribute(Qt::WA_DeleteOnClose);
@@ -39,6 +40,8 @@ void YLSingleChatWidget::setFriend(const YLFriend &fri)
     m_friend = fri;
     uint32_t msgId = GlobalData::getLatestMsgId(m_friend.friendId());
     m_friend_header_path = "file://" + QDir::currentPath() + "/" + m_friend.friendImageName();
+    m_message_view->setFriendId(m_friend.friendId());
+    m_message_view->setFriendIconPath(m_friend_header_path);
     if (msgId == 0)
     {
         //send request
@@ -167,8 +170,26 @@ void YLSingleChatWidget::init()
     m_message_view->resize(width(), 450);
     m_message_view->move(0, 50);
     m_message_view->setStyleSheet("background:red;");
-    connect(m_message_view, &YLMessageView::loadFinished, this, [this](bool f) {if (f) emit loadFinish();});
+    connect(m_message_view, &YLMessageView::loadFinished, this, [this](bool f) {
+        if (f) emit loadFinish();
+        //load message
+        YLDataBase db;
+        auto vec = db.getRecentMessage(m_friend.friendId());
 
+        for (QPair<uint32_t, QString> pair : vec)
+        {
+            //senderid 是当前登录用户
+            if (pair.first == GlobalData::getCurrLoginUserId())
+            {
+                m_message_view->addRight(GlobalData::getCurrLoginUserIconPath(), pair.second);
+            }
+            else
+            {
+                m_message_view->addLeft(m_friend_header_path, pair.second);
+            }
+
+        }
+    });
 
     m_label2 = new QLabel(this);
     QPixmap pixmap1(":/res/YLChatWidget/2.png");
@@ -206,6 +227,11 @@ void YLSingleChatWidget::initMidToolBar()
     m_cut->setImage(":/res/YLChatWidget/aio_quickbar_cut.png");
     m_cut->setFixedSize(35, 30);
 
+    m_audio = new YLButton(this);
+    m_audio->setImage(":/res/YLChatWidget/aio_quickbar_audio.png");
+    m_audio->setFixedSize(35, 30);
+    connect(m_audio, &YLButton::clicked, this, &YLSingleChatWidget::recordAudio);
+
     m_file = new YLButton(this);
     m_file->setImage(":/res/YLChatWidget/aio_quickbar_uploadfile.png");
     m_file->setFixedSize(35, 30);
@@ -223,11 +249,27 @@ void YLSingleChatWidget::initMidToolBar()
     m_msg_record->setImage(":/res/YLChatWidget/aio_quickbar_register.png");
     m_msg_record->setFixedSize(35, 30);
 
+    m_record_audio = new YLRecordAudioWidget(this);
+    m_record_audio->setFixedHeight(30);
+    m_record_audio->hide();
+    connect(m_record_audio, &YLRecordAudioWidget::send, this, [this](){
+        QString fileName = m_record_audio->stop();
+        updateSizeAndPosition();
+
+        YLBusiness::sendAudioMessage(GlobalData::getCurrLoginUserId(), m_friend.friendId(), fileName, m_record_audio->getTime());
+    });
+    connect(m_record_audio, &YLRecordAudioWidget::cancel, this, [this](){
+        m_record_audio->cancelRecord();
+        updateSizeAndPosition();
+    });
+
+
     QHBoxLayout *hl = new QHBoxLayout;
 
     hl->addWidget(m_emotion);
     hl->addWidget(m_gif);
     hl->addWidget(m_cut);
+    hl->addWidget(m_audio);
     hl->addWidget(m_file);
     hl->addWidget(m_image);
     hl->addWidget(m_more);
@@ -266,11 +308,13 @@ void YLSingleChatWidget::updateSizeAndPosition()
     m_split_button->move(width() - m_scale_width - 13, height() / 2 - 45);
     m_mid_toolbar->move(0, height() - 148);
     m_message_edit_widget->move(0, height() - 110);
-    m_transfer_file_widget->move(width() - 300, 51);
+    m_transfer_file_widget->move(width() - 300, 51);    
+    m_record_audio->move(0, m_mid_toolbar->geometry().topLeft().y() - 30);
 
-    m_message_view->resize(width() - m_scale_width, m_mid_toolbar->geometry().topLeft().y() - 51);
+    m_message_view->resize(width() - m_scale_width, m_mid_toolbar->geometry().topLeft().y() - 51 -(m_record_audio->isHidden() ? 0 : 30));
     m_mid_toolbar->resize(width() - m_scale_width, 35);
     m_transfer_file_widget->setFixedHeight(height() - 51);
+    m_record_audio->setFixedWidth(width() - m_scale_width);
 }
 
 void YLSingleChatWidget::paintEvent(QPaintEvent *event)
@@ -314,6 +358,22 @@ void YLSingleChatWidget::receiveMessage(uint32_t user_id, const QString &message
     }
 }
 
+
+void YLSingleChatWidget::receiveAudioMessage(uint32_t user_id, const QString &message, uint32_t duration, uint32_t msgId)
+{
+    if (user_id == m_friend.friendId())
+    {
+        m_message_view->addLeftAudio(m_friend_header_path, duration, msgId);
+        YLSession session = GlobalData::getSessionByFriendId(m_friend.friendId());
+        session.setOtherId(user_id);
+        session.setSessionType(base::SESSION_TYPE_SINGLE);
+        session.setSessionLastChatMessage("[语音]");
+        session.setSessionLastChatTime(QDateTime::currentDateTime().toTime_t());
+        SignalForward::instance()->forwordUpdateSession(session);
+        //send message ack
+    }
+}
+
 void YLSingleChatWidget::showEmotionWidget()
 {
     if (YLEmoticonWidget::isShow)
@@ -343,6 +403,14 @@ void YLSingleChatWidget::spliteButtonClicked()
     }
     updateSizeAndPosition();
     m_hide = !m_hide;
+}
+
+
+void YLSingleChatWidget::recordAudio()
+{
+    m_record_audio->show();
+    m_record_audio->start();
+    updateSizeAndPosition();
 }
 
 void YLSingleChatWidget::sendMessage()
@@ -375,7 +443,7 @@ void YLSingleChatWidget::sendMessage()
 
     for (int i = 0; i < fileList.size(); ++i)
     {
-        content.replace(fileList[i], "http://www.liutimo.cn/" + uploadFileList[i]);
+        content.replace(fileList[i], "http://www.liutimo.cn/images/" + uploadFileList[i]);
     }
 
     YLBusiness::sendMessage(GlobalData::getCurrLoginUserId(), m_friend.friendId(), content);

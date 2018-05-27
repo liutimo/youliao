@@ -5,6 +5,8 @@
 #include <QMap>
 #include <QVector>
 #include <QDebug>
+#include <QDateTime>
+
 #include "protobuf/youliao.base.pb.h"
 #include "protobuf/youliao.login.pb.h"
 #include "protobuf/youliao.friendlist.pb.h"
@@ -17,6 +19,7 @@
 #include "YLFileTransfer/yltransferfile.h"
 #include "YLFileTransfer/ylfiletransfermanager.h"
 #include "YLTray/ylmaintray.h"
+
 //全局PDU list
 //主线程产生的所有pdu都会放入这个list中
 //子线程循环冲list读数据发送到消息服务器
@@ -174,6 +177,12 @@ void PduHandler::_HandleFriendGroupGetRespone(BasePdu *pdu)
         groupsMap[elem.first] = QString(elem.second.c_str());
     }
 
+    //保存到树数据库
+    {
+        YLDataBase db;
+        db.addSomeFriendGroup(groupsMap);
+    }
+
     emit friendgroups(groupsMap);
 }
 
@@ -192,6 +201,7 @@ void PduHandler::_HandleFriendListGetRespone(BasePdu *pdu)
         {
             auto fri = c.friend_(i);
             YLFriend ylFriend;
+            ylFriend.setFriendGroupId(groupId);
             ylFriend.setRelateId(fri.related_id());
             ylFriend.setFriendId(fri.friend_id());
             ylFriend.setFriendAccount(QString::number(fri.friend_account()));
@@ -204,6 +214,12 @@ void PduHandler::_HandleFriendListGetRespone(BasePdu *pdu)
         }
     }
 
+    //保存到树数据库
+    {
+        YLDataBase db;
+        db.setFriends(friends);
+
+    }
     emit friendlist(friends);
 }
 
@@ -212,18 +228,62 @@ void PduHandler::_HandleMessageData(BasePdu *pdu)
     message::MessageData messageData;
     messageData.ParseFromString(pdu->getMessage());
 
-    YLDataBase::instance()->saveMessage(messageData);
 
-    auto singleChatWidget = GlobalData::getSingleChatWidget(messageData.from_user_id());
-    if (singleChatWidget)
-        singleChatWidget->receiveMessage(messageData.from_user_id(), QString(messageData.message_data().c_str()));
-    else
+    if (messageData.from_user_id() == GlobalData::getCurrLoginUserId())
+        return;
+    uint32_t senderId = messageData.from_user_id();
+    QString msgContent = messageData.message_data().c_str();
+
+    base::MessageType msgType = messageData.message_type();
+    if (msgType == base::MESSAGE_TYPE_SINGLE_TEXT)
     {
-        YLMainTray::instance()->receiveMessage(messageData);
-        emit unReadMessage(messageData.from_user_id(), messageData.message_data().c_str());
+        //保存到树数据库
+        {
+            YLDataBase db;
+            db.saveMessage(messageData);
+        }
+        auto singleChatWidget = GlobalData::getSingleChatWidget(senderId);
+        if (singleChatWidget)
+            singleChatWidget->receiveMessage(senderId, msgContent);
+        else
+        {
+            YLMainTray::instance()->receiveMessage(messageData);
+            emit unReadMessage(senderId, msgContent);
+        }
+    }
+    else if (msgType == base::MESSAGE_TYPE_GROUP_TEXT)
+    {
+        auto groupChatWidget = GlobalData::getGroupChatWidget(messageData.to_id());
+        if (groupChatWidget)
+            groupChatWidget->receiveMessage(senderId, msgContent);
+        else
+        {
+            YLMainTray::instance()->receiveMessage(messageData);
+            emit unReadMessage(senderId, msgContent);
+        }
+    }
+    else if (msgType == base::MESSAGE_TYPE_SINGLE_AUDIO)
+    {
+        //保存文件
+        uint32_t time = QDateTime::currentDateTime().toTime_t();
+        QString fileName = QString::number(time) + ".amr";
+        QFile file(fileName);
+        file.open(QIODevice::WriteOnly);
+        file.write(messageData.message_data().c_str(), messageData.message_data().length());
+        file.close();
+
+        GlobalData::addAudio(QString::number(senderId) + "_" + QString::number(messageData.msg_id()), fileName);
+
+        auto singleChatWidget = GlobalData::getSingleChatWidget(senderId);
+        if (singleChatWidget)
+            singleChatWidget->receiveAudioMessage(senderId, msgContent, messageData.msg_id(), messageData.audio_time());
+        else
+        {
+            YLMainTray::instance()->receiveMessage(messageData);
+            emit unReadMessage(senderId, msgContent);
+        }
     }
 
-    uint32_t msgType = messageData.message_type();
     switch (msgType) {
     case base::MESSAGE_TYPE_GROUP_TEXT:
     case base::MESSAGE_TYPE_GROUP_AUDIO:
@@ -407,6 +467,15 @@ void PduHandler::_HandleCreatGroupRespone(BasePdu *pdu)
         group.addManager(groupInfo.members(i));
 
     GlobalData::addToGroups(group);
+
+    {
+        YLDataBase db;
+        uint32_t idx = db.getGroupIdx(group.getGroupId());
+        if (idx != 0)
+            db.remOneGroup(idx);
+        db.addOneGroup(group);
+    }
+
     emit newGroup(group);
 }
 
@@ -434,6 +503,15 @@ void PduHandler::_HandleGetGroupListRespone(BasePdu *pdu)
             group.addManager(groupInfo.managers(i));
 
         GlobalData::addToGroups(group);
+
+        {
+            YLDataBase db;
+            uint32_t idx = db.getGroupIdx(group.getGroupId());
+            if (idx != 0)
+                db.remOneGroup(idx);
+            db.addOneGroup(group);
+        }
+
     }
     emit groupList();
 }
@@ -450,9 +528,28 @@ void PduHandler::_HandleGetGroupMemberRespone(BasePdu *pdu)
     {
         int memberId = respone.member_infos(i).user_id();
         members.push_back(respone.member_infos(i));
+        {
+            YLDataBase db;
+            uint32_t idx = db.getMemberIdx(groupId, memberId);
+            if (idx != 0)
+                db.remOneMember(idx);
+
+            uint32_t type = 0;
+
+            YLGroup group = GlobalData::getGroupByGroupId(groupId);
+
+            if (group.getGroupCreator() == memberId)
+                type = 2;
+            else if (group.getManagers().contains(memberId))
+                type = 1;
+
+            db.addOneMember(groupId, respone.member_infos(i), type);
+        }
     }
 
     GlobalData::setGroupMember(groupId, members);
+
+
 
     emit groupMembers();
 }

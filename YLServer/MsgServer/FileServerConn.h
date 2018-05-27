@@ -23,7 +23,7 @@ public:
 
     void connect(const std::string &serverIp, uint16_t serverPort, uint32_t serverIndex);
     virtual void close();
-
+    void onConfirm() override;
     virtual void onClose() override;
 //    virtual void onTimer();
 

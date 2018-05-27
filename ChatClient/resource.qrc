@@ -379,5 +379,15 @@
         <file>res/YLChatWidget/aio_quickbar_uploadfile.png</file>
         <file>res/YLChatWidget/bkg_selected.png</file>
         <file>res/YLChatWidget/bkg_hover.png</file>
+        <file>res/YLChatWidget/aio_quickbar_audio.png</file>
+        <file>res/YLCommonControl/Indicator_light_1.png</file>
+        <file>res/YLCommonControl/Indicator_light_2.png</file>
+        <file>res/YLCommonControl/audio_button_hoverl.png</file>
+        <file>res/YLCommonControl/audio_button_down.png</file>
+        <file>res/YLCommonControl/audio_button_normal.png</file>
+        <file>res/YLChatWidget/right.png</file>
+        <file>res/YLChatWidget/right.gif</file>
+        <file>res/YLChatWidget/left.png</file>
+        <file>res/YLChatWidget/left.gif</file>
     </qresource>
 </RCC>

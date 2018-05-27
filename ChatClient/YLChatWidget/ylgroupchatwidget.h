@@ -3,9 +3,10 @@
 
 
 #include <QWidget>
-
+#include "YLEntityObject/ylgroup.h"
 QT_BEGIN_NAMESPACE
 class QLabel;
+class YLButton;
 class YLMessageView;
 class QPushButton;
 class YLMessageEditWidget;
@@ -33,26 +34,35 @@ class YLGroupChatWidget : public QWidget
                                                  ";
 public:
     explicit YLGroupChatWidget(QWidget *parent = nullptr);
+    void setGroup(YLGroup &group) { m_group = group; }
+
+public slots:
+    void receiveMessage(uint32_t user_id, const QString &message);
 
 signals:
 
 protected:
     void paintEvent(QPaintEvent *event);
     void resizeEvent(QResizeEvent *event);
-
+    void closeEvent(QCloseEvent *event);
 private:
     void initTop();
     void init();
+    void initMidToolBar();
     void initLeft();
     void updateSizeAndPosition();
+    void sendTextMessage();
+
 private slots:
     void navigationClicked();
     void spliteButtonClicked();
+    void showEmotionWidget();
+
 private:
     QLabel                  *m_label;           //top bar
-    QLabel                  *m_label2;          //mid bar
-    YLMessageView           *m_meesage_view;
-    YLMessageEditWidget     *m_meesage_edit_widget;
+//    QLabel                  *m_label2;          //mid bar
+    YLMessageView           *m_message_view;
+    YLMessageEditWidget     *m_message_edit_widget;
     QPushButton             *m_send_button;
     QPushButton             *m_close_button;
     QPushButton             *m_split_button;
@@ -63,11 +73,22 @@ private:
     QToolButton *m_file;
     QToolButton *m_setting;
 
+
+    //mid tool bar
+    YLButton                *m_emotion;
+    YLButton                *m_gif;
+    YLButton                *m_cut;
+    YLButton                *m_file2;
+    YLButton                *m_image;
+    YLButton                *m_more;
+    YLButton                *m_msg_record;
+    QWidget                 *m_mid_toolbar;
     //通知栏
     YLGroupNoticeWidget *m_notice_widget;
     //成员列表
     YLGroupMemberListWidget *m_member_list_widget;
 
+    YLGroup     m_group;
     int         m_scale_width;  //仅在右边隐藏时使用，用于计算左边部分的新宽度或位置
 };
 

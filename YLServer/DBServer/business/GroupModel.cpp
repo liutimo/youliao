@@ -3,6 +3,7 @@
 //
 
 #include "GroupModel.h"
+#include "LoginModel.h"
 #include "../DBPool.h"
 #include "util/util.h"
 GroupModel* GroupModel::m_instance = nullptr;
@@ -211,9 +212,14 @@ bool GroupModel::getMembersByGroupId(uint32_t groupId, std::list<base::MemberInf
             while (resultSet->next())
             {
                 base::MemberInfo memberInfo;
-                memberInfo.set_user_id((uint32_t)resultSet->getInt("member_id"));
+                uint32_t userId = (uint32_t)resultSet->getInt("member_id");
+                memberInfo.set_user_id(userId);
                 memberInfo.set_group_card(resultSet->getString("group_card"));
                 memberInfo.set_last_chat_time((uint32_t)resultSet->getInt("last_chat_time"));
+
+                base::UserInfo *info = new base::UserInfo;
+                LoginModel::instance()->getUserInfo(userId, *info);
+                memberInfo.set_allocated_user_info(info);
                 members.push_back(memberInfo);
             }
 
@@ -326,6 +332,33 @@ base::GroupVerifyType  GroupModel::getVerofyTypeByGroupId(uint32_t groupId)
 
     return type;
 }
+
+//获取成员和群组的对应id
+uint32_t GroupModel::getRelationId(uint32_t groupId, uint32_t userId)
+{
+    uint32_t relationId = 0;
+    auto conn = DBManager::instance()->getConnection();
+    if (conn)
+    {
+        std::string sql = "SELECT id FROM yl_group_member WHERE group_id = " + std::to_string(groupId) + " AND member_id = " + std::to_string(userId);
+        printSql2Log(sql.c_str());
+
+        ResultSet *resultSet = conn->query(sql);
+        if (resultSet)
+        {
+            while (resultSet->next())
+            {
+                relationId = (uint32_t)resultSet->getInt("id");
+            }
+
+            delete resultSet;
+        }
+    }
+    DBManager::instance()->releaseConnection(conn);
+
+    return relationId;
+}
+
 
 
 bool GroupModel::getGroupManagers(uint32_t groupId, std::list<uint32_t> &managers)

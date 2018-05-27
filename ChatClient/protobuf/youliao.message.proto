@@ -2,17 +2,21 @@ syntax = "proto3";
 package youliao.pdu.message;
 import "youliao.base.proto";
 
+
 message MessageData
 {
-    uint32 relate_id = 1;
+    uint32 relate_id    = 1;
     uint32 from_user_id = 2;
-    uint32 to_user_id   = 3;
+    uint32 to_id        = 3;
     uint32 msg_id       = 4;
     uint32 create_time  = 5;
     youliao.pdu.base.MessageType message_type = 6;
     bytes  message_data = 7;
-    bytes  attach_data = 8;
+    uint32 audio_time   = 8;    //仅仅在语音消息时使用
+    uint32 to_user_id   = 9;    //此字段在路由服务器向消息服务器转发群消息时使用
 }
+
+
 
 //消息确认
 message MessageDataAck

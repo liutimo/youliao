@@ -10,6 +10,7 @@ class QPushButton;
 class YLMessageEditWidget;
 class YLButton;
 class YLTransferFileTaskListWidget;
+class YLRecordAudioWidget;
 QT_END_NAMESPACE
 
 class YLSingleChatWidget : public QWidget
@@ -50,13 +51,15 @@ private:
 
 public slots:
     void receiveMessage(uint32_t user_id, const QString &message);
-
+    void receiveAudioMessage(uint32_t user_id, const QString &message, uint32_t duration, uint32_t msgId);
 
 private slots:
     void showEmotionWidget();
     void sendMessage();
     void selectFile();
     void spliteButtonClicked();
+    void recordAudio();
+
 private:
     QLabel                  *m_label;           //top bar
     QLabel                  *m_label2;          //mid bar
@@ -65,10 +68,13 @@ private:
     YLButton                *m_emotion;
     YLButton                *m_gif;
     YLButton                *m_cut;
+    YLButton                *m_audio;
     YLButton                *m_file;
     YLButton                *m_image;
     YLButton                *m_more;
     YLButton                *m_msg_record;
+
+    YLRecordAudioWidget     *m_record_audio;
 
     YLMessageView           *m_message_view;
     YLMessageEditWidget     *m_message_edit_widget;

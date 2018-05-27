@@ -9,7 +9,8 @@ HEADERS += \
     $$PWD/ylgroupnoticewidget.h \
     $$PWD/ylgroupmemberlistwidget.h \
     $$PWD/ylmenubutton.h \
-    $$PWD/ylbutton.h
+    $$PWD/ylbutton.h \
+    $$PWD/ylrecordaudiowidget.h
 
 SOURCES += \
     $$PWD/ylheadframe.cpp \
@@ -22,5 +23,6 @@ SOURCES += \
     $$PWD/ylgroupnoticewidget.cpp \
     $$PWD/ylgroupmemberlistwidget.cpp \
     $$PWD/ylmenubutton.cpp \
-    $$PWD/ylbutton.cpp
+    $$PWD/ylbutton.cpp \
+    $$PWD/ylrecordaudiowidget.cpp
 

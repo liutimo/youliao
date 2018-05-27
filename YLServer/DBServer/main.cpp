@@ -7,6 +7,8 @@
 #include "pdu/protobuf/youliao.friendlist.pb.h"
 
 #include "business/Interface.h"
+#include "business/AudioModel.h"
+#include "network/HttpClient.h"
 using namespace youliao::pdu;
 
 using  namespace youliao::network;
@@ -24,6 +26,12 @@ void new_conn(callback_data data, uint8_t msg, net_handle_t handle, void *pParam
 
 int main() {
     netlib_init();
+
+    AudioModel::instance()->setUrl("http://www.liutimo.cn/uploadAudio.php");
+
+
+
+
     netlib_listen("127.0.0.1", 6001, new_conn, nullptr);
     netlib_eventloop();
 

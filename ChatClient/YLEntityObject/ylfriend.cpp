@@ -27,6 +27,9 @@ YLFriend& YLFriend::operator =(const YLFriend &f)
     friend_sex_ = f.friend_sex_;
 
     friend_is_online_ = f.friend_is_online_;
+
+    friend_group_id_ = f.friend_group_id_;
+
     return *this;
 }
 
@@ -46,6 +49,11 @@ bool YLFriend::operator <(const YLFriend &f1) const
         return false;
     else
         return true;
+}
+
+void YLFriend::setFriendGroupId(uint32_t id)
+{
+    friend_group_id_ = id;
 }
 
 void YLFriend::setFriendAccount(const QString &account)
@@ -86,6 +94,11 @@ void YLFriend::setFriendSex(uint32_t sex)
          friend_sex_ = "女";
      else
          friend_sex_ = "未知";
+}
+
+uint32_t YLFriend::friendGroupId() const
+{
+    return friend_group_id_;
 }
 
 QString YLFriend::friendAccount() const

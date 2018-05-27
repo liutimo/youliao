@@ -34,6 +34,8 @@ public:
 
     void setFriendSex(uint32_t sex);
 
+    void setFriendGroupId(uint32_t groupId);
+
     QString friendAccount() const;
 
     QString friendNickName() const;
@@ -56,6 +58,8 @@ public:
 
     uint32_t relateId() const { return relate_id_; }
 
+    uint32_t friendGroupId() const;
+
 private:
     uint32_t relate_id_;
 
@@ -70,7 +74,9 @@ private:
     QString friend_remark_;
     //好友头像路径
     QString friend_image_path_;
-    //好友分组，暂定为QString
+    //好友分组id
+    uint32_t friend_group_id_;
+    //好友分组name，暂定为QString
     QString friend_group;
 
     //sex

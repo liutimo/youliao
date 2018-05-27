@@ -13,6 +13,16 @@
 #include "../DBPool.h"
 #include "util/util.h"
 
+LoginModel* LoginModel::m_instance = nullptr;
+
+LoginModel* LoginModel::instance()
+{
+    if (m_instance == nullptr)
+        m_instance = new LoginModel;
+    return m_instance;
+}
+
+
 LoginModel::LoginModel()
 {
 

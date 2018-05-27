@@ -410,7 +410,7 @@ void AddDescriptorsImpl() {
       "SGSERVER\020\201\002\022 \n\033CID_LOGIN_RESPONE_MSGSERV"
       "ER\020\202\002\022 \n\033CID_LOGIN_REQUEST_USERLOGIN\020\203\002\022"
       " \n\033CID_LOGIN_RESPONE_USERLOGIN\020\204\002\022#\n\036CID"
-      "_LOGIN_REQUEST_USERLOGINOUT\020\205\002*\352\004\n\tServe"
+      "_LOGIN_REQUEST_USERLOGINOUT\020\205\002*\272\005\n\tServe"
       "rCID\022\023\n\017CID_SERVER_ZERO\020\000\022\036\n\031CID_SERVER_"
       "MSGSERVER_INFO\020\201\004\022 \n\033CID_SERVER_VALIDATE"
       "_REQUEST\020\202\004\022 \n\033CID_SERVER_VALIDATE_RESPO"
@@ -426,7 +426,9 @@ void AddDescriptorsImpl() {
       "_ONLINE\020\215\004\022\037\n\032CID_SERVER_USER_GO_OFFLINE"
       "\020\216\004\022*\n%CID_SERVER_GET_FRIENDS_STATUS_REQ"
       "UEST\020\217\004\022*\n%CID_SERVER_GET_FRIENDS_STATUS"
-      "_RESPONE\020\220\004*8\n\010OtherCID\022\022\n\016CID_OTHER_ZER"
+      "_RESPONE\020\220\004\022\'\n\"CID_SERVER_GET_ONLINE_GRO"
+      "UP_MEMBER\020\222\004\022%\n CID_SERVER_FORWARD_GROUP"
+      "_MESSAGE\020\221\004*8\n\010OtherCID\022\022\n\016CID_OTHER_ZER"
       "O\020\000\022\030\n\023CID_OTHER_HEARTBEAT\020\201\006*\362\007\n\rFriend"
       "ListCID\022\027\n\023CID_FRIENDLIST_ZERO\020\000\022\037\n\032CID_"
       "FRIENDLIST_GET_REQUEST\020\201\010\022\037\n\032CID_FRIENDL"
@@ -519,7 +521,7 @@ void AddDescriptorsImpl() {
       "roto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 5765);
+      descriptor, 5845);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "youliao.base.proto", &protobuf_RegisterTypes);
 }
@@ -600,6 +602,8 @@ bool ServerCID_IsValid(int value) {
     case 526:
     case 527:
     case 528:
+    case 529:
+    case 530:
       return true;
     default:
       return false;

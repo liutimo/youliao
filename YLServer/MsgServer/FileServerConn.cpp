@@ -93,16 +93,22 @@ void FileServerConn::connect(const std::string &serverIp, uint16_t serverPort, u
         m_connect_time = get_tick_count();
         g_file_server_list[m_server_index].reconnect_cnt = 2;
 
-        //成功连接,发送pdu获取ip地址信息
-        server::FileServerIPRequest request;
-        BasePdu basePdu;
-        basePdu.setSID(base::SID_SERVER);
-        basePdu.setCID(base::CID_SERVER_FILE_SERVER_IP_REQUEST);
-        basePdu.writeMessage(&request);
-        sendBasePdu(&basePdu);
+
     }
 
 }
+
+void FileServerConn::onConfirm()
+{
+    //成功连接,发送pdu获取ip地址信息
+    server::FileServerIPRequest request;
+    BasePdu basePdu;
+    basePdu.setSID(base::SID_SERVER);
+    basePdu.setCID(base::CID_SERVER_FILE_SERVER_IP_REQUEST);
+    basePdu.writeMessage(&request);
+    sendBasePdu(&basePdu);
+}
+
 
 void FileServerConn::close()
 {

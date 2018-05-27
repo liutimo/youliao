@@ -18,7 +18,7 @@
 #include "YLCommonControl/ylmessagebox.h"
 #include "YLAddFriendWidgets/yladdfriendwidget.h"
 #include "YLCommonControl/ylheadandstatusframe.h"
-
+#include "YLDataBase/yldatabase.h"
 using namespace youliao::pdu;
 
 QPoint YLMainWidget::center = QPoint();
@@ -107,7 +107,6 @@ void YLMainWidget::init()
     });
 }
 
-
 void YLMainWidget::initTray()
 {
     m_main_tray = YLMainTray::instance();
@@ -192,6 +191,8 @@ void YLMainWidget::closeEvent(QCloseEvent *event)
 /************************************************/
 void YLMainWidget::setUserInfo(UserInfo *userInfo)
 {
+
+
     m_user_info = userInfo;
     GlobalData::setCurrLoginUser(*m_user_info);
     nickname_label_->setText(m_user_info->user_nick().c_str());
@@ -203,5 +204,6 @@ void YLMainWidget::setUserInfo(UserInfo *userInfo)
     YLBusiness::getSessions(m_user_info->user_id());
     YLBusiness::getAllAddRequests();
     m_http_helper->download(m_user_info->user_header_url().c_str());
+
 }
 
