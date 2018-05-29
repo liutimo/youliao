@@ -2,6 +2,7 @@
 // Created by liuzheng on 18-3-25.
 //
 
+#include <pdu/protobuf/youliao.login.pb.h>
 #include "Interface.h"
 #include "../ProxyConn.h"
 #include "LoginModel.h"
@@ -56,6 +57,40 @@ namespace DB_INTERFACE
         delete pdu1;
         //add to thread pool
     }
+
+
+    void registerUser(BasePdu *basePdu, uint32_t conn_uuid)
+    {
+        login::UserRegisterRequest request;
+        request.ParseFromString(basePdu->getMessage());
+
+        LoginModel *loginModel = LoginModel::instance();
+
+        uint32_t account;
+
+        login::UserRegisterRespone respone;
+
+//        bool ret = false;
+        bool ret  = loginModel->doRegister(request.nick_name(), request.password(), request.header(), account);
+
+        if (ret)
+        {
+            respone.set_result_code(0);
+            respone.set_user_account(std::to_string(account));
+        }
+        else
+        {
+            respone.set_result_code(1);
+        }
+
+        respone.set_handle(request.handle());
+
+
+        auto conn = findProxyConn(conn_uuid);
+        if (conn)
+            sendMessage(conn, respone, base::SID_SERVER, base::CID_LOGIN_REGISTER_RESPONE);
+    }
+
 
     void getFriendGroups(BasePdu *basePdu, uint32_t conn_uid)
     {

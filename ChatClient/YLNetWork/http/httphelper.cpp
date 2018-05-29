@@ -60,10 +60,11 @@ QString HttpHelper::upload(const QString &fileName)
     QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
     multiPart->setBoundary("youliao_youliao");
 
+    QFileInfo info(*file);
 
     QHttpPart imagePart;
     imagePart.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("image/jpeg"));
-    imagePart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant(QString("form-data; name=\"file\"; filename=\"%1\"").arg(uploadFileName + ".png")));
+    imagePart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant(QString("form-data; name=\"file\"; filename=\"%1\"").arg(uploadFileName + "." + info.suffix())));
     imagePart.setBodyDevice(file);
 
     file->setParent(multiPart);
@@ -78,7 +79,7 @@ QString HttpHelper::upload(const QString &fileName)
     });
     multiPart->setParent(reply);
 
-    return uploadFileName + ".png";
+    return uploadFileName + "." + info.suffix();
 }
 
 void HttpHelper::startRequest(const QUrl &url)

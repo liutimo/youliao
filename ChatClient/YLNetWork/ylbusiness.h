@@ -13,6 +13,7 @@ public:
     explicit YLBusiness(QObject *parent = nullptr);
     static void heartBeat();
     static void login(const QString &account, const QString &password, UserStatusType type = USER_STATUS_ONLINE);
+    static void registerAccount(const QString &nickName, const QString &password, const QString &header);
 
     //friendlist
     static void getFriendGroupsRequest(uint32_t userId);

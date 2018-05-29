@@ -8,21 +8,20 @@
 #include "YLFileTransfer/yltransferfile.h"
 #include "YLChatWidget/ylsinglechatwidget.h"
 #include "YLCommonControl/ylrecordaudiowidget.h"
-
+#include "YLLoginPanel/ylregisterwidget.h"
 #include <QMenu>
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    a.setQuitOnLastWindowClosed(false);
+//    a.setQuitOnLastWindowClosed(false);
 
     //启动文件接收线程
     YLFileTransferReceiver::instance();
     SignalForward::instance();
 
     YLLoginPanel w;
-    w.resize(500, 400);
+    w.resize(500, 370);
     w.show();
-
 
     return a.exec();
 }

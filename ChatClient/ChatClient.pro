@@ -55,4 +55,5 @@ HEADERS += \
 RESOURCES += \
     resource.qrc
 
-FORMS +=
+FORMS += \
+    register.ui

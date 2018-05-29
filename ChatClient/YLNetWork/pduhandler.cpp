@@ -77,6 +77,9 @@ void PduHandler::_HandleBasePdu(BasePdu *pdu)
     case base::CID_LOGIN_RESPONE_USERLOGIN:
         _HandleUserLoginRespone(pdu);
         break;
+    case base::CID_LOGIN_REGISTER_RESPONE:
+        _HandleRegisterRespone(pdu);
+        break;
     case base::CID_OTHER_HEARTBEAT:
         _HandleHeartBeat();
         break;
@@ -157,6 +160,18 @@ void PduHandler::_HandleUserLoginRespone(BasePdu *pdu)
     }
     else
         emit loginStatus(false);
+}
+
+
+void PduHandler::_HandleRegisterRespone(BasePdu *pdu)
+{
+    login::UserRegisterRespone respone;
+    respone.ParseFromString(pdu->getMessage());
+
+    uint32_t resultCode = respone.result_code();
+    std::string account = respone.user_account();
+
+    emit regiserStatus(resultCode, account.c_str());
 }
 
 void PduHandler::_HandleHeartBeat()

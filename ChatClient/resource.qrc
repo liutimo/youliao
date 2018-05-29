@@ -389,5 +389,16 @@
         <file>res/YLChatWidget/right.gif</file>
         <file>res/YLChatWidget/left.png</file>
         <file>res/YLChatWidget/left.gif</file>
+        <file>res/LoginPanel/2.png</file>
+        <file>res/LoginPanel/chat.png</file>
+        <file>res/LoginPanel/mima_hover.png</file>
+        <file>res/LoginPanel/mima_press.png</file>
+        <file>res/LoginPanel/mima.png</file>
+        <file>res/LoginPanel/zhuce_hover.png</file>
+        <file>res/LoginPanel/zhuce_press.png</file>
+        <file>res/LoginPanel/zhuce.png</file>
+        <file>res/LoginPanel/loading.gif</file>
+        <file>res/LoginPanel/register_failed.png</file>
+        <file>res/LoginPanel/register_success.png</file>
     </qresource>
 </RCC>

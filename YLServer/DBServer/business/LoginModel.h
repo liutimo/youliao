@@ -23,7 +23,11 @@ public:
     bool doLogin(const std::string &str_name, const std::string &str_pass, base::UserInfo &userInfo);
 //    bool doLogout(uint32_t userId);
     bool getUserInfo(uint32_t userId, base::UserInfo &userInfo);
+
+    //注册
+    bool doRegister(const std::string &nickname, const std::string &password, const std::string &head, uint32_t& user_account);
 private:
+    void getMaxUserAccount(uint32_t &account);
     LoginModel();
     static LoginModel* m_instance;
 };

@@ -1,4 +1,5 @@
 #include "ylloginpanel.h"
+#include "ylregisterwidget.h"
 #include "YLCommonControl/ylheadandstatusframe.h"
 #include "YLCommonControl/yllineedit.h"
 #include "YLCommonControl/ylmessagebox.h"
@@ -65,6 +66,7 @@ void YLLoginPanel::init()
     });
 
     head_frame_           = new YLHeadAndStatusFrame(this);
+    head_frame_->setHeadFromLocal("1.jpg", true);
     connect(head_frame_, &YLHeadAndStatusFrame::statusChanged, this, [this](YLHeadAndStatusFrame::Status s){
         //handle status changed message here;
     });
@@ -85,6 +87,26 @@ void YLLoginPanel::init()
     pushbutton_login_->setObjectName("pushbutton_login_");
     pushbutton_login_->setStyleSheet(qss_login_button_);
     connect(pushbutton_login_, &QPushButton::clicked, this, &YLLoginPanel::on_login);
+
+    m_icon = new QLabel(this);
+    m_icon->setFixedSize(63, 48);
+    m_icon->setPixmap(QPixmap(":/res/LoginPanel/chat.png"));
+    m_icon->move(150, 80);
+
+    m_name = new QLabel(this);
+    m_name->setFixedSize(200, 106);
+    m_name->setPixmap(QPixmap(":/res/LoginPanel/2.png").scaled(500, 50));
+    m_name->move(220, 50);
+
+
+    m_register = new QPushButton(this);
+    m_register->setFixedSize(54, 16);
+    m_register->setStyleSheet(qss_regis_button);
+    connect(m_register, &QPushButton::clicked, this, &YLLoginPanel::on_register);
+
+    m_find_pw = new QPushButton(this);
+    m_find_pw->setFixedSize(54, 16);
+    m_find_pw->setStyleSheet(qss_mima_button);
 
     lineedit_passwd_->resize(200, 35);
     pushbutton_login_->resize(200, 35);
@@ -119,12 +141,22 @@ void YLLoginPanel::initCheckBoxs()
 
 void YLLoginPanel::resizeEvent(QResizeEvent *event)
 {
-    head_frame_->move((width() - head_frame_->width()) / 2, 35);
-    lineedit_useraccount_->move((width() - lineedit_useraccount_->width()) / 2, 175);
-    lineedit_passwd_->move((width() - lineedit_passwd_->width()) / 2, 210);
-    pushbutton_login_->move((width() - pushbutton_login_->width()) / 2, 275);
-    m_remember_pwd->move(pushbutton_login_->geometry().topLeft().x(), 250);
-    m_auto_login->move(pushbutton_login_->geometry().topRight().x() - 70, 250);
+//    head_frame_->move((width() - head_frame_->width()) / 2, 35);
+//    lineedit_useraccount_->move((width() - lineedit_useraccount_->width()) / 2, 175);
+//    lineedit_passwd_->move((width() - lineedit_passwd_->width()) / 2, 210);
+//    pushbutton_login_->move((width() - pushbutton_login_->width()) / 2, 275);
+//    m_remember_pwd->move(pushbutton_login_->geometry().topLeft().x(), 250);
+//    m_auto_login->move(pushbutton_login_->geometry().topRight().x() - 70, 250);
+
+    head_frame_->move(50, 200);
+    lineedit_useraccount_->move(160, 200);
+    lineedit_passwd_->move(160, 235);
+    pushbutton_login_->move(160, 305);
+    m_remember_pwd->move(160, 275);
+    m_auto_login->move(290, 275);
+
+    m_register->move(370, 210);
+    m_find_pw->move(370, 245);
 
     YLBasicWidget::resizeEvent(event);
 }
@@ -137,9 +169,12 @@ void YLLoginPanel::mousePressEvent(QMouseEvent *event)
 
 void YLLoginPanel::paintEvent(QPaintEvent *event)
 {
-//    QPainter painter(this);
-//    painter.setPen(Qt::NoPen);
-//    painter.drawPixmap(0, 0, width(), height(), QPixmap(":/res/LoginPanel/background.jpeg"));
+    QPainter painter(this);
+    painter.setPen(Qt::NoPen);
+    painter.setBrush(QColor::fromRgb(123, 193, 234));
+    painter.drawRect(0, 0, width(), 190);
+    painter.setBrush(QColor::fromRgb(235, 242, 249));    //#EBF2F9
+    painter.drawRect(0, 190, width(), height() - 190);
 }
 
 
@@ -157,6 +192,13 @@ void YLLoginPanel::on_login()
     {
         YLBusiness::login(lineedit_useraccount_->text(), lineedit_passwd_->text());
     }
+}
+
+
+void YLLoginPanel::on_register()
+{
+    YLRegisterWidget *widget = new YLRegisterWidget();
+    widget->show();
 }
 
 //network

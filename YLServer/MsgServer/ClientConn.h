@@ -30,8 +30,13 @@ public:
     uint32_t getUserId() { return m_user_id; }
 
 private:
+    //登录
     void _HandleClientLoginRequest(BasePdu *);
     void _HandleClientLoginOutRequest(BasePdu *);
+
+    //注册
+    void _HandleUserRegisterRequest(BasePdu *);
+
     void _HandleHeartBeat(BasePdu*);
     void _HandleGroupsRequest(BasePdu*);
     void _HandleFriendListGetRequest(BasePdu *);

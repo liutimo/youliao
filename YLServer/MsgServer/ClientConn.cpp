@@ -133,6 +133,9 @@ void ClientConn::handlePdu(BasePdu *pdu)
         case ::base::CID_LOGIN_REQUEST_USERLOGINOUT:
             _HandleClientLoginOutRequest(pdu);
             break;
+        case base::CID_LOGIN_REGISTER_REQUEST:
+            _HandleUserRegisterRequest(pdu);
+            break;
         case base::CID_OTHER_HEARTBEAT:
             _HandleHeartBeat(pdu);
             break;
@@ -355,6 +358,25 @@ void ClientConn::_HandleClientLoginOutRequest(BasePdu *pdu)
 
 }
 
+
+void ClientConn::_HandleUserRegisterRequest(BasePdu *pdu)
+{
+    login::UserRegisterRequest request;
+    request.ParseFromString(pdu->getMessage());
+
+    std::string nickName = request.nick_name();
+    std::string password = request.password();
+    std::string image    = request.header();
+
+    request.set_handle(m_handle);
+
+    DBServConn *conn = get_db_server_conn();
+    if (conn)
+    {
+        sendMessage(conn, request, base::SID_SERVER, base::CID_LOGIN_REGISTER_REQUEST);
+    }
+}
+
 void ClientConn::_HandleMessageDataRequest(BasePdu *pdu)
 {
     message::MessageData messageData;
@@ -371,8 +393,6 @@ void ClientConn::_HandleMessageDataRequest(BasePdu *pdu)
     if (!dbServConn)
         return;
     sendMessage(dbServConn, messageData, base::SID_SERVER, base::CID_MESSAGE_SAVE);
-
-
 
     if (messageType == base::MESSAGE_TYPE_SINGLE_TEXT || messageType == base::MESSAGE_TYPE_SINGLE_AUDIO)
     {

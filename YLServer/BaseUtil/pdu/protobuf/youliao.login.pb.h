@@ -37,7 +37,7 @@ namespace protobuf_youliao_2elogin_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[6];
+  static const ::google::protobuf::internal::ParseTable schema[8];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -55,6 +55,10 @@ void InitDefaultsUserLoginOutRequestImpl();
 void InitDefaultsUserLoginOutRequest();
 void InitDefaultsUserLoginOutResponseImpl();
 void InitDefaultsUserLoginOutResponse();
+void InitDefaultsUserRegisterRequestImpl();
+void InitDefaultsUserRegisterRequest();
+void InitDefaultsUserRegisterResponeImpl();
+void InitDefaultsUserRegisterRespone();
 inline void InitDefaults() {
   InitDefaultsMsgServerRequest();
   InitDefaultsMsgServerRespone();
@@ -62,6 +66,8 @@ inline void InitDefaults() {
   InitDefaultsUserLoginRespone();
   InitDefaultsUserLoginOutRequest();
   InitDefaultsUserLoginOutResponse();
+  InitDefaultsUserRegisterRequest();
+  InitDefaultsUserRegisterRespone();
 }
 }  // namespace protobuf_youliao_2elogin_2eproto
 namespace youliao {
@@ -85,6 +91,12 @@ extern UserLoginRequestDefaultTypeInternal _UserLoginRequest_default_instance_;
 class UserLoginRespone;
 class UserLoginResponeDefaultTypeInternal;
 extern UserLoginResponeDefaultTypeInternal _UserLoginRespone_default_instance_;
+class UserRegisterRequest;
+class UserRegisterRequestDefaultTypeInternal;
+extern UserRegisterRequestDefaultTypeInternal _UserRegisterRequest_default_instance_;
+class UserRegisterRespone;
+class UserRegisterResponeDefaultTypeInternal;
+extern UserRegisterResponeDefaultTypeInternal _UserRegisterRespone_default_instance_;
 }  // namespace login
 }  // namespace pdu
 }  // namespace youliao
@@ -96,6 +108,8 @@ template<> ::youliao::pdu::login::UserLoginOutRequest* Arena::Create< ::youliao:
 template<> ::youliao::pdu::login::UserLoginOutResponse* Arena::Create< ::youliao::pdu::login::UserLoginOutResponse>(Arena*);
 template<> ::youliao::pdu::login::UserLoginRequest* Arena::Create< ::youliao::pdu::login::UserLoginRequest>(Arena*);
 template<> ::youliao::pdu::login::UserLoginRespone* Arena::Create< ::youliao::pdu::login::UserLoginRespone>(Arena*);
+template<> ::youliao::pdu::login::UserRegisterRequest* Arena::Create< ::youliao::pdu::login::UserRegisterRequest>(Arena*);
+template<> ::youliao::pdu::login::UserRegisterRespone* Arena::Create< ::youliao::pdu::login::UserRegisterRespone>(Arena*);
 }  // namespace protobuf
 }  // namespace google
 namespace youliao {
@@ -768,6 +782,279 @@ class UserLoginOutResponse : public ::google::protobuf::Message /* @@protoc_inse
   friend struct ::protobuf_youliao_2elogin_2eproto::TableStruct;
   friend void ::protobuf_youliao_2elogin_2eproto::InitDefaultsUserLoginOutResponseImpl();
 };
+// -------------------------------------------------------------------
+
+class UserRegisterRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.login.UserRegisterRequest) */ {
+ public:
+  UserRegisterRequest();
+  virtual ~UserRegisterRequest();
+
+  UserRegisterRequest(const UserRegisterRequest& from);
+
+  inline UserRegisterRequest& operator=(const UserRegisterRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  UserRegisterRequest(UserRegisterRequest&& from) noexcept
+    : UserRegisterRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline UserRegisterRequest& operator=(UserRegisterRequest&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const UserRegisterRequest& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const UserRegisterRequest* internal_default_instance() {
+    return reinterpret_cast<const UserRegisterRequest*>(
+               &_UserRegisterRequest_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    6;
+
+  void Swap(UserRegisterRequest* other);
+  friend void swap(UserRegisterRequest& a, UserRegisterRequest& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline UserRegisterRequest* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<UserRegisterRequest>(NULL);
+  }
+
+  UserRegisterRequest* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<UserRegisterRequest>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const UserRegisterRequest& from);
+  void MergeFrom(const UserRegisterRequest& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(UserRegisterRequest* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string nick_name = 1;
+  void clear_nick_name();
+  static const int kNickNameFieldNumber = 1;
+  const ::std::string& nick_name() const;
+  void set_nick_name(const ::std::string& value);
+  #if LANG_CXX11
+  void set_nick_name(::std::string&& value);
+  #endif
+  void set_nick_name(const char* value);
+  void set_nick_name(const char* value, size_t size);
+  ::std::string* mutable_nick_name();
+  ::std::string* release_nick_name();
+  void set_allocated_nick_name(::std::string* nick_name);
+
+  // string password = 2;
+  void clear_password();
+  static const int kPasswordFieldNumber = 2;
+  const ::std::string& password() const;
+  void set_password(const ::std::string& value);
+  #if LANG_CXX11
+  void set_password(::std::string&& value);
+  #endif
+  void set_password(const char* value);
+  void set_password(const char* value, size_t size);
+  ::std::string* mutable_password();
+  ::std::string* release_password();
+  void set_allocated_password(::std::string* password);
+
+  // string header = 3;
+  void clear_header();
+  static const int kHeaderFieldNumber = 3;
+  const ::std::string& header() const;
+  void set_header(const ::std::string& value);
+  #if LANG_CXX11
+  void set_header(::std::string&& value);
+  #endif
+  void set_header(const char* value);
+  void set_header(const char* value, size_t size);
+  ::std::string* mutable_header();
+  ::std::string* release_header();
+  void set_allocated_header(::std::string* header);
+
+  // uint32 handle = 4;
+  void clear_handle();
+  static const int kHandleFieldNumber = 4;
+  ::google::protobuf::uint32 handle() const;
+  void set_handle(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.login.UserRegisterRequest)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr nick_name_;
+  ::google::protobuf::internal::ArenaStringPtr password_;
+  ::google::protobuf::internal::ArenaStringPtr header_;
+  ::google::protobuf::uint32 handle_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2elogin_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2elogin_2eproto::InitDefaultsUserRegisterRequestImpl();
+};
+// -------------------------------------------------------------------
+
+class UserRegisterRespone : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.login.UserRegisterRespone) */ {
+ public:
+  UserRegisterRespone();
+  virtual ~UserRegisterRespone();
+
+  UserRegisterRespone(const UserRegisterRespone& from);
+
+  inline UserRegisterRespone& operator=(const UserRegisterRespone& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  UserRegisterRespone(UserRegisterRespone&& from) noexcept
+    : UserRegisterRespone() {
+    *this = ::std::move(from);
+  }
+
+  inline UserRegisterRespone& operator=(UserRegisterRespone&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const UserRegisterRespone& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const UserRegisterRespone* internal_default_instance() {
+    return reinterpret_cast<const UserRegisterRespone*>(
+               &_UserRegisterRespone_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    7;
+
+  void Swap(UserRegisterRespone* other);
+  friend void swap(UserRegisterRespone& a, UserRegisterRespone& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline UserRegisterRespone* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<UserRegisterRespone>(NULL);
+  }
+
+  UserRegisterRespone* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<UserRegisterRespone>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const UserRegisterRespone& from);
+  void MergeFrom(const UserRegisterRespone& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(UserRegisterRespone* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string user_account = 2;
+  void clear_user_account();
+  static const int kUserAccountFieldNumber = 2;
+  const ::std::string& user_account() const;
+  void set_user_account(const ::std::string& value);
+  #if LANG_CXX11
+  void set_user_account(::std::string&& value);
+  #endif
+  void set_user_account(const char* value);
+  void set_user_account(const char* value, size_t size);
+  ::std::string* mutable_user_account();
+  ::std::string* release_user_account();
+  void set_allocated_user_account(::std::string* user_account);
+
+  // uint32 result_code = 1;
+  void clear_result_code();
+  static const int kResultCodeFieldNumber = 1;
+  ::google::protobuf::uint32 result_code() const;
+  void set_result_code(::google::protobuf::uint32 value);
+
+  // uint32 handle = 3;
+  void clear_handle();
+  static const int kHandleFieldNumber = 3;
+  ::google::protobuf::uint32 handle() const;
+  void set_handle(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.login.UserRegisterRespone)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr user_account_;
+  ::google::protobuf::uint32 result_code_;
+  ::google::protobuf::uint32 handle_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2elogin_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2elogin_2eproto::InitDefaultsUserRegisterResponeImpl();
+};
 // ===================================================================
 
 
@@ -1073,9 +1360,275 @@ inline void UserLoginOutRequest::set_user_id(::google::protobuf::uint32 value) {
 
 // UserLoginOutResponse
 
+// -------------------------------------------------------------------
+
+// UserRegisterRequest
+
+// string nick_name = 1;
+inline void UserRegisterRequest::clear_nick_name() {
+  nick_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& UserRegisterRequest::nick_name() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.login.UserRegisterRequest.nick_name)
+  return nick_name_.GetNoArena();
+}
+inline void UserRegisterRequest::set_nick_name(const ::std::string& value) {
+  
+  nick_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:youliao.pdu.login.UserRegisterRequest.nick_name)
+}
+#if LANG_CXX11
+inline void UserRegisterRequest::set_nick_name(::std::string&& value) {
+  
+  nick_name_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:youliao.pdu.login.UserRegisterRequest.nick_name)
+}
+#endif
+inline void UserRegisterRequest::set_nick_name(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  nick_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:youliao.pdu.login.UserRegisterRequest.nick_name)
+}
+inline void UserRegisterRequest::set_nick_name(const char* value, size_t size) {
+  
+  nick_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:youliao.pdu.login.UserRegisterRequest.nick_name)
+}
+inline ::std::string* UserRegisterRequest::mutable_nick_name() {
+  
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.login.UserRegisterRequest.nick_name)
+  return nick_name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* UserRegisterRequest::release_nick_name() {
+  // @@protoc_insertion_point(field_release:youliao.pdu.login.UserRegisterRequest.nick_name)
+  
+  return nick_name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void UserRegisterRequest::set_allocated_nick_name(::std::string* nick_name) {
+  if (nick_name != NULL) {
+    
+  } else {
+    
+  }
+  nick_name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), nick_name);
+  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.login.UserRegisterRequest.nick_name)
+}
+
+// string password = 2;
+inline void UserRegisterRequest::clear_password() {
+  password_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& UserRegisterRequest::password() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.login.UserRegisterRequest.password)
+  return password_.GetNoArena();
+}
+inline void UserRegisterRequest::set_password(const ::std::string& value) {
+  
+  password_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:youliao.pdu.login.UserRegisterRequest.password)
+}
+#if LANG_CXX11
+inline void UserRegisterRequest::set_password(::std::string&& value) {
+  
+  password_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:youliao.pdu.login.UserRegisterRequest.password)
+}
+#endif
+inline void UserRegisterRequest::set_password(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  password_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:youliao.pdu.login.UserRegisterRequest.password)
+}
+inline void UserRegisterRequest::set_password(const char* value, size_t size) {
+  
+  password_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:youliao.pdu.login.UserRegisterRequest.password)
+}
+inline ::std::string* UserRegisterRequest::mutable_password() {
+  
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.login.UserRegisterRequest.password)
+  return password_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* UserRegisterRequest::release_password() {
+  // @@protoc_insertion_point(field_release:youliao.pdu.login.UserRegisterRequest.password)
+  
+  return password_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void UserRegisterRequest::set_allocated_password(::std::string* password) {
+  if (password != NULL) {
+    
+  } else {
+    
+  }
+  password_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), password);
+  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.login.UserRegisterRequest.password)
+}
+
+// string header = 3;
+inline void UserRegisterRequest::clear_header() {
+  header_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& UserRegisterRequest::header() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.login.UserRegisterRequest.header)
+  return header_.GetNoArena();
+}
+inline void UserRegisterRequest::set_header(const ::std::string& value) {
+  
+  header_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:youliao.pdu.login.UserRegisterRequest.header)
+}
+#if LANG_CXX11
+inline void UserRegisterRequest::set_header(::std::string&& value) {
+  
+  header_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:youliao.pdu.login.UserRegisterRequest.header)
+}
+#endif
+inline void UserRegisterRequest::set_header(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  header_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:youliao.pdu.login.UserRegisterRequest.header)
+}
+inline void UserRegisterRequest::set_header(const char* value, size_t size) {
+  
+  header_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:youliao.pdu.login.UserRegisterRequest.header)
+}
+inline ::std::string* UserRegisterRequest::mutable_header() {
+  
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.login.UserRegisterRequest.header)
+  return header_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* UserRegisterRequest::release_header() {
+  // @@protoc_insertion_point(field_release:youliao.pdu.login.UserRegisterRequest.header)
+  
+  return header_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void UserRegisterRequest::set_allocated_header(::std::string* header) {
+  if (header != NULL) {
+    
+  } else {
+    
+  }
+  header_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), header);
+  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.login.UserRegisterRequest.header)
+}
+
+// uint32 handle = 4;
+inline void UserRegisterRequest::clear_handle() {
+  handle_ = 0u;
+}
+inline ::google::protobuf::uint32 UserRegisterRequest::handle() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.login.UserRegisterRequest.handle)
+  return handle_;
+}
+inline void UserRegisterRequest::set_handle(::google::protobuf::uint32 value) {
+  
+  handle_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.login.UserRegisterRequest.handle)
+}
+
+// -------------------------------------------------------------------
+
+// UserRegisterRespone
+
+// uint32 result_code = 1;
+inline void UserRegisterRespone::clear_result_code() {
+  result_code_ = 0u;
+}
+inline ::google::protobuf::uint32 UserRegisterRespone::result_code() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.login.UserRegisterRespone.result_code)
+  return result_code_;
+}
+inline void UserRegisterRespone::set_result_code(::google::protobuf::uint32 value) {
+  
+  result_code_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.login.UserRegisterRespone.result_code)
+}
+
+// string user_account = 2;
+inline void UserRegisterRespone::clear_user_account() {
+  user_account_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& UserRegisterRespone::user_account() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.login.UserRegisterRespone.user_account)
+  return user_account_.GetNoArena();
+}
+inline void UserRegisterRespone::set_user_account(const ::std::string& value) {
+  
+  user_account_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:youliao.pdu.login.UserRegisterRespone.user_account)
+}
+#if LANG_CXX11
+inline void UserRegisterRespone::set_user_account(::std::string&& value) {
+  
+  user_account_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:youliao.pdu.login.UserRegisterRespone.user_account)
+}
+#endif
+inline void UserRegisterRespone::set_user_account(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  user_account_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:youliao.pdu.login.UserRegisterRespone.user_account)
+}
+inline void UserRegisterRespone::set_user_account(const char* value, size_t size) {
+  
+  user_account_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:youliao.pdu.login.UserRegisterRespone.user_account)
+}
+inline ::std::string* UserRegisterRespone::mutable_user_account() {
+  
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.login.UserRegisterRespone.user_account)
+  return user_account_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* UserRegisterRespone::release_user_account() {
+  // @@protoc_insertion_point(field_release:youliao.pdu.login.UserRegisterRespone.user_account)
+  
+  return user_account_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void UserRegisterRespone::set_allocated_user_account(::std::string* user_account) {
+  if (user_account != NULL) {
+    
+  } else {
+    
+  }
+  user_account_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), user_account);
+  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.login.UserRegisterRespone.user_account)
+}
+
+// uint32 handle = 3;
+inline void UserRegisterRespone::clear_handle() {
+  handle_ = 0u;
+}
+inline ::google::protobuf::uint32 UserRegisterRespone::handle() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.login.UserRegisterRespone.handle)
+  return handle_;
+}
+inline void UserRegisterRespone::set_handle(::google::protobuf::uint32 value) {
+  
+  handle_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.login.UserRegisterRespone.handle)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

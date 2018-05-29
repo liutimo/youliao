@@ -102,18 +102,79 @@ bool LoginModel::doLogin(const std::string &str_name, const std::string &str_pas
     return ret;
 }
 
-//bool LoginModel::doLogout(uint32_t userId)
-//{
-//    auto conn = CacheManager::instance()->getCacheConn("OnlineUser");
-//
-//    if (conn != nullptr)
-//    {
-//        auto ret = conn->hdel("user_map", to_string(userId));
-//        if (ret == 1)
-//
-//            log("用户%d注销登录!", userId);
-//        else
-//            log("用户%d注销登录失败!", userId);
-//    }
-//    CacheManager::instance()->releaseCacheConn(conn);
-//}
+
+bool LoginModel::doRegister(const std::string &nickname, const std::string &password
+        , const std::string &head, uint32_t& user_account)
+{
+    bool ret = false;
+    //[1] 获得最后一条user_account
+    uint32_t  account = 0;
+    getMaxUserAccount(account);
+
+    if (account == 0)
+    {
+        user_account = 123456;
+    }
+    else
+    {
+        user_account = account + 1;
+    }
+
+    uint32_t created = (uint32_t )time(nullptr);
+
+    DBConn *conn = DBManager::instance()->getConnection();
+
+    if (conn)
+    {
+        std::string sql = "INSERT INTO yl_user(user_account, user_password, user_nickname,"
+                          " user_header, user_created, user_updated) "
+                          "VALUES(?, ?, ?, ?, ?, ?)";
+        printSql2Log(sql.c_str());
+
+        PrepareStatement *pstmt = new PrepareStatement;
+        if (pstmt->init(conn->getMysql(), sql))
+        {
+            uint32_t index = 0;
+            pstmt->setParam(index++, user_account);
+            pstmt->setParam(index++, password);
+            pstmt->setParam(index++, nickname);
+            if (head.empty())
+                pstmt->setParam(index++, "www.liutimo.cn/images/default.jpeg");
+            else
+                pstmt->setParam(index++, "www.liutimo.cn/images/" + head);
+            pstmt->setParam(index++, created);
+            pstmt->setParam(index++, created);
+
+            ret = pstmt->executeUpdate();
+        }
+
+        delete pstmt;
+    }
+
+    DBManager::instance()->releaseConnection(conn);
+
+    return ret;
+}
+
+
+void LoginModel::getMaxUserAccount(uint32_t &account)
+{
+
+    DBConn *conn = DBManager::instance()->getConnection();
+
+    if (conn)
+    {
+        std::string sql = "SELECT user_account FROM yl_user ORDER BY user_id DESC  LIMIT 1 ;";
+        printSql2Log(sql.c_str());
+        ResultSet *resultSet = conn->query(sql);
+
+        if (resultSet && resultSet->next())
+        {
+            account = (uint32_t)resultSet->getInt("user_account");
+        }
+
+        delete resultSet;
+    }
+
+    DBManager::instance()->releaseConnection(conn);
+}

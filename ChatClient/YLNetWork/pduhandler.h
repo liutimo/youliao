@@ -35,10 +35,11 @@ signals:
     void groupList();
     void groupMembers();
     void searchGroupResult(const QVector<YLGroup> friends);
-
+    void regiserStatus(uint32_t resultCode, QString account);
 private:
     void _HandleBasePdu(BasePdu *pdu);
     void _HandleUserLoginRespone(BasePdu *pdu);
+    void _HandleRegisterRespone(BasePdu *pdu);
     void _HandleHeartBeat();
     void _HandleFriendGroupGetRespone(BasePdu *pdu);
     void _HandleFriendListGetRespone(BasePdu *pdu);

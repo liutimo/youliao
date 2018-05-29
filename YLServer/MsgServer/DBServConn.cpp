@@ -130,6 +130,9 @@ void DBServConn::handlePdu(BasePdu *pdu)
         case base::CID_SERVER_VALIDATE_RESPONE:
             _HandleValidateRespone(pdu);
             break;
+        case base::CID_LOGIN_REGISTER_RESPONE:
+            _HandleRegisterRespone(pdu);
+            break;
         case base::CID_FRIENDLIST_GET_GROUPS_REPSONE:
             _HandleFriendGroupsRespone(pdu);
             break;
@@ -244,6 +247,21 @@ void DBServConn::_HandleValidateRespone(BasePdu *pdu)
         if (conn)
             sendMessage(conn, userGoOnline, base::SID_SERVER, base::CID_SERVER_USER_GO_ONLINE);
     }
+}
+
+void DBServConn::_HandleRegisterRespone(BasePdu *pdu)
+{
+    login::UserRegisterRespone respone;
+    respone.ParseFromString(pdu->getMessage());
+
+    uint32_t handle = respone.handle();
+
+    auto conn = findConn(handle);
+    if (conn)
+    {
+        sendMessage(conn, respone, base::SID_LOGIN, base::CID_LOGIN_REGISTER_RESPONE);
+    }
+
 }
 
 void DBServConn::_HandleFriendGroupsRespone(BasePdu *pdu)

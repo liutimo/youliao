@@ -19,6 +19,16 @@ class YLLoginPanel : public YLBasicWidget
                                         QPushButton#min_button_:pressed{border-image:url(:/res/MainFrame/sysbtn_min_down.png);}\
                                        ";
 
+    const QString qss_mima_button    = "QPushButton        {border-image:url(:/res/LoginPanel/mima.png);}\
+                                        QPushButton:hover  {border-image:url(:/res/LoginPanel/mima_hover.png);}\
+                                        QPushButton:pressed{border-image:url(:/res/LoginPanel/mima_press.png);}\
+                                       ";
+
+    const QString qss_regis_button   = "QPushButton        {border-image:url(:/res/LoginPanel/zhuce.png);}\
+                                        QPushButton:hover  {border-image:url(:/res/LoginPanel/zhuce_hover.png);}\
+                                        QPushButton:pressed{border-image:url(:/res/LoginPanel/zhuce_press.png);}\
+                                        ";
+
 
     const QString qss_password_     = "QLineEdit#lineedit_passwd_      {font: 13px;border-image:url(:/res/LoginPanel/edit_frame_normal_passwd.png);}\
                                        QLineEdit#lineedit_passwd_:hover{font: 13px;border-image:url(:/res/LoginPanel/edit_frame_hove_passwd.png);}";
@@ -49,6 +59,7 @@ private:
     void connectToLoginServer();
 private slots:
     void on_login();
+    void on_register();
 
 protected:
     void resizeEvent(QResizeEvent *event);
@@ -73,6 +84,14 @@ private:
     bool   m_connected;
 
     YLLoginTray *m_login_tray;
+
+
+    QLabel *m_icon;     //图标
+    QLabel *m_name;     //软件名
+
+    QPushButton         *m_register; //注册
+    QPushButton         *m_find_pw; //找回密码
+
 };
 
 #endif // YLLOGINPANEL_H

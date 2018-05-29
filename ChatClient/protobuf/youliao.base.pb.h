@@ -151,12 +151,14 @@ enum LoginCID {
   CID_LOGIN_REQUEST_USERLOGIN = 259,
   CID_LOGIN_RESPONE_USERLOGIN = 260,
   CID_LOGIN_REQUEST_USERLOGINOUT = 261,
+  CID_LOGIN_REGISTER_REQUEST = 262,
+  CID_LOGIN_REGISTER_RESPONE = 263,
   LoginCID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   LoginCID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool LoginCID_IsValid(int value);
 const LoginCID LoginCID_MIN = CID_LOGIN_ZERO;
-const LoginCID LoginCID_MAX = CID_LOGIN_REQUEST_USERLOGINOUT;
+const LoginCID LoginCID_MAX = CID_LOGIN_REGISTER_RESPONE;
 const int LoginCID_ARRAYSIZE = LoginCID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* LoginCID_descriptor();

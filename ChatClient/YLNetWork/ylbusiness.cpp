@@ -48,6 +48,23 @@ void  YLBusiness::loginOut(const uint32_t userId)
     PduSender::instance()->addMessage(basePdu);
 }
 
+
+void YLBusiness::registerAccount(const QString &nickName, const QString &password, const QString &header)
+{
+   login::UserRegisterRequest request;
+   request.set_nick_name(nickName.toStdString());
+   request.set_password(password.toStdString());
+   request.set_header(header.toStdString());
+
+   BasePdu *basePdu = new BasePdu;
+   basePdu->setSID(SID_LOGIN);
+   basePdu->setCID(CID_LOGIN_REGISTER_REQUEST);
+   basePdu->writeMessage(&request);
+
+   PduSender::instance()->addMessage(basePdu);
+
+}
+
 void YLBusiness::getFriendGroupsRequest(uint32_t userId)
 {
     friendlist::GroupsRequest groupRequest;

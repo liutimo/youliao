@@ -23,6 +23,8 @@ enum LoginCID
     CID_LOGIN_REQUEST_USERLOGIN = 0x0103;       // 用户登录请求
     CID_LOGIN_RESPONE_USERLOGIN = 0x0104;       // 用户登录结果响应
     CID_LOGIN_REQUEST_USERLOGINOUT = 0x0105;    //用户退出登录
+    CID_LOGIN_REGISTER_REQUEST  = 0x0106;       //注册请求
+    CID_LOGIN_REGISTER_RESPONE  = 0x0107;       //注册响应
 }
 
 //服务器之间的消息
