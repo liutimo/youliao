@@ -1147,25 +1147,28 @@ namespace DB_INTERFACE
         {
             //无需验证信息，直接加入
             //考虑加入后是否通知群员。
-            bool ret = groupModel->addMember(groupId, userId);
             base::GroupInfo *groupInfo = new base::GroupInfo;
             groupModel->getGroupInfoByGroupId(groupId, *groupInfo);
 
-            group::AddGroupRespone respone;
-            respone.set_user_id(userId);
-            respone.set_result_coid(ret ? 0 : 1);
-            respone.set_allocated_group_info(groupInfo);
+            uint32_t capacity = groupInfo->group_capacity();
+            uint32_t current = groupInfo->managers().size() + groupInfo->members().size() + 1;
 
-            auto conn = findProxyConn(conn_uuid);
-            if (conn)
-                sendMessage(conn, respone, base::SID_SERVER, base::CID_GROUP_ADD_GROUP_RESPONE);
+            if (current >= capacity)
+            {
+                //群已满
+            }
+            else
+            {
+                bool ret = groupModel->addMember(groupId, userId);
+                group::AddGroupRespone respone;
+                respone.set_user_id(userId);
+                respone.set_result_coid(ret ? 0 : 1);
+                respone.set_allocated_group_info(groupInfo);
 
-
-
-
-//            //保存到数据库
-//            MessageModel::instance()->saveGroupMesage(groupId, userId, base::MESSAGE_TYPE_GROUP_TEXT, created,
-//                                                      msgId, newMessage);
+                auto conn = findProxyConn(conn_uuid);
+                if (conn)
+                    sendMessage(conn, respone, base::SID_SERVER, base::CID_GROUP_ADD_GROUP_RESPONE);
+            }
         }
 
 
@@ -1205,6 +1208,14 @@ namespace DB_INTERFACE
 
         bool ret = GroupModel::instance()->exitGroup(groupId, userId);
 
+        if (ret)
+        {
+            //删除session
+            uint32_t sessionId = SessionModel::instance()->getSessionId(userId, groupId, base::SESSION_TYPE_GROUP);
+            if (sessionId != 0)
+                SessionModel::instance()->removeSession(sessionId);
+        }
+
         uint32_t resCode = ret ? 0 : 1;
 
         group::ExitGroupRespone respone;
@@ -1215,6 +1226,8 @@ namespace DB_INTERFACE
         auto conn = findProxyConn(conn_uuid);
         if (conn)
             sendMessage(conn, respone, base::SID_SERVER, base::CID_GROUP_EXIT_GROUP_RESPONE);
+
+
     }
 
 
@@ -1287,8 +1300,15 @@ namespace DB_INTERFACE
         //验证userId 是否具备该权限
         //...
 
-
         bool ret = GroupModel::instance()->exitGroup(groupId, memberId);
+
+        if (ret)
+        {
+            //成功退出
+            uint32_t sessionId = SessionModel::instance()->getSessionId(userId, groupId, base::SESSION_TYPE_GROUP);
+            if (sessionId != 0)
+                SessionModel::instance()->removeSession(sessionId);
+        }
         uint32_t resultCode = ret ? 0 : 1;
 
         group::KickOutMemberRespone respone;

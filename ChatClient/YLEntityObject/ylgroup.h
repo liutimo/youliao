@@ -27,7 +27,11 @@ public:
 
     void addMember(uint32_t memberId);
 
+    void setMembers(const QVector<uint32_t> &members) { m_members = members; }
+
     void addManager(uint32_t managerId);
+
+    void setManagers(const QVector<uint32_t> &managers) { m_managers = managers; }
 
     void setCreateTime(uint32_t createTime);
 

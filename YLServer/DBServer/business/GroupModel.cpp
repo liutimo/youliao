@@ -331,7 +331,7 @@ bool GroupModel::setGroupManager(uint32_t groupId, uint32_t memberId)
 
     if (conn)
     {
-        std::string updateSql = "UPDATE yl_group_member SET type = 1, updated = "
+        std::string updateSql = "UPDATE yl_group_member SET type = CASE WHEN type = 1 THEN 0 WHEN type=0 THEN 1 END, updated = "
                                 + std::to_string(time(nullptr)) +  " WHERE group_id = " + std::to_string(groupId)
                                 + " AND member_id = "  + std::to_string(memberId);
 

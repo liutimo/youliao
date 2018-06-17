@@ -88,7 +88,6 @@ void YLMemberListWidget::setHeader()
 
 void YLMemberListWidget::setRow(const base::MemberInfo &memberInfo, MemberNameWidgetItem::MemberType type)
 {
-
     int row = rowCount();
     insertRow(row);
 
@@ -213,7 +212,6 @@ void YLMemberListWidget::cellEntered(int row, int column)
 
         }
     }
-
 }
 
 void YLMemberListWidget::setRowColor(int row, QColor color)
@@ -254,7 +252,6 @@ void MemberNameWidgetItem::init()
     m_member_name->move(50, 5);
 }
 
-
 void MemberNameWidgetItem::setMemberType(MemberType type)
 {
     if (type == GROUPMANAGER)
@@ -266,7 +263,6 @@ void MemberNameWidgetItem::setMemberType(MemberType type)
         m_member_type->setPixmap(QPixmap(":/res/MainFrame/trad_boy.png"));
     }
 }
-
 
 void MemberNameWidgetItem::setMemberName(const QString &name)
 {
@@ -286,7 +282,6 @@ void MemberNameWidgetItem::setMemberName(const QString &name)
 
     m_member_name->setText("<p style='color:#777'>" + memberName + "</p>");
 }
-
 
 void MemberNameWidgetItem::setHeader(const QString &url)
 {

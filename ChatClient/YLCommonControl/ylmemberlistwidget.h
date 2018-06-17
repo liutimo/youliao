@@ -7,6 +7,7 @@
 #include "YLEntityObject/ylgroup.h"
 #include "YLCommonControl/ylmessagebox.h"
 #include "YLNetWork/ylbusiness.h"
+#include "globaldata.h"
 using namespace youliao::pdu;
 QT_BEGIN_NAMESPACE
 class QLabel;
@@ -115,7 +116,16 @@ public:
 
         connect(m_kick_out, &QPushButton::clicked, this, [this](){
             YLMessageBox *messageBox = new YLMessageBox(BUTTON_OK | BUTTON_CANNEL, this);
-            messageBox->setToolTip(QString("你确定将%1(%2)从本群中移除吗？"));
+
+            bool ret = false;
+            base::MemberInfo &memberInfo = GlobalData::getMemberInfo(m_group_id, m_user_id, ret);
+            if (!ret)
+                return;
+
+            messageBox->setToolTip(QString("你确定将<span style='color:#F67975;'>%1(%2)</span>从本群中移除吗？")
+                                   .arg(memberInfo.user_info().user_nick().c_str())
+                                   .arg(memberInfo.user_info().user_account()));
+
             messageBox->setWidgetTitle("提示");
             messageBox->setTipType(YLMessageBox::Tips);
             BottonResult res =  messageBox->exec();
@@ -127,14 +137,49 @@ public:
 
         connect(m_set_manager, &QPushButton::clicked, this, [this](){
             YLMessageBox *messageBox = new YLMessageBox(BUTTON_OK | BUTTON_CANNEL, this);
-            messageBox->setToolTip(QString("确定要设置%1(%2)为管理员吗？"));
             messageBox->setWidgetTitle("提示");
             messageBox->setTipType(YLMessageBox::Tips);
-            BottonResult res =  messageBox->exec();
-            if (res == BUTTON_OK)
+
+            bool ret = false;
+            base::MemberInfo &memberInfo = GlobalData::getMemberInfo(m_group_id, m_user_id, ret);
+            if (!ret)
+                return;
+
+            YLGroup group = GlobalData::getGroupByGroupId(m_group_id);
+
+            if (group.getManagers().contains(m_user_id))
             {
-                YLBusiness::setGroupManager(m_group_id, m_user_id);
+                messageBox->setToolTip(QString("确定要取消<span style='color:#F67975;'>%1(%2)</span>的管理员资格？")
+                                       .arg(memberInfo.user_info().user_nick().c_str())
+                                       .arg(memberInfo.user_info().user_account()));
+                BottonResult res =  messageBox->exec();
+                if (res == BUTTON_OK)
+                {
+                    YLBusiness::setGroupManager(m_group_id, m_user_id);
+                }
             }
+            else
+            {
+                //最多设置9为管理员 + 1个群主, 所有具备管理权限的人数有10
+                if (group.getManagers().size() >= 9)
+                {
+                    messageBox->setToolTip(QString("该群管理员数量已超上限"));
+                    messageBox->exec();
+                }
+                else
+                {
+                    messageBox->setToolTip(QString("确定要设置<span style='color:#F67975;'>%1(%2)</span>为管理员吗？")
+                                           .arg(memberInfo.user_info().user_nick().c_str())
+                                           .arg(memberInfo.user_info().user_account()));
+                    BottonResult res =  messageBox->exec();
+                    if (res == BUTTON_OK)
+                    {
+                        YLBusiness::setGroupManager(m_group_id, m_user_id);
+                    }
+                }
+            }
+
+
         });
     }
 

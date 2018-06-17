@@ -97,13 +97,13 @@ public:
     static void addUser(const base::UserInfo&);
     static void addUsers(const QList<base::UserInfo> &);
     static void addUSers(const QVector<base::UserInfo> &);
-    static YLGroup getGroupByGroupId(uint32_t groupId);
+    static YLGroup& getGroupByGroupId(uint32_t groupId);
     static void remGroupByGroupId(uint32_t groupId);
     static base::UserInfo getCreatorByGroupId(uint32_t groupId);
     static QVector<base::UserInfo> getManagersByGroupId(uint32_t groupId);
     static QVector<base::UserInfo> getMembersByGroupId(uint32_t groupId);
     static void setGroupMember(uint32_t groupId, const QVector<base::MemberInfo> &members);
-    static base::MemberInfo& getMemberInfo(uint32_t groupId, uint32_t memberId);
+    static base::MemberInfo& getMemberInfo(uint32_t groupId, uint32_t memberId, bool &ret);
 
     //audio
     static void addAudio(const QString &, const QString &);

@@ -42,6 +42,7 @@ signals:
     void deleteFriend(uint32_t friendId);
     void friendInformation(const base::UserInfo &);
     void addFriendSuccess();
+    void updateMemberList(uint32_t groupId);
 
 private:
     void _HandleBasePdu(BasePdu *pdu);

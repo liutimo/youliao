@@ -352,7 +352,11 @@ void YLGroupChatWidget::receiveMessage(uint32_t user_id, const QString &message)
     re.setMinimal(true);
     QString msg = message;
 
-    base::MemberInfo& memberInfo = GlobalData::getMemberInfo(m_group.getGroupId(), user_id);
+    bool ret = false;
+    base::MemberInfo& memberInfo = GlobalData::getMemberInfo(m_group.getGroupId(), user_id, ret);
+
+    if (!ret)
+        return;
 
     QString groupCard = memberInfo.group_card().c_str();
     QString name = groupCard.isEmpty() ? memberInfo.user_info().user_nick().c_str() : groupCard;

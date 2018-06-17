@@ -34,6 +34,15 @@ YLGroupInfoWidget::YLGroupInfoWidget(QWidget *parent) : YLBasicWidget(parent), i
         m_head_frame->setHeadFromUrl(url);
         m_photo->setHeadFromUrl(url);
     });
+
+    connect(PduHandler::instance(), &PduHandler::updateMemberList, this, [this](uint32_t groupId){
+        if (groupId == m_group.getGroupId())
+        {
+            m_group = GlobalData::getGroupByGroupId(groupId);
+            m_label_manager_count->setText(QString("管理员: %1/10人").arg(m_group.getManagers().size() + 1));
+            updateGroupMemberList();
+        }
+    });
 }
 
 void YLGroupInfoWidget::initTopNavigationBar()
@@ -143,7 +152,8 @@ void YLGroupInfoWidget::initRight2()
     m_member_list->setFixedSize(400, 350);
     m_member_list->move(210, 95);
     connect(m_member_list, &YLMemberListWidget::groupCardChanged, this, [this](uint32_t memberId, QString groupCard){
-        auto &member = GlobalData::getMemberInfo(m_group.getGroupId(), memberId);
+        bool ret = false;
+        auto &member = GlobalData::getMemberInfo(m_group.getGroupId(), memberId, ret);
         member.set_group_card(groupCard.toStdString());
         YLBusiness::modifyGroupCard(m_group.getGroupId(), groupCard);
     });
@@ -172,7 +182,7 @@ void YLGroupInfoWidget::setGroup(const YLGroup &group)
     QString imagePath = GlobalData::imagePath + m_group.getHeaderName();
     m_photo->setHeadFromLocal(imagePath);
     m_group_intro->setText(QString("该群创建于%1:").arg(QDateTime::fromTime_t(m_group.getCreateTime()).toString("yyyy/mm/dd")));
-    m_label_member_distr->setText(QString("<p style='color:gray;'>群员分布(%1/%2)</p>").arg(1 + group.getManagers().size() + group.getMembers().size()).arg(m_group.getGroupCapacity()));
+    m_label_member_distr->setText(QString("<p style='color:gray;'>群员分布(%1/%2)</p>").arg(1 + m_group.getManagers().size() + m_group.getMembers().size()).arg(m_group.getGroupCapacity()));
     m_label_manager_count->setText(QString("管理员: %1/10人").arg(m_group.getManagers().size() + 1));
 
     //发送网络请求
@@ -219,26 +229,28 @@ void YLGroupInfoWidget::modifyGroupCard()
 
 void YLGroupInfoWidget::updateGroupMemberList()
 {
+    m_member_list->clearContents();
+    m_member_list->setRowCount(0);
+    m_member_list->setHeader();
     m_group = GlobalData::getGroupByGroupId(m_group.getGroupId());
     m_member_list->setGroup(m_group);
-    m_member_list->clear();
-    m_member_list->setHeader();
     auto managers = m_group.getManagers();
     auto members = m_group.getMembers();
     uint32_t creatorId = m_group.getGroupCreator();
 
-    base::MemberInfo memberInfo = GlobalData::getMemberInfo(m_group.getGroupId(), creatorId);
+    bool ret = false;
+    base::MemberInfo memberInfo = GlobalData::getMemberInfo(m_group.getGroupId(), creatorId, ret);
     m_member_list->setRow(memberInfo, MemberNameWidgetItem::GROUPOWER);
 
     for (uint32_t managerId : managers)
     {
-        base::MemberInfo memberInfo = GlobalData::getMemberInfo(m_group.getGroupId(), managerId);
+        base::MemberInfo memberInfo = GlobalData::getMemberInfo(m_group.getGroupId(), managerId, ret);
         m_member_list->setRow(memberInfo, MemberNameWidgetItem::GROUPMANAGER);
     }
 
     for (uint32_t memberId : members)
     {
-        base::MemberInfo memberInfo = GlobalData::getMemberInfo(m_group.getGroupId(), memberId);
+        base::MemberInfo memberInfo = GlobalData::getMemberInfo(m_group.getGroupId(), memberId, ret);
         m_member_list->setRow(memberInfo, MemberNameWidgetItem::GROUPMEMBER);
     }
 }

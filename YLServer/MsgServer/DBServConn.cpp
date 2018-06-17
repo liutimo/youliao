@@ -760,7 +760,9 @@ void DBServConn::_HandleKcikOutMemberRespone(BasePdu *basePdu)
     respone.ParseFromString(basePdu->getMessage());
 
     uint32_t userId = respone.user_id();
+    uint32_t memberId = respone.member_id();
 
+    //通知操作者
     auto user = UserManager::instance()->getUser(userId);
     if (user)
     {
@@ -768,6 +770,15 @@ void DBServConn::_HandleKcikOutMemberRespone(BasePdu *basePdu)
         if (conn)
             sendMessage(conn, respone, base::SID_GROUP, base::CID_GROUP_KICK_OUT_RESPONE);
     }
+
+    user = UserManager::instance()->getUser(memberId);
+    if (user)
+    {
+        auto conn = user->getConn();
+        if (conn)
+            sendMessage(conn, respone, base::SID_GROUP, base::CID_GROUP_KICK_OUT_RESPONE);
+    }
+
 }
 
 void DBServConn::_HandleGroupAddRequestRespone(BasePdu *basePdu)

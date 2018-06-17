@@ -17,7 +17,7 @@ YLMessageBox::YLMessageBox(int type, QWidget *parent) : YLBasicWidget(parent), m
     m_tooltip->setWordWrap(true);
     m_tooltip->setAlignment(Qt::AlignVCenter);
     m_tooltip->setStyleSheet("font:12px");
-    m_tooltip->move(70, 32);
+    m_tooltip->move(70, 30);
 
     point1 = QPoint(190, 130);
     point2 = QPoint(270, 130);

@@ -682,6 +682,7 @@ void PduHandler::_HandleGetGroupListRespone(BasePdu *pdu)
             db.addOneGroup(group);
         }
 
+        YLBusiness::getGroupMembersInfo(group.getGroupId());
     }
     emit groupList();
 }
@@ -939,12 +940,60 @@ void PduHandler::_HandleModifyGroupIconRespone(BasePdu *pdu)
 void PduHandler::_HandleSetGroupManagerRespone(BasePdu *pdu)
 {
     group::SetGroupManagerRespone respone;
+    respone.ParseFromString(pdu->getMessage());
+
+    uint32_t groupId  = respone.group_id();
+    uint32_t memberId = respone.member_id();
+    uint32_t resultCode = respone.result_code();
+
+    //成功
+    if (resultCode == 0)
+    {
+        YLGroup &g = GlobalData::getGroupByGroupId(groupId);
+
+        auto members = g.getMembers();
+
+        if (members.contains(memberId))
+        {
+            //设置管理员
+            members.removeOne(memberId);
+
+            g.setMembers(members);
+            g.addManager(memberId);
+        }
+        else
+        {
+//            取消管理员
+            members.push_back(memberId);
+            g.setMembers(members);
+
+            auto managers = g.getManagers();
+            managers.removeOne(memberId);
+            g.setManagers(managers);
+        }
+        emit updateMemberList(groupId);
+    }
+    else
+    {
+        //设置失败
+
+    }
+
+
+
 
 }
 
 void PduHandler::_HandleKickOutGroupMemberRespone(BasePdu *pdu)
 {
+    group::KickOutMemberRespone respone;
+    respone.ParseFromString(pdu->getMessage());
 
+    uint32_t groupId = respone.group_id();
+
+    GlobalData::remGroupByGroupId(groupId);
+
+    YLBusiness::getGroupList();
 }
 
 void PduHandler::_HandleGetLatestGroupMsgIdRespone(BasePdu *pdu)
@@ -962,11 +1011,12 @@ void PduHandler::_HandleExitGroupRespone(BasePdu *pdu)
 {
     group::ExitGroupRespone respone;
     respone.ParseFromString(pdu->getMessage());
-
     uint32_t groupId = respone.group_id();
     uint32_t resultCode = respone.result_code();
 
     emit exitGroupResult(groupId, resultCode);
+
+    YLBusiness::getSessions(respone.user_id());
 }
 
 void PduHandler::_HandleGroupVerifyNotify(BasePdu *pdu)

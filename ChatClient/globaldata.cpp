@@ -332,11 +332,12 @@ void GlobalData::addUSers(const QVector<base::UserInfo> &users)
 }
 
 
-YLGroup GlobalData::getGroupByGroupId(uint32_t groupId)
+YLGroup& GlobalData::getGroupByGroupId(uint32_t groupId)
 {
+    YLGroup g;
     auto iter = m_groups.find(groupId);
     if (iter == m_groups.end())
-        return YLGroup();
+        return g;
     else
         return *iter;
 }
@@ -394,11 +395,20 @@ void GlobalData::setGroupMember(uint32_t groupId, const QVector<base::MemberInfo
 
 }
 
-base::MemberInfo& GlobalData::getMemberInfo(uint32_t groupId, uint32_t memberId)
+base::MemberInfo& GlobalData::getMemberInfo(uint32_t groupId, uint32_t memberId, bool &ret)
 {
     auto iter = m_group_member.find(groupId);
     if (iter != m_group_member.end())
+    {
+        ret = true;
         return (*iter)[memberId];
+    }
+    else
+    {
+        ret = false;
+        base::MemberInfo member = base::MemberInfo();
+        return member;
+    }
 }
 
 //audio

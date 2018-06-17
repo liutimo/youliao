@@ -44,7 +44,16 @@ void YLValidateGroupWidget::setGroup(const YLGroup &group)
         m_icon->show();
         m_info->show();
         //send Request
-        YLBusiness::addGroup(m_group.getGroupId());
+
+        uint32_t capacity = m_group.getGroupCapacity();
+        uint32_t current = m_group.getManagers().size() + m_group.getMembers().size() + 1;
+
+        if (current >= capacity)
+        {
+            m_info->setText("该群已满,无法加入。");
+        }
+        else
+            YLBusiness::addGroup(m_group.getGroupId());
     }
 }
 
