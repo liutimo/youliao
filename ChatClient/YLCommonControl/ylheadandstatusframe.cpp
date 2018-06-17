@@ -106,3 +106,4 @@ void YLHeadAndStatusFrame::resizeEvent(QResizeEvent *e)
 
     YLHeadFrame::resizeEvent(e);
 }
+

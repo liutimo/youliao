@@ -10,7 +10,11 @@ HEADERS += \
     $$PWD/ylgroupmemberlistwidget.h \
     $$PWD/ylmenubutton.h \
     $$PWD/ylbutton.h \
-    $$PWD/ylrecordaudiowidget.h
+    $$PWD/ylrecordaudiowidget.h \
+    $$PWD/ylmodifyinfowidget.h \
+    $$PWD/ylmodifyusericon.h \
+    $$PWD/ylimageeditwidget.h \
+    $$PWD/ylgroupiconeditwidget.h
 
 SOURCES += \
     $$PWD/ylheadframe.cpp \
@@ -24,5 +28,9 @@ SOURCES += \
     $$PWD/ylgroupmemberlistwidget.cpp \
     $$PWD/ylmenubutton.cpp \
     $$PWD/ylbutton.cpp \
-    $$PWD/ylrecordaudiowidget.cpp
+    $$PWD/ylrecordaudiowidget.cpp \
+    $$PWD/ylmodifyinfowidget.cpp \
+    $$PWD/ylmodifyusericon.cpp \
+    $$PWD/ylimageeditwidget.cpp \
+    $$PWD/ylgroupiconeditwidget.cpp
 

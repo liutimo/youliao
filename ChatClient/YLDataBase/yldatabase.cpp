@@ -5,10 +5,11 @@
 #include <QSqlError>
 #include <QDateTime>
 #include "globaldata.h"
+#include "YLEntityObject/ylmessage.h"
 //YLDataBase* YLDataBase::m_instance = nullptr;
 
 bool YLDataBase::m_first = true;
-
+int YLDataBase::i = 0;
 //YLDataBase* YLDataBase::instance()
 //{
 //    if (m_instance == nullptr)
@@ -33,14 +34,17 @@ YLDataBase::YLDataBase(QObject *parent) : QObject(parent)
         createMessageTable();
         createGroupTable();
         createGroupMemberTable();
+        createGroupMessageTable();
         m_first = false;
     }
+    ++i;
 }
 
 
 YLDataBase::~YLDataBase()
 {
     m_database.close();
+    qDebug() << i;
 }
 
 
@@ -67,6 +71,28 @@ void YLDataBase::saveMessage(const MessageData &msg)
         qDebug() << "插入消息失败" << query.lastError().text();
 }
 
+void YLDataBase::saveMessage(const YLMessage &msg)
+{
+    QString sql = "INSERT INTO yl_message(sender_id, receiver_id, message_type, message_id, message_content, created) "
+                  "VALUES(?, ?, ?, ?, ?, ?);";
+
+    QSqlQuery query;
+    query.prepare(sql);
+    query.addBindValue(msg.getSenderId());
+    query.addBindValue(msg.getReceiverId());
+    query.addBindValue(msg.getMessageType());
+    query.addBindValue(msg.getMessageId());
+    query.addBindValue(msg.getMsgContent());
+    query.addBindValue(msg.getCreateTime());
+
+    bool ret = query.exec();
+
+    if (ret)
+        qDebug() << "插入消息成功" ;
+    else
+        qDebug() << "插入消息失败" << query.lastError().text();
+}
+
 
 QVector<QPair<uint32_t, QString>> YLDataBase::getRecentMessage(uint32_t friendId)
 {
@@ -77,15 +103,15 @@ QVector<QPair<uint32_t, QString>> YLDataBase::getRecentMessage(uint32_t friendId
 
 
     QString sql = QString("SELECT sender_id, message_content, created "
-                  "FROM yl_message "
-                  "WHERE sender_id = %1 AND "
-                  "created BETWEEN %2 AND %3 "
-                  "UNION  "
-                  "SELECT sender_id, message_content, created "
-                  "FROM yl_message "
-                  "WHERE receiver_id = %1 AND "
-                  "created BETWEEN %2 AND %3 "
-                  "ORDER BY yl_message.created;").arg(friendId).arg(oneHourAgo).arg(currentTime);
+                          "FROM yl_message "
+                          "WHERE sender_id = %1 AND "
+                          "created BETWEEN %2 AND %3 "
+                          "UNION  "
+                          "SELECT sender_id, message_content, created "
+                          "FROM yl_message "
+                          "WHERE receiver_id = %1 AND "
+                          "created BETWEEN %2 AND %3 "
+                          "ORDER BY yl_message.created;").arg(friendId).arg(oneHourAgo).arg(currentTime);
     qDebug() << sql;
     QSqlQuery query;
     if (query.exec(sql))
@@ -107,12 +133,12 @@ QVector<QPair<uint32_t, QString>> YLDataBase::getMoreMessage(uint32_t friendId, 
     QVector<QPair<uint32_t, QString>> vec;
 
     QString sql = QString("SELECT sender_id, message_content, created "
-                  "FROM yl_message WHERE sender_id = %1 "
-                  "UNION  "
-                  "SELECT sender_id, message_content, created "
-                  "FROM yl_message "
-                  "WHERE receiver_id = %1 "
-                  "ORDER BY yl_message.created DESC LIMIT %2, 20;").arg(friendId).arg(currentIndex);
+                          "FROM yl_message WHERE sender_id = %1 "
+                          "UNION  "
+                          "SELECT sender_id, message_content, created "
+                          "FROM yl_message "
+                          "WHERE receiver_id = %1 "
+                          "ORDER BY yl_message.created DESC LIMIT %2, 20;").arg(friendId).arg(currentIndex);
 
     QSqlQuery query;
     if (query.exec(sql))
@@ -349,6 +375,21 @@ void YLDataBase::createGroupMemberTable()
         qDebug() << "创建群组成员表失败" << query.lastError().text();
 }
 
+void YLDataBase::createGroupMessageTable()
+{
+    QString sql = "CREATE TABLE yl_group_message (id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                  "group_id INTEGER, sender_id INTEGER, msg_id INTEGER, "
+                  "content VARCHAR (0, 4096), type INTEGER DEFAULT (0), created INTEGER);";
+
+    QSqlQuery query;
+    bool ret = query.exec(sql);
+
+    if (ret)
+        qDebug() << "创建群组消息表成功";
+    else
+        qDebug() << "创建群组消息表失败" << query.lastError().text();
+}
+
 /*************群组相关*****************/
 
 uint32_t YLDataBase::getGroupIdx(uint32_t groupId)
@@ -451,4 +492,103 @@ void YLDataBase::remOneMember(uint32_t idx)
 
     QSqlQuery query;
     query.exec(sql);
+}
+
+
+QVector<YLGroupMember> YLDataBase::getMemberByGroupId(uint32_t groupId)
+{
+    QString sql = "SELECT * FROM yl_group_member WHERE group_id = " + QString::number(groupId);
+    QSqlQuery query;
+    query.exec(sql);
+
+    QVector<YLGroupMember> vec;
+
+    while (query.next()) {
+        YLGroupMember member;
+        member.setGroupId(groupId);
+        member.setMemberId(query.value("member_id").toUInt());
+        member.setLastChatTime(query.value("last_chat_time").toUInt());
+        member.setGroupCard(query.value("group_card").toString());
+        member.setMemberType(query.value("type").toUInt());
+        member.setMemberNick(query.value("member_nick").toString());
+        member.setMemberHeader(query.value("member_header").toString());
+
+        vec.push_back(member);
+    }
+
+    return vec;
+}
+
+
+void YLDataBase::addOneGroupMessage(uint32_t groupId, uint32_t senderId, uint32_t msg_id,
+                        const QString &content, uint32_t created, uint32_t type)
+{
+    QString sql = "INSERT INTO yl_group_message (group_id, sender_id, msg_id, content"
+                  ", created, type) VALUES (?, ?, ?, ?, ?, ?)";
+
+    QSqlQuery query;
+    if (query.prepare(sql))
+    {
+        query.addBindValue(groupId);
+        query.addBindValue(senderId);
+        query.addBindValue(msg_id);
+        query.addBindValue(content);
+        query.addBindValue(created);
+        query.addBindValue(type);
+    }
+
+    query.exec();
+}
+
+uint32_t YLDataBase::getGroupMsgIdByGroupId(uint32_t groupId)
+{
+    QString sql = "SELECT msg_id FROM yl_group_message WHERE group_id = " +
+                   QString::number(groupId) + " ORDER BY msg_id DESC LIMIT 1";
+
+    uint32_t msgId = 0;
+
+    QSqlQuery query;
+    if (query.exec(sql))
+    {
+        if (query.next())
+        {
+            msgId = query.value("msg_id").toUInt();
+        }
+    }
+
+    return msgId;
+}
+
+
+QVector<QPair<uint32_t, YLMessage>> YLDataBase::getRecentGroupMsgByGroupId(uint32_t groupid)
+{
+    QVector<QPair<uint32_t, YLMessage>> vec;
+
+    uint32_t currentTime = QDateTime::currentDateTime().toTime_t();
+    uint32_t oneHourAgo  = /*currentTime - 3600*/0;
+
+
+    QString sql = QString("SELECT sender_id, msg_id, content, type, created "
+                          "FROM yl_group_message "
+                          "WHERE group_id = %1 AND created >= %2;").arg(groupid).arg(oneHourAgo);
+    qDebug() << sql;
+    QSqlQuery query;
+    if (query.exec(sql))
+    {
+        while (query.next())
+        {
+            QPair<uint32_t, YLMessage> pair;
+            pair.first = query.value("sender_id").toUInt();
+
+            pair.second.setSenderId(query.value("sender_id").toUInt());
+            pair.second.setMessageId(query.value("msg_id").toUInt());
+            pair.second.setMsgContent(query.value("content").toString());
+            pair.second.setMessageType((base::MessageType)query.value("type").toUInt());
+            pair.second.setCreateTime(query.value("created").toUInt());
+
+            vec.push_back(pair);
+        }
+    }
+
+    return vec;
 }

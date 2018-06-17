@@ -23,7 +23,9 @@ YLSession &YLSession::operator =(const YLSession &session)
 
 bool YLSession::operator ==(const YLSession &session) const
 {
-    if (m_session_id == session.getSessionId() && m_other_id == session.getOtherId())
+    if (m_session_id == session.getSessionId() &&
+            m_other_id == session.getOtherId() &&
+            m_session_type == session.getSessionType())
         return true;
     else
         return false;

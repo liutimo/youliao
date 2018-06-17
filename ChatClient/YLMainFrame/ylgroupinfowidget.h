@@ -66,7 +66,7 @@ private:
 
     //right1 首 页
     QPushButton *m_add_photo;
-    QLabel *m_photo;
+    YLHeadFrame *m_photo;
     QLabel *m_group_intro;
     QLabel *m_label_group_intro;
     QLabel *m_label_manager;

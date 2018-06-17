@@ -113,6 +113,12 @@ message DeleteFriendRequest
     uint32 friend_id = 2;
 }
 
+message DeleteFriendRespone
+{
+    uint32 user_id = 1;
+    uint32 friend_id = 2;
+}
+
 message ModifyFriendRemarkRequest
 {
     uint32 user_id = 1;
@@ -152,7 +158,6 @@ message AddFriendRespone
     uint32 result_id = 3;   //1 同意 2 拒绝 3 忽略
     uint32 group_id = 4;
     string remark = 5;
-
 }
 
 message GetAddRequestHistoryRequest

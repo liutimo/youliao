@@ -1,15 +1,9 @@
 #include <QApplication>
-#include <QDebug>
-#include <QThread>
 #include "YLLoginPanel/ylloginpanel.h"
 #include "signalforward.h"
-#include "YLDataBase/yldatabase.h"
 #include "YLFileTransfer/ylfiletransferreceiver.h"
 #include "YLFileTransfer/yltransferfile.h"
-#include "YLChatWidget/ylsinglechatwidget.h"
-#include "YLCommonControl/ylrecordaudiowidget.h"
-#include "YLLoginPanel/ylregisterwidget.h"
-#include <QMenu>
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);

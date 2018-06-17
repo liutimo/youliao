@@ -1,12 +1,15 @@
 #include "ylheadframe.h"
+#include "globaldata.h"
 #include <QPainter>
 #include <QToolButton>
 #include <QMenu>
 #include <QDebug>
+#include <QMouseEvent>
 YLHeadFrame::YLHeadFrame(QWidget *parent) : QLabel(parent), m_online(false)
 {
     resize(120, 120);
     m_http = new HttpHelper(this);
+    setStyleSheet("background:transparent;");
     connect(m_http, &HttpHelper::downloadFinshed, this, [this](){
         setHeadFromLocal(m_http->getFilename());
     });
@@ -19,8 +22,9 @@ void YLHeadFrame::setHeadFromLocal(const QString &path, bool online)
     update();
 }
 
-void YLHeadFrame::setHeadFromUrl(const QUrl &url)
+void YLHeadFrame::setHeadFromUrl(const QUrl &url, bool online)
 {
+    m_online = online;
     url_ = url;
     if (url_.isValid())
         m_http->download(url_.toString());
@@ -53,5 +57,10 @@ void YLHeadFrame::paintEvent(QPaintEvent *e)
 }
 
 
+void YLHeadFrame::mousePressEvent(QMouseEvent *e)
+{
+    if (e->button() == Qt::LeftButton)
+        emit clicked();
+}
 
 

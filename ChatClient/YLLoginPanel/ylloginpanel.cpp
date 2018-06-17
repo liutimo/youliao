@@ -43,8 +43,9 @@ YLLoginPanel::YLLoginPanel(QWidget *parent) : YLBasicWidget(parent), m_connected
         else
         {
             YLMessageBox *message = new YLMessageBox(BUTTON_OK,this);
-            message->setTitle("网络错误");
-            message->setToolTip("无法连接登录服务器");
+            message->setWidgetTitle("提示");
+            message->setIcon(":/res/MessageBox/sysmessagebox_errorFile.png");
+            message->setToolTip("账号不存在或密码错误");
             message->exec();
         }
     }, Qt::QueuedConnection);
@@ -75,6 +76,17 @@ void YLLoginPanel::init()
     lineedit_useraccount_->setPlaceholderText("输入账号");
     lineedit_useraccount_->setObjectName("lineedit_useraccount_");
     lineedit_useraccount_->setStyleSheet(qss_useraccount_);
+    connect(lineedit_useraccount_, &QLineEdit::textChanged, this, [this](){
+        YLLocalSettings *settings =  YLLocalSettings::instance();
+        QString headerPath = settings->getValue(lineedit_useraccount_->text()).toString();
+        if (!headerPath.isEmpty())
+            headerPath.remove("file://");
+        else
+            headerPath = ":/res/qq.png";
+
+        if (!headerPath.isEmpty())
+            head_frame_->setHeadFromLocal(headerPath);
+    });
 
     lineedit_passwd_      = new QLineEdit(this);
     lineedit_passwd_->setPlaceholderText("输入密码");
@@ -210,7 +222,7 @@ void YLLoginPanel::connectToLoginServer()
        if (!m_connected)
        {
            YLMessageBox *message = new YLMessageBox(BUTTON_OK, this);
-           message->setTitle("网络错误");
+           message->setWidgetTitle("网络错误");
            message->setToolTip("无法连接登录服务器");
            message->exec();
        }

@@ -25,10 +25,10 @@ signals:
     void signleMessage(uint32_t senderId, const QString &content);
     void friendgroups(const group_map&);
     void friendGroup(uint32_t group_id, const QString &group_name);
-    void sessions(const QList<base::SessionInfo>&);
-    void newSession(uint32_t otherId, uint32_t sessionId);
+    void sessions();
+    void newSession();
     void searchResult(const QVector<YLFriend> friends);
-    void unReadMessage(uint32_t friendId, const QString &message);
+    void unReadMessage(uint32_t friendId, const QString &message, uint32_t type);
     void newAddRequest();
     void receiveNewMsg(uint32_t msgType, uint32_t fromId = 0);
     void newGroup(YLGroup group);
@@ -36,6 +36,13 @@ signals:
     void groupMembers();
     void searchGroupResult(const QVector<YLGroup> friends);
     void regiserStatus(uint32_t resultCode, QString account);
+    void userHeaderIconChanged();
+    void exitGroupResult(uint32_t groupId, uint32_t resultCode);
+    void modifyGroupHeader(uint32_t groupId, const QString &url);
+    void deleteFriend(uint32_t friendId);
+    void friendInformation(const base::UserInfo &);
+    void addFriendSuccess();
+
 private:
     void _HandleBasePdu(BasePdu *pdu);
     void _HandleUserLoginRespone(BasePdu *pdu);
@@ -44,6 +51,7 @@ private:
     void _HandleFriendGroupGetRespone(BasePdu *pdu);
     void _HandleFriendListGetRespone(BasePdu *pdu);
     void _HandleMessageData(BasePdu *pdu);
+    void _HandleOfflineMessageData(BasePdu *pdu);
     void _HandleFriendStatusChangeMessage(BasePdu *pdu);
     void _HandleFriendSignatureChanged(BasePdu *pdu);
     void _HandleAddFriendGroupRespone(BasePdu *pdu);
@@ -61,7 +69,31 @@ private:
     void _HandleVerifyNotify(BasePdu *pdu);
     void _handleSendFileRespone(BasePdu *pdu);
     void _HandleFileNotify(BasePdu *pdu);
+    void _HandleModifyUserIconRespone(BasePdu *pdu);
 
+    //group
+    void _HandleGetLatestGroupMsgIdRespone(BasePdu *pdu);
+    void _HandleExitGroupRespone(BasePdu *pdu);
+    void _HandleModifyGroupIconRespone(BasePdu *pdu);
+    void _HandleSetGroupManagerRespone(BasePdu *pdu);
+    void _HandleKickOutGroupMemberRespone(BasePdu *pdu);
+    void _HandleGroupAddRequestHandleRespone(BasePdu *pdu);
+    void _HandleUpdateGroupListRespone(BasePdu *pdu);
+
+
+    //验证信息
+    //[1]群组验证
+    void _HandleGroupVerifyNotify(BasePdu *pdu);
+
+    //好友列表
+    void _HandleDeleteFriendRespone(BasePdu *pdu);
+    void _HandleAddFriendRespone(BasePdu *pdu);
+
+    //好友信息
+    void _HandleFriendInfomation(BasePdu *pdu);
+
+    //好友信息更改
+    void _HandleUserInformationChange(BasePdu *pdu);
 private:
     explicit PduHandler(QObject *parent = nullptr);
 

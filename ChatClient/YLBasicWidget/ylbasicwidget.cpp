@@ -23,13 +23,14 @@ void YLBasicWidget::init()
     close_button_->setTabletTracking(true);
     connect(close_button_, &QPushButton::clicked, this, &YLBasicWidget::on_close);
 
+    m_widget_icon = new QLabel(this);
+    m_widget_icon->setFixedSize(14, 16);
+    m_widget_icon->move(5, 9);
 
     m_title_label = new QLabel(this);
-    m_title_label->setStyleSheet("font:16px;");
-    m_title_label->move(5, 5);
-
-    m_widget_icon = new QLabel(this);
-    m_widget_icon->setFixedSize(28, 32);
+    m_title_label->setStyleSheet("font:13px; color:white");
+    m_title_label->setFixedHeight(22);
+    m_title_label->move(24, 5);
 }
 
 void YLBasicWidget::setWidgetDraged(bool flag)
@@ -43,10 +44,11 @@ void YLBasicWidget::setWidgetTitle(const QString &title)
 }
 
 
+
 void YLBasicWidget::setWidgetIcon(const QString fileName)
 {
     m_has_icon = true;
-    m_widget_icon->setPixmap(QPixmap(fileName).scaled(QSize(28, 32), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+    m_widget_icon->setPixmap(QPixmap(fileName).scaled(QSize(17, 20), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
 }
 
 void YLBasicWidget::resizeEvent(QResizeEvent *event)
@@ -58,8 +60,8 @@ void YLBasicWidget::resizeEvent(QResizeEvent *event)
     }
     else
     {
-        m_widget_icon->move(5, 5);
-        m_title_label->move(37, 5);
+        m_widget_icon->move(5, 9);
+        m_title_label->move(24, 5);
     }
     QWidget::resizeEvent(event);
 }

@@ -18,10 +18,14 @@ public:
     explicit YLHeadFrame(QWidget *parent = nullptr);
 
     void setHeadFromLocal(const QString &path, bool online = true);
-    void setHeadFromUrl(const QUrl &url);
+    void setHeadFromUrl(const QUrl &url, bool online = true);
 
 protected:
     void paintEvent(QPaintEvent *e);
+    void mousePressEvent(QMouseEvent *e);
+
+signals:
+    void clicked();
 
 private:
 

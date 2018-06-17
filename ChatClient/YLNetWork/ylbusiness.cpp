@@ -154,6 +154,34 @@ void YLBusiness::sendAudioMessage(uint32_t senderId, uint32_t receiverId, const 
     GlobalData::setLatestMsgId(receiverId, messageData.msg_id() + 1);
 }
 
+void YLBusiness::sendMessageAck(uint32_t senderId, uint32_t receiverId, uint32_t msg_id)
+{
+    message::MessageDataAck ack;
+    ack.set_from_user_id(senderId);
+    ack.set_to_user_id(receiverId);
+    ack.set_msg_id(msg_id);
+
+    BasePdu *basePdu = new BasePdu;
+    basePdu->setSID(SID_MESSAGE);
+    basePdu->setCID(CID_MESSAGE_DATA_ACK);
+    basePdu->writeMessage(&ack);
+
+    PduSender::instance()->addMessage(basePdu);
+}
+
+void YLBusiness::getOfflineMessage()
+{
+    message::GetOfflineMessageRequest request;
+    request.set_user_id(GlobalData::getCurrLoginUserId());
+
+    BasePdu *basePdu = new BasePdu;
+    basePdu->setSID(SID_MESSAGE);
+    basePdu->setCID(CID_MESSAGE_GET_OFFLINE_MESSAGE_REQUEST);
+    basePdu->writeMessage(&request);
+
+    PduSender::instance()->addMessage(basePdu);
+}
+
 void YLBusiness::getLatestMsgId(uint32_t friendId)
 {
     message::LatestMsgIdRequest request;
@@ -170,14 +198,18 @@ void YLBusiness::getLatestMsgId(uint32_t friendId)
 
 void YLBusiness::sendGroupTextMessage(uint32_t groupId, uint32_t userId, const QString &message)
 {
+    uint32_t msgId = GlobalData::getGroupLatestMsgId(groupId);
+
     message::MessageData msg;
     msg.set_from_user_id(userId);
     msg.set_to_id(groupId);
-    msg.set_msg_id(GlobalData::getGroupLatestMsgId(groupId));
+    msg.set_msg_id(msgId);
     msg.set_create_time(QDateTime::currentDateTime().toTime_t());
     msg.set_message_type(base::MESSAGE_TYPE_GROUP_TEXT);
     msg.set_message_data(message.toStdString());
 //    YLDataBase::instance()->saveMessage(messageData, true);
+
+    GlobalData::setGroupLatestMsgId(groupId, ++msgId);
 
     BasePdu *basePdu = new BasePdu;
     basePdu->setSID(SID_MESSAGE);
@@ -378,6 +410,20 @@ void YLBusiness::topSession(uint32_t userId, uint32_t sessionId)
     PduSender::instance()->addMessage(basePdu);
 }
 
+void YLBusiness::createNewSession(uint32_t otherId, SessionType type)
+{
+    session::CreateNewSession request;
+    request.set_other_id(otherId);
+    request.set_user_id(GlobalData::getCurrLoginUserId());
+    request.set_session_type(type);
+
+    BasePdu *basePdu = new BasePdu;
+    basePdu->setSID(SID_SESSION);
+    basePdu->setCID(CID_SESSIONLIST_ADD_SESSION_REQUEST);
+    basePdu->writeMessage(&request);
+    PduSender::instance()->addMessage(basePdu);
+}
+
 void YLBusiness::getAllAddRequests()
 {
     friendlist::GetAddRequestHistoryRequest request;
@@ -480,6 +526,74 @@ void YLBusiness::addGroup(uint32_t groupId, const QString &verifyData)
     PduSender::instance()->addMessage(basePdu);
 }
 
+void YLBusiness::getLatestGroupMsgId(uint32_t groupId)
+{
+   group::GetLatestGroupMsgIdRequest request;
+   request.set_user_id(GlobalData::getCurrLoginUserId());
+   request.set_group_id(groupId);
+
+   BasePdu *basePdu = new BasePdu;
+   basePdu->setSID(SID_GROUP);
+   basePdu->setCID(CID_GROUP_GET_LATEST_MSG_ID_REQUEST);
+   basePdu->writeMessage(&request);
+   PduSender::instance()->addMessage(basePdu);
+}
+
+void YLBusiness::exitGroup(uint32_t groupId)
+{
+    group::ExitGroupRequest request;
+    request.set_user_id(GlobalData::getCurrLoginUserId());
+    request.set_group_id(groupId);
+
+    BasePdu *basePdu = new BasePdu;
+    basePdu->setSID(SID_GROUP);
+    basePdu->setCID(CID_GROUP_EXIT_GROUP_REQUEST);
+    basePdu->writeMessage(&request);
+    PduSender::instance()->addMessage(basePdu);
+}
+
+void YLBusiness::modifyGroupHeader(uint32_t groupId, const QString &url)
+{
+    group::ModifyGroupHeaderRequest request;
+    request.set_user_id(GlobalData::getCurrLoginUserId());
+    request.set_group_id(groupId);
+    request.set_header_url(url.toStdString());
+
+    BasePdu *basePdu = new BasePdu;
+    basePdu->setSID(SID_GROUP);
+    basePdu->setCID(CID_GROUP_MODIFY_HEADER_REQUEST);
+    basePdu->writeMessage(&request);
+    PduSender::instance()->addMessage(basePdu);
+}
+
+void YLBusiness::setGroupManager(uint32_t groupId, uint32_t memberId)
+{
+    group::SetGroupManagerRequest request;
+    request.set_user_id(GlobalData::getCurrLoginUserId());
+    request.set_group_id(groupId);
+    request.set_member_id(memberId);
+
+    BasePdu *basePdu = new BasePdu;
+    basePdu->setSID(SID_GROUP);
+    basePdu->setCID(CID_GROUP_SET_MANAGER_REQUEST);
+    basePdu->writeMessage(&request);
+    PduSender::instance()->addMessage(basePdu);
+}
+
+void YLBusiness::kickOutGroupMember(uint32_t groupId, uint32_t memberId)
+{
+    group::KickOutMemberRequest request;
+    request.set_user_id(GlobalData::getCurrLoginUserId());
+    request.set_group_id(groupId);
+    request.set_member_id(memberId);
+
+    BasePdu *basePdu = new BasePdu;
+    basePdu->setSID(SID_GROUP);
+    basePdu->setCID(CID_GROUP_KICK_OUT_REQUEST);
+    basePdu->writeMessage(&request);
+    PduSender::instance()->addMessage(basePdu);
+}
+
 void YLBusiness::sendFileRequest(uint32_t friId, const QString &fileName, uint32_t fileSize, bool isOnline)
 {
     file::SendFileRequest request;
@@ -495,6 +609,66 @@ void YLBusiness::sendFileRequest(uint32_t friId, const QString &fileName, uint32
     BasePdu *basePdu = new BasePdu;
     basePdu->setSID(SID_FILE);
     basePdu->setCID(CID_FILE_REQUEST);
+    basePdu->writeMessage(&request);
+    PduSender::instance()->addMessage(basePdu);
+}
+
+void YLBusiness::modifyInformation(const UserInfo &userInfo, bool flag)
+{
+    other::ModifyInformationRequest request;
+    request.set_user_id(GlobalData::getCurrLoginUserId());
+    request.set_user_sign_changed(flag);
+
+    UserInfo *info = new UserInfo;
+    *info = userInfo;
+
+    request.set_allocated_user_info(info);
+
+    BasePdu *basePdu = new BasePdu;
+    basePdu->setSID(SID_OTHER);
+    basePdu->setCID(CID_OTHER_MODIFY_INFORMATION_REQUEST);
+    basePdu->writeMessage(&request);
+    PduSender::instance()->addMessage(basePdu);
+}
+
+void YLBusiness::modifyUserIcon(const QString &url)
+{
+    other::ModifyUserImageRequest request;
+    request.set_user_id(GlobalData::getCurrLoginUserId());
+    request.set_icon_url(url.toStdString());
+
+    BasePdu *basePdu = new BasePdu;
+    basePdu->setSID(SID_OTHER);
+    basePdu->setCID(CID_OTHER_MODIFY_USER_HEADER_REQUEST);
+    basePdu->writeMessage(&request);
+    PduSender::instance()->addMessage(basePdu);
+}
+
+void YLBusiness::getFriendInformation(uint32_t friendId)
+{
+    other::GetFriendInformationRequest request;
+    request.set_user_id(GlobalData::getCurrLoginUserId());
+    request.set_friend_id(friendId);
+
+    BasePdu *basePdu = new BasePdu;
+    basePdu->setSID(SID_OTHER);
+    basePdu->setCID(CID_OTHER_GET_FRIEND_INFORMATION_REQUEST);
+    basePdu->writeMessage(&request);
+    PduSender::instance()->addMessage(basePdu);
+}
+
+
+//群验证消息
+void YLBusiness::sendGroupVerifyResult(uint32_t groupId, uint32_t requestUserId, GroupVerifyResult result)
+{
+    group::VerifyHandlerResult request;
+    request.set_handle_user_id(GlobalData::getCurrLoginUserId());
+    request.set_group_id(groupId);
+    request.set_request_user_id(requestUserId);
+    request.set_verify_result(result);
+
+    BasePdu *basePdu = new BasePdu;basePdu->setSID(SID_GROUP);
+    basePdu->setCID(CID_GROUP_VERIFY_RESULT);
     basePdu->writeMessage(&request);
     PduSender::instance()->addMessage(basePdu);
 }

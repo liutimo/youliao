@@ -17,4 +17,4 @@ LINK_DIRECTORIES(../BaseUtil ./)
 find_package(Protobuf REQUIRED)
 add_executable(DBServer ${SOURCE_FILES})
 
-TARGET_LINK_LIBRARIES(DBServer BaseUtil mysqlclient pthread log4cxx protobuf)
+TARGET_LINK_LIBRARIES(DBServer BaseUtil mysqlclient pthread log4cxx protobuf curl)

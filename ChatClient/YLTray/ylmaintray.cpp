@@ -39,7 +39,10 @@ YLMainTray::YLMainTray(QObject *parent) : QSystemTrayIcon(parent)
     connect(this, &YLMainTray::activated, this, [this](QSystemTrayIcon::ActivationReason reason){
         if (reason == QSystemTrayIcon::Trigger)
         {
-            if(GlobalData::getMessages().size() > 0 || GlobalData::getAddRequests().size() > 0)
+            if (GlobalData::getMessages().size() > 0
+                || GlobalData::getAddRequests().size() > 0
+                || GlobalData::getGroupMessages().size() > 0
+                || GlobalData::getGroupAddRequests().size() > 0)
             {
                 auto w = QApplication::desktop();
                 YLMessageTip *ww = YLMessageTip::instance();
@@ -86,20 +89,41 @@ void YLMainTray::initMenu()
 
 void YLMainTray::receiveMessage(const message::MessageData &content)
 {
-    uint32_t friendId = content.from_user_id();
+    //需要区分消息类型
+    base::MessageType msgType = content.message_type();
 
     YLMessage msg;
-    msg.setFriendId(friendId);
+    msg.setSenderId(content.from_user_id());
     msg.setMessageId(content.msg_id());
     msg.setMsgContent(content.message_data().c_str());
     msg.setCreateTime(content.create_time());
+    msg.setMessageType(msgType);
+    msg.setReceiverId(content.to_id());
 
-    GlobalData::addMessage(friendId, msg);
+    if (msgType == base::MESSAGE_TYPE_GROUP_TEXT || msgType == base::MESSAGE_TYPE_GROUP_AUDIO)
+    {
+        //群组消息
+        uint32_t groupId = content.to_id();
+        msg.setSenderId(content.to_user_id());
+        msg.setGroupId(groupId);
 
-    m_icon_path = GlobalData::getFriendById(friendId).friendImageName();
-    m_timer->start(300);
+        //获取群组头像
+        m_icon_path = GlobalData::getGroupByGroupId(groupId).getGroupImage();
+
+        //放入内存
+        GlobalData::addGroupMessage(groupId, msg);
+    }
+    else if (msgType == base::MESSAGE_TYPE_SINGLE_AUDIO || msgType == base::MESSAGE_TYPE_SINGLE_TEXT)
+    {
+        //个人消息
+        uint32_t friendId = content.from_user_id();
+
+        //放入内存
+        GlobalData::addMessage(friendId, msg);
+
+        m_icon_path = GlobalData::getFriendById(friendId).friendImageName();
+    }
 }
-
 
 void YLMainTray::newAddRequest()
 {

@@ -4,6 +4,7 @@
 
 #include <network/ServerInfo.h>
 #include <pdu/protobuf/youliao.message.pb.h>
+#include <pdu/protobuf/youliao.other.pb.h>
 #include "DBServConn.h"
 #include "RouteConn.h"
 #include "ClientConn.h"
@@ -178,7 +179,44 @@ void DBServConn::handlePdu(BasePdu *pdu)
         case base::CID_GROUP_VERIFY_NOTIFY:
             _HandleVerifyNotify(pdu);
             break;
+        case base::CID_MESSAGE_GET_OFFLINE_MESSAGE_RESPONE:
+            _HandleOfflineMessageRespone(pdu);
+            break;
+        case base::CID_OTHER_MODIFY_USER_HEADER_RESPONE:
+            _HandleModifyIconRespone(pdu);
+            break;
+        case base::CID_GROUP_GET_LATEST_MSG_ID_RESPONE:
+            _HandleGetLatestGroupMsgIdRespone(pdu);
+            break;
+        case base::CID_GROUP_EXIT_GROUP_RESPONE:
+            _HandleExitGroupRespone(pdu);
+            break;
+        case base::CID_GROUP_MODIFY_HEADER_RESPONE:
+            _HandleModifyGroupHeaderRespone(pdu);
+            break;
+        case base::CID_GROUP_SET_MANAGER_RESPONE:
+            _HandleSetManagerRespone(pdu);
+            break;
+        case base::CID_GROUP_KICK_OUT_RESPONE:
+            _HandleKcikOutMemberRespone(pdu);
+            break;
+        case base::CID_GROUP_ADD_REQUEST_HANDLE_RESULT:
+            _HandleGroupAddRequestRespone(pdu);
+            break;
+        case base::CID_FRIENDLIST_DELETE_FRIEND_RESPONE:
+            _HandleDeleteFriendRespone(pdu);
+            break;
+        case base::CID_OTHER_GFT_FRIEND_INFORMATION_RESPONE:
+            _HandleGetFriendInformationRespone(pdu);
+            break;
+        case base::CID_FRIENDLIST_ADD_FRIEND_RESPONE:
+            _HandleAddFriendRespone(pdu);
+            break;
+        case base::CID_OTHER_MODIFY_INFORMATION_RESPONE:
+            _HandleModfiyInformationRespone(pdu);
+            break;
         default:
+
             break;
     }
 
@@ -433,7 +471,6 @@ void DBServConn::_HandleSearchFriendRespone(BasePdu *basePdu)
     }
 }
 
-
 void DBServConn::_HandleGetLatestMsgIdRespone(BasePdu *basePdu)
 {
     message::LatestMsgIdRespone respone;
@@ -554,12 +591,32 @@ void DBServConn::_HandleAddGroupRespone(BasePdu *basePdu)
     respone.ParseFromString(basePdu->getMessage());
 
     uint32_t userId = respone.user_id();
+    uint32_t resultCode = respone.result_coid();
+
     auto user = UserManager::instance()->getUser(userId);
     if (user)
     {
         auto conn = user->getConn();
         if (conn)
             sendMessage(conn, respone, base::SID_GROUP, base::CID_GROUP_ADD_GROUP_RESPONE);
+    }
+
+    //加入成功，广播给所有成员加入消息
+    if (resultCode == 0)
+    {
+        std::string newMessage = "大家好！！！";
+        uint32_t created  = (uint32_t)time(nullptr);
+        //广播消息
+        message::MessageData msg;
+        msg.set_from_user_id(userId);
+        msg.set_to_id(respone.group_info().group_id());
+        msg.set_message_data(newMessage);
+        msg.set_create_time(created);
+        msg.set_message_type(base::MESSAGE_TYPE_GROUP_TEXT);
+
+        auto conn = get_route_server_conn();
+        if (conn)
+            sendMessage(conn, msg, base::SID_SERVER, base::CID_SERVER_FORWARD_GROUP_MESSAGE);
     }
 }
 
@@ -572,7 +629,8 @@ void DBServConn::_HandleVerifyNotify(BasePdu *basePdu)
     group::GroupVerifyNotify groupVerifyNotify = groupVerifyNotifyUsers.verify_notify();
 
     std::list<uint32_t> routeUser; //需要转发到路由服务器  可能是没在线也可能时未在当前服务器登录
-    for (int i = 0; i < groupVerifyNotifyUsers.notify_users_size(); ++i) {
+    for (int i = 0; i < groupVerifyNotifyUsers.notify_users_size(); ++i)
+    {
         uint32_t userId = groupVerifyNotifyUsers.notify_users(i);
         auto user = UserManager::instance()->getUser(userId);
         if (!user)
@@ -591,4 +649,256 @@ void DBServConn::_HandleVerifyNotify(BasePdu *basePdu)
         //直接发送
         sendMessage(conn, groupVerifyNotify, base::SID_GROUP, base::CID_GROUP_VERIFY_NOTIFY);
     }
+}
+
+
+void DBServConn::_HandleOfflineMessageRespone(BasePdu *basePdu)
+{
+    message::GetOfflineMessageRespone respone;
+    respone.ParseFromString(basePdu->getMessage());
+
+    uint32_t userId = respone.user_id();
+
+    auto user = UserManager::instance()->getUser(userId);
+    if (user)
+    {
+        auto conn = user->getConn();
+        if (conn)
+            sendMessage(conn, respone, base::SID_MESSAGE, base::CID_MESSAGE_GET_OFFLINE_MESSAGE_RESPONE);
+    }
+}
+
+void DBServConn::_HandleModifyIconRespone(BasePdu *basePdu)
+{
+    other::ModifyUserImageRespone respone;
+    respone.ParseFromString(basePdu->getMessage());
+
+    uint32_t userId = respone.user_id();
+
+    auto user = UserManager::instance()->getUser(userId);
+    if (user)
+    {
+        auto conn = user->getConn();
+        if (conn)
+            sendMessage(conn, respone, base::SID_OTHER, base::CID_OTHER_MODIFY_USER_HEADER_RESPONE);
+    }
+
+
+}
+
+
+void DBServConn::_HandleGetLatestGroupMsgIdRespone(BasePdu *basePdu)
+{
+    group::GetLatestGroupMsgIdRespone respone;
+    respone.ParseFromString(basePdu->getMessage());
+
+    uint32_t userId = respone.user_id();
+
+    auto user = UserManager::instance()->getUser(userId);
+    if (user)
+    {
+        auto conn = user->getConn();
+        if (conn)
+            sendMessage(conn, respone, base::SID_OTHER, base::CID_GROUP_GET_LATEST_MSG_ID_RESPONE);
+    }
+}
+
+
+void DBServConn::_HandleExitGroupRespone(BasePdu *basePdu)
+{
+    group::ExitGroupRespone respone;
+    respone.ParseFromString(basePdu->getMessage());
+
+    uint32_t userId = respone.user_id();
+
+    auto user = UserManager::instance()->getUser(userId);
+    if (user)
+    {
+        auto conn = user->getConn();
+        if (conn)
+            sendMessage(conn, respone, base::SID_GROUP, base::CID_GROUP_EXIT_GROUP_RESPONE);
+    }
+}
+
+
+void DBServConn::_HandleModifyGroupHeaderRespone(BasePdu *basePdu)
+{
+    group::ModifyGroupHeaderRespone respone;
+    respone.ParseFromString(basePdu->getMessage());
+
+    uint32_t userId = respone.user_id();
+
+    auto user = UserManager::instance()->getUser(userId);
+    if (user)
+    {
+        auto conn = user->getConn();
+        if (conn)
+            sendMessage(conn, respone, base::SID_GROUP, base::CID_GROUP_MODIFY_HEADER_RESPONE);
+    }
+}
+
+void DBServConn::_HandleSetManagerRespone(BasePdu *basePdu)
+{
+    group::SetGroupManagerRespone respone;
+    respone.ParseFromString(basePdu->getMessage());
+
+    uint32_t userId = respone.user_id();
+
+    auto user = UserManager::instance()->getUser(userId);
+    if (user)
+    {
+        auto conn = user->getConn();
+        if (conn)
+            sendMessage(conn, respone, base::SID_GROUP, base::CID_GROUP_SET_MANAGER_RESPONE);
+    }
+
+}
+
+void DBServConn::_HandleKcikOutMemberRespone(BasePdu *basePdu)
+{
+    group::KickOutMemberRespone respone;
+    respone.ParseFromString(basePdu->getMessage());
+
+    uint32_t userId = respone.user_id();
+
+    auto user = UserManager::instance()->getUser(userId);
+    if (user)
+    {
+        auto conn = user->getConn();
+        if (conn)
+            sendMessage(conn, respone, base::SID_GROUP, base::CID_GROUP_KICK_OUT_RESPONE);
+    }
+}
+
+void DBServConn::_HandleGroupAddRequestRespone(BasePdu *basePdu)
+{
+    group::GroupAddRequestHandleResult handleResult;
+    handleResult.ParseFromString(basePdu->getMessage());
+
+    uint32_t userId = handleResult.user_id();
+    uint32_t groupId = handleResult.group_id();
+
+    auto user = UserManager::instance()->getUser(userId);
+    if (user)
+    {
+        auto conn = user->getConn();
+        if (conn)
+        {
+            sendMessage(conn, handleResult, base::SID_GROUP, base::CID_GROUP_ADD_REQUEST_HANDLE_RESULT);
+        }
+    }
+    else
+    {
+        //转发到路由服务器处理
+    }
+
+    //通知其他群成员新成员加入
+    group::UpdateGroupList request;
+    request.set_group_id(groupId);
+
+    auto routeConn = get_route_server_conn();
+    if (routeConn)
+        sendMessage(routeConn, request, base::SID_SERVER, base::CID_GROUP_UPDATE_GROUP_LIST);
+
+}
+
+void DBServConn::_HandleDeleteFriendRespone(BasePdu *basePdu)
+{
+    friendlist::DeleteFriendRespone respone;
+    respone.ParseFromString(basePdu->getMessage());
+
+    uint32_t userId = respone.user_id();
+
+    auto user = UserManager::instance()->getUser(userId);
+    if (user)
+    {
+        auto conn = user->getConn();
+        if (conn)
+        {
+            sendMessage(conn, respone, base::SID_FRIEND_LIST, base::CID_FRIENDLIST_DELETE_FRIEND_RESPONE);
+            return;
+        }
+    }
+
+    //转发消息路由器
+}
+
+void DBServConn::_HandleGetFriendInformationRespone(BasePdu *basePdu)
+{
+    other::GetFriendInformationRespone respone;
+    respone.ParseFromString(basePdu->getMessage());
+
+    uint32_t userId = respone.user_id();
+
+    auto user = UserManager::instance()->getUser(userId);
+    if (user)
+    {
+        auto conn = user->getConn();
+        if (conn)
+        {
+            sendMessage(conn, respone, base::SID_OTHER, base::CID_OTHER_GFT_FRIEND_INFORMATION_RESPONE);
+            return;
+        }
+    }
+}
+
+void DBServConn::_HandleAddFriendRespone(BasePdu *basePdu)
+{
+    friendlist::AddFriendRespone respone;
+    respone.ParseFromString(basePdu->getMessage());
+
+    uint32_t userId = respone.user_id();
+
+    uint32_t friendId = respone.friend_id();
+
+    //userID对应的用户一定时在这消息服务器登录的.
+    auto user = UserManager::instance()->getUser(userId);
+    if (user)
+    {
+        auto conn = user->getConn();
+        if (conn)
+        {
+            sendMessage(conn, respone, base::SID_FRIEND_LIST, base::CID_FRIENDLIST_ADD_FRIEND_RESPONE);
+        }
+    }
+
+    user = UserManager::instance()->getUser(friendId);
+    if (user)
+    {
+        auto conn = user->getConn();
+        if (conn)
+        {
+            sendMessage(conn, respone, base::SID_FRIEND_LIST, base::CID_FRIENDLIST_ADD_FRIEND_RESPONE);
+            return;
+        }
+    }
+
+    //转发消息路由器
+}
+
+
+void DBServConn::_HandleModfiyInformationRespone(BasePdu *basePdu)
+{
+    other::ModifyInformationRespone respone;
+    respone.ParseFromString(basePdu->getMessage());
+
+    uint32_t userId = respone.user_id();
+
+    auto user = UserManager::instance()->getUser(userId);
+    if (user)
+    {
+        auto conn = user->getConn();
+        if (conn) {
+            sendMessage(conn, respone, base::SID_OTHER, base::CID_OTHER_MODIFY_INFORMATION_RESPONE);
+        }
+    }
+
+    //通知好友信息更改
+    other::FriendInformationChange request;
+    request.set_user_id(userId);
+
+    auto routeConn = get_route_server_conn();
+    if (routeConn)
+        sendMessage(routeConn, request, base::SID_SERVER, base::CID_OTHER_FRIEND_INFORMATION_CHANGE_NOTIFY);
+
 }

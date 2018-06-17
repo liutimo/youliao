@@ -8,6 +8,7 @@
 #include <QProgressBar>
 #include <QDateTime>
 #include <QTimer>
+#include <sys/time.h>
 #include "YLFileTransfer/ylfiletransfermanager.h"
 #include "YLFileTransfer/ylfiletransferthread.h"
 YLTransferFileTaskListWidget::YLTransferFileTaskListWidget(QWidget *parent) : QWidget(parent), m_count(0)
@@ -160,7 +161,40 @@ YLSendFileWidget::YLSendFileWidget(QWidget *parent) : QWidget(parent)
     setFixedSize(300, 75);
     init();
 
-    m_start_time = QDateTime::currentDateTime().toTime_t();
+//    struct timeval tv;
+//    gettimeofday(&tv,NULL);
+//    m_start_time = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+    m_timer = new QTimer(this);
+    m_timer->start(500);
+    connect(m_timer, &QTimer::timeout, this, [this](){
+        YLTransferFileEntity entity;
+        if (!YLTransferFileEntityManager::instance()->getFileInfoByTaskId(m_task_id.toStdString(), entity))
+            return;
+
+        uint32_t progress = entity.m_progress;
+
+        //0.5s内接收
+        double size = (progress - m_last_time_progress);
+        m_last_time_progress = progress;
+        size /= 0.5;
+
+        QString s;
+        if (size < 1024)
+        {
+            s = QString::number(size) + "Bytes";
+        }
+        else if (size > 1024 && size < 1024 * 1024)
+        {
+            s = QString::number(size / 1024.0) + "KB";
+        }
+        else if (size > 1024 * 1024 && size < 1024 * 1024 * 1024)
+        {
+            s = QString::number(size / 1024.0 / 1024.0) + "MB";
+        }
+
+        m_speed->setText(s + "/s");
+    });
+
 }
 
 
@@ -254,25 +288,27 @@ void YLSendFileWidget::updateProgressBar(uint32_t progress)
 {
     m_transfer_progress->setValue(progress);
 
-    uint32_t currentTime = QDateTime::currentDateTime().toTime_t();
+//    struct timeval tv;
+//    gettimeofday(&tv,NULL);
+//    long long  currentTime = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+//    double speed = progress / ((currentTime - m_start_time) / 1000.0);
+//    QString s;
+//    if (speed < 1024)
+//    {
+//        s = QString::number(speed) + "Bytes";
+//    }
+//    else if (speed > 1024 && speed < 1024 * 1024)
+//    {
+//        s = QString::number(speed / 1024.0) + "KB";
+//    }
+//    else if (speed > 1024 * 1024 && speed < 1024 * 1024 * 1024)
+//    {
+//        s = QString::number(speed / 1024.0 / 1024.0) + "MB";
+//    }
 
-    double speed = progress / ((currentTime - m_start_time) / 1000.0);
-    QString s;
-    if (speed < 1024)
-    {
-        s = QString::number(speed) + "Bytes";
-    }
-    else if (speed > 1024 && speed < 1024 * 1024)
-    {
-        s = QString::number(speed / 1024.0) + "KB";
-    }
-    else if (speed > 1024 * 1024 && speed < 1024 * 1024 * 1024)
-    {
-        s = QString::number(speed / 1024.0 / 1024.0) + "MB";
-    }
-
-    m_speed->setText(s + "/s");
+//    m_speed->setText(s + "/s");
 }
+
 
 
 
@@ -316,7 +352,7 @@ void YLReceiveFileWidget::init()
         m_receive->hide();
         m_save_as->hide();
         YLTransferFileEntityManager::instance()->acceptFileTransfer(m_task_id.toStdString());
-        m_timer->start(1000);
+        m_timer->start(500);
     });
 
     m_save_as = new QPushButton("另存为", this);

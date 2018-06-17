@@ -19,7 +19,7 @@
 #include "YLFileTransfer/yltransferfile.h"
 #include "YLFileTransfer/ylfiletransfermanager.h"
 #include "YLTray/ylmaintray.h"
-
+#include "ylbusiness.h"
 //全局PDU list
 //主线程产生的所有pdu都会放入这个list中
 //子线程循环冲list读数据发送到消息服务器
@@ -40,6 +40,7 @@ PduHandler::PduHandler(QObject *parent) : QThread(parent)
     qRegisterMetaType<QVector<YLFriend>>("QVector<YLFriend>");
     qRegisterMetaType<YLGroup>("YLGroup");
     qRegisterMetaType<QVector<YLGroup>>("QVector<YLGroup>");
+    qRegisterMetaType<base::UserInfo>("base::UserInfo");
 }
 
 PduHandler* PduHandler::instance()
@@ -92,6 +93,9 @@ void PduHandler::_HandleBasePdu(BasePdu *pdu)
     case base::CID_MESSAGE_DATA:
         _HandleMessageData(pdu);
         break;
+    case base::CID_MESSAGE_GET_OFFLINE_MESSAGE_RESPONE:
+        _HandleOfflineMessageData(pdu);
+        break;
     case base::CID_FRIENDLIST_FRIEND_STATUS_CHANGE:
         _HandleFriendStatusChangeMessage(pdu);
         break;
@@ -142,6 +146,42 @@ void PduHandler::_HandleBasePdu(BasePdu *pdu)
         break;
     case base::CID_FILE_NOTIFY:
         _HandleFileNotify(pdu);
+        break;
+    case base::CID_OTHER_MODIFY_USER_HEADER_RESPONE:
+        _HandleModifyUserIconRespone(pdu);
+        break;
+    case base::CID_GROUP_GET_LATEST_MSG_ID_RESPONE:
+        _HandleGetLatestGroupMsgIdRespone(pdu);
+        break;
+    case base::CID_GROUP_EXIT_GROUP_RESPONE:
+        _HandleExitGroupRespone(pdu);
+        break;
+    case base::CID_GROUP_MODIFY_HEADER_RESPONE:
+        _HandleModifyGroupIconRespone(pdu);
+        break;
+    case base::CID_GROUP_SET_MANAGER_RESPONE:
+        _HandleSetGroupManagerRespone(pdu);
+        break;
+    case base::CID_GROUP_KICK_OUT_RESPONE:
+        _HandleKickOutGroupMemberRespone(pdu);
+        break;
+    case base::CID_GROUP_ADD_REQUEST_HANDLE_RESULT:
+        _HandleGroupAddRequestHandleRespone(pdu);
+        break;
+    case base::CID_FRIENDLIST_DELETE_FRIEND_RESPONE:
+        _HandleDeleteFriendRespone(pdu);
+        break;
+    case base::CID_OTHER_GFT_FRIEND_INFORMATION_RESPONE:
+        _HandleFriendInfomation(pdu);
+        break;
+    case base::CID_FRIENDLIST_ADD_FRIEND_RESPONE:
+        _HandleAddFriendRespone(pdu);
+        break;
+    case base::CID_OTHER_FRIEND_INFORMATION_CHANGE_NOTIFY:
+        _HandleUserInformationChange(pdu);
+        break;
+    case base::CID_GROUP_UPDATE_GROUP_LIST:
+        _HandleUpdateGroupListRespone(pdu);
         break;
     default:
         std::cout << "CID" << pdu->getCID() << "  SID:" << pdu->getSID();
@@ -243,7 +283,6 @@ void PduHandler::_HandleMessageData(BasePdu *pdu)
     message::MessageData messageData;
     messageData.ParseFromString(pdu->getMessage());
 
-
     if (messageData.from_user_id() == GlobalData::getCurrLoginUserId())
         return;
     uint32_t senderId = messageData.from_user_id();
@@ -252,33 +291,56 @@ void PduHandler::_HandleMessageData(BasePdu *pdu)
     base::MessageType msgType = messageData.message_type();
     if (msgType == base::MESSAGE_TYPE_SINGLE_TEXT)
     {
-        //保存到树数据库
-        {
-            YLDataBase db;
-            db.saveMessage(messageData);
-        }
+        GlobalData::setLatestMsgId(senderId, messageData.msg_id() + 1);
+
         auto singleChatWidget = GlobalData::getSingleChatWidget(senderId);
         if (singleChatWidget)
+        {
+            //保存到数据库
+            {
+                YLDataBase db;
+                db.saveMessage(messageData);
+            }
             singleChatWidget->receiveMessage(senderId, msgContent);
+            //此情况标记为已读
+            YLBusiness::sendMessageAck(messageData.from_user_id(), messageData.to_id(), messageData.msg_id());
+        }
         else
         {
             YLMainTray::instance()->receiveMessage(messageData);
-            emit unReadMessage(senderId, msgContent);
+            emit unReadMessage(senderId, msgContent, 1);
         }
     }
     else if (msgType == base::MESSAGE_TYPE_GROUP_TEXT)
     {
+        //创建session
+        YLSession session = GlobalData::getSessionByGroupId(messageData.to_id());
+        if (session.getOtherId() != messageData.to_id())
+        {
+            //Session不存在,创建session
+            YLBusiness::createNewSession(messageData.to_id(), base::SESSION_TYPE_GROUP);
+        }
+
+        GlobalData::setGroupLatestMsgId(messageData.to_id(), messageData.msg_id() + 1);
         auto groupChatWidget = GlobalData::getGroupChatWidget(messageData.to_id());
         if (groupChatWidget)
+        {
             groupChatWidget->receiveMessage(senderId, msgContent);
+            //数据库操作
+            {
+                YLDataBase db;
+                db.addOneGroupMessage(messageData.to_id(), messageData.from_user_id(), messageData.msg_id(), messageData.message_data().c_str(), messageData.create_time());
+            }
+        }
         else
         {
             YLMainTray::instance()->receiveMessage(messageData);
-            emit unReadMessage(senderId, msgContent);
-        }
+            emit unReadMessage(messageData.to_id(), msgContent, 2);
+        }  
     }
     else if (msgType == base::MESSAGE_TYPE_SINGLE_AUDIO)
     {
+        GlobalData::setLatestMsgId(senderId, messageData.msg_id() + 1);
         //保存文件
         uint32_t time = QDateTime::currentDateTime().toTime_t();
         QString fileName = QString::number(time) + ".amr";
@@ -295,7 +357,7 @@ void PduHandler::_HandleMessageData(BasePdu *pdu)
         else
         {
             YLMainTray::instance()->receiveMessage(messageData);
-            emit unReadMessage(senderId, msgContent);
+            emit unReadMessage(senderId, msgContent, 1);
         }
     }
 
@@ -315,6 +377,62 @@ void PduHandler::_HandleMessageData(BasePdu *pdu)
     }
 }
 
+
+void PduHandler::_HandleOfflineMessageData(BasePdu *pdu)
+{
+    message::GetOfflineMessageRespone respone;
+    respone.ParseFromString(pdu->getMessage());
+
+    for (int i = 0; i < respone.msg_data_size(); ++i)
+    {
+        auto messageData = respone.msg_data(i);
+
+        if (messageData.from_user_id() == GlobalData::getCurrLoginUserId())
+            return;
+
+        uint32_t senderId = messageData.from_user_id();
+        QString msgContent = messageData.message_data().c_str();
+
+        base::MessageType msgType = messageData.message_type();
+        if (msgType == base::MESSAGE_TYPE_SINGLE_TEXT)
+        {
+            auto singleChatWidget = GlobalData::getSingleChatWidget(senderId);
+            if (singleChatWidget)
+            {
+                singleChatWidget->receiveMessage(senderId, msgContent);
+                //此情况标记为已读
+                YLBusiness::sendMessageAck(messageData.from_user_id(), messageData.to_id(), messageData.msg_id());
+            }
+            else
+            {
+                YLMainTray::instance()->receiveMessage(messageData);
+                emit unReadMessage(senderId, msgContent, 1);
+            }
+        }
+        else if (msgType == base::MESSAGE_TYPE_SINGLE_AUDIO)
+        {
+            //保存文件
+            uint32_t time = QDateTime::currentDateTime().toTime_t();
+            QString fileName = QString::number(time) + ".amr";
+            QFile file(fileName);
+            file.open(QIODevice::WriteOnly);
+            file.write(messageData.message_data().c_str(), messageData.message_data().length());
+            file.close();
+
+            GlobalData::addAudio(QString::number(senderId) + "_" + QString::number(messageData.msg_id()), fileName);
+
+            auto singleChatWidget = GlobalData::getSingleChatWidget(senderId);
+            if (singleChatWidget)
+                singleChatWidget->receiveAudioMessage(senderId, msgContent, messageData.msg_id(), messageData.audio_time());
+            else
+            {
+                YLMainTray::instance()->receiveMessage(messageData);
+                emit unReadMessage(senderId, msgContent, 1);
+            }
+        }
+        emit receiveNewMsg(YLSession::FRIEND, messageData.from_user_id());
+    }
+}
 
 void PduHandler::_HandleFriendStatusChangeMessage(BasePdu *pdu)
 {
@@ -356,17 +474,39 @@ void PduHandler::_HandleGetSessionsRespone(BasePdu *pdu)
     session::GetSessionReponse respone;
     respone.ParseFromString(pdu->getMessage());
 
-    QList<base::SessionInfo> sessionList;
+
+    QList<YLSession> list;
+    QList<YLSession> topSessionList;
 
     for(int i = 0; i < respone.sessions_size(); ++i)
     {
         base::SessionInfo si;
         si = respone.sessions(i);
-        GlobalData::setLatestMsgId(si.other_id(), si.latest_msg_id());
-        sessionList.push_back(si);
+
+        YLSession s;
+        s.setSessionId(si.session_id());
+        s.setOtherId(si.other_id());
+        s.setSessionLastChatMessage(si.last_message_data().c_str());
+        s.setSessionTop(si.session_top());
+        s.setSessionType(si.session_type());
+        s.setSessionLastChatTime(si.latest_msg_time());
+        list.push_back(s);
+
+        //对于好友类型,需要设置最新的消息ID
+        if (s.getSessionType() == base::SESSION_TYPE_SINGLE)
+            GlobalData::setLatestMsgId(si.other_id(), si.latest_msg_id());
+
+        if (s.sessionTop())
+            topSessionList.push_back(s);
+
     }
 
-    emit sessions(sessionList);
+    GlobalData::setSessions(list);
+    GlobalData::setTopSessions(topSessionList);
+
+    emit sessions();
+
+    YLBusiness::getOfflineMessage();
 }
 
 
@@ -375,10 +515,19 @@ void PduHandler::_HandleAddSessionRespone(BasePdu *pdu)
     session::NewSessionRespone respone;
     respone.ParseFromString(pdu->getMessage());
 
-    uint32_t otherId = respone.other_id();
-    uint32_t sessionId = respone.session_id();
+    const base::SessionInfo &s = respone.session();
 
-    emit newSession(otherId, sessionId);
+    YLSession session;
+    session.setSessionId(s.session_id());
+    session.setOtherId(s.other_id());
+    session.setSessionType(s.session_type());
+    session.setSessionLastChatTime(s.latest_msg_time());
+    session.setSessionLastChatMessage(s.last_message_data().c_str());
+    session.addUnReadMsgCount();
+
+    GlobalData::getSessions().push_front(session);
+
+    emit newSession();
 }
 
 
@@ -395,7 +544,6 @@ void PduHandler::_HandleSearchFriendRespone(BasePdu *pdu)
         YLFriend fri;
         fri.setFriendId(friendInfo.friend_id());
         fri.setFriendAccount(QString::number(friendInfo.friend_account()));
-        fri.setFriendSex(friendInfo.friend_sex());
         fri.setFriendImagePath(friendInfo.friend_header_url().c_str());
         fri.setFriendNickName(friendInfo.friend_nick().c_str());
         friends.push_back(fri);
@@ -428,7 +576,10 @@ void PduHandler::_HandleAddFriendRequest(BasePdu *pdu)
     addRequest.setValidateData(request.validatedata().c_str());
     GlobalData::setRequest(addRequest);
     emit newAddRequest();
-    qDebug() << "AddFriendRequest:" << request.user_id() << " " << request.validatedata().c_str();
+
+    QString msg =  QString(request.user_nick().c_str()) + QString("请求加好友");
+
+    emit unReadMessage(3, msg, 3);
 }
 
 
@@ -511,6 +662,10 @@ void PduHandler::_HandleGetGroupListRespone(BasePdu *pdu)
         group.setGroupImage(groupInfo.group_head().c_str());
         group.setCreateTime(groupInfo.group_created());
         group.setVerifyType(groupInfo.group_verify_type());
+        group.setLatestMsgId(groupInfo.group_latest_msg_id());
+
+        GlobalData::setGroupLatestMsgId(groupInfo.group_id(), groupInfo.group_latest_msg_id() + 1);
+
         for (int i = 0; i < groupInfo.members_size(); ++i)
             group.addMember(groupInfo.members(i));
 
@@ -606,7 +761,7 @@ void PduHandler::_HandleAddGroupRespone(BasePdu *pdu)
 
     uint32_t userId  = respone.user_id();
     uint32_t resCode = respone.result_coid();
-    if (resCode == 1)
+    if (resCode == 0)
     {
         base::GroupInfo groupInfo = respone.group_info();
 
@@ -629,6 +784,7 @@ void PduHandler::_HandleAddGroupRespone(BasePdu *pdu)
     }
 }
 
+//群组
 void PduHandler::_HandleVerifyNotify(BasePdu *pdu)
 {
     group::GroupVerifyNotify notify;
@@ -643,9 +799,12 @@ void PduHandler::_HandleVerifyNotify(BasePdu *pdu)
     addRequest.setOtherHeadUrl(requestUserInfo.user_header_url().c_str());
     addRequest.setValidateData(notify.verify_data().c_str());
     addRequest.setGroupId(groupId);
-    GlobalData::setRequest(addRequest);
 
+    GlobalData::addOneGroupRequest(addRequest);
     emit newAddRequest();
+
+    QString msg = addRequest.getOtherNick() + QString("申请加入群") + GlobalData::getGroupByGroupId(groupId).getGroupName();
+    emit unReadMessage(3, msg, 3);
 }
 
 void PduHandler::_handleSendFileRespone(BasePdu *pdu)
@@ -714,8 +873,7 @@ void PduHandler::_HandleFileNotify(BasePdu *pdu)
     entity.m_file_name  = fileName;
 
     //设置文件保存目录
-    entity.setSaveFilePath("/home/liuzheng/Documents/youliao/FileRecv/");
-
+    entity.setSaveFilePath(GlobalData::filePath.toStdString());
 
     entity.m_file_object = new YLTransferFile(entity.getSaveFilePath() + fileName , true);
 
@@ -745,3 +903,142 @@ void PduHandler::_HandleFileNotify(BasePdu *pdu)
     YLTransferFileEntityManager::instance()->openFileSocketByTaskId(entity.m_task_id);
 }
 
+void PduHandler::_HandleModifyUserIconRespone(BasePdu *pdu)
+{
+    other::ModifyUserImageRespone respone;
+    respone.ParseFromString(pdu->getMessage());
+
+    uint32_t resultCode = respone.result_code();
+
+    if (resultCode == 0)
+    {
+        //成功上传
+
+        //[1] 修改全局变量中头像url
+        GlobalData::setCurrLoginUserHeaderIcon(respone.icon_url());
+
+        //[2] 通知主界面修改资料
+        emit userHeaderIconChanged();
+    }
+
+}
+
+void PduHandler::_HandleModifyGroupIconRespone(BasePdu *pdu)
+{
+    group::ModifyGroupHeaderRespone respone;
+    respone.ParseFromString(pdu->getMessage());
+
+    uint32_t resCode = respone.result_code();
+    uint32_t groupId = respone.group_id();
+    QString url = respone.header_url().c_str();
+
+    if (resCode == 0)
+        emit modifyGroupHeader(groupId, url);
+}
+
+void PduHandler::_HandleSetGroupManagerRespone(BasePdu *pdu)
+{
+    group::SetGroupManagerRespone respone;
+
+}
+
+void PduHandler::_HandleKickOutGroupMemberRespone(BasePdu *pdu)
+{
+
+}
+
+void PduHandler::_HandleGetLatestGroupMsgIdRespone(BasePdu *pdu)
+{
+    group::GetLatestGroupMsgIdRespone respone;
+    respone.ParseFromString(pdu->getMessage());
+
+    uint32_t groupId = respone.group_id();
+    uint32_t latestMsgId = respone.latest_msg_id();
+
+    GlobalData::setGroupLatestMsgId(groupId, latestMsgId + 1);
+}
+
+void PduHandler::_HandleExitGroupRespone(BasePdu *pdu)
+{
+    group::ExitGroupRespone respone;
+    respone.ParseFromString(pdu->getMessage());
+
+    uint32_t groupId = respone.group_id();
+    uint32_t resultCode = respone.result_code();
+
+    emit exitGroupResult(groupId, resultCode);
+}
+
+void PduHandler::_HandleGroupVerifyNotify(BasePdu *pdu)
+{
+    group::GroupVerifyNotify notify;
+    notify.ParseFromString(pdu->getMessage());
+
+    uint32_t requestUserId = notify.user_id();
+    uint32_t groupId = notify.group_id();
+    const base::UserInfo &userInfo = notify.user_info();
+}
+
+void PduHandler::_HandleGroupAddRequestHandleRespone(BasePdu *pdu)
+{
+    group::GroupAddRequestHandleResult result;
+    result.ParseFromString(pdu->getMessage());
+
+    YLBusiness::getGroupList();
+//    result
+}
+
+
+void PduHandler::_HandleDeleteFriendRespone(BasePdu *pdu)
+{
+    friendlist::DeleteFriendRespone respone;
+    respone.ParseFromString(pdu->getMessage());
+
+    uint32_t friendId = respone.friend_id();
+
+    emit deleteFriend(friendId);
+}
+
+
+void PduHandler::_HandleFriendInfomation(BasePdu *pdu)
+{
+    other::GetFriendInformationRespone respone;
+    respone.ParseFromString(pdu->getMessage());
+
+    const base::UserInfo &userInfo = respone.user_info();
+
+    emit friendInformation(userInfo);
+}
+
+
+void PduHandler::_HandleAddFriendRespone(BasePdu *pdu)
+{
+   friendlist::AddFriendRespone respone;
+   respone.ParseFromString(pdu->getMessage());
+
+   uint32_t resultId = respone.result_id();
+   if (resultId == 1)
+   {
+       //同意添加好友
+       emit addFriendSuccess();
+   }
+   else if (resultId == 2)
+   {
+       //拒绝添加好友
+   }
+   else if (resultId == 3)
+   {
+       //忽略
+   }
+}
+
+void PduHandler::_HandleUserInformationChange(BasePdu *pdu)
+{
+    YLBusiness::getFriendGroupsRequest(GlobalData::getCurrLoginUserId());
+    YLBusiness::getFriendListRequest(GlobalData::getCurrLoginUserId());
+}
+
+void PduHandler::_HandleUpdateGroupListRespone(BasePdu *pdu)
+{
+    YLBusiness::getGroupList();
+}

@@ -1,5 +1,5 @@
 #include "ylgroup.h"
-
+#include <QUrl>
 YLGroup::YLGroup()
 {
 
@@ -7,31 +7,34 @@ YLGroup::YLGroup()
 
 YLGroup::YLGroup(const YLGroup &group)
 {
-
-    m_group_id = group.m_group_id;
-    m_group_name = group.m_group_name;
-    m_creator = group.m_creator;
-    m_capacity = group.m_capacity;
-    m_managers = group.m_managers;
-    m_members = group.m_members;
-    m_group_name = group.m_group_name;
-    m_head_url = group.m_head_url;
-    m_created = group.m_created;
-    m_verify_type = group.m_verify_type;
+    m_group_id      = group.m_group_id;
+    m_group_name    = group.m_group_name;
+    m_creator       = group.m_creator;
+    m_capacity      = group.m_capacity;
+    m_managers      = group.m_managers;
+    m_members       = group.m_members;
+    m_group_name    = group.m_group_name;
+    m_head_url      = group.m_head_url;
+    m_created       = group.m_created;
+    m_verify_type   = group.m_verify_type;
+    m_latest_msg_id = group.m_latest_msg_id;
+    m_head_name     = group.m_head_name;
 }
 
 YLGroup &YLGroup::operator =(const YLGroup &group)
 {
-    m_group_id = group.m_group_id;
-    m_group_name = group.m_group_name;
-    m_creator = group.m_creator;
-    m_capacity = group.m_capacity;
-    m_managers = group.m_managers;
-    m_members = group.m_members;
-    m_group_name = group.m_group_name;
-    m_head_url = group.m_head_url;
-    m_created = group.m_created;
-    m_verify_type = group.m_verify_type;
+    m_group_id      = group.m_group_id;
+    m_group_name    = group.m_group_name;
+    m_creator       = group.m_creator;
+    m_capacity      = group.m_capacity;
+    m_managers      = group.m_managers;
+    m_members       = group.m_members;
+    m_group_name    = group.m_group_name;
+    m_head_url      = group.m_head_url;
+    m_created       = group.m_created;
+    m_verify_type   = group.m_verify_type;
+    m_latest_msg_id = group.m_latest_msg_id;
+    m_head_name     = group.m_head_name;
     return *this;
 
 }
@@ -72,9 +75,12 @@ void YLGroup::setGroupCapacity(uint32_t capacity)
     m_capacity = capacity;
 }
 
-void YLGroup::setGroupImage(const QString &url)
+void YLGroup::setGroupImage(const QString &strUrl)
 {
-    m_head_url = url;
+    m_head_url = strUrl;
+
+    QUrl url(strUrl);
+    m_head_name = url.fileName();
 }
 
 void YLGroup::addMember(uint32_t memberId)
@@ -96,6 +102,11 @@ void YLGroup::setCreateTime(uint32_t createTime)
 void YLGroup::setVerifyType(uint32_t type)
 {
     m_verify_type = type;
+}
+
+void YLGroup::setLatestMsgId(uint32_t msgId)
+{
+    m_latest_msg_id = msgId;
 }
 
 uint32_t YLGroup::getGroupId() const
@@ -141,4 +152,9 @@ uint32_t YLGroup::getCreateTime() const
 uint32_t YLGroup::getVerifyType() const
 {
     return m_verify_type;
+}
+
+uint32_t YLGroup::getLatestMsgId() const
+{
+    return m_latest_msg_id;
 }

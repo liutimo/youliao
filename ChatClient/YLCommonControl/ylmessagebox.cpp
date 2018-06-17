@@ -5,9 +5,22 @@
 #include <QEventLoop>
 YLMessageBox::YLMessageBox(int type, QWidget *parent) : YLBasicWidget(parent), m_button_type(type)
 {
-    setFixedSize(350, 180);
-    point1 = QPoint(190, 147);
-    point2 = QPoint(270, 147);
+    setFixedSize(350, 160);
+    setWidgetIcon(":/res/qqlogo.png");
+
+    m_icon = new QLabel(this);
+    m_icon->setFixedSize(40, 40);
+    m_icon->move(20, 57);
+
+    m_tooltip = new QLabel(this);
+    m_tooltip->setFixedSize(250, 92);
+    m_tooltip->setWordWrap(true);
+    m_tooltip->setAlignment(Qt::AlignVCenter);
+    m_tooltip->setStyleSheet("font:12px");
+    m_tooltip->move(70, 32);
+
+    point1 = QPoint(190, 130);
+    point2 = QPoint(270, 130);
 
     init();
     Qt::WindowFlags flags = windowFlags();
@@ -17,10 +30,6 @@ YLMessageBox::YLMessageBox(int type, QWidget *parent) : YLBasicWidget(parent), m
 
 void YLMessageBox::init()
 {
-    m_title = new QLabel("删除好友", this);
-    m_title->move(5, 5);
-    m_title->setStyleSheet("color:white; font:14px;");
-
     if ((m_button_type & BUTTON_OK) && (m_button_type & BUTTON_CANNEL))
     {
         initButtonOk(point1);
@@ -39,7 +48,7 @@ void YLMessageBox::init()
 void YLMessageBox::initButtonOk(const QPoint &p)
 {
     m_ok = new QPushButton("确定", this);
-    m_ok->setFixedSize(70, 28);
+    m_ok->setFixedSize(68, 23);
     m_ok->move(p);
     m_ok->setStyleSheet(qss_btn);
     connect(m_ok, &QPushButton::clicked, this, [this](){
@@ -52,7 +61,7 @@ void YLMessageBox::initButtonOk(const QPoint &p)
 void YLMessageBox::initButtonCannel(const QPoint &p)
 {
     m_cannel = new QPushButton("取消", this);
-    m_cannel->setFixedSize(70, 28);
+    m_cannel->setFixedSize(68, 23);
     m_cannel->move(p);
     m_cannel->setStyleSheet(qss_btn);
     connect(m_cannel, &QPushButton::clicked, this, [this](){
@@ -71,10 +80,26 @@ BottonResult YLMessageBox::exec()
 
     return m_botton_reslut;
 }
-
-void YLMessageBox::setTitle(const QString &title)
+void YLMessageBox::setTipType(TipType type)
 {
-    m_title->setText(title);
+    QString filePath;
+    switch (type) {
+    case Tips:
+        filePath = ":/res/MessageBox/sysmessagebox_inforFile.png";
+        break;
+    case Error:
+        filePath = ":/res/MessageBox/sysmessagebox_errorFile.png";
+        break;
+    case Warn:
+        filePath = ":/res/MessageBox/sysmessagebox_warningFile.png";
+        break;
+    default:
+        filePath = ":/res/MessageBox/sysmessagebox_inforFile.png";
+        break;
+    }
+
+    setIcon(filePath);
+
 }
 
 void YLMessageBox::paintEvent(QPaintEvent *event)
@@ -89,7 +114,7 @@ void YLMessageBox::paintEvent(QPaintEvent *event)
     painter.setBrush(Qt::white);
     painter.drawRect(rect());
 
-    painter.setBrush(QColor::fromRgb(40, 138, 221, 122));
+    painter.setBrush(QColor::fromRgb(40, 138, 221));           //#288ADD
     painter.drawRect(0, 0, width(), titleBarHeight);
 
     painter.setBrush(QColor::fromRgb(200, 200, 200, 122));
@@ -106,8 +131,11 @@ void YLMessageBox::closeEvent(QCloseEvent *event)
 
 void YLMessageBox::setToolTip(const QString &toolTip)
 {
-    m_tooltip = new QLabel(this);
-    m_tooltip->setStyleSheet("font:16px");
-    m_tooltip->move(50, 67);
     m_tooltip->setText(toolTip);
+}
+
+
+void YLMessageBox::setIcon(const QString &path)
+{
+    m_icon->setPixmap(QPixmap(path));
 }

@@ -1,23 +1,40 @@
 #include "globaldata.h"
+#include "yllocalsettings.h"
 #include <QDir>
 #include <QUrl>
 youliao::pdu::base::UserInfo GlobalData::m_user = youliao::pdu::base::UserInfo();
 QMap<int, QVector<YLFriend>> GlobalData::m_friends = QMap<int, QVector<YLFriend>> ();
 QString GlobalData::m_header_image_path = QString();
-QList<YLSession> GlobalData::m_sessions = QList<YLSession>();
 QMap<int, QString> GlobalData::m_group = QMap<int, QString>();
 QMap<uint32_t, YLSingleChatWidget*> GlobalData::m_single_chat_widgets = QMap<uint32_t, YLSingleChatWidget*>();
+
+//消息
 QMap<uint32_t, QVector<YLMessage>> GlobalData::m_messages = QMap<uint32_t, QVector<YLMessage>>();
+QMap<uint32_t, QVector<YLMessage>> GlobalData::m_group_messages = QMap<uint32_t, QVector<YLMessage>>();
 QMap<uint32_t, uint32_t> GlobalData::m_message_id = QMap<uint32_t, uint32_t>();
+
 QVector<YLAddRequest> GlobalData::m_add_request = QVector<YLAddRequest>();
 QVector<YLAddRequest> GlobalData::m_add_request_history = QVector<YLAddRequest>();
+QVector<YLAddRequest> GlobalData::m_group_request = QVector<YLAddRequest>();
 QMap<uint32_t, YLGroup> GlobalData::m_groups = QMap<uint32_t, YLGroup>();
 QMap<uint32_t, base::UserInfo>  GlobalData::m_all_user = QMap<uint32_t, base::UserInfo>();
 QMap<uint32_t, QMap<uint32_t, base::MemberInfo>> GlobalData::m_group_member = QMap<uint32_t, QMap<uint32_t, base::MemberInfo>>();
 QMap<uint32_t, YLGroupChatWidget*>  GlobalData::m_group_chat_widgets = QMap<uint32_t, YLGroupChatWidget*>();
 QMap<QString, QString> GlobalData::m_audio_map = QMap<QString, QString>();
+
+
 //group
 QMap<uint32_t, uint32_t> GlobalData::m_group_message_id = QMap<uint32_t, uint32_t>();
+
+//文件保存路径
+QString GlobalData::imagePath = QString();
+QString GlobalData::audioPath = QString();
+QString GlobalData::filePath = QString();
+
+
+//session
+QList<YLSession> GlobalData::m_sessions = QList<YLSession>();
+QList<YLSession> GlobalData::m_top_data = QList<YLSession>();
 
 GlobalData::GlobalData(QObject *parent) : QObject(parent)
 {
@@ -29,9 +46,19 @@ void GlobalData::setCurrLoginUser(youliao::pdu::base::UserInfo user)
     m_user = user;
 
     QUrl url(QString(user.user_header_url().c_str()));
-    m_header_image_path = "file://" + QDir::currentPath() + "/" + url.fileName();
+    m_header_image_path = "file://" + imagePath + "/" + url.fileName();
+
+    //修改配置文件,设置头像
+    YLLocalSettings::instance()->setValue(QString::number(user.user_account()), m_header_image_path);
 }
 
+void GlobalData::setCurrLoginUserHeaderIcon(const std::string urlStr)
+{
+    m_user.set_user_header_url(urlStr);
+
+    QUrl url(QString(urlStr.c_str()));
+    m_header_image_path = "file://" + imagePath + "/" + url.fileName();
+}
 
 const YLFriend GlobalData::getFriendById(const uint32_t friendId)
 {
@@ -63,6 +90,12 @@ void GlobalData::setSessions(const QList<YLSession> &sessions)
     m_sessions = sessions;
 }
 
+void GlobalData::setTopSessions(const QList<YLSession> &sessions)
+{
+    m_top_data = sessions;
+}
+
+
 YLSession GlobalData::getSessionByFriendId(uint32_t friendId)
 {
     for (auto &session : m_sessions)
@@ -74,6 +107,30 @@ YLSession GlobalData::getSessionByFriendId(uint32_t friendId)
     }
 
     return YLSession();
+}
+
+YLSession GlobalData::getSessionByGroupId(uint32_t groupId)
+{
+    for (auto &session : m_sessions)
+    {
+        if (session.getSessionType() == base::SESSION_TYPE_GROUP && session.getOtherId() == groupId)
+        {
+            return session;
+        }
+    }
+
+    return YLSession();
+}
+
+
+QList<YLSession>& GlobalData::getSessions()
+{
+    return m_sessions;
+}
+
+QList<YLSession>& GlobalData::getTopSessions()
+{
+    return m_top_data;
 }
 
 void GlobalData::setGroup(const QMap<int, QString> &group)
@@ -189,6 +246,34 @@ uint32_t GlobalData::getGroupLatestMsgId(uint32_t groupId)
         return iter.value();
 }
 
+/****************群组消息****************/
+void GlobalData::addGroupMessage(uint32_t groupId, const YLMessage& message)
+{
+    m_group_messages[groupId].push_back(message);
+}
+
+QVector<YLMessage> GlobalData::getGroupMessagesByGroupId(uint32_t groupId)
+{
+    auto iter = m_group_messages.find(groupId);
+    if (iter == m_group_messages.cend())
+        return QVector<YLMessage>();
+    else
+        return *iter;
+}
+
+const QMap<uint32_t, QVector<YLMessage>>& GlobalData::getGroupMessages()
+{
+    return m_group_messages;
+}
+
+void GlobalData::removeGroupMessageByGroupId(uint32_t groupId)
+{
+    auto iter = m_group_messages.find(groupId);
+    if (iter != m_group_messages.end())
+        m_group_messages.erase(iter);
+}
+
+
 void GlobalData::setRequest(const YLAddRequest &req)
 {
     m_add_request.push_back(req);
@@ -199,6 +284,15 @@ const QVector<YLAddRequest>& GlobalData::getAddRequests()
     return m_add_request;
 }
 
+void GlobalData::addOneGroupRequest(const YLAddRequest &request)
+{
+    m_group_request.push_back(request);
+}
+
+QVector<YLAddRequest> &GlobalData::getGroupAddRequests()
+{
+    return m_group_request;
+}
 
 //group
 void GlobalData::setGroups(const QMap<uint32_t, YLGroup>&groups)
@@ -241,10 +335,17 @@ void GlobalData::addUSers(const QVector<base::UserInfo> &users)
 YLGroup GlobalData::getGroupByGroupId(uint32_t groupId)
 {
     auto iter = m_groups.find(groupId);
-    if (iter != m_groups.end())
+    if (iter == m_groups.end())
         return YLGroup();
     else
         return *iter;
+}
+
+void GlobalData::remGroupByGroupId(uint32_t groupId)
+{
+    auto iter = m_groups.find(groupId);
+    if (iter != m_groups.end())
+        m_groups.erase(iter);
 }
 
 base::UserInfo GlobalData::getCreatorByGroupId(uint32_t groupId)

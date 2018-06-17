@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ModifyInfoationWidget</class>
+ <widget class="QWidget" name="ModifyInfoationWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>357</width>
+    <height>483</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <layout class="QGridLayout" name="gridLayout">
+     <property name="spacing">
+      <number>20</number>
+     </property>
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_4">
+       <property name="styleSheet">
+        <string notr="true">color:gray;</string>
+       </property>
+       <property name="text">
+        <string>故    乡</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1" colspan="2">
+      <widget class="QLineEdit" name="nick">
+       <property name="styleSheet">
+        <string notr="true">QLineEdit{border:1px solid gray;}
+QLineEdit:hover{border:1px solid #1583DD;}</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="0">
+      <widget class="QLabel" name="label_5">
+       <property name="styleSheet">
+        <string notr="true">color:gray;</string>
+       </property>
+       <property name="text">
+        <string>学    校</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1" colspan="7">
+      <widget class="QLineEdit" name="location">
+       <property name="styleSheet">
+        <string notr="true">QLineEdit{border:1px solid gray;}
+QLineEdit:hover{border:1px solid #1583DD;}</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="styleSheet">
+        <string notr="true">color:gray;</string>
+       </property>
+       <property name="text">
+        <string>生    日</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1" colspan="7">
+      <widget class="QLineEdit" name="hometown">
+       <property name="styleSheet">
+        <string notr="true">QLineEdit{border:1px solid gray;}
+QLineEdit:hover{border:1px solid #1583DD;}</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="0">
+      <widget class="QLabel" name="label_9">
+       <property name="styleSheet">
+        <string notr="true">color:gray;</string>
+       </property>
+       <property name="text">
+        <string>所在地</string>
+       </property>
+      </widget>
+     </item>
+     <item row="12" column="6" colspan="2">
+      <widget class="QPushButton" name="pushButton_2">
+       <property name="minimumSize">
+        <size>
+         <width>64</width>
+         <height>23</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>64</width>
+         <height>23</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton{border-image:url(:/res/YLCommonControl/audio_button_normal.png)}
+QPushButton:hover{border-image:url(:/res/YLCommonControl/audio_button_hoverl.png)}
+QPushButton:pressed{border-image:url(:/res/YLCommonControl/audio_button_down.png)}</string>
+       </property>
+       <property name="text">
+        <string>关闭</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="1" colspan="7">
+      <widget class="QLineEdit" name="school">
+       <property name="styleSheet">
+        <string notr="true">QLineEdit{border:1px solid gray;}
+QLineEdit:hover{border:1px solid #1583DD;}</string>
+       </property>
+      </widget>
+     </item>
+     <item row="10" column="0">
+      <widget class="QLabel" name="label_8">
+       <property name="styleSheet">
+        <string notr="true">color:gray;</string>
+       </property>
+       <property name="text">
+        <string>签    名</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="1" colspan="7">
+      <widget class="QLineEdit" name="phone">
+       <property name="styleSheet">
+        <string notr="true">QLineEdit{border:1px solid gray;}
+QLineEdit:hover{border:1px solid #1583DD;}</string>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="0">
+      <widget class="QLabel" name="label_7">
+       <property name="styleSheet">
+        <string notr="true">color:gray;</string>
+       </property>
+       <property name="text">
+        <string>邮    箱</string>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="1" colspan="7">
+      <widget class="QLineEdit" name="email">
+       <property name="styleSheet">
+        <string notr="true">QLineEdit{border:1px solid gray;}
+QLineEdit:hover{border:1px solid #1583DD;}</string>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="0">
+      <widget class="QLabel" name="label_6">
+       <property name="styleSheet">
+        <string notr="true">color:gray;</string>
+       </property>
+       <property name="text">
+        <string>手    机</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label">
+       <property name="styleSheet">
+        <string notr="true">color:gray;</string>
+       </property>
+       <property name="text">
+        <string>昵    称</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="5" colspan="3">
+      <widget class="QComboBox" name="comboBox">
+       <property name="styleSheet">
+        <string notr="true">QComboBox{border:1px solid gray;}
+QComboBox:hover{border:1px solid #1583DD;}
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 20px;
+ 
+    border-left-width: 0px;
+}
+ 
+QComboBox::down-arrow {
+    image: url(:/res/YLCommonControl/arrow_down.png);
+}
+ 
+QComboBox::item {
+	color:black;
+    height: 25px;
+    background: white;
+}
+ 
+QComboBox::item:hover {
+	color:black;
+    height: 25px;
+    background: red;
+}QListView::item:hover {
+    background: #BDD7FD;
+}</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>保密</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>男</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>女</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="2" column="4">
+      <widget class="QLabel" name="label_2">
+       <property name="styleSheet">
+        <string notr="true">color:gray;</string>
+       </property>
+       <property name="text">
+        <string>性别</string>
+       </property>
+      </widget>
+     </item>
+     <item row="12" column="3" colspan="3">
+      <widget class="QPushButton" name="saveBtn">
+       <property name="minimumSize">
+        <size>
+         <width>64</width>
+         <height>23</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>64</width>
+         <height>23</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton{border-image:url(:/res/YLCommonControl/audio_button_normal.png)}
+QPushButton:hover{border-image:url(:/res/YLCommonControl/audio_button_hoverl.png)}
+QPushButton:pressed{border-image:url(:/res/YLCommonControl/audio_button_down.png)}</string>
+       </property>
+       <property name="text">
+        <string>保存</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLabel" name="label_10">
+       <property name="minimumSize">
+        <size>
+         <width>32</width>
+         <height>12</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="10" column="1" colspan="7">
+      <widget class="QPlainTextEdit" name="signal">
+       <property name="styleSheet">
+        <string notr="true">QPlainTextEdit{border:1px solid gray;}
+QPlainTextEdit:hover{border:1px solid #1583DD;}</string>
+       </property>
+      </widget>
+     </item>
+     <item row="11" column="1" rowspan="2">
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="3" column="1" colspan="7">
+      <widget class="QLineEdit" name="birthday">
+       <property name="styleSheet">
+        <string notr="true">QLineEdit{border:1px solid gray;}
+QLineEdit:hover{border:1px solid #1583DD;}</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

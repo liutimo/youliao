@@ -6,22 +6,41 @@ QT_BEGIN_NAMESPACE
 class QPushButton;
 class QToolButton;
 class YLHeadFrame;
+class QScrollArea;
 QT_END_NAMESPACE
 
 class YLValidateMessageWidget : public YLBasicWidget
 {
     Q_OBJECT
+    const QString qss_selected = "QPushButton{color:white;border:0px;font: 16px solid 黑体;"
+                                 "background:qlineargradient(spread:reflect, x1:1, y1:0.977, x2:1, y2:0, "
+                                 "stop:0 rgba(218, 235, 249, 255), stop:1 rgba(40, 138, 221, 255));"
+                                 "font: 16px solid 黑体;}";
+
+    const QString qss_no_selected = "QPushButton{background:#288ADD;border:0px;color:white;font: 16px solid 黑体;}"
+                                    "QPushButton:hover{color:white;border:0px;"
+                                    "background:qlineargradient(spread:reflect, x1:1, y1:0.977, x2:1, y2:0, "
+                                    "stop:0 rgba(153, 200, 239, 255), "
+                                    "stop:1 rgba(40, 138, 221, 255));"
+                                    "border:0px;color:white;font: 16px solid 黑体;}";
+
 public:
     explicit YLValidateMessageWidget(QWidget *parent = nullptr);
 
 private:
     void initTop();
+    void showFriendWidget();
+    void showGroupWidget();
 
-public slots:
+protected:
+    void paintEvent(QPaintEvent *event);
 
 private:
     QPushButton *m_friend_message;
     QPushButton *m_group_message;
+
+    QScrollArea *m_friend_widget;
+    QScrollArea *m_group_widget;
 
     QLabel *m_no_msg;
 };
@@ -49,7 +68,7 @@ class ValidateInfomationWidget : public QWidget
 public:
     explicit ValidateInfomationWidget(QWidget *parent = nullptr);
     ~ValidateInfomationWidget();
-    void setAddRequest(const YLAddRequest &);
+    void setAddRequest(const YLAddRequest &, bool isGroup = false);
     void setConfirmed(bool isConfirmed = false);
 protected:
     void enterEvent(QEvent *event);
@@ -61,6 +80,9 @@ private:
     void initRight();
     void showRight();
     void hideRight();
+    void acceptRequest();
+    void refuseRequest();
+
     YLHeadFrame *m_head_frame;
     QLabel *m_nick;
     QLabel *m_infomation;
@@ -74,6 +96,7 @@ private:
 
     QLabel *m_op_text;
     YLAddRequest m_request;
+    bool m_is_group;
 };
 
 #endif // YLVALIDATEMESSAGEWIDGET_H

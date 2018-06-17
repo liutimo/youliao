@@ -38,3 +38,14 @@ message LatestMsgIdRespone
     uint32 friend_id = 2;
     uint32 latest_msg_id = 3;
 }
+
+message GetOfflineMessageRequest
+{
+    uint32 user_id = 1;
+}
+
+message GetOfflineMessageRespone
+{
+    uint32 user_id = 1;
+    repeated MessageData msg_data = 2;
+}

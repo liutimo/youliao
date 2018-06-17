@@ -8,7 +8,6 @@
 #include "YLEntityObject/ylgroup.h"
 class YLHeadFrame;
 class QLabel;
-class HttpHelper;
 class QMenu;
 class YLCounterBubble;
 
@@ -43,7 +42,10 @@ private:
     void init();
 
     void initMenu();
+    void initGroupMenu();
+    void initValidateMsgMenu();
 
+    QString handleTime(uint32_t timeStamp);
 protected:
     void resizeEvent(QResizeEvent *event);
     void mousePressEvent(QMouseEvent *event);
@@ -52,6 +54,18 @@ protected:
 
 private slots:
     void openChatWidget();
+    void onModifyRemark();
+    void onShowFriendInformationWidget();
+    void onDeleteFriend();
+
+    //群组
+    void onOpenGroupChatWidget();
+    void onModifyGroupRemark();
+    void onShowGroupInformationWidget();
+    void onExitGroup();
+
+    //验证消息
+    void onOpenValidateWidget();
 
 signals:
     void moveToTop(YLSession &);
@@ -59,8 +73,8 @@ signals:
     void moveFriendToGroup(uint32_t friendId, uint32_t oldGroupId, uint32_t newGroupId);
     void deleteFriend(uint32_t friendId);
     void modifyRemark(uint32_t friendId, const QString &newRemark);
-    void readCompleted(uint32_t friId);
-
+//    void readCompleted(uint32_t friId);
+    void readCompleted(uint32_t sessionId);
 private:
     YLHeadFrame *head_frame_;
     YLCounterBubble *m_counter_bubble;
@@ -68,13 +82,15 @@ private:
     QLabel      *label_up_;         //如果由备注则显示备注信息，否则显示昵称
     QLabel      *label_down_;       //显示个性签名 或者最后一条聊天记录
     QLabel      *label_time_;       //显示最后一次聊天的时间
-    QMenu       *menu_;
-    QMenu       *second_menu_;
+    QMenu       *menu_;             //用于Session list 中好友item
+    QMenu       *second_menu_;      //好友分组菜单
+    QMenu       *m_group_menu;
     QAction     *action_on_top;
     YLListItemType item_type_;      //保存当前item的类型
+
     YLFriend friend_;
     YLSession session_;
-    HttpHelper *m_http_helper;
+    YLGroup m_group;
 };
 
 #endif // YLLISTITEM_H

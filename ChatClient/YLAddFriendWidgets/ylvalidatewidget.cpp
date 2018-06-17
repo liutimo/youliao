@@ -2,9 +2,10 @@
 #include <QLabel>
 #include <QDebug>
 #include <QTextEdit>
-#include <QPushButton>
 #include <QLineEdit>
 #include <QComboBox>
+#include <QPainter>
+#include <QPushButton>
 #include "globaldata.h"
 #include "YLNetWork/ylbusiness.h"
 #include "YLCommonControl/ylheadframe.h"
@@ -156,3 +157,17 @@ void YLValidateWidget::next()
     }
 }
 
+void YLValidateWidget::paintEvent(QPaintEvent *event)
+{
+    const int titleBarHeight = 32;
+
+    QPainter painter(this);
+    painter.setPen(Qt::NoPen);
+
+
+    painter.setBrush(Qt::white);
+    painter.drawRect(rect());
+
+    painter.setBrush(QColor::fromRgb(40, 138, 221));           //#288ADD
+    painter.drawRect(0, 0, width(), titleBarHeight);
+}

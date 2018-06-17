@@ -1,5 +1,5 @@
 #include "yluser.h"
-
+#include <QUrl>
 YLUser::YLUser(QObject *parent) : QObject(parent)
 {
 
@@ -58,4 +58,13 @@ QString YLUser::getUserSignature() const
 QString YLUser::getUserImagePath() const
 {
     return user_image_path;
+}
+
+QString YLUser::getUserImageName() const
+{
+    QUrl url(user_image_path);
+    if (url.isValid())
+        return url.fileName();
+    else
+        return QString();
 }

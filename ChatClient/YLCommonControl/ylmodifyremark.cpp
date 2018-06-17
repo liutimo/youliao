@@ -9,7 +9,7 @@ YLModifyRemarkWidget::YLModifyRemarkWidget(QWidget *parent) : YLMessageBox(BUTTO
 
 void YLModifyRemarkWidget::init()
 {
-    setTitle("修改备注姓名");
+    setWidgetTitle("修改备注姓名");
 
     m_tip = new QLabel("请输入备注姓名:", this);
     m_tip->setStyleSheet("font:14px;");

@@ -1,9 +1,11 @@
 #include "signalforward.h"
 #include "globaldata.h"
 #include "YLTray/ylmessagetip.h"
+#include "YLNetWork/ylbusiness.h"
+#include "YLDataBase/yldatabase.h"
 #include "YLChatWidget/ylsinglechatwidget.h"
-#include "YLAddFriendWidgets/ylvalidatemessagewidget.h"
 #include "YLFileTransfer/ylfiletransferreceiver.h"
+#include "YLAddFriendWidgets/ylvalidatemessagewidget.h"
 SignalForward* SignalForward::s_signamlForward = nullptr;
 
 SignalForward::SignalForward(QObject *parent) : QObject(parent)
@@ -41,34 +43,63 @@ void SignalForward::forwordReadAll()
     emit readAll();
 }
 
-void SignalForward::forwordReadOne(uint32_t friendId, int type)
+void SignalForward::forwordReadOne(uint32_t senderId, int type)
 {
     if (type == 1)
     {
-        emit readOne(friendId);
-        YLFriend fri = GlobalData::getFriendById(friendId);
-        YLSingleChatWidget *singleChatWidget = GlobalData::getSingleChatWidget(friendId);
+        YLFriend fri = GlobalData::getFriendById(senderId);
+        YLSingleChatWidget *singleChatWidget = GlobalData::getSingleChatWidget(senderId);
         if (singleChatWidget == nullptr)
         {
             singleChatWidget = new YLSingleChatWidget;
             singleChatWidget->setFriend(fri);
-            GlobalData::addSingleChatWidget(friendId, singleChatWidget);
+            GlobalData::addSingleChatWidget(senderId, singleChatWidget);
         }
 
         singleChatWidget->show();
-        connect(singleChatWidget, &YLSingleChatWidget::loadFinish, this, [this, singleChatWidget, friendId](){
-            auto msgs = GlobalData::getMessagesByFriendId(friendId);
+        connect(singleChatWidget, &YLSingleChatWidget::loadFinish, this, [this, singleChatWidget, senderId](){
+            auto msgs = GlobalData::getMessagesByFriendId(senderId);
 
             for (YLMessage msg : msgs)
             {
-                singleChatWidget->receiveMessage(friendId, msg.getMsgContent());
+                {
+                    YLDataBase db;
+                    db.saveMessage(msg);
+                }
+                singleChatWidget->receiveMessage(senderId, msg.getMsgContent());
+                YLBusiness::sendMessageAck(senderId, GlobalData::getCurrLoginUserId(), msg.getMessageId());
             }
 
-            GlobalData::removeMessageByFriendId(friendId);
+            GlobalData::removeMessageByFriendId(senderId);
+            YLMessageTip::instance()->updateList();
+            emit readOne(GlobalData::getSessionByFriendId(senderId).getSessionId());
+        });
+    }
+    else if (type == 2)         // 群组消息
+    {
+        YLGroup group = GlobalData::getGroupByGroupId(senderId);
+        YLGroupChatWidget *groupChatWidget = GlobalData::getGroupChatWidget(senderId);
+        if (groupChatWidget == nullptr)
+        {
+            groupChatWidget = new YLGroupChatWidget;
+            groupChatWidget->setGroup(group);
+            GlobalData::addGroupChatWidget(senderId, groupChatWidget);
+        }
+
+        groupChatWidget->show();
+        connect(groupChatWidget, &YLGroupChatWidget::loadFinish, this, [this, groupChatWidget, senderId](){
+            auto msgs = GlobalData::getGroupMessagesByGroupId(senderId);
+
+            for (YLMessage msg : msgs)
+            {
+                groupChatWidget->receiveMessage(senderId, msg.getMsgContent());
+            }
+
+            GlobalData::removeGroupMessageByGroupId(senderId);
             YLMessageTip::instance()->updateList();
         });
     }
-    else if (type == 2)
+    else if (type == 3)
     {
         YLValidateMessageWidget *w = new YLValidateMessageWidget;
         w->show();

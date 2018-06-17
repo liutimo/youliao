@@ -46,15 +46,34 @@ public:
     //搜索群
     bool searchGroup(uint32_t userId, const std::string &searchData ,base::SearchType tye, std::list<base::GroupInfo> &groupList);
 
+    //退群
+    bool exitGroup(uint32_t groupId, uint32_t userId);
+
+    //设置管理员
+    bool setGroupManager(uint32_t groupId, uint32_t memberId);
+
+
+    //更换群头像
+    bool modifyGroupHeader(uint32_t groupId, const std::string &url);
+
+    //获取最新的消息ID
+    uint32_t getLatestMsgIdByGroupId(uint32_t groupId);
+
+    //获取群组验证类型
     base::GroupVerifyType getVerofyTypeByGroupId(uint32_t groupId);
 
     uint32_t getRelationId(uint32_t groupId, uint32_t userId);
 
+    //保存新的加入群请求
+    uint32_t addNewGroupRequest(uint32_t requestUserId, uint32_t groupId, const std::string &validateData);
+
+    //处理加群申请
+    bool updateAddGroupRequest(uint32_t requestUserId, uint32_t groupId, uint32_t handleUserId, base::GroupVerifyResult result);
 private:
     bool getGroupManagers(uint32_t groupId, std::list<uint32_t> &managers);
     bool getGroupMembers(uint32_t groupId, std::list<uint32_t> &members);
     uint32_t getId(uint32_t groupId, uint32_t userId);
-    bool addOne(uint32_t groupId, uint32_t userId, uint32_t type);  // 0普通 1管理员 2群主
+    bool addOne(uint32_t groupId, uint32_t userId, uint32_t type, uint32_t status);  // 0普通 1管理员 2群主
 
     GroupModel();
     static GroupModel* m_instance;

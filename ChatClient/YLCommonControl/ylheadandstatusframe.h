@@ -35,11 +35,9 @@ private:
     void setStatusIcon(const Status status);
 
 protected:
-     void resizeEvent(QResizeEvent *e);
-
+    void resizeEvent(QResizeEvent *e);
 signals:
     void statusChanged(Status status);
-
 private:
     Status status_;
     QMenu *status_menu_;

@@ -78,7 +78,7 @@ message AddGroupRequest
 message AddGroupRespone
 {
     uint32 user_id = 1;
-    uint32 result_coid = 2;                         // 1 成功  2 失败
+    uint32 result_coid = 2;                         // 0 成功  1 失败
     youliao.pdu.base.GroupInfo group_info = 3;
 }
 
@@ -99,8 +99,108 @@ message GroupVerifyNotifyUsers
     GroupVerifyNotify verify_notify = 2;
 }
 
+
+message GetLatestGroupMsgIdRequest
+{
+    uint32 user_id  = 1;
+    uint32 group_id = 2;
+}
+
+message GetLatestGroupMsgIdRespone
+{
+    uint32 user_id  = 1;
+    uint32 group_id = 2;
+    uint32 latest_msg_id = 3;
+}
+
+//设置管理员
+message SetGroupManagerRequest
+{
+    uint32 user_id      = 1;
+    uint32 group_id     = 2;
+    uint32 member_id    = 3;
+}
+
+message SetGroupManagerRespone
+{
+    uint32 user_id      = 1;
+    uint32 group_id     = 2;
+    uint32 member_id    = 3;
+    uint32 result_code  = 4;
+}
+
 //踢出去
+message KickOutMemberRequest
+{
+    uint32 user_id      = 1;
+    uint32 group_id     = 2;
+    uint32 member_id    = 3;
+}
+
+message KickOutMemberRespone
+{
+    uint32 user_id      = 1;
+    uint32 group_id     = 2;
+    uint32 member_id    = 3;
+    uint32 result_code  = 4;
+}
+
+
 
 //退群
+message ExitGroupRequest
+{
+    uint32 user_id = 1;
+    uint32 group_id = 2;
+}
+
+message ExitGroupRespone
+{
+    uint32 user_id = 1;
+    uint32 group_id = 2;
+    uint32 result_code = 3; //0成功 1失败
+}
+
+
+//修改群头像
+message ModifyGroupHeaderRequest
+{
+    uint32 user_id      = 1;
+    uint32 group_id     = 2;
+    string header_url   = 3;
+}
+
+message ModifyGroupHeaderRespone
+{
+    uint32 user_id      = 1;
+    uint32 group_id     = 2;
+    uint32 result_code  = 3;
+    string header_url   = 4;
+}
 
 //修改群公告
+
+
+//群组验证确认消息
+message VerifyHandlerResult
+{
+    uint32 handle_user_id = 1;
+    uint32 group_id = 2;
+    youliao.pdu.base.GroupVerifyResult verify_result = 3;
+    uint32 request_user_id = 4;
+}
+
+//群组添加请求处理结果
+message GroupAddRequestHandleResult
+{
+    uint32 user_id = 1;
+    uint32 group_id = 2;
+    string handle_user_nick = 3;    //处理人昵称
+    youliao.pdu.base.GroupVerifyResult verify_result = 4;   //处理结果
+}
+
+message UpdateGroupList
+{
+    uint32 user_id = 1;
+    uint32 group_id = 2;
+}

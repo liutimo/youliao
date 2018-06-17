@@ -119,6 +119,41 @@ void HandlerMap::init()
     //添加群组
     m_handler_map.insert(std::make_pair(CID_GROUP_ADD_GROUP_REQUEST, DB_INTERFACE::addGroup));
 
+    //消息确认
+    m_handler_map.insert(std::make_pair(CID_MESSAGE_DATA_ACK, DB_INTERFACE::readMessageAck));
+
+    //离线消息
+    m_handler_map.insert(std::make_pair(CID_MESSAGE_GET_OFFLINE_MESSAGE_REQUEST, DB_INTERFACE::getOfflineMessageData));
+
+    //修改资料
+    m_handler_map.insert(std::make_pair(CID_OTHER_MODIFY_INFORMATION_REQUEST, DB_INTERFACE::modifyInformation));
+
+    //修改头像
+    m_handler_map.insert(std::make_pair(CID_OTHER_MODIFY_USER_HEADER_REQUEST, DB_INTERFACE::modifyUserIcon));
+
+    //获取群组最新ID
+    m_handler_map.insert(std::make_pair(CID_GROUP_GET_LATEST_MSG_ID_REQUEST, DB_INTERFACE::getLatestGroupMsgId));
+
+    //退出群组
+    m_handler_map.insert(std::make_pair(CID_GROUP_EXIT_GROUP_REQUEST, DB_INTERFACE::exitGroup));
+
+    //修改群头像
+    m_handler_map.insert(std::make_pair(CID_GROUP_MODIFY_HEADER_REQUEST, DB_INTERFACE::modifyGroupHeader));
+
+    //设置管理员
+    m_handler_map.insert(std::make_pair(CID_GROUP_SET_MANAGER_REQUEST, DB_INTERFACE::setGroupManager));
+
+    //踢出群组
+    m_handler_map.insert(std::make_pair(CID_GROUP_KICK_OUT_REQUEST, DB_INTERFACE::kickOutGroupMember));
+
+    //新增sesson
+    m_handler_map.insert(std::make_pair(CID_SESSIONLIST_ADD_SESSION_REQUEST, DB_INTERFACE::createNewSession));
+
+    //验证信息处理结果
+    m_handler_map.insert(std::make_pair(CID_GROUP_VERIFY_RESULT, DB_INTERFACE::handleVerifyGroupResult));
+
+    //获取好友详细资料
+    m_handler_map.insert(std::make_pair(CID_OTHER_GET_FRIEND_INFORMATION_REQUEST, DB_INTERFACE::getFriendInformation));
 }
 
 pdu_handler_t HandlerMap::getHandler(uint16_t cid)

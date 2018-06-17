@@ -1,0 +1,167 @@
+syntax = "proto3";
+package youliao.pdu.server;
+import "youliao.base.proto";
+
+//[1]db_server
+
+//校验用户名和密码
+message ValidateRequest
+{
+    string user_name = 1;
+    string user_pwd  = 2;
+    uint32 msg_serv_id = 3;
+    bytes  attach_data  = 20;
+}
+
+message ValidateRespone
+{
+    string user_name     = 1;
+    uint32 result_code   = 2;
+    string result_string = 3;
+    youliao.pdu.base.UserInfo user_info = 4;
+    bytes attach_data = 20;
+}
+
+
+//
+message MsgServerInfo
+{
+    string ip             = 1;
+    uint32 port           = 2;
+    uint32 max_conn_count = 3;
+    uint32 cur_conn_count = 4;
+}
+
+//[1] 由msgServer发送给RouteServer,
+message RouteStatusChange
+{
+    uint32 user_id = 1;
+    youliao.pdu.base.RouteMessageType route_status_type = 2;
+    bytes attach_data = 20;
+}
+
+
+//[2]由RouteServer发送给DBServer
+message RouteGetOnlineFirendRequest
+{
+    uint32 user_id = 1;
+    youliao.pdu.base.RouteMessageType route_status_type = 2;
+    bytes attach_data = 20;
+}
+
+//[3]由DBServer转发给RouteServer
+message RouteGetOnlineFriendRespone
+{ 
+    uint32 user_id = 1;
+    //在线好友ID : 消息服务器ID
+    map<uint32, uint32> online_firends = 2;
+    youliao.pdu.base.RouteMessageType route_status_type = 3;
+    bytes attach_data = 20;
+}
+
+//[4] routeServer广播消息
+message RouteBroadcastStatusChange
+{
+    uint32 user_id = 1;
+    repeated uint32 friends = 2;
+    youliao.pdu.base.RouteMessageType route_status_type = 3;
+    bytes attach_data = 20;
+}
+
+
+//[1] MsgServer请求RouteServer转发消息
+message RouteMessageForward
+{
+    uint32 user_id = 1;
+    uint32 friend_id = 2;
+    uint32 msg_id       = 3;
+    uint32 create_time  = 4;
+    youliao.pdu.base.MessageType message_type = 5;
+    bytes  message_data = 6;
+}
+
+//[2] RouteServer向DBServer请求好友在线状态
+//    如果RouteServer收到该回复，则表示好友在线
+message RouteGetFriendOnlineStatus
+{
+    uint32 user_id = 1;
+    uint32 friend_id = 2;
+    uint32 msg_id       = 3;
+    uint32 create_time  = 4;
+    youliao.pdu.base.MessageType message_type = 5;
+    bytes  message_data = 6;
+    uint32 msg_idx = 7;
+}
+
+//RouteServer发送到MsgServer
+message RouteMessage
+{
+    uint32 user_id = 1;
+    uint32 friend_id = 2;
+    uint32 msg_id       = 3;
+    uint32 create_time  = 4;
+    youliao.pdu.base.MessageType message_type = 5;
+    bytes  message_data = 6;
+}
+
+
+message GetServerIndexRequest
+{
+}
+
+message GetServerIndexRespone
+{
+    uint32 index = 1;
+}
+
+
+//文件服务器
+message FileServerIPRequest
+{
+
+}
+
+message FileServerIPRespone
+{
+    repeated youliao.pdu.base.IpAddress ip_addr_list = 1;
+}
+
+message FileTransferRequest
+{
+    uint32 from_user_id = 1;
+    uint32 to_user_id = 2;
+    string file_name = 3;
+    uint32 file_size = 4;
+    youliao.pdu.base.TransferFileType trans_mode = 5;
+}
+
+message FileTransferRespone
+{
+    uint32 from_user_id = 1;
+    uint32 to_user_id = 2;
+    string file_name = 3;
+    uint32 file_size = 4;
+    string task_id = 5;
+    uint32 result_code = 6;
+    youliao.pdu.base.TransferFileType trans_mode = 7;
+}
+
+
+//由消息服务器到路由服务器//
+
+//[1] 用户上线
+message UserGoOnline
+{
+    uint32 user_id      = 1;
+    uint32 msg_index    = 2;       //用户所登录的消息服务器index
+    youliao.pdu.base.UserStatusType user_state = 3; //在线或者隐身
+
+}
+
+//[2] 用户下线
+message UserGoOffline
+{
+    uint32 user_id      = 1;
+}
+
+

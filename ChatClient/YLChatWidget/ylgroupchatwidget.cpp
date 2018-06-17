@@ -1,19 +1,26 @@
 #include "ylgroupchatwidget.h"
-#include "ylmessageview.h"
-#include "YLCommonControl/ylgroupnoticewidget.h"
-#include "ylmessageeditwidget.h"
-#include "YLCommonControl/ylbutton.h"
-#include "YLCommonControl/ylgroupmemberlistwidget.h"
-#include "ylemoticonwidget.h"
-#include "YLNetWork/http/httphelper.h"
-#include "YLNetWork/ylbusiness.h"
+
 #include "globaldata.h"
+#include "signalforward.h"
+#include "ylmessageview.h"
+#include "ylemoticonwidget.h"
+#include "ylmessageeditwidget.h"
+#include "YLNetWork/ylbusiness.h"
+#include "YLDataBase/yldatabase.h"
+#include "YLCommonControl/ylbutton.h"
+#include "YLNetWork/http/httphelper.h"
+#include "YLCommonControl/ylheadframe.h"
+#include "YLCommonControl/ylgroupnoticewidget.h"
+#include "YLCommonControl/ylgroupmemberlistwidget.h"
+
 #include <QLabel>
 #include <QPixmap>
 #include <QPainter>
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <QToolButton>
+
+/***********************************************/
 YLGroupChatWidget::YLGroupChatWidget(QWidget *parent) : QWidget(parent), m_hide(false)
 {
     resize(1000, 650);
@@ -21,6 +28,7 @@ YLGroupChatWidget::YLGroupChatWidget(QWidget *parent) : QWidget(parent), m_hide(
     initLeft();
     init();
     initMidToolBar();
+
     m_scale_width = 200;;
 }
 
@@ -115,7 +123,29 @@ void YLGroupChatWidget::init()
     m_message_view->setFocusPolicy(Qt::NoFocus);
     m_message_view->resize(width() - 200, 450);
     m_message_view->setStyleSheet("background:red;");
+    connect(m_message_view, &YLMessageView::loadFinished, this, [this](bool f) {
+        //加载最近消息
+        YLDataBase db;
+        auto vec = db.getRecentGroupMsgByGroupId(m_group.getGroupId());
 
+        for (QPair<uint32_t, YLMessage> pair : vec)
+        {
+            //senderid 是当前登录用户
+            if (pair.first == GlobalData::getCurrLoginUserId())
+            {
+                m_message_view->addRight(GlobalData::getCurrLoginUserIconPath(), pair.second.getMsgContent());
+            }
+            else
+            {
+//                m_message_view->addGroupLeft(GlobalData::getMemberInfo(m_group.getGroupId(), pair.first).user_info().user_header_url().c_str(),
+//                                        pair.second.getMsgContent());
+                receiveMessage(pair.first, pair.second.getMsgContent());
+            }
+        }
+
+        if (f) emit loadFinish();
+
+    });
 
 
     m_message_edit_widget = new YLMessageEditWidget(this);
@@ -304,12 +334,15 @@ void YLGroupChatWidget::sendTextMessage()
 
     YLBusiness::sendGroupTextMessage(m_group.getGroupId(), GlobalData::getCurrLoginUserId(), content);
 
-//    YLSession session = GlobalData::getSessionByFriendId(m_friend.friendId());
-//    session.setOtherId(m_friend.friendId());
-//    session.setSessionLastChatMessage(content);
-//    session.setSessionType(base::SESSION_TYPE_SINGLE);
-//    session.setSessionLastChatTime(QDateTime::currentDateTime().toTime_t());
-//    SignalForward::instance()->forwordUpdateSession(session);
+    YLSession session = GlobalData::getSessionByGroupId(m_group.getGroupId());
+
+    //session 存在,更新session
+    if (session.getOtherId() == m_group.getGroupId())
+    {
+        session.setSessionLastChatMessage(content);
+        session.setSessionLastChatTime(QDateTime::currentDateTime().toTime_t());
+        SignalForward::instance()->forwordUpdateSession(session);
+    }
 }
 
 void YLGroupChatWidget::receiveMessage(uint32_t user_id, const QString &message)
@@ -321,7 +354,12 @@ void YLGroupChatWidget::receiveMessage(uint32_t user_id, const QString &message)
 
     base::MemberInfo& memberInfo = GlobalData::getMemberInfo(m_group.getGroupId(), user_id);
 
-    m_message_view->addLeft(memberInfo.user_info().user_header_url().c_str(), message);
+    QString groupCard = memberInfo.group_card().c_str();
+    QString name = groupCard.isEmpty() ? memberInfo.user_info().user_nick().c_str() : groupCard;
+
+    QUrl url(memberInfo.user_info().user_header_url().c_str());
+    m_message_view->addGroupLeft("file://" + GlobalData::imagePath + url.fileName(), name ,message);
+
     msg.replace(re, "[Picture]");
 
 //    YLSession session = GlobalData::getSessionByFriendId(m_friend.friendId());
@@ -331,4 +369,23 @@ void YLGroupChatWidget::receiveMessage(uint32_t user_id, const QString &message)
 //    session.setSessionLastChatTime(QDateTime::currentDateTime().toTime_t());
 //    SignalForward::instance()->forwordUpdateSession(session);
 //    //send message ack
+}
+
+
+void YLGroupChatWidget::loadMemberList()
+{
+    QVector<YLGroupMember> vec;
+    {
+        YLDataBase db;
+
+        vec = db.getMemberByGroupId(m_group.getGroupId());
+    }
+
+    if (vec.empty())
+        return;
+
+    for (auto &mem : vec)
+    {
+        m_member_list_widget->addRow(mem);
+    }
 }

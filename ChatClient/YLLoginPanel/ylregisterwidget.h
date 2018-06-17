@@ -2,7 +2,7 @@
 #define YLREGISTERWIDGET_H
 
 #include <QWidget>
-
+#include "YLBasicWidget/ylbasicwidget.h"
 QT_BEGIN_NAMESPACE
 namespace Ui { class RegisterWidget; }
 class QLabel;
@@ -11,7 +11,7 @@ class QMovie;
 class QPushButton;
 QT_END_NAMESPACE
 
-class YLRegisterWidget : public QWidget
+class YLRegisterWidget : public YLBasicWidget
 {
     Q_OBJECT
 public:
@@ -25,6 +25,9 @@ private slots:
     void on_registerButton_clicked();
 
     void on_pushButton_clicked();
+
+protected:
+    void paintEvent(QPaintEvent *event);
 
 private:
     void uploadImage(const QString &fileName);
@@ -41,6 +44,10 @@ private:
 class LoadingWidget : public QWidget
 {
     Q_OBJECT
+    const QString qss_login_button_ = "QPushButton        {font: 13px;color:white;border-image:url(:/res/LoginPanel/button_login_normal.png);}\
+                                       QPushButton:hover  {font: 13px;color:white;border-image:url(:/res/LoginPanel/button_login_hover.png);}\
+                                       QPushButton:pressed{font: 13px;color:white;border-image:url(:/res/LoginPanel/button_login_down.png);}";
+
 public:
     explicit LoadingWidget(QWidget *parent = nullptr);
     void registerSuccess(const QString &account);

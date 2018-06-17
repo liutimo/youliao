@@ -7,6 +7,7 @@
 #include <QAudioFormat>
 #include <QAudioDeviceInfo>
 #include "YLDataBase/yldatabase.h"
+#include <QDir>
 YLMessageView::YLMessageView(QWidget *parent) : QWebEngineView(parent), m_current_page(0), m_current_index(0)
 {
     setAttribute(Qt::WA_DeleteOnClose);
@@ -14,6 +15,9 @@ YLMessageView::YLMessageView(QWidget *parent) : QWebEngineView(parent), m_curren
     setMouseTracking(true);
     load(QUrl("qrc:/res/YLChatWidget/bubble.html"));
     setContextMenuPolicy(Qt::NoContextMenu);
+
+
+    m_player = new QMediaPlayer(this);
 
     Test *t = new Test();
     t->setView(this);
@@ -23,6 +27,10 @@ YLMessageView::YLMessageView(QWidget *parent) : QWebEngineView(parent), m_curren
 
     connect(t, &Test::startPlayAudio, this, &YLMessageView::audio);
 
+    connect(m_player, &QMediaPlayer::mediaStatusChanged, this, [](QMediaPlayer::MediaStatus status){
+        //判断状态
+        //播放完成后停止气泡动画。
+    });
 }
 
 void YLMessageView::loadMore()
@@ -81,7 +89,18 @@ void YLMessageView::loadRight(const QString &head, const QString &content)
 
 void YLMessageView::addLeft(const QString &head, const QString &content)
 {
+    qDebug() << head;
     QString script = QString("document.getElementById(\"content\").insertAdjacentHTML(\"beforeEnd\",\"<div style='overflow:hidden;'><p class='divotherhead'><img src='%1' width='30px' height='30px' > </p><p class='triangle-left left' onmousedown='mouseDown(event)'>%2</p></div>\")").arg(head).arg(content) ;
+    page()->runJavaScript(script);
+    script = QString("keepOnBottom()");
+    page()->runJavaScript(script);
+    ++m_current_index;
+}
+
+void YLMessageView::addGroupLeft(const QString &icon, const QString &name, const QString &content)
+{
+    qDebug() << icon;
+    QString script = QString("document.getElementById(\"content\").insertAdjacentHTML(\"beforeEnd\",\"<div style='overflow:hidden;'><p class='divOtherHead'><img src='%1' width='30px' height='30px' ></p> <div> <p class='group-name-left'>%2</p><p class='triangle-left left' onmousedown='mouseDown(event)'>%3</p> <div></div>\")").arg(icon).arg(name).arg(content);
     page()->runJavaScript(script);
     script = QString("keepOnBottom()");
     page()->runJavaScript(script);
@@ -142,8 +161,8 @@ void YLMessageView::sendFileSuccess(const QString &head, const QString &fileName
 
 void YLMessageView::recvFileSuccess(const QString &head, const QString &fileName, const QString &fileSize)
 {
-    QString html = QString("<div style='overflow:hidden;'><p class='divMyHead'><img src='%1' width='30px' height='30px' ></p>\
-                    <div id='1' class='triangle-right right' onmousedown='mouseDown(event)' style='display:inline-block'>\
+    QString html = QString("<div style='overflow:hidden;'><p class='divOtherHead'><img src='%1' width='30px' height='30px' ></p>\
+                    <div id='1' class='triangle-left left' onmousedown='mouseDown(event)' style='display:inline-block'>\
                     <div><div class='file' ><p class ='fileinfo'><span class='filename'>%2 </span><span class='filesize'> (%3) </span> </p>\
                     <p class='tipmsg'>成功接收文件</p><p class ='op'><a href='#' class='opendir'>打开文件夹</a><a href='#' class='openfile'>打开</a></p></div>\
                     <div class='fileicon' style='width:40px; position:relative; '><img src='qrc:/res/FileIcon/audio.png' width='100%' />\
@@ -197,56 +216,12 @@ void YLMessageView::copy()
 
 void YLMessageView::audio(uint32_t msgId)
 {
-//    emit playAudio(msgId);
-
     QString key = QString::number(m_friend_id) + "_" + QString::number(msgId);
 
-    QString fileName = GlobalData::getAudio(key);
+    QString fileName = QDir::currentPath() + "/" + GlobalData::getAudio(key);
 
-    sourceFile.setFileName(fileName);
-    sourceFile.open(QIODevice::ReadOnly);
-
-    //[1]设置音频格式
-    QAudioFormat format;
-    format.setSampleRate(8000);                         //采样率
-    format.setChannelCount(1);                          //单声道
-    format.setSampleSize(8);                            //采样精度
-    format.setCodec("audio/amrnb");                       //格式
-    format.setByteOrder(QAudioFormat::LittleEndian);    //字节序
-    format.setSampleType(QAudioFormat::UnSignedInt);    //采样类型
-
-    //[2]获取音频设备信息
-    QAudioDeviceInfo info = QAudioDeviceInfo::defaultInputDevice();
-    if (!info.isFormatSupported(format))
-        format = info.nearestFormat(format);            //支持的最接近的format
-
-    //[3] 初始化QAudioInput
-    m_audio_output = new QAudioOutput(format, this);
-    m_audio_output->setVolume(80);
-
-    connect(m_audio_output, &QAudioOutput::stateChanged, this, [this] (QAudio::State newState){
-        switch (newState) {
-                  case QAudio::IdleState:
-                      // Finished playing (no more data)
-                      m_audio_output->stop();
-                      sourceFile.close();
-                      delete m_audio_output;
-                      break;
-
-                  case QAudio::StoppedState:
-                      // Stopped for other reasons
-                      if (m_audio_output->error() != QAudio::NoError) {
-                          // Error handling
-                      }
-                      break;
-
-                  default:
-                      // ... other cases as appropriate
-                      break;
-              }
-    });
-
-    m_audio_output->start(&sourceFile);
+    m_player->setMedia(QUrl::fromLocalFile(fileName));
+    m_player->play();
 }
 
 void YLMessageView::mousePressEvent(QMouseEvent *event)

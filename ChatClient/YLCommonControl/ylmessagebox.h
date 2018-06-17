@@ -25,14 +25,18 @@ class YLMessageBox : public YLBasicWidget
     const QString qss_btn = "QPushButton{border-radius:3px;background-color:rgb(244 , 244 , 244); border: 1px solid rgb(160 , 150 , 152);}\
                              QPushButton:hover{background-color:rgb(190 , 231 , 253);border: 1px solid rgb(79 , 173 , 216);}\
                              QPushButton:pressed{background-color:rgb(235 , 236 , 237);border: 1px solid rgb(79 , 173 , 216);padding-left:2px;  padding-top:2px;}";
-public:
-
+public:        
+      typedef enum {
+            Tips = 0,
+            Error,
+            Warn
+       }TipType;
 
     explicit YLMessageBox(int type = BUTTON_OK | BUTTON_CANNEL, QWidget *parent = nullptr);
     BottonResult exec();
-    void setTitle(const QString &title);
     void setToolTip(const QString &toolTip);
-
+    void setIcon(const QString &path);
+    void setTipType(TipType type);
 protected:
     void paintEvent(QPaintEvent *event);
     void closeEvent(QCloseEvent *event);
@@ -42,7 +46,7 @@ private:
     void initButtonOk(const QPoint &p);
     void initButtonCannel(const QPoint &p);
 
-    QLabel       *m_title;
+    QLabel       *m_icon;
     QLabel       *m_tooltip;
     QPushButton  *m_ok;
     QPushButton  *m_cannel;

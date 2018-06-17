@@ -17,7 +17,9 @@ public:
     explicit YLValidateWidget(QWidget *parent = nullptr);
     ~YLValidateWidget();
     void setFriend(const YLFriend &fri) { m_friend = fri; }
-signals:
+
+protected:
+    void paintEvent(QPaintEvent *event);
 
 private slots:
     void next();

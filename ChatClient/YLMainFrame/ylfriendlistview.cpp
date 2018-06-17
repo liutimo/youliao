@@ -43,6 +43,7 @@ YLFriendListView::YLFriendListView(QWidget *parent) : QListWidget(parent),
        GlobalData::setGroup(m_group);
     });
     connect(PduHandler::instance(), &PduHandler::friendlist, this, &YLFriendListView::updateFriendList);
+    connect(PduHandler::instance(), &PduHandler::addFriendSuccess, this, &YLFriendListView::refreshFriendList);
     connect(PduHandler::instance(), &PduHandler::friendStatusChange, this, &YLFriendListView::friendStatusChanged);
     connect(PduHandler::instance(), &PduHandler::friendSignatureChange, this, &YLFriendListView::friendSignatureChanged);
     connect(PduHandler::instance(), &PduHandler::friendGroup, this, [this](uint32_t groupId, const QString &groupName)
@@ -50,6 +51,7 @@ YLFriendListView::YLFriendListView(QWidget *parent) : QListWidget(parent),
         m_group[groupId] = groupName;
         GlobalData::setGroup(m_group);
     });
+    connect(PduHandler::instance(), &PduHandler::deleteFriend, this, &YLFriendListView::deleteFriend);
 }
 
 YLFriendListView::~YLFriendListView()
@@ -136,9 +138,9 @@ void YLFriendListView::updateList()
                 connect(item_widget, &YLListItem::modifyRemark, this, &YLFriendListView::modifyRemark);
                 connect(item_widget, &YLListItem::deleteFriend, this, &YLFriendListView::deleteFriend);
 
-                item_widget->setSecondMenu(m_group, elem);
                 fri.setFriendGroup(elem);
                 item_widget->setData(fri);
+                item_widget->setSecondMenu(m_group, elem);
                 setItemWidget(item, item_widget);
             }
         }
@@ -300,7 +302,7 @@ void YLFriendListView::editFinshed()
         if(elem == newName)
         {
             YLMessageBox *messageBox = new YLMessageBox(BUTTON_OK, parentWidget());
-            messageBox->setTitle("Error");
+            messageBox->setWidgetTitle("Error");
             messageBox->setToolTip("this group is exist!");
             auto p = YLMainWidget::center;
             messageBox->move(mapToGlobal(p) - mapToGlobal(messageBox->rect().center()));
@@ -356,10 +358,33 @@ void YLFriendListView::deleteFriend(uint32_t friendId)
             {
                 vec.erase(iter);
                 updateList();
-                return;
+                break;
             }
         }
     }
+
+    auto &m_top_sessions    = GlobalData::getTopSessions();
+    auto &m_sessions        = GlobalData::getSessions();
+
+    for (auto iter = m_top_sessions.begin(); iter != m_top_sessions.end(); ++iter)
+    {
+        if (iter->getOtherId() == friendId && iter->getSessionType() == base::SESSION_TYPE_SINGLE)
+        {
+            m_top_sessions.erase(iter);
+            break;
+        }
+    }
+
+    for (auto iter = m_sessions.begin(); iter != m_sessions.end(); ++iter)
+    {
+        if (iter->getOtherId() == friendId && iter->getSessionType() == base::SESSION_TYPE_SINGLE)
+        {
+            m_sessions.erase(iter);
+            break;
+        }
+    }
+
+    emit updateSessions();
 }
 
 void YLFriendListView::modifyRemark(uint32_t friendId, const QString &newRemark)
@@ -378,4 +403,5 @@ void YLFriendListView::modifyRemark(uint32_t friendId, const QString &newRemark)
             }
         }
     }
+
 }

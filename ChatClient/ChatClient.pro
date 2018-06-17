@@ -56,4 +56,7 @@ RESOURCES += \
     resource.qrc
 
 FORMS += \
-    register.ui
+    register.ui \
+    modifyinfo.ui \
+    userinformation.ui \
+    uploadheadicon.ui

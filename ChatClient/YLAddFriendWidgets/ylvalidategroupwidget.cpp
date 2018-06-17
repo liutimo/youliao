@@ -1,11 +1,14 @@
 #include "ylvalidategroupwidget.h"
 #include <QLabel>
+#include <QPainter>
 #include <QTextEdit>
 #include <QPushButton>
 #include "YLCommonControl/ylheadframe.h"
 #include "YLNetWork/ylbusiness.h"
 YLValidateGroupWidget::YLValidateGroupWidget(QWidget *parent) : YLBasicWidget(parent)
 {
+    setWidgetTitle("添加群");
+    setWidgetIcon(":/res/qqlogo.png");
     setFixedSize(460, 360);
 
     initLeft();
@@ -38,6 +41,7 @@ void YLValidateGroupWidget::setGroup(const YLGroup &group)
         m_next->hide();
         m_tip->hide();
         m_text_eidt->hide();
+        m_icon->show();
         m_info->show();
         //send Request
         YLBusiness::addGroup(m_group.getGroupId());
@@ -73,9 +77,18 @@ void YLValidateGroupWidget::initRight()
     m_text_eidt->setFixedSize(280, 80);
     m_text_eidt->move(135, 80);
 
+
+    m_icon = new QLabel(this);
+    m_icon->setFixedSize(40, 40);
+    m_icon->setPixmap(QPixmap(":/res/MessageBox/sysmessagebox_okFile.png"));
+    m_icon->move(160, 65);
+    m_icon->hide();
+
     m_info = new QLabel("成功加入该群", this);
-    m_info->setFixedSize(300, 100);
-    m_info->move(135, 50);;
+    m_info->setFixedSize(210, 40);
+    m_info->setWordWrap(true);
+    m_info->setAlignment(Qt::AlignVCenter);
+    m_info->move(210, 65);;
     m_info->hide();
 }
 
@@ -83,14 +96,20 @@ void YLValidateGroupWidget::initRight()
 void YLValidateGroupWidget::initBottom()
 {
     m_next = new QPushButton("下一步", this);
-    m_next->setFixedSize(80, 30);
-    m_next->move(270, height() - 35);
+    m_next->setFixedSize(64, 23);
+    m_next->move(300, height() - 30);
     connect(m_next, &QPushButton::clicked, this, &YLValidateGroupWidget::next);
+    m_next->setStyleSheet("QPushButton{border-image:url(:/res/YLCommonControl/audio_button_normal.png)}\
+                          QPushButton:hover{border-image:url(:/res/YLCommonControl/audio_button_hoverl.png)}\
+                          QPushButton:pressed{border-image:url(:/res/YLCommonControl/audio_button_down.png)}");
 
     m_cancel = new QPushButton("关闭", this);
-    m_cancel->setFixedSize(80, 30);
-    m_cancel->move(360, height() - 35);
+    m_cancel->setFixedSize(64, 23);
+    m_cancel->move(380, height() - 30);
     connect(m_cancel, &QPushButton::clicked, this, [this](){ close(); });
+    m_cancel->setStyleSheet("QPushButton{border-image:url(:/res/YLCommonControl/audio_button_normal.png)}\
+                            QPushButton:hover{border-image:url(:/res/YLCommonControl/audio_button_hoverl.png)}\
+                            QPushButton:pressed{border-image:url(:/res/YLCommonControl/audio_button_down.png)}");
 
 }
 
@@ -99,7 +118,32 @@ void YLValidateGroupWidget::next()
     m_next->hide();
     m_tip->hide();
     m_text_eidt->hide();
+    m_icon->show();
     m_info->show();
-    m_info->setText("已发送加群申请！！！！！！");
+    m_info->setText("你的加群请求已发送成功,请等候群主/管理员验证。");
     YLBusiness::addGroup(m_group.getGroupId(), m_text_eidt->toPlainText());
+}
+
+
+void YLValidateGroupWidget::paintEvent(QPaintEvent *event)
+{
+    const int titleBarHeight = 32;
+    const int bottomBarHeight = 36;
+    const int leftWidth = 130;
+
+    QPainter painter(this);
+    painter.setPen(Qt::NoPen);
+
+
+    painter.setBrush(Qt::white);
+    painter.drawRect(rect());
+
+    painter.setBrush(QColor::fromRgb(40, 138, 221));           //#288ADD
+    painter.drawRect(0, 0, width(), titleBarHeight);
+
+    painter.setBrush(QColor::fromRgb(234, 238, 245));           //#EAEEF5
+    painter.drawRect(0, height() - bottomBarHeight, width(), bottomBarHeight);
+
+    painter.setBrush(QColor::fromRgb(248, 250, 252));           //#F8FAFC
+    painter.drawRect(0, titleBarHeight, leftWidth, height() - titleBarHeight - bottomBarHeight);
 }

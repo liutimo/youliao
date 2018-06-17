@@ -40,7 +40,7 @@ namespace protobuf_youliao_2efriendlist_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[25];
+  static const ::google::protobuf::internal::ParseTable schema[26];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -82,6 +82,8 @@ void InitDefaultsMoveFriendToGroupRequestImpl();
 void InitDefaultsMoveFriendToGroupRequest();
 void InitDefaultsDeleteFriendRequestImpl();
 void InitDefaultsDeleteFriendRequest();
+void InitDefaultsDeleteFriendResponeImpl();
+void InitDefaultsDeleteFriendRespone();
 void InitDefaultsModifyFriendRemarkRequestImpl();
 void InitDefaultsModifyFriendRemarkRequest();
 void InitDefaultsSearchFriendRequestImpl();
@@ -115,6 +117,7 @@ inline void InitDefaults() {
   InitDefaultsDeleteFriendGroupRequest();
   InitDefaultsMoveFriendToGroupRequest();
   InitDefaultsDeleteFriendRequest();
+  InitDefaultsDeleteFriendRespone();
   InitDefaultsModifyFriendRemarkRequest();
   InitDefaultsSearchFriendRequest();
   InitDefaultsSearchFriendRespone();
@@ -145,6 +148,9 @@ extern DeleteFriendGroupRequestDefaultTypeInternal _DeleteFriendGroupRequest_def
 class DeleteFriendRequest;
 class DeleteFriendRequestDefaultTypeInternal;
 extern DeleteFriendRequestDefaultTypeInternal _DeleteFriendRequest_default_instance_;
+class DeleteFriendRespone;
+class DeleteFriendResponeDefaultTypeInternal;
+extern DeleteFriendResponeDefaultTypeInternal _DeleteFriendRespone_default_instance_;
 class FriendListRequest;
 class FriendListRequestDefaultTypeInternal;
 extern FriendListRequestDefaultTypeInternal _FriendListRequest_default_instance_;
@@ -213,6 +219,7 @@ template<> ::youliao::pdu::friendlist::AddNewFriendGroupRequest* Arena::Create< 
 template<> ::youliao::pdu::friendlist::AddNewFriendGroupRespone* Arena::Create< ::youliao::pdu::friendlist::AddNewFriendGroupRespone>(Arena*);
 template<> ::youliao::pdu::friendlist::DeleteFriendGroupRequest* Arena::Create< ::youliao::pdu::friendlist::DeleteFriendGroupRequest>(Arena*);
 template<> ::youliao::pdu::friendlist::DeleteFriendRequest* Arena::Create< ::youliao::pdu::friendlist::DeleteFriendRequest>(Arena*);
+template<> ::youliao::pdu::friendlist::DeleteFriendRespone* Arena::Create< ::youliao::pdu::friendlist::DeleteFriendRespone>(Arena*);
 template<> ::youliao::pdu::friendlist::FriendListRequest* Arena::Create< ::youliao::pdu::friendlist::FriendListRequest>(Arena*);
 template<> ::youliao::pdu::friendlist::FriendListRespone* Arena::Create< ::youliao::pdu::friendlist::FriendListRespone>(Arena*);
 template<> ::youliao::pdu::friendlist::FriendListRespone_FriendListEntry_DoNotUse* Arena::Create< ::youliao::pdu::friendlist::FriendListRespone_FriendListEntry_DoNotUse>(Arena*);
@@ -2157,6 +2164,116 @@ class DeleteFriendRequest : public ::google::protobuf::Message /* @@protoc_inser
 };
 // -------------------------------------------------------------------
 
+class DeleteFriendRespone : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.friendlist.DeleteFriendRespone) */ {
+ public:
+  DeleteFriendRespone();
+  virtual ~DeleteFriendRespone();
+
+  DeleteFriendRespone(const DeleteFriendRespone& from);
+
+  inline DeleteFriendRespone& operator=(const DeleteFriendRespone& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  DeleteFriendRespone(DeleteFriendRespone&& from) noexcept
+    : DeleteFriendRespone() {
+    *this = ::std::move(from);
+  }
+
+  inline DeleteFriendRespone& operator=(DeleteFriendRespone&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const DeleteFriendRespone& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const DeleteFriendRespone* internal_default_instance() {
+    return reinterpret_cast<const DeleteFriendRespone*>(
+               &_DeleteFriendRespone_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    18;
+
+  void Swap(DeleteFriendRespone* other);
+  friend void swap(DeleteFriendRespone& a, DeleteFriendRespone& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline DeleteFriendRespone* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<DeleteFriendRespone>(NULL);
+  }
+
+  DeleteFriendRespone* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<DeleteFriendRespone>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const DeleteFriendRespone& from);
+  void MergeFrom(const DeleteFriendRespone& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(DeleteFriendRespone* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // uint32 user_id = 1;
+  void clear_user_id();
+  static const int kUserIdFieldNumber = 1;
+  ::google::protobuf::uint32 user_id() const;
+  void set_user_id(::google::protobuf::uint32 value);
+
+  // uint32 friend_id = 2;
+  void clear_friend_id();
+  static const int kFriendIdFieldNumber = 2;
+  ::google::protobuf::uint32 friend_id() const;
+  void set_friend_id(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.friendlist.DeleteFriendRespone)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 user_id_;
+  ::google::protobuf::uint32 friend_id_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2efriendlist_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2efriendlist_2eproto::InitDefaultsDeleteFriendResponeImpl();
+};
+// -------------------------------------------------------------------
+
 class ModifyFriendRemarkRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.friendlist.ModifyFriendRemarkRequest) */ {
  public:
   ModifyFriendRemarkRequest();
@@ -2192,7 +2309,7 @@ class ModifyFriendRemarkRequest : public ::google::protobuf::Message /* @@protoc
                &_ModifyFriendRemarkRequest_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    18;
+    19;
 
   void Swap(ModifyFriendRemarkRequest* other);
   friend void swap(ModifyFriendRemarkRequest& a, ModifyFriendRemarkRequest& b) {
@@ -2317,7 +2434,7 @@ class SearchFriendRequest : public ::google::protobuf::Message /* @@protoc_inser
                &_SearchFriendRequest_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    19;
+    20;
 
   void Swap(SearchFriendRequest* other);
   friend void swap(SearchFriendRequest& a, SearchFriendRequest& b) {
@@ -2442,7 +2559,7 @@ class SearchFriendRespone : public ::google::protobuf::Message /* @@protoc_inser
                &_SearchFriendRespone_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    20;
+    21;
 
   void Swap(SearchFriendRespone* other);
   friend void swap(SearchFriendRespone& a, SearchFriendRespone& b) {
@@ -2558,7 +2675,7 @@ class AddFriendRequest : public ::google::protobuf::Message /* @@protoc_insertio
                &_AddFriendRequest_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    21;
+    22;
 
   void Swap(AddFriendRequest* other);
   friend void swap(AddFriendRequest& a, AddFriendRequest& b) {
@@ -2735,7 +2852,7 @@ class AddFriendRespone : public ::google::protobuf::Message /* @@protoc_insertio
                &_AddFriendRespone_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    22;
+    23;
 
   void Swap(AddFriendRespone* other);
   friend void swap(AddFriendRespone& a, AddFriendRespone& b) {
@@ -2874,7 +2991,7 @@ class GetAddRequestHistoryRequest : public ::google::protobuf::Message /* @@prot
                &_GetAddRequestHistoryRequest_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    23;
+    24;
 
   void Swap(GetAddRequestHistoryRequest* other);
   friend void swap(GetAddRequestHistoryRequest& a, GetAddRequestHistoryRequest& b) {
@@ -2977,7 +3094,7 @@ class GetAddRequestHistoryRespone : public ::google::protobuf::Message /* @@prot
                &_GetAddRequestHistoryRespone_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    24;
+    25;
 
   void Swap(GetAddRequestHistoryRespone* other);
   friend void swap(GetAddRequestHistoryRespone& a, GetAddRequestHistoryRespone& b) {
@@ -3945,6 +4062,38 @@ inline void DeleteFriendRequest::set_friend_id(::google::protobuf::uint32 value)
 
 // -------------------------------------------------------------------
 
+// DeleteFriendRespone
+
+// uint32 user_id = 1;
+inline void DeleteFriendRespone::clear_user_id() {
+  user_id_ = 0u;
+}
+inline ::google::protobuf::uint32 DeleteFriendRespone::user_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.friendlist.DeleteFriendRespone.user_id)
+  return user_id_;
+}
+inline void DeleteFriendRespone::set_user_id(::google::protobuf::uint32 value) {
+  
+  user_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.friendlist.DeleteFriendRespone.user_id)
+}
+
+// uint32 friend_id = 2;
+inline void DeleteFriendRespone::clear_friend_id() {
+  friend_id_ = 0u;
+}
+inline ::google::protobuf::uint32 DeleteFriendRespone::friend_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.friendlist.DeleteFriendRespone.friend_id)
+  return friend_id_;
+}
+inline void DeleteFriendRespone::set_friend_id(::google::protobuf::uint32 value) {
+  
+  friend_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.friendlist.DeleteFriendRespone.friend_id)
+}
+
+// -------------------------------------------------------------------
+
 // ModifyFriendRemarkRequest
 
 // uint32 user_id = 1;
@@ -4595,6 +4744,8 @@ GetAddRequestHistoryRespone::history() const {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

@@ -26,16 +26,16 @@ void YLMessageListItem::init()
     m_counter_bubble->move(270, 11);
 }
 
-void YLMessageListItem::setNickOrRemark(const QString &nick)
+void YLMessageListItem::setName(const QString &name)
 {
-    m_nick_or_remark->setText(QString("<p style='font: 16px;'>%1</p>").arg(nick));
+    m_nick_or_remark->setText(QString("<p style='font: 16px;'>%1</p>").arg(name));
 }
 
 void YLMessageListItem::setHeadFrame(const QString &path)
 {
     QUrl url(path);
     if (url.isValid())
-        m_head_frame->setHeadFromLocal(url.fileName());
+        m_head_frame->setHeadFromUrl(url);
     else
         m_head_frame->setHeadFromLocal(path);
 
@@ -49,9 +49,13 @@ void YLMessageListItem::setCounterNumber(int num)
 
 void YLMessageListItem::mousePressEvent(QMouseEvent *e)
 {
+
     if (e->button() == Qt::LeftButton)
     {
-        SignalForward::instance()->forwordReadOne(m_friend_id, m_type);
+        if (m_type == GROUP)
+            SignalForward::instance()->forwordReadOne(m_group_id, m_type);
+        else
+            SignalForward::instance()->forwordReadOne(m_sender_id, m_type);
     }
     QWidget::mousePressEvent(e);
 }
@@ -60,7 +64,10 @@ void YLMessageListItem::mouseDoubleClickEvent(QMouseEvent *e)
 {
     if (e->button() == Qt::LeftButton)
     {
-        SignalForward::instance()->forwordReadOne(m_friend_id, m_type);
+        if (m_type == GROUP)
+            SignalForward::instance()->forwordReadOne(m_group_id, m_type);
+        else
+            SignalForward::instance()->forwordReadOne(m_sender_id, m_type);
     }
     QWidget::mouseDoubleClickEvent(e);
 }

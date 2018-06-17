@@ -30,10 +30,14 @@ private:
     void _HandleGetFriendsStatusRequest(BasePdu *basePdu);
     void _HandleGetGroupOnlineMember(BasePdu *basePdu);
     void _HandleForwardGroupMessage(BasePdu *basePdu);
+    void _HandleUserInformationChange(BasePdu *basePdu);
+    void _HandleUpdateGroupListRequest(BasePdu *basePdu);
+
 
     void _HandleRouteMessage(BasePdu *basePdu);
     void _HandleMessageServerIndex(BasePdu *basePdu);
     void _HandleBroadcastMsg(BasePdu *basePdu);
+
 
     uint32_t  m_index;
 };

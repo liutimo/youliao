@@ -13,13 +13,18 @@ message GetSessionReponse
     repeated youliao.pdu.base.SessionInfo sessions = 2;
 }
 
+message CreateNewSession
+{
+    uint32 user_id = 1;
+    uint32 other_id = 2;
+    youliao.pdu.base.SessionType session_type = 3;
+}
+
 //当好友添加新
 message NewSessionRespone
 {
     uint32 user_id = 1;
-    uint32 other_id = 2;
-    uint32 session_id = 3;
-    youliao.pdu.base.SessionType session_type = 4;
+    youliao.pdu.base.SessionInfo session = 2;
 }
 
 

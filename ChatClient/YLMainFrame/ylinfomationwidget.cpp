@@ -1,5 +1,8 @@
 #include "ylinfomationwidget.h"
 #include "YLCommonControl/ylheadframe.h"
+#include "globaldata.h"
+#include "YLNetWork/pduhandler.h"
+#include "YLNetWork/ylbusiness.h"
 #include <QPushButton>
 #include <QLabel>
 #include <QPixmap>
@@ -9,6 +12,14 @@ YLInfomationWidget::YLInfomationWidget(QWidget *parent) : YLBasicWidget(parent)
     resize(730, 530);
     initLeft();
     initRight();
+
+    connect(PduHandler::instance(), &PduHandler::friendInformation, this, [this](const base::UserInfo &userInfo){
+        m_school->setText(userInfo.user_school().c_str());
+        m_email->setText(userInfo.user_email().c_str());
+        m_phone->setText(userInfo.user_phone().c_str());
+        m_location->setText(userInfo.user_location().c_str());
+        m_homeland->setText(userInfo.user_hometown().c_str());
+    });
 }
 
 void YLInfomationWidget::paintEvent(QPaintEvent *e)
@@ -83,6 +94,21 @@ void YLInfomationWidget::initRight()
     m_icon_email->move(380, 240);
     m_icon_email->setPixmap(QPixmap(":/res/Info/email.png"));
 
+    m_icon_phone = new QLabel(this);
+    m_icon_phone->setFixedSize(22, 22);
+    m_icon_phone->move(380, 275);
+    m_icon_phone->setPixmap(QPixmap(":/res/Info/phone.png"));
+
+    m_icon_homeland = new QLabel(this);
+    m_icon_homeland->setFixedSize(22, 22);
+    m_icon_homeland->move(380, 310);
+    m_icon_homeland->setPixmap(QPixmap(":/res/Info/home_land.png"));
+
+    m_icon_location = new QLabel(this);
+    m_icon_location->setFixedSize(22, 22);
+    m_icon_location->move(380, 345);
+    m_icon_location->setPixmap(QPixmap(":/res/Info/residence_place.png"));
+
     m_account = new QLabel(this);
     m_account->setText("123456");
     m_account->move(410, 30);
@@ -113,6 +139,18 @@ void YLInfomationWidget::initRight()
     m_label_email->setFixedSize(30, 30);
     m_label_email->move(410, 235);
 
+    m_label_phone = new QLabel("手机", this);
+    m_label_phone->setFixedSize(30, 30);
+    m_label_phone->move(410, 270);
+
+    m_label_homeland = new QLabel("家乡", this);
+    m_label_homeland->setFixedSize(30, 30);
+    m_label_homeland->move(410, 305);
+
+    m_label_location = new QLabel("现居", this);
+    m_label_location->setFixedSize(30, 30);
+    m_label_location->move(410, 340);
+
     m_nick = new QLabel(this);
     m_nick->setText("I'll be fine!");
     m_nick->move(450, 66);
@@ -132,6 +170,7 @@ void YLInfomationWidget::initRight()
 
     m_school = new QLabel(this);
     m_school->setText("CSLGDX");
+    m_school->setFixedWidth(300);
     m_school->move(450, 206);
     m_school->setTextInteractionFlags(Qt::TextSelectableByMouse);
 
@@ -140,6 +179,21 @@ void YLInfomationWidget::initRight()
     m_email->setText("779564531@qq.com");
     m_email->move(450, 241);
     m_email->setTextInteractionFlags(Qt::TextSelectableByMouse);
+
+    m_phone = new QLabel(this);
+    m_phone->setText("15367877419");
+    m_phone->move(450, 276);
+    m_phone->setTextInteractionFlags(Qt::TextSelectableByMouse);
+
+    m_homeland = new QLabel(this);
+    m_homeland->setText("15367877419");
+    m_homeland->move(450, 311);
+    m_homeland->setTextInteractionFlags(Qt::TextSelectableByMouse);
+
+    m_location = new QLabel(this);
+    m_location->setText("15367877419");
+    m_location->move(450, 346);
+    m_location->setTextInteractionFlags(Qt::TextSelectableByMouse);
 }
 
 
@@ -151,11 +205,30 @@ void YLInfomationWidget::setFriendInfo(const YLFriend &fri)
     m_nick->setText(m_friend_info.friendNickName());
     m_remark->setText(m_friend_info.friendRemark());
     m_group->setText(m_friend_info.friendGroup());
-//    m_label_sex->setText(m_friend_info.friend);
-//    m_email->setText(m_friend_info.friend);
 
-    m_header_icon->setPixmap(QPixmap(m_friend_info.friendImageName()));
-    m_circle_header_icon->setHeadFromLocal(m_friend_info.friendImageName());
+    QString imagePath = GlobalData::imagePath + m_friend_info.friendImageName();
+    m_header_icon->setPixmap(QPixmap(imagePath));
+    m_circle_header_icon->setHeadFromLocal(imagePath);
     m_signature->setText(m_friend_info.friendSigature());
     m_remark_or_nick->setText(m_friend_info.friendRemark().isEmpty() ? m_friend_info.friendNickName() : m_friend_info.friendRemark());
+
+    YLBusiness::getFriendInformation(m_friend_info.friendId());
+}
+
+
+void YLInfomationWidget::setUserInfo()
+{
+    m_account->setText(GlobalData::getCurrLoginUserAccount());
+    m_nick->setText(GlobalData::getCurrLoginUserNick());
+    m_header_icon->setPixmap(QPixmap(QUrl(GlobalData::getCurrLoginUserHeadUrl()).fileName()));
+    m_circle_header_icon->setHeadFromUrl(GlobalData::getCurrLoginUserHeadUrl());
+    m_signature->setText(GlobalData::getCurrLoginUserSignature());
+
+    m_group->hide();
+    m_remark->hide();
+    m_icon_remark->hide();
+    m_icon_group->hide();
+    m_label_remark->hide();
+    m_label_group->hide();
+
 }

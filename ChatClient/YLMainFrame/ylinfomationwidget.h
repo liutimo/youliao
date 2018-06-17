@@ -3,6 +3,7 @@
 
 #include "YLBasicWidget/ylbasicwidget.h"
 #include "YLEntityObject/ylfriend.h"
+#include "YLEntityObject/yluser.h"
 
 class QLabel;
 class YLHeadFrame;
@@ -14,6 +15,7 @@ class YLInfomationWidget : public YLBasicWidget
 public:
     explicit YLInfomationWidget(QWidget *parent = nullptr);
     void setFriendInfo(const YLFriend &);
+    void setUserInfo();
 signals:
 
 public slots:
@@ -39,6 +41,9 @@ private:
     QLabel *m_icon_sex;
     QLabel *m_icon_school;
     QLabel *m_icon_email;
+    QLabel *m_icon_phone;
+    QLabel *m_icon_homeland;
+    QLabel *m_icon_location;
 
     QLabel *m_account;
     QLabel *m_label_nick;
@@ -47,12 +52,18 @@ private:
     QLabel *m_label_sex;
     QLabel *m_label_school;
     QLabel *m_label_email;
+    QLabel *m_label_phone;
+    QLabel *m_label_homeland;
+    QLabel *m_label_location;
 
     QLabel *m_nick;
     QLabel *m_remark;
     QLabel *m_group;
     QLabel *m_school;
     QLabel *m_email;
+    QLabel *m_phone;
+    QLabel *m_homeland;
+    QLabel *m_location;
 
     YLFriend m_friend_info;
 

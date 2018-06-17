@@ -56,6 +56,7 @@ enum ServerCID
 
 
 
+
     //已删除
 
     //    CID_SERVER_USER_LOGOUT      = 0x0204;        //由消息服务器发送给数据库服务器
@@ -69,6 +70,13 @@ enum OtherCID
 {
     CID_OTHER_ZERO      = 0x0000;
     CID_OTHER_HEARTBEAT = 0x0301;            //心跳包
+    CID_OTHER_MODIFY_INFORMATION_REQUEST = 0x0302;   //修改资料
+    CID_OTHER_MODIFY_INFORMATION_RESPONE = 0x0303;
+    CID_OTHER_MODIFY_USER_HEADER_REQUEST = 0x0304;
+    CID_OTHER_MODIFY_USER_HEADER_RESPONE = 0x0305;
+    CID_OTHER_GET_FRIEND_INFORMATION_REQUEST = 0x0306;
+    CID_OTHER_GFT_FRIEND_INFORMATION_RESPONE = 0x0307;
+    CID_OTHER_FRIEND_INFORMATION_CHANGE_NOTIFY = 0x0308;
 }
 
 //好友列表
@@ -97,6 +105,7 @@ enum FriendListCID
     CID_FRIENDLIST_ADD_FRIEND_RESPONE           = 0x0414;   //响应
     CID_FRIENDLIST_GET_REQUEST_HISTORY_REQUEST  = 0x0415;   //请求获取好友请求历史
     CID_FRIENDLIST_GET_REQUEST_HISTORY_RESPONE  = 0x0416;   //响应获取好友请求历史
+    CID_FRIENDLIST_DELETE_FRIEND_RESPONE        = 0x0417;   //删除好友
 }
 
 //最近会话
@@ -113,6 +122,7 @@ enum SessionListCID
     CID_SESSIONLIST_TOP_SESSION = 0x0504;  //置顶session
     CID_SESSIONLIST_GET_SESSIONS_REQUEST = 0x0505;  //请求Session列表
     CID_SESSIONLIST_GET_SESSIONS_RESPONE = 0x0506;  //响应Session列表
+    CID_SESSIONLIST_ADD_SESSION_REQUEST  = 0x0507;  //添加session
 }
 
 
@@ -125,6 +135,10 @@ enum MessageCID
     CID_MESSAGE_UPDATE = 0x0603;      //更新消息，第一次存入数据库的消息时未读状态。当收到Client ACK，更改其状态为已读
     CID_MESSAGE_GET_LATEST_MSG_ID_REQUEST = 0x0604; //请求最新的消息ID
     CID_MESSAGE_GET_LATEST_MSG_ID_RESPONE = 0x0605; //响应最新的消息ID
+    CID_MESSAGE_DATA_ACK = 0x0606;      //消息确认
+    CID_MESSAGE_GET_OFFLINE_MESSAGE_REQUEST = 0x0607;   //获取离线消息
+    CID_MESSAGE_GET_OFFLINE_MESSAGE_RESPONE = 0x0608;
+
 }
 
 //群组
@@ -143,6 +157,19 @@ enum GroupCID
     CID_GROUP_SEARCH_GROUP_REQUEST  = 0x070A;
     CID_GROUP_SEARCH_GROUP_RESPONE  = 0x070B;
     CID_GROUP_VERIFY_NOTIFY         = 0x070C; //通知
+    CID_GROUP_GET_LATEST_MSG_ID_REQUEST = 0x070D;   //获取最新消息ID
+    CID_GROUP_GET_LATEST_MSG_ID_RESPONE = 0x070E;   //
+    CID_GROUP_EXIT_GROUP_REQUEST        = 0x070F;   //退群请求
+    CID_GROUP_EXIT_GROUP_RESPONE        = 0x0710;
+    CID_GROUP_MODIFY_HEADER_REQUEST     = 0x0711;
+    CID_GROUP_MODIFY_HEADER_RESPONE     = 0x0712;
+    CID_GROUP_SET_MANAGER_REQUEST       = 0x0713;   //设置管理员
+    CID_GROUP_SET_MANAGER_RESPONE       = 0x0714;
+    CID_GROUP_KICK_OUT_REQUEST          = 0x0715;   //踢出
+    CID_GROUP_KICK_OUT_RESPONE          = 0x0716;
+    CID_GROUP_VERIFY_RESULT             = 0x0717;   //验证信息结果
+    CID_GROUP_ADD_REQUEST_HANDLE_RESULT = 0x0718;   //添加群组请求处理结果
+    CID_GROUP_UPDATE_GROUP_LIST            = 0x0213;   //更新群组列表,群员更改时使用
 }
 //文件
 enum FileCID
@@ -193,6 +220,15 @@ enum SessionFlag
     SESSION_FLAG_ONTOP = 2;         //置顶
 }
 
+
+//群组消息验证结果
+enum GroupVerifyResult
+{
+    GROUP_VERIFY_RESULT_ZERO = 0;
+    GROUP_VERIFY_RESULT_PASS = 1;      //通过
+    GROUP_VERIGY_RESULT_REFUEST = 2;   //拒绝
+}
+
 //用户信息, 登录成功后发送
 message UserInfo
 {
@@ -204,22 +240,23 @@ message UserInfo
     string user_email = 6;
     string user_phone = 7;
     string user_sign_info = 8;
+    string user_birthday = 9;
+    string user_hometown = 10;
+    string user_school = 11;
+    string user_location = 12;
 }
 
-//好友信息
+//好友信息,该信息仅仅用于好友列表和Session列表.不用于好友详细资料
 message FriendInfo
 {
     uint32 related_id = 1;
     uint32 friend_id = 2;
     uint32 friend_account = 3;
-    uint32 friend_sex = 4;
-    string friend_nick = 5;
-    string friend_header_url =6;
-    string friend_email = 7;
-    string friend_phone = 8;
-    string friend_sign_info = 9;
-    string friend_remark = 10;
-    bool   friend_is_online = 11;
+    string friend_nick = 4;
+    string friend_header_url =5;
+    string friend_sign_info = 6;
+    string friend_remark = 7;
+    bool   friend_is_online = 8;
 }
 
 //会话信息
@@ -229,8 +266,9 @@ message SessionInfo
     uint32 other_id = 2;
     uint32 session_type = 3;
     uint32 session_top = 4;
-    uint32 session_update = 5;
-    uint32 latest_msg_id = 6;
+//    uint32 session_update = 5;
+    uint32 latest_msg_id = 5;
+    uint32 latest_msg_time = 6;
     bytes last_message_data = 7;
 }
 
@@ -259,15 +297,16 @@ message AddRequestInfo
 //群组信息
 message GroupInfo
 {
-    uint32 group_id = 1;        //群ID
-    string group_name = 2;      //群名称
-    string group_head = 3;      //群头像
-    uint32 group_creator = 4;   //群主
-    uint32 group_capacity = 5;  //最大成员数
-    uint32 group_created = 6;   //成立时间
-    repeated uint32 managers = 7; //管理员
+    uint32 group_id = 1;                //群ID
+    string group_name = 2;              //群名称
+    string group_head = 3;              //群头像
+    uint32 group_creator = 4;           //群主
+    uint32 group_capacity = 5;          //最大成员数
+    uint32 group_created = 6;           //成立时间
+    repeated uint32 managers = 7;       //管理员
     repeated uint32 members = 8;
     uint32 group_verify_type = 9;
+    uint32 group_latest_msg_id = 10;    //最新消息ID
 }
 
 //消息服务器发送给loginserver

@@ -12,7 +12,7 @@
 #include <QDebug>
 #include <QMenu>
 #include <QLabel>
-
+#include "YLCommonControl/ylmessagebox.h"
 YLGroupListView::YLGroupListView(QWidget *parent) : QListWidget(parent)
 {
     setObjectName("YLGroupListView");
@@ -24,6 +24,7 @@ YLGroupListView::YLGroupListView(QWidget *parent) : QListWidget(parent)
     initMenu();
     connect(PduHandler::instance(), &PduHandler::newGroup, this, &YLGroupListView::addGroupItem);
     connect(PduHandler::instance(), &PduHandler::groupList, this, &YLGroupListView::updateList);
+    connect(PduHandler::instance(), &PduHandler::exitGroupResult, this, &YLGroupListView::exitGroupResult);
 }
 
 void YLGroupListView::initMenu()
@@ -74,8 +75,33 @@ void YLGroupListView::updateList()
     {
         addGroupItem(group);
     }
+
+    //请求session列表
+    YLBusiness::getSessions(GlobalData::getCurrLoginUserId());
 }
 
+void YLGroupListView::exitGroupResult(uint32_t groupId, uint32_t resultCode)
+{
+
+    YLGroup group = GlobalData::getGroupByGroupId(groupId);
+
+
+    YLMessageBox *m = new YLMessageBox(BUTTON_OK, this);
+    m->setWidgetTitle("提示");
+    m->setIcon(":/res/MessageBox/sysmessagebox_inforFile.png");
+    if (resultCode == 0)
+    {
+        GlobalData::remGroupByGroupId(groupId);
+        m->setToolTip(QString("你已成功退出群:%1(%2)。").arg(group.getGroupName()).arg(group.getGroupId()));
+    }
+    else
+        m->setToolTip(QString("退出群组失败!!!"));
+
+    m->show();
+    m->exec();
+
+    updateList();
+}
 
 /****************************************************/
 
@@ -122,6 +148,19 @@ void YLGroupListItem::initMenu()
         YLGroupInfoWidget *w = new YLGroupInfoWidget;
         w->setGroup(m_group);
         w->show();
+    });
+
+    connect(action_exit_group, &QAction::triggered, this, [this](){
+
+        YLMessageBox *m = new YLMessageBox(BUTTON_OK | BUTTON_CANNEL, this);
+        m->setWidgetTitle("提示");
+        m->setIcon(":/res/MessageBox/sysmessagebox_inforFile.png");
+        m->setToolTip("你真的要退出该群吗？(退群通知仅群管理员可见)");
+        m->show();
+        BottonResult br =  m->exec();
+
+        if (br == BUTTON_OK)
+            YLBusiness::exitGroup(m_group.getGroupId());
     });
 
 }

@@ -33,6 +33,8 @@ public:
 
     void setVerifyType(uint32_t type);
 
+    void setLatestMsgId(uint32_t msgId);
+
     uint32_t getGroupId() const;
 
     QString getGroupName() const;
@@ -51,17 +53,23 @@ public:
 
     uint32_t getVerifyType() const;
 
+    uint32_t getLatestMsgId() const;
+
     uint32_t getCount() const { return 1 + m_managers.size() + m_members.size(); }
+
+    QString getHeaderName() const { return m_head_name; }
 private:
     uint32_t m_group_id;
     uint32_t m_creator;
     uint32_t m_capacity;
     uint32_t m_created;
     uint32_t m_verify_type;
+    uint32_t m_latest_msg_id;
     QVector<uint32_t> m_managers;
     QVector<uint32_t> m_members;
     QString m_group_name;
     QString m_head_url;
+    QString m_head_name;
 };
 
 #endif // YLGROUP_H

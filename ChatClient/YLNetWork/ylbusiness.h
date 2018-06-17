@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <protobuf/youliao.base.pb.h>
+#include "protobuf/youliao.other.pb.h"
 
 using namespace youliao::pdu::base;
 
@@ -36,11 +37,15 @@ public:
     static void sendAudioMessage(uint32_t senderId, uint32_t receiverId, const QString &filename, uint32_t time);
     static void getLatestMsgId(uint32_t friendId);
     static void sendGroupTextMessage(uint32_t groupId, uint32_t userId, const QString &message);
+    static void sendMessageAck(uint32_t senderId, uint32_t receiverId, uint32_t msg_id);
+    static void getOfflineMessage();
 
     //session
     static void getSessions(uint32_t userId);
     static void deleteSession(uint32_t userId, uint32_t sessionId);
     static void topSession(uint32_t userId, uint32_t sessionId);
+    static void createNewSession(uint32_t otherId, SessionType type);
+
 
     //group
     static void createGroupRequest(const QString &groupName, uint32_t groupMaxMembers, youliao::pdu::base::GroupVerifyType verifyType, const QVector<uint32_t> &members);
@@ -49,9 +54,23 @@ public:
     static void modifyGroupCard(uint32_t groupId, const QString &card);
     static void searchGroup(const QString &searchData, youliao::pdu::base::SearchType searchType);
     static void addGroup(uint32_t groupId, const QString &verifyData = QString());
+    static void getLatestGroupMsgId(uint32_t groupId);
+    static void exitGroup(uint32_t groupId);
+    static void modifyGroupHeader(uint32_t groupId, const QString &url);
+    static void setGroupManager(uint32_t groupId, uint32_t memberId);
+    static void kickOutGroupMember(uint32_t groupId, uint32_t memberId);
+
 
     //file
     static void sendFileRequest(uint32_t friId, const QString &fileName, uint32_t fileSize, bool isOnline);
+
+    //other
+    static void modifyInformation(const UserInfo &userInfo, bool flag);
+    static void modifyUserIcon(const QString &url);
+    static void getFriendInformation(uint32_t friendId);
+
+    //群验证消息
+    static void sendGroupVerifyResult(uint32_t groupId, uint32_t requestUserId, GroupVerifyResult result);
 };
 
 #endif // YLBUSINESS_H

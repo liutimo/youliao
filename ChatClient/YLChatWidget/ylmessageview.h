@@ -3,6 +3,7 @@
 
 #include <QWebEngineView>
 #include <QAudioOutput>
+#include <QMediaPlayer>
 #include <QFile>
 class YLMessageView : public QWebEngineView
 {
@@ -14,6 +15,7 @@ public:
     virtual ~YLMessageView();
 
     void addLeft(const QString &, const QString &);
+    void addGroupLeft(const QString &icon, const QString &name, const QString &content);
     void loadLeft(const QString &, const QString&);
     void addLeftAudio(const QString &, uint32_t msgId, uint32_t duration);
     void addRight(const QString &, const QString&);
@@ -42,6 +44,7 @@ private:
 
     QFile  sourceFile;
     QAudioOutput *m_audio_output;
+    QMediaPlayer *m_player;
 
     uint32_t m_friend_id;
     uint32_t m_current_page;

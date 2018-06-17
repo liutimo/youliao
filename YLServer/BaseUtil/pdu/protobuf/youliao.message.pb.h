@@ -37,7 +37,7 @@ namespace protobuf_youliao_2emessage_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[4];
+  static const ::google::protobuf::internal::ParseTable schema[6];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -51,16 +51,28 @@ void InitDefaultsLatestMsgIdRequestImpl();
 void InitDefaultsLatestMsgIdRequest();
 void InitDefaultsLatestMsgIdResponeImpl();
 void InitDefaultsLatestMsgIdRespone();
+void InitDefaultsGetOfflineMessageRequestImpl();
+void InitDefaultsGetOfflineMessageRequest();
+void InitDefaultsGetOfflineMessageResponeImpl();
+void InitDefaultsGetOfflineMessageRespone();
 inline void InitDefaults() {
   InitDefaultsMessageData();
   InitDefaultsMessageDataAck();
   InitDefaultsLatestMsgIdRequest();
   InitDefaultsLatestMsgIdRespone();
+  InitDefaultsGetOfflineMessageRequest();
+  InitDefaultsGetOfflineMessageRespone();
 }
 }  // namespace protobuf_youliao_2emessage_2eproto
 namespace youliao {
 namespace pdu {
 namespace message {
+class GetOfflineMessageRequest;
+class GetOfflineMessageRequestDefaultTypeInternal;
+extern GetOfflineMessageRequestDefaultTypeInternal _GetOfflineMessageRequest_default_instance_;
+class GetOfflineMessageRespone;
+class GetOfflineMessageResponeDefaultTypeInternal;
+extern GetOfflineMessageResponeDefaultTypeInternal _GetOfflineMessageRespone_default_instance_;
 class LatestMsgIdRequest;
 class LatestMsgIdRequestDefaultTypeInternal;
 extern LatestMsgIdRequestDefaultTypeInternal _LatestMsgIdRequest_default_instance_;
@@ -78,6 +90,8 @@ extern MessageDataAckDefaultTypeInternal _MessageDataAck_default_instance_;
 }  // namespace youliao
 namespace google {
 namespace protobuf {
+template<> ::youliao::pdu::message::GetOfflineMessageRequest* Arena::Create< ::youliao::pdu::message::GetOfflineMessageRequest>(Arena*);
+template<> ::youliao::pdu::message::GetOfflineMessageRespone* Arena::Create< ::youliao::pdu::message::GetOfflineMessageRespone>(Arena*);
 template<> ::youliao::pdu::message::LatestMsgIdRequest* Arena::Create< ::youliao::pdu::message::LatestMsgIdRequest>(Arena*);
 template<> ::youliao::pdu::message::LatestMsgIdRespone* Arena::Create< ::youliao::pdu::message::LatestMsgIdRespone>(Arena*);
 template<> ::youliao::pdu::message::MessageData* Arena::Create< ::youliao::pdu::message::MessageData>(Arena*);
@@ -599,6 +613,225 @@ class LatestMsgIdRespone : public ::google::protobuf::Message /* @@protoc_insert
   friend struct ::protobuf_youliao_2emessage_2eproto::TableStruct;
   friend void ::protobuf_youliao_2emessage_2eproto::InitDefaultsLatestMsgIdResponeImpl();
 };
+// -------------------------------------------------------------------
+
+class GetOfflineMessageRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.message.GetOfflineMessageRequest) */ {
+ public:
+  GetOfflineMessageRequest();
+  virtual ~GetOfflineMessageRequest();
+
+  GetOfflineMessageRequest(const GetOfflineMessageRequest& from);
+
+  inline GetOfflineMessageRequest& operator=(const GetOfflineMessageRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  GetOfflineMessageRequest(GetOfflineMessageRequest&& from) noexcept
+    : GetOfflineMessageRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline GetOfflineMessageRequest& operator=(GetOfflineMessageRequest&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const GetOfflineMessageRequest& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const GetOfflineMessageRequest* internal_default_instance() {
+    return reinterpret_cast<const GetOfflineMessageRequest*>(
+               &_GetOfflineMessageRequest_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    4;
+
+  void Swap(GetOfflineMessageRequest* other);
+  friend void swap(GetOfflineMessageRequest& a, GetOfflineMessageRequest& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline GetOfflineMessageRequest* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<GetOfflineMessageRequest>(NULL);
+  }
+
+  GetOfflineMessageRequest* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<GetOfflineMessageRequest>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const GetOfflineMessageRequest& from);
+  void MergeFrom(const GetOfflineMessageRequest& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(GetOfflineMessageRequest* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // uint32 user_id = 1;
+  void clear_user_id();
+  static const int kUserIdFieldNumber = 1;
+  ::google::protobuf::uint32 user_id() const;
+  void set_user_id(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.message.GetOfflineMessageRequest)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 user_id_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2emessage_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2emessage_2eproto::InitDefaultsGetOfflineMessageRequestImpl();
+};
+// -------------------------------------------------------------------
+
+class GetOfflineMessageRespone : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.message.GetOfflineMessageRespone) */ {
+ public:
+  GetOfflineMessageRespone();
+  virtual ~GetOfflineMessageRespone();
+
+  GetOfflineMessageRespone(const GetOfflineMessageRespone& from);
+
+  inline GetOfflineMessageRespone& operator=(const GetOfflineMessageRespone& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  GetOfflineMessageRespone(GetOfflineMessageRespone&& from) noexcept
+    : GetOfflineMessageRespone() {
+    *this = ::std::move(from);
+  }
+
+  inline GetOfflineMessageRespone& operator=(GetOfflineMessageRespone&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const GetOfflineMessageRespone& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const GetOfflineMessageRespone* internal_default_instance() {
+    return reinterpret_cast<const GetOfflineMessageRespone*>(
+               &_GetOfflineMessageRespone_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    5;
+
+  void Swap(GetOfflineMessageRespone* other);
+  friend void swap(GetOfflineMessageRespone& a, GetOfflineMessageRespone& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline GetOfflineMessageRespone* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<GetOfflineMessageRespone>(NULL);
+  }
+
+  GetOfflineMessageRespone* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<GetOfflineMessageRespone>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const GetOfflineMessageRespone& from);
+  void MergeFrom(const GetOfflineMessageRespone& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(GetOfflineMessageRespone* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated .youliao.pdu.message.MessageData msg_data = 2;
+  int msg_data_size() const;
+  void clear_msg_data();
+  static const int kMsgDataFieldNumber = 2;
+  ::youliao::pdu::message::MessageData* mutable_msg_data(int index);
+  ::google::protobuf::RepeatedPtrField< ::youliao::pdu::message::MessageData >*
+      mutable_msg_data();
+  const ::youliao::pdu::message::MessageData& msg_data(int index) const;
+  ::youliao::pdu::message::MessageData* add_msg_data();
+  const ::google::protobuf::RepeatedPtrField< ::youliao::pdu::message::MessageData >&
+      msg_data() const;
+
+  // uint32 user_id = 1;
+  void clear_user_id();
+  static const int kUserIdFieldNumber = 1;
+  ::google::protobuf::uint32 user_id() const;
+  void set_user_id(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.message.GetOfflineMessageRespone)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::RepeatedPtrField< ::youliao::pdu::message::MessageData > msg_data_;
+  ::google::protobuf::uint32 user_id_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2emessage_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2emessage_2eproto::InitDefaultsGetOfflineMessageResponeImpl();
+};
 // ===================================================================
 
 
@@ -899,9 +1132,79 @@ inline void LatestMsgIdRespone::set_latest_msg_id(::google::protobuf::uint32 val
   // @@protoc_insertion_point(field_set:youliao.pdu.message.LatestMsgIdRespone.latest_msg_id)
 }
 
+// -------------------------------------------------------------------
+
+// GetOfflineMessageRequest
+
+// uint32 user_id = 1;
+inline void GetOfflineMessageRequest::clear_user_id() {
+  user_id_ = 0u;
+}
+inline ::google::protobuf::uint32 GetOfflineMessageRequest::user_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.message.GetOfflineMessageRequest.user_id)
+  return user_id_;
+}
+inline void GetOfflineMessageRequest::set_user_id(::google::protobuf::uint32 value) {
+  
+  user_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.message.GetOfflineMessageRequest.user_id)
+}
+
+// -------------------------------------------------------------------
+
+// GetOfflineMessageRespone
+
+// uint32 user_id = 1;
+inline void GetOfflineMessageRespone::clear_user_id() {
+  user_id_ = 0u;
+}
+inline ::google::protobuf::uint32 GetOfflineMessageRespone::user_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.message.GetOfflineMessageRespone.user_id)
+  return user_id_;
+}
+inline void GetOfflineMessageRespone::set_user_id(::google::protobuf::uint32 value) {
+  
+  user_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.message.GetOfflineMessageRespone.user_id)
+}
+
+// repeated .youliao.pdu.message.MessageData msg_data = 2;
+inline int GetOfflineMessageRespone::msg_data_size() const {
+  return msg_data_.size();
+}
+inline void GetOfflineMessageRespone::clear_msg_data() {
+  msg_data_.Clear();
+}
+inline ::youliao::pdu::message::MessageData* GetOfflineMessageRespone::mutable_msg_data(int index) {
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.message.GetOfflineMessageRespone.msg_data)
+  return msg_data_.Mutable(index);
+}
+inline ::google::protobuf::RepeatedPtrField< ::youliao::pdu::message::MessageData >*
+GetOfflineMessageRespone::mutable_msg_data() {
+  // @@protoc_insertion_point(field_mutable_list:youliao.pdu.message.GetOfflineMessageRespone.msg_data)
+  return &msg_data_;
+}
+inline const ::youliao::pdu::message::MessageData& GetOfflineMessageRespone::msg_data(int index) const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.message.GetOfflineMessageRespone.msg_data)
+  return msg_data_.Get(index);
+}
+inline ::youliao::pdu::message::MessageData* GetOfflineMessageRespone::add_msg_data() {
+  // @@protoc_insertion_point(field_add:youliao.pdu.message.GetOfflineMessageRespone.msg_data)
+  return msg_data_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::youliao::pdu::message::MessageData >&
+GetOfflineMessageRespone::msg_data() const {
+  // @@protoc_insertion_point(field_list:youliao.pdu.message.GetOfflineMessageRespone.msg_data)
+  return msg_data_;
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

@@ -25,6 +25,15 @@ YLGroupInfoWidget::YLGroupInfoWidget(QWidget *parent) : YLBasicWidget(parent), i
     settingHide();
 
     connect(PduHandler::instance(), &PduHandler::groupMembers, this, &YLGroupInfoWidget::updateGroupMemberList);
+    connect(PduHandler::instance(), &PduHandler::modifyGroupHeader, this, [this](uint32_t groupId, const QString &url){
+        YLGroup group = GlobalData::getGroupByGroupId(groupId);
+        group.setGroupImage(url);
+        GlobalData::addToGroups(group);
+
+        //设置信息
+        m_head_frame->setHeadFromUrl(url);
+        m_photo->setHeadFromUrl(url);
+    });
 }
 
 void YLGroupInfoWidget::initTopNavigationBar()
@@ -91,7 +100,7 @@ void YLGroupInfoWidget::initRight1()
     m_add_photo->setStyleSheet(qss_add_photo);
     connect(m_add_photo, &QPushButton::clicked, this, &YLGroupInfoWidget::uploadPhoto);
 
-    m_photo = new QLabel(this);
+    m_photo = new YLHeadFrame(this);
     m_photo->setFixedSize(60, 60);
     m_photo->move(312, 70);
 
@@ -159,16 +168,17 @@ void YLGroupInfoWidget::setGroup(const YLGroup &group)
     m_label_group_name->setText(m_group.getGroupName());
     m_label_group_id->setText(QString::number(m_group.getGroupId()));
     m_head_frame->setHeadFromUrl(m_group.getGroupImage());
-    QUrl url(m_group.getGroupImage());
-    m_photo->setPixmap(QPixmap("./" + url.fileName()).scaled(m_photo->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+
+    QString imagePath = GlobalData::imagePath + m_group.getHeaderName();
+    m_photo->setHeadFromLocal(imagePath);
     m_group_intro->setText(QString("该群创建于%1:").arg(QDateTime::fromTime_t(m_group.getCreateTime()).toString("yyyy/mm/dd")));
     m_label_member_distr->setText(QString("<p style='color:gray;'>群员分布(%1/%2)</p>").arg(1 + group.getManagers().size() + group.getMembers().size()).arg(m_group.getGroupCapacity()));
     m_label_manager_count->setText(QString("管理员: %1/10人").arg(m_group.getManagers().size() + 1));
 
     //发送网络请求
     YLBusiness::getGroupMembersInfo(m_group.getGroupId());
+    YLBusiness::getLatestGroupMsgId(m_group.getGroupId());
 }
-
 
 void YLGroupInfoWidget::paintEvent(QPaintEvent *event)
 {
@@ -190,7 +200,14 @@ void YLGroupInfoWidget::paintEvent(QPaintEvent *event)
 void YLGroupInfoWidget::uploadPhoto()
 {
     QString m_filename = QFileDialog::getOpenFileName(this, tr("选择图片"), QDir::homePath(), tr("Images (*.png *.jpeg *.bmp *.gif *.jpg)"));
-    qDebug() << m_filename;
+    //[1]上传图片。
+
+    HttpHelper httpHelper;
+    QString uploadFileName = httpHelper.upload(m_filename);
+
+    //[2]成功则更改数据库
+    QString  url = "http://www.liutimo.cn/images/" + uploadFileName;
+    YLBusiness::modifyGroupHeader(m_group.getGroupId(), url);
 }
 
 
@@ -202,6 +219,8 @@ void YLGroupInfoWidget::modifyGroupCard()
 
 void YLGroupInfoWidget::updateGroupMemberList()
 {
+    m_group = GlobalData::getGroupByGroupId(m_group.getGroupId());
+    m_member_list->setGroup(m_group);
     m_member_list->clear();
     m_member_list->setHeader();
     auto managers = m_group.getManagers();

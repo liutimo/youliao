@@ -1,25 +1,28 @@
 #include "yladdfriendwidget.h"
+#include <QLabel>
+#include <QPainter>
 #include <QLineEdit>
+#include <QScrollBar>
 #include <QPushButton>
+#include <QHeaderView>
+#include <QHBoxLayout>
 #include <QRadioButton>
 #include <QTableWidget>
-#include <QHeaderView>
-#include <QScrollBar>
 #include <QButtonGroup>
-#include <QHBoxLayout>
-#include <QLabel>
-#include "YLNetWork/ylbusiness.h"
+
 #include "globaldata.h"
 #include "ylgroupwidget.h"
 #include "ylfriendinfowidget.h"
+#include "YLNetWork/ylbusiness.h"
 #include "YLNetWork/pduhandler.h"
+
 YLAddFriendWidget::YLAddFriendWidget(QWidget *parent) : YLBasicWidget(parent)
 {
     setFixedSize(600, 480);
     init();
     init_table_widget();
     setWidgetTitle("查找");
-    setWidgetIcon(":/res/MainFrame/logo.png");
+    setWidgetIcon(":/res/qqlogo.png");
     connect(PduHandler::instance(), &PduHandler::searchResult, this, &YLAddFriendWidget::friends);
     connect(PduHandler::instance(), &PduHandler::searchGroupResult, this, &YLAddFriendWidget::groups);
     showNoResultTip(false);
@@ -33,9 +36,11 @@ void YLAddFriendWidget::init()
     m_search_lineedit->setStyleSheet("QLineEdit{font: 13px;border:2px solid #D0E9FF;}\
                                       QLineEdit:hover{font: 13px;border:2px solid #1DB0B8;}");
 
-    m_search_button = new QPushButton("搜索", this);
+    m_search_button = new QPushButton("查找", this);
     m_search_button->setFixedSize(80, 28);
     m_search_button->move((width() - 480) / 2 + 400, 60);
+    m_search_button->setStyleSheet("border:0px; color:white; background:#009BDB;");
+
     connect(m_search_button, &QPushButton::clicked, this, [this](){
         base::SearchType type = base::SEARCH_TYPE_ACCOUNT;
         if (m_search_by_nickname->isChecked())
@@ -205,3 +210,24 @@ void YLAddFriendWidget::groups(const QVector<YLGroup> &groups)
         }
     }
 }
+
+
+void YLAddFriendWidget::paintEvent(QPaintEvent *event)
+{
+    const int titleBarHeight = 32;
+
+    QPainter painter(this);
+    painter.setPen(Qt::NoPen);
+
+
+    painter.setBrush(Qt::white);
+    painter.drawRect(rect());
+
+    painter.setBrush(QColor::fromRgb(40, 138, 221));           //#288ADD
+    painter.drawRect(0, 0, width(), titleBarHeight);
+
+
+    painter.setBrush(QColor::fromRgb(234,241,248));            //#EAF1F8
+    painter.drawRect(0, titleBarHeight, width(), height() - titleBarHeight);
+}
+

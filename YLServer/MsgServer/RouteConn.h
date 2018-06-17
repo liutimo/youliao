@@ -31,6 +31,8 @@ private:
     void _HandleRouteBroadcast(BasePdu *);
     void _HandleHandleStatusChange(BasePdu *);
     void _HandleForwardGroupMessage(BasePdu *);
+    void _HandleUserInformationChange(BasePdu *);
+    void _HandleUpdateGroupListRespone(BasePdu *);
 
     uint32_t   m_server_index;
     bool       m_open;

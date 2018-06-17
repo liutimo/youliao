@@ -16,49 +16,79 @@ YLRecentChatView::YLRecentChatView(QWidget *parent) : QListWidget(parent)
     setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     connect(SignalForward::instance(), &SignalForward::readOne, this, &YLRecentChatView::readComplete);
 
-    connect(PduHandler::instance(), &PduHandler::sessions, this, [this](const QList<base::SessionInfo> &lists)
+    connect(PduHandler::instance(), &PduHandler::sessions, this, [this]()
     {
-        for (base::SessionInfo session : lists)
-        {
-            YLSession s;
-            s.setSessionId(session.session_id());
-            s.setOtherId(session.other_id());
-            s.setSessionLastChatMessage(session.last_message_data().c_str());
-            s.setSessionTop(session.session_top());
-            s.setSessionType(session.session_type());
-            s.setSessionLastChatTime(session.session_update());
-
-            if (s.sessionTop())
-                m_top_data.push_back(s);
-            m_data.push_back(s);
-        }
-        GlobalData::setSessions(m_data);
         updateList();
     });
 
     connect(PduHandler::instance(), &PduHandler::newSession, this, &YLRecentChatView::newSession);
-    connect(PduHandler::instance(), &PduHandler::unReadMessage, this, [this](uint32_t friendId, const QString&message){
+    connect(PduHandler::instance(), &PduHandler::unReadMessage, this, [this](uint32_t friendId, const QString&message, uint32_t type)
+    {
+        auto &m_data     = GlobalData::getSessions();
+        auto &m_top_data = GlobalData::getTopSessions();
+
         for (YLSession &session : m_data)
         {
-            if (session.getOtherId() == friendId)
+            if (type == 1)
             {
-                session.addUnReadMsgCount();
-                session.setSessionLastChatMessage(message);
-                break;
+                if (session.getOtherId() == friendId && session.getSessionType() == YLSession::FRIEND)
+                {
+                    session.addUnReadMsgCount();
+                    session.setSessionLastChatMessage(message);
+                    break;
+                }
+            }
+            else if (type == 2)
+            {
+                if (session.getSessionType() == YLSession::GROUP && session.getOtherId() == friendId)
+                {
+                    session.addUnReadMsgCount();
+                    session.setSessionLastChatMessage(message);
+                    break;
+                }
+            }
+            else if (type == 3)
+            {
+                if (session.getSessionType() == YLSession::REQUEST && session.getOtherId() == 3)
+                {
+                    session.addUnReadMsgCount();
+                    session.setSessionLastChatMessage(message);
+                    break;
+                }
             }
         }
 
         for (YLSession &session : m_top_data)
         {
-            if (session.getOtherId() == friendId)
+            if (type == 1)
             {
-                session.addUnReadMsgCount();
-                session.setSessionLastChatMessage(message);
-                break;
+                if (session.getOtherId() == friendId && session.getSessionType() == YLSession::FRIEND)
+                {
+                    session.addUnReadMsgCount();
+                    session.setSessionLastChatMessage(message);
+                    break;
+                }
+            }
+            else if (type == 2)
+            {
+                if (session.getSessionType() == YLSession::GROUP && session.getOtherId() == friendId)
+                {
+                    session.addUnReadMsgCount();
+                    session.setSessionLastChatMessage(message);
+                    break;
+                }
+            }
+            else if (type == 3)
+            {
+                if (session.getSessionType() == YLSession::REQUEST && session.getOtherId() == 3)
+                {
+                    session.addUnReadMsgCount();
+                    session.setSessionLastChatMessage(message);
+                    break;
+                }
             }
         }
 
-        GlobalData::setSessions(m_data);
         updateList();
     });
 }
@@ -73,13 +103,21 @@ void YLRecentChatView::add(const YLSession &session, int pos)
     connect(item_widget, &YLListItem::deleteFromList, this, &YLRecentChatView::on_del_from_list);
     connect(item_widget, &YLListItem::readCompleted, this, &YLRecentChatView::readComplete);
 
-    item_widget->setData(GlobalData::getFriendById(session.getOtherId()), session);
+    if (session.getSessionType() == base::SESSION_TYPE_GROUP)
+        item_widget->setData(GlobalData::getGroupByGroupId(session.getOtherId()), session);
+    else if (session.getSessionType() == base::SESSION_TYPE_SINGLE)
+        item_widget->setData(GlobalData::getFriendById(session.getOtherId()), session);
+    else if (session.getSessionType() == base::SESSION_TYPE_VALIDATE_MSG)
+        item_widget->setData(session);
 
-    setItemWidget(item, item_widget);
+     setItemWidget(item, item_widget);
 }
 
 void YLRecentChatView::addItem(const YLSession &session)
 {
+    auto &m_data     = GlobalData::getSessions();
+    auto &m_top_data = GlobalData::getTopSessions();
+
     for (auto iter = m_data.begin(); iter != m_data.end(); ++iter)
     {
         if (session == *iter)
@@ -108,6 +146,9 @@ void YLRecentChatView::updateList()
     clear();
     int i = 0;
 
+    auto &m_data     = GlobalData::getSessions();
+    auto &m_top_data = GlobalData::getTopSessions();
+
     for (auto elem : m_top_data)
     {
         add(elem, i);
@@ -129,8 +170,6 @@ void YLRecentChatView::updateList()
         {
             add(elem, i++);
         }
-
-        qDebug() << m_data.size();
     }
 }
 
@@ -145,6 +184,9 @@ void YLRecentChatView::mousePressEvent(QMouseEvent *event)
 
 void YLRecentChatView::on_move_to_top(YLSession &session)
 {
+    auto &m_data     = GlobalData::getSessions();
+    auto &m_top_data = GlobalData::getTopSessions();
+
     bool exist = false;
 
     for (auto iter = m_top_data.begin(); iter != m_top_data.end(); ++iter)
@@ -177,6 +219,9 @@ void YLRecentChatView::on_move_to_top(YLSession &session)
 
 void YLRecentChatView::on_del_from_list(const YLSession &session)
 {
+    auto &m_data     = GlobalData::getSessions();
+    auto &m_top_data = GlobalData::getTopSessions();
+
     for (auto iter = m_top_data.begin(); iter != m_top_data.end(); ++iter)
     {
         if (*iter == session)
@@ -198,36 +243,19 @@ void YLRecentChatView::on_del_from_list(const YLSession &session)
     updateList();
 }
 
-void YLRecentChatView::newSession(uint32_t otherId, uint32_t sessionId)
+void YLRecentChatView::newSession()
 {
-    for (auto &session : m_top_data)
-    {
-        if (session.getOtherId() == otherId)
-        {
-            session.setSessionId(sessionId);
-            break;
-        }
-    }
-
-    for (auto &session : m_data)
-    {
-        if (session.getOtherId() == otherId)
-        {
-            session.setSessionId(sessionId);
-            break;
-        }
-    }
-
-    GlobalData::setSessions(m_data);
     updateList();
 }
 
-void YLRecentChatView::readComplete(uint32_t friendId)
+void YLRecentChatView::readComplete(uint32_t sessionId)
 {
+    auto &m_data     = GlobalData::getSessions();
+    auto &m_top_data = GlobalData::getTopSessions();
 
     for (YLSession &session : m_data)
     {
-        if (session.getOtherId() == friendId)
+        if (session.getSessionId() == sessionId)
         {
             session.clearUnReadMsgCount();
             break;
@@ -236,14 +264,13 @@ void YLRecentChatView::readComplete(uint32_t friendId)
 
     for (YLSession &session : m_top_data)
     {
-        if (session.getOtherId() == friendId)
+        if (session.getSessionId() == sessionId)
         {
             session.clearUnReadMsgCount();
             break;
         }
     }
 
-    GlobalData::setSessions(m_data);
     updateList();
 
 }

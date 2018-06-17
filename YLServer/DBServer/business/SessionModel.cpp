@@ -211,16 +211,21 @@ bool SessionModel::getSessions(uint32_t userId, std::list<base::SessionInfo> &se
     {
         while (resultSet->next())
         {
-            uint32_t friId = (uint32_t)resultSet->getInt("other_id");
+            uint32_t otherId = (uint32_t)resultSet->getInt("other_id");
             base::SessionInfo sessionInfo;
             sessionInfo.set_session_id((uint32_t)resultSet->getInt("session_id"));
-            sessionInfo.set_other_id(friId);
+            sessionInfo.set_other_id(otherId);
             sessionInfo.set_session_type((uint32_t)resultSet->getInt("session_type"));
             sessionInfo.set_session_top((uint32_t)resultSet->getInt("session_top"));
-            sessionInfo.set_session_update((uint32_t)resultSet->getInt("session_updated"));
             std::string content;
-            if(MessageModel::instance()->getLastMessage(userId, (uint32_t)resultSet->getInt("other_id"), content))
+            uint32_t latestTime = 0;
+            if(sessionInfo.session_type() == base::SESSION_TYPE_SINGLE && MessageModel::instance()->getLastMessage(userId, (uint32_t)resultSet->getInt("other_id"), content, latestTime))
                 sessionInfo.set_last_message_data(content);
+            else if(sessionInfo.session_type() == base::SESSION_TYPE_GROUP && MessageModel::instance()->getLastestGroupMessage(otherId, content, latestTime))
+                sessionInfo.set_last_message_data(content);
+
+
+            sessionInfo.set_latest_msg_time(latestTime);
             sessionList.push_back(sessionInfo);
         }
 

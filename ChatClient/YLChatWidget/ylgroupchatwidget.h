@@ -4,6 +4,7 @@
 
 #include <QWidget>
 #include "YLEntityObject/ylgroup.h"
+#include "YLEntityObject/ylgroupmember.h"
 QT_BEGIN_NAMESPACE
 class QLabel;
 class YLButton;
@@ -13,7 +14,10 @@ class YLMessageEditWidget;
 class QToolButton;
 class YLGroupNoticeWidget;
 class YLGroupMemberListWidget;
+class YLHeadFrame;
 QT_END_NAMESPACE
+
+
 
 class YLGroupChatWidget : public QWidget
 {
@@ -34,17 +38,19 @@ class YLGroupChatWidget : public QWidget
                                                  ";
 public:
     explicit YLGroupChatWidget(QWidget *parent = nullptr);
-    void setGroup(YLGroup &group) { m_group = group; }
+    void setGroup(YLGroup &group) { m_group = group; loadMemberList(); }
 
 public slots:
     void receiveMessage(uint32_t user_id, const QString &message);
 
 signals:
+    void loadFinish();
 
 protected:
     void paintEvent(QPaintEvent *event);
     void resizeEvent(QResizeEvent *event);
     void closeEvent(QCloseEvent *event);
+
 private:
     void initTop();
     void init();
@@ -52,6 +58,8 @@ private:
     void initLeft();
     void updateSizeAndPosition();
     void sendTextMessage();
+
+    void loadMemberList();
 
 private slots:
     void navigationClicked();

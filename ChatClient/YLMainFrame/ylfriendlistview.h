@@ -23,6 +23,7 @@ class YLFriendListView : public QListWidget
                                     QScrollBar::sub-line:vertical:hover{ border: 0px ;border-image: url(:/res/MainFrame/scrollbar_arrowup_highlight.png);height: 12px;subcontrol-position: top;subcontrol-origin: margin;}\
                                     QScrollBar::sub-line:vertical:pressed{border: 0px ;border-image: url(:/res/MainFrame/scrollbar_arrowup_down.png);height: 12px;subcontrol-position: top;ubcontrol-origin: margin;}";
 
+
 public:
     YLFriendListView(QWidget *parent = nullptr);
     ~YLFriendListView();
@@ -33,6 +34,9 @@ private:
 protected:
     void mousePressEvent(QMouseEvent *event);
     void contextMenuEvent(QContextMenuEvent *event);
+
+signals:
+    void updateSessions();
 
 private slots:
     void updateFriendList(const QMap<int, QVector<YLFriend>>&);

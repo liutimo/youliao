@@ -70,3 +70,35 @@ int AudioModel::saveAudioInfo(uint32_t nFromId, uint32_t nToId, uint32_t nCreate
     DBManager::instance()->releaseConnection(conn);
     return audioId;
 }
+
+
+
+bool AudioModel::getAudioInfo(uint32_t audioId, uint32_t &duration, string& path)
+{
+    bool ret = false;
+    DBConn *conn = DBManager::instance()->getConnection();
+
+    if (!conn)
+        return ret;
+
+    std::string querySql = "SELECT * FROM yl_audio WHERE id = " + std::to_string(audioId);
+    printSql2Log(querySql.c_str());
+
+    ResultSet *resultSet = conn->query(querySql);
+
+
+    if (resultSet)
+    {
+        if (resultSet->next())
+        {
+            duration = (uint32_t)resultSet->getInt("duration");
+            path = resultSet->getString("path");
+        }
+
+        delete resultSet;
+    }
+
+    DBManager::instance()->releaseConnection(conn);
+
+    return ret;
+}

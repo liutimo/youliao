@@ -4,11 +4,13 @@
 #include <QObject>
 #include <QSqlDatabase>
 
-#include <YLEntityObject/ylfriend.h>
 #include "YLEntityObject/ylgroup.h"
+#include "YLEntityObject/ylfriend.h"
+#include "YLEntityObject/ylmessage.h"
+#include "YLEntityObject/ylgroupmember.h"
 
-#include "protobuf/youliao.message.pb.h"
 #include "protobuf/youliao.base.pb.h"
+#include "protobuf/youliao.message.pb.h"
 
 using namespace youliao::pdu::message;
 using namespace youliao::pdu;
@@ -21,8 +23,9 @@ public:
     ~YLDataBase();
 
     /*************消息相关*****************/
-    //好友之间的消息
+    //好友之间的消息(const YLMessage &msg)
     void saveMessage(const MessageData &msg);
+    void saveMessage(const YLMessage &msg);
     void getMessage();
 
     /**
@@ -109,13 +112,49 @@ public:
      */
     void remOneMember(uint32_t idx);
 
+    /**
+     * @brief getMemberByGroupId
+     * @param groupId
+     * @return 群成员
+     * 获取群组成员
+     */
+    QVector<YLGroupMember> getMemberByGroupId(uint32_t groupId);
 
+    /**
+     * @brief addOneGroupMessage
+     * @param groupId　　群组ＩＤ
+     * @param senderId  发送者ＩＤ
+     * @param msg_id    消息ＩＤ
+     * @param content   文本
+     * @param created   创建时间
+     * @param type      消息类型
+     */
+    void addOneGroupMessage(uint32_t groupId, uint32_t senderId,
+                            uint32_t msg_id, const QString &content,
+                            uint32_t created, uint32_t type = 0);
+    /**
+     * @brief getGroupMsgIdByGroupId
+     * @param groupId
+     * @return
+     */
+    uint32_t getGroupMsgIdByGroupId(uint32_t groupId);
+
+    /**
+     * @brief getGroupMsgByGroupId
+     * @param groupid
+     * @return
+     * 获取最近一小时的消息
+     */
+    QVector<QPair<uint32_t, YLMessage>> getRecentGroupMsgByGroupId(uint32_t groupid);
+
+    QVector<QPair<uint32_t, YLMessage>> getGroupMsgByGroupId(uint32_t groupid, uint32_t page, uint32_t currentIndex);
 private:
     void createFriendTable();
     void createMessageTable();
     void createFriendGroupTable();
     void createGroupTable();
     void createGroupMemberTable();
+    void createGroupMessageTable();
 
 private:
 
@@ -123,6 +162,8 @@ private:
 //    static YLDataBase* m_instance;
     static bool m_first;
     QSqlDatabase m_database;
+
+    static int i;
 };
 
 #endif // YLDATABASE_H

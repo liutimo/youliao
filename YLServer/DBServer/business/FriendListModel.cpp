@@ -352,7 +352,6 @@ uint32_t FriendListModel::getRelationId(uint32_t userId, uint32_t friendId)
 }
 
 
-
 bool FriendListModel::searchFriend(std::string &searchData, base::SearchType searchType, list<base::FriendInfo> &result)
 {
     bool ret = false;
@@ -382,7 +381,6 @@ bool FriendListModel::searchFriend(std::string &searchData, base::SearchType sea
                 info.set_friend_id((uint32_t)resultSet->getInt("user_id"));
                 info.set_friend_account((uint32_t)resultSet->getInt("user_account"));
                 info.set_friend_header_url(resultSet->getString("user_header"));
-                info.set_friend_sex(resultSet->getInt("user_sex"));
                 info.set_friend_nick(resultSet->getString("user_nickname"));
                 result.push_back(info);
             }

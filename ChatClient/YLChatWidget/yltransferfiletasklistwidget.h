@@ -80,7 +80,9 @@ private:
     QString m_file_size;
     QString m_task_id;
 
-    uint32_t m_start_time;
+    long long m_start_time;
+    QTimer *m_timer;        //用于计算实时网速
+    uint32_t m_last_time_progress;
 };
 
 class YLReceiveFileWidget : public QWidget

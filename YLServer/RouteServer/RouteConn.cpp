@@ -7,6 +7,7 @@
 #include "pdu/protobuf/youliao.server.pb.h"
 #include "pdu/protobuf/youliao.group.pb.h"
 #include "pdu/protobuf/youliao.message.pb.h"
+#include "pdu/protobuf/youliao.other.pb.h"
 #include "RouteConn.h"
 #include "util/util.h"
 #include "network/netlib.h"
@@ -115,6 +116,12 @@ void RouteConn::handlePdu(BasePdu *basePdu)
             break;
         case base::CID_SERVER_FORWARD_GROUP_MESSAGE:
             _HandleForwardGroupMessage(basePdu);
+            break;
+        case base::CID_OTHER_FRIEND_INFORMATION_CHANGE_NOTIFY:
+            _HandleUserInformationChange(basePdu);
+            break;
+        case base::CID_GROUP_UPDATE_GROUP_LIST:
+            _HandleUpdateGroupListRequest(basePdu);
             break;
         default:
             break;
@@ -228,7 +235,8 @@ void RouteConn::_HandleGetFriendsStatusRequest(BasePdu *basePdu)
             base::FriendInfo &friendInfo = *(group.mutable_friend_(i));
 
             uint32_t friendId = friendInfo.friend_id();
-            std::string rv = conn->hget("user_map", std::to_string(friendId));
+            std::string friendIdStr = std::to_string(friendId);
+            std::string rv = conn->hget("user_map", friendIdStr);
 
             if (rv.empty())
             {
@@ -277,7 +285,6 @@ void RouteConn::_HandleGetGroupOnlineMember(BasePdu *basePdu)
 
     uint32_t userId = msg.user_id();
 
-
     auto conn = CacheManager::instance()->getCacheConn("OnlineUser");
     if (conn)
     {
@@ -300,10 +307,6 @@ void RouteConn::_HandleForwardGroupMessage(BasePdu *basePdu)
     message::MessageData msg;
     msg.ParseFromString(basePdu->getMessage());
 
-//    base::MessageType  msgType = msg.message_type();
-//    if (msgType != base::MESSAGE_TYPE_GROUP_AUDIO || msgType != base::MESSAGE_TYPE_GROUP_TEXT)
-//        return;
-
     uint32_t groupId = msg.to_id();
     std::string setName = "group_online_members_" + std::to_string(groupId);
 
@@ -324,6 +327,67 @@ void RouteConn::_HandleForwardGroupMessage(BasePdu *basePdu)
     }
 
     CacheManager::instance()->releaseCacheConn(conn);
+}
+
+void RouteConn::_HandleUserInformationChange(BasePdu *basePdu)
+{
+    other::FriendInformationChange request;
+    request.ParseFromString(basePdu->getMessage());
+
+    uint32_t userId = request.user_id();
+
+    std::string setName = "user_online_friends_" + std::to_string(userId);
+
+    auto conn = CacheManager::instance()->getCacheConn("OnlineUser");
+
+    if (conn)
+    {
+        //[1] 获取在线好友
+        std::list<uint32_t> members = conn->sMembers(setName);
+
+        //[2]
+        for(uint32_t friId : members)
+        {
+            request.set_user_id(friId);
+
+            std::string msgServIdx = conn->hget("user_msg_idx", std::to_string(friId));
+            auto msgConn = getRouteConn((uint32_t)atoi(msgServIdx.c_str()));
+            if (msgConn)
+                sendMessage(msgConn, request, base::SID_SERVER, base::CID_OTHER_FRIEND_INFORMATION_CHANGE_NOTIFY);
+        }
+
+    }
+
+    CacheManager::instance()->releaseCacheConn(conn);
+
+}
+
+void RouteConn::_HandleUpdateGroupListRequest(BasePdu *basePdu)
+{
+    group::UpdateGroupList request;
+    request.ParseFromString(basePdu->getMessage());
+
+    uint32_t groupId = request.group_id();
+
+
+    std::string setName = "group_online_members_" + std::to_string(groupId);
+    auto conn = CacheManager::instance()->getCacheConn("OnlineUser");
+    if (conn)
+    {
+        //获取群组在线成员
+        auto onlineMembers = conn->sMembers(setName);
+        for (uint32_t memberId : onlineMembers)
+        {
+            //获取群成员所在消息服务器ID
+            std::string msgServIdx = conn->hget("user_msg_idx", std::to_string(memberId));
+            auto msgConn = getRouteConn((uint32_t)atoi(msgServIdx.c_str()));
+            request.set_user_id(memberId);
+            if (msgConn)
+                sendMessage(msgConn, request, base::SID_SERVER, base::CID_GROUP_UPDATE_GROUP_LIST);
+        }
+    }
+
+    CacheManager::instance()->releaseCacheConn(conn);
 
 }
 
@@ -339,8 +403,6 @@ void RouteConn::_HandleRouteMessage(BasePdu *basePdu)
     request.set_create_time(routeMessageForward.create_time());
     request.set_message_type(routeMessageForward.message_type());
     request.set_message_data(routeMessageForward.message_data());
-
-
 }
 
 void RouteConn::_HandleMessageServerIndex(BasePdu *basePdu)

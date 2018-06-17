@@ -3,10 +3,13 @@
 
 #include <QWidget>
 #include <QPushButton>
+#include "YLEntityObject/ylgroupmember.h"
 QT_BEGIN_NAMESPACE
 class QListWidget;
 class QLineEdit;
 class QVBoxLayout;
+class QLabel;
+class YLHeadFrame;
 QT_END_NAMESPACE
 class Button : public QPushButton
 {
@@ -56,17 +59,41 @@ private:
     bool             m_clicked;
 };
 
+/**
+ * @brief The MemberNameWidgetItem class
+ * 用于群信息界面中的成员列表
+ */
+class MemberWidgetItem : public QWidget
+{
+    Q_OBJECT
+public:
+    typedef enum  { GROUPMANAGER = 1, GROUPOWER, GROUPMEMBER}MemberType;
+
+    explicit MemberWidgetItem(QWidget *parent = nullptr);
+    ~MemberWidgetItem();
+
+    void setMember(const YLGroupMember &member);
+
+private:
+    void init();
+    void setMemberType(MemberType type);
+    void setMemberName(const QString &name);
+
+private:
+    YLHeadFrame     *m_head_frame;
+    QLabel          *m_member_type;          //如果是管理员或者群主显示相应的图标
+    QLabel          *m_member_name;          //显示成员昵称
+    YLGroupMember   m_member;
+};
+
+
 class YLGroupMemberListWidget : public QWidget
 {
     Q_OBJECT
 
 public:
     explicit YLGroupMemberListWidget(QWidget *parent = nullptr);
-
-signals:
-
-public slots:
-
+    void addRow(const YLGroupMember &member);
 private:
     Button      *m_button;
     QLineEdit   *m_line_edit;

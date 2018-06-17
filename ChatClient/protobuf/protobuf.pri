@@ -5,7 +5,8 @@ DISTFILES += \
     $$PWD/youliao.message.proto \
     $$PWD/youliao.session.proto \
     $$PWD/youliao.group.proto \
-    $$PWD/youliao.file.proto
+    $$PWD/youliao.file.proto \
+    $$PWD/youliao.other.proto
 
 HEADERS += \
     $$PWD/youliao.base.pb.h \
@@ -14,7 +15,8 @@ HEADERS += \
     $$PWD/youliao.message.pb.h \
     $$PWD/youliao.session.pb.h \
     $$PWD/youliao.group.pb.h \
-    $$PWD/youliao.file.pb.h
+    $$PWD/youliao.file.pb.h \
+    $$PWD/youliao.other.pb.h
 
 SOURCES += \
     $$PWD/youliao.base.pb.cc \
@@ -23,4 +25,5 @@ SOURCES += \
     $$PWD/youliao.message.pb.cc \
     $$PWD/youliao.session.pb.cc \
     $$PWD/youliao.group.pb.cc \
-    $$PWD/youliao.file.pb.cc
+    $$PWD/youliao.file.pb.cc \
+    $$PWD/youliao.other.pb.cc

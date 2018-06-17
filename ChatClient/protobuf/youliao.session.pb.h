@@ -37,7 +37,7 @@ namespace protobuf_youliao_2esession_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[5];
+  static const ::google::protobuf::internal::ParseTable schema[6];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -47,6 +47,8 @@ void InitDefaultsGetSessionsRequestImpl();
 void InitDefaultsGetSessionsRequest();
 void InitDefaultsGetSessionReponseImpl();
 void InitDefaultsGetSessionReponse();
+void InitDefaultsCreateNewSessionImpl();
+void InitDefaultsCreateNewSession();
 void InitDefaultsNewSessionResponeImpl();
 void InitDefaultsNewSessionRespone();
 void InitDefaultsDeleteSessionRequestImpl();
@@ -56,6 +58,7 @@ void InitDefaultsTopSessionRequest();
 inline void InitDefaults() {
   InitDefaultsGetSessionsRequest();
   InitDefaultsGetSessionReponse();
+  InitDefaultsCreateNewSession();
   InitDefaultsNewSessionRespone();
   InitDefaultsDeleteSessionRequest();
   InitDefaultsTopSessionRequest();
@@ -64,6 +67,9 @@ inline void InitDefaults() {
 namespace youliao {
 namespace pdu {
 namespace session {
+class CreateNewSession;
+class CreateNewSessionDefaultTypeInternal;
+extern CreateNewSessionDefaultTypeInternal _CreateNewSession_default_instance_;
 class DeleteSessionRequest;
 class DeleteSessionRequestDefaultTypeInternal;
 extern DeleteSessionRequestDefaultTypeInternal _DeleteSessionRequest_default_instance_;
@@ -84,6 +90,7 @@ extern TopSessionRequestDefaultTypeInternal _TopSessionRequest_default_instance_
 }  // namespace youliao
 namespace google {
 namespace protobuf {
+template<> ::youliao::pdu::session::CreateNewSession* Arena::Create< ::youliao::pdu::session::CreateNewSession>(Arena*);
 template<> ::youliao::pdu::session::DeleteSessionRequest* Arena::Create< ::youliao::pdu::session::DeleteSessionRequest>(Arena*);
 template<> ::youliao::pdu::session::GetSessionReponse* Arena::Create< ::youliao::pdu::session::GetSessionReponse>(Arena*);
 template<> ::youliao::pdu::session::GetSessionsRequest* Arena::Create< ::youliao::pdu::session::GetSessionsRequest>(Arena*);
@@ -316,6 +323,123 @@ class GetSessionReponse : public ::google::protobuf::Message /* @@protoc_inserti
 };
 // -------------------------------------------------------------------
 
+class CreateNewSession : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.session.CreateNewSession) */ {
+ public:
+  CreateNewSession();
+  virtual ~CreateNewSession();
+
+  CreateNewSession(const CreateNewSession& from);
+
+  inline CreateNewSession& operator=(const CreateNewSession& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  CreateNewSession(CreateNewSession&& from) noexcept
+    : CreateNewSession() {
+    *this = ::std::move(from);
+  }
+
+  inline CreateNewSession& operator=(CreateNewSession&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CreateNewSession& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const CreateNewSession* internal_default_instance() {
+    return reinterpret_cast<const CreateNewSession*>(
+               &_CreateNewSession_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    2;
+
+  void Swap(CreateNewSession* other);
+  friend void swap(CreateNewSession& a, CreateNewSession& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline CreateNewSession* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<CreateNewSession>(NULL);
+  }
+
+  CreateNewSession* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<CreateNewSession>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const CreateNewSession& from);
+  void MergeFrom(const CreateNewSession& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(CreateNewSession* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // uint32 user_id = 1;
+  void clear_user_id();
+  static const int kUserIdFieldNumber = 1;
+  ::google::protobuf::uint32 user_id() const;
+  void set_user_id(::google::protobuf::uint32 value);
+
+  // uint32 other_id = 2;
+  void clear_other_id();
+  static const int kOtherIdFieldNumber = 2;
+  ::google::protobuf::uint32 other_id() const;
+  void set_other_id(::google::protobuf::uint32 value);
+
+  // .youliao.pdu.base.SessionType session_type = 3;
+  void clear_session_type();
+  static const int kSessionTypeFieldNumber = 3;
+  ::youliao::pdu::base::SessionType session_type() const;
+  void set_session_type(::youliao::pdu::base::SessionType value);
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.session.CreateNewSession)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 user_id_;
+  ::google::protobuf::uint32 other_id_;
+  int session_type_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2esession_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2esession_2eproto::InitDefaultsCreateNewSessionImpl();
+};
+// -------------------------------------------------------------------
+
 class NewSessionRespone : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.session.NewSessionRespone) */ {
  public:
   NewSessionRespone();
@@ -351,7 +475,7 @@ class NewSessionRespone : public ::google::protobuf::Message /* @@protoc_inserti
                &_NewSessionRespone_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    2;
+    3;
 
   void Swap(NewSessionRespone* other);
   friend void swap(NewSessionRespone& a, NewSessionRespone& b) {
@@ -402,38 +526,27 @@ class NewSessionRespone : public ::google::protobuf::Message /* @@protoc_inserti
 
   // accessors -------------------------------------------------------
 
+  // .youliao.pdu.base.SessionInfo session = 2;
+  bool has_session() const;
+  void clear_session();
+  static const int kSessionFieldNumber = 2;
+  const ::youliao::pdu::base::SessionInfo& session() const;
+  ::youliao::pdu::base::SessionInfo* release_session();
+  ::youliao::pdu::base::SessionInfo* mutable_session();
+  void set_allocated_session(::youliao::pdu::base::SessionInfo* session);
+
   // uint32 user_id = 1;
   void clear_user_id();
   static const int kUserIdFieldNumber = 1;
   ::google::protobuf::uint32 user_id() const;
   void set_user_id(::google::protobuf::uint32 value);
 
-  // uint32 other_id = 2;
-  void clear_other_id();
-  static const int kOtherIdFieldNumber = 2;
-  ::google::protobuf::uint32 other_id() const;
-  void set_other_id(::google::protobuf::uint32 value);
-
-  // uint32 session_id = 3;
-  void clear_session_id();
-  static const int kSessionIdFieldNumber = 3;
-  ::google::protobuf::uint32 session_id() const;
-  void set_session_id(::google::protobuf::uint32 value);
-
-  // .youliao.pdu.base.SessionType session_type = 4;
-  void clear_session_type();
-  static const int kSessionTypeFieldNumber = 4;
-  ::youliao::pdu::base::SessionType session_type() const;
-  void set_session_type(::youliao::pdu::base::SessionType value);
-
   // @@protoc_insertion_point(class_scope:youliao.pdu.session.NewSessionRespone)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::youliao::pdu::base::SessionInfo* session_;
   ::google::protobuf::uint32 user_id_;
-  ::google::protobuf::uint32 other_id_;
-  ::google::protobuf::uint32 session_id_;
-  int session_type_;
   mutable int _cached_size_;
   friend struct ::protobuf_youliao_2esession_2eproto::TableStruct;
   friend void ::protobuf_youliao_2esession_2eproto::InitDefaultsNewSessionResponeImpl();
@@ -475,7 +588,7 @@ class DeleteSessionRequest : public ::google::protobuf::Message /* @@protoc_inse
                &_DeleteSessionRequest_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    3;
+    4;
 
   void Swap(DeleteSessionRequest* other);
   friend void swap(DeleteSessionRequest& a, DeleteSessionRequest& b) {
@@ -585,7 +698,7 @@ class TopSessionRequest : public ::google::protobuf::Message /* @@protoc_inserti
                &_TopSessionRequest_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    4;
+    5;
 
   void Swap(TopSessionRequest* other);
   friend void swap(TopSessionRequest& a, TopSessionRequest& b) {
@@ -730,6 +843,52 @@ GetSessionReponse::sessions() const {
 
 // -------------------------------------------------------------------
 
+// CreateNewSession
+
+// uint32 user_id = 1;
+inline void CreateNewSession::clear_user_id() {
+  user_id_ = 0u;
+}
+inline ::google::protobuf::uint32 CreateNewSession::user_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.session.CreateNewSession.user_id)
+  return user_id_;
+}
+inline void CreateNewSession::set_user_id(::google::protobuf::uint32 value) {
+  
+  user_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.session.CreateNewSession.user_id)
+}
+
+// uint32 other_id = 2;
+inline void CreateNewSession::clear_other_id() {
+  other_id_ = 0u;
+}
+inline ::google::protobuf::uint32 CreateNewSession::other_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.session.CreateNewSession.other_id)
+  return other_id_;
+}
+inline void CreateNewSession::set_other_id(::google::protobuf::uint32 value) {
+  
+  other_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.session.CreateNewSession.other_id)
+}
+
+// .youliao.pdu.base.SessionType session_type = 3;
+inline void CreateNewSession::clear_session_type() {
+  session_type_ = 0;
+}
+inline ::youliao::pdu::base::SessionType CreateNewSession::session_type() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.session.CreateNewSession.session_type)
+  return static_cast< ::youliao::pdu::base::SessionType >(session_type_);
+}
+inline void CreateNewSession::set_session_type(::youliao::pdu::base::SessionType value) {
+  
+  session_type_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.session.CreateNewSession.session_type)
+}
+
+// -------------------------------------------------------------------
+
 // NewSessionRespone
 
 // uint32 user_id = 1;
@@ -746,46 +905,49 @@ inline void NewSessionRespone::set_user_id(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:youliao.pdu.session.NewSessionRespone.user_id)
 }
 
-// uint32 other_id = 2;
-inline void NewSessionRespone::clear_other_id() {
-  other_id_ = 0u;
+// .youliao.pdu.base.SessionInfo session = 2;
+inline bool NewSessionRespone::has_session() const {
+  return this != internal_default_instance() && session_ != NULL;
 }
-inline ::google::protobuf::uint32 NewSessionRespone::other_id() const {
-  // @@protoc_insertion_point(field_get:youliao.pdu.session.NewSessionRespone.other_id)
-  return other_id_;
+inline const ::youliao::pdu::base::SessionInfo& NewSessionRespone::session() const {
+  const ::youliao::pdu::base::SessionInfo* p = session_;
+  // @@protoc_insertion_point(field_get:youliao.pdu.session.NewSessionRespone.session)
+  return p != NULL ? *p : *reinterpret_cast<const ::youliao::pdu::base::SessionInfo*>(
+      &::youliao::pdu::base::_SessionInfo_default_instance_);
 }
-inline void NewSessionRespone::set_other_id(::google::protobuf::uint32 value) {
+inline ::youliao::pdu::base::SessionInfo* NewSessionRespone::release_session() {
+  // @@protoc_insertion_point(field_release:youliao.pdu.session.NewSessionRespone.session)
   
-  other_id_ = value;
-  // @@protoc_insertion_point(field_set:youliao.pdu.session.NewSessionRespone.other_id)
+  ::youliao::pdu::base::SessionInfo* temp = session_;
+  session_ = NULL;
+  return temp;
 }
-
-// uint32 session_id = 3;
-inline void NewSessionRespone::clear_session_id() {
-  session_id_ = 0u;
-}
-inline ::google::protobuf::uint32 NewSessionRespone::session_id() const {
-  // @@protoc_insertion_point(field_get:youliao.pdu.session.NewSessionRespone.session_id)
-  return session_id_;
-}
-inline void NewSessionRespone::set_session_id(::google::protobuf::uint32 value) {
+inline ::youliao::pdu::base::SessionInfo* NewSessionRespone::mutable_session() {
   
-  session_id_ = value;
-  // @@protoc_insertion_point(field_set:youliao.pdu.session.NewSessionRespone.session_id)
+  if (session_ == NULL) {
+    session_ = ::google::protobuf::Arena::Create< ::youliao::pdu::base::SessionInfo >(
+        GetArenaNoVirtual());
+  }
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.session.NewSessionRespone.session)
+  return session_;
 }
-
-// .youliao.pdu.base.SessionType session_type = 4;
-inline void NewSessionRespone::clear_session_type() {
-  session_type_ = 0;
-}
-inline ::youliao::pdu::base::SessionType NewSessionRespone::session_type() const {
-  // @@protoc_insertion_point(field_get:youliao.pdu.session.NewSessionRespone.session_type)
-  return static_cast< ::youliao::pdu::base::SessionType >(session_type_);
-}
-inline void NewSessionRespone::set_session_type(::youliao::pdu::base::SessionType value) {
-  
-  session_type_ = value;
-  // @@protoc_insertion_point(field_set:youliao.pdu.session.NewSessionRespone.session_type)
+inline void NewSessionRespone::set_allocated_session(::youliao::pdu::base::SessionInfo* session) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete reinterpret_cast< ::google::protobuf::MessageLite*>(session_);
+  }
+  if (session) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      session = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, session, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  session_ = session;
+  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.session.NewSessionRespone.session)
 }
 
 // -------------------------------------------------------------------
@@ -855,6 +1017,8 @@ inline void TopSessionRequest::set_session_id(::google::protobuf::uint32 value) 
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

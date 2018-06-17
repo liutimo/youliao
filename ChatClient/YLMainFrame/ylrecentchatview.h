@@ -25,7 +25,7 @@ class YLRecentChatView : public QListWidget
 public:
     YLRecentChatView(QWidget *parent = nullptr);
     void addItem(const YLSession&);
-
+    void updateList();
 
 protected:
     void mousePressEvent(QMouseEvent *event);
@@ -34,14 +34,13 @@ protected:
 private slots:
     void on_move_to_top  (YLSession &);
     void on_del_from_list(const YLSession &);
-    void newSession(uint32_t otherId, uint32_t sessionId);
-    void readComplete(uint32_t friId);
+    void newSession();
+    void readComplete(uint32_t sessionId);
 private:
-    void updateList();
     void add(const YLSession&, int pos = 0);
 
-    QList<YLSession> m_data;
-    QList<YLSession> m_top_data;
+//    QList<YLSession> m_data;
+//    QList<YLSession> m_top_data;
 };
 
 #endif // YLRECENTCHATVIEW_H

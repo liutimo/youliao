@@ -18,7 +18,9 @@ public:
     explicit YLValidateGroupWidget(QWidget *parent = nullptr);
     ~YLValidateGroupWidget();
     void setGroup(const YLGroup &group);
-signals:
+
+protected:
+    void paintEvent(QPaintEvent *event);
 
 private slots:
     void next();
@@ -40,6 +42,8 @@ private:
     QLabel *m_tip;
     QTextEdit *m_text_eidt;
     QLabel *m_info;
+    QLabel *m_icon;
+
     //bottom
     QPushButton *m_next;
     QPushButton *m_cancel;

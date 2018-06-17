@@ -29,7 +29,7 @@ public:
 
     QString getUserImagePath() const;
 
-
+    QString getUserImageName() const;
 private:
     QString user_account_;
     QString user_nickname_;

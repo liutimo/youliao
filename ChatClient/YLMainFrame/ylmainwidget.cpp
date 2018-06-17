@@ -1,9 +1,11 @@
 #include "ylmainwidget.h"
 #include <QPushButton>
+#include <QDir>
 #include <QLabel>
 #include <QDebug>
 #include <QTimer>
 #include <QPainter>
+#include <QStandardPaths>
 #include "globaldata.h"
 #include "ylnavigationbar.h"
 #include "ylgrouplistview.h"
@@ -14,11 +16,13 @@
 #include "YLTray/ylmaintray.h"
 #include "ylsignaturelineedit.h"
 #include "YLNetWork/ylbusiness.h"
+#include "YLNetWork/pduhandler.h"
 #include "YLNetWork/http/httphelper.h"
 #include "YLCommonControl/ylmessagebox.h"
 #include "YLAddFriendWidgets/yladdfriendwidget.h"
 #include "YLCommonControl/ylheadandstatusframe.h"
 #include "YLDataBase/yldatabase.h"
+#include "yluserinformationwidget.h"
 using namespace youliao::pdu;
 
 QPoint YLMainWidget::center = QPoint();
@@ -30,6 +34,10 @@ YLMainWidget::YLMainWidget(QWidget *parent) : YLBasicWidget(parent)
     initTray();
     initListWidget();
     center = geometry().center();
+
+    connect(PduHandler::instance(), &PduHandler::userHeaderIconChanged, this, [this](){
+        head_status_frame_->setHeadFromUrl(GlobalData::getCurrLoginUserHeadUrl());
+    });
 }
 
 void YLMainWidget::init()
@@ -48,6 +56,7 @@ void YLMainWidget::init()
     skin_button_->resize(close_button_->size());
     skin_button_->setObjectName("skin_button_");
     skin_button_->setStyleSheet(qss_skin_button);
+    skin_button_->hide();
 
     logo_label_ = new QLabel(this);
     logo_label_->setObjectName("logo_label_");
@@ -56,6 +65,12 @@ void YLMainWidget::init()
 
     head_status_frame_  = new YLHeadAndStatusFrame(this);
     head_status_frame_->resize(80, 80);
+    connect(head_status_frame_, &YLHeadAndStatusFrame::clicked, this, [this]()
+    {
+        YLUserInformationWidget *w = new YLUserInformationWidget;
+        w->setUserInfo();
+        w->show();
+    });
 
     nickname_label_ = new QLabel(this);
     nickname_label_->setText("hahaha");
@@ -88,13 +103,6 @@ void YLMainWidget::init()
     connect(m_timer, &QTimer::timeout, this, [this](){
         YLBusiness::heartBeat();
     });
-
-
-    m_http_helper = new HttpHelper;
-    connect(m_http_helper, &HttpHelper::downloadFinshed, this, [this](){
-        head_status_frame_->setHeadFromLocal("./" + m_http_helper->getFilename());
-    }, Qt::QueuedConnection);
-
 
     add_friend_button_ = new QPushButton(this);
     add_friend_button_->setFixedSize(60, 30);
@@ -138,6 +146,8 @@ void YLMainWidget::initListWidget()
     yl_grouplist_vide->move(0, 220);
     yl_grouplist_vide->hide();
     vec.push_back(yl_grouplist_vide);
+
+    connect(yl_friendlist_view, &YLFriendListView::updateSessions, yl_recent_chat_view, &YLRecentChatView::updateList);
 }
 
 void YLMainWidget::startHeartBeat()
@@ -192,18 +202,69 @@ void YLMainWidget::closeEvent(QCloseEvent *event)
 void YLMainWidget::setUserInfo(UserInfo *userInfo)
 {
 
-
     m_user_info = userInfo;
+
+    //创建默认文件夹
+    QString documentDir = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/youliao/" + QString::number(userInfo->user_id()) ;
+    QString audioDir = documentDir + "/audios/";
+    QString imageDir = documentDir + "/images/";
+    QString fileDir = documentDir + "/fileRecv/";
+
+    GlobalData::audioPath = audioDir;
+    GlobalData::imagePath = imageDir;
+    GlobalData::filePath = fileDir;
+
+    QDir dir;
+    bool ret = true;
+    dir.setPath(documentDir);
+    if (!dir.exists())
+       dir.mkdir(documentDir);
+    if (!ret)
+    {
+        close();
+        return;
+    }
+
+    dir.setPath(audioDir);
+    if (!dir.exists())
+        ret = dir.mkdir(audioDir);
+    if (!ret)
+    {
+        close();
+        return;
+    }
+
+    dir.setPath(imageDir);
+    if (!dir.exists())
+        ret = dir.mkdir(imageDir);
+    if (!ret)
+    {
+        close();
+        return;
+    }
+
+    dir.setPath(fileDir);
+    if (!dir.exists())
+        ret = dir.mkdir(fileDir);
+    if (!ret)
+    {
+        close();
+        return;
+    }
+
+
+    //必须在这里，因为需要使用设置好的图片路径
     GlobalData::setCurrLoginUser(*m_user_info);
+
+    //设置用户信息
     nickname_label_->setText(m_user_info->user_nick().c_str());
     signature_lineedit_->setText(m_user_info->user_sign_info().c_str());
+    head_status_frame_->setHeadFromUrl(QUrl(m_user_info->user_header_url().c_str()));
 
+    //网络请求数据
     YLBusiness::getFriendGroupsRequest(m_user_info->user_id());
     YLBusiness::getFriendListRequest(m_user_info->user_id());
     YLBusiness::getGroupList();
-    YLBusiness::getSessions(m_user_info->user_id());
     YLBusiness::getAllAddRequests();
-    m_http_helper->download(m_user_info->user_header_url().c_str());
-
 }
 

@@ -1,4 +1,5 @@
 #include "httphelper.h"
+#include "globaldata.h"
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QFile>
@@ -6,14 +7,20 @@
 #include <QHttpMultiPart>
 #include <QHttpPart>
 #include <QCryptographicHash>
-QNetworkAccessManager* HttpHelper::m_manager = new QNetworkAccessManager;
-
+#include <QStandardPaths>
+#include <QThread>
+QNetworkAccessManager* HttpHelper::m_manager        = new QNetworkAccessManager;
+QString                HttpHelper::m_file_save_path = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 HttpHelper::HttpHelper(QObject *parent) : QObject(parent),
 m_file(nullptr), m_reply(nullptr)
 {
+    connect(m_manager, &QNetworkAccessManager::finished, this, [this](QNetworkReply *reply)
+    {
+
+    });
 }
 
-void HttpHelper::download(const QString &url_)
+void HttpHelper::download(const QString &url_, bool isImage)
 {
     const QUrl url = QUrl::fromUserInput(url_);
     if (!url.isValid())
@@ -28,6 +35,14 @@ void HttpHelper::download(const QString &url_)
         emit urlInvalid();
         return;
     }
+
+    if (isImage)
+//        m_filename = m_file_save_path + "/" + QString::number(GlobalData::getCurrLoginUserId()) + "/images/"  + m_filename;
+        m_filename = GlobalData::imagePath + m_filename;
+    else
+//        m_filename = m_file_save_path + "/" + QString::number(GlobalData::getCurrLoginUserId()) + "/audio/" + m_filename;
+        m_filename = GlobalData::audioPath + m_filename;
+
 
     m_file = new QFile(m_filename);
 
@@ -73,11 +88,13 @@ QString HttpHelper::upload(const QString &fileName)
 
     QNetworkRequest req(QUrl("http://www.liutimo.cn/uploadImage.php"));
 
-    QNetworkReply *reply =  m_manager->post(req, multiPart);
-    connect(reply, &QNetworkReply::finished, this, [this, reply](){
-        qDebug() << reply->readAll();
+    m_reply =  m_manager->post(req, multiPart);
+    multiPart->setParent(m_reply);
+
+    connect(m_reply, &QNetworkReply::uploadProgress, this, [](qint64 bytesSent, qint64 bytesTotal){
+        qDebug() << bytesSent;
     });
-    multiPart->setParent(reply);
+
 
     return uploadFileName + "." + info.suffix();
 }
@@ -87,7 +104,7 @@ void HttpHelper::startRequest(const QUrl &url)
     m_reply = m_manager->get(QNetworkRequest(url));
     connect(m_reply, &QNetworkReply::finished, this, [this](){
         m_file->close();
-        m_reply->abort();
+        m_reply->close();
         delete m_reply;
         emit downloadFinshed();
     });

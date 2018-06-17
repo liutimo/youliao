@@ -9,11 +9,13 @@
 #include <QMovie>
 #include <QPainter>
 
-YLRegisterWidget::YLRegisterWidget(QWidget *parent) : QWidget(parent), ui(new Ui::RegisterWidget)
+YLRegisterWidget::YLRegisterWidget(QWidget *parent) : YLBasicWidget(parent), ui(new Ui::RegisterWidget)
   ,m_header_uploaded(false)
 {
     ui->setupUi(this);
     ui->pushButton->setEnabled(false);
+
+    ui->title->setPixmap(QPixmap(":/res/LoginPanel/2.png").scaled(500, 50));
 
     connect(ui->radioButton_2, &QRadioButton::toggled, this, [this](bool flag){
         if (flag)
@@ -90,6 +92,15 @@ void YLRegisterWidget::on_registerButton_clicked()
 
 }
 
+void YLRegisterWidget::paintEvent(QPaintEvent *event)
+{
+    QPainter painter(this);
+    painter.setPen(Qt::NoPen);
+    painter.setBrush(QColor::fromRgb(123, 193, 234));
+    painter.drawRect(0, 0, width(), 190);
+    painter.setBrush(QColor::fromRgb(235, 242, 249));    //#EBF2F9
+    painter.drawRect(0, 190, width(), height() - 190);
+}
 
 void YLRegisterWidget::uploadImage(const QString &fileName)
 {
@@ -128,6 +139,7 @@ LoadingWidget::LoadingWidget(QWidget *parent) : QWidget(parent), m_success(false
 
     m_login = new QPushButton("前往登录", this);
     m_login->setFixedSize(250, 35);
+    m_login->setStyleSheet(qss_login_button_);
     m_login->hide();
     connect(m_login, &QPushButton::clicked, this, [this](){
         emit closeClicked(m_success);
@@ -136,7 +148,7 @@ LoadingWidget::LoadingWidget(QWidget *parent) : QWidget(parent), m_success(false
     m_account = new QLabel(this);
     m_account->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     m_account->setFixedSize(250, 35);
-    m_account->hide();;
+    m_account->hide();
 }
 
 void LoadingWidget::resizeEvent(QResizeEvent *event)

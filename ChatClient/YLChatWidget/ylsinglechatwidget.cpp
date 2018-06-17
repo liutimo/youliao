@@ -39,7 +39,7 @@ void YLSingleChatWidget::setFriend(const YLFriend &fri)
 {
     m_friend = fri;
     uint32_t msgId = GlobalData::getLatestMsgId(m_friend.friendId());
-    m_friend_header_path = "file://" + QDir::currentPath() + "/" + m_friend.friendImageName();
+    m_friend_header_path = "file://" + GlobalData::imagePath + "/" + m_friend.friendImageName();
     m_message_view->setFriendId(m_friend.friendId());
     m_message_view->setFriendIconPath(m_friend_header_path);
     if (msgId == 0)
@@ -97,8 +97,11 @@ void YLSingleChatWidget::transferComplete(const QString &taskId)
     {
         s = QString::number(size / 1024.0 / 1024.0) + "MB";
     }
+
+    uint32_t pos = entity.m_file_name.find_last_of('/');
+
     if (entity.m_client_role == base::CLIENT_REALTIME_SENDER)
-        m_message_view->sendFileSuccess(m_friend_header_path, entity.m_file_name.c_str(), s);
+        m_message_view->sendFileSuccess(GlobalData::getCurrLoginUserIconPath(), entity.m_file_name.substr(pos + 1).c_str(), s);
     else
         m_message_view->recvFileSuccess(m_friend_header_path, entity.m_file_name.c_str(), s);
     m_transfer_file_widget->transferComplete(taskId);
@@ -171,7 +174,6 @@ void YLSingleChatWidget::init()
     m_message_view->move(0, 50);
     m_message_view->setStyleSheet("background:red;");
     connect(m_message_view, &YLMessageView::loadFinished, this, [this](bool f) {
-        if (f) emit loadFinish();
         //load message
         YLDataBase db;
         auto vec = db.getRecentMessage(m_friend.friendId());
@@ -189,6 +191,8 @@ void YLSingleChatWidget::init()
             }
 
         }
+
+        if (f) emit loadFinish();
     });
 
     m_label2 = new QLabel(this);
@@ -354,7 +358,6 @@ void YLSingleChatWidget::receiveMessage(uint32_t user_id, const QString &message
         session.setSessionLastChatMessage(msg);
         session.setSessionLastChatTime(QDateTime::currentDateTime().toTime_t());
         SignalForward::instance()->forwordUpdateSession(session);
-        //send message ack
     }
 }
 
@@ -449,11 +452,15 @@ void YLSingleChatWidget::sendMessage()
     YLBusiness::sendMessage(GlobalData::getCurrLoginUserId(), m_friend.friendId(), content);
 
     YLSession session = GlobalData::getSessionByFriendId(m_friend.friendId());
-    session.setOtherId(m_friend.friendId());
-    session.setSessionLastChatMessage(content);
-    session.setSessionType(base::SESSION_TYPE_SINGLE);
-    session.setSessionLastChatTime(QDateTime::currentDateTime().toTime_t());
-    SignalForward::instance()->forwordUpdateSession(session);
+
+    //session 存在,更新session
+    if (session.getOtherId() == m_friend.friendId())
+    {
+        session.setSessionLastChatMessage(content);
+        session.setSessionLastChatTime(QDateTime::currentDateTime().toTime_t());
+        SignalForward::instance()->forwordUpdateSession(session);
+    }
+
 }
 
 

@@ -93,6 +93,8 @@ bool YLMessageTip::eventFilter(QObject *watched, QEvent *event)
 void YLMessageTip::updateList()
 {
     m_list_widget->clear();
+
+    //好友消息
     auto messages = GlobalData::getMessages();
     for (auto elem : messages)
     {
@@ -105,13 +107,15 @@ void YLMessageTip::updateList()
         uint32_t friendId = messages.key(elem);
         YLFriend fri = GlobalData::getFriendById(friendId);
 
-        w->setNickOrRemark(fri.friendRemark().isEmpty() ? fri.friendNickName() : fri.friendRemark());
+        w->setName(fri.friendRemark().isEmpty() ? fri.friendNickName() : fri.friendRemark());
         w->setHeadFrame(fri.friendImagePath());
         w->setCounterNumber(elem.size());
-        w->setFriendId(friendId);
+        w->setSenderId(friendId);
     }
 
+    //添加请求
     auto requests = GlobalData::getAddRequests();
+    requests += GlobalData::getGroupAddRequests();
     if (requests.size() > 0)
     {
         const YLAddRequest &latestRequest = requests.back();
@@ -122,11 +126,29 @@ void YLMessageTip::updateList()
         YLMessageListItem *w = new YLMessageListItem;
         m_list_widget->setItemWidget(item, w);
         w->setType(YLMessageListItem::REQUEST);
-        w->setNickOrRemark("验证消息");
+        w->setName("验证消息");
         w->setHeadFrame(":/res/YLAddFriendWIdgets/AddBuddy/horn@2x.png");
         w->setCounterNumber(requests.size());
     }
+    //群组
+    auto groupMessages = GlobalData::getGroupMessages();
+    for (auto elem : groupMessages)
+    {
+        QListWidgetItem *item = new QListWidgetItem(m_list_widget);
+        m_list_widget->addItem(item);
+        item->setSizeHint(QSize(300, 45));
+        YLMessageListItem *w = new YLMessageListItem;
+        m_list_widget->setItemWidget(item, w);
 
+        uint32_t groupId = groupMessages.key(elem);
+        YLGroup group = GlobalData::getGroupByGroupId(groupId);
+
+        w->setName(group.getGroupName());
+        w->setHeadFrame(group.getGroupImage());
+        w->setCounterNumber(elem.size());
+        w->setType(YLMessageListItem::GROUP);
+        w->setGroupId(groupId);
+    }
 
     m_list_widget->resize(QSize(300, 45 * m_list_widget->count()));
 

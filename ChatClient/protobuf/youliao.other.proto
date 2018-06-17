@@ -1,0 +1,48 @@
+syntax = "proto3";
+package youliao.pdu.other;
+import "youliao.base.proto";
+
+
+message ModifyInformationRequest
+{
+    uint32 user_id = 1;
+    youliao.pdu.base.UserInfo user_info = 2;
+    bool user_sign_changed = 3;
+}
+
+message ModifyInformationRespone
+{
+    uint32 user_id = 1;
+    uint32 result_code = 2;
+}
+
+message ModifyUserImageRequest
+{
+    uint32 user_id  = 1;
+    string icon_url = 2;
+}
+
+message ModifyUserImageRespone
+{
+    uint32 user_id      = 1;
+    string icon_url     = 2;
+    uint32 result_code  = 3;
+}
+
+message GetFriendInformationRequest
+{
+    uint32 user_id = 1;
+    uint32 friend_id = 2;
+}
+
+message GetFriendInformationRespone
+{
+    uint32 user_id = 1;
+    youliao.pdu.base.UserInfo user_info = 2;
+}
+
+message FriendInformationChange
+{
+    uint32 user_id = 1;
+}
+

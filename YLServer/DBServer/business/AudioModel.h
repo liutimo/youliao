@@ -32,9 +32,11 @@ public:
      */
     int saveAudioInfo(uint32_t fromId, uint32_t toId, uint32_t createTime, const string& audioData, uint32_t duration);
 
+    bool getAudioInfo(uint32_t audioId, uint32_t &duration, string& path);
+
+
 private:
     AudioModel();
-    bool readAudioContent(uint32_t costTime, uint32_t size, const string &path);
 
 
 private:

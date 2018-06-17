@@ -38,6 +38,9 @@ private slots:
     void enableCustom(int, bool);
     void addSelectedItem(uint32_t friId);
 
+protected:
+    void paintEvent(QPaintEvent *event);
+
 signals:
     void createComplete(const QString &groupName);
 

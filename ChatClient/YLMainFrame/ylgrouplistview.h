@@ -30,6 +30,7 @@ public:
 private slots:
     void createGroupComplete(const QString &groupName);
     void updateList();
+    void exitGroupResult(uint32_t groupId, uint32_t resultCode);
 
 private:
     void initMenu();

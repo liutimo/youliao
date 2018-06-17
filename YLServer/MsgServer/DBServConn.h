@@ -43,6 +43,18 @@ private:
     void _HandleSearchGroupRespone(BasePdu *);
     void _HandleAddGroupRespone(BasePdu *);
     void _HandleVerifyNotify(BasePdu *);
+    void _HandleOfflineMessageRespone(BasePdu *);
+    void _HandleModifyIconRespone(BasePdu *);
+    void _HandleGetLatestGroupMsgIdRespone(BasePdu *);
+    void _HandleExitGroupRespone(BasePdu *);
+    void _HandleModifyGroupHeaderRespone(BasePdu*);
+    void _HandleSetManagerRespone(BasePdu *);
+    void _HandleKcikOutMemberRespone(BasePdu *);
+    void _HandleGroupAddRequestRespone(BasePdu *);
+    void _HandleDeleteFriendRespone(BasePdu *);
+    void _HandleGetFriendInformationRespone(BasePdu *);
+    void _HandleAddFriendRespone(BasePdu *);
+    void _HandleModfiyInformationRespone(BasePdu *);
 
     uint32_t   m_server_index;
     bool       m_open;

@@ -2,12 +2,14 @@
 // Created by liuzheng on 18-4-9.
 //
 
+#include <pdu/protobuf/youliao.other.pb.h>
 #include "RouteConn.h"
 #include "pdu/protobuf/youliao.friendlist.pb.h"
 #include "pdu/protobuf/youliao.message.pb.h"
 #include "network/netlib.h"
 #include "pdu/protobuf/youliao.login.pb.h"
 #include "pdu/protobuf/youliao.server.pb.h"
+#include "pdu/protobuf/youliao.group.pb.h"
 
 #include "ClientConn.h"
 #include "User.h"
@@ -136,6 +138,12 @@ void RouteConn::handlePdu(BasePdu *pdu)
             break;
         case base::CID_SERVER_FORWARD_GROUP_MESSAGE:
             _HandleForwardGroupMessage(pdu);
+            break;
+        case base::CID_OTHER_FRIEND_INFORMATION_CHANGE_NOTIFY:
+            _HandleUserInformationChange(pdu);
+            break;
+        case base::CID_GROUP_UPDATE_GROUP_LIST:
+            _HandleUpdateGroupListRespone(pdu);
             break;
         default:
             break;
@@ -283,5 +291,38 @@ void RouteConn::_HandleForwardGroupMessage(BasePdu *basePdu)
             sendMessage(conn, msg, base::SID_MESSAGE, base::CID_MESSAGE_DATA);
     }
 
+}
 
+
+void RouteConn::_HandleUserInformationChange(BasePdu *basePdu)
+{
+    other::FriendInformationChange respone;
+    respone.ParseFromString(basePdu->getMessage());
+
+    uint32_t userId = respone.user_id();
+
+    auto user = UserManager::instance()->getUser(userId);
+    if (user)
+    {
+        auto conn = user->getConn();
+        if (conn)
+            sendMessage(conn, respone, base::SID_OTHER, base::CID_OTHER_FRIEND_INFORMATION_CHANGE_NOTIFY);
+    }
+}
+
+
+void RouteConn::_HandleUpdateGroupListRespone(BasePdu *basePdu)
+{
+    group::UpdateGroupList updateGroupList;
+    updateGroupList.ParseFromString(basePdu->getMessage());
+
+    uint32_t userId = updateGroupList.user_id();
+
+    auto user = UserManager::instance()->getUser(userId);
+    if (user)
+    {
+        auto conn = user->getConn();
+        if (conn)
+            sendMessage(conn, updateGroupList, base::SID_GROUP, base::CID_GROUP_UPDATE_GROUP_LIST);
+    }
 }

@@ -29,7 +29,9 @@ class YLAddFriendWidget : public YLBasicWidget
 
 public:
     explicit YLAddFriendWidget(QWidget *parent = nullptr);
-signals:
+
+protected:
+    void paintEvent(QPaintEvent *event);
 
 private slots:
     void friends(const QVector<YLFriend> &fris);

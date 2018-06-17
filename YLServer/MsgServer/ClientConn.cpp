@@ -20,6 +20,7 @@
 #include "pdu/protobuf/youliao.session.pb.h"
 #include "pdu/protobuf/youliao.group.pb.h"
 #include "pdu/protobuf/youliao.file.pb.h"
+#include "pdu/protobuf/youliao.other.pb.h"
 #include "User.h"
 #include <sys/time.h>
 #include "FileServerConn.h"
@@ -148,6 +149,9 @@ void ClientConn::handlePdu(BasePdu *pdu)
         case base::CID_MESSAGE_DATA:
             _HandleMessageDataRequest(pdu);
             break;
+        case base::CID_MESSAGE_DATA_ACK:
+            _HandleMessageDataAck(pdu);
+            break;
         case base::CID_FRIENDLIST_SIGNATURE_CHANGED_REQUEST:
             _HandleSignatureChangeRequest(pdu);
             break;
@@ -213,6 +217,39 @@ void ClientConn::handlePdu(BasePdu *pdu)
             break;
         case base::CID_FILE_REQUEST:
             _HandleClientFileRequest(pdu);
+            break;
+        case base::CID_MESSAGE_GET_OFFLINE_MESSAGE_REQUEST:
+            _HandleOfflineMessageDataRequest(pdu);
+            break;
+        case base::CID_OTHER_MODIFY_INFORMATION_REQUEST:
+            _HandleModifyInformation(pdu);
+            break;
+        case base::CID_OTHER_MODIFY_USER_HEADER_REQUEST:
+            _HandleModifyUserIcon(pdu);
+            break;
+        case base::CID_GROUP_GET_LATEST_MSG_ID_REQUEST:
+            _HandleGetGroupLatestMsgIdRequest(pdu);
+            break;
+        case base::CID_GROUP_EXIT_GROUP_REQUEST:
+            _HandleExitGroupRequest(pdu);
+            break;
+        case base::CID_GROUP_MODIFY_HEADER_REQUEST:
+            _HandleGroupHeaderRequest(pdu);
+            break;
+        case base::CID_GROUP_SET_MANAGER_REQUEST:
+            _HandleSetManagerRequest(pdu);
+            break;
+        case base::CID_GROUP_KICK_OUT_REQUEST:
+            _HandleKickOutMemberRequest(pdu);
+            break;
+        case base::CID_SESSIONLIST_ADD_SESSION_REQUEST:
+            _HandleCreateNewSessionRequest(pdu);
+            break;
+        case base::CID_GROUP_VERIFY_RESULT:
+            _HandleGroupVerifyResult(pdu);
+            break;
+        case base::CID_OTHER_GET_FRIEND_INFORMATION_REQUEST:
+            _HandleGetFriendInformationRequest(pdu);
             break;
         default:
             std::cout << pdu->getCID() << std::endl;
@@ -439,6 +476,34 @@ void ClientConn::_HandleMessageDataRequest(BasePdu *pdu)
 
 }
 
+
+void ClientConn::_HandleMessageDataAck(BasePdu *pdu)
+{
+    message::MessageDataAck ack;
+    ack.ParseFromString(pdu->getMessage());
+
+    log("收到消息已读确认请求");
+
+    DBServConn *conn = get_db_server_conn();
+    if (conn)
+        sendMessage(conn, ack, base::SID_MESSAGE, base::CID_MESSAGE_DATA_ACK);
+}
+
+
+void ClientConn::_HandleOfflineMessageDataRequest(BasePdu *basePdu)
+{
+    message::GetOfflineMessageRequest request;
+    request.ParseFromString(basePdu->getMessage());
+
+    uint32_t userId = request.user_id();
+    log("用户%d请求离线消息", userId);
+
+    DBServConn *conn = get_db_server_conn();
+    if (conn)
+        sendMessage(conn, request, base::SID_MESSAGE, base::CID_MESSAGE_GET_OFFLINE_MESSAGE_REQUEST);
+}
+
+
 void ClientConn::_HandleSignatureChangeRequest(BasePdu *pdu)
 {
     friendlist::SignatureChangeResquest signatureChangeResquest;
@@ -614,6 +679,21 @@ void ClientConn::_HandleTopSessionRequest(BasePdu *pdu)
 }
 
 
+void ClientConn::_HandleCreateNewSessionRequest(BasePdu *pdu)
+{
+    session::CreateNewSession request;
+    request.ParseFromString(pdu->getMessage());
+
+    uint32_t userId = request.user_id();
+
+    log("用户%d请求创建新的Session");
+
+    DBServConn *dbServConn = get_db_server_conn();
+    if (dbServConn)
+        sendMessage(dbServConn, request, base::SID_SERVER, base::CID_SESSIONLIST_ADD_SESSION_REQUEST);
+}
+
+
 void ClientConn::_HandleSearchFriendRequest(BasePdu *pdu)
 {
     friendlist::SearchFriendRequest request;
@@ -746,6 +826,24 @@ void ClientConn::_HandlerGetAddRequestHistoryRequest(BasePdu *pdu)
     }
 }
 
+
+void ClientConn::_HandleGroupVerifyResult(BasePdu *pdu)
+{
+    group::VerifyHandlerResult result;
+    result.ParseFromString(pdu->getMessage());
+
+    uint32_t userId = result.handle_user_id();
+    uint32_t requestId = result.request_user_id();
+    log("用户%d处理了用户%d的入群申请", userId, requestId);
+
+    auto dbConn = get_db_server_conn();
+    if (dbConn)
+    {
+        sendMessage(dbConn, result, base::SID_SERVER, base::CID_GROUP_VERIFY_RESULT);
+    }
+}
+
+
 void ClientConn::_HandleCreatGroupRequest(BasePdu *basePdu)
 {
     group::GroupCreateRequest request;
@@ -846,6 +944,91 @@ void ClientConn::_HandleAddGroupRequest(BasePdu *basePdu)
         sendMessage(conn, request, base::SID_SERVER, base::CID_GROUP_ADD_GROUP_REQUEST);
 }
 
+
+void ClientConn::_HandleGetGroupLatestMsgIdRequest(BasePdu *basePdu)
+{
+    group::GetLatestGroupMsgIdRequest request;
+    request.ParseFromString(basePdu->getMessage());
+
+    uint32_t userId = request.user_id();
+    uint32_t groupId = request.group_id();
+
+    log("用户%d请求获取群组%d最新消息ID", userId, groupId);
+
+    auto conn = get_db_server_conn();
+    if (conn)
+        sendMessage(conn, request, base::SID_SERVER, base::CID_GROUP_GET_LATEST_MSG_ID_REQUEST);
+}
+
+
+void ClientConn::_HandleExitGroupRequest(BasePdu *basePdu)
+{
+    group::ExitGroupRequest request;
+    request.ParseFromString(basePdu->getMessage());
+
+    uint32_t userId = request.user_id();
+    uint32_t groupId = request.group_id();
+
+    log("用户%d请求退出群组%d", userId, groupId);
+
+    auto conn = get_db_server_conn();
+    if (conn)
+        sendMessage(conn, request, base::SID_SERVER, base::CID_GROUP_EXIT_GROUP_REQUEST);
+}
+
+void ClientConn::_HandleGroupHeaderRequest(BasePdu *basePdu)
+{
+    group::ModifyGroupHeaderRequest request;
+    request.ParseFromString(basePdu->getMessage());
+
+    uint32_t userId = request.user_id();
+    uint32_t groupId = request.group_id();
+
+    log("用户%d请求更换群组%d的头像", userId, groupId);
+
+    auto conn = get_db_server_conn();
+    if (conn)
+        sendMessage(conn, request, base::SID_SERVER, base::CID_GROUP_MODIFY_HEADER_REQUEST);
+}
+
+
+void ClientConn::_HandleSetManagerRequest(BasePdu *pdu)
+{
+    group::SetGroupManagerRequest request;
+    request.ParseFromString(pdu->getMessage());
+
+    uint32_t userId = request.user_id();
+    uint32_t member = request.member_id();
+    uint32_t groupId = request.group_id();
+
+    log("用户%d将用户%d设置为群组%d的管理员", userId, member, groupId);
+
+    auto conn = get_db_server_conn();
+    if (conn)
+        sendMessage(conn, request, base::SID_SERVER, base::CID_GROUP_SET_MANAGER_REQUEST);
+
+}
+
+void ClientConn::_HandleKickOutMemberRequest(BasePdu *pdu)
+{
+    group::KickOutMemberRequest request;
+    request.ParseFromString(pdu->getMessage());
+
+    uint32_t userId = request.user_id();
+    uint32_t member = request.member_id();
+    uint32_t groupId = request.group_id();
+
+    log("用户%d将用户%d踢出群组%d", userId, member, groupId);
+
+
+    auto conn = get_db_server_conn();
+    if (conn)
+        sendMessage(conn, request, base::SID_SERVER, base::CID_GROUP_KICK_OUT_REQUEST);
+
+}
+
+
+
 void ClientConn::_HandleClientFileRequest(BasePdu *pdu)
 {
     file::SendFileRequest request;
@@ -908,4 +1091,47 @@ void ClientConn::_HandleClientFileRequest(BasePdu *pdu)
 
 }
 
+//修改资料
+void ClientConn::_HandleModifyInformation(BasePdu *pdu)
+{
+    other::ModifyInformationRequest request;
+    request.ParseFromString(pdu->getMessage());
 
+    uint32_t userId = request.user_id();
+
+    log("用户%d请求修改资料", userId);
+
+    DBServConn *dbServConn = get_db_server_conn();
+    if (dbServConn)
+        sendMessage(dbServConn, request, base::SID_OTHER, base::CID_OTHER_MODIFY_INFORMATION_REQUEST);
+}
+
+
+void ClientConn::_HandleModifyUserIcon(BasePdu *pdu)
+{
+    other::ModifyUserImageRequest request;
+    request.ParseFromString(pdu->getMessage());
+
+    uint32_t userId = request.user_id();
+
+    log("用户%d请求修改头像", userId);
+
+    DBServConn *dbServConn = get_db_server_conn();
+    if (dbServConn)
+        sendMessage(dbServConn, request, base::SID_OTHER, base::CID_OTHER_MODIFY_USER_HEADER_REQUEST);
+}
+
+
+void ClientConn::_HandleGetFriendInformationRequest(BasePdu *pdu)
+{
+    other::GetFriendInformationRequest request;
+    request.ParseFromString(pdu->getMessage());
+
+    uint32_t userId = request.user_id();
+    log("用户%d请求好友信息", userId);
+
+
+    DBServConn *dbServConn = get_db_server_conn();
+    if (dbServConn)
+        sendMessage(dbServConn, request, base::SID_SERVER, base::CID_OTHER_GET_FRIEND_INFORMATION_REQUEST);
+}

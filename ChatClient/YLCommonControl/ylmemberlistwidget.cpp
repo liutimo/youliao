@@ -5,6 +5,8 @@
 #include <QScrollBar>
 #include <QDateTime>
 #include <QMouseEvent>
+#include <QMenu>
+#include <QDebug>
 #include "yllineedit.h"
 #include "globaldata.h"
 #include "YLCommonControl/ylheadframe.h"
@@ -13,7 +15,9 @@ YLMemberListWidget::YLMemberListWidget(QWidget *parent) : QTableWidget(parent)
 {
     m_last_row_color = QColor(0x00,0xff,0x00,0x00);//透明颜色
     m_previous_color_row = -1;
-
+    m_is_group_creator = false;
+    m_is_group_manager = false;
+    setMouseTracking(true);
     setColumnCount(3);
     setShowGrid(false);                                     //设置不显示格子线
     setFocusPolicy(Qt::NoFocus);                            //去除选中时虚线
@@ -27,7 +31,7 @@ YLMemberListWidget::YLMemberListWidget(QWidget *parent) : QTableWidget(parent)
     horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
     horizontalHeader()->setDefaultAlignment(Qt::AlignCenter);
     horizontalHeader()->setStyleSheet("QHeaderView::section {background-color:#ECECEC;color: #777777;padding-left:5px;padding-top:3px; padding-bottom:3px;;border: 0px; font:12px;}"
-                                      "QHeaderView::section:checked{background-color:#ECECEC;color: #777777;padding-left:5px;padding-top:3px; padding-bottom:3px;border: 0px; font:12px;}");
+                                      "QHeaderView::section{background-color:#ECECEC;color: #777777;padding-left:5px;padding-top:3px; padding-bottom:3px;border: 0px; font:12px;}");
 
     verticalHeader()->hide();
 
@@ -56,10 +60,22 @@ YLMemberListWidget::YLMemberListWidget(QWidget *parent) : QTableWidget(parent)
         m_line_edit->hideButton();
         m_line_edit->setFixedSize(95, 30);
     });
+
 }
 
 YLMemberListWidget::~YLMemberListWidget()
 {  
+}
+
+void YLMemberListWidget::setGroup(const YLGroup &group)
+{
+    m_group = group;
+
+    if (m_group.getGroupCreator() == GlobalData::getCurrLoginUserId())
+        m_is_group_creator = true;
+
+    if (m_group.getManagers().contains(GlobalData::getCurrLoginUserId()))
+        m_is_group_manager = true;
 }
 
 void YLMemberListWidget::setHeader()
@@ -83,8 +99,9 @@ void YLMemberListWidget::setRow(const base::MemberInfo &memberInfo, MemberNameWi
     setItem(row, 0, c1);
 
     MemberNameWidgetItem *w1 = new MemberNameWidgetItem;
-    w1->setMemberName(QString::number(memberInfo.user_id()));
+    w1->setMemberName(memberInfo.user_info().user_nick().c_str());
     w1->setMemberType(type);
+    w1->setHeader(memberInfo.user_info().user_header_url().c_str());
     setCellWidget(rowCount() - 1, 0, w1);
 
     QTableWidgetItem *c2 = new QTableWidgetItem;
@@ -137,8 +154,11 @@ void YLMemberListWidget::mousePressEvent(QMouseEvent *event)
         m_line_edit->hideButton();
         m_line_edit->setFixedSize(95, 30);
     }
+
     QTableWidget::mousePressEvent(event);
 }
+
+
 
 void YLMemberListWidget::cellEntered(int row, int column)
 {
@@ -155,8 +175,45 @@ void YLMemberListWidget::cellEntered(int row, int column)
         setRowColor(row, QColor(193,210,240));
     }
 
+    removeCellWidget(m_previous_color_row, 2);
     //设置行的索引
     m_previous_color_row = row;
+
+
+    //设置窗口样式
+    qDebug() << "群主id" << m_group.getGroupCreator() << "当前登录用户" << GlobalData::getCurrLoginUserId();
+
+    uint32_t rowUserId = m_row_id.key(row);
+
+    //群组权限的操作
+    //群主可以设置管理员和踢出群组成员
+    if (m_is_group_creator)  //群主
+    {
+        if (rowUserId != m_group.getGroupCreator())
+        {
+            ButtonGroup *b = new ButtonGroup;
+            b->setUserId(rowUserId);
+            b->setGroupId(m_group.getGroupId());
+            setCellWidget(row, 2, b);
+        }
+    }
+    else
+    {
+        //管理员
+        if (m_is_group_manager)
+        {
+            if (rowUserId != m_group.getGroupCreator() && !m_group.getManagers().contains(rowUserId))
+            {
+                ButtonGroup *b = new ButtonGroup;
+                b->setUserId(rowUserId);
+                b->setGroupId(m_group.getGroupId());
+                b->hideSet();
+                setCellWidget(row, 2, b);
+            }
+
+        }
+    }
+
 }
 
 void YLMemberListWidget::setRowColor(int row, QColor color)
@@ -230,4 +287,9 @@ void MemberNameWidgetItem::setMemberName(const QString &name)
     m_member_name->setText("<p style='color:#777'>" + memberName + "</p>");
 }
 
+
+void MemberNameWidgetItem::setHeader(const QString &url)
+{
+    m_head_frame->setHeadFromUrl(url);
+}
 

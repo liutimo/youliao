@@ -55,6 +55,10 @@ bool LoginModel::getUserInfo(uint32_t userId, base::UserInfo &userInfo)
                 userInfo.set_user_phone(resultSet->getString("user_phone"));
                 userInfo.set_user_nick(resultSet->getString("user_nickname"));
                 userInfo.set_user_id((uint32_t)resultSet->getInt("user_id"));
+                userInfo.set_user_location(resultSet->getString("user_location"));
+                userInfo.set_user_hometown(resultSet->getString("user_hometown"));
+                userInfo.set_user_birthday(resultSet->getString("user_birthday"));
+                userInfo.set_user_school(resultSet->getString("user_school"));
             }
         }
 
@@ -92,6 +96,10 @@ bool LoginModel::doLogin(const std::string &str_name, const std::string &str_pas
                 userInfo.set_user_phone(resultSet->getString("user_phone"));
                 userInfo.set_user_nick(resultSet->getString("user_nickname"));
                 userInfo.set_user_id(resultSet->getInt("user_id"));
+                userInfo.set_user_location(resultSet->getString("user_location"));
+                userInfo.set_user_hometown(resultSet->getString("user_hometown"));
+                userInfo.set_user_birthday(resultSet->getString("user_birthday"));
+                userInfo.set_user_school(resultSet->getString("user_school"));
             }
         }
 
@@ -126,10 +134,18 @@ bool LoginModel::doRegister(const std::string &nickname, const std::string &pass
 
     if (conn)
     {
+        std::string header = "www.liutimo.cn/images/";
+        if (head.empty())
+            header += "default.jpeg";
+        else
+            header += head;
         std::string sql = "INSERT INTO yl_user(user_account, user_password, user_nickname,"
                           " user_header, user_created, user_updated) "
-                          "VALUES(?, ?, ?, ?, ?, ?)";
+                          "VALUES(?, ?, ?, '" + header + "', ?, ?)";
         printSql2Log(sql.c_str());
+
+
+
 
         PrepareStatement *pstmt = new PrepareStatement;
         if (pstmt->init(conn->getMysql(), sql))
@@ -138,10 +154,6 @@ bool LoginModel::doRegister(const std::string &nickname, const std::string &pass
             pstmt->setParam(index++, user_account);
             pstmt->setParam(index++, password);
             pstmt->setParam(index++, nickname);
-            if (head.empty())
-                pstmt->setParam(index++, "www.liutimo.cn/images/default.jpeg");
-            else
-                pstmt->setParam(index++, "www.liutimo.cn/images/" + head);
             pstmt->setParam(index++, created);
             pstmt->setParam(index++, created);
 

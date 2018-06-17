@@ -1,17 +1,18 @@
 #include "ylcreategroupwidget.h"
+#include <QLabel>
+#include <QDebug>
+#include <QPainter>
+#include <QLineEdit>
+#include <QMouseEvent>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
-#include <QLabel>
-#include <QLineEdit>
-#include <QRadioButton>
 #include <QPushButton>
 #include <QButtonGroup>
-#include <QMouseEvent>
-#include <QDebug>
-#include "YLCommonControl/ylheadframe.h"
+#include <QRadioButton>
 #include "globaldata.h"
 #include "signalforward.h"
 #include "YLNetWork/ylbusiness.h"
+#include "YLCommonControl/ylheadframe.h"
 
 YLCreateGroupWidget::YLCreateGroupWidget(QWidget *parent) : YLBasicWidget(parent)
 {
@@ -19,7 +20,7 @@ YLCreateGroupWidget::YLCreateGroupWidget(QWidget *parent) : YLBasicWidget(parent
     setAttribute(Qt::WA_DeleteOnClose);
     init();
     initLayout();
-    setWidgetIcon();
+    setWidgetIcon(":/res/qqlogo.png");
     setWidgetTitle("创建群组");
 
 }
@@ -27,6 +28,26 @@ YLCreateGroupWidget::YLCreateGroupWidget(QWidget *parent) : YLBasicWidget(parent
 YLCreateGroupWidget::~YLCreateGroupWidget()
 {
     qDebug() << "~YLCreateGroupWidget()";
+}
+
+
+void YLCreateGroupWidget::paintEvent(QPaintEvent *event)
+{
+    const int titleBarHeight = 32;
+
+    QPainter painter(this);
+    painter.setPen(Qt::NoPen);
+
+
+    painter.setBrush(Qt::white);
+    painter.drawRect(rect());
+
+    painter.setBrush(QColor::fromRgb(40, 138, 221));           //#288ADD
+    painter.drawRect(0, 0, width(), titleBarHeight);
+
+
+    painter.setBrush(QColor::fromRgb(234,241,248));            //#EAF1F8
+    painter.drawRect(0, titleBarHeight, width(), height() - titleBarHeight);
 }
 
 void YLCreateGroupWidget::init()

@@ -3,7 +3,6 @@
         <file>res/sysbtn_close_down.png</file>
         <file>res/sysbtn_close_hover.png</file>
         <file>res/sysbtn_close_normal.png</file>
-        <file>res/1.jpg</file>
         <file>res/YLCommonControl/away.png</file>
         <file>res/YLCommonControl/busypng</file>
         <file>res/YLCommonControl/imonline.png</file>
@@ -37,7 +36,6 @@
         <file>res/MainFrame/main_search_delhighlight.png</file>
         <file>res/MainFrame/main_search_delnormal.png</file>
         <file>res/MainFrame/search_icon.png</file>
-        <file>res/2.jpeg</file>
         <file>res/YLChatWidget/sysbtn_max_down.png</file>
         <file>res/YLChatWidget/sysbtn_max_hover.png</file>
         <file>res/YLChatWidget/sysbtn_max_normal.png</file>
@@ -281,7 +279,6 @@
         <file>res/MainFrame/aio_top_mark.png</file>
         <file>res/MainFrame/right.png</file>
         <file>res/MainFrame/down.png</file>
-        <file>res/1.jpeg</file>
         <file>res/Info/sex_age.png</file>
         <file>res/Info/school.png</file>
         <file>res/Info/remark.png</file>
@@ -400,5 +397,40 @@
         <file>res/LoginPanel/loading.gif</file>
         <file>res/LoginPanel/register_failed.png</file>
         <file>res/LoginPanel/register_success.png</file>
+        <file>res/LoginPanel/addphoto_normal.png</file>
+        <file>res/LoginPanel/AddPhoto.png</file>
+        <file>res/LoginPanel/AddPhotodown.png</file>
+        <file>res/LoginPanel/AddPhotohover.png</file>
+        <file>res/YLCommonControl/arrow_up.png</file>
+        <file>res/YLCommonControl/arrow_down.png</file>
+        <file>res/Info/phone.png</file>
+        <file>res/Info/home_land.png</file>
+        <file>res/Info/residence_place.png</file>
+        <file>res/head_bkg_highlight_60.png</file>
+        <file>res/headicon/bighead_editor_rotate_left_down.png</file>
+        <file>res/headicon/bighead_editor_rotate_left_hover.png</file>
+        <file>res/headicon/bighead_editor_rotate_left_normal.png</file>
+        <file>res/headicon/bighead_editor_rotate_right_down.png</file>
+        <file>res/headicon/bighead_editor_rotate_right_hover.png</file>
+        <file>res/headicon/bighead_editor_rotate_right_normal.png</file>
+        <file>res/headicon/bighead_editor_zoom_in_hover.png</file>
+        <file>res/headicon/bighead_editor_zoom_in_normal.png</file>
+        <file>res/headicon/bighead_editor_zoom_out_hover.png</file>
+        <file>res/headicon/bighead_editor_zoom_out_normal.png</file>
+        <file>res/headicon/CircleMask.png</file>
+        <file>res/qqlogo.png</file>
+        <file>res/MessageBox/sysmessagebox_errorFile.png</file>
+        <file>res/MessageBox/sysmessagebox_inforFile.png</file>
+        <file>res/MessageBox/sysmessagebox_okFile.png</file>
+        <file>res/MessageBox/sysmessagebox_questionFile.png</file>
+        <file>res/MessageBox/sysmessagebox_warningFile.png</file>
+        <file>res/YLCommonControl/set.png</file>
+        <file>res/YLCommonControl/set_pressed.png</file>
+        <file>res/YLCommonControl/set_hover.png</file>
+        <file>res/YLCommonControl/remove.png</file>
+        <file>res/YLCommonControl/remove_pressed.png</file>
+        <file>res/YLCommonControl/remove_hover.png</file>
+        <file>res/YLAddFriendWIdgets/AddBuddy/SessionNode.png</file>
+        <file>res/qq.png</file>
     </qresource>
 </RCC>
