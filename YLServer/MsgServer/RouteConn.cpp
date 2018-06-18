@@ -145,6 +145,9 @@ void RouteConn::handlePdu(BasePdu *pdu)
         case base::CID_GROUP_UPDATE_GROUP_LIST:
             _HandleUpdateGroupListRespone(pdu);
             break;
+        case base::CID_GROUP_UNGROUP:
+            _HandleUngroupNotify(pdu);
+            break;
         default:
             break;
     }
@@ -324,5 +327,21 @@ void RouteConn::_HandleUpdateGroupListRespone(BasePdu *basePdu)
         auto conn = user->getConn();
         if (conn)
             sendMessage(conn, updateGroupList, base::SID_GROUP, base::CID_GROUP_UPDATE_GROUP_LIST);
+    }
+}
+
+
+void RouteConn::_HandleUngroupNotify(BasePdu *basePdu)
+{
+    group::UngroupNotify notify;
+    notify.ParseFromString(basePdu->getMessage());
+
+    uint32_t userId = notify.user_id();
+    auto user = UserManager::instance()->getUser(userId);
+    if (user)
+    {
+        auto conn = user->getConn();
+        if (conn)
+            sendMessage(conn, notify, base::SID_GROUP, base::CID_GROUP_UNGROUP);
     }
 }

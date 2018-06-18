@@ -654,7 +654,7 @@ namespace DB_INTERFACE
         respone.set_group_id(groupId);
 
         //获取离线消息
-        bool ret = MessageModel::instance()->getGroupOfflineMessage(groupId, currMsgId, respone);
+        bool ret = MessageModel::instance()->getGroupOfflineMessage(userId, groupId, currMsgId, respone);
 
         if (ret && respone.msg_data_size() > 0)
         {
@@ -1231,28 +1231,53 @@ namespace DB_INTERFACE
         uint32_t userId     = request.user_id();
         uint32_t groupId    = request.group_id();
 
-        bool ret = GroupModel::instance()->exitGroup(groupId, userId);
-
-        if (ret)
-        {
-            //删除session
-            uint32_t sessionId = SessionModel::instance()->getSessionId(userId, groupId, base::SESSION_TYPE_GROUP);
-            if (sessionId != 0)
-                SessionModel::instance()->removeSession(sessionId);
-        }
-
-        uint32_t resCode = ret ? 0 : 1;
 
         group::ExitGroupRespone respone;
         respone.set_user_id(userId);
         respone.set_group_id(groupId);
-        respone.set_result_code(resCode);
+
+
+        base::GroupInfo groupInfo;
+        GroupModel::instance()->getGroupInfoByGroupId(groupId, groupInfo);
 
         auto conn = findProxyConn(conn_uuid);
+        //群主退出
+        if (groupInfo.group_creator() == userId)
+        {
+            //解散群
+            GroupModel::instance()->ungroup(groupId);
+
+            //删除与该群相关的session
+            SessionModel::instance()->deleteGroupSession(groupId);
+
+            //通知群员
+            group::UngroupNotify notify;
+            notify.set_user_id(userId);
+            notify.set_group_id(groupId);
+
+            if (conn)
+                sendMessage(conn, notify, base::SID_SERVER, base::CID_GROUP_UNGROUP);
+        }
+        else
+        {
+            bool ret = GroupModel::instance()->exitGroup(groupId, userId);
+
+            if (ret)
+            {
+                //删除session
+                uint32_t sessionId = SessionModel::instance()->getSessionId(userId, groupId, base::SESSION_TYPE_GROUP);
+                if (sessionId != 0)
+                    SessionModel::instance()->removeSession(sessionId);
+            }
+
+            uint32_t resCode = ret ? 0 : 1;
+
+            respone.set_result_code(resCode);
+        }
+
+
         if (conn)
             sendMessage(conn, respone, base::SID_SERVER, base::CID_GROUP_EXIT_GROUP_RESPONE);
-
-
     }
 
 

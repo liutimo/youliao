@@ -4,6 +4,7 @@
 
 #include "MessageModel.h"
 #include "AudioModel.h"
+#include "GroupModel.h"
 #include "../DBPool.h"
 #include "util/util.h"
 #include "FriendListModel.h"
@@ -397,18 +398,31 @@ bool MessageModel::getOfflineMessage(uint32_t userId, message::GetOfflineMessage
     return ret;
 }
 
-bool MessageModel::getGroupOfflineMessage(uint32_t groupId, uint32_t currentMsgId, message::GetGroupOfflineMessageRespone &respone)
+bool MessageModel::getGroupOfflineMessage(uint32_t userId, uint32_t groupId, uint32_t currentMsgId, message::GetGroupOfflineMessageRespone &respone)
 {
     bool ret = false;
+
+
+    std::string querySql = "SELECT sender_id, msg_id, content, type, created "
+                           "FROM yl_group_message "
+                           "WHERE group_id = " + std::to_string(groupId) + " AND msg_id > " + std::to_string(currentMsgId);
+
+    if (currentMsgId == 0)
+    {
+        uint32_t updateTime = GroupModel::instance()->getJoinGroupTime(userId, groupId);
+
+        if (updateTime == 0)
+            return ret;
+
+        querySql += " AND created > " + std::to_string(updateTime);
+
+    }
 
     DBConn *conn = DBManager::instance()->getConnection();
 
     if (!conn)
         return ret;
 
-    std::string querySql = "SELECT sender_id, msg_id, content, type, created "
-                           "FROM yl_group_message "
-                           "WHERE group_id = "+ std::to_string(groupId)+ " AND msg_id > " + std::to_string(currentMsgId);
 
     printSql2Log(querySql.c_str());
 

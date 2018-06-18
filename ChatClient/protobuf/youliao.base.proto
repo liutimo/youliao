@@ -172,6 +172,7 @@ enum GroupCID
     CID_GROUP_UPDATE_GROUP_LIST            = 0x0213;   //更新群组列表,群员更改时使用
     CID_GROUP_GET_OFFLINE_MESSAGE_REQUEST  = 0x0214;  //请求群历史消息
     CID_GROUP_GET_OFFLINE_MESSAGE_RESPONE  = 0x0215;
+    CID_GROUP_UNGROUP                      = 0x0216; //解散群
 }
 //文件
 enum FileCID

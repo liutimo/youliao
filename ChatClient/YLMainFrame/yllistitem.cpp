@@ -212,10 +212,6 @@ void YLListItem::setData(const YLFriend &friend_, const YLSession &session)
         //处理时间显示格式
         label_time_->setText(placeholder_text_3.arg(handleTime(session_.getSessionLastChatTime())));
 
-//        QDateTime dateTime;
-//        dateTime.setTime_t(session.getSessionLastChatTime());
-//        label_time_->setText(placeholder_text_3.arg(dateTime.toString("hh:mm")));
-
         QString msg = session.getSessionLastChatMessage();
         QRegExp re;
         re.setPattern("<img.*src='.*'.*>");
@@ -374,6 +370,8 @@ void YLListItem::onDeleteFriend()
     messageBox->setIcon(":/res/MessageBox/sysmessagebox_questionFile.png");
     QString toolTip = friend_.friendRemark().isEmpty() ? friend_.friendNickName() : friend_.friendRemark();
     messageBox->setToolTip("你是否确认删除<span style='color:#FF6666'>" + toolTip + "</span>?(删除后,你将从对方的联系人列表中消息,且以后不在接收此人的会话消息。)");
+    auto p = YLMainWidget::center;
+    messageBox->move(mapToGlobal(p) - mapToGlobal(messageBox->rect().center()));
     BottonResult res = messageBox->exec();
     if (res == ID_OK)
     {
@@ -442,6 +440,8 @@ void YLListItem::onExitGroup()
         m->setToolTip("你真的要退出该群吗？(你是群主,你的退出将解散该群)");
     else
         m->setToolTip("你真的要退出该群吗？(退群通知仅群管理员可见)");
+    auto p = YLMainWidget::center;
+    m->move(mapToGlobal(p) - mapToGlobal(m->rect().center()));
     BottonResult br =  m->exec();
 
     if (br == BUTTON_OK)

@@ -37,6 +37,7 @@ public:
     //获取指定用户的所有session
     bool getSessions(uint32_t userId, std::list<base::SessionInfo> &sessionList);
 
+    bool deleteGroupSession(uint32_t groupId);
 private:
     SessionModel();
     static SessionModel *m_instance;

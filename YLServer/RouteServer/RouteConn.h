@@ -32,7 +32,7 @@ private:
     void _HandleForwardGroupMessage(BasePdu *basePdu);
     void _HandleUserInformationChange(BasePdu *basePdu);
     void _HandleUpdateGroupListRequest(BasePdu *basePdu);
-
+    void _HandleUngroupNotify(BasePdu *basePdu);
 
     void _HandleRouteMessage(BasePdu *basePdu);
     void _HandleMessageServerIndex(BasePdu *basePdu);

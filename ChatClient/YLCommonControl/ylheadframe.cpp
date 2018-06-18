@@ -11,7 +11,8 @@ YLHeadFrame::YLHeadFrame(QWidget *parent) : QLabel(parent), m_online(false)
     m_http = new HttpHelper(this);
     setStyleSheet("background:transparent;");
     connect(m_http, &HttpHelper::downloadFinshed, this, [this](){
-        setHeadFromLocal(m_http->getFilename());
+        path_ = m_http->getFilename();
+        update();
     });
 }
 

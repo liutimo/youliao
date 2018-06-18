@@ -36,6 +36,7 @@ void HttpHelper::download(const QString &url_, bool isImage)
         return;
     }
 
+
     if (isImage)
 //        m_filename = m_file_save_path + "/" + QString::number(GlobalData::getCurrLoginUserId()) + "/images/"  + m_filename;
         m_filename = GlobalData::imagePath + m_filename;
@@ -50,7 +51,7 @@ void HttpHelper::download(const QString &url_, bool isImage)
     {
         emit downloadFinshed();
 
-       m_file->close();
+        m_file->close();
     }
     else
     {

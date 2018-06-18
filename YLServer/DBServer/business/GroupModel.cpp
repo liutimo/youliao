@@ -139,7 +139,9 @@ bool GroupModel::getOtherGroupByUserId(uint32_t userId, std::list<uint32_t> &gro
     auto conn = DBManager::instance()->getConnection();
     if (conn)
     {
-        std::string sql = "SELECT group_id FROM yl_group_member WHERE status = 1 AND member_id = " + std::to_string(userId);
+        std::string sql = "SELECT a.group_id FROM yl_group_member AS a, yl_group AS b WHERE status = 1 "
+                          "AND a.group_id = b.group_id AND b.group_status = 0 "
+                          "AND type != 2 AND member_id = " + std::to_string(userId);
         printSql2Log(sql.c_str());
 
         ResultSet *resultSet = conn->query(sql);
@@ -169,7 +171,7 @@ bool GroupModel::getSelfGroupByUserId(uint32_t userId, std::list<uint32_t> &grou
     auto conn = DBManager::instance()->getConnection();
     if (conn)
     {
-        std::string sql = "SELECT group_id FROM yl_group WHERE  group_creator = " + std::to_string(userId);
+        std::string sql = "SELECT group_id FROM yl_group WHERE group_status = 0 AND group_creator = " + std::to_string(userId);
         printSql2Log(sql.c_str());
         ResultSet *resultSet = conn->query(sql);
         if (resultSet)
@@ -252,11 +254,11 @@ bool GroupModel::searchGroup(uint32_t userId, const std::string &searchData, bas
         std::string querySql;
         if (searchType == base::SEARCH_TYPE_ACCOUNT)
         {
-            querySql = "SELECT * FROM yl_group WHERE group_id =" + searchData;
+            querySql = "SELECT * FROM yl_group WHERE group_status = 0 AND group_id =" + searchData;
         }
         else if (searchType == base::SEARCH_TYPE_NICKNAME)
         {
-            querySql = "SELECT * FROM yl_group WHERE group_name LIKE '%"+ searchData +"%';";
+            querySql = "SELECT * FROM yl_group WHERE group_status = 0 AND group_name LIKE '%"+ searchData +"%';";
         }
 
         ResultSet *resultSet = conn->query(querySql);
@@ -497,6 +499,49 @@ bool GroupModel::updateAddGroupRequest(uint32_t requestUserId, uint32_t groupId,
     return ret;
 }
 
+
+uint32_t GroupModel::getJoinGroupTime(uint32_t memberId, uint32_t groupId)
+{
+    uint32_t updatedTime = 0;
+    auto conn = DBManager::instance()->getConnection();
+    if (conn)
+    {
+        std::string sql = "SELECT  updated FROM yl_group_member WHERE group_id = " + std::to_string(groupId) + " AND member_id = " + std::to_string(memberId);
+        printSql2Log(sql.c_str());
+
+        ResultSet *resultSet = conn->query(sql);
+        if (resultSet)
+        {
+            while (resultSet->next())
+            {
+                updatedTime = (uint32_t)resultSet->getInt("updated");
+            }
+
+            delete resultSet;
+        }
+    }
+    DBManager::instance()->releaseConnection(conn);
+
+    return updatedTime;
+}
+
+
+//解散群组
+bool GroupModel::ungroup(uint32_t groupId)
+{
+    bool ret = false;
+    auto conn = DBManager::instance()->getConnection();
+    if (conn)
+    {
+        std::string sql = "UPDATE yl_group SET group_status = 1  WHERE group_id = " + std::to_string(groupId);
+        printSql2Log(sql.c_str());
+
+        ret = conn->update(sql);
+    }
+    DBManager::instance()->releaseConnection(conn);
+
+    return ret;
+}
 
 //获取成员和群组的对应id
 uint32_t GroupModel::getRelationId(uint32_t groupId, uint32_t userId)

@@ -123,6 +123,9 @@ void RouteConn::handlePdu(BasePdu *basePdu)
         case base::CID_GROUP_UPDATE_GROUP_LIST:
             _HandleUpdateGroupListRequest(basePdu);
             break;
+        case base::CID_GROUP_UNGROUP:
+            _HandleUngroupNotify(basePdu);
+            break;
         default:
             break;
     }
@@ -388,8 +391,36 @@ void RouteConn::_HandleUpdateGroupListRequest(BasePdu *basePdu)
     }
 
     CacheManager::instance()->releaseCacheConn(conn);
-
 }
+
+
+void RouteConn::_HandleUngroupNotify(BasePdu *basePdu)
+{
+    group::UngroupNotify notify;
+    notify.ParseFromString(basePdu->getMessage());
+
+    uint32_t groupId = notify.group_id();
+
+    std::string setName = "group_online_members_" + std::to_string(groupId);
+    auto conn = CacheManager::instance()->getCacheConn("OnlineUser");
+    if (conn)
+    {
+        //获取群组在线成员
+        auto onlineMembers = conn->sMembers(setName);
+        for (uint32_t memberId : onlineMembers)
+        {
+            notify.set_user_id(memberId);
+            //获取群成员所在消息服务器ID
+            std::string msgServIdx = conn->hget("user_msg_idx", std::to_string(memberId));
+            auto msgConn = getRouteConn((uint32_t)atoi(msgServIdx.c_str()));
+            if (msgConn)
+                sendMessage(msgConn, notify, base::SID_SERVER, base::CID_GROUP_UNGROUP);
+        }
+    }
+
+    CacheManager::instance()->releaseCacheConn(conn);
+}
+
 
 void RouteConn::_HandleRouteMessage(BasePdu *basePdu)
 {

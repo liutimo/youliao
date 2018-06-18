@@ -37,7 +37,7 @@ namespace protobuf_youliao_2egroup_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[26];
+  static const ::google::protobuf::internal::ParseTable schema[27];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -95,6 +95,8 @@ void InitDefaultsGroupAddRequestHandleResultImpl();
 void InitDefaultsGroupAddRequestHandleResult();
 void InitDefaultsUpdateGroupListImpl();
 void InitDefaultsUpdateGroupList();
+void InitDefaultsUngroupNotifyImpl();
+void InitDefaultsUngroupNotify();
 inline void InitDefaults() {
   InitDefaultsGroupCreateRequest();
   InitDefaultsGroupCreateRespone();
@@ -122,6 +124,7 @@ inline void InitDefaults() {
   InitDefaultsVerifyHandlerResult();
   InitDefaultsGroupAddRequestHandleResult();
   InitDefaultsUpdateGroupList();
+  InitDefaultsUngroupNotify();
 }
 }  // namespace protobuf_youliao_2egroup_2eproto
 namespace youliao {
@@ -199,6 +202,9 @@ extern SetGroupManagerRequestDefaultTypeInternal _SetGroupManagerRequest_default
 class SetGroupManagerRespone;
 class SetGroupManagerResponeDefaultTypeInternal;
 extern SetGroupManagerResponeDefaultTypeInternal _SetGroupManagerRespone_default_instance_;
+class UngroupNotify;
+class UngroupNotifyDefaultTypeInternal;
+extern UngroupNotifyDefaultTypeInternal _UngroupNotify_default_instance_;
 class UpdateGroupList;
 class UpdateGroupListDefaultTypeInternal;
 extern UpdateGroupListDefaultTypeInternal _UpdateGroupList_default_instance_;
@@ -234,6 +240,7 @@ template<> ::youliao::pdu::group::SearchGroupRequest* Arena::Create< ::youliao::
 template<> ::youliao::pdu::group::SearchGroupRespone* Arena::Create< ::youliao::pdu::group::SearchGroupRespone>(Arena*);
 template<> ::youliao::pdu::group::SetGroupManagerRequest* Arena::Create< ::youliao::pdu::group::SetGroupManagerRequest>(Arena*);
 template<> ::youliao::pdu::group::SetGroupManagerRespone* Arena::Create< ::youliao::pdu::group::SetGroupManagerRespone>(Arena*);
+template<> ::youliao::pdu::group::UngroupNotify* Arena::Create< ::youliao::pdu::group::UngroupNotify>(Arena*);
 template<> ::youliao::pdu::group::UpdateGroupList* Arena::Create< ::youliao::pdu::group::UpdateGroupList>(Arena*);
 template<> ::youliao::pdu::group::VerifyHandlerResult* Arena::Create< ::youliao::pdu::group::VerifyHandlerResult>(Arena*);
 }  // namespace protobuf
@@ -3407,6 +3414,116 @@ class UpdateGroupList : public ::google::protobuf::Message /* @@protoc_insertion
   friend struct ::protobuf_youliao_2egroup_2eproto::TableStruct;
   friend void ::protobuf_youliao_2egroup_2eproto::InitDefaultsUpdateGroupListImpl();
 };
+// -------------------------------------------------------------------
+
+class UngroupNotify : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.group.UngroupNotify) */ {
+ public:
+  UngroupNotify();
+  virtual ~UngroupNotify();
+
+  UngroupNotify(const UngroupNotify& from);
+
+  inline UngroupNotify& operator=(const UngroupNotify& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  UngroupNotify(UngroupNotify&& from) noexcept
+    : UngroupNotify() {
+    *this = ::std::move(from);
+  }
+
+  inline UngroupNotify& operator=(UngroupNotify&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const UngroupNotify& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const UngroupNotify* internal_default_instance() {
+    return reinterpret_cast<const UngroupNotify*>(
+               &_UngroupNotify_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    26;
+
+  void Swap(UngroupNotify* other);
+  friend void swap(UngroupNotify& a, UngroupNotify& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline UngroupNotify* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<UngroupNotify>(NULL);
+  }
+
+  UngroupNotify* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<UngroupNotify>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const UngroupNotify& from);
+  void MergeFrom(const UngroupNotify& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(UngroupNotify* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // uint32 user_id = 1;
+  void clear_user_id();
+  static const int kUserIdFieldNumber = 1;
+  ::google::protobuf::uint32 user_id() const;
+  void set_user_id(::google::protobuf::uint32 value);
+
+  // uint32 group_id = 2;
+  void clear_group_id();
+  static const int kGroupIdFieldNumber = 2;
+  ::google::protobuf::uint32 group_id() const;
+  void set_group_id(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.group.UngroupNotify)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 user_id_;
+  ::google::protobuf::uint32 group_id_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2egroup_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2egroup_2eproto::InitDefaultsUngroupNotifyImpl();
+};
 // ===================================================================
 
 
@@ -5176,9 +5293,43 @@ inline void UpdateGroupList::set_group_id(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:youliao.pdu.group.UpdateGroupList.group_id)
 }
 
+// -------------------------------------------------------------------
+
+// UngroupNotify
+
+// uint32 user_id = 1;
+inline void UngroupNotify::clear_user_id() {
+  user_id_ = 0u;
+}
+inline ::google::protobuf::uint32 UngroupNotify::user_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.group.UngroupNotify.user_id)
+  return user_id_;
+}
+inline void UngroupNotify::set_user_id(::google::protobuf::uint32 value) {
+  
+  user_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.group.UngroupNotify.user_id)
+}
+
+// uint32 group_id = 2;
+inline void UngroupNotify::clear_group_id() {
+  group_id_ = 0u;
+}
+inline ::google::protobuf::uint32 UngroupNotify::group_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.group.UngroupNotify.group_id)
+  return group_id_;
+}
+inline void UngroupNotify::set_group_id(::google::protobuf::uint32 value) {
+  
+  group_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.group.UngroupNotify.group_id)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

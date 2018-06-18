@@ -218,6 +218,9 @@ void DBServConn::handlePdu(BasePdu *pdu)
         case base::CID_GROUP_GET_OFFLINE_MESSAGE_RESPONE:
             _HandleGetGroupOfflineMessageRespone(pdu);
             break;
+        case base::CID_GROUP_UNGROUP:
+            _HandleUngroupNotify(pdu);
+            break;
         default:
 
             break;
@@ -934,3 +937,14 @@ void DBServConn::_HandleGetGroupOfflineMessageRespone(BasePdu *pdu)
     }
 }
 
+void DBServConn::_HandleUngroupNotify(BasePdu *pdu)
+{
+    group::UngroupNotify notify;
+    notify.ParseFromString(pdu->getMessage());
+
+    auto conn = get_route_server_conn();
+    if (conn)
+    {
+        sendMessage(conn, notify, base::SID_SERVER, base::CID_GROUP_UNGROUP);
+    }
+}

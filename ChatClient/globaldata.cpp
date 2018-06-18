@@ -300,6 +300,11 @@ void GlobalData::setGroups(const QMap<uint32_t, YLGroup>&groups)
     m_groups = groups;
 }
 
+void GlobalData::remGroups()
+{
+    m_groups.clear();
+}
+
 void GlobalData::addToGroups(const YLGroup &group)
 {
     m_groups[group.getGroupId()] = group;

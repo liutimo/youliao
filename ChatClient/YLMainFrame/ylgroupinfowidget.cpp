@@ -33,6 +33,7 @@ YLGroupInfoWidget::YLGroupInfoWidget(QWidget *parent) : YLBasicWidget(parent), i
         //设置信息
         m_head_frame->setHeadFromUrl(url);
         m_photo->setHeadFromUrl(url);
+        YLBusiness::getGroupList();
     });
 
     connect(PduHandler::instance(), &PduHandler::updateMemberList, this, [this](uint32_t groupId){
@@ -175,6 +176,14 @@ void YLGroupInfoWidget::initRight2()
 void YLGroupInfoWidget::setGroup(const YLGroup &group)
 {
     m_group = group;
+
+    if (m_group.getGroupCreator() != GlobalData::getCurrLoginUserId()
+            && !m_group.getManagers().contains(GlobalData::getCurrLoginUserId()))
+    {
+        m_add_photo->hide();
+        m_photo->move(m_add_photo->geometry().topLeft());
+    }
+
     m_label_group_name->setText(m_group.getGroupName());
     m_label_group_id->setText(QString::number(m_group.getGroupId()));
     m_head_frame->setHeadFromUrl(m_group.getGroupImage());
@@ -210,8 +219,9 @@ void YLGroupInfoWidget::paintEvent(QPaintEvent *event)
 void YLGroupInfoWidget::uploadPhoto()
 {
     QString m_filename = QFileDialog::getOpenFileName(this, tr("选择图片"), QDir::homePath(), tr("Images (*.png *.jpeg *.bmp *.gif *.jpg)"));
+    if (m_filename.isEmpty())
+        return;
     //[1]上传图片。
-
     HttpHelper httpHelper;
     QString uploadFileName = httpHelper.upload(m_filename);
 

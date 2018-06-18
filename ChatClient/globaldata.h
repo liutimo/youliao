@@ -92,6 +92,7 @@ public:
 
     //group
     static void setGroups(const QMap<uint32_t, YLGroup>&);
+    static void remGroups();
     static void addToGroups(const YLGroup &);
     static QMap<uint32_t, YLGroup> getGroups();
     static void addUser(const base::UserInfo&);

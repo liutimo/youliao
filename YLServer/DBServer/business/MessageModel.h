@@ -40,7 +40,7 @@ public:
 
     bool getOfflineMessage(uint32_t userId, message::GetOfflineMessageRespone &respone);
 
-    bool getGroupOfflineMessage(uint32_t groupId, uint32_t currentMsgId, message::GetGroupOfflineMessageRespone &respone);
+    bool getGroupOfflineMessage(uint32_t user_id, uint32_t groupId, uint32_t currentMsgId, message::GetGroupOfflineMessageRespone &respone);
 private:
     MessageModel();
 

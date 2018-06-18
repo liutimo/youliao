@@ -81,6 +81,7 @@ private:
     void _HandleGroupAddRequestHandleRespone(BasePdu *pdu);
     void _HandleUpdateGroupListRespone(BasePdu *pdu);
     void _HandleGroupOfflineMessageRespone(BasePdu *pdu);
+    void _HandleUngroupNotify(BasePdu *pdu);
 
     //验证信息
     //[1]群组验证

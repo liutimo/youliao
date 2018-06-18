@@ -23,6 +23,7 @@
 #include "YLCommonControl/ylheadandstatusframe.h"
 #include "YLDataBase/yldatabase.h"
 #include "yluserinformationwidget.h"
+#include "yllocalsettings.h"
 using namespace youliao::pdu;
 
 QPoint YLMainWidget::center = QPoint();

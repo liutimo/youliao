@@ -186,6 +186,9 @@ void PduHandler::_HandleBasePdu(BasePdu *pdu)
     case base::CID_GROUP_GET_OFFLINE_MESSAGE_RESPONE:
         _HandleGroupOfflineMessageRespone(pdu);
         break;
+    case base::CID_GROUP_UNGROUP:
+        _HandleUngroupNotify(pdu);
+        break;
     default:
         std::cout << "CID" << pdu->getCID() << "  SID:" << pdu->getSID();
         break;
@@ -663,6 +666,7 @@ void PduHandler::_HandleCreatGroupRespone(BasePdu *pdu)
 
 void PduHandler::_HandleGetGroupListRespone(BasePdu *pdu)
 {
+    GlobalData::remGroups();
     group::GetGroupListRespone respone;
     respone.ParseFromString(pdu->getMessage());
 
@@ -1143,6 +1147,12 @@ void PduHandler::_HandleGroupOfflineMessageRespone(BasePdu *pdu)
             }
         }
     }
+}
+
+
+void PduHandler::_HandleUngroupNotify(BasePdu *pdu)
+{
+    YLBusiness::getGroupList();
 }
 
 void PduHandler::_HandleUserSignalChangeRespone(BasePdu *pdu)

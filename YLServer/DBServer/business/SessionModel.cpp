@@ -236,3 +236,25 @@ bool SessionModel::getSessions(uint32_t userId, std::list<base::SessionInfo> &se
 
     return ret;
 }
+
+
+bool SessionModel::deleteGroupSession(uint32_t groupId)
+{
+    bool ret = false;
+    DBConn *dbConn = DBManager::instance()->getConnection();
+
+    if (!dbConn)
+        return ret;
+
+    uint32_t update = time(nullptr);
+
+    std::string removeSql = "UPDATE yl_session SET session_status = 1, "
+                            "session_updated =  "  + std::to_string(update) + " WHERE session_type = 2 AND other_id = " + std::to_string(groupId);
+    printSql2Log(removeSql.c_str());
+
+    ret = dbConn->update(removeSql);
+
+    DBManager::instance()->releaseConnection(dbConn);
+
+    return ret;
+}

@@ -75,7 +75,7 @@ void YLFriendListView::initMenu()
     connect(action_show_all_or_online, &QAction::triggered, this, &YLFriendListView::showFriendsModel);
     connect(action_add_group, &QAction::triggered, this, &YLFriendListView::addGroup);
 
-    QAction *action_rename = new QAction("重命名");
+    action_rename = new QAction("重命名");
     QAction *action_delete = new QAction("删除该组");
     m_group_menu = new QMenu();
     m_group_menu->addAction(action_refresh);
@@ -170,7 +170,12 @@ void YLFriendListView::contextMenuEvent(QContextMenuEvent *event)
     if (m_current_press_item == nullptr)
         m_blank_menu->exec(QCursor::pos());
     else if (qFind(m_group_item, m_current_press_item) != m_group_item.cend())
+    {
+        QString name = m_current_press_item->text().split(QRegExp("(\\(\\d/\\d\\))")).at(0);
+        if (name == "我的好友")
+            action_rename->setEnabled(false);
         m_group_menu->exec(QCursor::pos());
+    }
     event->accept();
 }
 
@@ -197,6 +202,10 @@ void YLFriendListView::friendStatusChanged(uint32_t friendId, uint32_t status)
             }
         }
     }
+
+    GlobalData::setFriends(m_friends);
+
+    emit updateSessions();
     updateList();
 }
 

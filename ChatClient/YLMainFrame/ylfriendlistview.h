@@ -67,6 +67,7 @@ private:
     bool m_flag;
     int m_type;    // 1. add new  2. rename  0. nothing
     int m_group_id;
+    QAction *action_rename;
 };
 
 #endif // YLFRIENDLISTVIEW_H

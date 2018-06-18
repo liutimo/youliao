@@ -151,6 +151,7 @@ namespace DB_PRIVATE
 {
     void AddValidateMessageSession(uint32_t userId, const std::string &userNick,
                                    const std::string &groupName,uint32_t connUuid);
+
 }
 
 

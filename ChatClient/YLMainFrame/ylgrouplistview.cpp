@@ -6,6 +6,7 @@
 #include "YLNetWork/ylbusiness.h"
 #include "YLNetWork/pduhandler.h"
 #include "YLChatWidget/ylgroupchatwidget.h"
+#include "YLMainFrame/ylmainwidget.h"
 #include "globaldata.h"
 #include <QMouseEvent>
 #include <QScrollBar>
@@ -97,7 +98,8 @@ void YLGroupListView::exitGroupResult(uint32_t groupId, uint32_t resultCode)
     else
         m->setToolTip(QString("退出群组失败!!!"));
 
-    m->show();
+    auto p = YLMainWidget::center;
+    m->move(mapToGlobal(p) - mapToGlobal(m->rect().center()));
     m->exec();
 
     updateList();
@@ -155,8 +157,13 @@ void YLGroupListItem::initMenu()
         YLMessageBox *m = new YLMessageBox(BUTTON_OK | BUTTON_CANNEL, this);
         m->setWidgetTitle("提示");
         m->setIcon(":/res/MessageBox/sysmessagebox_inforFile.png");
-        m->setToolTip("你真的要退出该群吗？(退群通知仅群管理员可见)");
-        m->show();
+        //群组退出则表示解散该群
+        if (m_group.getGroupCreator() == GlobalData::getCurrLoginUserId())
+            m->setToolTip("你真的要退出该群吗？(你是群主,你的退出将解散该群)");
+        else
+            m->setToolTip("你真的要退出该群吗？(退群通知仅群管理员可见)");
+        auto p = YLMainWidget::center;
+        m->move(mapToGlobal(p) - mapToGlobal(m->rect().center()));
         BottonResult br =  m->exec();
 
         if (br == BUTTON_OK)

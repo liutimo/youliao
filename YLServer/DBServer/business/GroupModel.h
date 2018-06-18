@@ -69,6 +69,12 @@ public:
 
     //处理加群申请
     bool updateAddGroupRequest(uint32_t requestUserId, uint32_t groupId, uint32_t handleUserId, base::GroupVerifyResult result);
+
+    //获取加入群组的时间
+    uint32_t getJoinGroupTime(uint32_t memberId, uint32_t groupId);
+
+    //解散群组
+    bool ungroup(uint32_t groupId);
 private:
     bool getGroupManagers(uint32_t groupId, std::list<uint32_t> &managers);
     bool getGroupMembers(uint32_t groupId, std::list<uint32_t> &members);

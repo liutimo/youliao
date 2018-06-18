@@ -33,6 +33,7 @@ private:
     void _HandleForwardGroupMessage(BasePdu *);
     void _HandleUserInformationChange(BasePdu *);
     void _HandleUpdateGroupListRespone(BasePdu *);
+    void _HandleUngroupNotify(BasePdu *);
 
     uint32_t   m_server_index;
     bool       m_open;
