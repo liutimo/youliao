@@ -12,6 +12,14 @@ YLModifyInfoWidget::YLModifyInfoWidget(QWidget *parent) : YLBasicWidget(parent),
 
     setWidgetTitle("编辑资料");
     setWidgetIcon();
+
+    setTabOrder(ui->nick, ui->comboBox);
+    setTabOrder(ui->comboBox, ui->birthday);
+    setTabOrder(ui->birthday, ui->hometown);
+    setTabOrder(ui->hometown, ui->location);
+    setTabOrder(ui->location, ui->school);
+    setTabOrder(ui->school, ui->email);
+    setTabOrder(ui->email, ui->signal);
 }
 
 

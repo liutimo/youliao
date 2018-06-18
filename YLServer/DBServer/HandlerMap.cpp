@@ -154,6 +154,9 @@ void HandlerMap::init()
 
     //获取好友详细资料
     m_handler_map.insert(std::make_pair(CID_OTHER_GET_FRIEND_INFORMATION_REQUEST, DB_INTERFACE::getFriendInformation));
+
+    //获取群组历史消息
+    m_handler_map.insert(std::make_pair(CID_GROUP_GET_OFFLINE_MESSAGE_REQUEST, DB_INTERFACE::getGroupOfflineMessage));
 }
 
 pdu_handler_t HandlerMap::getHandler(uint16_t cid)

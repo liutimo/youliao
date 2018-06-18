@@ -91,6 +91,72 @@ YLRecentChatView::YLRecentChatView(QWidget *parent) : QListWidget(parent)
 
         updateList();
     });
+
+    connect(PduHandler::instance(), &PduHandler::receiveNewMsg, this, [this](uint32_t friendId, const QString&message, uint32_t time, uint32_t type)
+    {
+        auto &m_data     = GlobalData::getSessions();
+        auto &m_top_data = GlobalData::getTopSessions();
+
+        for (YLSession &session : m_data)
+        {
+            if (type == 1)
+            {
+                if (session.getOtherId() == friendId && session.getSessionType() == YLSession::FRIEND)
+                {
+                    session.setSessionLastChatTime(time);
+                    session.setSessionLastChatMessage(message);
+                    break;
+                }
+            }
+            else if (type == 2)
+            {
+                if (session.getSessionType() == YLSession::GROUP && session.getOtherId() == friendId)
+                {
+                    session.setSessionLastChatTime(time);
+                    session.setSessionLastChatMessage(message);
+                    break;
+                }
+            }
+            else if (type == 3)
+            {
+                if (session.getSessionType() == YLSession::REQUEST && session.getOtherId() == 3)
+                {
+                    session.setSessionLastChatTime(time);
+                    session.setSessionLastChatMessage(message);
+                    break;
+                }
+            }
+        }
+
+        for (YLSession &session : m_top_data)
+        {
+            if (type == 1)
+            {
+                if (session.getOtherId() == friendId && session.getSessionType() == YLSession::FRIEND)
+                {
+                    session.setSessionLastChatMessage(message);
+                    break;
+                }
+            }
+            else if (type == 2)
+            {
+                if (session.getSessionType() == YLSession::GROUP && session.getOtherId() == friendId)
+                {
+                    session.setSessionLastChatMessage(message);
+                    break;
+                }
+            }
+            else if (type == 3)
+            {
+                if (session.getSessionType() == YLSession::REQUEST && session.getOtherId() == 3)
+                {
+                    session.setSessionLastChatMessage(message);
+                    break;
+                }
+            }
+        }
+        updateList();
+    });
 }
 
 void YLRecentChatView::add(const YLSession &session, int pos)

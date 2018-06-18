@@ -396,3 +396,41 @@ bool MessageModel::getOfflineMessage(uint32_t userId, message::GetOfflineMessage
 
     return ret;
 }
+
+bool MessageModel::getGroupOfflineMessage(uint32_t groupId, uint32_t currentMsgId, message::GetGroupOfflineMessageRespone &respone)
+{
+    bool ret = false;
+
+    DBConn *conn = DBManager::instance()->getConnection();
+
+    if (!conn)
+        return ret;
+
+    std::string querySql = "SELECT sender_id, msg_id, content, type, created "
+                           "FROM yl_group_message "
+                           "WHERE group_id = "+ std::to_string(groupId)+ " AND msg_id > " + std::to_string(currentMsgId);
+
+    printSql2Log(querySql.c_str());
+
+    ResultSet *resultSet = conn->query(querySql);
+
+    if (resultSet)
+    {
+        while (resultSet->next())
+        {
+            message::MessageData *data = respone.add_msg_data();
+            data->set_msg_id((uint32_t)resultSet->getInt("msg_id"));
+            data->set_create_time((uint32_t)resultSet->getInt("created"));
+            data->set_message_data(resultSet->getString("content"));
+            data->set_from_user_id((uint32_t)resultSet->getInt("sender_id"));
+            data->set_to_id(groupId);
+            data->set_message_type((base::MessageType)resultSet->getInt("type"));
+        }
+        ret = true;
+
+        delete resultSet;
+    }
+
+    DBManager::instance()->releaseConnection(conn);
+    return ret;
+}

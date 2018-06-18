@@ -39,6 +39,7 @@ public:
     static void sendGroupTextMessage(uint32_t groupId, uint32_t userId, const QString &message);
     static void sendMessageAck(uint32_t senderId, uint32_t receiverId, uint32_t msg_id);
     static void getOfflineMessage();
+    static void getGroupOfflineMessage(uint32_t groupId, uint32_t currMsgId);
 
     //session
     static void getSessions(uint32_t userId);

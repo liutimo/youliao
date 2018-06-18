@@ -70,6 +70,9 @@ void YLMainWidget::init()
         YLUserInformationWidget *w = new YLUserInformationWidget;
         w->setUserInfo();
         w->show();
+        connect(w, &YLUserInformationWidget::signalChange, this, [this](const QString &sig){
+            signature_lineedit_->setText(sig);
+        });
     });
 
     nickname_label_ = new QLabel(this);
@@ -257,7 +260,23 @@ void YLMainWidget::setUserInfo(UserInfo *userInfo)
     GlobalData::setCurrLoginUser(*m_user_info);
 
     //设置用户信息
-    nickname_label_->setText(m_user_info->user_nick().c_str());
+    QString nickName = m_user_info->user_nick().c_str();
+    //校验昵称长度，如果超过label width则使用 '...'
+    QString memberName = nickName;
+    QFontMetrics fontMetrics(nickname_label_->font());
+    int strWidth = fontMetrics.width(nickName);
+
+    if (strWidth > 140)
+    {
+        nickName += "...";
+        while (strWidth > 140) {
+            nickName = nickName.remove(nickName.length() - 4, 1);
+            strWidth = fontMetrics.width(nickName);
+        }
+    }
+
+    nickname_label_->setText(nickName);
+    nickname_label_->setToolTip(memberName);
     signature_lineedit_->setText(m_user_info->user_sign_info().c_str());
     head_status_frame_->setHeadFromUrl(QUrl(m_user_info->user_header_url().c_str()));
 

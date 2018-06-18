@@ -170,6 +170,8 @@ enum GroupCID
     CID_GROUP_VERIFY_RESULT             = 0x0717;   //验证信息结果
     CID_GROUP_ADD_REQUEST_HANDLE_RESULT = 0x0718;   //添加群组请求处理结果
     CID_GROUP_UPDATE_GROUP_LIST            = 0x0213;   //更新群组列表,群员更改时使用
+    CID_GROUP_GET_OFFLINE_MESSAGE_REQUEST  = 0x0214;  //请求群历史消息
+    CID_GROUP_GET_OFFLINE_MESSAGE_RESPONE  = 0x0215;
 }
 //文件
 enum FileCID

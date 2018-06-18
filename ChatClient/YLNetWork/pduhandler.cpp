@@ -183,6 +183,9 @@ void PduHandler::_HandleBasePdu(BasePdu *pdu)
     case base::CID_GROUP_UPDATE_GROUP_LIST:
         _HandleUpdateGroupListRespone(pdu);
         break;
+    case base::CID_GROUP_GET_OFFLINE_MESSAGE_RESPONE:
+        _HandleGroupOfflineMessageRespone(pdu);
+        break;
     default:
         std::cout << "CID" << pdu->getCID() << "  SID:" << pdu->getSID();
         break;
@@ -304,6 +307,7 @@ void PduHandler::_HandleMessageData(BasePdu *pdu)
             singleChatWidget->receiveMessage(senderId, msgContent);
             //此情况标记为已读
             YLBusiness::sendMessageAck(messageData.from_user_id(), messageData.to_id(), messageData.msg_id());
+            emit receiveNewMsg(senderId, msgContent, messageData.create_time(), 1);
         }
         else
         {
@@ -331,6 +335,7 @@ void PduHandler::_HandleMessageData(BasePdu *pdu)
                 YLDataBase db;
                 db.addOneGroupMessage(messageData.to_id(), messageData.from_user_id(), messageData.msg_id(), messageData.message_data().c_str(), messageData.create_time());
             }
+            emit receiveNewMsg(messageData.to_id(), msgContent, messageData.create_time(), 2);
         }
         else
         {
@@ -353,7 +358,10 @@ void PduHandler::_HandleMessageData(BasePdu *pdu)
 
         auto singleChatWidget = GlobalData::getSingleChatWidget(senderId);
         if (singleChatWidget)
+        {
             singleChatWidget->receiveAudioMessage(senderId, msgContent, messageData.msg_id(), messageData.audio_time());
+            emit receiveNewMsg(senderId, msgContent, messageData.create_time(), 1);
+        }
         else
         {
             YLMainTray::instance()->receiveMessage(messageData);
@@ -361,20 +369,20 @@ void PduHandler::_HandleMessageData(BasePdu *pdu)
         }
     }
 
-    switch (msgType) {
-    case base::MESSAGE_TYPE_GROUP_TEXT:
-    case base::MESSAGE_TYPE_GROUP_AUDIO:
-        emit receiveNewMsg(YLSession::GROUP, messageData.from_user_id());
-        break;
-    case base::MESSAGE_TYPE_SINGLE_TEXT:
-    case base::MESSAGE_TYPE_SINGLE_AUDIO:
-        emit receiveNewMsg(YLSession::FRIEND, messageData.from_user_id());
-        break;
-    case base::MESSAGE_TYPE_VALIDATE_MSG:
-        emit receiveNewMsg(YLSession::REQUEST);
-    default:
-        break;
-    }
+//    switch (msgType) {
+//    case base::MESSAGE_TYPE_GROUP_TEXT:
+//    case base::MESSAGE_TYPE_GROUP_AUDIO:
+//        emit receiveNewMsg(YLSession::GROUP, messageData.from_user_id());
+//        break;
+//    case base::MESSAGE_TYPE_SINGLE_TEXT:
+//    case base::MESSAGE_TYPE_SINGLE_AUDIO:
+//        emit receiveNewMsg(YLSession::FRIEND, messageData.from_user_id());
+//        break;
+//    case base::MESSAGE_TYPE_VALIDATE_MSG:
+//        emit receiveNewMsg(YLSession::REQUEST);
+//    default:
+//        break;
+//    }
 }
 
 
@@ -430,7 +438,6 @@ void PduHandler::_HandleOfflineMessageData(BasePdu *pdu)
                 emit unReadMessage(senderId, msgContent, 1);
             }
         }
-        emit receiveNewMsg(YLSession::FRIEND, messageData.from_user_id());
     }
 }
 
@@ -498,7 +505,6 @@ void PduHandler::_HandleGetSessionsRespone(BasePdu *pdu)
 
         if (s.sessionTop())
             topSessionList.push_back(s);
-
     }
 
     GlobalData::setSessions(list);
@@ -523,7 +529,16 @@ void PduHandler::_HandleAddSessionRespone(BasePdu *pdu)
     session.setSessionType(s.session_type());
     session.setSessionLastChatTime(s.latest_msg_time());
     session.setSessionLastChatMessage(s.last_message_data().c_str());
-    session.addUnReadMsgCount();
+    if (session.getSessionType() == base::SESSION_TYPE_SINGLE)
+    {
+        if (GlobalData::getMessagesByFriendId(session.getOtherId()).size() != 0)
+            session.addUnReadMsgCount();
+    }
+    else if (session.getSessionType() == base::SESSION_TYPE_GROUP)
+    {
+        if (GlobalData::getGroupMessagesByGroupId(session.getOtherId()).size() != 0)
+            session.addUnReadMsgCount();
+    }
 
     GlobalData::getSessions().push_front(session);
 
@@ -682,6 +697,7 @@ void PduHandler::_HandleGetGroupListRespone(BasePdu *pdu)
             db.addOneGroup(group);
         }
 
+        //获取群成员员信息
         YLBusiness::getGroupMembersInfo(group.getGroupId());
     }
     emit groupList();
@@ -719,10 +735,14 @@ void PduHandler::_HandleGetGroupMemberRespone(BasePdu *pdu)
     }
 
     GlobalData::setGroupMember(groupId, members);
-
-
-
     emit groupMembers();
+    //获取群离线消息
+    {
+        YLDataBase db;
+        uint32_t msgId = db.getGroupMsgIdByGroupId(groupId);
+
+        YLBusiness::getGroupOfflineMessage(groupId, msgId);
+    }
 }
 
 
@@ -1091,4 +1111,44 @@ void PduHandler::_HandleUserInformationChange(BasePdu *pdu)
 void PduHandler::_HandleUpdateGroupListRespone(BasePdu *pdu)
 {
     YLBusiness::getGroupList();
+}
+
+void PduHandler::_HandleGroupOfflineMessageRespone(BasePdu *pdu)
+{
+    message::GetGroupOfflineMessageRespone respone;
+    respone.ParseFromString(pdu->getMessage());
+
+    uint32_t groupId = respone.group_id();
+    auto groupChatWidget = GlobalData::getGroupChatWidget(groupId);
+
+    for (int i = 0; i < respone.msg_data_size(); ++i)
+    {
+        auto messageData = respone.msg_data(i);
+
+        uint32_t senderId = messageData.from_user_id();
+        QString msgContent = messageData.message_data().c_str();
+
+        base::MessageType msgType = messageData.message_type();
+        if (msgType == base::MESSAGE_TYPE_GROUP_TEXT)
+        {
+
+            if (groupChatWidget)
+            {
+                groupChatWidget->receiveMessage(senderId, msgContent);
+            }
+            else
+            {
+                YLMainTray::instance()->receiveMessage(messageData);
+                emit unReadMessage(groupId, msgContent, 2);
+            }
+        }
+    }
+}
+
+void PduHandler::_HandleUserSignalChangeRespone(BasePdu *pdu)
+{
+    friendlist::SignatureChangeRespone respone;
+    respone.ParseFromString(pdu->getMessage());
+
+//    QString s = respone.sig
 }

@@ -43,7 +43,7 @@ private:
     const QString qss_logo_label     = "QLabel#logo_label_{border-image:url(:/res/MainFrame/logo.png);}";
 
 
-    const QString qss_nickname_label = "QLabel#nickname_label_{color:white; font:32px sold Sans-serif;}";
+    const QString qss_nickname_label = "QLabel#nickname_label_{color:white; font:22px sold Sans-serif;}";
 
 
     void init();

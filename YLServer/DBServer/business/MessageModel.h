@@ -39,6 +39,8 @@ public:
     bool messageAck(uint32_t senderId, uint32_t receiverId, uint32_t msgId);
 
     bool getOfflineMessage(uint32_t userId, message::GetOfflineMessageRespone &respone);
+
+    bool getGroupOfflineMessage(uint32_t groupId, uint32_t currentMsgId, message::GetGroupOfflineMessageRespone &respone);
 private:
     MessageModel();
 

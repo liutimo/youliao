@@ -21,6 +21,9 @@ public:
     void setUserInfo();
 
 
+signals:
+    void signalChange(const QString &);
+
 protected:
     void paintEvent(QPaintEvent *event);
 

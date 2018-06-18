@@ -251,6 +251,9 @@ void ClientConn::handlePdu(BasePdu *pdu)
         case base::CID_OTHER_GET_FRIEND_INFORMATION_REQUEST:
             _HandleGetFriendInformationRequest(pdu);
             break;
+        case base::CID_GROUP_GET_OFFLINE_MESSAGE_REQUEST:
+            _HandleGetGroupOfflineMessageRequest(pdu);
+            break;
         default:
             std::cout << pdu->getCID() << std::endl;
             break;
@@ -1025,6 +1028,21 @@ void ClientConn::_HandleKickOutMemberRequest(BasePdu *pdu)
     if (conn)
         sendMessage(conn, request, base::SID_SERVER, base::CID_GROUP_KICK_OUT_REQUEST);
 
+}
+
+
+void ClientConn::_HandleGetGroupOfflineMessageRequest(BasePdu *pdu)
+{
+    message::GetGroupOfflineMessageRequest request;
+    request.ParseFromString(pdu->getMessage());
+
+    uint32_t userId = request.user_id();
+
+    log("用户%d请求群组离线消息", userId);
+
+    auto conn = get_db_server_conn();
+    if (conn)
+        sendMessage(conn, request, base::SID_SERVER, base::CID_GROUP_GET_OFFLINE_MESSAGE_REQUEST);
 }
 
 

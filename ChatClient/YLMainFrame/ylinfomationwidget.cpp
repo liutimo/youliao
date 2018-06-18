@@ -47,6 +47,7 @@ void YLInfomationWidget::initLeft()
     m_remark_or_nick->move(150, 380);
 
     m_signature = new QLabel(this);
+    m_signature->setFixedWidth(200);
     m_signature->setText("come on now, follow my lead");
     m_signature->move(150, 410);
 

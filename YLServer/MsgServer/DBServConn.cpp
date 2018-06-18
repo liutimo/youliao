@@ -215,6 +215,9 @@ void DBServConn::handlePdu(BasePdu *pdu)
         case base::CID_OTHER_MODIFY_INFORMATION_RESPONE:
             _HandleModfiyInformationRespone(pdu);
             break;
+        case base::CID_GROUP_GET_OFFLINE_MESSAGE_RESPONE:
+            _HandleGetGroupOfflineMessageRespone(pdu);
+            break;
         default:
 
             break;
@@ -913,3 +916,21 @@ void DBServConn::_HandleModfiyInformationRespone(BasePdu *basePdu)
         sendMessage(routeConn, request, base::SID_SERVER, base::CID_OTHER_FRIEND_INFORMATION_CHANGE_NOTIFY);
 
 }
+
+
+void DBServConn::_HandleGetGroupOfflineMessageRespone(BasePdu *pdu)
+{
+    message::GetGroupOfflineMessageRespone respone;
+    respone.ParseFromString(pdu->getMessage());
+
+    uint32_t userId = respone.user_id();
+    auto user = UserManager::instance()->getUser(userId);
+    if (user)
+    {
+        auto conn = user->getConn();
+        if (conn) {
+            sendMessage(conn, respone, base::SID_GROUP, base::CID_GROUP_GET_OFFLINE_MESSAGE_RESPONE);
+        }
+    }
+}
+

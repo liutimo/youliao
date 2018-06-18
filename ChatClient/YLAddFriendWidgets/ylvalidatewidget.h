@@ -13,6 +13,9 @@ class QComboBox;
 class YLValidateWidget : public YLBasicWidget
 {
     Q_OBJECT
+    const QString qss_btn = "QPushButton{border-radius:3px;background-color:rgb(244 , 244 , 244); border: 1px solid rgb(160 , 150 , 152);}\
+            QPushButton:hover{background-color:rgb(190 , 231 , 253);border: 1px solid rgb(79 , 173 , 216);}\
+            QPushButton:pressed{background-color:rgb(235 , 236 , 237);border: 1px solid rgb(79 , 173 , 216);padding-left:2px;  padding-top:2px;}";
 public:
     explicit YLValidateWidget(QWidget *parent = nullptr);
     ~YLValidateWidget();

@@ -137,8 +137,6 @@ void YLGroupChatWidget::init()
             }
             else
             {
-//                m_message_view->addGroupLeft(GlobalData::getMemberInfo(m_group.getGroupId(), pair.first).user_info().user_header_url().c_str(),
-//                                        pair.second.getMsgContent());
                 receiveMessage(pair.first, pair.second.getMsgContent());
             }
         }
@@ -365,14 +363,6 @@ void YLGroupChatWidget::receiveMessage(uint32_t user_id, const QString &message)
     m_message_view->addGroupLeft("file://" + GlobalData::imagePath + url.fileName(), name ,message);
 
     msg.replace(re, "[Picture]");
-
-//    YLSession session = GlobalData::getSessionByFriendId(m_friend.friendId());
-//    session.setOtherId(m_group.getGroupId());
-//    session.setSessionType(base::SESSION_TYPE_GROUP);
-//    session.setSessionLastChatMessage(msg);
-//    session.setSessionLastChatTime(QDateTime::currentDateTime().toTime_t());
-//    SignalForward::instance()->forwordUpdateSession(session);
-//    //send message ack
 }
 
 

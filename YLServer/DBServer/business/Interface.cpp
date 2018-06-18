@@ -639,6 +639,31 @@ namespace DB_INTERFACE
         }
     }
 
+
+    //获取群组历史消息
+    void getGroupOfflineMessage(BasePdu *basePdu, uint32_t conn_uuid) {
+        message::GetGroupOfflineMessageRequest request;
+        request.ParseFromString(basePdu->getMessage());
+
+        uint32_t userId = request.user_id();
+        uint32_t groupId = request.group_id();
+        uint32_t currMsgId = request.curr_msg_id();
+
+        message::GetGroupOfflineMessageRespone respone;
+        respone.set_user_id(userId);
+        respone.set_group_id(groupId);
+
+        //获取离线消息
+        bool ret = MessageModel::instance()->getGroupOfflineMessage(groupId, currMsgId, respone);
+
+        if (ret && respone.msg_data_size() > 0)
+        {
+            auto conn = findProxyConn(conn_uuid);
+            if (conn)
+                sendMessage(conn, respone, base::SID_SERVER, base::CID_GROUP_GET_OFFLINE_MESSAGE_RESPONE);
+        }
+    }
+
     //搜索好友
     void searchFriend(BasePdu *basePdu, uint32_t conn_uuid)
     {

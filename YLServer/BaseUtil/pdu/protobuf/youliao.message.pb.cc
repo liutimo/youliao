@@ -52,6 +52,16 @@ class GetOfflineMessageResponeDefaultTypeInternal {
   ::google::protobuf::internal::ExplicitlyConstructed<GetOfflineMessageRespone>
       _instance;
 } _GetOfflineMessageRespone_default_instance_;
+class GetGroupOfflineMessageRequestDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<GetGroupOfflineMessageRequest>
+      _instance;
+} _GetGroupOfflineMessageRequest_default_instance_;
+class GetGroupOfflineMessageResponeDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<GetGroupOfflineMessageRespone>
+      _instance;
+} _GetGroupOfflineMessageRespone_default_instance_;
 }  // namespace message
 }  // namespace pdu
 }  // namespace youliao
@@ -183,7 +193,50 @@ void InitDefaultsGetOfflineMessageRespone() {
   ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsGetOfflineMessageResponeImpl);
 }
 
-::google::protobuf::Metadata file_level_metadata[6];
+void InitDefaultsGetGroupOfflineMessageRequestImpl() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+#ifdef GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  ::google::protobuf::internal::InitProtobufDefaultsForceUnique();
+#else
+  ::google::protobuf::internal::InitProtobufDefaults();
+#endif  // GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  {
+    void* ptr = &::youliao::pdu::message::_GetGroupOfflineMessageRequest_default_instance_;
+    new (ptr) ::youliao::pdu::message::GetGroupOfflineMessageRequest();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::youliao::pdu::message::GetGroupOfflineMessageRequest::InitAsDefaultInstance();
+}
+
+void InitDefaultsGetGroupOfflineMessageRequest() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsGetGroupOfflineMessageRequestImpl);
+}
+
+void InitDefaultsGetGroupOfflineMessageResponeImpl() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+#ifdef GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  ::google::protobuf::internal::InitProtobufDefaultsForceUnique();
+#else
+  ::google::protobuf::internal::InitProtobufDefaults();
+#endif  // GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  protobuf_youliao_2emessage_2eproto::InitDefaultsMessageData();
+  {
+    void* ptr = &::youliao::pdu::message::_GetGroupOfflineMessageRespone_default_instance_;
+    new (ptr) ::youliao::pdu::message::GetGroupOfflineMessageRespone();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::youliao::pdu::message::GetGroupOfflineMessageRespone::InitAsDefaultInstance();
+}
+
+void InitDefaultsGetGroupOfflineMessageRespone() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsGetGroupOfflineMessageResponeImpl);
+}
+
+::google::protobuf::Metadata file_level_metadata[8];
 
 const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   ~0u,  // no _has_bits_
@@ -236,6 +289,22 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _weak_field_map_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::message::GetOfflineMessageRespone, user_id_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::message::GetOfflineMessageRespone, msg_data_),
+  ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::message::GetGroupOfflineMessageRequest, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::message::GetGroupOfflineMessageRequest, user_id_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::message::GetGroupOfflineMessageRequest, group_id_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::message::GetGroupOfflineMessageRequest, curr_msg_id_),
+  ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::message::GetGroupOfflineMessageRespone, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::message::GetGroupOfflineMessageRespone, user_id_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::message::GetGroupOfflineMessageRespone, group_id_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::message::GetGroupOfflineMessageRespone, msg_data_),
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::youliao::pdu::message::MessageData)},
@@ -244,6 +313,8 @@ static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROT
   { 29, -1, sizeof(::youliao::pdu::message::LatestMsgIdRespone)},
   { 37, -1, sizeof(::youliao::pdu::message::GetOfflineMessageRequest)},
   { 43, -1, sizeof(::youliao::pdu::message::GetOfflineMessageRespone)},
+  { 50, -1, sizeof(::youliao::pdu::message::GetGroupOfflineMessageRequest)},
+  { 58, -1, sizeof(::youliao::pdu::message::GetGroupOfflineMessageRespone)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -253,6 +324,8 @@ static ::google::protobuf::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::message::_LatestMsgIdRespone_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::message::_GetOfflineMessageRequest_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::message::_GetOfflineMessageRespone_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::message::_GetGroupOfflineMessageRequest_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::message::_GetGroupOfflineMessageRespone_default_instance_),
 };
 
 void protobuf_AssignDescriptors() {
@@ -271,7 +344,7 @@ void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) GOOGLE_PROTOBUF_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 6);
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 8);
 }
 
 void AddDescriptorsImpl() {
@@ -293,10 +366,15 @@ void AddDescriptorsImpl() {
       "sageRequest\022\017\n\007user_id\030\001 \001(\r\"_\n\030GetOffli"
       "neMessageRespone\022\017\n\007user_id\030\001 \001(\r\0222\n\010msg"
       "_data\030\002 \003(\0132 .youliao.pdu.message.Messag"
-      "eDatab\006proto3"
+      "eData\"W\n\035GetGroupOfflineMessageRequest\022\017"
+      "\n\007user_id\030\001 \001(\r\022\020\n\010group_id\030\002 \001(\r\022\023\n\013cur"
+      "r_msg_id\030\003 \001(\r\"v\n\035GetGroupOfflineMessage"
+      "Respone\022\017\n\007user_id\030\001 \001(\r\022\020\n\010group_id\030\002 \001"
+      "(\r\0222\n\010msg_data\030\003 \003(\0132 .youliao.pdu.messa"
+      "ge.MessageDatab\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 653);
+      descriptor, 862);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "youliao.message.proto", &protobuf_RegisterTypes);
   ::protobuf_youliao_2ebase_2eproto::AddDescriptors();
@@ -2251,6 +2329,633 @@ void GetOfflineMessageRespone::InternalSwap(GetOfflineMessageRespone* other) {
 }
 
 
+// ===================================================================
+
+void GetGroupOfflineMessageRequest::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int GetGroupOfflineMessageRequest::kUserIdFieldNumber;
+const int GetGroupOfflineMessageRequest::kGroupIdFieldNumber;
+const int GetGroupOfflineMessageRequest::kCurrMsgIdFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+GetGroupOfflineMessageRequest::GetGroupOfflineMessageRequest()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    ::protobuf_youliao_2emessage_2eproto::InitDefaultsGetGroupOfflineMessageRequest();
+  }
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:youliao.pdu.message.GetGroupOfflineMessageRequest)
+}
+GetGroupOfflineMessageRequest::GetGroupOfflineMessageRequest(const GetGroupOfflineMessageRequest& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::memcpy(&user_id_, &from.user_id_,
+    static_cast<size_t>(reinterpret_cast<char*>(&curr_msg_id_) -
+    reinterpret_cast<char*>(&user_id_)) + sizeof(curr_msg_id_));
+  // @@protoc_insertion_point(copy_constructor:youliao.pdu.message.GetGroupOfflineMessageRequest)
+}
+
+void GetGroupOfflineMessageRequest::SharedCtor() {
+  ::memset(&user_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&curr_msg_id_) -
+      reinterpret_cast<char*>(&user_id_)) + sizeof(curr_msg_id_));
+  _cached_size_ = 0;
+}
+
+GetGroupOfflineMessageRequest::~GetGroupOfflineMessageRequest() {
+  // @@protoc_insertion_point(destructor:youliao.pdu.message.GetGroupOfflineMessageRequest)
+  SharedDtor();
+}
+
+void GetGroupOfflineMessageRequest::SharedDtor() {
+}
+
+void GetGroupOfflineMessageRequest::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* GetGroupOfflineMessageRequest::descriptor() {
+  ::protobuf_youliao_2emessage_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_youliao_2emessage_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const GetGroupOfflineMessageRequest& GetGroupOfflineMessageRequest::default_instance() {
+  ::protobuf_youliao_2emessage_2eproto::InitDefaultsGetGroupOfflineMessageRequest();
+  return *internal_default_instance();
+}
+
+
+void GetGroupOfflineMessageRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:youliao.pdu.message.GetGroupOfflineMessageRequest)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  ::memset(&user_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&curr_msg_id_) -
+      reinterpret_cast<char*>(&user_id_)) + sizeof(curr_msg_id_));
+  _internal_metadata_.Clear();
+}
+
+bool GetGroupOfflineMessageRequest::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:youliao.pdu.message.GetGroupOfflineMessageRequest)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // uint32 user_id = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &user_id_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint32 group_id = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &group_id_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint32 curr_msg_id = 3;
+      case 3: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &curr_msg_id_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:youliao.pdu.message.GetGroupOfflineMessageRequest)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:youliao.pdu.message.GetGroupOfflineMessageRequest)
+  return false;
+#undef DO_
+}
+
+void GetGroupOfflineMessageRequest::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:youliao.pdu.message.GetGroupOfflineMessageRequest)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->user_id(), output);
+  }
+
+  // uint32 group_id = 2;
+  if (this->group_id() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->group_id(), output);
+  }
+
+  // uint32 curr_msg_id = 3;
+  if (this->curr_msg_id() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->curr_msg_id(), output);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
+  // @@protoc_insertion_point(serialize_end:youliao.pdu.message.GetGroupOfflineMessageRequest)
+}
+
+::google::protobuf::uint8* GetGroupOfflineMessageRequest::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:youliao.pdu.message.GetGroupOfflineMessageRequest)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->user_id(), target);
+  }
+
+  // uint32 group_id = 2;
+  if (this->group_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->group_id(), target);
+  }
+
+  // uint32 curr_msg_id = 3;
+  if (this->curr_msg_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->curr_msg_id(), target);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:youliao.pdu.message.GetGroupOfflineMessageRequest)
+  return target;
+}
+
+size_t GetGroupOfflineMessageRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:youliao.pdu.message.GetGroupOfflineMessageRequest)
+  size_t total_size = 0;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->user_id());
+  }
+
+  // uint32 group_id = 2;
+  if (this->group_id() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->group_id());
+  }
+
+  // uint32 curr_msg_id = 3;
+  if (this->curr_msg_id() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->curr_msg_id());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void GetGroupOfflineMessageRequest::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:youliao.pdu.message.GetGroupOfflineMessageRequest)
+  GOOGLE_DCHECK_NE(&from, this);
+  const GetGroupOfflineMessageRequest* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const GetGroupOfflineMessageRequest>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:youliao.pdu.message.GetGroupOfflineMessageRequest)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:youliao.pdu.message.GetGroupOfflineMessageRequest)
+    MergeFrom(*source);
+  }
+}
+
+void GetGroupOfflineMessageRequest::MergeFrom(const GetGroupOfflineMessageRequest& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:youliao.pdu.message.GetGroupOfflineMessageRequest)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.user_id() != 0) {
+    set_user_id(from.user_id());
+  }
+  if (from.group_id() != 0) {
+    set_group_id(from.group_id());
+  }
+  if (from.curr_msg_id() != 0) {
+    set_curr_msg_id(from.curr_msg_id());
+  }
+}
+
+void GetGroupOfflineMessageRequest::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:youliao.pdu.message.GetGroupOfflineMessageRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void GetGroupOfflineMessageRequest::CopyFrom(const GetGroupOfflineMessageRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:youliao.pdu.message.GetGroupOfflineMessageRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool GetGroupOfflineMessageRequest::IsInitialized() const {
+  return true;
+}
+
+void GetGroupOfflineMessageRequest::Swap(GetGroupOfflineMessageRequest* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void GetGroupOfflineMessageRequest::InternalSwap(GetGroupOfflineMessageRequest* other) {
+  using std::swap;
+  swap(user_id_, other->user_id_);
+  swap(group_id_, other->group_id_);
+  swap(curr_msg_id_, other->curr_msg_id_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata GetGroupOfflineMessageRequest::GetMetadata() const {
+  protobuf_youliao_2emessage_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_youliao_2emessage_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
+// ===================================================================
+
+void GetGroupOfflineMessageRespone::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int GetGroupOfflineMessageRespone::kUserIdFieldNumber;
+const int GetGroupOfflineMessageRespone::kGroupIdFieldNumber;
+const int GetGroupOfflineMessageRespone::kMsgDataFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+GetGroupOfflineMessageRespone::GetGroupOfflineMessageRespone()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    ::protobuf_youliao_2emessage_2eproto::InitDefaultsGetGroupOfflineMessageRespone();
+  }
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:youliao.pdu.message.GetGroupOfflineMessageRespone)
+}
+GetGroupOfflineMessageRespone::GetGroupOfflineMessageRespone(const GetGroupOfflineMessageRespone& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      msg_data_(from.msg_data_),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::memcpy(&user_id_, &from.user_id_,
+    static_cast<size_t>(reinterpret_cast<char*>(&group_id_) -
+    reinterpret_cast<char*>(&user_id_)) + sizeof(group_id_));
+  // @@protoc_insertion_point(copy_constructor:youliao.pdu.message.GetGroupOfflineMessageRespone)
+}
+
+void GetGroupOfflineMessageRespone::SharedCtor() {
+  ::memset(&user_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&group_id_) -
+      reinterpret_cast<char*>(&user_id_)) + sizeof(group_id_));
+  _cached_size_ = 0;
+}
+
+GetGroupOfflineMessageRespone::~GetGroupOfflineMessageRespone() {
+  // @@protoc_insertion_point(destructor:youliao.pdu.message.GetGroupOfflineMessageRespone)
+  SharedDtor();
+}
+
+void GetGroupOfflineMessageRespone::SharedDtor() {
+}
+
+void GetGroupOfflineMessageRespone::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* GetGroupOfflineMessageRespone::descriptor() {
+  ::protobuf_youliao_2emessage_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_youliao_2emessage_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const GetGroupOfflineMessageRespone& GetGroupOfflineMessageRespone::default_instance() {
+  ::protobuf_youliao_2emessage_2eproto::InitDefaultsGetGroupOfflineMessageRespone();
+  return *internal_default_instance();
+}
+
+
+void GetGroupOfflineMessageRespone::Clear() {
+// @@protoc_insertion_point(message_clear_start:youliao.pdu.message.GetGroupOfflineMessageRespone)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  msg_data_.Clear();
+  ::memset(&user_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&group_id_) -
+      reinterpret_cast<char*>(&user_id_)) + sizeof(group_id_));
+  _internal_metadata_.Clear();
+}
+
+bool GetGroupOfflineMessageRespone::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:youliao.pdu.message.GetGroupOfflineMessageRespone)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // uint32 user_id = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &user_id_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint32 group_id = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &group_id_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // repeated .youliao.pdu.message.MessageData msg_data = 3;
+      case 3: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(26u /* 26 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(
+                input, add_msg_data()));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:youliao.pdu.message.GetGroupOfflineMessageRespone)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:youliao.pdu.message.GetGroupOfflineMessageRespone)
+  return false;
+#undef DO_
+}
+
+void GetGroupOfflineMessageRespone::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:youliao.pdu.message.GetGroupOfflineMessageRespone)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->user_id(), output);
+  }
+
+  // uint32 group_id = 2;
+  if (this->group_id() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->group_id(), output);
+  }
+
+  // repeated .youliao.pdu.message.MessageData msg_data = 3;
+  for (unsigned int i = 0,
+      n = static_cast<unsigned int>(this->msg_data_size()); i < n; i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      3,
+      this->msg_data(static_cast<int>(i)),
+      output);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
+  // @@protoc_insertion_point(serialize_end:youliao.pdu.message.GetGroupOfflineMessageRespone)
+}
+
+::google::protobuf::uint8* GetGroupOfflineMessageRespone::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:youliao.pdu.message.GetGroupOfflineMessageRespone)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->user_id(), target);
+  }
+
+  // uint32 group_id = 2;
+  if (this->group_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->group_id(), target);
+  }
+
+  // repeated .youliao.pdu.message.MessageData msg_data = 3;
+  for (unsigned int i = 0,
+      n = static_cast<unsigned int>(this->msg_data_size()); i < n; i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageToArray(
+        3, this->msg_data(static_cast<int>(i)), deterministic, target);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:youliao.pdu.message.GetGroupOfflineMessageRespone)
+  return target;
+}
+
+size_t GetGroupOfflineMessageRespone::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:youliao.pdu.message.GetGroupOfflineMessageRespone)
+  size_t total_size = 0;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
+  // repeated .youliao.pdu.message.MessageData msg_data = 3;
+  {
+    unsigned int count = static_cast<unsigned int>(this->msg_data_size());
+    total_size += 1UL * count;
+    for (unsigned int i = 0; i < count; i++) {
+      total_size +=
+        ::google::protobuf::internal::WireFormatLite::MessageSize(
+          this->msg_data(static_cast<int>(i)));
+    }
+  }
+
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->user_id());
+  }
+
+  // uint32 group_id = 2;
+  if (this->group_id() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->group_id());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void GetGroupOfflineMessageRespone::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:youliao.pdu.message.GetGroupOfflineMessageRespone)
+  GOOGLE_DCHECK_NE(&from, this);
+  const GetGroupOfflineMessageRespone* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const GetGroupOfflineMessageRespone>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:youliao.pdu.message.GetGroupOfflineMessageRespone)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:youliao.pdu.message.GetGroupOfflineMessageRespone)
+    MergeFrom(*source);
+  }
+}
+
+void GetGroupOfflineMessageRespone::MergeFrom(const GetGroupOfflineMessageRespone& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:youliao.pdu.message.GetGroupOfflineMessageRespone)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  msg_data_.MergeFrom(from.msg_data_);
+  if (from.user_id() != 0) {
+    set_user_id(from.user_id());
+  }
+  if (from.group_id() != 0) {
+    set_group_id(from.group_id());
+  }
+}
+
+void GetGroupOfflineMessageRespone::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:youliao.pdu.message.GetGroupOfflineMessageRespone)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void GetGroupOfflineMessageRespone::CopyFrom(const GetGroupOfflineMessageRespone& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:youliao.pdu.message.GetGroupOfflineMessageRespone)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool GetGroupOfflineMessageRespone::IsInitialized() const {
+  return true;
+}
+
+void GetGroupOfflineMessageRespone::Swap(GetGroupOfflineMessageRespone* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void GetGroupOfflineMessageRespone::InternalSwap(GetGroupOfflineMessageRespone* other) {
+  using std::swap;
+  CastToBase(&msg_data_)->InternalSwap(CastToBase(&other->msg_data_));
+  swap(user_id_, other->user_id_);
+  swap(group_id_, other->group_id_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata GetGroupOfflineMessageRespone::GetMetadata() const {
+  protobuf_youliao_2emessage_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_youliao_2emessage_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace message
 }  // namespace pdu
@@ -2274,6 +2979,12 @@ template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::message::GetOfflin
 }
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::message::GetOfflineMessageRespone* Arena::Create< ::youliao::pdu::message::GetOfflineMessageRespone >(Arena* arena) {
   return Arena::CreateInternal< ::youliao::pdu::message::GetOfflineMessageRespone >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::message::GetGroupOfflineMessageRequest* Arena::Create< ::youliao::pdu::message::GetGroupOfflineMessageRequest >(Arena* arena) {
+  return Arena::CreateInternal< ::youliao::pdu::message::GetGroupOfflineMessageRequest >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::message::GetGroupOfflineMessageRespone* Arena::Create< ::youliao::pdu::message::GetGroupOfflineMessageRespone >(Arena* arena) {
+  return Arena::CreateInternal< ::youliao::pdu::message::GetGroupOfflineMessageRespone >(arena);
 }
 }  // namespace protobuf
 }  // namespace google

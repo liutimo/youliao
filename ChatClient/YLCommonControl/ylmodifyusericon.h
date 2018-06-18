@@ -18,6 +18,8 @@ public:
     void setUserIcon(const QString &);
     QPixmap getClipPixmap();
 
+signals:
+    void changeIcon(const QString &);
 
 protected:
     void paintEvent(QPaintEvent *event);

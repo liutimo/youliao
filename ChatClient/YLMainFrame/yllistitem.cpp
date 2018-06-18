@@ -313,6 +313,7 @@ void YLListItem::openChatWidget()
     {
         singleChatWidget = new YLSingleChatWidget;
         singleChatWidget->setFriend(friend_);
+        singleChatWidget->setWindowTitle(friend_.friendRemark().isEmpty() ? friend_.friendNickName() : friend_.friendRemark());
         GlobalData::addSingleChatWidget(friend_.friendId(), singleChatWidget);
         connect(singleChatWidget, &YLSingleChatWidget::loadFinish, this, [this, singleChatWidget](){
             //未读计数显示则说明有未读消息
@@ -389,6 +390,7 @@ void YLListItem::onOpenGroupChatWidget()
     {
         groupChatWidget = new YLGroupChatWidget;
         groupChatWidget->setGroup(m_group);
+        groupChatWidget->setWindowTitle(m_group.getGroupName());
         GlobalData::addGroupChatWidget(groupId, groupChatWidget);
         connect(groupChatWidget, &YLGroupChatWidget::loadFinish, this, [this, groupChatWidget, groupId](){
             //未读计数显示则说明有未读消息
@@ -399,6 +401,11 @@ void YLListItem::onOpenGroupChatWidget()
                 for (const YLMessage &msg : msgs)
                 {
                     groupChatWidget->receiveMessage(msg.getSenderId(), msg.getMsgContent());
+
+                    //存入数据库
+                    YLDataBase db;
+                    db.addOneGroupMessage(groupId, msg.getSenderId(), msg.getMessageId(),
+                                          msg.getMsgContent(), msg.getCreateTime());
                 }
 
                 GlobalData::removeGroupMessageByGroupId(groupId);

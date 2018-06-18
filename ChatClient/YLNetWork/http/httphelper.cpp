@@ -49,6 +49,8 @@ void HttpHelper::download(const QString &url_, bool isImage)
     if (m_file->exists())
     {
         emit downloadFinshed();
+
+       m_file->close();
     }
     else
     {

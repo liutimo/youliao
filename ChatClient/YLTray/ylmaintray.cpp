@@ -104,7 +104,7 @@ void YLMainTray::receiveMessage(const message::MessageData &content)
     {
         //群组消息
         uint32_t groupId = content.to_id();
-        msg.setSenderId(content.to_user_id());
+//        msg.setSenderId(content.to_user_id());
         msg.setGroupId(groupId);
 
         //获取群组头像

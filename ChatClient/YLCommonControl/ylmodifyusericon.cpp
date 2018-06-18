@@ -33,7 +33,7 @@ YLModifyUserIcon::YLModifyUserIcon(QWidget *parent) : YLBasicWidget(parent), ui(
 void YLModifyUserIcon::setUserIcon(const QString &url)
 {
     QPixmap pix(url);
-    imageEditWidget->setPixmap(pix);
+    imageEditWidget->setPixmap(pix.scaled(350, 350, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
 }
 
 
@@ -84,6 +84,7 @@ void YLModifyUserIcon::on_cancel_clicked()
 
 void YLModifyUserIcon::on_btnSave_clicked()
 {
+    emit changeIcon(m_file_name);
     //[1]上传图片。
     HttpHelper httpHelper;
     QString uploadFileName = httpHelper.upload(m_file_name);

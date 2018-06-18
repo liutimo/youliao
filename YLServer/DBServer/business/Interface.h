@@ -81,6 +81,8 @@ namespace DB_INTERFACE
     //获取历史消息
     void getOfflineMessageData(BasePdu *basePdu, uint32_t conn_uuid);
 
+    //获取群组历史消息
+    void getGroupOfflineMessage(BasePdu *basePdu, uint32_t conn_uuid);
 
     /*******************session************************/\
     //获取session列表

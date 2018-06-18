@@ -85,6 +85,8 @@ private:
     void _HandleGroupHeaderRequest(BasePdu *);
     void _HandleSetManagerRequest(BasePdu *);
     void _HandleKickOutMemberRequest(BasePdu *);
+    void _HandleGetGroupOfflineMessageRequest(BasePdu *);
+
 
     //file
     void _HandleClientFileRequest(BasePdu *);

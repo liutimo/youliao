@@ -7,6 +7,7 @@
 #include "YLCommonControl/ylmodifyusericon.h"
 #include <QUrl>
 #include <QPainter>
+#include <QDateTime>
 
 YLUserInformationWidget::YLUserInformationWidget(QWidget *parent) : YLBasicWidget(parent), ui(new Ui::UserInfoWidget)
 {
@@ -18,10 +19,17 @@ YLUserInformationWidget::YLUserInformationWidget(QWidget *parent) : YLBasicWidge
     m_head_frame->setStyleSheet("QLabel:hover{border-image:url(:/res/head_bkg_highlight_60.png);}");
     connect(m_head_frame, &YLHeadFrame::clicked, this, [this](){
         YLModifyUserIcon *w = new YLModifyUserIcon;
+        connect(w, &YLModifyUserIcon::changeIcon, this, [this](const QString &icon){
+            ui->bigIcon->setPixmap(QPixmap(icon).scaled(350, 350, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+            m_head_frame->setHeadFromLocal(icon);
+        });
+
         QUrl url(m_user_info.user_header_url().c_str());
         w->setUserIcon(GlobalData::imagePath + url.fileName());
         w->show();
     });
+
+//    ui->nick->setTextInteractionFlags(Qt::TextSelectableByMouse);
 }
 
 
@@ -29,7 +37,11 @@ void YLUserInformationWidget::paintEvent(QPaintEvent *event)
 {
     QPainter p(this);
     p.setPen(Qt::NoPen);
-    p.setBrush(Qt::red);
+    p.setBrush(QColor::fromRgb(239, 239, 239));        //#EFEFEF
+    p.drawRect(0, 0, 350, height());
+
+    p.setBrush(Qt::white);
+    p.drawRect(350, 0, width() - 350, height());
 }
 
 void YLUserInformationWidget::setUserInfo()
@@ -53,7 +65,8 @@ void YLUserInformationWidget::setUserInfo()
 void YLUserInformationWidget::setBigIcon()
 {
     QUrl url(m_user_info.user_header_url().c_str());
-    ui->bigIcon->setPixmap(QPixmap(GlobalData::imagePath + url.fileName()));
+    ui->bigIcon->setPixmap(QPixmap(GlobalData::imagePath + url.fileName())
+                           .scaled(360, 360, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
 }
 
 void YLUserInformationWidget::setSmallIcon()
@@ -63,7 +76,22 @@ void YLUserInformationWidget::setSmallIcon()
 
 void YLUserInformationWidget::setNickName()
 {
-    ui->nick->setText(m_user_info.user_nick().c_str());
+    QString nickName = m_user_info.user_nick().c_str();
+    ui->nick->setToolTip(nickName);
+
+    QFontMetrics fontMetrics(ui->nick->font());
+    int strWidth = fontMetrics.width(nickName);
+
+    if (strWidth > 140)
+    {
+        nickName += "...";
+        while (strWidth > 140) {
+            nickName = nickName.remove(nickName.length() - 4, 1);
+            strWidth = fontMetrics.width(nickName);
+        }
+    }
+    ui->nick->setText(nickName);
+
 }
 
 void YLUserInformationWidget::setSignature()
@@ -87,7 +115,17 @@ void YLUserInformationWidget::setAge()
 
 void YLUserInformationWidget::setBirthday()
 {
+    QString birth = m_user_info.user_birthday().c_str();
+    QDate date = QDate::fromString(birth, "yyyy-MM-dd");
 
+    int mouth = date.month();
+    int day = date.day();
+    int year = date.year();
+    QDate::currentDate().year() - year;
+
+    QString birthdaty = QString("%1月%2日").arg(mouth).arg(day );
+    ui->birthday->setText(birthdaty);
+    ui->age->setText(QString("%1岁").arg(QDate::currentDate().year() - year + 1));
 }
 
 void YLUserInformationWidget::setPhone()
@@ -118,5 +156,6 @@ void YLUserInformationWidget::on_pushButton_clicked()
 
     connect(w, &YLModifyInfoWidget::modifySuccess, this, [this](){
         setUserInfo();
+        emit signalChange(m_user_info.user_sign_info().c_str());
     });
 }

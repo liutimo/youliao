@@ -45,7 +45,7 @@ void YLHeadFrame::paintEvent(QPaintEvent *e)
     p.setClipPath(path);
     p.setRenderHint(QPainter::SmoothPixmapTransform);
 
-    QImage image(path_.isEmpty() ? ":/res/1.jpg" : path_);
+    QImage image(path_.isEmpty() ? ":/res/qq.png" : path_);
     if (!m_online)
         image = image.convertToFormat(QImage::Format_Grayscale8);
 

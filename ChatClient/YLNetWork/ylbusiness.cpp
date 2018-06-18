@@ -182,6 +182,22 @@ void YLBusiness::getOfflineMessage()
     PduSender::instance()->addMessage(basePdu);
 }
 
+void YLBusiness::getGroupOfflineMessage(uint32_t groupId, uint32_t currMsgId)
+{
+    message::GetGroupOfflineMessageRequest request;
+    request.set_group_id(groupId);
+    request.set_curr_msg_id(currMsgId);
+    request.set_user_id(GlobalData::getCurrLoginUserId());
+
+
+    BasePdu *basePdu = new BasePdu;
+    basePdu->setSID(SID_GROUP);
+    basePdu->setCID(CID_GROUP_GET_OFFLINE_MESSAGE_REQUEST);
+    basePdu->writeMessage(&request);
+
+    PduSender::instance()->addMessage(basePdu);
+}
+
 void YLBusiness::getLatestMsgId(uint32_t friendId)
 {
     message::LatestMsgIdRequest request;
@@ -207,9 +223,9 @@ void YLBusiness::sendGroupTextMessage(uint32_t groupId, uint32_t userId, const Q
     msg.set_create_time(QDateTime::currentDateTime().toTime_t());
     msg.set_message_type(base::MESSAGE_TYPE_GROUP_TEXT);
     msg.set_message_data(message.toStdString());
-//    YLDataBase::instance()->saveMessage(messageData, true);
 
     GlobalData::setGroupLatestMsgId(groupId, ++msgId);
+//    GlobalData::setGroupLatestMsgId(groupId, msg.msg_id() + 1);
 
     BasePdu *basePdu = new BasePdu;
     basePdu->setSID(SID_MESSAGE);
@@ -218,7 +234,10 @@ void YLBusiness::sendGroupTextMessage(uint32_t groupId, uint32_t userId, const Q
 
     PduSender::instance()->addMessage(basePdu);
 
-    GlobalData::setGroupLatestMsgId(groupId, msg.msg_id() + 1);
+    //存入数据库
+    YLDataBase db;
+    db.addOneGroupMessage(groupId, userId, msgId, message, msg.create_time());
+
 }
 
 void YLBusiness::modifySignature(uint32_t userId, const QString &signature)

@@ -21,6 +21,10 @@ public:
     explicit YLConfirmWidget(QWidget *parent = nullptr);
     ~YLConfirmWidget();
     void setOtherId(uint32_t id) { m_other_id = id; }
+
+protected:
+    void paintEvent(QPaintEvent *event);
+
 signals:
     void complete();
 private:

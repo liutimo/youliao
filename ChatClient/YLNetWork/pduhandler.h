@@ -30,7 +30,7 @@ signals:
     void searchResult(const QVector<YLFriend> friends);
     void unReadMessage(uint32_t friendId, const QString &message, uint32_t type);
     void newAddRequest();
-    void receiveNewMsg(uint32_t msgType, uint32_t fromId = 0);
+    void receiveNewMsg(uint32_t friendId, const QString &message, uint32_t time, uint32_t type);
     void newGroup(YLGroup group);
     void groupList();
     void groupMembers();
@@ -80,7 +80,7 @@ private:
     void _HandleKickOutGroupMemberRespone(BasePdu *pdu);
     void _HandleGroupAddRequestHandleRespone(BasePdu *pdu);
     void _HandleUpdateGroupListRespone(BasePdu *pdu);
-
+    void _HandleGroupOfflineMessageRespone(BasePdu *pdu);
 
     //验证信息
     //[1]群组验证
@@ -95,6 +95,9 @@ private:
 
     //好友信息更改
     void _HandleUserInformationChange(BasePdu *pdu);
+
+    //个性签名修改通知
+    void _HandleUserSignalChangeRespone(BasePdu *pdu);
 private:
     explicit PduHandler(QObject *parent = nullptr);
 

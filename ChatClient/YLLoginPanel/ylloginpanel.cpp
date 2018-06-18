@@ -44,8 +44,11 @@ YLLoginPanel::YLLoginPanel(QWidget *parent) : YLBasicWidget(parent), m_connected
         {
             YLMessageBox *message = new YLMessageBox(BUTTON_OK,this);
             message->setWidgetTitle("提示");
-            message->setIcon(":/res/MessageBox/sysmessagebox_errorFile.png");
+            message->setTipType(YLMessageBox::Tips);
             message->setToolTip("账号不存在或密码错误");
+            QPoint center = geometry().center();
+            QPoint topLeft = QPoint(center.x() - 175, center.y() - 80);
+            message->move(topLeft);
             message->exec();
         }
     }, Qt::QueuedConnection);
@@ -67,7 +70,7 @@ void YLLoginPanel::init()
     });
 
     head_frame_           = new YLHeadAndStatusFrame(this);
-    head_frame_->setHeadFromLocal("1.jpg", true);
+    head_frame_->setHeadFromLocal(":/res/qq.png", true);
     connect(head_frame_, &YLHeadAndStatusFrame::statusChanged, this, [this](YLHeadAndStatusFrame::Status s){
         //handle status changed message here;
     });
@@ -192,6 +195,19 @@ void YLLoginPanel::paintEvent(QPaintEvent *event)
 
 void YLLoginPanel::on_login()
 {
+    if (lineedit_useraccount_->text().isEmpty() || lineedit_passwd_->text().isEmpty())
+    {
+        YLMessageBox *messageBox = new YLMessageBox(BUTTON_OK, this);
+        messageBox->setTipType(YLMessageBox::Tips);
+        messageBox->setToolTip("账号或密码不能为空!");
+        //居中 messagebox 350 * 160
+        QPoint center = geometry().center();
+        QPoint topLeft = QPoint(center.x() - 175, center.y() - 80);
+        messageBox->move(topLeft);
+        messageBox->exec();
+        return;
+    }
+
     YLLocalSettings *settings = YLLocalSettings::instance();
     settings->setValue("auto_login", m_auto_login->isChecked());
     settings->setValue("remeber_pwd", m_remember_pwd->isChecked());
@@ -210,6 +226,9 @@ void YLLoginPanel::on_login()
 void YLLoginPanel::on_register()
 {
     YLRegisterWidget *widget = new YLRegisterWidget();
+    QPoint center = geometry().center();
+    QPoint topLeft = QPoint(center.x() - widget->width() / 2, center.y() - widget->height() / 2);
+    widget->move(topLeft);
     widget->show();
 }
 
@@ -224,6 +243,9 @@ void YLLoginPanel::connectToLoginServer()
            YLMessageBox *message = new YLMessageBox(BUTTON_OK, this);
            message->setWidgetTitle("网络错误");
            message->setToolTip("无法连接登录服务器");
+           QPoint center = geometry().center();
+           QPoint topLeft = QPoint(center.x() - 175, center.y() - 80);
+           message->move(topLeft);
            message->exec();
        }
     }, Qt::UniqueConnection);

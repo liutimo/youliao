@@ -12,6 +12,8 @@
 
 YLValidateWidget::YLValidateWidget(QWidget *parent) : YLBasicWidget(parent)
 {
+    setWidgetTitle("添加好友");
+    setWidgetIcon(":/res/qqlogo.png");
     setFixedSize(460, 360);
     initLeft();
     initRight1();
@@ -69,6 +71,11 @@ void YLValidateWidget::initRight2()
     m_combo_box = new QComboBox(this);
     m_combo_box->setFixedSize(180, 30);
     m_combo_box->move(200, 80);
+    m_combo_box->setStyleSheet("QComboBox{border:1px solid gray;}QComboBox:hover{border:1px solid #1583DD;}QComboBox::drop-down {\
+                               subcontrol-origin: padding;subcontrol-position: top right;width: 20px;border-left-width: 0px;}\
+                               QComboBox::down-arrow {image: url(:/res/YLCommonControl/arrow_down.png);}\
+                               QComboBox::item {color:black;height: 25px;background: white;}\
+                               QComboBox::item:hover {color:black;height: 25px; background: red;}QListView::item:hover {background: #BDD7FD;}");
 
     for(auto groupName : GlobalData::getGroup())
     {
@@ -91,11 +98,13 @@ void YLValidateWidget::initBottom()
     m_next->setFixedSize(80, 30);
     m_next->move(270, height() - 35);
     connect(m_next, &QPushButton::clicked, this, &YLValidateWidget::next);
+    m_next->setStyleSheet(qss_btn);
 
     m_cancel = new QPushButton("取消", this);
     m_cancel->setFixedSize(80, 30);
     m_cancel->move(360, height() - 35);
     connect(m_cancel, &QPushButton::clicked, this, [this](){ close(); });
+    m_cancel->setStyleSheet(qss_btn);
 }
 
 void YLValidateWidget::right1Hide()

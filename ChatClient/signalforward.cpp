@@ -53,6 +53,7 @@ void SignalForward::forwordReadOne(uint32_t senderId, int type)
         {
             singleChatWidget = new YLSingleChatWidget;
             singleChatWidget->setFriend(fri);
+            singleChatWidget->setWindowTitle(fri.friendRemark().isEmpty() ? fri.friendNickName() : fri.friendRemark());
             GlobalData::addSingleChatWidget(senderId, singleChatWidget);
         }
 
@@ -83,20 +84,26 @@ void SignalForward::forwordReadOne(uint32_t senderId, int type)
         {
             groupChatWidget = new YLGroupChatWidget;
             groupChatWidget->setGroup(group);
+            groupChatWidget->setWindowTitle(group.getGroupName());
             GlobalData::addGroupChatWidget(senderId, groupChatWidget);
         }
 
         groupChatWidget->show();
-        connect(groupChatWidget, &YLGroupChatWidget::loadFinish, this, [this, groupChatWidget, senderId](){
+        connect(groupChatWidget, &YLGroupChatWidget::loadFinish, this, [this, groupChatWidget, senderId, group](){
             auto msgs = GlobalData::getGroupMessagesByGroupId(senderId);
 
             for (YLMessage msg : msgs)
             {
-                groupChatWidget->receiveMessage(senderId, msg.getMsgContent());
+                groupChatWidget->receiveMessage(msg.getSenderId(), msg.getMsgContent());
+                //存入数据库
+                YLDataBase db;
+                db.addOneGroupMessage(group.getGroupId(), msg.getSenderId(), msg.getMessageId(),
+                                      msg.getMsgContent(), msg.getCreateTime());
             }
 
             GlobalData::removeGroupMessageByGroupId(senderId);
             YLMessageTip::instance()->updateList();
+            emit readOne(GlobalData::getSessionByGroupId(senderId).getSessionId());
         });
     }
     else if (type == 3)

@@ -7,7 +7,7 @@ YLMessageBox::YLMessageBox(int type, QWidget *parent) : YLBasicWidget(parent), m
 {
     setFixedSize(350, 160);
     setWidgetIcon(":/res/qqlogo.png");
-
+    setWidgetTitle("提示");
     m_icon = new QLabel(this);
     m_icon->setFixedSize(40, 40);
     m_icon->move(20, 57);
