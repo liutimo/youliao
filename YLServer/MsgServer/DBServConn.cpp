@@ -5,6 +5,7 @@
 #include <network/ServerInfo.h>
 #include <pdu/protobuf/youliao.message.pb.h>
 #include <pdu/protobuf/youliao.other.pb.h>
+#include <pdu/protobuf/youliao.file.pb.h>
 #include "DBServConn.h"
 #include "RouteConn.h"
 #include "ClientConn.h"
@@ -220,6 +221,9 @@ void DBServConn::handlePdu(BasePdu *pdu)
             break;
         case base::CID_GROUP_UNGROUP:
             _HandleUngroupNotify(pdu);
+            break;
+        case base::CID_FILE_GET_OFFILNE_FILE_RESPONE:
+            _HandleGetOfflineRespone(pdu);
             break;
         default:
 
@@ -946,5 +950,23 @@ void DBServConn::_HandleUngroupNotify(BasePdu *pdu)
     if (conn)
     {
         sendMessage(conn, notify, base::SID_SERVER, base::CID_GROUP_UNGROUP);
+    }
+}
+
+
+void DBServConn::_HandleGetOfflineRespone(BasePdu *pdu)
+{
+    file::GetOfflineFileRespone respone;
+    respone.ParseFromString(pdu->getMessage());
+
+    uint32_t userId = respone.user_id();
+
+    auto user = UserManager::instance()->getUser(userId);
+    if (user)
+    {
+        auto conn = user->getConn();
+        if (conn)
+            sendMessage(conn, respone, base::SID_FILE, base::CID_FILE_GET_OFFILNE_FILE_RESPONE);
+
     }
 }

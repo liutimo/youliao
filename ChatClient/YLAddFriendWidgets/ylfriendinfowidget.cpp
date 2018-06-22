@@ -2,6 +2,8 @@
 #include "YLCommonControl/ylheadframe.h"
 #include "YLNetWork/http/httphelper.h"
 #include "ylvalidatewidget.h"
+#include "globaldata.h"
+#include "YLCommonControl/ylmessagebox.h"
 #include <QPushButton>
 #include <QLabel>
 
@@ -33,9 +35,23 @@ void YLFriendInfoWidget::init()
     m_add_friend->setFixedSize(48, 11);
     m_add_friend->move(79, 55);
     connect(m_add_friend, &QPushButton::clicked, this, [this](){
-        YLValidateWidget *w = new YLValidateWidget;
-        w->setFriend(m_friend);
-        w->show();
+
+        if (m_friend.friendId() != GlobalData::getCurrLoginUserId())
+        {
+            YLValidateWidget *w = new YLValidateWidget;
+            w->setFriend(m_friend);
+            w->show();
+        }
+        else
+        {
+            YLMessageBox *messageBox = new YLMessageBox(BUTTON_OK, this);
+            messageBox->setTipType(YLMessageBox::Tips);
+            messageBox->setToolTip("你不能添加自己为好友");/*
+            QPoint center = mapToGlobal(geometry().center());
+            QPoint topLeft = QPoint(center.x() - 175, center.y() - 80);
+            messageBox->move(mapToGlobal(topLeft));*/
+            messageBox->exec();
+        }
     });
 }
 

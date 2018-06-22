@@ -109,9 +109,9 @@ void YLMainWidget::init()
     });
 
     add_friend_button_ = new QPushButton(this);
-    add_friend_button_->setFixedSize(60, 30);
-    add_friend_button_->move(40, height() - 30);
-
+    add_friend_button_->setFixedSize(70, 28);
+    add_friend_button_->move(5, 100);
+    add_friend_button_->setStyleSheet(qss_add_button);
     connect(add_friend_button_, &QPushButton::clicked, this, [](){
         YLAddFriendWidget *w = new YLAddFriendWidget;
         w->resize(600, 400);
@@ -191,8 +191,11 @@ void YLMainWidget::paintEvent(QPaintEvent *event)
     Q_UNUSED(event);
     QPainter p(this);
     p.setPen(Qt::NoPen);
-    p.setBrush(QColor::fromRgb(40, 138, 221, 122));
+    p.setBrush(QColor::fromRgb(40, 138, 221));
     p.drawRect(rect());
+
+    p.setBrush(QColor::fromRgb(209, 230, 248));
+    p.drawRect(0, height() - 30, width(), 30);
 }
 #include <QApplication>
 void YLMainWidget::closeEvent(QCloseEvent *event)

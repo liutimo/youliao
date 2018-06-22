@@ -146,6 +146,15 @@ message FileTransferRespone
     youliao.pdu.base.TransferFileType trans_mode = 7;
 }
 
+message OfflineUploadComplete
+{
+    uint32 sender_id = 1;
+    uint32 receiver_id = 2;
+    string task_id = 3;
+}
+
+
+
 
 //由消息服务器到路由服务器//
 

@@ -37,7 +37,7 @@ namespace protobuf_youliao_2efile_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[8];
+  static const ::google::protobuf::internal::ParseTable schema[11];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -59,6 +59,12 @@ void InitDefaultsLoginFileServerRequestImpl();
 void InitDefaultsLoginFileServerRequest();
 void InitDefaultsLoginFileServerResponeImpl();
 void InitDefaultsLoginFileServerRespone();
+void InitDefaultsOfflineFileImpl();
+void InitDefaultsOfflineFile();
+void InitDefaultsGetOfflineFileRequestImpl();
+void InitDefaultsGetOfflineFileRequest();
+void InitDefaultsGetOfflineFileResponeImpl();
+void InitDefaultsGetOfflineFileRespone();
 inline void InitDefaults() {
   InitDefaultsSendFileRequest();
   InitDefaultsSendFileRespone();
@@ -68,6 +74,9 @@ inline void InitDefaults() {
   InitDefaultsClientFileState();
   InitDefaultsLoginFileServerRequest();
   InitDefaultsLoginFileServerRespone();
+  InitDefaultsOfflineFile();
+  InitDefaultsGetOfflineFileRequest();
+  InitDefaultsGetOfflineFileRespone();
 }
 }  // namespace protobuf_youliao_2efile_2eproto
 namespace youliao {
@@ -85,12 +94,21 @@ extern GetFileBlockRequestDefaultTypeInternal _GetFileBlockRequest_default_insta
 class GetFileBlockRespone;
 class GetFileBlockResponeDefaultTypeInternal;
 extern GetFileBlockResponeDefaultTypeInternal _GetFileBlockRespone_default_instance_;
+class GetOfflineFileRequest;
+class GetOfflineFileRequestDefaultTypeInternal;
+extern GetOfflineFileRequestDefaultTypeInternal _GetOfflineFileRequest_default_instance_;
+class GetOfflineFileRespone;
+class GetOfflineFileResponeDefaultTypeInternal;
+extern GetOfflineFileResponeDefaultTypeInternal _GetOfflineFileRespone_default_instance_;
 class LoginFileServerRequest;
 class LoginFileServerRequestDefaultTypeInternal;
 extern LoginFileServerRequestDefaultTypeInternal _LoginFileServerRequest_default_instance_;
 class LoginFileServerRespone;
 class LoginFileServerResponeDefaultTypeInternal;
 extern LoginFileServerResponeDefaultTypeInternal _LoginFileServerRespone_default_instance_;
+class OfflineFile;
+class OfflineFileDefaultTypeInternal;
+extern OfflineFileDefaultTypeInternal _OfflineFile_default_instance_;
 class SendFileRequest;
 class SendFileRequestDefaultTypeInternal;
 extern SendFileRequestDefaultTypeInternal _SendFileRequest_default_instance_;
@@ -106,8 +124,11 @@ template<> ::youliao::pdu::file::ClientFileState* Arena::Create< ::youliao::pdu:
 template<> ::youliao::pdu::file::FileNotify* Arena::Create< ::youliao::pdu::file::FileNotify>(Arena*);
 template<> ::youliao::pdu::file::GetFileBlockRequest* Arena::Create< ::youliao::pdu::file::GetFileBlockRequest>(Arena*);
 template<> ::youliao::pdu::file::GetFileBlockRespone* Arena::Create< ::youliao::pdu::file::GetFileBlockRespone>(Arena*);
+template<> ::youliao::pdu::file::GetOfflineFileRequest* Arena::Create< ::youliao::pdu::file::GetOfflineFileRequest>(Arena*);
+template<> ::youliao::pdu::file::GetOfflineFileRespone* Arena::Create< ::youliao::pdu::file::GetOfflineFileRespone>(Arena*);
 template<> ::youliao::pdu::file::LoginFileServerRequest* Arena::Create< ::youliao::pdu::file::LoginFileServerRequest>(Arena*);
 template<> ::youliao::pdu::file::LoginFileServerRespone* Arena::Create< ::youliao::pdu::file::LoginFileServerRespone>(Arena*);
+template<> ::youliao::pdu::file::OfflineFile* Arena::Create< ::youliao::pdu::file::OfflineFile>(Arena*);
 template<> ::youliao::pdu::file::SendFileRequest* Arena::Create< ::youliao::pdu::file::SendFileRequest>(Arena*);
 template<> ::youliao::pdu::file::SendFileRespone* Arena::Create< ::youliao::pdu::file::SendFileRespone>(Arena*);
 }  // namespace protobuf
@@ -1250,6 +1271,343 @@ class LoginFileServerRespone : public ::google::protobuf::Message /* @@protoc_in
   friend struct ::protobuf_youliao_2efile_2eproto::TableStruct;
   friend void ::protobuf_youliao_2efile_2eproto::InitDefaultsLoginFileServerResponeImpl();
 };
+// -------------------------------------------------------------------
+
+class OfflineFile : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.file.OfflineFile) */ {
+ public:
+  OfflineFile();
+  virtual ~OfflineFile();
+
+  OfflineFile(const OfflineFile& from);
+
+  inline OfflineFile& operator=(const OfflineFile& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  OfflineFile(OfflineFile&& from) noexcept
+    : OfflineFile() {
+    *this = ::std::move(from);
+  }
+
+  inline OfflineFile& operator=(OfflineFile&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const OfflineFile& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const OfflineFile* internal_default_instance() {
+    return reinterpret_cast<const OfflineFile*>(
+               &_OfflineFile_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    8;
+
+  void Swap(OfflineFile* other);
+  friend void swap(OfflineFile& a, OfflineFile& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline OfflineFile* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<OfflineFile>(NULL);
+  }
+
+  OfflineFile* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<OfflineFile>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const OfflineFile& from);
+  void MergeFrom(const OfflineFile& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(OfflineFile* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string task_id = 2;
+  void clear_task_id();
+  static const int kTaskIdFieldNumber = 2;
+  const ::std::string& task_id() const;
+  void set_task_id(const ::std::string& value);
+  #if LANG_CXX11
+  void set_task_id(::std::string&& value);
+  #endif
+  void set_task_id(const char* value);
+  void set_task_id(const char* value, size_t size);
+  ::std::string* mutable_task_id();
+  ::std::string* release_task_id();
+  void set_allocated_task_id(::std::string* task_id);
+
+  // uint32 sender_id = 1;
+  void clear_sender_id();
+  static const int kSenderIdFieldNumber = 1;
+  ::google::protobuf::uint32 sender_id() const;
+  void set_sender_id(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.file.OfflineFile)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr task_id_;
+  ::google::protobuf::uint32 sender_id_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2efile_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2efile_2eproto::InitDefaultsOfflineFileImpl();
+};
+// -------------------------------------------------------------------
+
+class GetOfflineFileRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.file.GetOfflineFileRequest) */ {
+ public:
+  GetOfflineFileRequest();
+  virtual ~GetOfflineFileRequest();
+
+  GetOfflineFileRequest(const GetOfflineFileRequest& from);
+
+  inline GetOfflineFileRequest& operator=(const GetOfflineFileRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  GetOfflineFileRequest(GetOfflineFileRequest&& from) noexcept
+    : GetOfflineFileRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline GetOfflineFileRequest& operator=(GetOfflineFileRequest&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const GetOfflineFileRequest& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const GetOfflineFileRequest* internal_default_instance() {
+    return reinterpret_cast<const GetOfflineFileRequest*>(
+               &_GetOfflineFileRequest_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    9;
+
+  void Swap(GetOfflineFileRequest* other);
+  friend void swap(GetOfflineFileRequest& a, GetOfflineFileRequest& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline GetOfflineFileRequest* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<GetOfflineFileRequest>(NULL);
+  }
+
+  GetOfflineFileRequest* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<GetOfflineFileRequest>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const GetOfflineFileRequest& from);
+  void MergeFrom(const GetOfflineFileRequest& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(GetOfflineFileRequest* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // uint32 user_id = 1;
+  void clear_user_id();
+  static const int kUserIdFieldNumber = 1;
+  ::google::protobuf::uint32 user_id() const;
+  void set_user_id(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.file.GetOfflineFileRequest)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 user_id_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2efile_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2efile_2eproto::InitDefaultsGetOfflineFileRequestImpl();
+};
+// -------------------------------------------------------------------
+
+class GetOfflineFileRespone : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.file.GetOfflineFileRespone) */ {
+ public:
+  GetOfflineFileRespone();
+  virtual ~GetOfflineFileRespone();
+
+  GetOfflineFileRespone(const GetOfflineFileRespone& from);
+
+  inline GetOfflineFileRespone& operator=(const GetOfflineFileRespone& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  GetOfflineFileRespone(GetOfflineFileRespone&& from) noexcept
+    : GetOfflineFileRespone() {
+    *this = ::std::move(from);
+  }
+
+  inline GetOfflineFileRespone& operator=(GetOfflineFileRespone&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const GetOfflineFileRespone& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const GetOfflineFileRespone* internal_default_instance() {
+    return reinterpret_cast<const GetOfflineFileRespone*>(
+               &_GetOfflineFileRespone_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    10;
+
+  void Swap(GetOfflineFileRespone* other);
+  friend void swap(GetOfflineFileRespone& a, GetOfflineFileRespone& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline GetOfflineFileRespone* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<GetOfflineFileRespone>(NULL);
+  }
+
+  GetOfflineFileRespone* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<GetOfflineFileRespone>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const GetOfflineFileRespone& from);
+  void MergeFrom(const GetOfflineFileRespone& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(GetOfflineFileRespone* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated .youliao.pdu.file.OfflineFile offline_files = 2;
+  int offline_files_size() const;
+  void clear_offline_files();
+  static const int kOfflineFilesFieldNumber = 2;
+  ::youliao::pdu::file::OfflineFile* mutable_offline_files(int index);
+  ::google::protobuf::RepeatedPtrField< ::youliao::pdu::file::OfflineFile >*
+      mutable_offline_files();
+  const ::youliao::pdu::file::OfflineFile& offline_files(int index) const;
+  ::youliao::pdu::file::OfflineFile* add_offline_files();
+  const ::google::protobuf::RepeatedPtrField< ::youliao::pdu::file::OfflineFile >&
+      offline_files() const;
+
+  // uint32 user_id = 1;
+  void clear_user_id();
+  static const int kUserIdFieldNumber = 1;
+  ::google::protobuf::uint32 user_id() const;
+  void set_user_id(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.file.GetOfflineFileRespone)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::RepeatedPtrField< ::youliao::pdu::file::OfflineFile > offline_files_;
+  ::google::protobuf::uint32 user_id_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2efile_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2efile_2eproto::InitDefaultsGetOfflineFileResponeImpl();
+};
 // ===================================================================
 
 
@@ -2276,9 +2634,152 @@ inline void LoginFileServerRespone::set_allocated_task_id(::std::string* task_id
   // @@protoc_insertion_point(field_set_allocated:youliao.pdu.file.LoginFileServerRespone.task_id)
 }
 
+// -------------------------------------------------------------------
+
+// OfflineFile
+
+// uint32 sender_id = 1;
+inline void OfflineFile::clear_sender_id() {
+  sender_id_ = 0u;
+}
+inline ::google::protobuf::uint32 OfflineFile::sender_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.file.OfflineFile.sender_id)
+  return sender_id_;
+}
+inline void OfflineFile::set_sender_id(::google::protobuf::uint32 value) {
+  
+  sender_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.file.OfflineFile.sender_id)
+}
+
+// string task_id = 2;
+inline void OfflineFile::clear_task_id() {
+  task_id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& OfflineFile::task_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.file.OfflineFile.task_id)
+  return task_id_.GetNoArena();
+}
+inline void OfflineFile::set_task_id(const ::std::string& value) {
+  
+  task_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:youliao.pdu.file.OfflineFile.task_id)
+}
+#if LANG_CXX11
+inline void OfflineFile::set_task_id(::std::string&& value) {
+  
+  task_id_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:youliao.pdu.file.OfflineFile.task_id)
+}
+#endif
+inline void OfflineFile::set_task_id(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  task_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:youliao.pdu.file.OfflineFile.task_id)
+}
+inline void OfflineFile::set_task_id(const char* value, size_t size) {
+  
+  task_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:youliao.pdu.file.OfflineFile.task_id)
+}
+inline ::std::string* OfflineFile::mutable_task_id() {
+  
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.file.OfflineFile.task_id)
+  return task_id_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* OfflineFile::release_task_id() {
+  // @@protoc_insertion_point(field_release:youliao.pdu.file.OfflineFile.task_id)
+  
+  return task_id_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void OfflineFile::set_allocated_task_id(::std::string* task_id) {
+  if (task_id != NULL) {
+    
+  } else {
+    
+  }
+  task_id_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), task_id);
+  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.file.OfflineFile.task_id)
+}
+
+// -------------------------------------------------------------------
+
+// GetOfflineFileRequest
+
+// uint32 user_id = 1;
+inline void GetOfflineFileRequest::clear_user_id() {
+  user_id_ = 0u;
+}
+inline ::google::protobuf::uint32 GetOfflineFileRequest::user_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.file.GetOfflineFileRequest.user_id)
+  return user_id_;
+}
+inline void GetOfflineFileRequest::set_user_id(::google::protobuf::uint32 value) {
+  
+  user_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.file.GetOfflineFileRequest.user_id)
+}
+
+// -------------------------------------------------------------------
+
+// GetOfflineFileRespone
+
+// uint32 user_id = 1;
+inline void GetOfflineFileRespone::clear_user_id() {
+  user_id_ = 0u;
+}
+inline ::google::protobuf::uint32 GetOfflineFileRespone::user_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.file.GetOfflineFileRespone.user_id)
+  return user_id_;
+}
+inline void GetOfflineFileRespone::set_user_id(::google::protobuf::uint32 value) {
+  
+  user_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.file.GetOfflineFileRespone.user_id)
+}
+
+// repeated .youliao.pdu.file.OfflineFile offline_files = 2;
+inline int GetOfflineFileRespone::offline_files_size() const {
+  return offline_files_.size();
+}
+inline void GetOfflineFileRespone::clear_offline_files() {
+  offline_files_.Clear();
+}
+inline ::youliao::pdu::file::OfflineFile* GetOfflineFileRespone::mutable_offline_files(int index) {
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.file.GetOfflineFileRespone.offline_files)
+  return offline_files_.Mutable(index);
+}
+inline ::google::protobuf::RepeatedPtrField< ::youliao::pdu::file::OfflineFile >*
+GetOfflineFileRespone::mutable_offline_files() {
+  // @@protoc_insertion_point(field_mutable_list:youliao.pdu.file.GetOfflineFileRespone.offline_files)
+  return &offline_files_;
+}
+inline const ::youliao::pdu::file::OfflineFile& GetOfflineFileRespone::offline_files(int index) const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.file.GetOfflineFileRespone.offline_files)
+  return offline_files_.Get(index);
+}
+inline ::youliao::pdu::file::OfflineFile* GetOfflineFileRespone::add_offline_files() {
+  // @@protoc_insertion_point(field_add:youliao.pdu.file.GetOfflineFileRespone.offline_files)
+  return offline_files_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::youliao::pdu::file::OfflineFile >&
+GetOfflineFileRespone::offline_files() const {
+  // @@protoc_insertion_point(field_list:youliao.pdu.file.GetOfflineFileRespone.offline_files)
+  return offline_files_;
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

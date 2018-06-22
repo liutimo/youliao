@@ -3,8 +3,10 @@
 //
 
 #include "ClientConn.h"
+#include "MsgServerConn.h"
 #include "pdu/protobuf/youliao.base.pb.h"
 #include "pdu/protobuf/youliao.file.pb.h"
+#include "pdu/protobuf/youliao.server.pb.h"
 #include "TransferTaskManager.h"
 #include "network/netlib.h"
 #include "util/util.h"
@@ -326,6 +328,21 @@ void ClientConn::_HandleClientGetFileBlockRespone(BasePdu *basePdu)
              if (rv == 1)
              {
                  _StatesNotify(base::CLIENT_FILE_DONE, taskId, userId, this);
+
+                 //离线文件传输完成
+                 auto conn = get_msg_server_conn();
+
+                 if (conn)
+                 {
+                     server::OfflineUploadComplete request;
+                     request.set_sender_id(userId);
+                     request.set_receiver_id(m_transfer_task->getOpponent(userId));
+                     request.set_task_id(taskId);
+
+                     sendMessage(conn, request, base::SID_SERVER, base::CID_FILE_OFFLINE_UPLOAD_COMPLETE);
+                 }
+
+
              }
              else
              {

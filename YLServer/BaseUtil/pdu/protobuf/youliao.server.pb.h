@@ -50,8 +50,6 @@ void InitDefaultsValidateRequestImpl();
 void InitDefaultsValidateRequest();
 void InitDefaultsValidateResponeImpl();
 void InitDefaultsValidateRespone();
-void InitDefaultsUserOfflineImpl();
-void InitDefaultsUserOffline();
 void InitDefaultsMsgServerInfoImpl();
 void InitDefaultsMsgServerInfo();
 void InitDefaultsRouteStatusChangeImpl();
@@ -82,6 +80,8 @@ void InitDefaultsFileTransferRequestImpl();
 void InitDefaultsFileTransferRequest();
 void InitDefaultsFileTransferResponeImpl();
 void InitDefaultsFileTransferRespone();
+void InitDefaultsOfflineUploadCompleteImpl();
+void InitDefaultsOfflineUploadComplete();
 void InitDefaultsUserGoOnlineImpl();
 void InitDefaultsUserGoOnline();
 void InitDefaultsUserGoOfflineImpl();
@@ -89,7 +89,6 @@ void InitDefaultsUserGoOffline();
 inline void InitDefaults() {
   InitDefaultsValidateRequest();
   InitDefaultsValidateRespone();
-  InitDefaultsUserOffline();
   InitDefaultsMsgServerInfo();
   InitDefaultsRouteStatusChange();
   InitDefaultsRouteGetOnlineFirendRequest();
@@ -105,6 +104,7 @@ inline void InitDefaults() {
   InitDefaultsFileServerIPRespone();
   InitDefaultsFileTransferRequest();
   InitDefaultsFileTransferRespone();
+  InitDefaultsOfflineUploadComplete();
   InitDefaultsUserGoOnline();
   InitDefaultsUserGoOffline();
 }
@@ -133,6 +133,9 @@ extern GetServerIndexResponeDefaultTypeInternal _GetServerIndexRespone_default_i
 class MsgServerInfo;
 class MsgServerInfoDefaultTypeInternal;
 extern MsgServerInfoDefaultTypeInternal _MsgServerInfo_default_instance_;
+class OfflineUploadComplete;
+class OfflineUploadCompleteDefaultTypeInternal;
+extern OfflineUploadCompleteDefaultTypeInternal _OfflineUploadComplete_default_instance_;
 class RouteBroadcastStatusChange;
 class RouteBroadcastStatusChangeDefaultTypeInternal;
 extern RouteBroadcastStatusChangeDefaultTypeInternal _RouteBroadcastStatusChange_default_instance_;
@@ -163,9 +166,6 @@ extern UserGoOfflineDefaultTypeInternal _UserGoOffline_default_instance_;
 class UserGoOnline;
 class UserGoOnlineDefaultTypeInternal;
 extern UserGoOnlineDefaultTypeInternal _UserGoOnline_default_instance_;
-class UserOffline;
-class UserOfflineDefaultTypeInternal;
-extern UserOfflineDefaultTypeInternal _UserOffline_default_instance_;
 class ValidateRequest;
 class ValidateRequestDefaultTypeInternal;
 extern ValidateRequestDefaultTypeInternal _ValidateRequest_default_instance_;
@@ -184,6 +184,7 @@ template<> ::youliao::pdu::server::FileTransferRespone* Arena::Create< ::youliao
 template<> ::youliao::pdu::server::GetServerIndexRequest* Arena::Create< ::youliao::pdu::server::GetServerIndexRequest>(Arena*);
 template<> ::youliao::pdu::server::GetServerIndexRespone* Arena::Create< ::youliao::pdu::server::GetServerIndexRespone>(Arena*);
 template<> ::youliao::pdu::server::MsgServerInfo* Arena::Create< ::youliao::pdu::server::MsgServerInfo>(Arena*);
+template<> ::youliao::pdu::server::OfflineUploadComplete* Arena::Create< ::youliao::pdu::server::OfflineUploadComplete>(Arena*);
 template<> ::youliao::pdu::server::RouteBroadcastStatusChange* Arena::Create< ::youliao::pdu::server::RouteBroadcastStatusChange>(Arena*);
 template<> ::youliao::pdu::server::RouteGetFriendOnlineStatus* Arena::Create< ::youliao::pdu::server::RouteGetFriendOnlineStatus>(Arena*);
 template<> ::youliao::pdu::server::RouteGetOnlineFirendRequest* Arena::Create< ::youliao::pdu::server::RouteGetOnlineFirendRequest>(Arena*);
@@ -194,7 +195,6 @@ template<> ::youliao::pdu::server::RouteMessageForward* Arena::Create< ::youliao
 template<> ::youliao::pdu::server::RouteStatusChange* Arena::Create< ::youliao::pdu::server::RouteStatusChange>(Arena*);
 template<> ::youliao::pdu::server::UserGoOffline* Arena::Create< ::youliao::pdu::server::UserGoOffline>(Arena*);
 template<> ::youliao::pdu::server::UserGoOnline* Arena::Create< ::youliao::pdu::server::UserGoOnline>(Arena*);
-template<> ::youliao::pdu::server::UserOffline* Arena::Create< ::youliao::pdu::server::UserOffline>(Arena*);
 template<> ::youliao::pdu::server::ValidateRequest* Arena::Create< ::youliao::pdu::server::ValidateRequest>(Arena*);
 template<> ::youliao::pdu::server::ValidateRespone* Arena::Create< ::youliao::pdu::server::ValidateRespone>(Arena*);
 }  // namespace protobuf
@@ -511,109 +511,6 @@ class ValidateRespone : public ::google::protobuf::Message /* @@protoc_insertion
 };
 // -------------------------------------------------------------------
 
-class UserOffline : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.server.UserOffline) */ {
- public:
-  UserOffline();
-  virtual ~UserOffline();
-
-  UserOffline(const UserOffline& from);
-
-  inline UserOffline& operator=(const UserOffline& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  #if LANG_CXX11
-  UserOffline(UserOffline&& from) noexcept
-    : UserOffline() {
-    *this = ::std::move(from);
-  }
-
-  inline UserOffline& operator=(UserOffline&& from) noexcept {
-    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
-      if (this != &from) InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-  #endif
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const UserOffline& default_instance();
-
-  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const UserOffline* internal_default_instance() {
-    return reinterpret_cast<const UserOffline*>(
-               &_UserOffline_default_instance_);
-  }
-  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    2;
-
-  void Swap(UserOffline* other);
-  friend void swap(UserOffline& a, UserOffline& b) {
-    a.Swap(&b);
-  }
-
-  // implements Message ----------------------------------------------
-
-  inline UserOffline* New() const PROTOBUF_FINAL {
-    return ::google::protobuf::Arena::Create<UserOffline>(NULL);
-  }
-
-  UserOffline* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
-    return ::google::protobuf::Arena::Create<UserOffline>(arena);
-  }
-  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
-  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
-  void CopyFrom(const UserOffline& from);
-  void MergeFrom(const UserOffline& from);
-  void Clear() PROTOBUF_FINAL;
-  bool IsInitialized() const PROTOBUF_FINAL;
-
-  size_t ByteSizeLong() const PROTOBUF_FINAL;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
-  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
-  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const PROTOBUF_FINAL;
-  void InternalSwap(UserOffline* other);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return NULL;
-  }
-  inline void* MaybeArenaPtr() const {
-    return NULL;
-  }
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // uint32 user_id = 1;
-  void clear_user_id();
-  static const int kUserIdFieldNumber = 1;
-  ::google::protobuf::uint32 user_id() const;
-  void set_user_id(::google::protobuf::uint32 value);
-
-  // @@protoc_insertion_point(class_scope:youliao.pdu.server.UserOffline)
- private:
-
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::uint32 user_id_;
-  mutable int _cached_size_;
-  friend struct ::protobuf_youliao_2eserver_2eproto::TableStruct;
-  friend void ::protobuf_youliao_2eserver_2eproto::InitDefaultsUserOfflineImpl();
-};
-// -------------------------------------------------------------------
-
 class MsgServerInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.server.MsgServerInfo) */ {
  public:
   MsgServerInfo();
@@ -649,7 +546,7 @@ class MsgServerInfo : public ::google::protobuf::Message /* @@protoc_insertion_p
                &_MsgServerInfo_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    3;
+    2;
 
   void Swap(MsgServerInfo* other);
   friend void swap(MsgServerInfo& a, MsgServerInfo& b) {
@@ -781,7 +678,7 @@ class RouteStatusChange : public ::google::protobuf::Message /* @@protoc_inserti
                &_RouteStatusChange_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    4;
+    3;
 
   void Swap(RouteStatusChange* other);
   friend void swap(RouteStatusChange& a, RouteStatusChange& b) {
@@ -906,7 +803,7 @@ class RouteGetOnlineFirendRequest : public ::google::protobuf::Message /* @@prot
                &_RouteGetOnlineFirendRequest_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    5;
+    4;
 
   void Swap(RouteGetOnlineFirendRequest* other);
   friend void swap(RouteGetOnlineFirendRequest& a, RouteGetOnlineFirendRequest& b) {
@@ -1052,7 +949,7 @@ class RouteGetOnlineFriendRespone : public ::google::protobuf::Message /* @@prot
                &_RouteGetOnlineFriendRespone_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    7;
+    6;
 
   void Swap(RouteGetOnlineFriendRespone* other);
   friend void swap(RouteGetOnlineFriendRespone& a, RouteGetOnlineFriendRespone& b) {
@@ -1193,7 +1090,7 @@ class RouteBroadcastStatusChange : public ::google::protobuf::Message /* @@proto
                &_RouteBroadcastStatusChange_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    8;
+    7;
 
   void Swap(RouteBroadcastStatusChange* other);
   friend void swap(RouteBroadcastStatusChange& a, RouteBroadcastStatusChange& b) {
@@ -1332,7 +1229,7 @@ class RouteMessageForward : public ::google::protobuf::Message /* @@protoc_inser
                &_RouteMessageForward_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    9;
+    8;
 
   void Swap(RouteMessageForward* other);
   friend void swap(RouteMessageForward& a, RouteMessageForward& b) {
@@ -1478,7 +1375,7 @@ class RouteGetFriendOnlineStatus : public ::google::protobuf::Message /* @@proto
                &_RouteGetFriendOnlineStatus_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    10;
+    9;
 
   void Swap(RouteGetFriendOnlineStatus* other);
   friend void swap(RouteGetFriendOnlineStatus& a, RouteGetFriendOnlineStatus& b) {
@@ -1631,7 +1528,7 @@ class RouteMessage : public ::google::protobuf::Message /* @@protoc_insertion_po
                &_RouteMessage_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    11;
+    10;
 
   void Swap(RouteMessage* other);
   friend void swap(RouteMessage& a, RouteMessage& b) {
@@ -1777,7 +1674,7 @@ class GetServerIndexRequest : public ::google::protobuf::Message /* @@protoc_ins
                &_GetServerIndexRequest_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    12;
+    11;
 
   void Swap(GetServerIndexRequest* other);
   friend void swap(GetServerIndexRequest& a, GetServerIndexRequest& b) {
@@ -1873,7 +1770,7 @@ class GetServerIndexRespone : public ::google::protobuf::Message /* @@protoc_ins
                &_GetServerIndexRespone_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    13;
+    12;
 
   void Swap(GetServerIndexRespone* other);
   friend void swap(GetServerIndexRespone& a, GetServerIndexRespone& b) {
@@ -1976,7 +1873,7 @@ class FileServerIPRequest : public ::google::protobuf::Message /* @@protoc_inser
                &_FileServerIPRequest_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    14;
+    13;
 
   void Swap(FileServerIPRequest* other);
   friend void swap(FileServerIPRequest& a, FileServerIPRequest& b) {
@@ -2072,7 +1969,7 @@ class FileServerIPRespone : public ::google::protobuf::Message /* @@protoc_inser
                &_FileServerIPRespone_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    15;
+    14;
 
   void Swap(FileServerIPRespone* other);
   friend void swap(FileServerIPRespone& a, FileServerIPRespone& b) {
@@ -2181,7 +2078,7 @@ class FileTransferRequest : public ::google::protobuf::Message /* @@protoc_inser
                &_FileTransferRequest_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    16;
+    15;
 
   void Swap(FileTransferRequest* other);
   friend void swap(FileTransferRequest& a, FileTransferRequest& b) {
@@ -2320,7 +2217,7 @@ class FileTransferRespone : public ::google::protobuf::Message /* @@protoc_inser
                &_FileTransferRespone_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    17;
+    16;
 
   void Swap(FileTransferRespone* other);
   friend void swap(FileTransferRespone& a, FileTransferRespone& b) {
@@ -2443,6 +2340,131 @@ class FileTransferRespone : public ::google::protobuf::Message /* @@protoc_inser
   mutable int _cached_size_;
   friend struct ::protobuf_youliao_2eserver_2eproto::TableStruct;
   friend void ::protobuf_youliao_2eserver_2eproto::InitDefaultsFileTransferResponeImpl();
+};
+// -------------------------------------------------------------------
+
+class OfflineUploadComplete : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:youliao.pdu.server.OfflineUploadComplete) */ {
+ public:
+  OfflineUploadComplete();
+  virtual ~OfflineUploadComplete();
+
+  OfflineUploadComplete(const OfflineUploadComplete& from);
+
+  inline OfflineUploadComplete& operator=(const OfflineUploadComplete& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  OfflineUploadComplete(OfflineUploadComplete&& from) noexcept
+    : OfflineUploadComplete() {
+    *this = ::std::move(from);
+  }
+
+  inline OfflineUploadComplete& operator=(OfflineUploadComplete&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const OfflineUploadComplete& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const OfflineUploadComplete* internal_default_instance() {
+    return reinterpret_cast<const OfflineUploadComplete*>(
+               &_OfflineUploadComplete_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    17;
+
+  void Swap(OfflineUploadComplete* other);
+  friend void swap(OfflineUploadComplete& a, OfflineUploadComplete& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline OfflineUploadComplete* New() const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<OfflineUploadComplete>(NULL);
+  }
+
+  OfflineUploadComplete* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL {
+    return ::google::protobuf::Arena::Create<OfflineUploadComplete>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const OfflineUploadComplete& from);
+  void MergeFrom(const OfflineUploadComplete& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(OfflineUploadComplete* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string task_id = 3;
+  void clear_task_id();
+  static const int kTaskIdFieldNumber = 3;
+  const ::std::string& task_id() const;
+  void set_task_id(const ::std::string& value);
+  #if LANG_CXX11
+  void set_task_id(::std::string&& value);
+  #endif
+  void set_task_id(const char* value);
+  void set_task_id(const char* value, size_t size);
+  ::std::string* mutable_task_id();
+  ::std::string* release_task_id();
+  void set_allocated_task_id(::std::string* task_id);
+
+  // uint32 sender_id = 1;
+  void clear_sender_id();
+  static const int kSenderIdFieldNumber = 1;
+  ::google::protobuf::uint32 sender_id() const;
+  void set_sender_id(::google::protobuf::uint32 value);
+
+  // uint32 receiver_id = 2;
+  void clear_receiver_id();
+  static const int kReceiverIdFieldNumber = 2;
+  ::google::protobuf::uint32 receiver_id() const;
+  void set_receiver_id(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:youliao.pdu.server.OfflineUploadComplete)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr task_id_;
+  ::google::protobuf::uint32 sender_id_;
+  ::google::protobuf::uint32 receiver_id_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_youliao_2eserver_2eproto::TableStruct;
+  friend void ::protobuf_youliao_2eserver_2eproto::InitDefaultsOfflineUploadCompleteImpl();
 };
 // -------------------------------------------------------------------
 
@@ -3068,24 +3090,6 @@ inline void ValidateRespone::set_allocated_attach_data(::std::string* attach_dat
   }
   attach_data_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), attach_data);
   // @@protoc_insertion_point(field_set_allocated:youliao.pdu.server.ValidateRespone.attach_data)
-}
-
-// -------------------------------------------------------------------
-
-// UserOffline
-
-// uint32 user_id = 1;
-inline void UserOffline::clear_user_id() {
-  user_id_ = 0u;
-}
-inline ::google::protobuf::uint32 UserOffline::user_id() const {
-  // @@protoc_insertion_point(field_get:youliao.pdu.server.UserOffline.user_id)
-  return user_id_;
-}
-inline void UserOffline::set_user_id(::google::protobuf::uint32 value) {
-  
-  user_id_ = value;
-  // @@protoc_insertion_point(field_set:youliao.pdu.server.UserOffline.user_id)
 }
 
 // -------------------------------------------------------------------
@@ -4320,6 +4324,91 @@ inline void FileTransferRespone::set_trans_mode(::youliao::pdu::base::TransferFi
   
   trans_mode_ = value;
   // @@protoc_insertion_point(field_set:youliao.pdu.server.FileTransferRespone.trans_mode)
+}
+
+// -------------------------------------------------------------------
+
+// OfflineUploadComplete
+
+// uint32 sender_id = 1;
+inline void OfflineUploadComplete::clear_sender_id() {
+  sender_id_ = 0u;
+}
+inline ::google::protobuf::uint32 OfflineUploadComplete::sender_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.server.OfflineUploadComplete.sender_id)
+  return sender_id_;
+}
+inline void OfflineUploadComplete::set_sender_id(::google::protobuf::uint32 value) {
+  
+  sender_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.server.OfflineUploadComplete.sender_id)
+}
+
+// uint32 receiver_id = 2;
+inline void OfflineUploadComplete::clear_receiver_id() {
+  receiver_id_ = 0u;
+}
+inline ::google::protobuf::uint32 OfflineUploadComplete::receiver_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.server.OfflineUploadComplete.receiver_id)
+  return receiver_id_;
+}
+inline void OfflineUploadComplete::set_receiver_id(::google::protobuf::uint32 value) {
+  
+  receiver_id_ = value;
+  // @@protoc_insertion_point(field_set:youliao.pdu.server.OfflineUploadComplete.receiver_id)
+}
+
+// string task_id = 3;
+inline void OfflineUploadComplete::clear_task_id() {
+  task_id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& OfflineUploadComplete::task_id() const {
+  // @@protoc_insertion_point(field_get:youliao.pdu.server.OfflineUploadComplete.task_id)
+  return task_id_.GetNoArena();
+}
+inline void OfflineUploadComplete::set_task_id(const ::std::string& value) {
+  
+  task_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:youliao.pdu.server.OfflineUploadComplete.task_id)
+}
+#if LANG_CXX11
+inline void OfflineUploadComplete::set_task_id(::std::string&& value) {
+  
+  task_id_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:youliao.pdu.server.OfflineUploadComplete.task_id)
+}
+#endif
+inline void OfflineUploadComplete::set_task_id(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  task_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:youliao.pdu.server.OfflineUploadComplete.task_id)
+}
+inline void OfflineUploadComplete::set_task_id(const char* value, size_t size) {
+  
+  task_id_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:youliao.pdu.server.OfflineUploadComplete.task_id)
+}
+inline ::std::string* OfflineUploadComplete::mutable_task_id() {
+  
+  // @@protoc_insertion_point(field_mutable:youliao.pdu.server.OfflineUploadComplete.task_id)
+  return task_id_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* OfflineUploadComplete::release_task_id() {
+  // @@protoc_insertion_point(field_release:youliao.pdu.server.OfflineUploadComplete.task_id)
+  
+  return task_id_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void OfflineUploadComplete::set_allocated_task_id(::std::string* task_id) {
+  if (task_id != NULL) {
+    
+  } else {
+    
+  }
+  task_id_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), task_id);
+  // @@protoc_insertion_point(field_set_allocated:youliao.pdu.server.OfflineUploadComplete.task_id)
 }
 
 // -------------------------------------------------------------------

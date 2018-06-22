@@ -20,6 +20,7 @@
 #include <QPixmap>
 #include <QCheckBox>
 #include <QApplication>
+#include <QCryptographicHash>
 using namespace youliao::pdu;
 
 YLLoginPanel::YLLoginPanel(QWidget *parent) : YLBasicWidget(parent), m_connected(false)
@@ -87,8 +88,7 @@ void YLLoginPanel::init()
         else
             headerPath = ":/res/qq.png";
 
-        if (!headerPath.isEmpty())
-            head_frame_->setHeadFromLocal(headerPath);
+        head_frame_->setHeadFromLocal(headerPath);
     });
 
     lineedit_passwd_      = new QLineEdit(this);
@@ -156,13 +156,6 @@ void YLLoginPanel::initCheckBoxs()
 
 void YLLoginPanel::resizeEvent(QResizeEvent *event)
 {
-//    head_frame_->move((width() - head_frame_->width()) / 2, 35);
-//    lineedit_useraccount_->move((width() - lineedit_useraccount_->width()) / 2, 175);
-//    lineedit_passwd_->move((width() - lineedit_passwd_->width()) / 2, 210);
-//    pushbutton_login_->move((width() - pushbutton_login_->width()) / 2, 275);
-//    m_remember_pwd->move(pushbutton_login_->geometry().topLeft().x(), 250);
-//    m_auto_login->move(pushbutton_login_->geometry().topRight().x() - 70, 250);
-
     head_frame_->move(50, 200);
     lineedit_useraccount_->move(160, 200);
     lineedit_passwd_->move(160, 235);
@@ -218,7 +211,9 @@ void YLLoginPanel::on_login()
     //登录操作在这里完成。
     if (m_connected)
     {
-        YLBusiness::login(lineedit_useraccount_->text(), lineedit_passwd_->text());
+        QByteArray array = QCryptographicHash::hash(lineedit_passwd_->text().toUtf8(), QCryptographicHash::Sha1);
+        QString password = QString(array.toHex());
+        YLBusiness::login(lineedit_useraccount_->text(), password);
     }
 }
 

@@ -4,7 +4,7 @@
 #include <QObject>
 #include <protobuf/youliao.base.pb.h>
 #include "protobuf/youliao.other.pb.h"
-
+#include "protobuf/youliao.file.pb.h"
 using namespace youliao::pdu::base;
 
 class YLBusiness : public QObject
@@ -72,6 +72,8 @@ public:
 
     //群验证消息
     static void sendGroupVerifyResult(uint32_t groupId, uint32_t requestUserId, GroupVerifyResult result);
+
+    static void getOfflineFile();
 };
 
 #endif // YLBUSINESS_H

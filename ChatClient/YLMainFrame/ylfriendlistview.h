@@ -4,6 +4,10 @@
 #include <QListWidget>
 #include "YLEntityObject/ylfriend.h"
 #include "protobuf/youliao.friendlist.pb.h"
+#include "protobuf/youliao.file.pb.h"
+
+using namespace youliao::pdu;
+
 class QMenu;
 class QLineEdit;
 
@@ -51,6 +55,8 @@ private slots:
     void moveFriendToGroup(uint32_t friendId, uint32_t oldGroupId, uint32_t newGroupId);
     void deleteFriend(uint32_t friendId);
     void modifyRemark(uint32_t friendId, const QString &newRemark);
+    void offlineFiles(file::GetOfflineFileRespone respone);
+
 private:
     QMenu       *m_blank_menu;
     QMenu       *m_group_menu;

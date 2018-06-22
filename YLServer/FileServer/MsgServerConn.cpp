@@ -12,6 +12,12 @@
 
 static BaseConnMap_t g_msg_server_conn_map;
 
+MsgServerConn* get_msg_server_conn()
+{
+    return (MsgServerConn*)g_msg_server_conn_map.begin()->second;
+}
+
+
 void msgServerConnCallback(void *callback_data, uint8_t msg, int handle, void*)
 {
     if (msg == NETWORK_CONNECT)

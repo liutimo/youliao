@@ -254,6 +254,9 @@ void ClientConn::handlePdu(BasePdu *pdu)
         case base::CID_GROUP_GET_OFFLINE_MESSAGE_REQUEST:
             _HandleGetGroupOfflineMessageRequest(pdu);
             break;
+        case base::CID_FILE_GET_OFFLINE_FILE_REQUEST:
+            _HandleGetOfflineFileRequest(pdu);
+            break;
         default:
             std::cout << pdu->getCID() << std::endl;
             break;
@@ -1105,6 +1108,17 @@ void ClientConn::_HandleClientFileRequest(BasePdu *pdu)
         sendBasePdu(&basePdu);
 
     }
+}
+
+
+void ClientConn::_HandleGetOfflineFileRequest(BasePdu *pdu)
+{
+    file::GetOfflineFileRequest request;
+    request.ParseFromString(pdu->getMessage());
+
+    auto conn = get_db_server_conn();
+    if (conn)
+        sendMessage(conn, request, base::SID_SERVER, base::CID_FILE_GET_OFFLINE_FILE_REQUEST);
 
 
 }

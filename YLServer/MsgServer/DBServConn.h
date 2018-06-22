@@ -57,6 +57,7 @@ private:
     void _HandleModfiyInformationRespone(BasePdu *);
     void _HandleGetGroupOfflineMessageRespone(BasePdu *);
     void _HandleUngroupNotify(BasePdu *);
+    void _HandleGetOfflineRespone(BasePdu *);
 
     uint32_t   m_server_index;
     bool       m_open;

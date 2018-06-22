@@ -35,6 +35,10 @@ private:
                                         QPushButton#min_button_:pressed{border-image:url(:/res/MainFrame/sysbtn_min_down.png);}\
                                        ";
 
+    const QString qss_add_button     = "QPushButton        {border-image:url(:/res/MainFrame/main_search_bkg_2.png);}\
+                                        QPushButton:hover  {border-image:url(:/res/MainFrame/main_search_bkg.png);}\
+                                       ";
+
     const QString qss_skin_button    = "QPushButton#skin_button_        {border-image:url(:/res/MainFrame/sysbtn_skin_normal.png);}\
                                         QPushButton#skin_button_:hover  {border-image:url(:/res/MainFrame/sysbtn_Skin_highlight.png);}\
                                         QPushButton#skin_button_:pressed{border-image:url(:/res/MainFrame/sysbtn_Skin_down.png);}\

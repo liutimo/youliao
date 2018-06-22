@@ -33,6 +33,6 @@ private:
 
 void initFileMsgServerConn();
 void msgServerConnCallback(void *callback_data, uint8_t msg, int handle, void*);
-
+MsgServerConn* get_msg_server_conn();
 
 #endif //LOGINSERVER_MSGSERVERCONN_H

@@ -5,6 +5,7 @@
 #include "YLNetWork/http/httphelper.h"
 #include "YLNetWork/ylbusiness.h"
 #include "YLNetWork/pduhandler.h"
+#include <QCryptographicHash>
 
 #include <QMovie>
 #include <QPainter>
@@ -76,7 +77,12 @@ void YLRegisterWidget::on_registerButton_clicked()
 
     if (ui->tip1->text().isEmpty() && ui->tip2->text().isEmpty() && ui->password1->text() == ui->password2->text())
     {
-        YLBusiness::registerAccount(ui->nickName->text(), ui->password1->text(), m_image_url);
+        //密码加密
+        QByteArray array = QCryptographicHash::hash(ui->password1->text().toUtf8(), QCryptographicHash::Sha1);
+        QString password = QString(array.toHex());
+
+
+        YLBusiness::registerAccount(ui->nickName->text(), password, m_image_url);
         m_loading_widget = new LoadingWidget(this);
         m_loading_widget->resize(size());
         m_loading_widget->show();

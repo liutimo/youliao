@@ -157,6 +157,12 @@ void HandlerMap::init()
 
     //获取群组历史消息
     m_handler_map.insert(std::make_pair(CID_GROUP_GET_OFFLINE_MESSAGE_REQUEST, DB_INTERFACE::getGroupOfflineMessage));
+
+    //离线文件传输完成
+    m_handler_map.insert(std::make_pair(CID_FILE_OFFLINE_UPLOAD_COMPLETE, DB_INTERFACE::offlineFileUploadComplete));
+
+    //获取离线文件
+    m_handler_map.insert(std::make_pair(CID_FILE_GET_OFFLINE_FILE_REQUEST, DB_INTERFACE::getOfflineFile));
 }
 
 pdu_handler_t HandlerMap::getHandler(uint16_t cid)

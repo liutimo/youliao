@@ -33,7 +33,7 @@ public:
 private:
     void _HandleGetFileServerIpRespone(BasePdu *);
     void _HandleFileMsgTransferRespone(BasePdu *);
-
+    void _HandleOfflineUpoladComplete(BasePdu *);
 
 private:
     bool        m_open;

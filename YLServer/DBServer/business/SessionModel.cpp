@@ -45,6 +45,8 @@ uint32_t SessionModel::getSessionId(uint32_t userId, uint32_t otherId, uint32_t 
     if (!flag)
         strSql += + " AND session_status=0";
 
+    printSql2Log(strSql.c_str());
+
     ResultSet *resultSet = dbConn->query(strSql);
 
     if (resultSet)

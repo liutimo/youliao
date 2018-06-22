@@ -71,7 +71,7 @@ QLineEdit:hover{border:1px solid #1583DD;}</string>
      <item row="4" column="1" colspan="7">
       <widget class="QLineEdit" name="hometown">
        <property name="focusPolicy">
-        <enum>Qt::TabFocus</enum>
+        <enum>Qt::StrongFocus</enum>
        </property>
        <property name="styleSheet">
         <string notr="true">QLineEdit{border:1px solid gray;}
@@ -302,7 +302,7 @@ QPlainTextEdit:hover{border:1px solid #1583DD;}</string>
      <item row="3" column="1" colspan="7">
       <widget class="QLineEdit" name="birthday">
        <property name="focusPolicy">
-        <enum>Qt::TabFocus</enum>
+        <enum>Qt::StrongFocus</enum>
        </property>
        <property name="styleSheet">
         <string notr="true">QLineEdit{border:1px solid gray;}

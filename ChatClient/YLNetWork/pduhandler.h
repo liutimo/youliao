@@ -3,6 +3,7 @@
 #include <QThread>
 #include "base/BasePdu.h"
 #include "protobuf/youliao.base.pb.h"
+#include "protobuf/youliao.file.pb.h"
 #include "YLEntityObject/ylfriend.h"
 #include "YLEntityObject/ylgroup.h"
 using namespace youliao::pdu;
@@ -42,6 +43,7 @@ signals:
     void deleteFriend(uint32_t friendId);
     void friendInformation(const base::UserInfo &);
     void addFriendSuccess();
+    void offlineFiles(file::GetOfflineFileRespone);
     void updateMemberList(uint32_t groupId);
 
 private:
@@ -99,6 +101,8 @@ private:
 
     //个性签名修改通知
     void _HandleUserSignalChangeRespone(BasePdu *pdu);
+
+    void _HandleGetOfflineFileRespone(BasePdu *pdu);
 private:
     explicit PduHandler(QObject *parent = nullptr);
 

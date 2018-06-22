@@ -145,8 +145,12 @@ namespace DB_INTERFACE
     //获取好友详细信息
     void getFriendInformation(BasePdu *basePdu, uint32_t conn_uuid);
 
-}
+    //离线文件传输
+    void offlineFileUploadComplete(BasePdu *basePdu, uint32_t conn_uuid);
 
+    //获取离线文件
+    void getOfflineFile(BasePdu *basePdu, uint32_t conn_uid);
+}
 namespace DB_PRIVATE
 {
     void AddValidateMessageSession(uint32_t userId, const std::string &userNick,

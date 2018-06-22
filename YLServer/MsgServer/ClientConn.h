@@ -90,6 +90,7 @@ private:
 
     //file
     void _HandleClientFileRequest(BasePdu *);
+    void _HandleGetOfflineFileRequest(BasePdu *);
 
     //other
     void _HandleModifyInformation(BasePdu *);

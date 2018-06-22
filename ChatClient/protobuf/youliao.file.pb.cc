@@ -62,6 +62,21 @@ class LoginFileServerResponeDefaultTypeInternal {
   ::google::protobuf::internal::ExplicitlyConstructed<LoginFileServerRespone>
       _instance;
 } _LoginFileServerRespone_default_instance_;
+class OfflineFileDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<OfflineFile>
+      _instance;
+} _OfflineFile_default_instance_;
+class GetOfflineFileRequestDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<GetOfflineFileRequest>
+      _instance;
+} _GetOfflineFileRequest_default_instance_;
+class GetOfflineFileResponeDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<GetOfflineFileRespone>
+      _instance;
+} _GetOfflineFileRespone_default_instance_;
 }  // namespace file
 }  // namespace pdu
 }  // namespace youliao
@@ -236,7 +251,71 @@ void InitDefaultsLoginFileServerRespone() {
   ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsLoginFileServerResponeImpl);
 }
 
-::google::protobuf::Metadata file_level_metadata[8];
+void InitDefaultsOfflineFileImpl() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+#ifdef GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  ::google::protobuf::internal::InitProtobufDefaultsForceUnique();
+#else
+  ::google::protobuf::internal::InitProtobufDefaults();
+#endif  // GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  {
+    void* ptr = &::youliao::pdu::file::_OfflineFile_default_instance_;
+    new (ptr) ::youliao::pdu::file::OfflineFile();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::youliao::pdu::file::OfflineFile::InitAsDefaultInstance();
+}
+
+void InitDefaultsOfflineFile() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsOfflineFileImpl);
+}
+
+void InitDefaultsGetOfflineFileRequestImpl() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+#ifdef GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  ::google::protobuf::internal::InitProtobufDefaultsForceUnique();
+#else
+  ::google::protobuf::internal::InitProtobufDefaults();
+#endif  // GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  {
+    void* ptr = &::youliao::pdu::file::_GetOfflineFileRequest_default_instance_;
+    new (ptr) ::youliao::pdu::file::GetOfflineFileRequest();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::youliao::pdu::file::GetOfflineFileRequest::InitAsDefaultInstance();
+}
+
+void InitDefaultsGetOfflineFileRequest() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsGetOfflineFileRequestImpl);
+}
+
+void InitDefaultsGetOfflineFileResponeImpl() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+#ifdef GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  ::google::protobuf::internal::InitProtobufDefaultsForceUnique();
+#else
+  ::google::protobuf::internal::InitProtobufDefaults();
+#endif  // GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  protobuf_youliao_2efile_2eproto::InitDefaultsOfflineFile();
+  {
+    void* ptr = &::youliao::pdu::file::_GetOfflineFileRespone_default_instance_;
+    new (ptr) ::youliao::pdu::file::GetOfflineFileRespone();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::youliao::pdu::file::GetOfflineFileRespone::InitAsDefaultInstance();
+}
+
+void InitDefaultsGetOfflineFileRespone() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsGetOfflineFileResponeImpl);
+}
+
+::google::protobuf::Metadata file_level_metadata[11];
 
 const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   ~0u,  // no _has_bits_
@@ -317,6 +396,26 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _weak_field_map_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::file::LoginFileServerRespone, result_code_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::file::LoginFileServerRespone, task_id_),
+  ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::file::OfflineFile, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::file::OfflineFile, sender_id_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::file::OfflineFile, task_id_),
+  ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::file::GetOfflineFileRequest, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::file::GetOfflineFileRequest, user_id_),
+  ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::file::GetOfflineFileRespone, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::file::GetOfflineFileRespone, user_id_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::youliao::pdu::file::GetOfflineFileRespone, offline_files_),
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::youliao::pdu::file::SendFileRequest)},
@@ -327,6 +426,9 @@ static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROT
   { 55, -1, sizeof(::youliao::pdu::file::ClientFileState)},
   { 63, -1, sizeof(::youliao::pdu::file::LoginFileServerRequest)},
   { 71, -1, sizeof(::youliao::pdu::file::LoginFileServerRespone)},
+  { 78, -1, sizeof(::youliao::pdu::file::OfflineFile)},
+  { 85, -1, sizeof(::youliao::pdu::file::GetOfflineFileRequest)},
+  { 91, -1, sizeof(::youliao::pdu::file::GetOfflineFileRespone)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -338,6 +440,9 @@ static ::google::protobuf::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::file::_ClientFileState_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::file::_LoginFileServerRequest_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::file::_LoginFileServerRespone_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::file::_OfflineFile_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::file::_GetOfflineFileRequest_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::youliao::pdu::file::_GetOfflineFileRespone_default_instance_),
 };
 
 void protobuf_AssignDescriptors() {
@@ -356,7 +461,7 @@ void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) GOOGLE_PROTOBUF_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 8);
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 11);
 }
 
 void AddDescriptorsImpl() {
@@ -392,10 +497,15 @@ void AddDescriptorsImpl() {
       "r_id\030\001 \001(\r\022\017\n\007task_id\030\002 \001(\t\0225\n\013client_ro"
       "le\030\003 \001(\0162 .youliao.pdu.base.ClientFileRo"
       "le\">\n\026LoginFileServerRespone\022\023\n\013result_c"
-      "ode\030\001 \001(\r\022\017\n\007task_id\030\002 \001(\tb\006proto3"
+      "ode\030\001 \001(\r\022\017\n\007task_id\030\002 \001(\t\"1\n\013OfflineFil"
+      "e\022\021\n\tsender_id\030\001 \001(\r\022\017\n\007task_id\030\002 \001(\t\"(\n"
+      "\025GetOfflineFileRequest\022\017\n\007user_id\030\001 \001(\r\""
+      "^\n\025GetOfflineFileRespone\022\017\n\007user_id\030\001 \001("
+      "\r\0224\n\roffline_files\030\002 \003(\0132\035.youliao.pdu.f"
+      "ile.OfflineFileb\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 1234);
+      descriptor, 1423);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "youliao.file.proto", &protobuf_RegisterTypes);
   ::protobuf_youliao_2ebase_2eproto::AddDescriptors();
@@ -3641,6 +3751,801 @@ void LoginFileServerRespone::InternalSwap(LoginFileServerRespone* other) {
 }
 
 
+// ===================================================================
+
+void OfflineFile::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int OfflineFile::kSenderIdFieldNumber;
+const int OfflineFile::kTaskIdFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+OfflineFile::OfflineFile()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    ::protobuf_youliao_2efile_2eproto::InitDefaultsOfflineFile();
+  }
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:youliao.pdu.file.OfflineFile)
+}
+OfflineFile::OfflineFile(const OfflineFile& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  task_id_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.task_id().size() > 0) {
+    task_id_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.task_id_);
+  }
+  sender_id_ = from.sender_id_;
+  // @@protoc_insertion_point(copy_constructor:youliao.pdu.file.OfflineFile)
+}
+
+void OfflineFile::SharedCtor() {
+  task_id_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  sender_id_ = 0u;
+  _cached_size_ = 0;
+}
+
+OfflineFile::~OfflineFile() {
+  // @@protoc_insertion_point(destructor:youliao.pdu.file.OfflineFile)
+  SharedDtor();
+}
+
+void OfflineFile::SharedDtor() {
+  task_id_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+
+void OfflineFile::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* OfflineFile::descriptor() {
+  ::protobuf_youliao_2efile_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_youliao_2efile_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const OfflineFile& OfflineFile::default_instance() {
+  ::protobuf_youliao_2efile_2eproto::InitDefaultsOfflineFile();
+  return *internal_default_instance();
+}
+
+
+void OfflineFile::Clear() {
+// @@protoc_insertion_point(message_clear_start:youliao.pdu.file.OfflineFile)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  task_id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  sender_id_ = 0u;
+  _internal_metadata_.Clear();
+}
+
+bool OfflineFile::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:youliao.pdu.file.OfflineFile)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // uint32 sender_id = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &sender_id_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // string task_id = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_task_id()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->task_id().data(), static_cast<int>(this->task_id().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "youliao.pdu.file.OfflineFile.task_id"));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:youliao.pdu.file.OfflineFile)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:youliao.pdu.file.OfflineFile)
+  return false;
+#undef DO_
+}
+
+void OfflineFile::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:youliao.pdu.file.OfflineFile)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 sender_id = 1;
+  if (this->sender_id() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->sender_id(), output);
+  }
+
+  // string task_id = 2;
+  if (this->task_id().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->task_id().data(), static_cast<int>(this->task_id().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "youliao.pdu.file.OfflineFile.task_id");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      2, this->task_id(), output);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
+  // @@protoc_insertion_point(serialize_end:youliao.pdu.file.OfflineFile)
+}
+
+::google::protobuf::uint8* OfflineFile::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:youliao.pdu.file.OfflineFile)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 sender_id = 1;
+  if (this->sender_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->sender_id(), target);
+  }
+
+  // string task_id = 2;
+  if (this->task_id().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->task_id().data(), static_cast<int>(this->task_id().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "youliao.pdu.file.OfflineFile.task_id");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        2, this->task_id(), target);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:youliao.pdu.file.OfflineFile)
+  return target;
+}
+
+size_t OfflineFile::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:youliao.pdu.file.OfflineFile)
+  size_t total_size = 0;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
+  // string task_id = 2;
+  if (this->task_id().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->task_id());
+  }
+
+  // uint32 sender_id = 1;
+  if (this->sender_id() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->sender_id());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void OfflineFile::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:youliao.pdu.file.OfflineFile)
+  GOOGLE_DCHECK_NE(&from, this);
+  const OfflineFile* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const OfflineFile>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:youliao.pdu.file.OfflineFile)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:youliao.pdu.file.OfflineFile)
+    MergeFrom(*source);
+  }
+}
+
+void OfflineFile::MergeFrom(const OfflineFile& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:youliao.pdu.file.OfflineFile)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.task_id().size() > 0) {
+
+    task_id_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.task_id_);
+  }
+  if (from.sender_id() != 0) {
+    set_sender_id(from.sender_id());
+  }
+}
+
+void OfflineFile::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:youliao.pdu.file.OfflineFile)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void OfflineFile::CopyFrom(const OfflineFile& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:youliao.pdu.file.OfflineFile)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool OfflineFile::IsInitialized() const {
+  return true;
+}
+
+void OfflineFile::Swap(OfflineFile* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void OfflineFile::InternalSwap(OfflineFile* other) {
+  using std::swap;
+  task_id_.Swap(&other->task_id_);
+  swap(sender_id_, other->sender_id_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata OfflineFile::GetMetadata() const {
+  protobuf_youliao_2efile_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_youliao_2efile_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
+// ===================================================================
+
+void GetOfflineFileRequest::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int GetOfflineFileRequest::kUserIdFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+GetOfflineFileRequest::GetOfflineFileRequest()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    ::protobuf_youliao_2efile_2eproto::InitDefaultsGetOfflineFileRequest();
+  }
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:youliao.pdu.file.GetOfflineFileRequest)
+}
+GetOfflineFileRequest::GetOfflineFileRequest(const GetOfflineFileRequest& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  user_id_ = from.user_id_;
+  // @@protoc_insertion_point(copy_constructor:youliao.pdu.file.GetOfflineFileRequest)
+}
+
+void GetOfflineFileRequest::SharedCtor() {
+  user_id_ = 0u;
+  _cached_size_ = 0;
+}
+
+GetOfflineFileRequest::~GetOfflineFileRequest() {
+  // @@protoc_insertion_point(destructor:youliao.pdu.file.GetOfflineFileRequest)
+  SharedDtor();
+}
+
+void GetOfflineFileRequest::SharedDtor() {
+}
+
+void GetOfflineFileRequest::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* GetOfflineFileRequest::descriptor() {
+  ::protobuf_youliao_2efile_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_youliao_2efile_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const GetOfflineFileRequest& GetOfflineFileRequest::default_instance() {
+  ::protobuf_youliao_2efile_2eproto::InitDefaultsGetOfflineFileRequest();
+  return *internal_default_instance();
+}
+
+
+void GetOfflineFileRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:youliao.pdu.file.GetOfflineFileRequest)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  user_id_ = 0u;
+  _internal_metadata_.Clear();
+}
+
+bool GetOfflineFileRequest::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:youliao.pdu.file.GetOfflineFileRequest)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // uint32 user_id = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &user_id_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:youliao.pdu.file.GetOfflineFileRequest)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:youliao.pdu.file.GetOfflineFileRequest)
+  return false;
+#undef DO_
+}
+
+void GetOfflineFileRequest::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:youliao.pdu.file.GetOfflineFileRequest)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->user_id(), output);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
+  // @@protoc_insertion_point(serialize_end:youliao.pdu.file.GetOfflineFileRequest)
+}
+
+::google::protobuf::uint8* GetOfflineFileRequest::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:youliao.pdu.file.GetOfflineFileRequest)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->user_id(), target);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:youliao.pdu.file.GetOfflineFileRequest)
+  return target;
+}
+
+size_t GetOfflineFileRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:youliao.pdu.file.GetOfflineFileRequest)
+  size_t total_size = 0;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->user_id());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void GetOfflineFileRequest::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:youliao.pdu.file.GetOfflineFileRequest)
+  GOOGLE_DCHECK_NE(&from, this);
+  const GetOfflineFileRequest* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const GetOfflineFileRequest>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:youliao.pdu.file.GetOfflineFileRequest)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:youliao.pdu.file.GetOfflineFileRequest)
+    MergeFrom(*source);
+  }
+}
+
+void GetOfflineFileRequest::MergeFrom(const GetOfflineFileRequest& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:youliao.pdu.file.GetOfflineFileRequest)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.user_id() != 0) {
+    set_user_id(from.user_id());
+  }
+}
+
+void GetOfflineFileRequest::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:youliao.pdu.file.GetOfflineFileRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void GetOfflineFileRequest::CopyFrom(const GetOfflineFileRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:youliao.pdu.file.GetOfflineFileRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool GetOfflineFileRequest::IsInitialized() const {
+  return true;
+}
+
+void GetOfflineFileRequest::Swap(GetOfflineFileRequest* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void GetOfflineFileRequest::InternalSwap(GetOfflineFileRequest* other) {
+  using std::swap;
+  swap(user_id_, other->user_id_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata GetOfflineFileRequest::GetMetadata() const {
+  protobuf_youliao_2efile_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_youliao_2efile_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
+// ===================================================================
+
+void GetOfflineFileRespone::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int GetOfflineFileRespone::kUserIdFieldNumber;
+const int GetOfflineFileRespone::kOfflineFilesFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+GetOfflineFileRespone::GetOfflineFileRespone()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    ::protobuf_youliao_2efile_2eproto::InitDefaultsGetOfflineFileRespone();
+  }
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:youliao.pdu.file.GetOfflineFileRespone)
+}
+GetOfflineFileRespone::GetOfflineFileRespone(const GetOfflineFileRespone& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      offline_files_(from.offline_files_),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  user_id_ = from.user_id_;
+  // @@protoc_insertion_point(copy_constructor:youliao.pdu.file.GetOfflineFileRespone)
+}
+
+void GetOfflineFileRespone::SharedCtor() {
+  user_id_ = 0u;
+  _cached_size_ = 0;
+}
+
+GetOfflineFileRespone::~GetOfflineFileRespone() {
+  // @@protoc_insertion_point(destructor:youliao.pdu.file.GetOfflineFileRespone)
+  SharedDtor();
+}
+
+void GetOfflineFileRespone::SharedDtor() {
+}
+
+void GetOfflineFileRespone::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* GetOfflineFileRespone::descriptor() {
+  ::protobuf_youliao_2efile_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_youliao_2efile_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const GetOfflineFileRespone& GetOfflineFileRespone::default_instance() {
+  ::protobuf_youliao_2efile_2eproto::InitDefaultsGetOfflineFileRespone();
+  return *internal_default_instance();
+}
+
+
+void GetOfflineFileRespone::Clear() {
+// @@protoc_insertion_point(message_clear_start:youliao.pdu.file.GetOfflineFileRespone)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  offline_files_.Clear();
+  user_id_ = 0u;
+  _internal_metadata_.Clear();
+}
+
+bool GetOfflineFileRespone::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:youliao.pdu.file.GetOfflineFileRespone)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // uint32 user_id = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &user_id_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // repeated .youliao.pdu.file.OfflineFile offline_files = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(
+                input, add_offline_files()));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:youliao.pdu.file.GetOfflineFileRespone)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:youliao.pdu.file.GetOfflineFileRespone)
+  return false;
+#undef DO_
+}
+
+void GetOfflineFileRespone::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:youliao.pdu.file.GetOfflineFileRespone)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->user_id(), output);
+  }
+
+  // repeated .youliao.pdu.file.OfflineFile offline_files = 2;
+  for (unsigned int i = 0,
+      n = static_cast<unsigned int>(this->offline_files_size()); i < n; i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      2,
+      this->offline_files(static_cast<int>(i)),
+      output);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
+  // @@protoc_insertion_point(serialize_end:youliao.pdu.file.GetOfflineFileRespone)
+}
+
+::google::protobuf::uint8* GetOfflineFileRespone::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:youliao.pdu.file.GetOfflineFileRespone)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->user_id(), target);
+  }
+
+  // repeated .youliao.pdu.file.OfflineFile offline_files = 2;
+  for (unsigned int i = 0,
+      n = static_cast<unsigned int>(this->offline_files_size()); i < n; i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageToArray(
+        2, this->offline_files(static_cast<int>(i)), deterministic, target);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:youliao.pdu.file.GetOfflineFileRespone)
+  return target;
+}
+
+size_t GetOfflineFileRespone::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:youliao.pdu.file.GetOfflineFileRespone)
+  size_t total_size = 0;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
+  // repeated .youliao.pdu.file.OfflineFile offline_files = 2;
+  {
+    unsigned int count = static_cast<unsigned int>(this->offline_files_size());
+    total_size += 1UL * count;
+    for (unsigned int i = 0; i < count; i++) {
+      total_size +=
+        ::google::protobuf::internal::WireFormatLite::MessageSize(
+          this->offline_files(static_cast<int>(i)));
+    }
+  }
+
+  // uint32 user_id = 1;
+  if (this->user_id() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->user_id());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void GetOfflineFileRespone::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:youliao.pdu.file.GetOfflineFileRespone)
+  GOOGLE_DCHECK_NE(&from, this);
+  const GetOfflineFileRespone* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const GetOfflineFileRespone>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:youliao.pdu.file.GetOfflineFileRespone)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:youliao.pdu.file.GetOfflineFileRespone)
+    MergeFrom(*source);
+  }
+}
+
+void GetOfflineFileRespone::MergeFrom(const GetOfflineFileRespone& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:youliao.pdu.file.GetOfflineFileRespone)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  offline_files_.MergeFrom(from.offline_files_);
+  if (from.user_id() != 0) {
+    set_user_id(from.user_id());
+  }
+}
+
+void GetOfflineFileRespone::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:youliao.pdu.file.GetOfflineFileRespone)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void GetOfflineFileRespone::CopyFrom(const GetOfflineFileRespone& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:youliao.pdu.file.GetOfflineFileRespone)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool GetOfflineFileRespone::IsInitialized() const {
+  return true;
+}
+
+void GetOfflineFileRespone::Swap(GetOfflineFileRespone* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void GetOfflineFileRespone::InternalSwap(GetOfflineFileRespone* other) {
+  using std::swap;
+  CastToBase(&offline_files_)->InternalSwap(CastToBase(&other->offline_files_));
+  swap(user_id_, other->user_id_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata GetOfflineFileRespone::GetMetadata() const {
+  protobuf_youliao_2efile_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_youliao_2efile_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace file
 }  // namespace pdu
@@ -3670,6 +4575,15 @@ template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::file::LoginFileSer
 }
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::file::LoginFileServerRespone* Arena::Create< ::youliao::pdu::file::LoginFileServerRespone >(Arena* arena) {
   return Arena::CreateInternal< ::youliao::pdu::file::LoginFileServerRespone >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::file::OfflineFile* Arena::Create< ::youliao::pdu::file::OfflineFile >(Arena* arena) {
+  return Arena::CreateInternal< ::youliao::pdu::file::OfflineFile >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::file::GetOfflineFileRequest* Arena::Create< ::youliao::pdu::file::GetOfflineFileRequest >(Arena* arena) {
+  return Arena::CreateInternal< ::youliao::pdu::file::GetOfflineFileRequest >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::youliao::pdu::file::GetOfflineFileRespone* Arena::Create< ::youliao::pdu::file::GetOfflineFileRespone >(Arena* arena) {
+  return Arena::CreateInternal< ::youliao::pdu::file::GetOfflineFileRespone >(arena);
 }
 }  // namespace protobuf
 }  // namespace google

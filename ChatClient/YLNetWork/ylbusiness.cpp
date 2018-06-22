@@ -691,3 +691,16 @@ void YLBusiness::sendGroupVerifyResult(uint32_t groupId, uint32_t requestUserId,
     basePdu->writeMessage(&request);
     PduSender::instance()->addMessage(basePdu);
 }
+
+
+void YLBusiness::getOfflineFile()
+{
+    file::GetOfflineFileRequest request;
+    request.set_user_id(GlobalData::getCurrLoginUserId());
+
+
+    BasePdu *basePdu = new BasePdu;basePdu->setSID(SID_GROUP);
+    basePdu->setCID(CID_FILE_GET_OFFLINE_FILE_REQUEST);
+    basePdu->writeMessage(&request);
+    PduSender::instance()->addMessage(basePdu);
+}

@@ -7,7 +7,9 @@
 #include "yllistitem.h"
 #include "ylmainwidget.h"
 #include "globaldata.h"
+#include "YLDataBase/yldatabase.h"
 #include "YLCommonControl/ylmessagebox.h"
+#include "YLTray/ylmessagetip.h"
 //network
 #include "YLNetWork/pduhandler.h"
 #include "YLNetWork/ylbusiness.h"
@@ -52,6 +54,8 @@ YLFriendListView::YLFriendListView(QWidget *parent) : QListWidget(parent),
         GlobalData::setGroup(m_group);
     });
     connect(PduHandler::instance(), &PduHandler::deleteFriend, this, &YLFriendListView::deleteFriend);
+
+    connect(PduHandler::instance(), &PduHandler::offlineFiles, this, &YLFriendListView::offlineFiles);
 }
 
 YLFriendListView::~YLFriendListView()
@@ -413,4 +417,26 @@ void YLFriendListView::modifyRemark(uint32_t friendId, const QString &newRemark)
         }
     }
 
+}
+
+
+void YLFriendListView::offlineFiles(file::GetOfflineFileRespone respone)
+{
+    for (int i = 0; i < respone.offline_files_size(); ++i)
+    {
+        const file::OfflineFile &file = respone.offline_files(i);
+
+        uint32_t senderId = file.sender_id();
+        QString taskId = file.task_id().c_str();
+
+        YLFriend fri = GlobalData::getFriendById(senderId);
+
+        YLSingleChatWidget *singleChatWidget = new YLSingleChatWidget;
+        singleChatWidget->setFriend(fri);
+        singleChatWidget->setWindowTitle(fri.friendRemark().isEmpty() ? fri.friendNickName() : fri.friendRemark());
+        GlobalData::addSingleChatWidget(fri.friendId(), singleChatWidget);
+        singleChatWidget->show();
+
+        singleChatWidget->addRecvFileItem(taskId);
+    }
 }

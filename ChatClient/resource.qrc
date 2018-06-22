@@ -432,5 +432,7 @@
         <file>res/YLCommonControl/remove_hover.png</file>
         <file>res/YLAddFriendWIdgets/AddBuddy/SessionNode.png</file>
         <file>res/qq.png</file>
+        <file>res/MainFrame/main_search_bkg_2.png</file>
+        <file>res/MainFrame/main_search_bkg.png</file>
     </qresource>
 </RCC>

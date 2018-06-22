@@ -8,6 +8,7 @@
 #include "network/netlib.h"
 #include "ClientConn.h"
 #include "FileServerConn.h"
+#include "DBServConn.h"
 #include "util/util.h"
 #include "User.h"
 
@@ -138,6 +139,9 @@ void FileServerConn::handlePdu(BasePdu *pdu)
         case base::CID_SERVER_FILE_TRANSFER_RESPONE:
             _HandleFileMsgTransferRespone(pdu);
             break;
+        case base::CID_FILE_OFFLINE_UPLOAD_COMPLETE:
+            _HandleOfflineUpoladComplete(pdu);
+            break;
         default:
             log("位置的CID:%d", pdu->getCID());
             break;
@@ -237,5 +241,23 @@ void FileServerConn::_HandleFileMsgTransferRespone(BasePdu *basePdu)
         {
             //发送到路由服务器
         }
+    }
+}
+
+
+void FileServerConn::_HandleOfflineUpoladComplete(BasePdu *basePdu)
+{
+    server::OfflineUploadComplete respone;
+    respone.ParseFromString(basePdu->getMessage());
+
+    uint32_t senderId = respone.sender_id();
+    uint32_t receiverId = respone.receiver_id();
+    std::string taskId = respone.task_id();
+
+    auto conn = get_db_server_conn();
+
+    if (conn)
+    {
+        sendMessage(conn, respone, base::SID_SERVER, base::CID_FILE_OFFLINE_UPLOAD_COMPLETE);
     }
 }

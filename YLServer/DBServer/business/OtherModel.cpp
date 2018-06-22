@@ -86,3 +86,55 @@ bool OtherModel::modifyUserIcon(uint32_t userId, const std::string &url)
     return ret;
 }
 
+
+bool OtherModel::saveOfflineFile(uint32_t senderId, uint32_t receiverId, const std::string &task_id)
+{
+    bool ret = false;
+    DBConn *conn = DBManager::instance()->getConnection();
+
+    if (conn)
+    {
+        std::string updateSql = "INSERT INTO youliao.yl_offline_file(sender_id, receiver_id, task_id) "
+                                " VALUES( " + std::to_string(senderId) + ", "
+                                                                         + std::to_string(receiverId) + ", '" + task_id + "')";
+
+        printSql2Log(updateSql.c_str());
+        ret = conn->update(updateSql);
+    }
+
+    DBManager::instance()->releaseConnection(conn);
+    return ret;
+}
+
+
+bool OtherModel::getOfflineFile(uint32_t receiverId, file::GetOfflineFileRespone &respone)
+{
+    bool ret = false;
+    DBConn *conn = DBManager::instance()->getConnection();
+
+    if (conn)
+    {
+        std::string updateSql = "SELECT id, sender_id, task_id FROM yl_offline_file "
+                                "WHERE receiver_id = " + std::to_string(receiverId) + " AND task_status = 0";
+
+
+        printSql2Log(updateSql.c_str());
+
+        ResultSet *resultSet = conn->query(updateSql);
+        if (resultSet)
+        {
+            while (resultSet->next())
+            {
+                file::OfflineFile *offlineFile =  respone.add_offline_files();
+                offlineFile->set_sender_id(resultSet->getInt("sender_id"));
+                offlineFile->set_task_id(resultSet->getString("task_id"));
+            }
+
+            delete resultSet;
+        }
+        ret = true;
+    }
+
+    DBManager::instance()->releaseConnection(conn);
+    return ret;
+}

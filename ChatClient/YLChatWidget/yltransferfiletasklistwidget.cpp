@@ -260,8 +260,23 @@ void YLSendFileWidget::setTaskId(const QString &taskId)
         return;
 
     uint32_t fileSize = entity.m_file_size;
-    m_file_name = entity.m_file_name.c_str();
+    std::string fileName = entity.m_file_name;
 
+    int i = fileName.find_last_of('/');
+
+    m_file_name = fileName.substr(i + 1).c_str();
+
+    QFontMetrics fontMetrics(m_file_info->font());
+    int strWidth = fontMetrics.width(m_file_name);
+
+    if (strWidth > 180)
+    {
+        m_file_name += "...";
+        while (strWidth > 180) {
+            m_file_name = m_file_name.remove(m_file_name.length() - 4, 1);
+            strWidth = fontMetrics.width(m_file_name);
+        }
+    }
 
     m_transfer_progress->setMaximum(fileSize);
     m_transfer_progress->setValue(0);
@@ -412,7 +427,25 @@ void YLReceiveFileWidget::setTaskId(const QString &taskId)
         return;
 
     uint32_t fileSize = entity.m_file_size;
-    m_file_name = entity.m_file_name.c_str();
+
+    std::string fileName = entity.m_file_name.c_str();
+
+    int i = fileName.find_last_of('/');
+
+    m_file_name = fileName.substr(i + 1).c_str();
+
+    QFontMetrics fontMetrics(m_file_info->font());
+    int strWidth = fontMetrics.width(m_file_name);
+
+    if (strWidth > 180)
+    {
+        m_file_name += "...";
+        while (strWidth > 180) {
+            m_file_name = m_file_name.remove(m_file_name.length() - 4, 1);
+            strWidth = fontMetrics.width(m_file_name);
+        }
+    }
+
 
     m_transfer_progress->setMaximum(fileSize);
     m_transfer_progress->setValue(0);

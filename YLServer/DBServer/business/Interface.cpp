@@ -13,6 +13,7 @@
 #include "SessionModel.h"
 #include "OtherModel.h"
 #include "AudioModel.h"
+#include "pdu/protobuf/youliao.file.pb.h"
 #include "pdu/protobuf/youliao.server.pb.h"
 #include "pdu/protobuf/youliao.message.pb.h"
 #include "pdu/protobuf/youliao.session.pb.h"
@@ -1446,18 +1447,47 @@ namespace DB_INTERFACE
             sendMessage(conn, respone, base::SID_SERVER, base::CID_OTHER_GFT_FRIEND_INFORMATION_RESPONE);
     }
 
+
+    //离线文件传输
+    void offlineFileUploadComplete(BasePdu *basePdu, uint32_t conn_uuid)
+    {
+        server::OfflineUploadComplete request;
+        request.ParseFromString(basePdu->getMessage());
+
+        uint32_t senderId = request.sender_id();
+        uint32_t receiverId = request.receiver_id();
+        std::string taskId = request.task_id();
+
+        OtherModel::instance()->saveOfflineFile(senderId, receiverId, taskId);
+    }
+
+    //获取离线文件
+    void getOfflineFile(BasePdu *basePdu, uint32_t conn_uid)
+    {
+        file::GetOfflineFileRequest request;
+        request.ParseFromString(basePdu->getMessage());
+
+        uint32_t userId = request.user_id();
+
+        file::GetOfflineFileRespone respone;
+        respone.set_user_id(userId);
+        bool ret = OtherModel::instance()->getOfflineFile(userId, respone);
+
+        if (ret) {
+            auto conn = findProxyConn(conn_uid);
+            if (conn)
+                sendMessage(conn, respone, base::SID_FILE, base::CID_FILE_GET_OFFILNE_FILE_RESPONE);
+        }
+    }
 }
 
 
-namespace DB_PRIVATE
-{
+namespace DB_PRIVATE {
     //群组验证消息session创建
     void AddValidateMessageSession(uint32_t userId, const std::string &userNick,
-                                   const std::string &groupName,uint32_t connUuid)
-    {
+                                   const std::string &groupName, uint32_t connUuid) {
         uint32_t sessionId = SessionModel::instance()->getSessionId(userId, 3, base::SESSION_TYPE_VALIDATE_MSG);
-        if (sessionId == 0)
-        {
+        if (sessionId == 0) {
             sessionId = SessionModel::instance()->addSession(userId, 3, base::SESSION_TYPE_VALIDATE_MSG);
 
             base::SessionInfo *sessionInfo = new base::SessionInfo;
@@ -1476,9 +1506,7 @@ namespace DB_PRIVATE
             auto conn = findProxyConn(connUuid);
             if (conn)
                 sendMessage(conn, respone, base::SID_SERVER, base::CID_SESSIONLIST_ADD_SESSION);
-        }
-        else
-        {
+        } else {
             SessionModel::instance()->updateSession(sessionId);
         }
     }

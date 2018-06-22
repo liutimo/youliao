@@ -75,3 +75,20 @@ message LoginFileServerRespone
     uint32 result_code = 1;
     string task_id = 2;
 }
+
+message OfflineFile
+{
+    uint32 sender_id = 1;
+    string task_id = 2;
+}
+
+message GetOfflineFileRequest
+{
+    uint32 user_id = 1;
+}
+
+message GetOfflineFileRespone
+{
+    uint32 user_id = 1;
+    repeated OfflineFile offline_files = 2;
+}

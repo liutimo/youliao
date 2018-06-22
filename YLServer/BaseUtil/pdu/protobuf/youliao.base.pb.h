@@ -393,12 +393,15 @@ enum FileCID {
   CID_FILE_STATE = 2054,
   CID_FILE_LOGIN_REQUEST = 2055,
   CID_FILE_LOGIN_RESPONE = 2056,
+  CID_FILE_OFFLINE_UPLOAD_COMPLETE = 2057,
+  CID_FILE_GET_OFFLINE_FILE_REQUEST = 2058,
+  CID_FILE_GET_OFFILNE_FILE_RESPONE = 2059,
   FileCID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   FileCID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool FileCID_IsValid(int value);
 const FileCID FileCID_MIN = CID_FILE_ZERO;
-const FileCID FileCID_MAX = CID_FILE_LOGIN_RESPONE;
+const FileCID FileCID_MAX = CID_FILE_GET_OFFILNE_FILE_RESPONE;
 const int FileCID_ARRAYSIZE = FileCID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* FileCID_descriptor();

@@ -41,6 +41,8 @@ PduHandler::PduHandler(QObject *parent) : QThread(parent)
     qRegisterMetaType<YLGroup>("YLGroup");
     qRegisterMetaType<QVector<YLGroup>>("QVector<YLGroup>");
     qRegisterMetaType<base::UserInfo>("base::UserInfo");
+
+    qRegisterMetaType<file::GetOfflineFileRespone>("file::GetOfflineFileRespone");
 }
 
 PduHandler* PduHandler::instance()
@@ -188,6 +190,9 @@ void PduHandler::_HandleBasePdu(BasePdu *pdu)
         break;
     case base::CID_GROUP_UNGROUP:
         _HandleUngroupNotify(pdu);
+        break;
+    case base::CID_FILE_GET_OFFILNE_FILE_RESPONE:
+        _HandleGetOfflineFileRespone(pdu);
         break;
     default:
         std::cout << "CID" << pdu->getCID() << "  SID:" << pdu->getSID();
@@ -516,6 +521,7 @@ void PduHandler::_HandleGetSessionsRespone(BasePdu *pdu)
     emit sessions();
 
     YLBusiness::getOfflineMessage();
+    YLBusiness::getOfflineFile();
 }
 
 
@@ -1125,6 +1131,14 @@ void PduHandler::_HandleGroupOfflineMessageRespone(BasePdu *pdu)
     uint32_t groupId = respone.group_id();
     auto groupChatWidget = GlobalData::getGroupChatWidget(groupId);
 
+    //创建session
+    YLSession session = GlobalData::getSessionByGroupId(groupId);
+    if (session.getOtherId() != groupId)
+    {
+        //Session不存在,创建session
+        YLBusiness::createNewSession(groupId, base::SESSION_TYPE_GROUP);
+    }
+
     for (int i = 0; i < respone.msg_data_size(); ++i)
     {
         auto messageData = respone.msg_data(i);
@@ -1161,4 +1175,13 @@ void PduHandler::_HandleUserSignalChangeRespone(BasePdu *pdu)
     respone.ParseFromString(pdu->getMessage());
 
 //    QString s = respone.sig
+}
+
+void PduHandler::_HandleGetOfflineFileRespone(BasePdu *pdu)
+{
+    file::GetOfflineFileRespone respone;
+    respone.ParseFromString(pdu->getMessage());
+
+
+//    emit offlineFiles(respone);
 }
